@@ -1,0 +1,1022 @@
+\documentclass[12pt,english]{mrl}
+\usepackage{graphicx}
+\usepackage{listings}
+\usepackage{cite}
+\usepackage{amsthm}
+\newtheorem*{example}{Example}
+
+\usepackage[toc,page]{appendix}
+
+\renewcommand{\familydefault}{\rmdefault}
+\usepackage[T1]{fontenc}
+\usepackage[latin9]{inputenc}
+\usepackage{color}
+\usepackage{babel}
+\usepackage{verbatim}
+\usepackage{float}
+\usepackage{url}
+\usepackage{amsthm}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage[unicode=true,pdfusetitle, bookmarks=true,bookmarksnumbered=false,bookmarksopen=false,  breaklinks=false,pdfborder={0 0 1},backref=false,colorlinks=true]{hyperref}
+\usepackage{breakurl}
+
+
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb,enumerate}
+\usepackage{amsthm}
+\usepackage{cite}
+\usepackage{comment}
+\usepackage[all]{xy}
+%\usepackage[notref,notcite]{showkeys}
+\usepackage{hyperref}
+\usepackage{todonotes}
+
+% THEOREM ENVIRONMENTS
+
+\theoremstyle{definition}
+\newtheorem{lem}{Lemma}[section]
+\newtheorem{cor}[lem]{Corollary}
+\newtheorem{prop}[lem]{Proposition}
+\newtheorem{thm}[lem]{Theorem}
+\newtheorem{soln}[]{Solution}
+\newtheorem{conj}[lem]{Conjecture}
+\newtheorem{Defn}[lem]{Definition}
+\newtheorem{Ex}[lem]{Example}
+\newtheorem{Question}[lem]{Question}
+\newtheorem{Property}[lem]{Property}
+\newtheorem{Properties}[lem]{Properties}
+\newtheorem{Discussion}[lem]{Remark}
+\newtheorem{Construction}[lem]{Construction}
+\newtheorem{Notation}[lem]{Notation}
+\newtheorem{Fact}[lem]{Fact}
+\newtheorem{Notationdefinition}[lem]{Definition/Notation}
+\newtheorem{Remarkdefinition}[lem]{Remark/Definition}
+\newtheorem{rem}[lem]{Remark}
+\newtheorem{Subprops}{}[lem]
+\newtheorem{Para}[lem]{}
+\newtheorem{Exer}[lem]{Exercise}
+\newtheorem{Exerc}{Exercise}
+
+\newenvironment{defn}{\begin{Defn}\rm}{\end{Defn}}
+\newenvironment{ex}{\begin{Ex}\rm}{\end{Ex}}
+\newenvironment{question}{\begin{Question}\rm}{\end{Question}}
+\newenvironment{property}{\begin{Property}\rm}{\end{Property}}
+\newenvironment{properties}{\begin{Properties}\rm}{\end{Properties}}
+\newenvironment{notation}{\begin{Notation}\rm}{\end{Notation}}
+\newenvironment{fact}{\begin{Fact}\rm}{\end{Fact}}
+\newenvironment{notationdefinition}{\begin{Notationdefinition}\rm}{\end{Notationdefinition}}
+\newenvironment{remarkdefinition}{\begin{Remarkdefinition}\rm}{\end{Remarkdefinition}}
+\newenvironment{subprops}{\begin{Subprops}\rm}{\end{Subprops}}
+\newenvironment{para}{\begin{Para}\rm}{\end{Para}}
+\newenvironment{disc}{\begin{Discussion}\rm}{\end{Discussion}}
+\newenvironment{construction}{\begin{Construction}\rm}{\end{Construction}}
+\newenvironment{exer}{\begin{Exer}\rm}{\end{Exer}}
+\newenvironment{exerc}{\begin{Exerc}\rm}{\end{Exerc}}
+
+\newtheorem{intthm}{Theorem}
+\renewcommand{\theintthm}{\Alph{intthm}}
+
+% COMENTS
+
+%\newcommand{\ssw}[1]{\footnote{#1}}
+\newcommand{\nt}[2][$^\spadesuit$]{\hspace{0pt}#1\marginpar{\tt\raggedleft
+    #1 #2}}
+\newcommand{\dw}[2][$^\spadesuit$]{\nt[#1]{DW:#2}}
+\newcommand{\ssw}[2][$^\spadesuit$]{\nt[#1]{SSW:#2}}
+\newcommand{\ts}[2][$^\spadesuit$]{\nt[#1]{TS:#2}}
+
+\newcommand{\ds}{\displaystyle}
+
+% CATEGORIES
+
+\newcommand{\A}{\mathcal{A}}
+\newcommand{\D}{\mathcal{D}}
+\newcommand{\R}{\mathcal{R}}
+\newcommand{\cat}[1]{\mathcal{#1}}
+\newcommand{\catx}{\cat{X}}
+\newcommand{\caty}{\cat{Y}}
+\newcommand{\catm}{\cat{M}}
+\newcommand{\catv}{\cat{V}}
+\newcommand{\catw}{\cat{W}}
+\newcommand{\catg}{\cat{G}}
+\newcommand{\catp}{\cat{P}}
+\newcommand{\catf}{\cat{F}}
+\newcommand{\cati}{\cat{I}}
+\newcommand{\cata}{\cat{A}}
+\newcommand{\catabel}{\mathcal{A}b}
+\newcommand{\catc}{\cat{C}}
+\newcommand{\catb}{\cat{B}}
+\newcommand{\catgi}{\cat{GI}}
+\newcommand{\catgp}{\cat{GP}}
+\newcommand{\catgf}{\cat{GF}}
+\newcommand{\catgic}{\cat{GI}_C}
+\newcommand{\catgib}{\cat{GI}_B}
+\newcommand{\catib}{\cat{I}_B}
+\newcommand{\catgibdc}{\cat{GI}_{\bdc}}
+\newcommand{\catgicd}{\cat{GI}_{C^{\dagger}}}
+\newcommand{\caticd}{\cat{I}_{C^{\dagger}}}
+\newcommand{\catgc}{\cat{G}_C}
+\newcommand{\catgpc}{\cat{GP}_C}
+\newcommand{\catgpb}{\cat{GP}_B}
+\newcommand{\catgpcd}{\cat{GP}_{C^{\dagger}}}
+\newcommand{\catpcd}{\cat{P}_{C^{\dagger}}}
+\newcommand{\catac}{\cat{A}_C}
+\newcommand{\catab}{\cat{A}_B}
+\newcommand{\catbc}{\cat{B}_C}
+\newcommand{\catabdc}{\cat{A}_{\bdc}}
+\newcommand{\catbbdc}{\cat{B}_{\bdc}}
+\newcommand{\catbb}{\cat{B}_B}
+\newcommand{\catacd}{\cat{A}_{\da{C}}}
+\newcommand{\catbcd}{\cat{B}_{\da{C}}}
+\newcommand{\catgfc}{\cat{GF}_C}
+\newcommand{\catic}{\cat{I}_C}
+\newcommand{\catibdc}{\cat{I}_{\bdc}}
+\newcommand{\catpb}{\cat{P}_B}
+\newcommand{\catpc}{\cat{P}_C}
+\newcommand{\catfc}{\cat{F}'}
+\newcommand{\opg}{\cat{G}}
+\newcommand{\finrescat}[1]{\operatorname{res}\comp{\cat{#1}}}
+\newcommand{\proprescat}[1]{\operatorname{res}\wti{\cat{#1}}}
+\newcommand{\finrescatx}{\finrescat{X}}
+\newcommand{\finrescaty}{\finrescat{Y}}
+\newcommand{\finrescatv}{\finrescat{V}}
+\newcommand{\fincorescatggicd}{\operatorname{cores}\comp{\catg(\caticd)}}
+\newcommand{\finrescatw}{\finrescat{W}}
+\newcommand{\finrescatpc}{\operatorname{res}\comp{\catpc}}
+\newcommand{\finrescatpcr}{\operatorname{res}\comp{\catpc(R)}}
+\newcommand{\finrescatpb}{\operatorname{res}\comp{\catpb}}
+\newcommand{\finrescatpbr}{\operatorname{res}\comp{\catpb(R)}}
+\newcommand{\finrescatgpb}{\operatorname{res}\comp{\catgpb}}
+\newcommand{\finrescatgpbr}{\operatorname{res}\comp{\catgpb(R)}}
+\newcommand{\propcorescatic}{\operatorname{cores}\wti{\catic}}
+\newcommand{\propcorescatgic}{\operatorname{cores}\wti{\catgic}}
+\newcommand{\fincorescatic}{\operatorname{cores}\comp{\catic}}
+\newcommand{\fincorescaticr}{\operatorname{cores}\comp{\catic(R)}}
+\newcommand{\fincorescatir}{\operatorname{cores}\comp{\cati(R)}}
+\newcommand{\finrescatp}{\finrescat{P}}
+\newcommand{\proprescatgpc}{\operatorname{res}\wti{\catgpc}}
+\newcommand{\fincorescaticd}{\operatorname{cores}\comp{\caticd}}
+\newcommand{\finrescatgp}{\finrescat{GP}}
+\newcommand{\finrescatpcd}{\operatorname{res}\comp{\catp_{\da{C}}}}
+\newcommand{\fincorescatggic}{\operatorname{cores}\comp{\catg(\catic)}}
+\newcommand{\fincorescatibdc}{\operatorname{cores}\comp{\catibdc}}
+\newcommand{\fincorescatibdcr}{\operatorname{cores}\comp{\catibdc(R)}}
+\newcommand{\fincorescatgibdc}{\operatorname{cores}\comp{\catgibdc}}
+\newcommand{\fincorescatgibdcr}{\operatorname{cores}\comp{\catgibdc(R)}}
+\newcommand{\fincorescatibr}{\operatorname{cores}\comp{\catib(R)}}
+\newcommand{\finrescatggpc}{\operatorname{res}\comp{\catg(\catpc)}}
+\newcommand{\finrescatg}{\operatorname{res}\comp{\cat{G}}(R)}
+\newcommand{\finrescatgpr}{\operatorname{res}\comp{\cat{GP}(R)}}
+\newcommand{\finrescatpr}{\operatorname{res}\comp{\cat{P}(R)}}
+\newcommand{\finrescatgpc}{\operatorname{res}\comp{\catgp_C(R)}}
+\newcommand{\proprescatpc}{\operatorname{res}\wti{\catp_C(R)}}
+\newcommand{\propcorescatpc}{\operatorname{cores}\wti{\catp_C(R)}}
+\newcommand{\finrescatgpcd}{\operatorname{res}\comp{\catgp_{C^{\dagger}}(R)}}
+\newcommand{\proprescatp}{\proprescat{P}}
+\newcommand{\proprescatgp}{\proprescat{GP}}
+\newcommand{\proprescatx}{\proprescat{X}}
+\newcommand{\proprescaty}{\proprescat{Y}}
+\newcommand{\proprescatv}{\proprescat{V}}
+\newcommand{\proprescatw}{\proprescat{W}}
+\newcommand{\fincorescat}[1]{\operatorname{cores}\comp{\cat{#1}}}
+\newcommand{\propcorescat}[1]{\operatorname{cores}\wti{\cat{#1}}}
+\newcommand{\fincorescatx}{\fincorescat{X}}
+\newcommand{\fincorescati}{\fincorescat{I}}
+\newcommand{\fincorescatgi}{\fincorescat{GI}}
+\newcommand{\fincorescatgir}{\fincorescat{GI(R)}}
+\newcommand{\fincorescatgic}{\operatorname{cores}\comp{\catgi_C(R)}}
+\newcommand{\fincorescatgicd}{\operatorname{cores}\comp{\catgi_{C^{\dagger}}(R)}}
+\newcommand{\propcorescati}{\propcorescat{I}}
+\newcommand{\propcorescatgi}{\propcorescat{GI}}
+\newcommand{\fincorescaty}{\fincorescat{Y}}
+\newcommand{\fincorescatv}{\fincorescat{V}}
+\newcommand{\fincorescatw}{\fincorescat{W}}
+\newcommand{\propcorescatx}{\propcorescat{X}}
+\newcommand{\propcorescaty}{\propcorescat{Y}}
+\newcommand{\propcorescatv}{\propcorescat{V}}
+\newcommand{\propcorescatw}{\propcorescat{W}}
+\newcommand{\cpltrescat}[1]{\operatorname{res}\ol{\cat{#1}}}
+\newcommand{\cpltcorescat}[1]{\operatorname{cores}\ol{\cat{#1}}}
+\newcommand{\cpltrescatw}{\cpltrescat{W}}
+\newcommand{\cpltcorescatw}{\cpltcorescat{W}}
+\newcommand{\gw}{\opg(\catw)}
+\newcommand{\gnw}[1]{\opg^{#1}(\catw)}
+\newcommand{\gnx}[1]{\opg^{#1}(\catx)}
+\newcommand{\gx}{\opg(\catx)}
+\newcommand{\catao}{\cata^o}
+\newcommand{\catxo}{\catx^o}
+\newcommand{\catyo}{\caty^o}
+\newcommand{\catwo}{\catw^o}
+\newcommand{\catvo}{\catv^o}
+
+
+% DIMENSIONS
+
+\newcommand{\pdim}{\operatorname{pd}}	
+\newcommand{\pd}{\operatorname{pd}}	
+\newcommand{\gdim}{\mathrm{G}\text{-}\!\dim}	
+\newcommand{\gkdim}[1]{\mathrm{G}_{#1}\text{-}\!\dim}	
+\newcommand{\gcdim}{\gkdim{C}}	
+\newcommand{\injdim}{\operatorname{id}}	
+\newcommand{\id}{\operatorname{id}}	
+\newcommand{\fd}{\operatorname{fd}}
+\newcommand{\fdim}{\operatorname{fd}}
+\newcommand{\catpd}[1]{\cat{#1}\text{-}\pd}
+\newcommand{\xpd}{\catpd{X}}
+\newcommand{\xopd}{\catxo\text{-}\pd}
+\newcommand{\xid}{\catid{X}}
+\newcommand{\wpd}{\catpd{W}}
+\newcommand{\ypd}{\catpd{Y}}
+\newcommand{\gpd}{\catpd{G}}
+\newcommand{\gid}{\catid{G}}
+\newcommand{\catid}[1]{\cat{#1}\text{-}\id}
+\newcommand{\yid}{\catid{Y}}
+\newcommand{\vid}{\catid{V}}
+\newcommand{\wid}{\catid{W}}
+\newcommand{\pdpd}{\catpd\text{-}\pd}
+\newcommand{\idid}{\catid\text{-}\id}
+\newcommand{\pcpd}{\catpc\text{-}\pd}
+\newcommand{\pbpd}{\catpb\text{-}\pd}
+\newcommand{\icdagdim}{\caticd\text{-}\id}
+\newcommand{\icdid}{\caticd\text{-}\id}
+\newcommand{\ibdcid}{\catibdc\text{-}\id}
+\newcommand{\icdim}{\catic\text{-}\id}
+\newcommand{\icid}{\catic\text{-}\id}
+\newcommand{\ibid}{\catib\text{-}\id}
+\newcommand{\pcdim}{\catpc\text{-}\pd}
+\newcommand{\gpcpd}{\catgpc\text{-}\pd}
+\newcommand{\gfpd}{\catgf\text{-}\pd}
+\newcommand{\gppd}{\catgp\text{-}\pd}
+\newcommand{\gfcpd}{\catgfc\text{-}\pd}
+\newcommand{\gpbpd}{\catgpb\text{-}\pd}
+\newcommand{\gicid}{\catgic\text{-}\id}
+\newcommand{\gibid}{\catgib\text{-}\id}
+\newcommand{\gicdagdim}{\catgicd\text{-}\id}
+\newcommand{\gicdid}{\catgicd\text{-}\id}
+\newcommand{\ggpcpd}{\catg(\catpc)\text{-}\pd}
+\newcommand{\ggicdid}{\catg(\caticd)\text{-}\id}
+\newcommand{\ggicid}{\catg(\catic)\text{-}\id}
+\newcommand{\cmdim}{\mathrm{CM}\text{-}\dim}	
+\newcommand{\cidim}{\mathrm{CI}\text{-}\!\dim}	
+\newcommand{\cipd}{\mathrm{CI}\text{-}\!\pd}	
+\newcommand{\cifd}{\mathrm{CI}\text{-}\!\fd}	
+\newcommand{\ciid}{\mathrm{CI}\text{-}\!\id}	
+
+
+% OTHER INVARIANTS
+
+\newcommand{\Ht}{\operatorname{ht}}	
+\newcommand{\col}{\operatorname{col}}	
+\newcommand{\depth}{\operatorname{depth}}	
+\newcommand{\rank}{\operatorname{rank}}	
+\newcommand{\amp}{\operatorname{amp}}
+\newcommand{\edim}{\operatorname{edim}}
+\newcommand{\crs}{\operatorname{crs}}
+\newcommand{\rfd}{\operatorname{Rfd}}
+\newcommand{\ann}{\operatorname{Ann}}
+\newcommand{\mspec}{\mathrm{m}\text{\spec}}
+\newcommand{\soc}{\operatorname{Soc}}
+\newcommand{\len}{\operatorname{length}}
+\newcommand{\type}{\operatorname{type}}
+\newcommand{\dist}{\operatorname{dist}}
+\newcommand{\prox}{\operatorname{\sigma}}
+\newcommand{\curv}{\operatorname{curv}}
+\newcommand{\icurv}{\operatorname{inj\,curv}}
+\newcommand{\grade}{\operatorname{grade}}
+\newcommand{\card}{\operatorname{card}}
+\newcommand{\cx}{\operatorname{cx}}	
+\newcommand{\cmd}{\operatorname{cmd}}	
+\newcommand{\Span}{\operatorname{Span}}	
+\newcommand{\CM}{\operatorname{CM}}	
+
+% FUNCTORS
+
+\newcommand{\cbc}[2]{#1(#2)}
+\newcommand{\ext}{\operatorname{Ext}}	
+\newcommand{\rhom}{\mathbf{R}\!\operatorname{Hom}}	
+\newcommand{\lotimes}{\otimes^{\mathbf{L}}}
+\newcommand{\HH}{\operatorname{H}}
+\newcommand{\Hom}{\operatorname{Hom}}	
+\newcommand{\coker}{\operatorname{Coker}}
+\newcommand{\spec}{\operatorname{Spec}}
+\newcommand{\s}{\mathfrak{S}}
+\newcommand{\tor}{\operatorname{Tor}}
+\newcommand{\im}{\operatorname{Im}}
+\newcommand{\shift}{\mathsf{\Sigma}}
+\newcommand{\othershift}{\mathsf{\Sigma}}
+\newcommand{\da}[1]{#1^{\dagger}}
+\newcommand{\Cl}{\operatorname{Cl}}
+\newcommand{\Pic}{\operatorname{Pic}}
+\newcommand{\proj}{\operatorname{Proj}}
+\newcommand{\End}{\operatorname{End}}
+\newcommand{\cone}{\operatorname{Cone}}
+\newcommand{\Ker}{\operatorname{Ker}}
+\newcommand{\xext}{\ext_{\catx}}
+\newcommand{\yext}{\ext_{\caty}}
+\newcommand{\vext}{\ext_{\catv}}
+\newcommand{\wext}{\ext_{\catw}}
+\newcommand{\aext}{\ext_{\cata}}
+\newcommand{\ahom}{\Hom_{\cata}}
+\newcommand{\aoext}{\ext_{\catao}}
+\newcommand{\aohom}{\Hom_{\catao}}
+\newcommand{\xaext}{\ext_{\catx\!\cata}}
+\newcommand{\axext}{\ext_{\cata\catx}}
+\newcommand{\ayext}{\ext_{\cata\caty}}
+\newcommand{\avext}{\ext_{\cata\catv}}
+\newcommand{\awext}{\ext_{\cata\catw}}
+\newcommand{\Qext}{\ext_{\catw \cata}}
+\newcommand{\pmext}{\ext_{\catp(R)\catm(R)}}
+\newcommand{\miext}{\ext_{\catm(R)\cati(R)}}
+\newcommand{\Qtate}{\comp{\ext}_{\catw \cata}}
+\newcommand{\awtate}{\comp{\ext}_{\cata \catw}}
+\newcommand{\avtate}{\comp{\ext}_{\cata \catv}}
+\newcommand{\pmtate}{\comp{\ext}_{\catp(R) \catm(R)}}
+\newcommand{\mitate}{\comp{\ext}_{\catm(R) \cati(R)}}
+\newcommand{\pcext}{\ext_{\catpc}}
+\newcommand{\pbext}{\ext_{\catpb}}
+\newcommand{\gpcext}{\ext_{\catgpc}}
+\newcommand{\icext}{\ext_{\catic}}
+\newcommand{\gpbext}{\ext_{\catgpb}}
+\newcommand{\gibdcext}{\ext_{\catgibdc}}
+\newcommand{\ibdcext}{\ext_{\catibdc}}
+\newcommand{\gicext}{\ext_{\catgic}}
+\newcommand{\gpext}{\ext_{\catgp}}
+\newcommand{\giext}{\ext_{\catgi}}
+\newcommand{\gicdext}{\ext_{\catgicd}}
+
+% IDEALS
+
+\newcommand{\ideal}[1]{\mathfrak{#1}}
+\newcommand{\m}{\ideal{m}}
+\newcommand{\n}{\ideal{n}}
+\newcommand{\p}{\ideal{p}}
+\newcommand{\q}{\ideal{q}}
+\newcommand{\fa}{\ideal{a}}
+\newcommand{\fb}{\ideal{b}}
+\newcommand{\fN}{\ideal{N}}
+\newcommand{\fs}{\ideal{s}}
+\newcommand{\fr}{\ideal{r}}
+
+% OPERATIONS AND ACCENTS
+
+\newcommand{\wt}{\widetilde}
+\newcommand{\ti}{\tilde}
+\newcommand{\comp}[1]{\widehat{#1}}
+\newcommand{\ol}{\overline}
+\newcommand{\wti}{\widetilde}
+
+% OPERATORS
+
+\newcommand{\ass}{\operatorname{Ass}}
+\newcommand{\supp}{\operatorname{Supp}}
+\newcommand{\minh}{\operatorname{Minh}}
+\newcommand{\Min}{\operatorname{Min}}
+
+% MATHBB
+
+\newcommand{\bbz}{\mathbb{Z}}
+\newcommand{\bbn}{\mathbb{N}}
+\newcommand{\bbq}{\mathbb{Q}}
+\newcommand{\bbr}{\mathbb{R}}
+\newcommand{\bbc}{\mathbb{C}}
+
+% ARROWS
+
+\newcommand{\from}{\leftarrow}
+\newcommand{\xra}{\xrightarrow}
+\newcommand{\xla}{\xleftarrow}
+\newcommand{\onto}{\twoheadrightarrow}
+\newcommand{\res}{\xra{\simeq}}
+
+
+% MAPS
+
+\newcommand{\vf}{\varphi}
+\newcommand{\ve}{\varepsilon}
+\newcommand{\Qcomp}{\varepsilon_{\catw \cata}}
+\newcommand{\awcomp}{\varepsilon_{\cata \catw}}
+\newcommand{\avcomp}{\varepsilon_{\cata \catv}}
+\newcommand{\xQcomp}{\vartheta_{\catx \catw \cata}}
+\newcommand{\ayvcomp}{\vartheta_{\cata \caty \catv}}
+\newcommand{\Qacomp}{\varkappa_{\catw \cata}}
+\newcommand{\xaacomp}{\varkappa_{\catx \cata}}
+\newcommand{\aaycomp}{\varkappa_{\cata\caty}}
+\newcommand{\aavcomp}{\varkappa_{\cata\catv}}
+\newcommand{\gpcpccomp}{\vartheta_{\catgpc\catpc}}
+\newcommand{\gpcpbcomp}{\vartheta_{\catgpc\catpb}}
+\newcommand{\gpcgpbcomp}{\vartheta_{\catgpc\catgpb}}
+\newcommand{\gicibcomp}{\vartheta_{\catgic\catib}}
+\newcommand{\gicgibcomp}{\vartheta_{\catgic\catgib}}
+\newcommand{\giciccomp}{\vartheta_{\catgic\catic}}
+\newcommand{\pccomp}{\varkappa_{\catpc}}
+\newcommand{\gpccomp}{\varkappa_{\catgpc}}
+\newcommand{\iccomp}{\varkappa_{\catic}}
+\newcommand{\ibdccomp}{\varkappa_{\catibdc}}
+\newcommand{\icdcomp}{\varkappa_{\caticd}}
+\newcommand{\giccomp}{\varkappa_{\catgic}}
+
+% MISCELLANEOUS 
+
+\newcommand{\y}{\mathbf{y}}
+\newcommand{\te}{\theta}
+\newcommand{\x}{\mathbf{x}}
+\newcommand{\opi}{\operatorname{i}}
+\newcommand{\route}{\gamma}
+\newcommand{\sdc}[1]{\mathsf{#1}}
+\newcommand{\nls}[1]{\mathsf{#1}}
+\newcommand{\cl}{\operatorname{cl}}
+\newcommand{\cls}{\operatorname{cls}}
+\newcommand{\pic}{\operatorname{pic}}
+\newcommand{\pics}{\operatorname{pics}}
+\newcommand{\tri}{\trianglelefteq}
+\newcommand{\Mod}{\operatorname{Mod}}
+\newcommand{\bdc}{B^{\dagger_C}}
+\newcommand{\e}{\mathbf{e}}
+\newcommand{\f}{\mathbf{f}}
+
+
+% RENEWED COMMANDS
+
+\renewcommand{\geq}{\geqslant}
+\renewcommand{\leq}{\leqslant}
+\renewcommand{\ker}{\Ker}
+\renewcommand{\hom}{\Hom}
+
+
+\newcommand{\normal}{\lhd}
+\newcommand{\normaleq}{\trianglelefteqslant}
+\newcommand{\homrm}[1]{\hom_{_{#1}\catm}}
+\newcommand{\hommr}[1]{\hom_{\catm_{#1}}}
+\newcommand{\cplx}[1]{{#1}_{\bullet}}
+\newcommand{\pext}{\mathrm{P}\!\ext}
+\newcommand{\pextrm}[1]{\pext_{_{#1}\catm}}
+\newcommand{\pextmr}[1]{\pext_{\catm_{#1}}}
+\newcommand{\iext}{\mathrm{I}\!\ext}
+\newcommand{\iextrm}[1]{\iext_{_{#1}\catm}}
+\newcommand{\iextmr}[1]{\iext_{\catm_{#1}}}
+\newcommand{\catmod}[1]{#1\text{-mod}}
+\newcommand{\modcat}[1]{\text{mod-}#1}
+
+
+\newcommand{\lcm}{\textnormal{lcm}}
+\newcommand{\diff}{\backslash}
+%\setlength{\parindent}{0mm}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% LyX specific LaTeX commands.
+\floatstyle{ruled}
+\newfloat{algorithm}{tbp}{loa}
+\providecommand{\algorithmname}{Algorithm}
+\floatname{algorithm}{\protect\algorithmname}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Textclass specific LaTeX commands.
+\numberwithin{equation}{section}
+\numberwithin{figure}{section}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% User specified LaTeX commands.
+\usepackage{algpseudocode}
+
+\usepackage{subcaption}
+
+\numberwithin{equation}{section}
+
+
+\makeatletter
+
+
+\makeatletter
+
+\newcommand{\h}{\mathcal{H}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% LyX specific LaTeX commands.
+\floatstyle{ruled}
+\newfloat{algorithm}{tbp}{loa}
+\providecommand{\algorithmname}{Algorithm}
+\floatname{algorithm}{\protect\algorithmname}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Textclass specific LaTeX commands.
+\numberwithin{equation}{section}
+\numberwithin{figure}{section}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% User specified LaTeX commands.
+\usepackage{algpseudocode}
+
+\makeatother
+
+\begin{document}
+\begin{frontmatter}
+
+\begin{fmbox}
+\hfill\setlength{\fboxrule}{0px}\setlength{\fboxsep}{5px}\fbox{\includegraphics[width=2in]{moneroLogo.png}}
+\dochead{Research bulletin \hfill MRL-0004}
+\title{Improving Obfuscation in the CryptoNote Protocol}
+\date{26 January 2015}
+\author[
+   addressref={mrl},
+   email={lab@getmonero.org}
+]{\fnm{Adam} \snm{Mackenzie}}
+\author[
+   addressref={mrl},
+   email={lab@getmonero.org}
+]{\fnm{Surae} \snm{Noether}}
+\author[
+   addressref={mrl},
+   email={lab@getmonero.org}
+]{\snm{Monero Core Team}}
+
+
+\address[id=mrl]{
+  \orgname{Monero Research Lab}
+}
+\end{fmbox}
+
+
+\begin{abstractbox}
+\begin{abstract}
+We identify several blockchain analysis attacks available to degrade the untraceability of the CryptoNote 2.0 protocol. We analyze possible solutions, discuss the relative merits and drawbakcs to those solutions, and recommend improvements to the Monero protocol that will hopefully provide long-term resistance of the cryptocurrency against blockchain analysis. Our recommended improvements to Monero include a protocol-level network-wide minimum mix-in policy of $n=2$ foreign outputs per ring signature, a protocol-level increase of this value to $n=4$ after two years, and a wallet-level default value of $n=4$ in the interim. We also recommend a torrent-style method of sending Monero output. We also discuss a non-uniform, age-dependent mix-in selection method to mitigate the other forms of blockchain analysis identified herein, but we make no formal recommendations on implementation for a variety of reasons.  The ramifications following these improvements are also discussed in some detail.
+
+This research bulletin has not undergone peer review, and reflects only the results of internal investigation.
+\end{abstract}
+\end{abstractbox}
+
+\end{frontmatter}
+
+%\todo[inline]{Check all references; many do not exist}
+
+\section{Overview}\label{overview}
+
+We address several security concerns in traceability when using a ring signature approach to ensure the privacy of digital currency transactions. Recall that the CryptoNote protocol proposal proves unconditional unlinkability, but untraceability remained unproven; indeed, CryptoNote is very traceable, as we demonstrate in this document. 
+
+We remind the reader that we say that two transactions are \textit{unlinkable} when an observer cannot prove that those two transactions were sent to the same user. We say that a transaction is considered \textit{untraceable} if all possible senders of a transaction are equiprobable. Hence, the problems with untraceability in CryptoNote suggest that, while users can \textit{receive} CryptoNote-based cryptocurrencies with no concern for their privacy, they cannot necessarily \textit{spend} those currencies without releasing some information about their past transactions.  Of course, without a non-interactive zero-knowledge (NIZK) approach (see, for example, \cite{miers2013zerocoin}), traceability is inevitable. However, NIZK approaches to date have had limited applications and suffer the disadvantage of computational cost. Addressing some of the security issues related to traceability without zero-knowledge techniques is the main goal of this document. Critically, we ask the reader to observe that the techniques presented do not violate users' capabilities to provide auditable histories of their transactions in order to comply with local laws (see Section \ref{auditability}).
+
+In Section \ref{chainRxns}, we review how \textit{spending in the clear}, or \textit{zero-mix spending} leads to traceability, as detailed in \cite{chainReactions}. In Section \ref{moreIssues}, we identify three further routes of attack that may be used to reduce untraceability in CryptoNote, although we make no claims that this list is exhaustive. In particular, Section \ref{temporalAssociations} details how the age of transaction outputs can be used to remove untraceability from CryptoNote. Section \ref{combinationAttacks} details how observable data about the transactions used in a ring signature can be used in a combinatorial analysis to associate transaction outputs that are otherwise not associated together. Section \ref{associationByUse} details how careless usage of transaction outputs together in a new transaction can lead an attacker to draw conclusions about the ownership of the original transaction outputs; we call this an association-by-use attack.
+
+In Section \ref{Recommendations}, we detail some recommendations to mitigate these avenues of attack, and for other recommendations we merely make a sketch. In Section \ref{minMixIn}, we recommend a  mandatory, network-wide minimum mix-in of $n=2$, and we justify this choice.  In Sections \ref{mitigCombo} and \ref{mitigAssoc}, we detail our recommendations for mitigating the combinatorial and association-by-use attacks described in Sections \ref{combinationAttacks} and \ref{associationByUse}, respectively. 
+
+In Section \ref{softwareImplementation} we detail our roadmap to implementing our policy suggestions. Finally, in Section \ref{auditability}, we discuss a method that a user can use to comply with local laws without sacrificing the privacy we have worked so hard to attain.
+
+\section{Traceability with Zero Mix-In Spending}\label{chainRxns}
+
+In this section, we list several problems with untraceability in CryptoNote and other ring signature schemes. The issues detailed in \cite{chainReactions} are not comprehensive, of course, and we describe other issues in this document. We make no claims that the issues presented in this document are comprehensive, either. In Section \ref{temporalAssociations}, we describe age-related attacks on transaction outputs, in Section \ref{combinationAttacks}, we describe certain combinatorial attacks that can be used to force traceability using data external to the ring signatures such as block height, and in Section \ref{associationByUse}, we describe how careless usage of transaction outputs together can reveal to an eavesdropper further information about transaction ownership. The chain reactions caused by transactions spent in the clear, described in \cite{chainReactions}, form a good starting point of the discussion.
+
+When using a CryptoNote-style ring signature protocol in a digital currency to obscure traceability and linkability, a malicious party with a large number of transaction outputs can cause a chain reaction in traceability by sacrificing their own anonymity, allowable through so-called zero mix transactions which have no foreign outputs used as mix-ins for the associated ring-signature. Before we proceed, we wish to establish some terminology for the reader. First, recall that in transparent cryptocurrencies such as Bitcoin, transaction outputs can be inspected to determine whether they have been spent or not. Indeed, the acronym UTXO is often used, meaning \textit{unspent transaction output}. In CryptoNote, this acryonym would be inappropriate, as it is difficult to determine whether a transaction output has been spent or not without using some form of blockchain analysis or other form of traceability attack, such as the attacks described herein.  As a consequence, we will not refer to transaction outputs as spent or unspent within this document. Second, we shall refer to the practice of spending a transaction output with a ring signature that was generated using no foreign transaction outputs used as mix-ins by \textit{spending in the clear} or as \textit{zero-mix} spending. Spending a transaction in the clear means generating a ring signature with no mix-ins; the ring signature is equivalent to a usual digital signature in this case.
+
+Our initial security concerns can be visualized quite simply. Just as in the original ring signature paper, \cite{rivest2001leak}, consider the situation in which an employee of a government leaks a secret by collecting the public keys of $n$ other employees (mix-ins). The leaker then uses those keys and her own private key to generate a ring signature to sign the document that they are leaking. An observer will, apparently, only have a $1$ in $n+1$ chance at guessing which employee leaked the secret. What happens if the employees who owned the mix-in keys begin vigorously denying that they leaked that secret? What happens as, one by one, those employees willfully reveal their private keys to prove to an authority figure, or simply to one another, that they aren't the leak? At first, your obfuscatory power drops from $1$ of $n+1$ to $1$ of $n$ after the first employee reveals their key. After the second employee reveals their key, your obfuscatory power drops from $1$ of $n$ to $1$ of $n-1$, and so on. In this scenario, ring signatures become significantly weaker. As we identified in \cite{chainReactions}, when ring signatures are iteratively used, transaction after transaction, the problem compounds. Through chain reactions, the security of one transaction can depend on the security of a transaction with no directly related parties.  Of course, ring signatures are still valid as \textit{digital signatures} go, and so their ability to act as the backbone of a cryptocurrency network is not in question. The only question is to address this degradation in untraceability.   
+
+To see an example of this, say that Alice fashions a ring signature using the mix-ins $\left\{\text{Bob}, \text{Cynthia}, \text{Doug}\right\}$. For any observer, then, the list of possible senders of the transaction is clearly  $\left\{\text{Alice}, \text{Bob}, \text{Cynthia}, \text{Doug}\right\}$. If Bob, Cynthia, and Doug then each spend their transaction outputs with zero mix-ins, then it is obvious any any observer that they no longer own those transaction outputs. Hence, they can be excluded from the list of possible senders of Alice's transaction, and Alice is now exposed as the sender of her transaction. It is not as if only three users, Bob, Cynthia, and Doug,  spent their transactions in the clear, but as if all four users spent their transactions in the clear. Hence, any signatures using Alice's transactions as a mix-in are now also compromised. If enough transactions are affected, there can be second-order effects, leading to a chain reaction. 
+
+We modeled the creation of ring signatures in \cite{chainReactions} using a variant of the P\'{o}lya Urn Process described in depth in \cite{johnson1977urn}, and we used this model to demonstrate that chain reactions in traceability are possible. Consequently, if all of the mix-ins used to generate a new ring signature are controlled by a malicious party, then that malicious party has gained control over the untraceability of the new ring signature. The P\'{o}lya Urn Process suffers from the \textit{rich get richer} effect; an attacker in control of many outputs at the beginning of the experiment will probabilistically control more and more as time goes on unless parameters are chosen carefully.
+
+As a saving grace, within the CryptoNote protocol, users cannot be directly associated with transaction outputs. All that can be said is whether a key image is associated with a transaction output. Indeed, the so-called \textit{stealth address} element of the CryptoNote protocol ensures that this does not lead to a complete failure in anonymity.  To be precise, when Bob, Cynthia, and Doug spend their transaction outputs in the clear, they are revealing to the world via the blockchain that their outputs belong to their associated key images. When this occurs, and when it is clear that Alice's key image was used in none of those transactions, her \textit{key image} is now linked to the relevant output, not Alice's identity. 
+
+
+\subsection{Change and Dust Force Zero Mix Spending}\label{changeAndDust}
+
+We now show how users are regularly forced to make transactions in the clear, regardless of their intent.
+
+One may have reasonably assumed that the original CryptoNote developers would have implemented a standardized denomination requirement for all transaction outputs, but this is not so. For example, whereas $102.5$ XMR would reasonably be represented as $100$ XMR, $2$ XMR and $0.5$ XMR, the protocol does not disallow any strange denominations such as $100$ XMR, $2$ XMR, $0.499999999$ XMR and $0.000000001$ XMR.  An output is unmixable either because it has been denominated unusually, such as our example with $0.499999999$ XMR (and hence the transaction output set associated with the denomination is empty) or its amount is smaller than the minimum transaction fee, such as our example with $0.000000001$ XMR.
+
+Below is a simple example of dust generation using the current denomination code. In this example, Bob has $103.32111111$ in his wallet and decides to send Alice $53.32111111$ XMR with $2$ foreign transaction outputs used as mix-ins while receiving $50$ XMR in change. Let us presume that Bob's XMR is split up by denomination such that his $103.32111111$ XMR consists of an output of $100$ XMR, an output of $3$ XMR, an output of $0.3$ XMR, an output of $0.02$ XMR, and an output of dust, $0.00111111$ XMR. The current denomination code will take the output of $100$ XMR that Bob owns, split it into two outputs, each for $50$ XMR, and send one to Alice and one to Bob. It will then take all of the remaining outputs in Bob's wallet ($3$, $0.3$, $0.02$, $0.00111111$) and send them to Alice, each signed with their own ring signature with the minimum mix-in level wherever possible. Unfortunately, the dust output, $.00111111$ is in a unique category in the sense that the transaction output set responsible for the denomination $.00111111$ is empty. Hence, no mix-ins are possible. We get a diagram like this:
+
+\begin{align}\label{firstExample}
+\xymatrix{
+100 \text{~XMR~(Bob)~(mix-in=2)}  \ar[r] &50 \text{~XMR~(Alice)}, 50 \text{~XMR~(Bob)}\\
+3 \text{~XMR~(Bob)~(mix-in=2)}    \ar[r] & 3 \text{~XMR~(Alice)}\\
+0.3 \text{~XMR~(Bob)~(mix-in=2)} \ar[r] &0.3 \text{~XMR~(Alice)}\\
+0.02 \text{~XMR~(Bob)~(mix-in=2)} \ar[r] &0.02 \text{~XMR~(Alice)}\\
+0.00111111 \text{~XMR~(Bob)~(mix-in=0)} \ar[r] &0.00111111 \text{~XMR (Alice)}
+}
+\end{align}
+  
+Some privacy issues with this transaction may have become obvious already; since CryptoNote does not enforce transaction outputs to adhere to a strict form of $A \times 10^{B}$ for an integer $1 \leq A \leq 9$, we have a so-called dust output of $0.00111111$ XMR, and this output cannot be mixed unless many other dust outputs happen to have such a strange denomination. Despite the privacy allegedly afforded by ring signatures with all other outputs, Bob has effectively stripped himself of privacy by including the dust input that is unmixable. Indeed, any observer can see this strange, unmixed output bundled with this transaction, and included in the same block; the observer will then draw obvious conclusions about funds ownership.
+
+To worsen matters, Alice now also has a dust input that can not be spent using ring signatures without compounding the previous problem. While no observer can yet determine who received the transaction due to the uconditional unlinkability of the CryptoNote protocol, Alice will remove privacy from her transactions if she later decides to use that dust as an input due to the aforementioned problems with untraceability.
+
+\section{More Issues with Traceability}\label{moreIssues}
+In this section, we identify other security concerns related to traceability in CryptoNote. This is not intended to be a comprehensive list of all routes of attack toward violating untraceability in CryptoNote, but represents a list of the most pressing issues identified by the Monero Core Team and the Monero Research Lab as routes of attack that may erode untraceability in the event of blockchain analysis.
+
+\subsection{Temporal Associations}\label{temporalAssociations}
+
+This section describes how the age of a transaction output causes a circumstantial traceability among transactions. There are at least two distinct problems with the age of transactions. As before, we start with chain reactions. In expectation, the older outputs have been used in more ring signatures than younger outputs; they have simply been extant in the transaction output set for longer, and have had more opportunities to be chosen from ring signatures. Any ring signature generation scheme that ignores this will provide a disproportionate amount of chain reaction potential to the over-used transaction output. Further, the earlier an attacker gains control of a transaction output set, the greater their capability to execute a chain reaction attack.
+
+The second problem we identify is related to traceability, but not to chain reactions.  Each transaction spends a transaction output using a ring signature, which uses an associated list of transaction outputs as mix-ins. The genuine transaction output being spent is a member of this list. If $n$ foreign transaction outputs have been used in this ring signature, then this list has $n+1$ elements on it. An observer cannot distinguish which transaction output in the list associated with the ring signature is the output actually being spent without some form of blockchain analysis. However, in practice, given a certain transaction output, an attacker may model the cumulative probability that the output has already been spent as an increasing function of time. An output that has been in the blockchain for $202612$ blocks is much more likely to have already been spent than an output that has been in the blockchain for $202$ blocks. Hence, in the absence of any other external information, with any given output, the youngest output used to fashion the ring signature is the most likely output to be the genuine output being spent. Conversely, the oldest output is the one least likely to be the genuine output being spent. 
+
+In this paper, we do not directly address how to mitigate these observations for a variety of reasons. If it were possible to determine whether outputs had been spent, we would simply choose outputs that had remained unspent. However, this is not a simply tractable problem without blockchain analysis. One solution to this problem is to determine a non-uniform method of choosing transaction outputs for ring signatures; choose transaction outputs based on their age such that the probability that these outputs are chosen for a ring signature is inversely related to the probability that they have been spent already. This would suggest that we, the developers of Monero, must estimate the probability distribution governing the age of transaction outputs. 
+
+This, too, is problematic. When an exchange rate is experiencing a strong long-term decline (inflation), rational users are more likely to spend their transaction outputs, for tomorrow their outputs will be worth less in terms of goods and services than today and hoarding is not economically rational. When an exchange rate is experiencing a strong long-term increase (deflation), rational users are more likely to hoard their transaction outputs for the opposite reason. Hence, the distribution of transaction output ages will at least vary over time, and, presuming \textit{any} proportion of users are rational will certainly depend sensitively on the economic performance of the currency. It is unwise to design security recommendations around the economic performance of our protocol. 
+
+An astute observer may recommend mining Bitcoin data, which is transparent, and developing a marginal lifespan distribution from that information. However, in this instance, we are making several problematic assumptions. Assuming that the Bitcoin economy is equivalent to the Monero economy, or even a decent proxy, is problematic due to the comparative sizes of the economies. Further, choosing any one particular distribution that does not vary over time will allow an attacker to exploit the difference between the fixed distribution of choice and the time-varying distribution in the wallet software. One would be inclined to choose distributions that vary over time, perhaps with some iterative updating method, but this requires some form of observing data and responding to those observations; as we've previously mentioned, it's not easily tractable to observe the lifespan behavior within a CryptoNote protocol.
+
+Hence, choosing a fixed distribution in order to generate random numbers to pick outputs used in a ring signature is a suboptimal solution. Another alternative to choosing a fixed distribution is to probabilistically choose from a family of distributions; to put it simply, we could roll dice twice, first to pick a distribution, and then second to pick outputs using that previously chosen distribution for the ring signature. However, these mixed distribution approaches are, in the end, equivalent to choosing a single fixed distribution and the problems with this approach reduce to the problems in the first, fixed distribution scenario.
+
+Paradoxically, keeping wallet software intact without modification is equivalent to choosing the uniform distribution for each ring signature! Which is to say, we are stuck between a rock and a hard place with transaction output lifespan distributions, for any choice we make is certain to be a sub-optimal decision. The Monero Core Team and the Monero Research Lab would like to follow the development philosophy that it is wise to start with smaller changes at first and then ramp those changes up over time, rather than start with drastic changes and try to scale them back. Hence, although we have identified this security issue, we are not making formal recommendations yet until we have further data to inform our choices.
+
+\begin{comment}
+attempt to mitigate the age-related effects on untraceability by recommending to wallet designers usage of an age-dependent selection of transaction outputs in ring signature generation in Section \ref{selection}. The selection of transaction outputs is a non-consensus practice for fashioning ring signatures, and so no protocol recommendation is being made. 
+
+Current wallet programs usually choose uniformly from the transaction output set. We recommend that wallets choose based on age such that the probability that a transaction is chosen for a ring signature is inversely proportional to the probability that it has already been spent. This way, transactions that are unlikely to have been spent are most likely to be chosen for ring signatures. 
+
+Recall we previously mentioned that, within a CryptoNote protocol like Monero, it is not easy to determine wither a transaction has been spent. Hence, estimating the probability distribution of lifespans is also not easy. A wallet designer can always feel free to make assumptions, though. By assuming that the marginal lifespan of a given transaction output is drawn from an exponential distribution, developing a non-uniform distribution is simple by inverting the cumulative distribution function. However, the exponential distribution is both memoryless and has a ``skinny-tail,'' whereas financial transactions are usually not memoryless and usually ``fat-tailed.'' Other distributions used in lifetime and income modeling, such as the Weibull distribution, the Pareto distribution, or the Burr distribution, may make more sense given the context of the problem. We discuss these issues in some detail in Section \ref{selection}. 
+\end{comment}
+
+\subsection{Association by Use of Outputs Within a Transaction}\label{associationByUse}
+
+In this Section, we describe how careless usage of outputs together can be used to link those transactions as belonging to a common user. In other words, transaction outputs that are used together are probably owned together. Using the principle from Section \ref{combinationAttacks}, we see that this is a form of the combinatorial attack. Although the \textit{ring signature} affords observers equiprobability across all possible signers, data exterior to the ring signature may allow for extra information.
+
+Consider the following generalized example. If Bob sends Alice some Monero, it is broken up into several transaction outputs as in Example \ref{firstExample}. When Alice goes on to spend that money, she may use two or more outputs from that same initial transaction in her ring signature. If so, an observer may conclude that the outputs stemming from a common root transaction are more likely to belong to the true signer of the transaction. This can lead to a probabilistic issue with traceability. This may be hard to visualize, so here is a specific example beginning with $1$ XMR in Bob's wallet. 
+
+Bob wishes to send $0.75$ XMR to Alice, and will pay $0.01$ XMR in fees. The Monero that Alice receives, $0.75$ XMR, will be delivered as two new unspent transaction outputs with amounts $0.7$ XMR and $0.05$ XMR. Further, an output of $0.01$ XMR must be delivered as a fee. This leaves $0.24$ XMR as change, which will be delivered to Bob in two unspent transaction outputs of amount $0.2$ and $0.04$ XMR each. At some point in time later, Alice realizes she has $0.75$ XMR and decides to go spend it some place. When she does so, both of her outputs, $0.7$ XMR and $0.05$ XMR, are included in her ring signature. An observer could then look at her ring signature and draw a conclusion that whoever signed that ring signature probably is the owner of both the $0.7$ XMR and the $0.05$ XMR. Even if Alice used a ring signature with many mix-ins, since she used two outputs that originated from the same transaction, those outputs are more likely to be identifiable as owned by the true signer. The transaction could look something like Table \ref{linkByAssociation}.
+
+\begin{table}[!htb]
+    \caption{Linking transaction outputs by association}
+    \label{linkByAssociation}
+    \begin{subtable}{.5\linewidth}
+      \centering
+        \caption{Transaction $1$ by Bob}
+        \begin{tabular}{|c|c|}\hline
+            In & Out \\\hline
+            $1.0$ XMR (Bob) & $0.7$ XMR (Alice)\\
+             & $0.05$ XMR (Alice)\\
+             & $0.2$ XMR (Bob)\\
+             & $0.04$ XMR (Bob)\\
+             & $0.01$ XMR (Fee)\\\hline
+        \end{tabular}
+    \end{subtable}%
+    \begin{subtable}{.5\linewidth}
+      \centering
+        \caption{Transaction $2$ by Bob}
+        \begin{tabular}{|c|c|}\hline
+            In & Out \\\hline
+            $0.7$ XMR (Alice) & $\cdots$ \\
+            $0.05$ XMR (Alice) & $\cdots$ \\\hline
+        \end{tabular}
+    \end{subtable}%
+\end{table}
+ 
+Notice a few things about this example. First, this example is almost identical to the combinatorial attack using block height as will be described in Section \ref{combinationAttacks}. However, in this example, these outputs do not just share block height, but in fact they share a common root transaction. Second, this problem is symmetric with respect to Bob and Alice. Bob encounters a hazard also when he tries to spend his change output of $0.2$ or $0.04$ in a transaction. His ring signatures specify his originating transaction, as well, so if he decides to spend both his $0.2$ and $0.04$ XMR in the same transaction, they can be linked to him. 
+
+\subsection{Combinatorial Attacks to Reveal Outputs}\label{combinationAttacks}
+
+In this section, we generalize the attack described in Section \ref{associationByUse} to describe a so-called combinatorial attack, during which a combinatorial analysis can be executed in order to draw a conclusion about output ownership. The primary conclusion of this section is simply that transactions should be broken up into several smaller transactions across periods of time as in a torrent, and users should re-send themselves their funds periodically. 
+
+Any data available to an observer about the transactions used to fashion a ring signature can be used in a combinatorial analysis to draw a conclusion about funds ownership. Consider the following example using block height. Lets say Cynthia received $10$, $20$, and $30$ XMR at block height $39,859$ in separate transactions. In a much later block, an observer, Eve, sees three transactions of $10$, $20$, and $30$ XMR, respectively. Eve sees that the $10$ XMR transaction uses a mix-in from block $39,859$, and so does the $20$ XMR transaction, and so does the $30$ XMR transaction. By checking all combinations available, Eve concludes that it is more likely that whoever received $60$ XMR at block height $39,859$ is spending those funds than any other user, although Cynthia and Eve do not necessarily know each others' identities. 
+
+This information can be used in tandem with other routes of attack. To be specific, \textit{if a set of distinct transactions has some common data} (such as a common block height) \textit{and if all transactions in this set use mix-ins with some other common data, then it is likely that these transactions are related by a common user}.  This provides some information to attackers about traceability. Our definition of a combinatorial attack seems strikingly general, and, in fact, includes the association-by-use attack described in Section \ref{associationByUse}. A combinatorial analysis of a set of transactions with some common data will lead to very few conclusions using this principle. That is to say, although this sort of \textit{combinatorial attack} may not work most of the time, when it does work, it works very well. 
+
+
+
+\section{Our Recommendations}\label{Recommendations}
+
+In this Section, we specify our recommendations to the Monero Core Team for developing the Monero cryptocurrency. Our recommendations, while not perfect solutions to each of the above problems, mitigate the exposure users experience to traceability attacks. We recommend any and all CryptoNote developers to implement at least the network-wide minimum mix-in requirement of $n\geq 3$, and the larger the better.
+
+\subsection{Requiring Minimum Mix-Ins}\label{minMixIn}
+
+In this section, we attempt to mitigate the chain reaction phenomenon by recommending a change to the Monero protocol \textit{requiring} a minimum $n\geq 2$ mix-ins per transaction whenever at least $2$ foreign outputs are available for mixing, and setting the default in wallet software to $n\geq 4$ mix-ins per transaction. We also justify this recommendation. 
+
+Specifically, we recommend that the Monero protocol be modified such that a node refuses to relay a transaction containing a ring signature without the requisite number of mix-ins, unless that transaction is denominated such that it lies in a transaction output set without a sufficient number of transaction outputs. We also recommend that the Monero protocol be modified such that a block is rejected if it contains any transactions containing ring signatures without the requisite number of mix-ins.
+
+Of course, any mandatory minimum mix-in $n \geq 2$ allows for a probabilistic guarantee that any traceability chain reaction will terminate. Specifically, an attacker will have to spend more funds than they will reveal, as we demonstrated in \cite{chainReactions}. The only question is ``what value of $n$ should be enforced?'' This has been a source of heated debate within the Monero Research Lab and the Monero Core Team. Large values of $n$ will lead to greater security at the expense of an unreasonably large blockchain and greater transaction fees. As previously mentioned, we are not using NIZK techniques and no ring signature method can match that level of security, and so any blockchain size exceeding the size of an NIZK blockchain (e.g. Zerocoin) is unacceptable. On the other hand, smaller values of $n$ may save blockchain space, but could possibly compromise security. Luckily, the size, in terms of bytes, of a ring signature grows approximately linearly with the number of foreign keys used in the ring signature, and increasing $n$ uniformly improves system resilience to chain reaction attacks as described in \cite{chainReactions}. This resilience improvement is not linear, however, and there is no optimal point. In terms of security, $n=3$ is superior to $n=2$, and $n=4$ is superior to $n=3$, and so on.
+
+Using Monte Carlo simulations of chain reactions at \cite{saturationUTXO}, we have concluded that individual users can be protected against chain reaction attacks by using at least $n=3$ mix-ins for their ring signatures. Quantifiable security metrics can verify these results in at least two ways. The first metric we used to verify these results demanded that the success of a chain reaction attack depend on the output set size (yielding a choice of $n \geq 3$). Indeed, using this first metric, we see that, regardless of the size of an output set, a $50\%$ attacker can be $95\%$ confident of controlling one in ten new transactions when $n=2$, but when $n\geq 3$, the attacker's success depends sensitively on output set size. The second metric we used demanded that an attacker controlling $50\%$ of an output set of arbitrary size must wait for tens of thousands of transactions before they may be $95\%$ confident of gaining control over a single new transaction (yielding a choice of at least $n \geq 4$).
+
+However, it is still true that, for $n=2$, chain reactions are still probabilistically guaranteed to burn themselves out, ensuring that degradation of system integrity is somewhat graceful and that any chain reaction attacker must spend more capital than they reveal. After much debate, we have decided that setting the default mix-in value within wallet software to $n=4$ but allowing users who are less concerned about anonymity and more concerned about transaction fees to lower their mix-ins to $n=2$ seems to be prudent. As previously mentioned, the Monero Core Team and the Monero Research Lab would like to follow the development philosophy that it is wise to start with smaller changes at first and then ramp those changes up over time, rather than start with drastic changes and try to scale them back. We are also formally recommending that the protocol be modified such that, after the blockchain has gotten sufficiently long, the network-wide minimum mix-in policy be increased to $n=4$. After $2$ years, Monero will automatically become more secure.
+
+As an aside, notice that this is not the only way to address the chain reaction problem. An alternative way to address the chain reaction problem induced by allowing transactions to be spent in the clear is a tag-based solution. This solution recommends tagging some transaction outputs as safe to mix, and some as unsafe to mix; equivalently, this would involve pruning mix-in sets. Before validating a block, a miner could verify that no ring signature in the block uses a zero mix-in transaction output as a signature input by checking tags.
+
+However, such tag-based solutions have some problems associated with them. For example, while a single block may not contain any ring signatures which use zero mix-in transaction outputs as signature inputs, due to chain reactions as described in \cite{chainReactions}, the block may still contain traceable transactions. Indeed, the transactions present in a block may be separated from dangerous ``in-the-clear'' transactions by several other transactions. Further, in a tag-based solution that still allows for zero mix-in transactions, users may still opt-out of benefiting from the privacy that ring signatures provide. It would be preferable to find a solution that maintains privacy as a uniform policy across the network, allows users to opt-in to greater privacy, and allows for compliance with local laws as described in Section \ref{auditability}.
+
+
+
+\begin{comment}
+\subsection{Quantifying Security for a Minimum Mix-In Policy}\label{quantifiableSecurity}
+
+We showed in \cite{chainReactions} that greater mix-in levels are uniformly better in terms of preventing chain reactions. We recommend a network-wide minimum mix-in policy. The Monero Core Team produced sample code at \cite{saturationUTXO} that suggests that at least $3$ to $5$ mix-ins would be a good choice. However, in the world of modern cryptography, any choice of minimum mix-in must be made carefully with an eye toward computational security. With this in mind, and with the \textit{a priori} expectation that a minimum mix-in of at least $3$ is likely to be desirable for security, but signatures with more than $6$ or $7$ mix-ins will cause an unreasonable amount of blockchain bloat, we quantify the security afforded by a minimum mix-in level. 
+
+We proceed as in \cite{chainRxns}. We model a transaction output set as an urn filled with marbles. Marbles controlled by an attacker are black, and marbles controlled by ostensibly honest parties are white. Whenever a new ring signature is generated, a handful of marbles are taken from the urn blindly and uniformly. These marbles represent the foreign transaction outputs used as mix-ins in the ring signature. If all of the marbles drawn are black, then the attacker has control over the traceability of the new transaction. Indeed, if the attacker spends all of their own transaction outputs with no mix-ins, then an observer can draw conclusions about the ownership of that new transaction output, whose ring signature is composed of mix-ins that have all been spent in the clear.
+
+Presume that an attacker owns $k$ transaction outputs from a transaction output set with $K$ transaction outputs. Further presume that we require $n$ mix-ins which are chosen \textit{uniformly} from this set whenever a new transaction output is generated and added to the set. How many new transactions are likely to be generated before the attacker gains control over the untraceability of a \textit{single} new ring signature? This is a classic question about hypergeometric distributions from probability and statistics. An alternative formulation is to ask ``how many new transactions must occur before there is a $95\%$ probability that an attacker has gained control over a new transaction?" 
+
+Notice here we are assuming mix-ins are drawn uniformly from the transaction output set, but this is not necessarily the case. Indeed, in Section \ref{selection}, we recommend that wallet software designers use a non-uniform distribution for mix-ins. However, one could reasonably ask ``how much security do we require if wallet designers ignore our recommendations?'' Furthermore, our recommendation specifically is to choose transaction outputs from output sets based on their \textit{age} (perhaps in terms of block height). Hence, the set of all outputs of the same denomination with the same age will have a uniform probability of being chosen for the ring signature. This has the effect of further partitioning the transaction output set by transaction age (this set is already partitioned by transaction amount). 
+
+Even under our non-uniform ring selection regime, within each new partition, we are still selecting ring signatures in a uniform manner from these partitions. Hence, the motivating scenario of the hypergeometric urn as previously described, is still a valid one, after an appropriate restriction. However, given a particular ring signature generation technique, and under certain assumptions of money velocity distribution, a more accurate method of answering the motivating security question could be employed. The best we could manage, though, under this scenario, is to save everyone a ring signature or two from their minimum number of mix-ins, which would cut down on blockchain space without causing a significant loss in security. Such a method, however, presumes that \textit{everyone} is using the same ring signature selection method, and we cannot assume this to be the case, as previously mentioned. 
+
+The number of new signatures generated before the attacker gains control over a single new ring signature is a random variable. Using the model presented in \cite{chainReactions}, we can develop a probability mass function for this random variable.  The probability that an attacker gains control over the \textit{very next} transaction to take place is precisely $\frac{k^n}{K^n}$. The probability that an attacker gains control not over the first transaction, but the second would be $(1-k^n/K^n)\cdot k^n/(K+1)^n$ since, after losing control over the first new transaction, the transaction output set has grown in size. Repeating this pattern, we obtain the mass function:
+\begin{align}\label{pmf}
+P\left\{N = 1\right\} &= \frac{k^n}{K^n}\\
+P\left\{N=2\right\} &= \frac{k^n}{(K+1)^n}\left(1-\frac{k^n}{K^n}\right)\\
+P\left\{N=3\right\} &= \frac{k^n}{(K+2)^n}\left(1-\frac{k^n}{(K+1)^n}\right)\left(1-\frac{k^n}{K^n}\right)\\
+\vdots &\\
+P\left\{N=m \right\}&= \frac{k^n}{(K+m-1)^n}\prod_{i=0}^{m-2}\left(1-\frac{k^n}{(K+i)^n}\right)
+\end{align}
+
+\begin{defn}
+We shall say that a choice $n$ of minimum mix-ins is $(k,K,N)$-secure if there is a $95\%$ probability that an attacker with $k$ transaction outputs in a set of $K$ transaction outputs gains control over a new transaction within $N$ new transactions. 
+\end{defn}
+
+We chose $95\%$ for historical reasons in statistics, but any fixed probability greater than $0.5$ can yield an equivalent definition. Hopefully a few facts about this definition are obvious to the reader. First, a choice of $n$ minimum mix-ins can be $(k,K,N)$-secure and $(k^{*},K^{*},N^{*})$-secure where $k\neq k^*$, $K \neq K^*$, and $N\neq N^*$. Also, if a choice of $n$ minimum mix-ins is $(k,K,N)$-secure, then it is also $(k,K,N^*)$-secure for any $N \leq N^*$, because the probability of gaining control over a new transaction can only increase as new signatures are generated. Also, if a choice of $n$ minimum mix-ins is $(k,K,N)$-secure, then it is also secure against weaker attacks, i.e.\ it is also $(k,K^*, N)$-secure for any $K^* \geq K$, and it is also $(k^*,K,N)$-secure for any $k^* \leq k$.
+
+
+Here are a few examples. There is a $95\%$ probability that, for $n=1$, an attacker with $k=1$ transaction output out of a set of $K=10$ transaction output will gain control over a single new ring signature within $170$ transactions. This is a very ``front-heavy'' process in the sense that, while $95\%$ of the process occurs across the first $170$ turns, there is a whopping $10\%$ chance the process terminates on the first turn. This is due to the fact that the attacker's control over the transaction output set is self-diluting unless the attacker is sending an enormous number of transactions to themselves. Regardless, using our above definition, we could say that $n=1$ is $(1,10,170)$-secure. Now consider the situation in which $n=1$, $k=2$, $K=10$. There is a $95\%$ probability that, for $n=1$, an attacker with $k=2$ transaction output out of a set $K=10$ transaction output will gain control over a single new ring signature within only $29$ new transactions. Hence, we could say that $n=1$ is $(2,10,29)$-secure. Similar computations demonstrate that $n=3$ is $(39,100,10000)$-secure. 
+
+Here's another example. Consider the case in which $k=2$, $K=10$, and $n=2$. We numerically determined that there is \textit{less} than a $35\%$ probability that an attacker can gain control over a single ring signature even within $10,000$ new transactions; we did not bother simulating more than $10,000$ new transactions. Hence, $n=2$ is more secure than $(2,10,10^4)$-secure. However, as previously described, this process is front-heavy. There is a massive $4\%$ chance the attacker controls the very first new ring signature at the beginning of the experiment. That is, $4\%$ in the first slot, $35\%$ in the first $10,000$ slots. Certainly, the ``grabbing power'' of an attacker is diluted quickly, especially if $K$ was small. Further, this dilution is increased as the number of mix-ins $n$ increases. The \textit{proportion} of the transaction output set is not the sole deciding factor. Indeed, as we just showed, $n=2$ is more than $(2,10,10^4)$-secure, but it is only $(20,100,280)$-secure, even though $k=20, K=100$ has the same proportion of maliciously owned transactions as $k=2,K=10$. 
+
+Any benchmark in security is somewhat arbitrary. We set forth two standards, which we will call the ``low traffic'' and ``high traffic'' standards. For the high traffic standard, we require our system to be secure such that any attacker with no greater than $50\%$ of very large transaction output sets must have no greater than a $95\%$ probability of success at gaining control over a single new transaction within $10,000$ new transactions. We made these choices carefully; first, we chose a $50\%$ control by attackers under the assumption that any currency under greater than $50\%$ control by a single malicious party is more or less uninteresting to handle. Second, we chose $N = 10^5$ to reflect the number of transactions per second that occur for large-scale payment processors. Indeed, the largest scale processors on the planet, such as Visa, rarely have to deal with transactions-per-second exceeding $5\times 10^5$, and usually much closer, as order-of-magnitude estimates go, to the $5\times 10^3$\cite{visaTPS}. Note that Bitcoin can handle, in terms of orders-of-magnitude, at most around $10^2$ transactions per second. Monero, during the infamous Block $202612$, handled a record of $513$ transactions in a single minute, all of which were performed, apparently, by an attacker. Even under the moon-like scenario of a cryptocurrency taking over the payment processing tasks of Visa during the highest traffic times, choosing $N = 10^5$ or $10^6$ seems sufficient.  
+
+Finally, we have not specified the size of the transaction output sets for which we desire security; we simply require security for \textit{very large} transaction output sets. For example, it would take about $31$ years for $10,000$ transactions per second to double a transaction output size from $K_1=10^9$ to $K_2 = 2\times 10^9$. Thus, we choose our benchmark in security to be a choice of minimum mix-in $n$ that is $(0.5\times K,K,10^5)$ secure for all values of $K$ up to $K=10^9$ under the high traffic standard. Current transaction output sets in Monero range in size from fewer than $10$ elements to more than $10^6$ elements, roughly following Benford's Law, and no one should use a currency that is owned in greater proportions than $50\%$ by any one party. We numerically computed that $n=12$ is more than $(5\cdot 10^8, 10^9, 10^5)$-secure but $n=11$ is not. 
+
+For a low traffic standard, we relax our requirements by a bit. We numerically discovered that, for a broad range of orders of magnitude ranging from $K=10^4$ to $K=10^9$, an attacker controlling a little over $27.5\%$ of an output set (that is, $k = 27.5\times K$) will have about a $95\%$ probability of successfully grabbing one transaction out of every $500$ new transactions when $n=4$. That is to say, we computed that $n=4$ is $(27.5\times K, K, 500)$-secure for a many plausible orders of magnitude of $K$, but $n=3$ is not.
+
+A large-scale payment processor such as Visa during a high traffic time like the Christmas shopping season, an attacker with half of a transaction output set of size $10^9$ can be $95\%$ confident that she will only gain control over $1$ out of every $10^5$ new transactions if $12$ mix-ins are required. This is our ``high traffic'' recommendation, $n=12$. Notice that this is mix-in level is only necessary if Monero becomes a global payment processor on the order of magnitude of Visa, and is under attack by a spectacularly wealthy individual with the intention of revealing the transaction information of other users at the expense of their own anonymity.
+
+On the other hand, for the ``low traffic'' scenario, if the attacker controls $27.5\%$ of a transaction output set of sizes between $10^4$ and $10^9$, then she can be $95\%$ confident that she can gain control of only $1$ out of every $500$ new transactions if $n=4$ mix-ins are required. This is our ``low traffic'' recommendation, $n=4$. Note that this mix-in level is robust against many sizes of transaction output sets, still guarantees self-dilution of an attacker's share of an output set, and doesn't represent a phenomenally large ring signature for each transaction as $n=12$ would.
+\end{comment}
+
+
+\begin{comment}
+\subsection{Transaction Output Selection Methods for Ring Signature Generation}\label{selection}
+
+To mitigate the age-related effects on untraceability, we recommend that wallet designers use age-dependent selection of transaction outputs in ring signature generation. The selection of transaction outputs is a non-consensus practice for fashioning ring signatures. Current wallet programs choose uniformly from the transaction output set, but it would be wise to make this choice based on age such that transactions are more likely to be included if they are less likely to have been spent. In this section, we sketch a few methods that wallet designers could use to do so, but we do not go into detail. Indeed, studying the lifespan data present in transparent blockchains, such as the Bitcoin blockchain, and making more detailed age-related recommendations for ring signature selection will be the subject of a later paper by the Monero Research Lab.
+
+Certain assumptions could be made about the marginal lifespan of a transaction output before transmission, disregarding that output amount. For example, one wallet designer may decide to model transaction output lifespans by an exponential distribution, assuming all transaction outputs have a mean of about $7.0$ days. Another wallet designer may decide to model transaction output lifespans with a Gamma distribution with shape parameter $2$ and scale parameter $3.5$. By assuming that the marginal lifespan of a given transaction output is drawn from known distribution, selecting mix-ins for a ring signature is simple. Wallet developers can use either a binning method to select ring signatures for mixing, or can use the method of inverting the cumulative distribution function to assign a probability mass function to each transaction output set. 
+
+Unfortunately, estimates of parameters for a currency like Monero cannot be obtained directly, but they can be estimated by studying a proxy network, i.e.\ Bitcoin, for which data is readily available. Indeed, Bitcoin is the first currency for which such huge stores of data are so easily obtained. 
+
+However, the choice of distribution is critical. As we have already seen, drawing from an output set in a uniform way without regard to age of transaction outputs can lead to exploitation. Choosing another incorrect distribution will not fix the problem, and possibly make it worse. Consider the exponential distribution and the Bitcoin blockchain. This distribution shows some traits that appear to be inappropriate for transaction output lifetimes, such as memorylessnes. We can reasonably expect that a five-year old transaction output will have a lower probability of being spent in the next block than a five-block old transaction output within the Bitcoin blockchain. Lifespans of transaction outputs have memory and the distribution appears to be fatter-tailed than the exponential distribution.
+
+Furthermore, for an exponential distribution with mean $\mu$, $99.9\%$ of all observations will occur within less than $7\times\mu$ and $99.99\%$ of all observations will occur within less than $8\times \mu$.  Say that the minimum age of all the transactions in a transaction output set is $L$. Then an observer who sees any transaction with a mix-in of lifetime more than $L + 8\times \mu$ from that output set can be fairly confident that mix-in is the genuine transaction being spent. 
+
+Recall that we set out with a \textit{temporal association} problem in which young mix-ins could be labeled as more likely to be the genuine transaction output; by choosing an exponential distribution, we have turned the problem on its head such that old mix-ins can be labeled as more likely to be the genuine transaction output.  Having said that, since old outputs are, indeed, spent far less often, applying the exponential distribution would still make the \textit{temporal association} problem better than it was under the uniform distribution in the sense that fewer transactions would be effected.
+
+Some problems with the exponential distribution could possibly be mitigated by relaxing the assumption that all transaction outputs, regardless of amount, have the same mean lifespan. If we allow the possibility that $10.0 XMR$ outputs have a longer lifespan than $1.0$ XMR outputs, which in turn have a longer lifespan than $0.1 XMR$ outputs, the exponential distribution may once again become reasonable.  However, the problem really comes from the fact that the exponential distribution is not heavy-tailed. One could choose another, heavy-tailed distribution, perhaps one that has been classically used to model income distributions, such as the Pareto distribution or the Burr distribution. These choices may make sense, given a deeper analysis of the lifespan data of Bitcoin transaction outputs.
+\end{comment}
+
+
+\begin{comment}
+
+In this section, we derive and elaborate upon two methods for selecting transaction outputs for ring signature generation to avoid the age-related traceability issues as previously described.
+
+\subsubsection{Deterministic Binning by Age}\label{deterministic}
+
+We wish to emphasize that we are not recommending a protocol consensus change, but any wallet designer should likely follow one of the methods recommended in this section, or in Section \ref{continuousPDF}.  The first method of ring signature generation we recommend is the following. If a user wishes to send a transaction output of a particular denomination, the set of available transaction outputs for mixing is enumerated by age; if the current block height is $H$ and a transaction output in the main chain of the blockchain occurs at height $H^{*}$, then the transaction can be said to have age $H-H^*$. The protocol will identify some spacing constant, say $c=8192$, and then partition the available transaction outputs into bins based on their ages. Blocks with age at most $c\cdot 4^0$ will be placed in the first bin. Any block not yet placed that has age at most $c\cdot 4^1$ will be placed in the second bin. Any block not yet placed that has age at most $c \cdot 4^2$ will be placed in the third bin. We repeat the process iteratively, so that any block not yet placed on the $i^{th}$ iteration that has age at most $c \cdot 4^i$ will be placed in the $(i+1)^{th}$ bin, until all blocks have been placed in bins.  At this point, the protocol refers to the network wide minimum mix-in requirement, $n$. In practice, if we denote the maximum age of available transaction outputs as $\textit{MaxAge}$, it may be wise to choose $c = \textit{Floor}(\textit{MaxAge})/4^n)$ so that the bins are sure to cover the timespan of all available unspent transaction outputs. 
+
+The rule enforced in this method shall be ``each ring signature requires at least one mix-in from each bin'' or at least the $n$ youngest bins. After that point, the user can include whatever outputs they desire in their ring signatures, for they have not only met the network-wide minimum mix-in requirement, but they have also drawn their first $n$ mix-ins from a binned approximation to an exponential distribution.
+
+The advantages of this method include simplicity. All of the mathematics occur in the integers without further manipulation. It is easy for a node to verify whether a particular ring signature has been fashioned according to the rules and reject a block as containing an invalid transaction if it has not been fashioned according to the rules.
+
+The drawbacks of this method, unfortunately, are several. The spacing constant adds yet another \textit{magic number} to the codebase. We can make some informed choices  about this spacing constant, however; we can use the maximum likelihood estimate of the average lifespan of a transaction output in the Bitcoin network as a proxy for the average lifespan of a transaction in the Monero network, for example. On the other hand we could consider a specific transaction output set, look at the oldest transaction output in the set, and partitition the timeline into $4^n$ pieces. If we do this, then our spacing constant is $c=\textit{Floor}(\textit{MaxAge}/4^n)$. 
+
+However, any binning method is only an approximation to a continuous distribution. Some bins may happen to be empty, and in that case, no legitimate transaction can be generated unless we specifically encode certain edge-cases. More worrisome, however, is the following: an honest user can honestly fashion a legitimate, non-double-spending ring signature which is then rejected as being dishonestly fashioned. This user may have made a mistake of choosing a transaction on the edges of one of the bins. If the user delays at all in releasing that transaction to the network, or if any network delay effects cause this transaction to be heard by nodes a few blocks later, then a transaction that was in bin $3$ may now have slid into bin $4$, and now the transaction no longer appears legitimate. Any friction against creation of legitimate transaction outputs must be seriously considered.
+
+We could, of course, draw from the \textit{center} of bins, or the \textit{front} of bins before the \textit{end} of bins first. However, we certainly do not want to add any such edge-detection algorithms to our binning method because this would change the distribution from which we are drawing our transaction outputs, possibly violating our exponential lifespan assumption. The problem is made worse by adding more bins, whereas untraceability in general is improved by requiring more ring signatures. Hence, there is a trade-off between number of bins and probability that honest transactions are rejected, and yet we are requiring a minimum number of bins. This method seems unsatisfactory.
+
+
+
+\subsubsection{Continuous Density Function}\label{continuousPDF}
+
+The second method we use to mitigate time-related traceability is to use the continuous density functions of the exponential distributions, rather than a binning method. The primary drawbacks to this method are computational complexity and forcing this method into an integer-math environment.
+
+We assume that the lifespan of a transaction is a random variable with a marginal distribution that is exponential. An exponential distribution with an unknown parameter, $\tau$, with density function $f(t\mid \tau) =\tau^{-1} \text{Exp}(-t/\tau)$ for $\tau, t > 0$ will have cumulative distribution function $F(t \mid \tau) = 1-e^{-t/\tau}$. We wish to choose transactions from the transaction output set for our ring signature based on this exponential distribution  so that the probability that a transaction is chosen for a ring signature is inversely proportional to the probability that it has already been spent. This way, transactions that are unlikely to have been spent are most likely to be chosen for ring signatures.
+
+Normally, if $M$ possible outputs are available for mixing, we index them $1, 2, \ldots, M$, then we generate a uniform random number from $1$ to $M$. We pick the index that is generated. This is the uniform mass distribution. Rather than this, we custom design a probability mass function on the indices $\left\{1, 2, \ldots, M\right\}$. That is, we need a \textit{probability} for each $i$ that the index $i$ is chosen for the ring signature. For each $i$ from $1$ to $M$, we will compute a number, $\rho_i$, associated with the $i^{th}$ ring signature that is \textit{proportional} to the probability that it has been spent already given the above distribution. Then the numbers $1/\rho_i$ will be proportional to the probability that the $i^{th}$ output is chosen for the ring signature. Of course, the sequence $\left\{1/\rho_1, 1/\rho_2, \ldots, 1/\rho_M\right\}$ will, in general, not sum to $1$ and is hence not a probability mass function. However, we can simply scale each element in this sequence by the sum $\sum_i 1/\rho_i$ to obtain a probability mass function.
+
+Since we cannot directly measure lifespan of a Monero transaction output, we use data from Blockchain.info to estimate parameter values for Bitcoin. We computed the maximum likelihood estimate of the parameter $\tau$. We considered the cumulative bitcoin-days-destroyed  and the cumulative output volume for the past $180$ days to do so, and we obtained an average lifespan of a transaction output in Bitcoin to be approximately $6.82$ days. We will use this as our recommended parameter value. Since Monero has a $1$ block per minute target time, this corresponds to about an average transaction lifespan of $9820$ Monero blocks.
+
+\subsubsection{Example of the Continuous Method}\label{exampleCont}
+
+We illustrate this method with a quick example. Keep in mind this is only an example. Presume the Monero Core Team decides that the average time until an unspent transaction output has been spent is $\tau = 10^4$ blocks (very close to our recommended $9820$ blocks computed from the Bitcoin network data).  Further presume that Bob wishes to carry out transaction $2A$ from Table \ref{linkByAssociationSolnA} to send Alice $0.05$ XMR from an output of $0.09$ XMR. In order to do so, Bob must find several transaction outputs with amount $0.09$ XMR. Let's say that he finds four transactions, each with ages $15$, $150$, $1500$, and $15000$ blocks, respectively. Furthermore, let's say that we have chosen an arbitrary network wide choice for $\tau = 10^4$ blocks. In this case, the probabilities that these blocks have already been spent are displayed in Table \ref{probabilities}. These would correspond to the values of $p_i$ in the pseudocode of Algorithm \ref{choosing}. 
+
+\begin{table}[]
+\centering
+\begin{tabular}{|c|c|}\hline
+ Age of Transaction & Probability Spent \\\hline
+ $15$ & $0.00149$ \\
+ $150$ & $0.01489$ \\
+ $1500$ & $0.13929$ \\
+ $15000$ & $0.77687$ \\\hline
+\end{tabular}
+\caption{Probability that transactions have been spent by age, assuming average lifespan is $10^4$ blocks, and assuming an exponentially distributed lifespan.}
+\label{probabilities}
+\end{table}
+
+Recall, the probability of choosing any one of these outputs is \textit{inversely} proportional to the values listed in Table \ref{probabilities}. We compute the probability that a transaction is chosen for a ring signature based on its age in Table \ref{probabilities2}.
+
+\begin{table}[]
+\centering
+\begin{tabular}{|c|c|c|}\hline
+ Age of Transaction & $(\text{Prob Spent})^{-1}$ & Probability chosen \\\hline
+ $15$ & $671.14$ & $671.14/746.77 = 0.8987$\\
+ $150$ & $67.16$ & $67.16/746.77 = 0.0899$\\
+ $1500$ & $7.18$ & $7.18/746.77 \approx 0.0096$\\
+ $15000$ & $1.29$ & $1.29/746.77 \approx 0.0017$\\\hline
+\end{tabular}
+\caption{The probability that a transaction is chosen for a ring signature shall be \textit{inversely} proportional to the probability that it has yet been spent. Column $1$ depicts age of a transaction, Column $2$ depicts the inverse of the probability that said transaction has yet been spent as computed in Table \ref{probabilities}, and Column $3$ depicts the probability that the transaction is chosen for the ring signature.}
+\label{probabilities2}
+\end{table}
+
+
+\subsubsection{Advantages and Drawbacks to the Continuous Method}\label{advantsAndDrawbacks}
+
+One drawback to this approach is computational intensity. However, computational intensity is the drawback for any privacy related scenario. This method is also more difficult to implement than a deterministic binning method, especially in an integer-math environment (the CDF $F(t\mid \tau) = 1-e^{-t/\tau}$ is bounded between $[0,1]$). Another drawback is that we have assumed a marginal distribution for the lifespan of a transaction. Of course, we have no way of directly measuring the lifespan of transaction outputs. Unless one executes a traceability attack and then performs some statistical analysis on the result, any choice of $\tau$ is essentially arbitrary. However, just as our security choices in Section \ref{quantifiableSecurity} were essentially arbitrary but well-informed, we can make well-informed decisions about $\tau$. For example, due to the monotonicity of the exponential distribution, whatever choice we make for $\tau$ will preserve the \textit{order} of probabilities, so that ``more likely to have been spent'' transactions are still less likely to be chosen for the ring signature than their ``less likely to have been spent'' counterparts. Furthermore, if $\tau$ is \textit{reasonable}, the probabilities will be fairly close to the correct probabilities. 
+
+Another drawback is verifiability. Verifying that a single transaction is valid is impossible; there is a nonzero probability that any one ring signature of a particular denomination is simply composed of the first $n$ transactions to have ever occurred on the blockchain of that denomination. It may not seem random at all. While this is undesirable for security purposes, the ring signature was still generated \textit{fairly} and according to the rules. Addressing this requires developing robust hypothesis testing and simultaneous confidence intervals; we may address this in a later paper. However, verifying that all ring signatures in a block have been generated according to this probabilistic method is possibly unnecessary. Alone, implementing a minimum mix-in policy as described in Section \ref{softwareImplementation} will possibly improve privacy sufficiently to mitigate temporal associations. Furthermore, we are reluctant to recommend too many large-scale changes simultaneously. 
+
+Finally, we make a Bayesian observation. Since we are starting with an \textit{a priori} distribution (exponential) with an unknown parameter, one may be inclined to use Bayesian methods to bootstrap our way into a better distribution. However, Bayesian methods rely upon using known data to update their distributions, and in our case, it's difficult to discern the lifespan of transactions that have been spent with many mix-ins unless they have been revealed through a zero-mix-in spend earlier in a chain reaction. Furthermore, even if we were to develop a distribution based on chain reaction information, this would not necessarily inform us of the lifespan of an \textit{arbitrary} transaction, but only the lifespan of transactions that have been revealed due to chain reactions. Hence, we'd actually be developing an estimate using conditional probabilities of a subset of the transactions in which we are interested, and this is inappropriate.
+
+\end{comment}
+
+\subsection{Mitigating Combination Attacks}\label{mitigCombo}
+
+The easiest way to obfuscate ownership of the funds from eavesdropping by Eve during a combinatorial attack would be for Bob to simply send outputs owned by himself to himself separately every few random periods of time. This skews the blockchain analysis performed by Eve in Section \ref{combinationAttacks} and, in fact, in Section \ref{temporalAssociations}. In this section, we merely specify that no user resend all of her outputs to herself at the same time. Furthermore, any receiver of funds, by contrast, should request that the sender break the transaction up into pieces in a torrent and send the required amount over a period of time . This way, if Eve is anticipating a certain transaction amount within a certain window of time, she can not readily ascertain if some combination of outputs from all transactions in a given block might correspond to the exact amount which she expects the recipient to be sent.
+
+By re-sending transactions to oneself iteratively over intervals of time with random length, and by breaking all transactions (including a resend transaction) into multiple smaller transactions, also sent over an interval of time, we dramatically weaken the ability for an eavesdropper to glean information from the blockchain based solely on block height. Notice that this recommendation is a wallet-level recommendation, not a protocol-level recommendation.
+
+\subsection{Mitigating Association by Use}\label{mitigAssoc}
+
+To prevent a so-called ``Assocation by Use'' attack, an alternative transaction generation scheme could be used. Rather than generating a single transaction with as few unspent transaction outputs as possible, we can generate a separate transaction for each output. Hence, if Bob wants to send Alice $0.75$ XMR out of a wallet with $1$ XMR, then he will actually send two transactions. One transaction will send $0.7$ XMR and one transaction will send $0.05$ XMR.  First, the usual denomination and change-splitting method will be applied before sending $0.7$ XMR out of a wallet with $1$ XMR within, as in Table \ref{linkByAssociationSolnA}. Then, with his change, Bob will complete the transaction; after his first transaction, this will leave Bob with a spare $0.09$ XMR output, from which he can execute the usual denomination and change-splitting method before sending $0.05$ XMR to Alice as in Table \ref{linkByAssociationSolnB}.
+
+\begin{table}[!htb]
+    \caption{Transaction $1$}
+    \label{linkByAssociationSolnA}
+    \begin{subtable}{.5\linewidth}
+      \centering
+        \caption{Transaction $1A$ by Bob}
+        \begin{tabular}{|c|c|}\hline
+            In & Out \\\hline
+            $1.0$ XMR (Bob) & $0.7$ XMR (Alice)\\
+             & $0.2$ XMR (Bob)\\
+             & $0.09$ XMR (Bob)\\
+             & $0.01$ XMR (Fee)\\\hline
+        \end{tabular}
+    \end{subtable}%
+    \begin{subtable}{.5\linewidth}
+      \centering
+        \caption{Transaction $1B$ by Alice}
+        \begin{tabular}{|c|c|}\hline
+            In & Out\\\hline
+            $0.7$ XMR (Alice) & $\cdots$\\ \hline
+        \end{tabular}
+    \end{subtable} 
+\end{table}
+\begin{table}[!htb]
+    \caption{Transaction $2$}
+    \label{linkByAssociationSolnB}
+    \begin{subtable}{.5\linewidth}
+      \centering
+        \caption{Transaction $2A$ by Bob}
+        \begin{tabular}{|c|c|}\hline
+            In & Out \\\hline
+            $0.09$ XMR (Bob) & $0.05$ XMR (Alice)\\
+             & $0.03$ XMR (Bob)\\
+             & $0.01$ XMR (Fee)\\\hline
+        \end{tabular}
+    \end{subtable}%
+    \begin{subtable}{.5\linewidth}
+      \centering
+        \caption{Transaction $2B$ by Alice}
+        \begin{tabular}{|c|c|}\hline
+            In & Out\\\hline
+            $0.05$ XMR (Alice) & $\cdots$\\ \hline
+        \end{tabular}
+    \end{subtable} 
+\end{table}
+
+
+In the above scheme, Bob generates only generates one extra output, but in doing so is able to protect Alice from being uncovered in the future by transactional association of outputs used in ring signatures.  Mining fees are increased according to the number of transaction outputs received, but anonymity is preserved. 
+
+Notice, however, that there is a subtlety under this alternative scheme. If Bob uses his own change output in order to send the $0.05$ XMR in Transaction $2A$, this can lead to the same circumstantial likelihood analysis that we were trying to avoid in the first place. Outputs may be associated as being spent from a common transaction, or from a common \textit{tree} of transactions, or spent from a common block, or spent from within a short span of time. This list may not be comprehensive. Of course, these scenarios are harder and harder for Eve to analyze compared to the simple scenario initially presented in Section \ref{associationByUse}. 
+
+Two outputs from disjoint transactions with two different block heights are less likely to come from a common owner than two outputs from a common transaction, or than two outputs from two transactions linked by a single step, or than two outputs from a similar block height. Hence, since Bob can also use any other output he owns in order to send the remaining $0.05$ XMR, not just his change output, he should endeavor to do so if possible. This leads us to the natural solution, which is simple to implement in its basic form: use one and only one input for every transaction, and output one and only one output to the recipient. This is repeated until all desired funds are transferred to the recipient.
+
+This is, of course, an inefficient method of generating transaction outputs. To increase efficiency, multiple inputs may also be used to generate a transaction if and only if the outputs referenced do not lie within a few blocks of each other.
+
+
+\section{Roadmap to our Recommendations}\label{softwareImplementation}
+
+Implementing a network-wide minimum mix-in policy $n=2$ to the Monero architecture can be done in several ways.
+\begin{enumerate}[(1)]
+\item Within a wallet, users may be required to send via wallet-to-wallet RPC with a minimum mix-in, unless those transactions lie in transaction output sets without enough mix-ins.
+\item Miners may be requested or required to only include mixed transactions satisfying the minimum mix-in, unless those transactions lie in transaction output sets without enough mix-ins.
+\item The peer-to-peer protocol may be modified such that transactions that do not satisfy the minimum mix-in for all their ring signatures are not relayed, unless those transactions lie in transaction output sets without enough mix-ins.
+\end{enumerate}
+
+Furthermore, if a transaction is included in a block with height greater than a certain critical value, $n=2$ shall not be sufficient, but in fact we will require $n=4$. We recommend this block height to correspond to about two to three years after publication of this document, but the specifics are unimportant.  Our roadmap to implement a network-wide minimum mix-in policy is to implement $(1)$ soon, skip $(2)$, and plan $(3)$ for a later date after vigorous testing on our testnet. The primary obstacle to immediate implementation is transaction \textit{dust}. To overcome the obstacle, we define a \textit{legal transaction output form} as any number $A \times 10^{B}$ where $A$ is an integer $1 \leq A \leq 9$ and $B$ is any integer $-12 \leq B$. Hence, a transaction output with amount $0.00111111$ XMR does not follow the legal transaction output form, but the transaction outputs $0.001, 0.0001, 0.00001, 0.000001, 0.0000001$, and $0.00000001$ XMR are each legal. We propose the following policy:
+
+\begin{enumerate}[(i)]
+\item Within a wallet, users may be required to produce only transaction outputs adhering to the legal transaction output form.
+\item Miners may be requested or required to only include transactions with all outputs satisfying the legal transaction output form.
+\item The peer-to-peer protocol may be modified such that transactions that do not satisfy the legal transaction output form for all of their transaction outputs are not relayed.
+\end{enumerate}
+
+Implementing these will allow a user to use a non-legal transaction output as a transaction input, so long as all outputs from that transaction adhere to this strict form. No new dust will be created in the system, and dust will only be removed from the system over time. Again, our roadmap to implement a legal transaction output form is to attack $(i)$ first, skip $(ii)$, and plan $(iii)$ for a later date after vigorous testing. 
+
+In order to encourage users to re-send transactions to themselves iteratively over intervals of time with random length, we recommend that, within a wallet, a warning be displayed if a random but minimum number of blocks have been added to the blockchain since an output has been received in the wallet. After $6$ to $8$ weeks have transpired, for example, all outputs in a wallet should be re-sent.
+
+Furthermore, wallet software should specify that
+\begin{enumerate}[(a)]
+\item one and only one transaction output should be sent to a recipient at a time;
+\item a transaction that must consist of several outputs should be broken up into several smaller transactions spread over time as in a torrent; and
+\item each transaction output received by a recipient should use transaction inputs with dissimilar block heights and dissimilar root transactions.
+\end{enumerate}
+
+\begin{comment}
+\subsection{Implementing Ring Signature Selection Methods}\label{algorithmApproach}
+
+In this Section, we also include a pseudocode algorithm for choosing transaction outputs from the continuous distribution as described in Section \ref{continuousPDF}. We recommend using the maximum likelihood estimate previously computed from the Bitcoin network, $\tau = 6.82$ days, in the following, corresponding to about $9820$ blocks. Since values \textit{close} to this value of $\tau$ will provide qualitatively similar results, one could round this value to the nearest power of $2$, namely $8192$, or the nearest power of $10$, namely $10^4$, if it is computationally efficient to do so.
+
+
+We enumerate the available transaction outputs by block height, $H_1, H_2, \ldots, H_M$, and we call the current block height $H_0$. We then compute $t_1= H_0 - H_1, t_2 = H_0 - H_2, \ldots, t_M = H_0 - H_M$ as the elapsed durations since the outputs have been encoded in the blockchain. Assuming an exponentially distributed lifespan with an average lifespan of $\tau$, the probability that transaction $i$ has been spent by now is $\rho_i = 1-e^{-t_i/\tau}$. We wish to choose transactions in \textit{inverse} proportion to this probability.  Thus, we will set the probability that we use transaction $i$ in the next ring signature to be proportional to $P_i:=(1-e^{-t_i/\tau})^{-1} = 1/\rho_i$.  For each $i$, we compute $P_i$. Now the sequence $\left\{P_1, P_2, \ldots, P_M\right\}$ is a sequence that is proportional to our desired probability mass function. We sum those values to get $P=\sum_i P_i$, and we scale the sequence to be bounded within $[0,1]$, yielding the probability mass function
+\[Pr\left\{\text{Index~}j\text{ chosen for ring sig}\right\} = P_j/P\]
+
+Generating a uniform random variable, call it $u$, from $[0,1]$, we will choose the index
+\begin{align*}
+i &= \begin{cases}
+0; & 0 \leq u < \frac{P_1}{P}\\
+1; & \frac{P_1}{P} \leq u < \frac{P_1}{P} + \frac{P_2}{P} \\
+2; & \sum_{j=1}^{2} \frac{P_j}{P} \leq u < \sum_{j=1}^{3} \frac{P_j}{P}\\
+\vdots &\\
+k; & \sum_{j=1}^{k} \frac{P_j}{P} \leq u < \sum_{j=1}^{k+1} \frac{P_j}{P}, 1 \leq k < M\\
+\vdots & \\
+M; & \sum_{j=1}^{M} \frac{P_j}{P} \leq u < 1
+\end{cases}
+\end{align*}
+This index, $i$, will be the index to be included in our ring signature. We will then repeat the above process as many times as necessary until we have all the transaction outputs needed to fashion our ring signature. 
+
+We will not allow repeat usage of the same transaction within a ring signature. Due to the so-called Birthday Paradox \cite{klamkin1967extensions}, collisions of index choice will be common (although not as common as a bin edge collision using the deterministic binning method in Section \ref{deterministic}. This can be dealt with using either \textit{Accept-Reject} methods, or by computing new probability distributions after each step, removing the previous signature. The Accept-Reject method works in the following manner: keep drawing random numbers $u$ until you come across a non-colliding index. This will be \textit{probabilistically} efficient if transaction output set sizes are large.  For smaller set sizes, however, there is a decent chance that many random numbers will have to be generated before an acceptance occurs. Thus, for small set sizes, fewer than $10^2$ or $10^3$ elements, it may be more efficient to re-compute the probability distribution. Furthermore, the new probability distribution is an easy function of the old probability distribution, and so this is what we recommend.
+
+Remember, we already know $\left\{\frac{P_1}{P}, \frac{P_2}{P}, \ldots, \frac{P_M}{P}\right\}$, and we know we are going to use some index, $i$, that was just determined by our first random number, $u$. Then the next probability distribution will be obtained from $\left\{P_1, P_2, \ldots, P_{i-1}, P_{i+1}, \ldots, P_M \right\}$, which has sum $P - P_i$. Hence, we obtain the mass function
+
+\[Pr\left\{\text{Index~}j\text{ chosen for ring sig} \mid \text{Index~}i\text{ chosen for ring sig}\right\} = \begin{cases}\displaystyle \frac{P_j}{P-P_i} & j\neq i \\ 0 & j = i \end{cases}\]
+
+That is, our new distribution is a simple function of our old distribution. We provide a pseudocode algorithm describing the above approach.
+
+
+\begin{algorithm}[H]
+\caption{Choosing transactions based on age.The first loop generates the data required for the probability mass function, namely the values for $P_i$ for each $i=1,2,\ldots,M$ and the value for $P = \sum_i P_i$.  The second loop fills the \texttt{Result} array with indices that are generated using the mass function found in the first loop, drawing random objects out of a bag without replacement given a particular mass function.}
+\label{choosing}
+\begin{algorithmic}
+
+\State $\text{Define~}H_0\gets\text{~Current block height}$
+\State $\tau \gets \text{Expected lifespan of transaction output}$
+\State $\text{Define~}H_1, H_2, \ldots, H_M \gets \text{~Block heights of all transactions with appropriate amounts}$
+\State $\text{Define~}Result \gets \text{Store indices chosen for ring sig here. Length must be}< M$
+
+
+\State $t_1, t_2, \ldots, t_M \gets 0$
+\State $P, P_1, P_2, \ldots, P_M \gets 0$
+
+\For{$i=1\text{~to~}M$}
+    \State $t_i \gets H_0 - H_i$
+    \State $p_i \gets 1-e^{-t_i / \tau}\text{~Note: this can be drawn from a lookup table}$
+    \State $P_i \gets 1.0/p_i$
+    \State $P \gets P + P_i$
+\EndFor
+
+
+\For{$i=1\text{~to~}Length(Result)$}
+    
+    \State $u \gets \text{Uniform}(0,1)\cdot P$
+    
+    \State $Result\left[i\right] \gets 1$
+
+    \While{$\displaystyle u \geq P_{Result\left[i\right]}\text{~and~}$}
+    
+        \State $u \gets u - P_{Result\left[i\right]}$
+    
+        \State $Result\left[i\right] \gets Result\left[i\right] + 1$
+    
+    \EndWhile
+    
+    \State $P \gets P-P_{Result[i]}$
+    \State $P_{Result[i]} \gets 0$
+    
+\EndFor
+
+\State \Return $Result$
+
+\end{algorithmic}
+\end{algorithm}
+
+Different variants of the above algorithm can be used by defining an expected age of a transaction based on it's denomination. Intuitively, it's more likely that a user hoards a very large transaction output with, say, a denomination around $100,000$ XMR, rather than a small transaction output with, say, a denomination around $0.1$ XMR.
+
+\end{comment}
+
+
+\section{Auditability for Compliance Purposes}\label{auditability}
+
+Businesses using ring signatures and stealth addressing through Monero will have the reasonable desire to comply with the corresponding local laws within their jurisdictions. Typically, these laws require the business to prove ownership of their own funds, and demonstrate where funds may have been sent. To prove ownership of any unspent funds on the block chain, a Monero account holder may publish a zero mix-in ring signature of their public key. Please be aware that a zero-mix-in ring signature is just an ordinary digital signature. An auditor can then scan the block chain for the presence of the output public key, and verify that the key image produced from the zero mix-in ring signature has not yet been used on the block chain. To protect the privacy of the business and its customers, the auditor should then destroy the signature and the key image.
+
+\section{Conclusion}\label{conclusion}
+
+We identified several routes an attacker could use to execute a blockchain analysis to degrade the untraceability of the CryptoNote 2.0 protocol. The zero mix spending problem identified in \cite{chainReactions}, the age-based association problem, the association-by-usage problem, and a more generalized combinatorial analysis problem are each identified. We recommend a network-wide minimum mix-in of $n=2$ to address zero mix chain reaction problems, and we discuss how a mix-in of $n=4$ is likely to be larger than necessary for most practical purposes. We recommend a non-uniform transaction output selection method for ring generation to mitigate age-based association problems. We recommend partitioning all transactions into many smaller sub-transactions such that they occur over an interval of time, as in a torrent, and such that each sub-transaction has one and only one output, in order to mitigate the combinatorial analysis problem.
+
+
+
+
+
+\medskip{}
+
+\bibliographystyle{plain}
+\bibliography{biblio.bib}
+
+\end{document}
