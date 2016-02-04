@@ -1,0 +1,996 @@
+\documentclass[12pt,english]{mrl}
+\usepackage{graphicx}
+\usepackage{listings}
+\usepackage{cite}
+\usepackage{amsthm}
+\newtheorem*{example}{Example}
+
+\usepackage[toc,page]{appendix}
+
+\renewcommand{\familydefault}{\rmdefault}
+\usepackage[T1]{fontenc}
+\usepackage[latin9]{inputenc}
+\usepackage{color}
+\usepackage{babel}
+\usepackage{verbatim}
+\usepackage{float}
+\usepackage{url}
+\usepackage{amsthm}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage[unicode=true,pdfusetitle, bookmarks=true,bookmarksnumbered=false,bookmarksopen=false,  breaklinks=false,pdfborder={0 0 1},backref=false,colorlinks=true]{hyperref}
+\usepackage{breakurl}
+
+
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb,enumerate}
+\usepackage{amsthm}
+\usepackage{cite}
+\usepackage{comment}
+\usepackage[all]{xy}
+%\usepackage[notref,notcite]{showkeys}
+\usepackage{hyperref}
+\usepackage{todonotes}
+
+% THEOREM ENVIRONMENTS
+
+\theoremstyle{definition}
+\newtheorem{lem}{Lemma}[section]
+\newtheorem{cor}[lem]{Corollary}
+\newtheorem{prop}[lem]{Proposition}
+\newtheorem{thm}[lem]{Theorem}
+\newtheorem{soln}[]{Solution}
+\newtheorem{conj}[lem]{Conjecture}
+\newtheorem{Defn}[lem]{Definition}
+\newtheorem{Ex}[lem]{Example}
+\newtheorem{Question}[lem]{Question}
+\newtheorem{Property}[lem]{Property}
+\newtheorem{Properties}[lem]{Properties}
+\newtheorem{Discussion}[lem]{Remark}
+\newtheorem{Construction}[lem]{Construction}
+\newtheorem{Notation}[lem]{Notation}
+\newtheorem{Fact}[lem]{Fact}
+\newtheorem{Notationdefinition}[lem]{Definition/Notation}
+\newtheorem{Remarkdefinition}[lem]{Remark/Definition}
+\newtheorem{rem}[lem]{Remark}
+\newtheorem{Subprops}{}[lem]
+\newtheorem{Para}[lem]{}
+\newtheorem{Exer}[lem]{Exercise}
+\newtheorem{Exerc}{Exercise}
+
+\newenvironment{defn}{\begin{Defn}\rm}{\end{Defn}}
+\newenvironment{ex}{\begin{Ex}\rm}{\end{Ex}}
+\newenvironment{question}{\begin{Question}\rm}{\end{Question}}
+\newenvironment{property}{\begin{Property}\rm}{\end{Property}}
+\newenvironment{properties}{\begin{Properties}\rm}{\end{Properties}}
+\newenvironment{notation}{\begin{Notation}\rm}{\end{Notation}}
+\newenvironment{fact}{\begin{Fact}\rm}{\end{Fact}}
+\newenvironment{notationdefinition}{\begin{Notationdefinition}\rm}{\end{Notationdefinition}}
+\newenvironment{remarkdefinition}{\begin{Remarkdefinition}\rm}{\end{Remarkdefinition}}
+\newenvironment{subprops}{\begin{Subprops}\rm}{\end{Subprops}}
+\newenvironment{para}{\begin{Para}\rm}{\end{Para}}
+\newenvironment{disc}{\begin{Discussion}\rm}{\end{Discussion}}
+\newenvironment{construction}{\begin{Construction}\rm}{\end{Construction}}
+\newenvironment{exer}{\begin{Exer}\rm}{\end{Exer}}
+\newenvironment{exerc}{\begin{Exerc}\rm}{\end{Exerc}}
+
+\newtheorem{intthm}{Theorem}
+\renewcommand{\theintthm}{\Alph{intthm}}
+
+% COMENTS
+
+%\newcommand{\ssw}[1]{\footnote{#1}}
+\newcommand{\nt}[2][$^\spadesuit$]{\hspace{0pt}#1\marginpar{\tt\raggedleft
+    #1 #2}}
+\newcommand{\dw}[2][$^\spadesuit$]{\nt[#1]{DW:#2}}
+\newcommand{\ssw}[2][$^\spadesuit$]{\nt[#1]{SSW:#2}}
+\newcommand{\ts}[2][$^\spadesuit$]{\nt[#1]{TS:#2}}
+
+\newcommand{\ds}{\displaystyle}
+
+% CATEGORIES
+
+\newcommand{\A}{\mathcal{A}}
+\newcommand{\D}{\mathcal{D}}
+\newcommand{\R}{\mathcal{R}}
+\newcommand{\cat}[1]{\mathcal{#1}}
+\newcommand{\catx}{\cat{X}}
+\newcommand{\caty}{\cat{Y}}
+\newcommand{\catm}{\cat{M}}
+\newcommand{\catv}{\cat{V}}
+\newcommand{\catw}{\cat{W}}
+\newcommand{\catg}{\cat{G}}
+\newcommand{\catp}{\cat{P}}
+\newcommand{\catf}{\cat{F}}
+\newcommand{\cati}{\cat{I}}
+\newcommand{\cata}{\cat{A}}
+\newcommand{\catabel}{\mathcal{A}b}
+\newcommand{\catc}{\cat{C}}
+\newcommand{\catb}{\cat{B}}
+\newcommand{\catgi}{\cat{GI}}
+\newcommand{\catgp}{\cat{GP}}
+\newcommand{\catgf}{\cat{GF}}
+\newcommand{\catgic}{\cat{GI}_C}
+\newcommand{\catgib}{\cat{GI}_B}
+\newcommand{\catib}{\cat{I}_B}
+\newcommand{\catgibdc}{\cat{GI}_{\bdc}}
+\newcommand{\catgicd}{\cat{GI}_{C^{\dagger}}}
+\newcommand{\caticd}{\cat{I}_{C^{\dagger}}}
+\newcommand{\catgc}{\cat{G}_C}
+\newcommand{\catgpc}{\cat{GP}_C}
+\newcommand{\catgpb}{\cat{GP}_B}
+\newcommand{\catgpcd}{\cat{GP}_{C^{\dagger}}}
+\newcommand{\catpcd}{\cat{P}_{C^{\dagger}}}
+\newcommand{\catac}{\cat{A}_C}
+\newcommand{\catab}{\cat{A}_B}
+\newcommand{\catbc}{\cat{B}_C}
+\newcommand{\catabdc}{\cat{A}_{\bdc}}
+\newcommand{\catbbdc}{\cat{B}_{\bdc}}
+\newcommand{\catbb}{\cat{B}_B}
+\newcommand{\catacd}{\cat{A}_{\da{C}}}
+\newcommand{\catbcd}{\cat{B}_{\da{C}}}
+\newcommand{\catgfc}{\cat{GF}_C}
+\newcommand{\catic}{\cat{I}_C}
+\newcommand{\catibdc}{\cat{I}_{\bdc}}
+\newcommand{\catpb}{\cat{P}_B}
+\newcommand{\catpc}{\cat{P}_C}
+\newcommand{\catfc}{\cat{F}'}
+\newcommand{\opg}{\cat{G}}
+\newcommand{\finrescat}[1]{\operatorname{res}\comp{\cat{#1}}}
+\newcommand{\proprescat}[1]{\operatorname{res}\wti{\cat{#1}}}
+\newcommand{\finrescatx}{\finrescat{X}}
+\newcommand{\finrescaty}{\finrescat{Y}}
+\newcommand{\finrescatv}{\finrescat{V}}
+\newcommand{\fincorescatggicd}{\operatorname{cores}\comp{\catg(\caticd)}}
+\newcommand{\finrescatw}{\finrescat{W}}
+\newcommand{\finrescatpc}{\operatorname{res}\comp{\catpc}}
+\newcommand{\finrescatpcr}{\operatorname{res}\comp{\catpc(R)}}
+\newcommand{\finrescatpb}{\operatorname{res}\comp{\catpb}}
+\newcommand{\finrescatpbr}{\operatorname{res}\comp{\catpb(R)}}
+\newcommand{\finrescatgpb}{\operatorname{res}\comp{\catgpb}}
+\newcommand{\finrescatgpbr}{\operatorname{res}\comp{\catgpb(R)}}
+\newcommand{\propcorescatic}{\operatorname{cores}\wti{\catic}}
+\newcommand{\propcorescatgic}{\operatorname{cores}\wti{\catgic}}
+\newcommand{\fincorescatic}{\operatorname{cores}\comp{\catic}}
+\newcommand{\fincorescaticr}{\operatorname{cores}\comp{\catic(R)}}
+\newcommand{\fincorescatir}{\operatorname{cores}\comp{\cati(R)}}
+\newcommand{\finrescatp}{\finrescat{P}}
+\newcommand{\proprescatgpc}{\operatorname{res}\wti{\catgpc}}
+\newcommand{\fincorescaticd}{\operatorname{cores}\comp{\caticd}}
+\newcommand{\finrescatgp}{\finrescat{GP}}
+\newcommand{\finrescatpcd}{\operatorname{res}\comp{\catp_{\da{C}}}}
+\newcommand{\fincorescatggic}{\operatorname{cores}\comp{\catg(\catic)}}
+\newcommand{\fincorescatibdc}{\operatorname{cores}\comp{\catibdc}}
+\newcommand{\fincorescatibdcr}{\operatorname{cores}\comp{\catibdc(R)}}
+\newcommand{\fincorescatgibdc}{\operatorname{cores}\comp{\catgibdc}}
+\newcommand{\fincorescatgibdcr}{\operatorname{cores}\comp{\catgibdc(R)}}
+\newcommand{\fincorescatibr}{\operatorname{cores}\comp{\catib(R)}}
+\newcommand{\finrescatggpc}{\operatorname{res}\comp{\catg(\catpc)}}
+\newcommand{\finrescatg}{\operatorname{res}\comp{\cat{G}}(R)}
+\newcommand{\finrescatgpr}{\operatorname{res}\comp{\cat{GP}(R)}}
+\newcommand{\finrescatpr}{\operatorname{res}\comp{\cat{P}(R)}}
+\newcommand{\finrescatgpc}{\operatorname{res}\comp{\catgp_C(R)}}
+\newcommand{\proprescatpc}{\operatorname{res}\wti{\catp_C(R)}}
+\newcommand{\propcorescatpc}{\operatorname{cores}\wti{\catp_C(R)}}
+\newcommand{\finrescatgpcd}{\operatorname{res}\comp{\catgp_{C^{\dagger}}(R)}}
+\newcommand{\proprescatp}{\proprescat{P}}
+\newcommand{\proprescatgp}{\proprescat{GP}}
+\newcommand{\proprescatx}{\proprescat{X}}
+\newcommand{\proprescaty}{\proprescat{Y}}
+\newcommand{\proprescatv}{\proprescat{V}}
+\newcommand{\proprescatw}{\proprescat{W}}
+\newcommand{\fincorescat}[1]{\operatorname{cores}\comp{\cat{#1}}}
+\newcommand{\propcorescat}[1]{\operatorname{cores}\wti{\cat{#1}}}
+\newcommand{\fincorescatx}{\fincorescat{X}}
+\newcommand{\fincorescati}{\fincorescat{I}}
+\newcommand{\fincorescatgi}{\fincorescat{GI}}
+\newcommand{\fincorescatgir}{\fincorescat{GI(R)}}
+\newcommand{\fincorescatgic}{\operatorname{cores}\comp{\catgi_C(R)}}
+\newcommand{\fincorescatgicd}{\operatorname{cores}\comp{\catgi_{C^{\dagger}}(R)}}
+\newcommand{\propcorescati}{\propcorescat{I}}
+\newcommand{\propcorescatgi}{\propcorescat{GI}}
+\newcommand{\fincorescaty}{\fincorescat{Y}}
+\newcommand{\fincorescatv}{\fincorescat{V}}
+\newcommand{\fincorescatw}{\fincorescat{W}}
+\newcommand{\propcorescatx}{\propcorescat{X}}
+\newcommand{\propcorescaty}{\propcorescat{Y}}
+\newcommand{\propcorescatv}{\propcorescat{V}}
+\newcommand{\propcorescatw}{\propcorescat{W}}
+\newcommand{\cpltrescat}[1]{\operatorname{res}\ol{\cat{#1}}}
+\newcommand{\cpltcorescat}[1]{\operatorname{cores}\ol{\cat{#1}}}
+\newcommand{\cpltrescatw}{\cpltrescat{W}}
+\newcommand{\cpltcorescatw}{\cpltcorescat{W}}
+\newcommand{\gw}{\opg(\catw)}
+\newcommand{\gnw}[1]{\opg^{#1}(\catw)}
+\newcommand{\gnx}[1]{\opg^{#1}(\catx)}
+\newcommand{\gx}{\opg(\catx)}
+\newcommand{\catao}{\cata^o}
+\newcommand{\catxo}{\catx^o}
+\newcommand{\catyo}{\caty^o}
+\newcommand{\catwo}{\catw^o}
+\newcommand{\catvo}{\catv^o}
+
+
+% DIMENSIONS
+
+\newcommand{\pdim}{\operatorname{pd}}	
+\newcommand{\pd}{\operatorname{pd}}	
+\newcommand{\gdim}{\mathrm{G}\text{-}\!\dim}	
+\newcommand{\gkdim}[1]{\mathrm{G}_{#1}\text{-}\!\dim}	
+\newcommand{\gcdim}{\gkdim{C}}	
+\newcommand{\injdim}{\operatorname{id}}	
+\newcommand{\id}{\operatorname{id}}	
+\newcommand{\fd}{\operatorname{fd}}
+\newcommand{\fdim}{\operatorname{fd}}
+\newcommand{\catpd}[1]{\cat{#1}\text{-}\pd}
+\newcommand{\xpd}{\catpd{X}}
+\newcommand{\xopd}{\catxo\text{-}\pd}
+\newcommand{\xid}{\catid{X}}
+\newcommand{\wpd}{\catpd{W}}
+\newcommand{\ypd}{\catpd{Y}}
+\newcommand{\gpd}{\catpd{G}}
+\newcommand{\gid}{\catid{G}}
+\newcommand{\catid}[1]{\cat{#1}\text{-}\id}
+\newcommand{\yid}{\catid{Y}}
+\newcommand{\vid}{\catid{V}}
+\newcommand{\wid}{\catid{W}}
+\newcommand{\pdpd}{\catpd\text{-}\pd}
+\newcommand{\idid}{\catid\text{-}\id}
+\newcommand{\pcpd}{\catpc\text{-}\pd}
+\newcommand{\pbpd}{\catpb\text{-}\pd}
+\newcommand{\icdagdim}{\caticd\text{-}\id}
+\newcommand{\icdid}{\caticd\text{-}\id}
+\newcommand{\ibdcid}{\catibdc\text{-}\id}
+\newcommand{\icdim}{\catic\text{-}\id}
+\newcommand{\icid}{\catic\text{-}\id}
+\newcommand{\ibid}{\catib\text{-}\id}
+\newcommand{\pcdim}{\catpc\text{-}\pd}
+\newcommand{\gpcpd}{\catgpc\text{-}\pd}
+\newcommand{\gfpd}{\catgf\text{-}\pd}
+\newcommand{\gppd}{\catgp\text{-}\pd}
+\newcommand{\gfcpd}{\catgfc\text{-}\pd}
+\newcommand{\gpbpd}{\catgpb\text{-}\pd}
+\newcommand{\gicid}{\catgic\text{-}\id}
+\newcommand{\gibid}{\catgib\text{-}\id}
+\newcommand{\gicdagdim}{\catgicd\text{-}\id}
+\newcommand{\gicdid}{\catgicd\text{-}\id}
+\newcommand{\ggpcpd}{\catg(\catpc)\text{-}\pd}
+\newcommand{\ggicdid}{\catg(\caticd)\text{-}\id}
+\newcommand{\ggicid}{\catg(\catic)\text{-}\id}
+\newcommand{\cmdim}{\mathrm{CM}\text{-}\dim}	
+\newcommand{\cidim}{\mathrm{CI}\text{-}\!\dim}	
+\newcommand{\cipd}{\mathrm{CI}\text{-}\!\pd}	
+\newcommand{\cifd}{\mathrm{CI}\text{-}\!\fd}	
+\newcommand{\ciid}{\mathrm{CI}\text{-}\!\id}	
+
+
+% OTHER INVARIANTS
+
+\newcommand{\Ht}{\operatorname{ht}}	
+\newcommand{\col}{\operatorname{col}}	
+\newcommand{\depth}{\operatorname{depth}}	
+\newcommand{\rank}{\operatorname{rank}}	
+\newcommand{\amp}{\operatorname{amp}}
+\newcommand{\edim}{\operatorname{edim}}
+\newcommand{\crs}{\operatorname{crs}}
+\newcommand{\rfd}{\operatorname{Rfd}}
+\newcommand{\ann}{\operatorname{Ann}}
+\newcommand{\mspec}{\mathrm{m}\text{\spec}}
+\newcommand{\soc}{\operatorname{Soc}}
+\newcommand{\len}{\operatorname{length}}
+\newcommand{\type}{\operatorname{type}}
+\newcommand{\dist}{\operatorname{dist}}
+\newcommand{\prox}{\operatorname{\sigma}}
+\newcommand{\curv}{\operatorname{curv}}
+\newcommand{\icurv}{\operatorname{inj\,curv}}
+\newcommand{\grade}{\operatorname{grade}}
+\newcommand{\card}{\operatorname{card}}
+\newcommand{\cx}{\operatorname{cx}}	
+\newcommand{\cmd}{\operatorname{cmd}}	
+\newcommand{\Span}{\operatorname{Span}}	
+\newcommand{\CM}{\operatorname{CM}}	
+
+% FUNCTORS
+
+\newcommand{\cbc}[2]{#1(#2)}
+\newcommand{\ext}{\operatorname{Ext}}	
+\newcommand{\rhom}{\mathbf{R}\!\operatorname{Hom}}	
+\newcommand{\lotimes}{\otimes^{\mathbf{L}}}
+\newcommand{\HH}{\operatorname{H}}
+\newcommand{\Hom}{\operatorname{Hom}}	
+\newcommand{\coker}{\operatorname{Coker}}
+\newcommand{\spec}{\operatorname{Spec}}
+\newcommand{\s}{\mathfrak{S}}
+\newcommand{\tor}{\operatorname{Tor}}
+\newcommand{\im}{\operatorname{Im}}
+\newcommand{\shift}{\mathsf{\Sigma}}
+\newcommand{\othershift}{\mathsf{\Sigma}}
+\newcommand{\da}[1]{#1^{\dagger}}
+\newcommand{\Cl}{\operatorname{Cl}}
+\newcommand{\Pic}{\operatorname{Pic}}
+\newcommand{\proj}{\operatorname{Proj}}
+\newcommand{\End}{\operatorname{End}}
+\newcommand{\cone}{\operatorname{Cone}}
+\newcommand{\Ker}{\operatorname{Ker}}
+\newcommand{\xext}{\ext_{\catx}}
+\newcommand{\yext}{\ext_{\caty}}
+\newcommand{\vext}{\ext_{\catv}}
+\newcommand{\wext}{\ext_{\catw}}
+\newcommand{\aext}{\ext_{\cata}}
+\newcommand{\ahom}{\Hom_{\cata}}
+\newcommand{\aoext}{\ext_{\catao}}
+\newcommand{\aohom}{\Hom_{\catao}}
+\newcommand{\xaext}{\ext_{\catx\!\cata}}
+\newcommand{\axext}{\ext_{\cata\catx}}
+\newcommand{\ayext}{\ext_{\cata\caty}}
+\newcommand{\avext}{\ext_{\cata\catv}}
+\newcommand{\awext}{\ext_{\cata\catw}}
+\newcommand{\Qext}{\ext_{\catw \cata}}
+\newcommand{\pmext}{\ext_{\catp(R)\catm(R)}}
+\newcommand{\miext}{\ext_{\catm(R)\cati(R)}}
+\newcommand{\Qtate}{\comp{\ext}_{\catw \cata}}
+\newcommand{\awtate}{\comp{\ext}_{\cata \catw}}
+\newcommand{\avtate}{\comp{\ext}_{\cata \catv}}
+\newcommand{\pmtate}{\comp{\ext}_{\catp(R) \catm(R)}}
+\newcommand{\mitate}{\comp{\ext}_{\catm(R) \cati(R)}}
+\newcommand{\pcext}{\ext_{\catpc}}
+\newcommand{\pbext}{\ext_{\catpb}}
+\newcommand{\gpcext}{\ext_{\catgpc}}
+\newcommand{\icext}{\ext_{\catic}}
+\newcommand{\gpbext}{\ext_{\catgpb}}
+\newcommand{\gibdcext}{\ext_{\catgibdc}}
+\newcommand{\ibdcext}{\ext_{\catibdc}}
+\newcommand{\gicext}{\ext_{\catgic}}
+\newcommand{\gpext}{\ext_{\catgp}}
+\newcommand{\giext}{\ext_{\catgi}}
+\newcommand{\gicdext}{\ext_{\catgicd}}
+
+% IDEALS
+
+\newcommand{\ideal}[1]{\mathfrak{#1}}
+\newcommand{\m}{\ideal{m}}
+\newcommand{\n}{\ideal{n}}
+\newcommand{\p}{\ideal{p}}
+\newcommand{\q}{\ideal{q}}
+\newcommand{\fa}{\ideal{a}}
+\newcommand{\fb}{\ideal{b}}
+\newcommand{\fN}{\ideal{N}}
+\newcommand{\fs}{\ideal{s}}
+\newcommand{\fr}{\ideal{r}}
+
+% OPERATIONS AND ACCENTS
+
+\newcommand{\wt}{\widetilde}
+\newcommand{\ti}{\tilde}
+\newcommand{\comp}[1]{\widehat{#1}}
+\newcommand{\ol}{\overline}
+\newcommand{\wti}{\widetilde}
+
+% OPERATORS
+
+\newcommand{\ass}{\operatorname{Ass}}
+\newcommand{\supp}{\operatorname{Supp}}
+\newcommand{\minh}{\operatorname{Minh}}
+\newcommand{\Min}{\operatorname{Min}}
+
+% MATHBB
+
+\newcommand{\bbz}{\mathbb{Z}}
+\newcommand{\bbn}{\mathbb{N}}
+\newcommand{\bbq}{\mathbb{Q}}
+\newcommand{\bbr}{\mathbb{R}}
+\newcommand{\bbc}{\mathbb{C}}
+
+% ARROWS
+
+\newcommand{\from}{\leftarrow}
+\newcommand{\xra}{\xrightarrow}
+\newcommand{\xla}{\xleftarrow}
+\newcommand{\onto}{\twoheadrightarrow}
+\newcommand{\res}{\xra{\simeq}}
+
+
+% MAPS
+
+\newcommand{\vf}{\varphi}
+\newcommand{\ve}{\varepsilon}
+\newcommand{\Qcomp}{\varepsilon_{\catw \cata}}
+\newcommand{\awcomp}{\varepsilon_{\cata \catw}}
+\newcommand{\avcomp}{\varepsilon_{\cata \catv}}
+\newcommand{\xQcomp}{\vartheta_{\catx \catw \cata}}
+\newcommand{\ayvcomp}{\vartheta_{\cata \caty \catv}}
+\newcommand{\Qacomp}{\varkappa_{\catw \cata}}
+\newcommand{\xaacomp}{\varkappa_{\catx \cata}}
+\newcommand{\aaycomp}{\varkappa_{\cata\caty}}
+\newcommand{\aavcomp}{\varkappa_{\cata\catv}}
+\newcommand{\gpcpccomp}{\vartheta_{\catgpc\catpc}}
+\newcommand{\gpcpbcomp}{\vartheta_{\catgpc\catpb}}
+\newcommand{\gpcgpbcomp}{\vartheta_{\catgpc\catgpb}}
+\newcommand{\gicibcomp}{\vartheta_{\catgic\catib}}
+\newcommand{\gicgibcomp}{\vartheta_{\catgic\catgib}}
+\newcommand{\giciccomp}{\vartheta_{\catgic\catic}}
+\newcommand{\pccomp}{\varkappa_{\catpc}}
+\newcommand{\gpccomp}{\varkappa_{\catgpc}}
+\newcommand{\iccomp}{\varkappa_{\catic}}
+\newcommand{\ibdccomp}{\varkappa_{\catibdc}}
+\newcommand{\icdcomp}{\varkappa_{\caticd}}
+\newcommand{\giccomp}{\varkappa_{\catgic}}
+
+% MISCELLANEOUS 
+
+\newcommand{\y}{\mathbf{y}}
+\newcommand{\te}{\theta}
+\newcommand{\x}{\mathbf{x}}
+\newcommand{\opi}{\operatorname{i}}
+\newcommand{\route}{\gamma}
+\newcommand{\sdc}[1]{\mathsf{#1}}
+\newcommand{\nls}[1]{\mathsf{#1}}
+\newcommand{\cl}{\operatorname{cl}}
+\newcommand{\cls}{\operatorname{cls}}
+\newcommand{\pic}{\operatorname{pic}}
+\newcommand{\pics}{\operatorname{pics}}
+\newcommand{\tri}{\trianglelefteq}
+\newcommand{\Mod}{\operatorname{Mod}}
+\newcommand{\bdc}{B^{\dagger_C}}
+\newcommand{\e}{\mathbf{e}}
+\newcommand{\f}{\mathbf{f}}
+
+
+% RENEWED COMMANDS
+
+\renewcommand{\geq}{\geqslant}
+\renewcommand{\leq}{\leqslant}
+\renewcommand{\ker}{\Ker}
+\renewcommand{\hom}{\Hom}
+
+
+\newcommand{\normal}{\lhd}
+\newcommand{\normaleq}{\trianglelefteqslant}
+\newcommand{\homrm}[1]{\hom_{_{#1}\catm}}
+\newcommand{\hommr}[1]{\hom_{\catm_{#1}}}
+\newcommand{\cplx}[1]{{#1}_{\bullet}}
+\newcommand{\pext}{\mathrm{P}\!\ext}
+\newcommand{\pextrm}[1]{\pext_{_{#1}\catm}}
+\newcommand{\pextmr}[1]{\pext_{\catm_{#1}}}
+\newcommand{\iext}{\mathrm{I}\!\ext}
+\newcommand{\iextrm}[1]{\iext_{_{#1}\catm}}
+\newcommand{\iextmr}[1]{\iext_{\catm_{#1}}}
+\newcommand{\catmod}[1]{#1\text{-mod}}
+\newcommand{\modcat}[1]{\text{mod-}#1}
+
+
+\newcommand{\lcm}{\textnormal{lcm}}
+\newcommand{\diff}{\backslash}
+%\setlength{\parindent}{0mm}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% LyX specific LaTeX commands.
+\floatstyle{ruled}
+\newfloat{algorithm}{tbp}{loa}
+\providecommand{\algorithmname}{Algorithm}
+\floatname{algorithm}{\protect\algorithmname}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Textclass specific LaTeX commands.
+\numberwithin{equation}{section}
+\numberwithin{figure}{section}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% User specified LaTeX commands.
+\usepackage{algpseudocode}
+
+\usepackage{subcaption}
+
+\numberwithin{equation}{section}
+
+
+\makeatletter
+
+
+\makeatletter
+
+\newcommand{\h}{\mathcal{H}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% LyX specific LaTeX commands.
+\floatstyle{ruled}
+\newfloat{algorithm}{tbp}{loa}
+\providecommand{\algorithmname}{Algorithm}
+\floatname{algorithm}{\protect\algorithmname}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Textclass specific LaTeX commands.
+\numberwithin{equation}{section}
+\numberwithin{figure}{section}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% User specified LaTeX commands.
+\usepackage{algpseudocode}
+
+\makeatother
+
+\begin{document}
+\begin{frontmatter}
+
+\begin{fmbox}
+\hfill\setlength{\fboxrule}{0px}\setlength{\fboxsep}{5px}\fbox{\includegraphics[width=2in]{moneroLogo.png}}
+\dochead{Research bulletin \hfill MRL-0005}
+\title{Difficulty Adjustment Algorithms in Cryptocurrency Protocols}
+\date{12 October 2014}
+\author[
+   addressref={mrl},
+   email={lab@monero.cc}
+]{\fnm{Sarang} \snm{Noether}}
+\author[
+   addressref={mrl}
+   email={lab@monero.cc}
+]{\fnm{Surae} \snm{Noether}}
+
+
+\address[id=mrl]{
+  \orgname{Monero Research Lab}
+}
+\end{fmbox}
+
+\begin{abstractbox}
+\begin{abstract}
+As of this writing, the algorithm employed for difficulty adjustment in the CryptoNote reference code is known by the Monero Research Lab to be flawed. By dishonestly reporting timestamps, attackers can gain disproportionate control over network difficulty.  We verify this route of attack by testing the CryptoNote reference code against historical blockchain timestamp data; we use data that has been both deterministically manipulated and randomly manipulated to represent an attack. To do this, we reimplemented the difficulty adjustment algorithm in the Python programming language. We describe and illustrate the nature of the flaw and recommend a solution.
+
+This research bulletin has not undergone peer review, and reflects only the results of internal investigation.
+\end{abstract}
+\end{abstractbox}
+\end{frontmatter}
+
+In this research bulletin, we audit difficulty assessment and adjustment in the CryptoNote reference code (from which the Monero cryptocurrency has been forked). This audit reveals that the difficulty assessment and adjustment algorithm is flawed in several ways. We discuss the desirable properties of difficulty and establish a more suitable difficulty adjustment algorithm. 
+
+To begin, though, we have to ask obvious questions. What is the hashing difficulty of a proof-of-work cryptocurrency? Each block that arrives on the network is assigned a difficulty score, so one interpretation of difficulty is the following: difficulty scores form a weighting scheme to a blockchain. However, many choices of weighting schemes can be described, none of which accomplish the intuitive tasks one desires from a difficulty scheme. If difficulty scores are independent of time and depend solely on block height, then network hash rate will have no practical consequence for difficulty. For example, by setting the difficulty of each block to be precisely half the previous difficulty with some initial difficulty on the genesis block, we see immediately that hash rate has no effect on difficulty. Furthermore, there is a monotonically increasing incentive to mine. For another example, by setting difficulty of each block to the current time, difficulty will linearly increase in time and we see, again, hash rate has no effect on difficulty. Hence, the answer ``difficulty is a weighting scheme'' seems dissatisfying. So what properties should difficulty exhibit, in addition to being a weighting scheme?
+
+The most important property of blockchain growth is that the number of block arrivals on the network should be held roughly constant in time. Hence, we intuitively conclude that if network hash rate has increased, difficulty should increase, and \textit{vice versa}. Difficulty should remain unchanged if and only if network hash rate has remained unchanged. It is not immediately obvious, however, what sort of relationship hash rate and difficulty ought to have. Should difficulty be directly proportional to hash rate, or should there be some more complicated relationship between the two? Should we set difficulty to the square of hash rate, or should difficulty be a linear function of hash rate? If difficulty is a linear function of hash rate, will any linear transformation suffice? If only some linear transformations work, what properties must we require from such a linear transformation?
+
+In Section \ref{model}, we construct a statistical model of blockchain construction using independent Bernoulli trials (each corresponding to hashing a particular nonce). Using this model, we conclude that difficulty assessments should be directly proportional to network hash rate. We also observe the equivalence between this process and a Poisson process under suitable assumptions, which appear to be reasonable in the cryptocurrency setting.
+
+In Section \ref{currentApproach}, we discuss the current approach to difficulty assessment in the CryptoNote reference code. In that section, we elaborate upon the current codebase, we attempt to identify the ostensible goals of the reference difficulty algorithm, and we discuss some successes and failures of that code with respect to both those goals as well as the desirable properties of difficulty.
+
+In Section \ref{proposedChanges}, we make some proposals for changes to the current difficulty assessment method. Our recommendations vary from simple to sophisticated, with advantages and drawbacks to each.
+
+All discussions of drawbacks, flaws, and attack vulnerabilities herein are not meant to be comprehensive. Notice that, although this paper discusses the CryptoNote reference code, we discuss this from the perspective of the Monero codebase, which has been forked from the CryptoNote reference code.
+
+\section{Modeling Blockchain Construction with Jenga, Bernoulli, and Poisson}\label{model}
+
+Assume we have an unknown number of computers, $N(t)$, on a network with an unknown weighted connected graph structure, describing the computer network and transmission speeds. For simplicity, presume that each computer has a hash rate of $1 H/s$, so that $N(t)$ is both network hash rate and user participation. While this may seem unrealistic at first, keep in mind that a powerful mining computer can be viewed as a cluster of $1 H/s$ computers on the network with zero transmission delay between them. Mining pools can similarly be viewed as superclusters of such clusters with nearly zero transmission delays between them. We allow participants to join or leave the game at any real-valued time. The results of the coin flipping game are transmitted across the network so all participants have up-to-date data. Non-uniformity in the network leads each node to have its own data. Say the data accessible by the $i^{th}$ node up till time $t$ is $D_i(t)$. All nodes eventually receive the same data, although not necessarily at the same rate or in the same order. The coin flipping game proceeds as follows:
+
+The game is to build a stack of heads-up coins in the center of the room following certain rules. Before each flip, the $i^{th}$ participant uses the data made available to her thus far to assess the current state of the game. She uses this data to (a) choose a \textit{parent coin} from the current stack and (b) make a determination about the weight of the coin she is about to flip. Denote the probability of obtaining a heads as $p_i(t; D_i(t))$ and the probability of obtaining a tails as $1-p_i(t; D_i(t))$. If the flip is heads-up, she will stack her heads-up coin on the pre-determined parent coin and receive a monetary reward. In order to claim their reward, players announce the discovery time $\widehat{t}$ and the parent coin to the network. Note that $\widehat{t} \neq t$ in general. When the $j^{th}$ participant hears such an announcement, she adjusts her own information, $D_j(t)$, so as to keep an accurate model of the stack of coins.
+
+When deciding how node $i$ should adjust $p_i$ based on $D_i$, we allow node $i$ to make the assumption that all other nodes on the network have the same data as itself. That is, node $i$ assumes that if $j \neq i$, then $D_j = D_i$. If so, the node will also conclude that other nodes have the same weight, i.e.\ $p_i = p_j$. Indeed, all nodes will \textit{eventually} have the same data, and probably only within a few seconds. While this assumption is not outrageously false, it is still false. Even if all actors are honest, computers within a pool will receive information about that pool before computers outside of that pool, due to transmission speeds if not selfish mining. Despite this unreasonable assumption, an honest node $i$ has no \textit{a priori} information available about the data made available to other players, and so this ostensibly false assumption is necessary.
+
+We largely ignore parent-coin selection rules in this document, although many interesting questions arise from these variations. For completeness, we shall discuss parent-coin selection for a moment. Many decision rules for choosing parent coins could be constructed, but one desirable restriction for a fair game is that, whatever the decision rule is employed for choosing parent coins, this rule is uniformly enforced across nodes. This way, two nodes at the same time with the same data will choose the same parent coin.  In \cite{nakamoto2008bitcoin}, Satoshi Nakamoto proposed that clients always stack new heads on top of the longest branch they can see. In \cite{sompolinsky2013accelerating}, Sompolinsky and Zohar recommend a greedy algorithm seeking the heaviest subtree approach: participants determine their parent coin by climbing the blocktree from the genesis block upward, and each time they are faced with a branch, they take the branch leading to the heaviest subtree. When they have finished climbing the blocktree, they have found their parent coin. 
+
+Both approaches can be viewed under a different light: assign a score to each block and choosing the block with the highest \textit{cumulative} score of all preceding blocks. A generalized Nakamoto rule can be constructed by stacking new heads on top of the longest branch in the coin tree in terms of some score function. This observation matches nicely with our description of difficulty as a weighting scheme applied to the blockchain, as well. Indeed, for any given difficulty scheme, a simple parent selection scheme could be ``choose as the parent coin the choice that has maximal \textit{cumulative difficulty}.'' From this perspective, we see that the generalized Nakamoto rule is sensitively dependent upon choice of difficulty algorithm.
+
+This is all we shall say on parent-coin selection rules in this document. On the other hand, we primarily focus on coin-weight selection, or rather, difficulty algorithm. One desirable restriction for a fair game is that the weight of the coin is determined across nodes uniformly, when possible. That is to say, two different computers on the network with the same data at the same time will flip coins with the same weights. That is to say, if $D_i(t_1) = D_j(t_2)$ and $t_1 = t_2$, then $p_i(t_1; D_i(t_1)) = p_j(t_2 \; D_j(t_2))$ for any $i, j$.
+
+Although the game the network is playing may seem peculiar so far, the game becomes more peculiar when the fundamental unreliability of timestamps is taken into account. The discovering node announces the time $\widehat{t}$, not necessarily the time $t$. Indeed, the announced time of discovery of each flip, $\widehat{t}$, is subject to dishonest actors, calibration error on the part of the local machine, and error due to transmission speeds on the network. Indeed, machines with up to $2$ hours disparity in their local clocks can still be considered ostensibly honest actors due to the barbaric practice of Daylight Savings Time. Worse yet, there is no way, to our knowledge, of validating that timestamps are reported honestly. In fact, the data available to any given node, $D_i(t)$ is precisely a tree of (possibly false) timestamps representing the stack of coins.
+
+In the remainder of this document, unless there is danger of confusion, we will denote $N(t)$, $D_i(t)$, and $p_i(t; D_i(t))$ as $N$, $D_i$, and $p_i$, respectively, with the understanding that these quantities vary in time.
+
+\section{Difficulty is Hash Power}\label{diffIsHash}
+
+In this subsection, we derive the constraint required on the coin weight, $p_i$, that ensures that, regardless of network hash rate, $N$, and regardless of network structure, the total number of heads-up coins being discovered across the whole network per unit time is approximately constant; namely, by setting difficulty proportional to network hash power, we will attain constant heads-up coins over time, on average. 
+
+In most cryptocurrency protocols, as well as the CryptoNote protocol, a hash digest, $h(m)$, multiplied by network difficulty, $\mathcal{D}$, must be less than some constant, $c$, in order for a user on the network to have earned the right to declare a block valid. That is, if $h(m)\cdot\mathcal{D} \leq c$, then the user has earned the right to post a block to the blockchain and has won a block reward. A good hash algorithm, $h$, has an output space that is practically, if not mathematically, indistinguishable from the uniform distribution, and so this has probability of success that is roughly proportional to $c/\mathcal{D}$. This allows us to model the race for block validation by equating the act of testing a nonce against a difficulty target with flipping a coin with probability of heads $p=c/\mathcal{D}$. 
+
+Recall that the most important property of blockchain growth is to keep the rate of arrival of heads-up coins roughly constant, regardless of the number of coin-flippers and their speed of coin flips at any point in time. However, neither the number of users on the network nor their personal coin-flipping rates are directly observable. However, if a large number of such trials, $N$, is observed with a small probability of success, $p$, we can cite the approximation
+\[\binom{N}{k} p^k(1-p)^{N-k} \approx \frac{\lambda^k e^{-\lambda}}{k!}\]
+where $\lambda = Np$. The left hand side is the probability of finding $k$ successes in a sequence of $N$ independent Bernoulli trials, each with probability of success $p$. The right-hand side is the probability of finding $k$ arrivals in a time interval while observing a Poisson process with rate parameter $\lambda = Np$. That is to say, while hash rate is held constant at $N$ and difficulty is held constant at $\mathcal{D}$, blocks will arrive on the network in a process that is closely approximated by a Poisson process with rate $\lambda = cN/\mathcal{D}$. We wish to keep this rate of arrivals constant in time, regardless of how $N$ changes in time, so the natural choice is to pick $\mathcal{D} = cN/\lambda_{\text{target}}$, where $\lambda_{\text{target}}$ is our target block arrival rate. That is to say, the only difficulty choice that will maintain a constant (average) block arrival rate will be to choose difficulty to be proportional to network hash rate.
+
+We may re-attain this result without citing the Poisson approximation, if we are willing to deal in expectation and rely upon the Law of Large Numbers to ensure that variance away from the expectation is small. Indeed, each user flips coins at some fixed rate. Some users are faster than others, and some factions of users form collective pools with their coin-flipping machines in order to smooth out the unreliability in their rate of heads-up coin arrivals. However, regardless of user behavior, we can enumerate the list of the coin-flipping rates, $\left\{r_1, r_2, \ldots, r_n\right\}$, where $r_i$ measures the numbers of coin flips per unit time\footnote{Remember, coin flips are directly analagous to hashes, so a gigahash-per-second device corresponds to $r_i = 10^9$ flips per second}. Hence, network hash rate is precisely $N=\sum_i r_i$. Each user has access to data  describing the history of the game, $D_i$, which consists of both her own data as well as partial data provided by other users. She then draws her own conclusions about the bias of the coin she is flipping, $p_i$. Recall that if $p_i$ is the probability of a heads-up coin, and we make $r_i$ flips, the resulting number of heads follows a $\text{Binomial}(r_i,p_i)$ distribution, which has expectation $r_i p_i$. Thus, we can \textit{expect} the total number of arrivals across the network per second to be
+$$\text{Arrivals per second} = \sum_j (r_j\text{ coin flips per second})\cdot (p_j\text{ prob. of heads})$$
+and furthermore, if the number of users is large and the period of time over which we sample this game is large, this expectation will be fairly accurate and variance away from this expectation will be small
+
+Citing our assumption that $D_i = D_j$ for each $i,j$, node $i$ may model the total number of arrivals across the network per second to be
+\begin{align*}\text{Arrivals per second} &= \sum_j r_j p_j\\
+&\approx \sum_j r_j p_i\text{ (by assumption)}\\
+&= p_i \sum_j r_j \\
+&= w_i N
+\end{align*}
+Of course, the left hand side of this equation must be held constant in order to maintain a constant rate of block arrivals. Recalling that the probability of a successful flip is $c/\mathcal{D}$ for some constant $c$, and for a target of $\lambda_{\text{target}}$ seconds per block, then we have
+\begin{align*}
+\lambda_{\text{target}} =& p_i N\\
+=& cN/\mathcal{D}\\
+\mathcal{D} =& cN/\lambda_{\text{target}}
+\end{align*}
+And we re-attain our result that difficulty ought to be proportional to network hash rate, $N$.
+
+\section{Orphaned Blocks}
+We pause to make an observation about orphaned coins, which actually has nothing to do with difficulty. Regardless of parent-coin selection, we will still occasionally, due to transmission speed errors, see computers producing orphan blocks. If all users mine honestly, this is the primary source of orphan blocks, but there is nothing to prevent users from colluding in a selfish mining attack, as described in \cite{eyal2014majority}. Due to some conflict in the community over the term ``orphaned block,'' a more descriptive term perhaps could be \textit{dead branches of the  blocktree}.
+
+Consider the following example modeled after Bitcoin with a block target of $\lambda_{\text{target}}=0.1$ blocks per minute; for the sake of argument, presume the network is a complete graph with a constant $N$ nodes and with the same transmission speed between any two nodes. We could model transmission time in the network between node $i$ and node $j$ as $\mu + e_{ij}$. Here, each $e_{ij}$ is a random variable with $E(e_{ij}) = 0$, the mean propagation time is $\mu \approx 6.5$ seconds following the times reported in \cite{decker2013information}; note that the times reported in that publication are somewhat out of date, but they are a sufficient starting point. When a node finds a heads-up coin at time $t$, then by time $t+6.5$, only half the network (on average) has heard of my new heads-up coin. What about a computer in the second half of the network, the blind half? A node in that half of the network flipping coins between time $t$ and $t+6.5$ may have chosen a different parent coin because it does not have as much information as I (or I chose a different parent coin because I have less information than it). Furthermore, one or the other branch will become part of the main chain eventually; these two events are mutually exclusive. Hence the total number of coin flips wasted is at least
+$$\text{Orphaned flips} \geq E\left[\text{Number of heads found by half the network in }[t,t+\mu)\right]$$
+and if hash power is distributed approximately uniformly, we can take a simple average. This approximation works out to be $\mu\cdot \lambda_{\text{target}}$ flips, where $\lambda_{\text{target}}$ denotes our target block arrival rate. In this example, this would be about $0.01083$ orphaned blocks on average. In expectation, a Bitcoin miner can expect about $1.083$ of their blocks orphaned for every $100$ blocks mined (once every $16$-ish hours). In probability, a Bitcoin miner can be $95\%$ confident that at least one block has been orphaned for every $275$ blocks mined. An individual with $1\%$ of the Bitcoin network's hashing power can expect, on average, to receive $1$ out of every $100$ blocks rewards, which would occur with rate $\lambda_{\text{target}}/100 = 1/1000$ blocks per minute. Hence, to obtain $275$ blocks would require about $190$ days, and such a miner can be $95\%$ confident she will see one orphaned block every $190$ days.
+
+On the other hand, if we have a coin modeled after Monero, with a block target time of $\lambda_{\text{target}}=1.0$ blocks per minute (compared with Bitcoin's $\lambda_{\text{target}} = 0.1$ blocks per minute), but we choose an otherwise similar setup as above, we will see about $0.1083$ orphaned blocks per mined block on average, corresponding to a $6.5$-second propagation time. In expectation, a Monero miner can expect $1.083$ blocks orphaned/wasted for every $10$ mined blocks. In probability, a Monero miner can be $95\%$ confident that at least one block has been orphaned every $26$ blocks mined. If a miner has $1\%$ of the Monero network's hashing power, such a miner can expect to receive $1$ out of every $100$ block rewards, which would occur with rate $\lambda_{\text{target}}/100 = 1/100$ blocks per minute. With $95\%$ probability, such a miner can be $95\%$ confident she will see one orphaned block every $1.8$ days.
+
+Before drawing any conclusions, note that these estimates rely upon \textit{expectations}, which we justified by assuming uniformity in hashing power. This is, of course, very false in the case of Bitcoin, which can see many orders of magnitude difference in performance between various mining rigs. In the case of Monero, which has a somewhat egalitarian proof of work algorithm, this assumption is less problematic. Either way, these values should not be taken as particularly precise. Rather, these values are intended give a broad idea of a ``first-glimpse'' into orphan coin analysis. Having said that, notice that the rate of orphan block arrivals is proportional to the target block arrival rate: the arrival rate of Monero blocks is ten times the arrival rate of Bitcoin blocks, Monero miners can expect around $10\%$ of blocks to be orphan blocks, and Bitcoin miners can expect around $1\%$ of blocks to be orphan blocks. Hence, setting target block arrival rates lower (say, one block every two minutes or three minutes) will dramatically reduce the rate of orphans on the Monero network.
+
+
+
+\section{Current Monero Approach to Difficulty }\label{currentApproach}
+In this section, we examine the current approach in the Monero codebase, which was inherited from the CryptoNote reference code. We elaborate on the mechanism employed by this algorithm to assess and adjust difficulty. We discuss drawbacks and problems with this approach.
+
+\subsection{The Reference CryptoNote Difficulty Adjustment}
+We examined in detail the CryptoNote reference code (written in C). We re-implemented the code relevant to the problem at hand in Python. This code is available at INSERT URL HERE, and is also available in Appendix \ref{referenceCode}. This Python script was written by Sarang Noether so as to algorithmically match the C algorithm originally implemented in the reference code. We chose Python to re-implement the algorithm for clarity reasons.
+
+The cryptocurrency Monero (XMR) has a block target time of one block per minute. Since timestamps are reported in seconds, and due to a few other algorithmic reasons, this target time is expressed as its reciprocal, setting \texttt{target~}$= 60.0$ seconds per block.  The current algorithm considers the most recently received $720$ blocks as a sample. For notational convenience, in this section, we list these $720$ block timestamps as $\left\{t_1, t_2, \ldots, t_{720}\right\}$ (where later indices are received later in time) and their difficulties as $\left\{d_1, d_2, \ldots, d_{720}\right\}$. Given a new timestamp, $t_{721}$, the algorithm tries to answer the question ``to what difficulty should this new block be set?''  
+
+These timestamps need not occur in order (that is, it is possible that $t_{i} > t_{i+1}$ in this list) due to reasons mentioned previously (calibration error in local clocks, transmission speeds across the network, and dishonest users). The \textit{order statistics} of a list of random variables is precisely that same list but sorted; denote the order statistics of these timestamps as $\left\{t_{(1)}, t_{(2)}, \ldots, t_{(720)}\right\}$ so that $t_{(1)} \leq t_{(2)} \leq \ldots \leq t_{(720)}$.
+
+Since each block is associated with both a timestamp and a difficulty, we can mathematically view the list of the past $720$ blocks as a list of \textit{ordered pairs}:
+$$(t_1,d_1),(t_2,d_2),\ldots,(t_{720},d_{720})$$
+The reference code currently sorts the \textit{first coordinate} of this list into its order statistics, yielding the list
+$$(t_{(1)},d_1),(t_{(2)},d_2),\ldots,(t_{(720)},d_{720})$$
+whereas a more natural choice may be to sort the entire list \textit{together} by its first coordinate. Observe that the difficulties listed are not necessarily related to the newly ordered timestamps. See Section \ref{fail} for a discussion on this and the possible ramifications.
+
+Next, the CryptoNote reference code discards the upper and lower $60$ blocks of the last $720$. This is simply discarding $1/6$ of the total list, the top and bottom outliers, keeping the middle $83.33\%$ of the list. All that is necessary for this step is to compute the indices at which we slice out the interesting information, and this appears to occur completely correctly\footnote{Unlike previous sorting and slicing problems in the CryptoNote codebase. See, for example, \cite{macheta2014counterfeiting}}.  This leaves the list of $600$ timestamps, $\left\{t_{(61)}, t_{(62)}, \ldots, t_{(660)}\right\}$, which is also ordered, and the difficulties, $\left\{d_{61}, \ldots, d_{660}\right\}$. Recall that these difficulties are associated with the original blocks, not necessarily the difficulties associated with the now-sorted blocks. Note that, by discarding the upper and lower $60$ blocks, a user may start mining until $30$ blocks have been added to the main chain and then log off without their hashing power ever impacting their own mining rate.
+
+The algorithm then uses the following formula for computing the difficulty score of the next block:
+\begin{align}
+d_{721} :=&\frac{\tau \cdot  \sum_{i=61}^{660} d_i + \left(t_{(660)} - t_{(61)}\right) - 1}{\left(t_{(660)} - t_{(61)}\right)} \label{diffFormInitial}
+\end{align}
+where $\tau$ is the block target time $\tau = 60$ seconds per block. After close inspection, the offset $-1$ in the numerator appears to take into account that blocks must be separated by at least one second. Indeed, this latter term\footnote{While this bound may be tightened to $t_{(660)} - t_{(61)} \geq 599$, the clarity of this difficulty adjustment does not benefit by such an adjustment.}, $\frac{t_{(660)} - t_{(61)} - 1}{\tau} > 0$, and so $d_{721} > \frac{\tau}{t_{(660)} - t_{(61)}} \sum_i d_i$. 
+
+To clean up this formula, let us notationally emphasize that $t_{(660)} - t_{(61)}$ captures the dispersion of timestamps by writing $\Delta T := t_{(660)} - t_{(61)}$. Other approaches may choose different estimates of the dispersion of timestamps, $\Delta T$; dispersion is a fun thing to play with in statistics. We also write $d_{721} = d_{\text{Next}}$ to emphasize the notion that this approach is intended to compute future difficulties, and that we are not necessarily handcuffing ourselves to a $600$ minute window. We replace $\sum_{i=61}^{660} d_i$ with $n \overline{d}$ where $\overline{d}$ is the sample mean of difficulty of the blocks in our sample size for the same reason. Different summary statistics may be used for possibly great effect in various blockchain approaches.
+
+We choose all of this notation to emphasize that we can use many choices of sample of previous blocks and many choices of relevant time periods; the particular formula
+\begin{align}
+d_{\text{next}} =& \frac{n\tau}{\Delta T}\overline{d} + \frac{\Delta T - 1}{\Delta T} \label{diffForm}
+\end{align}
+will be referred to as the reference CryptoNote difficulty adjustment. In order to begin analyzing the reference CryptoNote difficulty adjustment, one must consider equilibria and stability of those equilibria. 
+
+
+
+\subsection{Drawbacks of the CryptoNote Approach}\label{fail}
+This section discusses a few known drawbacks and failures of the current Monero codebase.
+
+\subsubsection{Difficulty Should Not Act Like a Clock}
+
+Notice that if all blocks have recently arrived on target, then $n\tau = \Delta T$, but not \emph{vice versa}, since $\Delta T$ is determined solely by the first and last timestamps. That is to say, we have the general fact that on-target block arrival times provide that $n\tau \approx \Delta T$, but $n\tau \approx \Delta T$ under very general circumstances with quite a bit of wiggle-room for the blocks that arrive between these two endpoints. Furthermore, $\frac{\Delta T - 1}{\Delta T} \approx 1$ and $\frac{n\tau}{\Delta T} \approx 1$ for most reasonable choices of $n$ and $\tau$. Consider, for example, Monero, which has $\tau = 60.0$ seconds per block and $n = 600$. For such a currency, we can expect, in most circumstances, $\Delta T \approx 36000$ and so $\frac{\Delta T - 1}{\Delta T} \approx 0.99997$.  Hence, the reference CryptoNote difficulty adjustment algorithm satisfies
+\[d_{\text{next}} \approx \overline{d} + 1\]
+under very general circumswtances, which demonstrates on an intuitive level that the reference CryptoNote difficulty algorithm acts like a clock rather than an estimate of hashing power.
+
+We can demonstrate this rigorously, rather than intuitively, however. We first show that no equilibrium possible in this system when all blocks have arrived on target. Intuitively, when designing a difficulty algorith, we ought to attain $d_{\text{next}} = \overline{d}$ whenever the network is static and unchanging, but this is not possible in the CryptoNote reference code. Indeed, assume that $d_{\text{next}} = \overline{d}$ so that equilibrium occurs and that all blocks have arrived on target so that $n \tau = \Delta T$.  Then we have
+
+\begin{align*}
+d_{\text{next}} =& \frac{n\tau}{\Delta T}\overline{d} + \frac{\Delta T - 1}{\Delta T}\\
+\overline{d} =& \overline{d} + \frac{\Delta T - 1}{\Delta T}
+\end{align*}
+Which can only occur if $\Delta T = 1$. However, $\Delta T \geq n$ since each block must occur at least one second later than the previous block\footnote{The CryptoNote reference code attaches a unique integer timestamp to each block, so blocks cannot have the same timestamp.}. 
+
+On the other hand, let us split our two assumptions up into two distinct assumptions. Rather than assuming that we are at an equilibrium \emph{and} all recent blocks have arrived on target, now let us assume only that we are at equilibrium. Then we have
+\begin{align*}
+d_{\text{next}} =& \frac{n\tau}{\Delta T} \overline{d} - \frac{\Delta T - 1}{\Delta T}\\
+\overline{d} =& \frac{n \tau}{\Delta T} \overline{d} - \frac{\Delta T - 1}{\Delta T}\\
+\overline{d} \Delta T =& n\tau \overline{d} - \Delta T + 1\\
+(1+\overline{d})\Delta T =& n\tau \overline{d} + 1\\
+\Delta T =& \frac{n \tau \overline{d} + 1}{\overline{d} + 1}\\
+=& n\tau + \frac{1 - n\tau}{\overline{d} + 1}
+\end{align*}
+Hence, under the assumption of equilibrium, we conclude that blocks can only arrive on target if $n\tau = 1$. Again, our target block arrival time is $\tau = 60.0$ for a Monero-like cryptocurrency, and $\tau = 1209600.0$ for a Bitcoin-like currency; in both cases, $n > 600$. Indeed, $n\tau = 1$ is only true for coins with a block target time less than one second. 
+
+However, we do have the result that if we are at equilibrium with a very large difficulty, then $\Delta T \approx n\tau$, i.e.\ blocks are arriving \textit{almost} on target.
+
+Now let us only assume that all recent blocks have arrived on target. If this is the case, then $\Delta T = n\tau$ and we have
+\begin{align*}
+d_{\text{next}} =& \frac{n\tau}{\Delta T}\overline{d} + \frac{\Delta T - 1}{\Delta T}\\
+=& \frac{n\tau}{n\tau}\overline{d} + \frac{n\tau - 1}{n\tau}\\
+=& \overline{d} + 1 - \frac{1}{n\tau}
+\end{align*}
+In the case of Monero, we have $n = 600$ and $\tau = 60.0$ so $1/n\tau$ is nearly negligible and we re-obtain our previous result that difficulty increases like clockwork. We conclude that if all blocks have recently arrived on target, then the reference CryptoNote difficulty adjustment increases \emph{about} linearly.
+
+Now consider the question: under what circumstances may difficulty drop? Recall that, in general, difficulty is a large, positive number so $1-\overline{d} < 0$:
+\begin{align*}
+d_{\text{next}} =& \frac{n\tau}{\Delta T}\overline{d} + \frac{\Delta T - 1}{\Delta T} < \overline{d}\\
+n\tau \overline{d} + (\Delta T - 1) <& \overline{d} \Delta T\\
+n\tau \overline{d} - 1 <& \Delta T (\overline{d} - 1)\\
+\frac{n\tau \overline{d} - 1}{\overline{d} - 1} <& \Delta T\\
+\overline{d}\frac{n\tau - \overline{d}^{-1}}{1 - \overline{d}^{-1}} < \Delta T
+\end{align*}
+Now, presuming difficulty is large (as it usually is), we have $\overline{d}^{-1} \approx 0$ and so we have the idea that difficulty will drop whenever $\overline{d} n \tau < \Delta T$, or rather, whenever $\overline{d} < \frac{\Delta T}{n\tau}$.
+
+Since $n^{-1}\Delta T$ is the sample mean of inter-arrival times of blocks, we see that this aspect of the difficulty algorithm acts as it should: if sample mean of inter-arrival times is very large enough compared to the target, then $\frac{\Delta T}{n\tau}$ is large enough compared to $\overline{d}$, and so difficulty drops. 
+
+
+\subsubsection{Ordering by Time but not Difficulty}
+The original CryptoNote developers sorted the list of ordered pairs
+$$(t_1, d_1),(t_2,d_2),\ldots,(t_{720},d_{720})$$
+by the first coordinate, the timestamps, yielding the list
+$$(t_{(1)},d_1), (t_{(2)},d_2),\ldots,(t_{(720)},d_{720}).$$
+However, we now clearly see that the block difficulty associated with the $n^{\text{th}}$ block in this list, $d_n$, is no longer associated with timestamp $t_n$, but instead the $n^{\text{th}}$ ordered timestamp, $t_{(n)}$. The severity of this oversight could be slight. As we saw above, under assumptions of a static network performing ``on target,'' difficulty will increase approximately linearly in time. Sorting timestamps without sorting the difficulty associated with those timestamps could lead to strange results, as the current algorithm re-assembles the timestamps of blocks without regard to their difficulty.
+
+To illustrate the potential for problems, consider that the next step in the Monero algorithm is to discard $1/6$ of the list according to outliers in the list $\left\{t_{(n)}\right\}$. But now the choice of sorting becomes strikingly important; there are going to be many instances in which we entirely discard block $X$ due to its timestamp, but preserve the difficulty assigned to block $X$ and simply \textit{re-assign that difficulty to a different block}.
+
+Statistically, this is attempting to assess some information from a population of people about their height and age, and then using that information to infer information about their gender. During the process, you take a sample of people and randomly permute their ages. You then discard the outlying people in terms of \textit{height} and conveniently forget that you permuted their ages in the first place! In the meanwhile, the fact that nice old people tend to be short gets entirely washed out of your statistical analysis. 
+
+\subsubsection{Incorrect Computation}
+The median in the algorithm is computed as a sum:
+
+\begin{lstlisting}[language=Python,basicstyle=\small,breaklines=true]
+# Apply the median rule
+for i in range( check_window, len( timestamps ) ):
+    try:
+        median = sum( timestamps[i-check_window:i] )
+        if timestamp[i] < median:
+            timestamp.pop( i )
+    except:
+        pass
+\end{lstlisting}
+Perhaps the original coders simply got their terminology confused. The mean is proportional to the sum, but the median is not.
+
+\section{Proposed Difficulty}\label{proposedChanges}
+
+In this section, we propose partial solutions to the problem of determining the difficulty of the next block to be added on the blockchain. We propose some methods of computing difficulty. The first method we propose is overly simplistic, but is based on good intuition. We discuss the drawbacks of this method and use those drawbacks to draw conclusions about how a ``good'' difficulty algorithm should behave. We then propose another method that is less simplistic and exploits the uniformly minimum variance unbiased estimator (UMVUE) of the block arrival rate assuming blocks arrive in a Poisson process. Finally, we propose another method that builds on the UMVUE method to include a so-called ``momentum'' term to prevent manipulation by malicious parties. Finally, we use Monte Carlo simulations, described in detail, to illustrate how our method is more reliable than the current Monero approach. 
+
+Recall that difficulty is intended to be proportional to the net hash power of the network; any difficulty computation should be based on a statistical estimate of the rate of block arrivals. The best possible estimate for this would come from an impartial and trusted observer with an accurate clock observing all hashes, both failures and successes, and their timestamps. This is absurd for a variety of reasons; not only is it impossible to establish the trustworthiness of any one given observer, it is exceedingly difficult to establish the accuracy of their clock, even under the generous assumption of trustworthiness; Einstein would be pleased by the difficulty of our situation, all puns intended. All we can do is allow each user to trust their own clock and their observed data. Our suggestions are based on this notion. 
+
+Our estimates take the form of the uniformly minimum variance unbiased estimator (UMVUE) of the rate of arrival of a Poisson process, which also happens to match the maximum likelihood estimate due to the fact that the inter-arrival times of a Poisson process are drawn from an exponential distribution, which is a member of the exponential family.
+
+We list the blocks on the blockchain in terms of height and in descending order, $\left\{\mathcal{B}_H,\mathcal{B}_{H-1}, \ldots,\mathcal{B}_1, \mathcal{B}_0\right\}$, where $\mathcal{B}_0$ denotes the genesis block, and the current height of the blockchain is $H+1$ (since we start counting at zero). The next block to be added will have height $H+2$ and will be labeled $\mathcal{B}_{H+1}$ with timestamp $t_{H+1}$. Our task is to compute difficulty $\mathcal{D}_{H+1}$. For each block $\mathcal{B}_i$, for $0 \leq i \leq H$, denote the timestamp and difficulty of that block to be $(t_i,\mathcal{D}_i)$. Presuming that $H > N+1$, the top $N+1$ blocks on the blockchain have timestamps and difficulties, in descending order, $\left\{(t_{H},\mathcal{D}_{H}),(t_{H-1},\mathcal{D}_{H-1}),\ldots,(t_{H-N},\mathcal{D}_{H-N})\right\}$.
+
+
+\subsection{Simplest Method}
+In this subsection, we discuss a na\"{i}ve method of difficulty adjustment; to be clear, we are not recommending this method, but in fact we are pointing out how a very simple method can be used to produce a better method than the current implementation. Using the Difficulty Equation \ref{difficultyEquation}, we see that difficulty is proportional to network hash rate:
+\[\mathcal{D} = k\tau \widehat{N\overline{r}}\]
+where $k$ is a constant, $\tau$ is our target number of seconds per block arrival, and $\widehat{N\overline{r}}$ is an estimate of network hash rate. Using the rate notation for a Poisson process, $\lambda = 1/\tau$, so we could easily write $\mathcal{D} = \frac{k}{\lambda} \widehat{N\overline{r}}$.
+
+The simplest method of assigning difficulty to $\mathcal{B}_{H+1}$ is to consider whether the rate of arrival has changed from block $\mathcal{B}_{H}$ to $\mathcal{B}_{H+1}$. Indeed, we could simply compare $\left|t_{H+1} - t_{H}\right|$ compared to $\left|t_{H} - t_{H-1}\right|$. A simple decision rule can be manufactured by setting $r:= \displaystyle \frac{\left|t_{H+1} - t_{H}\right|}{\left|t_{H} - t_{H-1}\right|}$ and then using the rule
+\begin{equation*}
+\begin{cases}
+r \gg 1 & \Rightarrow \text{~Decrease difficulty}\\
+r \approx 1 & \Rightarrow \text{~Do not change difficulty}\\
+r \ll 1 & \Rightarrow \text{~Increase difficulty}.
+\end{cases}
+\end{equation*}
+
+A specific implementation could be as simple as setting $\mathcal{D}_{H+1} = \mathcal{D}_{H}/cr$ when $r > 1+ r^{*}$, and setting $\mathcal{D}_{H+1} = \mathcal{D}_{H}/r$ when $r < 1 - r^{*}$ for some chosen threshold $0 < r^{*} < 1$ and constant $c$. Then, by setting an initial condition, the idea is that difficulty will more or less change continuously, or at least whenever net hash power has significantly changed. This algorithm is appealing to intuition. However, there are some issues.
+
+First, we are only taking one sample of block arrival times. Hence, large variability from stochasticity could easily cripple a cryptocurrency employing this algorithm without any degree of manipulation. For example, consider the case of a Monero-like cryptocurrency in which two blocks arrive on target, with $t_{H}-t_{H-1} = \tau = 60.0$, but then a third block arrives almost simultaneously with the second block, only one second later. Then $r = 1/60$, so difficulty will increase by a factor of $60.0$. Certainly, taking a sample of only one is inappropriate here.
+
+Second, this algorithm does not at all take into account the block target time $\tau$. This algorithm causes an adjustment in difficulty only under the circumstances that network behavior has changed, but not its current state. Recall that a user can manipulate the timestamps placed on her own blocks. There is nothing to prevent a user from mining several blocks in a row and setting their timestamps to manipulate the above algorithm.  A dishonest miner under these circumstances could first force difficulty to spike upward and then carefully release her blocks such that difficulty never returns to its previously lower levels; alternatively, a dishonest miner under these circumstances could carefully choose their timestamps so that $r \approx 1$ for each of their blocks, causing their contribution toward difficulty to be discounted. This illustrates how this method is insufficient for our purposes and leads us  to determine some further requirements for difficulty beyond a simple estimate of network hash rate.  However, this method is still superior to the current CryptoNote reference code, which acts like a clock!
+
+\subsection{Further Requirements For Difficulty}
+Any measure of difficulty must include a notion of the target block arrival time. Any measure of difficulty must be resistant to stochasticity; minimizing the variance of an estimate is a good way to ensure this. This can be obtained by taking a sample of a size larger than $N=1$, as we did in the previous example, and by using the uniformly minimum variance unbiased estimator (UMVUE) of inter-arrival times under the assumption that the underlying process is Poisson. These requirements must be balanced against the desire for difficulty to be fairly responsive; large sample sizes are unresponsive. Rapid changes are caused by large numbers of users dropping off the network, for example, due to mining multipools switching their target coins. Thus, our sample sizes can neither be too small (as we've already seen) or too large (to avoid a sluggish response).  Finally, we hope to find a method that is resistant to manipulation in a certain sense; we will discuss this below.
+
+\subsection{UMVUE Method}
+We are given a block target $\tau=1/\lambda$. We recall the asymptotic similarity between iterative continuous-time Bernoulli trials and the Poisson process. Given the Difficulty Equation \ref{difficultyEquation}, we have
+\[\mathcal{D} = \frac{k}{\lambda} N\overline{r} = k\tau N\overline{r}\]
+we will see a rate of arrival $\lambda=1/\tau$, where each hash has probability of success $k/\mathcal{D}$. Here's the trick: we know our previous value of $\mathcal{D}$, which is the difficulty of the previous block or, alternatively, an average of previous blocks. We also know our target value of $\frac{k}{\lambda}=k\tau$ and we wish to estimate $N\overline{r}$. But we can't observe $N\overline{r}$, we can only observe the actual rates of arrival. We may use these actual rates of arrival to compute the UMVUE, $\hat{\lambda}$, which may differ from our target rate of arrival, $\lambda$. Given the last $N$ blocks
+\[\left\{(t_{H}, \mathcal{D}_{H}), (t_{H-1}, \mathcal{D}_{H-1}), \ldots (t_{H-N+1}, \mathcal{D}_{H-N+1})\right\}\]
+we compute the order statistics in time
+\[t_{(H)}, t_{(H-1)}, \ldots, t_{(H-N+1)}\]
+where this list is simply the \textit{ordered} list of timestamps. In particular, $t_{(H)} = \text{max}\left\{t_i;H-N+1 \leq i \leq H\right\}$ and $t_{(H-N+1)} = \text{min}\left\{t_i; H-N+1 \leq i \leq H\right\}$. We obtain the uniformly minimum variance unbiased estimator of the rate of arrival for a Poisson process given this data 
+\[\widehat{\lambda} = N/(t_{(H)} - t_{(H-N+1)})\]
+The Difficulty Equation \ref{difficultyEquation} provides something along the lines of 
+\[\widehat{N\overline{r}} = \frac{\mathcal{D}_{\text{old}}}{k} \hat{\lambda}\]
+where $\mathcal{D}_{\text{old}}$ may be taken to be our previous value of difficulty, $\mathcal{D}_H$, or the average value of difficulty over the previous $N$ blocks, $\overline{\mathcal{D}}$, or some other ``current estimate of difficutly.'' No matter what, however, we may not exclude outliers from this estimate, for this would allow us to avoid counting the outlier blocks, and hence, any malicious actor could tailor their timestamps to look like outliers to be ignored. Here, $k$ is the constant as before, and $\hat{\lambda}$ is the UMVUE of our rate of arrival. This will provide us
+\begin{align*}
+\mathcal{D}_{H+1} =& k\tau \widehat{N\overline{r}}\\
+=& k\tau \frac{\mathcal{D}_{\text{old}}}{k}\hat{\lambda}\\
+=& \hat{\lambda}\tau \mathcal{D}_{\text{old}}
+\end{align*}
+A smooth difficulty adjustment algorithm would use $\mathcal{D}_\text{old} = \overline{\mathcal{D}}$, whereas if we have no concern for smoothness, we may use $\mathcal{D}_{\text{odl}} = \mathcal{D}_H$.  Since $\tau = 1/\lambda$, our multiplicative adjustment is the ratio $\widehat{\lambda}/\lambda$, or rather, we adjust our difficulty by the ratio of our observed rate of arrival to our target rate of arrival. 
+\begin{align}\label{proposedChangedAlgo}
+\mathcal{D}_{H+1} =& \frac{\widehat{\lambda}}{\lambda} \mathcal{D}_{\text{old}} 
+\end{align}
+We refer to Equation \ref{proposedChangedAlgo} as our Proposed Difficulty Algorithm. If $\hat{\lambda}$ is smaller than $\lambda$, then (a) fewer arrivals per second have been observed than our target and (b) this ratio is less than one, so difficulty will drop. Similarly, if $\hat{\lambda}$ is greater than $\lambda$, then (a) more arrivals per second have been observed than our target and (b) this ratio is greater than one so difficulty will increase. Note how similar this expression is to our so-called \textit{Simplest Method} from the previous section, which was based solely on the intuition of rates of arrivals.  Now our task has reduced to finding good estimates of $\hat{\lambda}$, which is best obtained with the UMVUE.
+
+
+However, since our estimator is based only on $N$, our sample of the top few blocks, and the timestamps $t_{(H)}$ and $t_{(H-N+1)}$, we are using the timestamps from precisely two blocks to compute our spread of time. This leaves open the possibility that an attacker controls one or both of these timestamps, and hence an attacker partially controls the next block's difficulty. For example, a user with about $20\%$ hashing power has a $36\%$ chance of controlling at least one of these timestamps. This disproportionate control over timestamps is troubling. If the underlying processes are true Poisson processes, then we conclude manipulation of timestamps has not occurred and this issue is resolved.
+
+\subsection{Testing for Poisson-icity}
+We learn the lessons of the previous section; we wish to ignore an estimate of hash rate under the condition that we believe it is untrustworthy.  Poisson processes with arrivals occurring at times $\left\{T_1, T_2, \ldots, T_{N+1}\right\}$ have inter-arrival times $S_{1} = T_2 - T_1, S_2 = T_3 - T_2, \ldots$. Furthermore, the maximum likelihood estimate matches the UMVUE of the underlying rate parameter $\lambda$, as previously mentioned, and is $\hat{\lambda} = N/(T_{(N)} - T_{(1)})$. This is, in fact, $1/\overline{S}$ where $\overline{S}$ is the sample mean of the inter-arrival times.
+
+A convenient property of Poisson processes with rate $\lambda$ is that the mean inter-arrival time is $1/\lambda$ and the variance in the inter-arrival times is $1/\lambda^2$. Hence, testing the squared mean against the variance is a test for whether a process is Poisson or not. Given a sequence of inter-arrival times, say $\left\{S_1, S_2, \ldots, S_n\right\}$, a test of whether these inter-arrival times came from a genuine Poisson process is to compare the squared sample mean $\overline{S}^2 = \left(n^{-1}\sum_{i=1}^{n} S_i\right)^2$ with the (unbiased) sample variance $\text{Var}(S) = (n-1)^{-1}\sum_{i=1}^{n} (S_i - \overline{S})^2$. Indeed, taking the whole Monero blockchain as a sample, we observe about a $22\%$ difference between mean and the standard deviation! This suggests that, throughout the history of Monero, quite a bit of timestamp manipulation has occurred, although at this point it is not clear to the Monero Research Lab how to quantify the amount or degree of manipulation.
+
+When the squared mean and variance are vastly different, we distrust the notion that the underlying process is Poisson.
+
+
+\begin{comment} Furthermore, if this lack of Poisson-icity is due to an attacker manipulating timestamps, the mean inter-arrival time, which only utilizes $T_{(1)}$ and $T_{(N)}$, the first and last times of arrival, is particularly vulnerable to a \textit{single} attacker changing their timestamps. On the other hand, the sample standard deviation utilizes all inter-arrival times equally in it's computation. Hence, rather than using $\hat{\lambda} = 1/\overline{S}$, we shall use $\hat{\lambda} = 1/\sqrt{\text{Var}(S)}$. Furthermore, if variance and squared mean of inter-arrival times are drastically different, then we will choose to not trust our data at all and keep difficulty relatively constant. If variance spikes far above the squared mean, or plummets, this suggests a high degree of manipulation of timestamps in our recent data.
+\end{comment}
+
+Hence, rather than modifying $\mathcal{D}_{\text{old}}$ by a multiplicative factor $\frac{\hat{\lambda}}{\lambda}$, we will consider an equivalent additive change in difficulty, $\Delta \mathcal{D} = (\frac{\hat{\lambda}}{\lambda} - 1)\mathcal{D}_{\text{old}}$. Furthermore, we will scale this change in difficulty by a factor $\alpha$ which will depend on both the squared sample mean and the sample variance of inter-arrival times. If squared sample mean and sample variance are approximately equal, we will set $\alpha \approx 1$, and if sample meean and sample standard deviation are different, $\alpha \to 0$. To this end, let $\overline{S}^2$ denote the squared sample mean of inter-arrival times and denote $\text{Var}(S)$ denote the sample standard deviation. Many choices of $\alpha$ are reasonable. For example, we may choose
+\[\alpha = \text{Exp}\left[-\left|\overline{S}^2-\text{Var}(S)\right|/\overline{S}^2\right]\]
+Notice that, since $\overline{S}^2$ is never zero, since all blocks must arrive with at least one second separating them, this expression is well defined. Also notice that $\alpha$ has the property that when $\overline{S}^2 = \text{Var}(S)$, we have that $\alpha = 1$, and whenever $\left|\overline{S}^2 - \text{Var}(S)\right|/\overline{S}^2 \to \infty$, we have that $\alpha \to 0$. The scaling in the denominator of the exponent provides a probabilistic guarantee that the momentum term $\alpha$ stays reasonable close to $1$ under manipulation-free circumstances.
+
+We can consider $\alpha$ a momentum term, where a close match between a true Poisson process and the observed inter-arrival times yields almost no momentum, or we can consider $\alpha$ a trust value, where a close match yields a high trust level. Using this interpretation, a $22\%$ variance between squared sample mean and sample variance would yield an $80.25\%$ trust rating.  On the other hand, a mere five percent difference between squared sample mean, $\overline{S}^2$, and sample variance, $\text{Var}(S)$, will provide a trust value of $0.95122$, or rather, about a $95\%$ trust rating. An unreasonably large difference between squared sample mean and sample variance, say $50\%$, would yield a trust value of $0.5 \leq -\ln(\alpha)$, or rather $\alpha \geq 0.606$ or a $60.6\%$ trust rating. As we have previously observed, there is, historically, a $22\%$ difference between squared sample mean, $\overline{S}^2$, and sample variance, $\text{Var}(S)$. This provides a good reference point for examining this momentum term. A $22\%$ difference would provide $-\ln(\alpha) \leq 0.22$, yielding $0.8025 \leq \alpha$. That is to say, our momentum term would cause our difficulty to adjust at around $80\%$ it's maximal rate.
+
+
+
+\subsection{Our Recommendation}
+
+We recommend that the difficulty of the next block be computed by setting
+\[\mathcal{D}_{H+1} = \overline{\mathcal{D}} + \Delta \mathcal{D}\]
+where $\overline{\mathcal{D}}$ denotes the sample mean of difficulty over the previous $N$ blocks (sticking with tradition, perhaps $N=600$) and where we use
+\begin{align}
+\Delta \mathcal{D} =& \alpha (\frac{\hat{\lambda}}{\lambda} -1)\overline{\mathcal{D}}\\
+\hat{\lambda}=& N\left(\sum_{i=1}^{n} S_i\right)^{-1} = N(T_{(n)} - T_{(1)})^{-1} = 1/\overline{S}\\
+\alpha =& \text{Exp}\left[-\left|\overline{S}^2-\text{Var}(S)\right|/\overline{S}^2 \right]
+\end{align}
+
+Recall that $\tau = 1/\lambda$, and so we may write $\Delta \mathcal{D} = \alpha (\tau \hat{\lambda} -1)\overline{\mathcal{D}}$ for some convenience. Notice that our adjustment method is protocol agnostic. This could be implemented in Bitcoin, Monero, or any other cryptocurrency. 
+
+We make no claims that our approach is the best possible one; although, any estimate of hash rate should (almost certainly) use the UMVUE of Poisson arrival rates. However, this approach brings several benefits compared to the reference CryptoNote difficulty adjustment. Consider the following.
+
+First, equilibrium occurs if and only if $\Delta \mathcal{D} = 0$, so difficulty is held approximately constant whenever $\Delta \mathcal{D} \approx 0$. This occurs whenever $\hat{\lambda} \approx \lambda$, which occurs if and only if $T_{(H+1)} - T_{(H-N+1)} \approx N\tau$, where $\tau$ is our target block arrival time and $N$ is our sample size. If the process is genuinely Poisson and $N$ is sufficiently large, this is true with high probability. If all blocks have arrived precisely on target, this is also true, but our sample variance is zero.  Regardless of block arrival rate, if the timestamps of blocks $\mathcal{B}_{H-1}, \ldots, \mathcal{B}_{H-N+2}$ stay bounded within the interval $\left[T_{(H-N+1)}, T_{(H)}\right]$, then the interior timestamps may vary in any way whatsoever without effecting the next block difficulty. Finally, we have the property that, as squared sample mean, $\overline{S}^2$, and squared sample variance, $\text{Var}(S)$, diverge from one another, $\alpha \to 0$. In this case, the process is wildly non-Poisson and so we don't change difficulty much.
+
+
+
+
+
+
+
+
+
+
+
+
+\section{Simulations}\label{simulations}
+
+We use Monte Carlo simulations to construct simulated blockchains given a known network hash rate. A simulated blockchain of height $H$ takes the form
+\[\texttt{blockChain}:=\left\{(t_{0}, \mathcal{D}_{0}), (t_{1}, \mathcal{D}_{1}), \ldots, (t_{H-1}, \mathcal{D}_{H-1}), (t_{H}, \mathcal{D}_{H})\right\}\]
+where each entry in each ordered pair of this array is an integer and we initialize all simulations with the initial condition $(t_0, \mathcal{D}_0) = (0, 1)$. The timepoints $t_i$ denote seconds that have elapsed since the genesis block and the difficulties $\mathcal{D}_i$ denote their associated difficulties. 
+
+Note that the Monero blockchain (as well as all other CryptoNote blockchains and most other cryptocurrencies) uses Epoch time and set the timestamp of the genesis block to the coordinated universal time (UTC), Thursday, 1 January 1970. Hence, for most cryptocurrencies, the ostensible timespan between the genesis block and the block of height one is over forty years, measured in seconds. Rather than specify a special rule for the inter-arrival time between block one and block zero to account for this, we simply ignore this convention; our simulations, which have a target block inter-arrival time of $60$ seconds, will not have a forty year gap between the first two blocks.
+
+Our simulations are designed to construct a local copy of the blockchain by an honest observer using a local clock, $t$, a known network hash rate, $N(t)$, and the assumption that blocks arrive in a non-homogeneous Poisson process dependent both on the hash rate and the difficulty of the top block, $\mathcal{D}_H$, which is deterministically computed from the blockchain. Our simulations depend critically on the memoryless property of Poisson processes. We first generate a known (integer) network hash rate, which is a function of time, and initialize time $t=0.0$. The ``true'' rate of arrival of the next block, in terms of the underlying Poisson process, is precisely $\lambda = N(t)/\mathcal{D}_H$ using the model presented previously in Section \ref{diffIsHash}. 
+
+We compute the next timepoint that the hash rate changes, $t_{\texttt{hash}}$. We generate a random inter-arrival time of the next possible block, $T_{\texttt{poss}}$, from an exponential distribution with ``true'' rate parameter $\lambda$. We check whether the next possible block arrives before or after the hash rate changes, i.e.\ we check whether $t + T_{\texttt{poss}} < t_{\texttt{hash}}$. 
+
+If the next block arrives before hash rate changes, that is to say, if $t + T_{\texttt{poss}} < t_{\texttt{hash}}$, then we choose a timepoint, $\hat{t}$, to be associated with that block. In general, $\hat{t}$ is a function of $t + T_{\texttt{poss}}$, as it is a timepoint based on the ``true'' time of arrival of the next block. Examples are easy to generate. If this function is the identity function, i.e.\ if $\hat{t} = t + T_{\texttt{poss}}$, then the node that discovered this block has reported its timestamp honestly. If $\hat{t} = t + T_{\texttt{poss}} + 18$, then the node that discovered this block has reported its timestamp $18$ seconds in the future; a node with a policy of reporting all timestamps $18$ seconds in the future almost certainly has an incorrect system time, and is ostensibly an honest user.  From $\hat{t}$ we compute the next difficulty, $\mathcal{D}_{\texttt{next}}$ to be associated with that block, and we append the ordered pair $(\hat{t},\mathcal{D})_{\texttt{next}})$ to $\texttt{blockChain}$. We then re-set our clock to $t = t + T_{\texttt{poss}}$ to reflect that time has rolled forward, and we begin again by generating a random inter-arrival time of the next possible block, $T_{\texttt{poss}}$.
+
+On the other hand, if the next block arrives after the hash rate changes, we ignore that next possible block arrival; we may do so due to the memoryless property of Poisson processes. We instead re-set our clock to $t = t_{\texttt{hash}}$, rollover our network hash rate to $N(t_{\texttt{hash}})$, recompute the ``true'' rate parameter $\lambda$, and re-compute the next timepoint that the hash rate changes, $t_{\texttt{hash}}$. We then begin again by generating another random inter-arrival time of the next possible block, $T_{\texttt{poss}}$.
+
+We proceed as described until $t \geq \texttt{MaxTime}$ and compare the sequence of ordered pairs represented by $\texttt{blockChain}$ against the known network hash rate, $N(t)$. A good difficulty algorithm will exhibit a close match between the ordered pairs $(t_i, \mathcal{D}_i)$ and $(t_i, N(t_i))$. Of course, this cannot be guaranteed by any algorithm since the timepoint in the ordered pair $(t_i, \mathcal{D}_i)$ is a possibly false timestamp, as previously described.
+
+\subsection{Generating Network Hash Rate}\label{NetHashRate}
+
+We generate six regimes of network hash rate behavior: both deterministic and probabilistic realizations of linear, exponential, and sigmoidal trends. We choose linear trends for simplicity, exponential trends to mimic simple population growth models, and sigmoidal trends to mimic more complicated population growth models that incorporate population carrying capacity. In all cases, we set $\texttt{maxTime} = 3\times 10^7$ to simulate approximately one year of data.
+
+In each deterministic case, we chose to run a one year simulation beginning with a one $kH/s$ network and terminating with a $100 GH/s$ network. The linear case takes the form $N(t)= mt + b$, the exponential case takes the form $N(t) = A e^{rt}$, and the sigmoidal case takes the form $N\left(K - N\right) = Ae^{rt}$ (this latter form is the solution of the differential equation modeling a population with carrying capacity, $N^{\prime} = rN(1-N/K)$). Presuming the sigmoidal case is approaching the carrying capacity of the Bitcoin network, currently in the $PH/s$ range, $K=10^15$ here. In order to meet our target of an initial condition of one $kH/s$ and ending after one year with $100 GH/s$, we have
+\begin{align*}
+\text{Linear:} m =& blah & b &= blah\\
+\text{Exp:} A=& blah & r =& blah\\
+\text{Sigmoid:} A=& blah & r =& blah
+\end{align*}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+\newpage
+\begin{appendices}
+\chapter{CryptoNote Difficulty Reference Code}\label{referenceCode}
+
+\begin{lstlisting}[language=Python,basicstyle=\small,breaklines=true]
+# DIFFICULTY.py
+# Gives difficulty information over time for blocks with given timestamps
+# Input: block_file WINDOW CUT LAG CHECK_WINDOW [MODE]
+#   block_file format: one line per integer timestamp
+#   WINDOW: blocks to be used when computing difficulty (720 in practice)
+#   CUT: blocks on each side of the block window to exclude (60 in practice)
+#   LAG: how far behind we want to be (15 in practice)
+#   CHECK_WINDOW: number of blocks to use for median cutoff (60 in practice)
+#   [MODE]: 0 = don't sort difficulties (default); 1 = sort difficulties
+# Output: block information, one line per block
+#   line format: block_id timestamp next_difficulty cumulative_difficulty
+
+import sys
+from math import floor
+
+window = int( sys.argv[2] )
+cut = int( sys.argv[3] )
+lag = int( sys.argv[4] )
+check_window = int( sys.argv[5] )
+target = 60
+mode = 0
+try:
+    if int( sys.argv[6] ) == 1:
+        mode = 1
+except:
+    pass
+
+print "# window is " + str( window ) + " and cut is " + str( cut )
+
+# Read timestamps into an integer array
+block_file = open( sys.argv[1], 'r' )
+timestamps = []
+for line in block_file:
+    timestamps.append( floor( float( line.strip() ) ) )
+cumulative_difficulties = []
+
+print "# read " + str( len( timestamps ) ) + " blocks"
+
+# Apply the median rule
+for i in range( check_window, len( timestamps ) ):
+    try:
+        median = sum( timestamps[i-check_window:i] )
+        if timestamp[i] < median:
+            timestamp.pop( i )
+    except:
+        pass
+
+# Compute the difficulty for the next block
+def next_difficulty( timestamps, cumulative_difficulties ):
+    if ( len( timestamps ) > window ):
+        timestamps = timestamps[0:window]
+        cumulative_difficulties = cumulative_difficulties[0:window]
+    
+    length = len( timestamps )
+    
+    # Run some sanity checks
+    if len( timestamps ) > window or len( cumulative_difficulties ) > window or len( timestamps ) != len( cumulative_difficulties ):
+        raise Exception( "Incorrect number of blocks" )
+    if length <= 1:
+        return 1
+    if window < 2:
+        raise Exception( "Window is too small" )
+    if ( 2 * cut > window - 2 ):
+        raise Exception( "Cut is too large" )
+
+    timestamps.sort()
+    if mode == 1:
+        cumulative_difficulties.sort()
+
+    # Compute the cut indices
+    if ( length <= ( window - 2 * cut ) ):
+        cut_begin = 0
+        cut_end = length
+    else:
+        cut_begin = int( floor( ( len( timestamps ) - ( window - 2 * cut ) + 1 ) / 2 ) )
+        cut_end = cut_begin + window - 2 * cut
+
+    time_span = timestamps[cut_end-1] - timestamps[cut_begin]
+    if time_span == 0:
+        time_span = 1
+
+    total_work = cumulative_difficulties[cut_end-1] - cumulative_difficulties[cut_begin]
+    if total_work < 0:
+        raise Exception( "Cannot have negative total work" )
+
+    # Assume high is zero; that is, no overflow
+    low = total_work * target
+    if low + time_span - 1 < low:
+        return 0
+    else:
+        return int( floor( ( low + time_span - 1 ) / time_span ) )
+
+# Start feeding blocks into the difficulty algorithm
+print "# block timestep next_difficulty cumulative_difficulty"
+for i in range( len( timestamps ) ):
+    offset = ( i + 1 ) - min( i + 1, window + cut )
+    if offset == 0:
+        offset = 1
+
+    difficulty = next_difficulty( timestamps[offset:i], cumulative_difficulties[offset:i] )
+    if i == 0:
+        cumulative_difficulties.append( 0 )
+    else:
+        cumulative_difficulties.append( cumulative_difficulties[i-1] + difficulty )
+
+    # Output
+    print ' '.join( map( str, [ i, timestamps[i], difficulty, cumulative_difficulties[i] ] ) )
+\end{lstlisting}
+
+
+
+\end{appendices}
+
+\medskip{}
+
+\bibliographystyle{plain}
+\bibliography{biblio.bib}
+
+\end{document}
