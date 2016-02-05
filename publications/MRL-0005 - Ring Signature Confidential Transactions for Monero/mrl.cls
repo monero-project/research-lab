@@ -579,7 +579,6 @@
 
 \def\runtitle#1{\gdef\@runtitle{#1}}                      
 \def\runauthor#1{\gdef\@runauthor{#1}\global\let\copauthor\@runauthor}
-\def\@runauthor{}
 \def\@lastpage{0}
 
 \def\thepage@fmt#1{Page #1 of \@lastpage}
@@ -847,6 +846,7 @@
 \setattribute{address}          {text} {Author details}
 \setattribute{corref}           {text} {Correspondence: }
 \setattribute{authorinfo}       {text} {}
+
 \setattribute{presentaddress}   {text} {\textit{Present address: }}
 \setattribute{copyright}        {text} {\copyright\,\textit{\journal@name}}
 \setattribute{runninghead}      {text} {\copyright\,\textit{\journal@name} \hfill \thepage@fmt{\thepage}}

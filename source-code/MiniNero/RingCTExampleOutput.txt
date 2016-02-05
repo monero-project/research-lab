@@ -1,0 +1,23 @@
+('H', '61fe7f0f5a607a33427d01dd1fded5ffa03fae2e9df9ebccf2e0a2f5bd77a204')
+inputs
+('b, b in binary', 10000, [0, 0, 0, 0, 1, 0, 0, 0, 1, 1, 1, 0, 0, 1])
+Generating Aggregate Schnorr Non-linkable Ring Signature
+outputs
+('b, b in binary', 7000, [0, 0, 0, 1, 1, 0, 1, 0, 1, 1, 0, 1, 1, 0])
+Generating Aggregate Schnorr Non-linkable Ring Signature
+('b, b in binary', 3000, [0, 0, 0, 1, 1, 1, 0, 1, 1, 1, 0, 1, 0, 0])
+Generating Aggregate Schnorr Non-linkable Ring Signature
+verifying range proofs of outputs
+Verifying Aggregate Schnorr Non-linkable Ring Signature
+Verified
+Verifying Aggregate Schnorr Non-linkable Ring Signature
+Verified
+('Generating MLSAG sig of dimensions ', 2, 'x ', 2)
+('verifying MLSAG sig of dimensions ', 2, 'x ', 2)
+('c', ['80a3cfd06dd2862307cd75c2a1566f20cd743dbb0b9feb22d79dcbecb9023f42', 'a9b7342ba7bf2f102505ca19dab734fde638916c0a29f5b30e49833ab51393ea', '80a3cfd06dd2862307cd75c2a1566f20cd743dbb0b9feb22d79dcbecb9023f42'])
+('sig verifies?', True)
+('Sig verified?', True)
+Finding received amount corresponding to Cib
+('received ', 7000, 'a488ec68732fb551841c2c6dcc7ffac895d98ec7e9378275ed20ea12805fc18e')
+Finding received amount corresponding to Cic
+('received ', 3000, '1b46626858e130a0f3884c74c9fdeabc4d812c519103ea16a35a3f82a3d0ed6d')

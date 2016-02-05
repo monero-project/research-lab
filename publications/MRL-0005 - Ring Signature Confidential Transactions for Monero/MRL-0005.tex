@@ -1,0 +1,1500 @@
+\documentclass[12pt,english]{mrl}
+\usepackage{graphicx}
+\usepackage{listings}
+\usepackage{cite}
+\usepackage{amsthm}
+\newtheorem*{example}{Example}
+
+\usepackage[toc,page]{appendix}
+
+\renewcommand{\familydefault}{\rmdefault}
+\usepackage[T1]{fontenc}
+\usepackage[latin9]{inputenc}
+\usepackage{color}
+\usepackage{babel}
+\usepackage{verbatim}
+\usepackage{float}
+\usepackage{url}
+\usepackage{amsthm}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage[unicode=true,pdfusetitle, bookmarks=true,bookmarksnumbered=false,bookmarksopen=false,  breaklinks=false,pdfborder={0 0 1},backref=false,colorlinks=true]{hyperref}
+\usepackage{breakurl}
+
+
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb,enumerate}
+\usepackage{amsthm}
+\usepackage{cite}
+\usepackage{comment}
+\usepackage[all]{xy}
+%\usepackage[notref,notcite]{showkeys}
+\usepackage{hyperref}
+\usepackage{todonotes}
+
+
+\usepackage{mathtools}
+\usepackage{mathrsfs}
+% THEOREM ENVIRONMENTS
+
+\theoremstyle{definition}
+\newtheorem{lem}{Lemma}[section]
+\newtheorem{cor}[lem]{Corollary}
+\newtheorem{prop}[lem]{Proposition}
+\newtheorem{thm}[lem]{Theorem}
+\newtheorem{soln}[]{Solution}
+\newtheorem{conj}[lem]{Conjecture}
+\newtheorem{Defn}[lem]{Definition}
+\newtheorem{Ex}[lem]{Example}
+\newtheorem{Question}[lem]{Question}
+\newtheorem{Property}[lem]{Property}
+\newtheorem{Properties}[lem]{Properties}
+\newtheorem{Discussion}[lem]{Remark}
+\newtheorem{Construction}[lem]{Construction}
+\newtheorem{Notation}[lem]{Notation}
+\newtheorem{Fact}[lem]{Fact}
+\newtheorem{Notationdefinition}[lem]{Definition/Notation}
+\newtheorem{Remarkdefinition}[lem]{Remark/Definition}
+\newtheorem{rem}[lem]{Remark}
+\newtheorem{Subprops}{}[lem]
+\newtheorem{Para}[lem]{}
+\newtheorem{Exer}[lem]{Exercise}
+\newtheorem{Exerc}{Exercise}
+
+\newenvironment{defn}{\begin{Defn}\rm}{\end{Defn}}
+\newenvironment{ex}{\begin{Ex}\rm}{\end{Ex}}
+\newenvironment{question}{\begin{Question}\rm}{\end{Question}}
+\newenvironment{property}{\begin{Property}\rm}{\end{Property}}
+\newenvironment{properties}{\begin{Properties}\rm}{\end{Properties}}
+\newenvironment{notation}{\begin{Notation}\rm}{\end{Notation}}
+\newenvironment{fact}{\begin{Fact}\rm}{\end{Fact}}
+\newenvironment{notationdefinition}{\begin{Notationdefinition}\rm}{\end{Notationdefinition}}
+\newenvironment{remarkdefinition}{\begin{Remarkdefinition}\rm}{\end{Remarkdefinition}}
+\newenvironment{subprops}{\begin{Subprops}\rm}{\end{Subprops}}
+\newenvironment{para}{\begin{Para}\rm}{\end{Para}}
+\newenvironment{disc}{\begin{Discussion}\rm}{\end{Discussion}}
+\newenvironment{construction}{\begin{Construction}\rm}{\end{Construction}}
+\newenvironment{exer}{\begin{Exer}\rm}{\end{Exer}}
+\newenvironment{exerc}{\begin{Exerc}\rm}{\end{Exerc}}
+
+\newtheorem{intthm}{Theorem}
+\renewcommand{\theintthm}{\Alph{intthm}}
+
+% COMENTS
+
+%\newcommand{\ssw}[1]{\footnote{#1}}
+\newcommand{\nt}[2][$^\spadesuit$]{\hspace{0pt}#1\marginpar{\tt\raggedleft
+    #1 #2}}
+\newcommand{\dw}[2][$^\spadesuit$]{\nt[#1]{DW:#2}}
+\newcommand{\ssw}[2][$^\spadesuit$]{\nt[#1]{SSW:#2}}
+\newcommand{\ts}[2][$^\spadesuit$]{\nt[#1]{TS:#2}}
+
+\newcommand{\ds}{\displaystyle}
+
+% CATEGORIES
+
+\newcommand{\A}{\mathcal{A}}
+\newcommand{\D}{\mathcal{D}}
+\newcommand{\R}{\mathcal{R}}
+\newcommand{\cat}[1]{\mathcal{#1}}
+\newcommand{\catx}{\cat{X}}
+\newcommand{\caty}{\cat{Y}}
+\newcommand{\catm}{\cat{M}}
+\newcommand{\catv}{\cat{V}}
+\newcommand{\catw}{\cat{W}}
+\newcommand{\catg}{\cat{G}}
+\newcommand{\catp}{\cat{P}}
+\newcommand{\catf}{\cat{F}}
+\newcommand{\cati}{\cat{I}}
+\newcommand{\cata}{\cat{A}}
+\newcommand{\catabel}{\mathcal{A}b}
+\newcommand{\catc}{\cat{C}}
+\newcommand{\catb}{\cat{B}}
+\newcommand{\catgi}{\cat{GI}}
+\newcommand{\catgp}{\cat{GP}}
+\newcommand{\catgf}{\cat{GF}}
+\newcommand{\catgic}{\cat{GI}_C}
+\newcommand{\catgib}{\cat{GI}_B}
+\newcommand{\catib}{\cat{I}_B}
+\newcommand{\catgibdc}{\cat{GI}_{\bdc}}
+\newcommand{\catgicd}{\cat{GI}_{C^{\dagger}}}
+\newcommand{\caticd}{\cat{I}_{C^{\dagger}}}
+\newcommand{\catgc}{\cat{G}_C}
+\newcommand{\catgpc}{\cat{GP}_C}
+\newcommand{\catgpb}{\cat{GP}_B}
+\newcommand{\catgpcd}{\cat{GP}_{C^{\dagger}}}
+\newcommand{\catpcd}{\cat{P}_{C^{\dagger}}}
+\newcommand{\catac}{\cat{A}_C}
+\newcommand{\catab}{\cat{A}_B}
+\newcommand{\catbc}{\cat{B}_C}
+\newcommand{\catabdc}{\cat{A}_{\bdc}}
+\newcommand{\catbbdc}{\cat{B}_{\bdc}}
+\newcommand{\catbb}{\cat{B}_B}
+\newcommand{\catacd}{\cat{A}_{\da{C}}}
+\newcommand{\catbcd}{\cat{B}_{\da{C}}}
+\newcommand{\catgfc}{\cat{GF}_C}
+\newcommand{\catic}{\cat{I}_C}
+\newcommand{\catibdc}{\cat{I}_{\bdc}}
+\newcommand{\catpb}{\cat{P}_B}
+\newcommand{\catpc}{\cat{P}_C}
+\newcommand{\catfc}{\cat{F}'}
+\newcommand{\opg}{\cat{G}}
+\newcommand{\finrescat}[1]{\operatorname{res}\comp{\cat{#1}}}
+\newcommand{\proprescat}[1]{\operatorname{res}\wti{\cat{#1}}}
+\newcommand{\finrescatx}{\finrescat{X}}
+\newcommand{\finrescaty}{\finrescat{Y}}
+\newcommand{\finrescatv}{\finrescat{V}}
+\newcommand{\fincorescatggicd}{\operatorname{cores}\comp{\catg(\caticd)}}
+\newcommand{\finrescatw}{\finrescat{W}}
+\newcommand{\finrescatpc}{\operatorname{res}\comp{\catpc}}
+\newcommand{\finrescatpcr}{\operatorname{res}\comp{\catpc(R)}}
+\newcommand{\finrescatpb}{\operatorname{res}\comp{\catpb}}
+\newcommand{\finrescatpbr}{\operatorname{res}\comp{\catpb(R)}}
+\newcommand{\finrescatgpb}{\operatorname{res}\comp{\catgpb}}
+\newcommand{\finrescatgpbr}{\operatorname{res}\comp{\catgpb(R)}}
+\newcommand{\propcorescatic}{\operatorname{cores}\wti{\catic}}
+\newcommand{\propcorescatgic}{\operatorname{cores}\wti{\catgic}}
+\newcommand{\fincorescatic}{\operatorname{cores}\comp{\catic}}
+\newcommand{\fincorescaticr}{\operatorname{cores}\comp{\catic(R)}}
+\newcommand{\fincorescatir}{\operatorname{cores}\comp{\cati(R)}}
+\newcommand{\finrescatp}{\finrescat{P}}
+\newcommand{\proprescatgpc}{\operatorname{res}\wti{\catgpc}}
+\newcommand{\fincorescaticd}{\operatorname{cores}\comp{\caticd}}
+\newcommand{\finrescatgp}{\finrescat{GP}}
+\newcommand{\finrescatpcd}{\operatorname{res}\comp{\catp_{\da{C}}}}
+\newcommand{\fincorescatggic}{\operatorname{cores}\comp{\catg(\catic)}}
+\newcommand{\fincorescatibdc}{\operatorname{cores}\comp{\catibdc}}
+\newcommand{\fincorescatibdcr}{\operatorname{cores}\comp{\catibdc(R)}}
+\newcommand{\fincorescatgibdc}{\operatorname{cores}\comp{\catgibdc}}
+\newcommand{\fincorescatgibdcr}{\operatorname{cores}\comp{\catgibdc(R)}}
+\newcommand{\fincorescatibr}{\operatorname{cores}\comp{\catib(R)}}
+\newcommand{\finrescatggpc}{\operatorname{res}\comp{\catg(\catpc)}}
+\newcommand{\finrescatg}{\operatorname{res}\comp{\cat{G}}(R)}
+\newcommand{\finrescatgpr}{\operatorname{res}\comp{\cat{GP}(R)}}
+\newcommand{\finrescatpr}{\operatorname{res}\comp{\cat{P}(R)}}
+\newcommand{\finrescatgpc}{\operatorname{res}\comp{\catgp_C(R)}}
+\newcommand{\proprescatpc}{\operatorname{res}\wti{\catp_C(R)}}
+\newcommand{\propcorescatpc}{\operatorname{cores}\wti{\catp_C(R)}}
+\newcommand{\finrescatgpcd}{\operatorname{res}\comp{\catgp_{C^{\dagger}}(R)}}
+\newcommand{\proprescatp}{\proprescat{P}}
+\newcommand{\proprescatgp}{\proprescat{GP}}
+\newcommand{\proprescatx}{\proprescat{X}}
+\newcommand{\proprescaty}{\proprescat{Y}}
+\newcommand{\proprescatv}{\proprescat{V}}
+\newcommand{\proprescatw}{\proprescat{W}}
+\newcommand{\fincorescat}[1]{\operatorname{cores}\comp{\cat{#1}}}
+\newcommand{\propcorescat}[1]{\operatorname{cores}\wti{\cat{#1}}}
+\newcommand{\fincorescatx}{\fincorescat{X}}
+\newcommand{\fincorescati}{\fincorescat{I}}
+\newcommand{\fincorescatgi}{\fincorescat{GI}}
+\newcommand{\fincorescatgir}{\fincorescat{GI(R)}}
+\newcommand{\fincorescatgic}{\operatorname{cores}\comp{\catgi_C(R)}}
+\newcommand{\fincorescatgicd}{\operatorname{cores}\comp{\catgi_{C^{\dagger}}(R)}}
+\newcommand{\propcorescati}{\propcorescat{I}}
+\newcommand{\propcorescatgi}{\propcorescat{GI}}
+\newcommand{\fincorescaty}{\fincorescat{Y}}
+\newcommand{\fincorescatv}{\fincorescat{V}}
+\newcommand{\fincorescatw}{\fincorescat{W}}
+\newcommand{\propcorescatx}{\propcorescat{X}}
+\newcommand{\propcorescaty}{\propcorescat{Y}}
+\newcommand{\propcorescatv}{\propcorescat{V}}
+\newcommand{\propcorescatw}{\propcorescat{W}}
+\newcommand{\cpltrescat}[1]{\operatorname{res}\ol{\cat{#1}}}
+\newcommand{\cpltcorescat}[1]{\operatorname{cores}\ol{\cat{#1}}}
+\newcommand{\cpltrescatw}{\cpltrescat{W}}
+\newcommand{\cpltcorescatw}{\cpltcorescat{W}}
+\newcommand{\gw}{\opg(\catw)}
+\newcommand{\gnw}[1]{\opg^{#1}(\catw)}
+\newcommand{\gnx}[1]{\opg^{#1}(\catx)}
+\newcommand{\gx}{\opg(\catx)}
+\newcommand{\catao}{\cata^o}
+\newcommand{\catxo}{\catx^o}
+\newcommand{\catyo}{\caty^o}
+\newcommand{\catwo}{\catw^o}
+\newcommand{\catvo}{\catv^o}
+
+
+% DIMENSIONS
+
+\newcommand{\pdim}{\operatorname{pd}}	
+\newcommand{\pd}{\operatorname{pd}}	
+\newcommand{\gdim}{\mathrm{G}\text{-}\!\dim}	
+\newcommand{\gkdim}[1]{\mathrm{G}_{#1}\text{-}\!\dim}	
+\newcommand{\gcdim}{\gkdim{C}}	
+\newcommand{\injdim}{\operatorname{id}}	
+\newcommand{\id}{\operatorname{id}}	
+\newcommand{\fd}{\operatorname{fd}}
+\newcommand{\fdim}{\operatorname{fd}}
+\newcommand{\catpd}[1]{\cat{#1}\text{-}\pd}
+\newcommand{\xpd}{\catpd{X}}
+\newcommand{\xopd}{\catxo\text{-}\pd}
+\newcommand{\xid}{\catid{X}}
+\newcommand{\wpd}{\catpd{W}}
+\newcommand{\ypd}{\catpd{Y}}
+\newcommand{\gpd}{\catpd{G}}
+\newcommand{\gid}{\catid{G}}
+\newcommand{\catid}[1]{\cat{#1}\text{-}\id}
+\newcommand{\yid}{\catid{Y}}
+\newcommand{\vid}{\catid{V}}
+\newcommand{\wid}{\catid{W}}
+\newcommand{\pdpd}{\catpd\text{-}\pd}
+\newcommand{\idid}{\catid\text{-}\id}
+\newcommand{\pcpd}{\catpc\text{-}\pd}
+\newcommand{\pbpd}{\catpb\text{-}\pd}
+\newcommand{\icdagdim}{\caticd\text{-}\id}
+\newcommand{\icdid}{\caticd\text{-}\id}
+\newcommand{\ibdcid}{\catibdc\text{-}\id}
+\newcommand{\icdim}{\catic\text{-}\id}
+\newcommand{\icid}{\catic\text{-}\id}
+\newcommand{\ibid}{\catib\text{-}\id}
+\newcommand{\pcdim}{\catpc\text{-}\pd}
+\newcommand{\gpcpd}{\catgpc\text{-}\pd}
+\newcommand{\gfpd}{\catgf\text{-}\pd}
+\newcommand{\gppd}{\catgp\text{-}\pd}
+\newcommand{\gfcpd}{\catgfc\text{-}\pd}
+\newcommand{\gpbpd}{\catgpb\text{-}\pd}
+\newcommand{\gicid}{\catgic\text{-}\id}
+\newcommand{\gibid}{\catgib\text{-}\id}
+\newcommand{\gicdagdim}{\catgicd\text{-}\id}
+\newcommand{\gicdid}{\catgicd\text{-}\id}
+\newcommand{\ggpcpd}{\catg(\catpc)\text{-}\pd}
+\newcommand{\ggicdid}{\catg(\caticd)\text{-}\id}
+\newcommand{\ggicid}{\catg(\catic)\text{-}\id}
+\newcommand{\cmdim}{\mathrm{CM}\text{-}\dim}	
+\newcommand{\cidim}{\mathrm{CI}\text{-}\!\dim}	
+\newcommand{\cipd}{\mathrm{CI}\text{-}\!\pd}	
+\newcommand{\cifd}{\mathrm{CI}\text{-}\!\fd}	
+\newcommand{\ciid}{\mathrm{CI}\text{-}\!\id}	
+
+
+% OTHER INVARIANTS
+
+\newcommand{\Ht}{\operatorname{ht}}	
+\newcommand{\col}{\operatorname{col}}	
+\newcommand{\depth}{\operatorname{depth}}	
+\newcommand{\rank}{\operatorname{rank}}	
+\newcommand{\amp}{\operatorname{amp}}
+\newcommand{\edim}{\operatorname{edim}}
+\newcommand{\crs}{\operatorname{crs}}
+\newcommand{\rfd}{\operatorname{Rfd}}
+\newcommand{\ann}{\operatorname{Ann}}
+\newcommand{\mspec}{\mathrm{m}\text{\spec}}
+\newcommand{\soc}{\operatorname{Soc}}
+\newcommand{\len}{\operatorname{length}}
+\newcommand{\type}{\operatorname{type}}
+\newcommand{\dist}{\operatorname{dist}}
+\newcommand{\prox}{\operatorname{\sigma}}
+\newcommand{\curv}{\operatorname{curv}}
+\newcommand{\icurv}{\operatorname{inj\,curv}}
+\newcommand{\grade}{\operatorname{grade}}
+\newcommand{\card}{\operatorname{card}}
+\newcommand{\cx}{\operatorname{cx}}	
+\newcommand{\cmd}{\operatorname{cmd}}	
+\newcommand{\Span}{\operatorname{Span}}	
+\newcommand{\CM}{\operatorname{CM}}	
+
+% FUNCTORS
+
+\newcommand{\cbc}[2]{#1(#2)}
+\newcommand{\ext}{\operatorname{Ext}}	
+\newcommand{\rhom}{\mathbf{R}\!\operatorname{Hom}}	
+\newcommand{\lotimes}{\otimes^{\mathbf{L}}}
+\newcommand{\HH}{\operatorname{H}}
+\newcommand{\Hom}{\operatorname{Hom}}	
+\newcommand{\coker}{\operatorname{Coker}}
+\newcommand{\spec}{\operatorname{Spec}}
+\newcommand{\s}{\mathfrak{S}}
+\newcommand{\tor}{\operatorname{Tor}}
+\newcommand{\im}{\operatorname{Im}}
+\newcommand{\shift}{\mathsf{\Sigma}}
+\newcommand{\othershift}{\mathsf{\Sigma}}
+\newcommand{\da}[1]{#1^{\dagger}}
+\newcommand{\Cl}{\operatorname{Cl}}
+\newcommand{\Pic}{\operatorname{Pic}}
+\newcommand{\proj}{\operatorname{Proj}}
+\newcommand{\End}{\operatorname{End}}
+\newcommand{\cone}{\operatorname{Cone}}
+\newcommand{\Ker}{\operatorname{Ker}}
+\newcommand{\xext}{\ext_{\catx}}
+\newcommand{\yext}{\ext_{\caty}}
+\newcommand{\vext}{\ext_{\catv}}
+\newcommand{\wext}{\ext_{\catw}}
+\newcommand{\aext}{\ext_{\cata}}
+\newcommand{\ahom}{\Hom_{\cata}}
+\newcommand{\aoext}{\ext_{\catao}}
+\newcommand{\aohom}{\Hom_{\catao}}
+\newcommand{\xaext}{\ext_{\catx\!\cata}}
+\newcommand{\axext}{\ext_{\cata\catx}}
+\newcommand{\ayext}{\ext_{\cata\caty}}
+\newcommand{\avext}{\ext_{\cata\catv}}
+\newcommand{\awext}{\ext_{\cata\catw}}
+\newcommand{\Qext}{\ext_{\catw \cata}}
+\newcommand{\pmext}{\ext_{\catp(R)\catm(R)}}
+\newcommand{\miext}{\ext_{\catm(R)\cati(R)}}
+\newcommand{\Qtate}{\comp{\ext}_{\catw \cata}}
+\newcommand{\awtate}{\comp{\ext}_{\cata \catw}}
+\newcommand{\avtate}{\comp{\ext}_{\cata \catv}}
+\newcommand{\pmtate}{\comp{\ext}_{\catp(R) \catm(R)}}
+\newcommand{\mitate}{\comp{\ext}_{\catm(R) \cati(R)}}
+\newcommand{\pcext}{\ext_{\catpc}}
+\newcommand{\pbext}{\ext_{\catpb}}
+\newcommand{\gpcext}{\ext_{\catgpc}}
+\newcommand{\icext}{\ext_{\catic}}
+\newcommand{\gpbext}{\ext_{\catgpb}}
+\newcommand{\gibdcext}{\ext_{\catgibdc}}
+\newcommand{\ibdcext}{\ext_{\catibdc}}
+\newcommand{\gicext}{\ext_{\catgic}}
+\newcommand{\gpext}{\ext_{\catgp}}
+\newcommand{\giext}{\ext_{\catgi}}
+\newcommand{\gicdext}{\ext_{\catgicd}}
+
+% IDEALS
+
+\newcommand{\ideal}[1]{\mathfrak{#1}}
+\newcommand{\m}{\ideal{m}}
+\newcommand{\n}{\ideal{n}}
+\newcommand{\p}{\ideal{p}}
+\newcommand{\q}{\ideal{q}}
+\newcommand{\fa}{\ideal{a}}
+\newcommand{\fb}{\ideal{b}}
+\newcommand{\fN}{\ideal{N}}
+\newcommand{\fs}{\ideal{s}}
+\newcommand{\fr}{\ideal{r}}
+
+% OPERATIONS AND ACCENTS
+
+\newcommand{\wt}{\widetilde}
+\newcommand{\ti}{\tilde}
+\newcommand{\comp}[1]{\widehat{#1}}
+\newcommand{\ol}{\overline}
+\newcommand{\wti}{\widetilde}
+
+% OPERATORS
+
+\newcommand{\ass}{\operatorname{Ass}}
+\newcommand{\supp}{\operatorname{Supp}}
+\newcommand{\minh}{\operatorname{Minh}}
+\newcommand{\Min}{\operatorname{Min}}
+
+% MATHBB
+
+\newcommand{\bbz}{\mathbb{Z}}
+\newcommand{\bbn}{\mathbb{N}}
+\newcommand{\bbq}{\mathbb{Q}}
+\newcommand{\bbr}{\mathbb{R}}
+\newcommand{\bbc}{\mathbb{C}}
+
+% ARROWS
+
+\newcommand{\from}{\leftarrow}
+\newcommand{\xra}{\xrightarrow}
+\newcommand{\xla}{\xleftarrow}
+\newcommand{\onto}{\twoheadrightarrow}
+\newcommand{\res}{\xra{\simeq}}
+
+
+% MAPS
+
+\newcommand{\vf}{\varphi}
+\newcommand{\ve}{\varepsilon}
+\newcommand{\Qcomp}{\varepsilon_{\catw \cata}}
+\newcommand{\awcomp}{\varepsilon_{\cata \catw}}
+\newcommand{\avcomp}{\varepsilon_{\cata \catv}}
+\newcommand{\xQcomp}{\vartheta_{\catx \catw \cata}}
+\newcommand{\ayvcomp}{\vartheta_{\cata \caty \catv}}
+\newcommand{\Qacomp}{\varkappa_{\catw \cata}}
+\newcommand{\xaacomp}{\varkappa_{\catx \cata}}
+\newcommand{\aaycomp}{\varkappa_{\cata\caty}}
+\newcommand{\aavcomp}{\varkappa_{\cata\catv}}
+\newcommand{\gpcpccomp}{\vartheta_{\catgpc\catpc}}
+\newcommand{\gpcpbcomp}{\vartheta_{\catgpc\catpb}}
+\newcommand{\gpcgpbcomp}{\vartheta_{\catgpc\catgpb}}
+\newcommand{\gicibcomp}{\vartheta_{\catgic\catib}}
+\newcommand{\gicgibcomp}{\vartheta_{\catgic\catgib}}
+\newcommand{\giciccomp}{\vartheta_{\catgic\catic}}
+\newcommand{\pccomp}{\varkappa_{\catpc}}
+\newcommand{\gpccomp}{\varkappa_{\catgpc}}
+\newcommand{\iccomp}{\varkappa_{\catic}}
+\newcommand{\ibdccomp}{\varkappa_{\catibdc}}
+\newcommand{\icdcomp}{\varkappa_{\caticd}}
+\newcommand{\giccomp}{\varkappa_{\catgic}}
+
+% MISCELLANEOUS 
+
+\newcommand{\y}{\mathbf{y}}
+\newcommand{\te}{\theta}
+\newcommand{\x}{\mathbf{x}}
+\newcommand{\opi}{\operatorname{i}}
+\newcommand{\route}{\gamma}
+\newcommand{\sdc}[1]{\mathsf{#1}}
+\newcommand{\nls}[1]{\mathsf{#1}}
+\newcommand{\cl}{\operatorname{cl}}
+\newcommand{\cls}{\operatorname{cls}}
+\newcommand{\pic}{\operatorname{pic}}
+\newcommand{\pics}{\operatorname{pics}}
+\newcommand{\tri}{\trianglelefteq}
+\newcommand{\Mod}{\operatorname{Mod}}
+\newcommand{\bdc}{B^{\dagger_C}}
+\newcommand{\e}{\mathbf{e}}
+\newcommand{\f}{\mathbf{f}}
+
+
+% RENEWED COMMANDS
+
+\renewcommand{\geq}{\geqslant}
+\renewcommand{\leq}{\leqslant}
+\renewcommand{\ker}{\Ker}
+\renewcommand{\hom}{\Hom}
+
+
+\newcommand{\normal}{\lhd}
+\newcommand{\normaleq}{\trianglelefteqslant}
+\newcommand{\homrm}[1]{\hom_{_{#1}\catm}}
+\newcommand{\hommr}[1]{\hom_{\catm_{#1}}}
+\newcommand{\cplx}[1]{{#1}_{\bullet}}
+\newcommand{\pext}{\mathrm{P}\!\ext}
+\newcommand{\pextrm}[1]{\pext_{_{#1}\catm}}
+\newcommand{\pextmr}[1]{\pext_{\catm_{#1}}}
+\newcommand{\iext}{\mathrm{I}\!\ext}
+\newcommand{\iextrm}[1]{\iext_{_{#1}\catm}}
+\newcommand{\iextmr}[1]{\iext_{\catm_{#1}}}
+\newcommand{\catmod}[1]{#1\text{-mod}}
+\newcommand{\modcat}[1]{\text{mod-}#1}
+
+
+\newcommand{\lcm}{\textnormal{lcm}}
+\newcommand{\diff}{\backslash}
+%\setlength{\parindent}{0mm}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% LyX specific LaTeX commands.
+\floatstyle{ruled}
+\newfloat{algorithm}{tbp}{loa}
+\providecommand{\algorithmname}{Algorithm}
+\floatname{algorithm}{\protect\algorithmname}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Textclass specific LaTeX commands.
+\numberwithin{equation}{section}
+\numberwithin{figure}{section}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% User specified LaTeX commands.
+\usepackage{algpseudocode}
+
+\usepackage{subcaption}
+
+\numberwithin{equation}{section}
+
+
+\makeatletter
+
+
+\makeatletter
+
+\newcommand{\h}{\mathcal{H}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% LyX specific LaTeX commands.
+\floatstyle{ruled}
+\newfloat{algorithm}{tbp}{loa}
+\providecommand{\algorithmname}{Algorithm}
+\floatname{algorithm}{\protect\algorithmname}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Textclass specific LaTeX commands.
+\numberwithin{equation}{section}
+\numberwithin{figure}{section}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% User specified LaTeX commands.
+\usepackage{algpseudocode}
+
+\makeatother
+
+\begin{document}
+\begin{frontmatter}
+
+\begin{fmbox}
+\hfill\setlength{\fboxrule}{0px}\setlength{\fboxsep}{5px}\fbox{\includegraphics[width=2in]{moneroLogo.png}}
+\dochead{Research bulletin \hfill MRL-0005}
+\title{Ring Confidential Transactions}
+\date{February 2016}
+\author[
+   addressref={mrl},
+   email={lab@getmonero.org   shen.noether@gmx.com}
+]{\fnm{Shen} \snm{Noether}}
+\author[
+   addressref={mrl},
+   email={lab@getmonero.org}
+]{\fnm{Adam} \snm{Mackenzie}}
+\author[
+   addressref={mrl},
+   email={lab@getmonero.org}
+]{\snm{Monero Core Team}}
+
+\address[id=mrl]{
+  \orgname{Monero Research Lab}
+}\end{fmbox}
+
+
+\begin{abstractbox}
+\begin{abstract}
+This article introduces a method of hiding transaction amounts in
+the strongly decentralized anonymous cryptocurrency Monero. Similar
+to Bitcoin, Monero is a cryptocurrency which is distributed through
+a proof of work ``mining'' process. The original Monero protocol
+was based on CryptoNote, which uses ring signatures and one-time keys
+to hide the destination and origin of transactions. Recently the technique
+of using a commitment scheme to hide the amount of a transaction has
+been discussed and implemented by Bitcoin Core Developer Gregory Maxwell.
+In this article, a new type of ring signature, A Multi-layered Linkable
+Spontaneous Anonymous Group signature is described which allows for hidden
+amounts, origins and destinations of transactions with reasonable
+efficiency and verifiable, trustless coin generation. Some extensions of the protocol are provided, such as Aggregate Schnorr Range Proofs, and Ring Multisignature. The author would like to note that early drafts of this were publicized in the Monero Community and on the bitcoin research irc channel. Blockchain hashed drafts are available in \cite{Snoe} showing that this work was started in Summer 2015, and completed in early October 2015. An eprint is also available at \url{http://eprint.iacr.org/2015/1098}.
+\end{abstract}
+\end{abstractbox}
+
+\end{frontmatter}
+
+%\maketitle
+
+%\tableofcontents
+\section{Introduction}
+
+
+\subsection{Spontaneous (Ad Hoc) Ring Signatures in CryptoCurrencies}
+
+Recall that in Bitcoin each transaction is signed by the owner of
+the coins being sent and these signatures verify that the owner is
+allowed to send the coins. This is entirely analogous to the signing
+of a check from your bank.
+
+CryptoNote \cite{CN} and Ring Coin
+\cite{B2} advanced this idea by using ``ring signatures'' which were originally described
+in \cite{RST} as a ``digital signature that specifies a group of
+possible signers such that the verifier can't tell which member actually
+produced the signature.'' The idea therefore is to have the origin
+pubkey of a transaction hidden in a group of pubkeys all of which contain
+the same amount of coins, so that no one can tell which user actually
+sent the coins. 
+
+The original CryptoNote protocol as described in \cite{CN}
+implements a slight modification of this to prevent double spends.
+Namely in \cite{CN} a ``traceable ring signature,'' which is a slight modification of those described in 
+\cite{FS} is employed. This type of ring signature has the benefit of not allowing the owner of a coin to
+sign two different ring signatures with the same pubkey without being
+noticed on the blockchain. The obvious reason for this is to prevent
+``double-spending'' which, in Bitcoin, refers to
+spending a coin twice. Ring coin \cite{B2,B} uses a more efficient linkable
+ring signature which is a slight modification of the Linkable Spontaneous
+Anonymous Group signatures described in \cite{LWW}.
+
+One benefit of using the above types of ring signatures over other anonymizing techniques, such as CoinJoin \cite{GMc} or using coin mixing services,
+is that they allow for ``spontaneous'' mixing. With CoinJoin or coin mixers, it is
+similarly possible to hide the originator of a given transaction,
+however these techniques in practice need some sort of centralized group manager, such as a centralized CoinJoin server, where transactions
+are combined by a trusted party. In the case that the trusted party is compromised,
+the anonymity of the transaction is also compromised. 
+
+Some coins such
+as Dash (originally called Darkcoin) \cite{DASH}, attempt to negate this by using a larger number
+of trusted mixers (in this case masternodes) but this number is still
+much smaller than the users of the coin. In contrast, with a spontaneous
+ring signature, transactions can be created by the owner of a given
+pubkey (this is the spontaneous, or ``ad-hoc'' property) without relying
+on any trusted server, and thus providing for safer anonymity. 
+
+One possible attack against the original CryptoNote or  ring-coin protocol \cite{CN,B2}
+is blockchain analysis based on the amounts sent in a given transaction.
+For example, if an adversary knows that $.9$ coins have been sent
+at a certain time, then they may be able to narrow down the possibilities
+of the sender by looking for transactions containing $.9$ coins.
+This is somewhat negated by the use of the one-time keys used in \cite{CN}
+since the sender can include a number of change addresses in a transaction,
+thus obfuscating the amount which has been sent with a type of ``knapsack mixing.'' However this technique
+has the downside that it can create a large amount of ``dust'' transactions
+on the blockchain, i.e. transactions of small amounts that take up
+proportionately more space than their importance. Additionally, the
+receiver of the coins may have to ``sweep'' all this dust when they
+want to send it, possibly allowing for a smart adversary to keep track
+of which keys go together in some manner. Furthermore, it is easy to establish an upper and lower bound on the amounts sent. 
+
+Another downside to the original CryptoNote set-up is that it requires a given
+pair of $\left(P,A\right)$ of pubkey $P$ and amount $A$ to be used in a ring
+signature with other pubkeys having the same amount. For less common
+amounts, this means there may be a smaller number of potential pairs
+$\left(P^{\prime},A^{\prime}\right)$ available on the blockchain
+with $A^{\prime}=A$ to ring signature with. Thus, in the original CryptoNote protocol, the potential anonymity set is perhaps smaller than may be desired. 
+  Analysis of the above weaknesses is covered in \cite{mrl4}.
+
+
+\subsection{Ring CT for Monero}
+
+An obvious way to negate the downsides of the CryptNote protocol, as described in the previous section, would be to implement hidden amounts for any transaction.
+In this
+paper, I describe a modification to the Monero protocol, a proof-of-work
+cryptocurrency extending the original CryptoNote protocol, which allows the amounts sent in
+a transaction to be hidden. This modification is based on the Confidential
+Transactions \cite{GM} which are used on the Elements side-chain
+in Bitcoin, except it allows for their use in ring signatures. Therefore,
+the modification is given the obvious name of Ring Confidential Transactions for Monero. 
+
+In order to preserve the property that coins cannot be double spent,
+a generalization of the LSAG's of \cite{LWW} is described, a Multilayered Linkable
+Spontaneous Anonymous Group Signature (MLSAG) which allows for combining
+Confidential Transactions with a ring signature in such a way that
+using multiple inputs and outputs is possible, anonymity is preserved,
+and double-spending is prevented. The author notes that an essentially similar protocol was proposed by Connor Frenkenecht about a month after the second drafts of this were originally publicized. 
+\subsection{Strongly Decentralized Anonymous Payment Schemes}
+The Ring CT protocol allows hidden amounts, origins, and destinations
+for transactions which is somewhat similar to Zerocash \cite{Z}. 
+One possible differentiator is that the use of proof of work for coin generation
+is possible with Ring CT as opposed to in ZeroCash, where it seems all coins
+must be pregenerated by a trusted group.
+
+Note that one of the biggest innovations in Bitcoin \cite{SN}, was
+the decentralized distribution model allowing anyone willing to put
+their computing power to work to participate in the generation of
+the currency. Some of the benefits of this type of proof-of-work include
+trustless incentives for securing the network and stronger decentralization (for example, to protect against poison-pill type attacks).  
+
+One final obvious benefit of the proof-of-work coin generation is
+it makes Ring CT immune to a powerful actor somehow acquiring all the
+pieces of the master key used in coin generation. Since there is an
+obvious large incentive (the ability to generate free money \footnote{The author previously had assumed this would allow the unmasking of transactions as well, but the newer ZeroCash paper claims this is not possible.}) to acquire all pieces of the trusted generation
+key, this is fairly important. 
+
+
+\subsection{Acknowledgements}
+
+I would like to thank Monero team for lots of help and discussion
+in the creation of this paper and the Monero and Bitcoin Community
+for support and discussion. With respect to disclosure, the author received several donations totalling between 2 and 3 bitcoins from the Monero community in gratitude for his work on this research. 
+
+
+
+\section{Multilayered Linkable
+Spontaneous Anonymous Group Signatures}
+\label{MLSAGsection}
+
+
+
+In this section, I define the Multilayered Linkable Spontaneous Anonymous 
+Group signatures (MLSAG) used by the the Ring CT protocol. Note that
+I define these as a general signature, and not necessarily in their
+use case for Ring Confidential Transactions. An MLSAG is essentially similar to
+the LSAG's described in \cite{LWW}, but rather than having a ring
+signature on a set of $n$ keys, instead, an MLSAG is a ring signature
+on a set of $n$ key-vectors. 
+\begin{defn}
+\label{def:A-key-vector-is}A \textbf{key-vector} is just a collection
+$\overline{y}=\left(y_{1},...,y_{r}\right)$ of public keys with corresponding
+private keys $\overline{x}=\left(x_{1},...,x_{r}\right)$. 
+\end{defn}
+
+\subsection{\label{sub:BackLSAG}LWW signatures vs FS signatures}
+
+The ring signatures used in Monero and the original CryptoNote protocol are
+derived from the traceable ring signatures of \cite{FS}. The CryptoNote \cite{CN}
+ring signatures come with a ``key-image'' which means that a signer
+can only sign one ring on the block-chain with a given public and
+private key pair or else their transaction will be marked as invalid. Because of this, one-time keys are used in CryptoNote,
+which further helps anonymity. 
+
+In \cite{B}, Adam Back noticed that the Linkable Spontaneous Anonymous
+Group (LSAG) signatures of \cite{LWW} can be modified to give a more efficient
+linkable ring signature producing the same effect as the \cite{FS}
+ring signatures. This modification reduces the storage cost on the
+blockchain essentially in half.
+
+First I recall almost verbatim the modification given in \cite{B}: 
+
+\textbf{Keygen}: Find a number of public keys $P_{i},i=0,1,...,n$
+and a secret index $j$ such that $xG=P_{j}$ where $G$ is the ed25519
+base-point and $x$ is the signers spend key. Let $I=xH_p\left(P_{j}\right)$
+where $H_p$ is a hash function returning a point \footnote{In practice $H_p(P) = Keccak(P)\cdot G$ where $G$ is the ed25519 basepoint, although note that for the commitment scheme I will use $toPoint(Keccak(P))$, hashing successively until $Keccak(P)$ returns a multiple of the basepoint.}
+Let $\mathfrak{m}$ be a given message. 
+
+\textbf{SIGN}: Let $\alpha,s_{i},\ i\neq j,\ i\in\left\{ 1,...,n\right\} $
+be random values in $\mathbb{Z}_{q}$ (the ed25519 base field). 
+
+Compute
+\[
+L_{j}=\alpha G
+\]
+\[
+R_{j}=\alpha H_p\left(P_{j}\right)
+\]
+\[
+c_{j+1}=h\left(\mathfrak{m},L_{j},R_{j}\right)
+\]
+ where $h$ is a hash function returning a value in $\mathbb{Z}_{q}$.
+Now, working successively in $j$ modulo $n$, define 
+\[
+L_{j+1}=s_{j+1}G+c_{j+1}P_{j+1}
+\]
+\[
+R_{j+1}=s_{j+1}H_p\left(P_{j+1}\right)+c_{j+1}\cdot I
+\]
+\[
+c_{j+2}=h\left(\mathfrak{m},\ L_{j+1},\ R_{j+1}\right)
+\]
+\[
+\cdots
+\]
+\[
+L_{j-1}=s_{j-1}G+c_{j-1}P_{j-1}
+\]
+\[
+R_{j-1}=s_{j-1}H_p\left(P_{j-1}\right)+c_{j-1}\cdot I
+\]
+\[
+c_{j}=h\left(\mathfrak{m},L_{j-1},\ R_{j-1}\right)
+\]
+ so that $c_{1},...,c_{n}$ are defined. 
+
+Let $s_{j}=\alpha-c_{j}\cdot x_j\ mod\ l$, ($l$ being the ed25519
+curve order) hence $\alpha=s_{j}+c_{j}x_j\ mod\ l$ so that 
+\[
+L_{j}=\alpha G=s_{j}G+c_{j}x_jG=s_{j}G+c_{j}P_{j}
+\]
+\[
+R_{j}=\alpha 
+H_p\left(P_{j}\right)=s_{j}H_p\left(P_{j}\right)+c_{j}I
+\]
+and 
+\[
+c_{j+1}=h\left(\mathfrak{m},\ L_{j},\ R_{j}\right)
+\]
+ and thus, given a single $c_{i}$ value, the $P_{j}$ values, the
+key image $I$, and all the $s_{j}$ values, all the other $c_{k},\ k\neq i$
+can be recovered by an observer. The signature therefore becomes:
+\[
+\sigma=\left(I,c_{1},s_{1},...,s_{n}\right)
+\]
+ which represents a space savings over \cite[4.4]{CN} where the ring signature would instead look like: 
+ \[
+\sigma=\left(I,c_{1}, ..., c_{n},s_{1},...,s_{n}\right)
+\]
+\textbf{Verification }proceeds as follows. An observer computes $L_{i},R_{i},$
+and $c_{i}$ for all $i$ and checks that $c_{n+1}=c_{1}$. Then the
+verifier checks that 
+\[
+c_{i+1}=h\left(\mathfrak{m},L_{i},R_{i}\right)
+\]
+ for all $i\mod n$ 
+
+\textbf{LINK}: Signatures with duplicate key images $I$ are rejected. 
+
+Note that proofs of unforgeability, anonymity, and linkability
+hold for the above protocol which are only insignificant modifications to the proofs
+given in \cite{LWW}. I will give a more generalized version of these
+proofs for the MLSAG's. 
+\subsection{\label{sub:MLSAG-Description}MLSAG Description}
+
+
+For the Ring CT protocol, which will be described in section
+\ref{sec:Ring-CT-ForMonero}, I require a generalization of the Back
+LSAG signatures described in the previous section which allows for key-vectors (Definition
+\ref{def:A-key-vector-is}) rather than just keys. 
+
+
+Suppose that each signer of a (generalized) ring containing $n$
+members has exactly $m$ keys $\left\{ P_{i}^{j}\right\} _{j=1,...,m}^{i=1,...,n}$.
+The intent of the MLSAG ring signature is the following: 
+\begin{itemize}
+\item To prove that one of the $n$ signers knows the secret keys to their entire key vector. 
+\item To enforce that if the signer uses any one of their $m$ signing keys in another MLSAG
+signature, then the two rings are linked, and the second such MLSAG signature (ordered by the Monero block chain) is discarded. 
+\end{itemize}
+
+The algorithm proceeds as follows: Let $\mathfrak{m}$ be a given
+message. Let $\pi$ be a secret index corresponding to the signer
+of the generalized ring. For $j=1,...,m$, let $I_{j}=x_{j}H\left(P_{\pi}^{j}\right)$,
+and for $j=1,...,m$, $i=1,...,\hat{\pi},...n$ (where $\hat{\pi}$
+means omit the index $\pi$) let $s_{i}^{j}$ be some random scalars (elements of $\mathbb{Z}_q$).
+Now, in a manner analogous to subsection \ref{sub:BackLSAG},
+define 
+\[
+L_{\pi}^{j}=\alpha_{j}G
+\]
+\[
+R_{\pi}^{j}=\alpha_{j}H\left(P_{\pi}^{j}\right)
+\]
+ for random scalars $\alpha_j$ and $j=1,...,m$. Now, again analogously
+to section \ref{sub:BackLSAG}, set:
+\[
+c_{\pi+1}=H\left(\mathfrak{m},L_{\pi}^{1},R_{\pi}^{1},...,L_{\pi}^{m},R_{\pi}^{m}\right).
+\]
+\[
+L_{\pi+1}^{j}=s_{\pi+1}^{j}G+c_{\pi+1}P_{\pi+1}^{j}
+\]
+\[
+R_{\pi+1}^{j}=s_{\pi+1}^{j}H\left(P_{\pi+1}^{j}\right)+c_{\pi+1}I_{j}
+\]
+ and repeat this, incrementing $i$ modulo $n$ until we arrive at
+\[
+L_{\pi-1}^{j}=s_{i-1}^{j}G+c_{i-1}P_{i-1}^{j}
+\]
+\[
+R_{\pi-1}^{j}=s_{i-1}^{j}H\left(P_{i-1}^{j}\right)+c_{i-1}\cdot I_{j}
+\]
+\[
+c_{\pi}=H\left(\mathfrak{m},L_{\pi-1}^{1},R_{\pi-1}^{1},...,L_{\pi-1}^{m},R_{\pi-1}^{m}\right).
+\]
+ Finally, solve for each $s_{\pi}^{j}$ using $\alpha_{j}=s_{\pi}^{j}+c_{\pi}x_{j} \mod \ell$.
+The signature is then given as $\left(I_{1},...,I_{m},c_{1},s_{1}^{1},...,s_{1}^{m},s_{2}^{1},...,s_{2}^{m},...,s_{n}^{1},...,s_{n}^{m}\right)$,
+so the complexity is $O\left(m\left(n+1\right)\right).$ 
+Verification
+proceeds by regenerating all the $L_{i}^{j},R_{i}^{j}$ starting from
+$i=1$ as in section \ref{sub:BackLSAG} (which is the special case that $m=1$) and verifying
+the hash $c_{n+1}=c_{1}.$ 
+If these are being used in a blockchain setting such as Monero, signatures with key images $I_j$ which have already appeared are then rejected. 
+One can easily show, in a manner similar to \cite{LWW}: 
+\begin{itemize}
+\item The probability of a signer generating a valid signature without knowing
+all ``$m$'' private keys belonging to their key vector for index $\pi$ is negligible. 
+\item The probability of a signer not signing for any key of index $\pi$
+is negligible. (In other words, the key images in the signature necessarily
+all come from index $\pi$.)
+\item If a signer signs two rings using at least one of the same public keys, then the two rings are linked.
+\end{itemize}
+I expand on these points below with security proofs. 
+
+
+\subsection{MLSAG Security Model}
+
+An MLSAG will satisfy the following three properties of Unforgeability,
+Linkability, and Signer Ambiguity which are very similar to the definitions
+given in \cite{LWW}. 
+\begin{defn}
+\label{def:(Unforgeability)--An}(Unforgeability) %
+{} An MLSAG signature scheme is unforgeable if for any probabilistic polynomial time (PPT) algorithm
+$\mathcal{A}$ with signing oracle $\mathcal{SO}$ producing valid
+signatures, given a list of $n$ public key vectors chosen by $\mathcal{A}$,
+then $\mathcal{A}$ can only with negligible probability produce a
+valid signature when $\mathcal{A}$ does not know one of the corresponding
+private key vectors. 
+\end{defn}
+\begin{rem}
+In the following definition, note that I include rejecting duplicate
+key images as part of the verification criteria for the MLSAG, which gives a slightly different Linkability definition than the one in \cite{LWW}. 
+\end{rem}
+\begin{defn}
+\label{def:(Linkability)}(Linkability) Let $L$ be the set of all
+public keys in a given setting (e.g. in a given blockchain). An MLSAG signature scheme on $L$ is key-image
+linked if the probability of a PPT adversary $\mathcal{A}$ creating
+two signatures $\sigma,\sigma^{\prime}$ signed with respect to key-vectors
+$\overline{y}$ and $\overline{y}^{\prime}$ each containing the same
+public key $y_{i}=y$$_{i}^{\prime}$ in $L$ and each verifying without being marked duplicate,
+is negligible. %
+\end{defn}
+\begin{defn}
+\label{def:(Signer-Ambiguity-)}(Signer Ambiguity %
+) An MLSAG signature scheme is said to be signer ambiguous if given
+any verifying signature $\sigma$ on key-vectors $\left(\overline{y}_{1},...,\overline{y}_{n}\right)$
+and any set of $t$ private keys, none of the same index, nor of the
+secret index, then the probability of guessing the secret key is less
+than $\frac{1}{n-t}+\frac{1}{Q\left(k\right)}$ 
+\end{defn}
+Proofs of the above definitions for the MLSAG signatures are given in the appendix. 
+
+\section{\label{sec:Background-on-ConfidentialT}Background on Confidential
+Transactions}
+
+
+\subsection{Confidential Transactions in Bitcoin}
+
+In \cite{GM}, Greg Maxwell describes Confidential Transactions which
+are a way to send Bitcoin transactions with the amounts hidden. The
+basic idea is to use a Pedersen Commitment and the method is well
+described in the cited source. In this paper I make a slight modification
+the the Confidential Transactions machinery in that rather than taking
+the commitments to sum to zero, I instead sign for the commitment,
+to prove I know a private key. This is described in more detail in
+the next section. 
+
+
+\subsection{Modification for Ring Signatures}
+
+Let $G$ be the ed25519 basepoint. Let\footnote{$H=MiniNero.getHForCT()$ in terms of the code at \cite{Snoe}}
+\[
+H=toPoint\left(cn\_fast\_hash\left(G\right)\right)
+\]
+Note that not every hash gives a point in the group of the basepoint (i.e. $H=\psi G$ for some unknown $\psi$) (which is contrary to what happens in secp256k1, the curve used by Bitcoin). However, it seems that choosing the basepoint itself works (I previously used H(123456G) which seemed more secure to me, but the basepoint is certainly a more natural choice). 
+Choosing $H = \gamma G$ for some unknown $\gamma$ is necessary so that all the usual elliptic curve math holds.
+
+Under the discrete
+logarithm assumption on ed25519, the probability of an adversary discovering $\gamma$
+is negligible.  
+Define $C\left(a,x\right)=xG+aH$, the commitment to the value $a$
+with mask $x$. Note that as long as $log_{G}H$ is unknown, and if
+$a\neq0$, then $log_{G}C\left(a,x\right)$ is unknown. On the other
+hand, if $a=0$, then $log_{G}C\left(a,x\right)=x$, so it is possible
+to sign with sk-pk keypair $\left(x,C\left(0,x\right)\right).$ 
+
+In \cite{GM}, there are input commitments, output commitments, and
+the network checks that 
+\[
+\sum Inputs=\sum Outputs.
+\]
+ However, this does not suffice in Monero: Since a given transaction
+contains multiple possible inputs $P_{i},i=1,...,n$, only one of
+which belong to the sender, (see \cite[4.4]{CN}), then if we are
+able to check the above equality, it must be possible for the network
+to see which $P_{i}$ belongs to the sender of the transaction. This
+is undesirable, since it removes the anonymity provided by the ring
+signatures. Thus instead, commitments for the inputs and outputs are
+created as follows (suppose first that there is only one input)
+
+\[
+C_{in}=x_{c}G+aH
+\]
+\[
+C_{out-1}=y_{1}G+b_{1}H
+\]
+\[
+C_{out-2}=y_{2}G+b_{2}H
+\]
+ such that $x_{c}=y_{1}+y_{2}+z$, $x_{c}-y_{1}-y_{2}=z$, $y_{i}$
+are mask values, $z>0$ and $a=b_{1}+b_{2}.$ Here $x_{c}$ is a special
+private key the ``amount key'' known only to the sender, and to
+the person who sent them their coins, and must be different than their
+usual private key. In this case, 
+\[
+C_{in}-\sum_{i=1}^{2}C_{out-i}
+\]
+\[
+=x_{c}G+aH-y_{1}G-b_{1}H-y_{2}G-b_{2}H
+\]
+\[
+=zG.
+\]
+Thus, the above summation becomes a commitment to $0$, with $sk=z$,
+and $pk=zG$, rather than an actual equation summing to zero. Note
+that $z$ is not computable to the originator of $x_{c}$'s coins,
+unless they know both of the $y_{1},y_{2}$, but even this can be simply mitigated by including an additional change address (the usual case is that the second commitment, with $y_2$ as mask, is sent to yourself as change).  
+
+Since it is undesirable to show which input belongs to the sender,
+a ring signature consisting of all the input commitments $C_{i},i=1,...,s,...,n$
+(where $s$ is the secret index of the commitment of the sender),
+adding the corresponding pubkey (so commitments and pubkeys are paired
+$\left(C_{i},P_{i}\right)$ only being allowed to be spent together)
+and subtracting $\sum C_{out}$ is created: 
+\[
+\left\{ P_{1}+C_{1,in}-\sum_{j}C_{j,out},...,P_{s}+C_{s,in}-\sum_{j}C_{j,out},...,P_{n}+C_{n,in}-\sum_{j}C_{j,out}\right\} .
+\]
+ This is a ring signature which can be signed since we know one of
+the private keys (namely $z+x^{\prime}$ with $z$ 
+as above and $x^{\prime}G=P_{s}$). In fact, since we know, for each $i$, both the private key for $P_{i}$ and the private key for $P_{i}+C_{i,in}-\sum_{j}C_{j,out}$,
+we can perform a signature as in section \ref{sub:MLSAG-Description}. This precise details are described in Definition \ref{RCTProtocol}.
+
+As noted in \cite{GM}, it is important to prove that the output amounts\footnote{Since input commitments could potentially be just inherited from the
+previous transaction, it suffices to consider the output amounts.}
+$b_{1},...b_{n}$ all lie in a range of positive values, e.g. $(0,2^{16}).$
+This can be accomplished essentially the same way as in \cite{GM} and is described in more detail in section \ref{AgSchnorr}.
+
+Finally, note that in the above, I have not made any mention of the tag-linkability property which is used in Monero and Cryptonote to prevent double-spends. The tag-linkability property here will result from combining the above discussion with the MLSAG signatures as described in Definition \ref{RCTProtocol}.
+
+
+\section{\label{sec:Ring-CT-ForMonero}Ring CT For Monero Protocol}
+
+
+\subsection{Protocol Description}
+\begin{defn}
+\label{RCTProtocol}(Tag-Linkable Ring-CT with
+Multiple Inputs and One-time Keys) \end{defn}
+\begin{itemize}
+\item Let $\left\{ \left(P_{\pi}^{1},C_{\pi}^{1}\right),...,\left(P_{\pi}^{m},C_{\pi}^{m}\right)\right\} $
+be a collection of addresses / commitments with corresponding secret
+keys $x_{j},\ j=1,...,m$. 
+\item Find $q+1$ collections $\left\{ \left(P_{i}^{1},C_{i}^{1}\right),...,\left(P_{i}^{m},C_{i}^{m}\right)\right\} ,i=1,...,q+1$
+which are not already tag linked in the sense of \cite[page 6]{FS}. 
+\item Decide on a set of output addresses $\left(Q_{i},C_{i,out}\right)$
+such that $\sum_{j=1}^{m}C_{\pi}^{j}-\sum_{i}C_{i,out}$ is a commitment
+to zero. 
+\item Let 
+\[
+\mbox{\ensuremath{\mathfrak{R}}}\coloneqq\left\{ \left\{ \left(P_{1}^{1},C_{1}^{1}\right),...,\left(P_{1}^{m},C_{1}^{m}\right),\left(\sum_{j}P_{1}^{j}+\sum_{j=1}^{m}C_{1}^{j}-\sum_{i}C_{i,out}\right)\right\} ,\right.
+\]
+\[
+...,
+\]
+\[
+\left.\left\{ \left(P_{q+1}^{1},C_{q+1}^{1}\right),...,\left(P_{q+1}^{m},C_{q+1}^{m}\right),\left(\sum_{j}P_{q+1}^{j}+\sum_{j=1}^{m}C_{q+1}^{j}-\sum_{i}C_{i,out}\right)\right\} \right\} .
+\]
+ be the generalized ring which we wish to sign. Note that the last
+column is a Ring-CT ring in the sense of section \ref{sec:Ring-CT-ForMonero}. 
+\item Compute the MLSAG signature $\Sigma$ on $\mathfrak{R}.$
+\end{itemize}
+In this case, by Theorem \ref{thm:Unforgeability}, $P_{\pi}^{j},j=1,...,m$ cannot be the signer of any
+additional non-linked Ring Signatures in the given superset $\mathcal{P}$
+of all such pairs $\mathcal{P}=\left\{ \left(P,C\right)\right\} $
+after signing $\Sigma$. 
+\begin{rem}
+Space complexity of the above protocol. Note that the size of the
+signature $\Sigma$ on $\mathfrak{R}$ according to definition \ref{RCTProtocol}
+is actually smaller, for $m>1$, than a current CryptoNote \cite{CN}
+ring signature based transaction which includes multiple inputs. This
+is because of the size improvements, given by \cite{LWW}, to each
+column. Note also, it is probably not necessary to include the key-image
+of the commitment entry of the above signature. Further size optimizations
+are likely possible.\end{rem}
+
+\subsection{Conversion from Visible Denominations to Commitments}
+\label{conversion}
+
+As Monero currently uses Blockchain visible scalars to represent amounts, it is important that there is a way to convert from visible amounts to commitments while preserving anonymity. In fact, this is not difficult. Given a pair $(P, a)$ where $P$ is a public key and $a$ represents an amount, this may be used as the input to a transaction as $(P, aH)$, and it must be checked by the verifier that the input amount $a$ multiplied by the masking point $H$, indeed gives $aH$. Thus at the first step, the input amounts will not be hidden, but the outputs of this transaction can be hidden, and all the necessary relations outlined in section \ref{sec:Ring-CT-ForMonero} hold. Note that a range proof is not necessary for such an input.
+\begin{rem}
+The obvious benefit of this method of converting from visible amounts to commitments is that the amount of coins generated by the mining process is trustlessly verifiable. This is an advantage of the Ring CT protocol over payment schemes such as \cite{Z} which rely on a trusted setup phase. 
+\end{rem}
+\subsection{Transaction Fees}
+As Monero is strongly decentralized (i.e. proof of work) it is necessary to pay miners a transaction fee for each transaction. This helps with the network security to prevent blockchain bloat. These fees must be paid "unmasked" i.e. just as $bH$, rather than $xG+bH$, and for some standardized amount $b$ so that the miner can verify that $b\cdot H = bH$ and thus there is enough money for the transaction fee while still having the equations in terms of $H$ so the necessary relations of section \ref{sec:Ring-CT-ForMonero} hold. 
+\subsection{Ring Multisignature}
+Note that a simple version of a $t$ of $m$ of $n$ ring- multisignature can be done with the MLSAG signatures. This allows a group of $m$ participants to create a multi-signature such that $t$ out of $m$ must sign for the signature to be accepted as valid, and in addition, it is signer ambiguous which $m$ keys are the participants out of the $n$ keys. 
+\begin{itemize}
+ \item The $n$ participants in the multisignature create a shared secret $x_e$ and public key $P_e$ and share multisig key-images 
+ \[
+I_j = x_e H(P_e | P_j)
+ \]
+ with $P_j$ the public key of the participant. 
+ \item Any participant of the multisignature selects $n-m$ additional public keys on the block-chain and creates an MLSAG signature with the first row the total $n$ keys, and the second row having each entry the shared key $P_e$. 
+ \item Each signer transmitting part of the multisignature provides the initial $I_j,\ j=1,...,m$ so that the signature is accepted after $t$ verifying signatures have been transmitted on the blockchain, each corresponding to one of the key images $I_j$. 
+\end{itemize}
+
+An expanded writeup of the ring-multisignature is in the works. 
+
+\section{Aggregate Schnorr Range Proofs}
+\label{AgSchnorr}
+In \cite{GM}, the confidential transactions without ring signatures uses a type of ring signature based on \cite{abe} called a Borromean ring signature, which helps to prove a committed value lies within a certain range. In this article, I will outline an alternative method, inspired by \cite{herranz}, which has the same space savings, but perhaps simpler security proofs. The motivation for this is as follows: Suppose that a given transaction has input commitments
+\[
+ C_{in} = a_{in} G + 10 H
+\]
+and output commitments
+\[
+ C_{out,1} = a_{out,1} G + 5 H,\ C_{out,2} = a_{out,2} G + 5 H
+\]
+this scenario is valid as it is possible to sign for 
+\[
+ C_{in} - C_{out,1} - C_{out,2} = \left(a_{in} - a_{out,1} - a_{out,2} \right) G
+\]
+However, note that (without range proofs) it would be possible to alternatively set output commitments
+\[ 
+  C_{out,1} = a_{out,1} G - H,\ C_{out,2} = a_{out,2} G + 11 H
+\]
+as $-1$ is a very large number modulo the curve group order, free money has been created. It is therefore necessary to prove that the $C_{out,i}$ are commitments to values which are positive and lie in a restricted range $[0,2^n]$ for some $n$.
+To do this, one decomposes each output value into binary:
+\[
+ b = b_0 2^0 + b_1 2^1 + b_2 2^2 + \cdots + b_n 2^n
+\]
+and computes commitments $C_{out,i}^j$ to $b_j \cdot 2^j $ and such that 
+\[
+ C_{out,i}^1 + C_{out,i}^2 + \cdots + C_{out,i}^n = C_{out,i}
+\]
+Finally, using secret key $b_j$, one computes a ring signature on 
+\[
+ (C_{out,i}^j, C_{out,i}^j - 2^j H)
+\]
+for all $j$ and provides the $C_{out,i}^j$ to the verifying parties (in this case, the miners). 
+
+For space savings, one can either use a Borromean ring signature (as in \cite{GM}) to combine all of these simple ring signatures, or a type of aggregate ring signature defined as follows:
+\subsubsection{ Aggregate Schnorr Non-linkable Ring Signature (ASNL) Generation} 
+Let $(x_i^j, P_1^j, P_2^j)$ be a set of keys, $j=1,...,n$ with $x_i^j$ the secret key of $P_i^j$
+\begin{itemize}
+ \item For each $j$, let $i^\prime := i+1\  mod\  2$, set $\alpha_j$ a random scalar, and compute $L_i^j = \alpha_j G$. 
+ \item Set $c_{i^\prime}^j= H_s(L_i^j)$, where $H_s$ is a cryptographic hash function returning a scalar, and after choosing $s_{i^\prime}^j$ random, compute
+ \[
+L_{i^\prime}^j = s_{i^\prime} G + c_{i^\prime} H. 
+ \]
+ \item Set $c_i = H_s(L_{i^\prime}^j)$ and compute
+ \[
+ s_i^j = \alpha - c_i^j x_i \ mod\ \ell 
+ \]
+ \item Return $(L_1^j, s_2^j)$ for all $j$ and $s = \sum_j s_1^j$. 
+\end{itemize}
+
+\subsubsection{ Aggregate Schnorr Non-linkable Ring Signature (ASNL) Verification}
+Start with $(P_1^j, P_2^j, L_1^j, s_2^j)$ for $j=1,...,n$ and $s$. 
+\begin{itemize}
+ \item For all $j$, compute $c_2^j = H_s (L_1^j)$, $L_2^j = s_2^j G + c_2^j H$, and $c_1^j = H_s(L_2^j)$. 
+ \item If $\sum_{j=1}^n L_1^j = s G + (c_1^j + \cdots + c_n^j) H$ then return $0$ for a valid signature.  Otherwise return $-1$. 
+\end{itemize}
+ \begin{thm}
+ The Aggregate Schnorr Non-linkable ring signature is unforgeable under the discrete logarithm assumption.  
+ \end{thm}
+\begin{proof}
+ I sketch a proof in the case $n=2$. The general case is similar. Suppose that an adversary $\mathcal{A}$ is able to forge an ASNL signature on 
+\[
+  \left\{ (x_i^1, P_1^1, P_2^1), (x_i^2, P_1^2, P_2^2) \right\}
+ \]
+ with non-negligible probability while knowing at most one of the $x_i^j$ (suppose without loss of generality that $\mathcal{A}$ knows $x_i^1$). For any given such forgery:
+ \[
+  \{s,(P_1^j, P_2^j, L_1^j, s_2^j)\},\ j=1,2,
+ \]
+I solve the discrete logarithm of $P_1^2$ with non-negligible probability. Following the verification algorithm, let $c_1^j = H_s\left(s_2^j G + H_s(L_1^j)H\right)$. It must then be true that 
+\[
+ L_1^1 + L_1^2 = sG + \left(c_1^1 P_1^1 + c_1^2 P_1^2\right).
+\]
+Supposing that $L_1^1 = a G$ and $L_1^2 = bG$ with $a,b$ known to $\mathcal{A}$, then 
+\[ 
+ aG + bG - sG - c_1^1 P_1^1 = c_1^2 P_1^2
+\]
+so, as $c_1^2$ is determined by the verification protocol, it must be the case that $\mathcal{A}$ knows the private key of $P_1^2$, 
+\[
+ x_1^2 := \frac{a+b-s-c_1^1 x_1^1}{c_1^2} \mod \ell
+\]
+ This contradicts the discrete logarithm assumption for the given group. 
+\end{proof}
+\subsection{Representing Amounts }
+Amounts in the Ring CT protocol be represented in a similar manner as in \cite{GM}, however modified slightly to fit Monero.
+CryptoNote coins organize denominations of coins into a databases of indices, so that they may be referenced in order of their appearance as inputs for ring signatures. As all values in CryptoNote coins are represented as 64-bit unsigned integers, we can use a range proof over the entire register to encode the output amount to the recipient. Beneficially, this also allows all outputs to be mixed with each other, so only a single index of outputs in order of appearance is required. A range proof of this is approximately 5 kilobytes. Ring signatures for inputs then become much more resilient to analysis, as the anonymity set is widely expanded.
+
+While the range proofs are large, using a transaction hashing scheme that signs the transaction "prefix" (both input indices and outputs) and stores the range proof, along with ring signatures, separately enables large amounts of space saving when syncing to a checkpoint or operating as an SPV node. Similar to Sidechains Elements \cite{El}, we would store 
+$H(H(prefix) || H(signatures))$ in the merkle tree. Then, nodes syncing to and trusting a checkpoint need only download the prefix and a hash of the signatures, effectively reducing the amount of bandwidth require to sync dramatically. Because the transaction prefix uses a varint for the outputs it references in its ring signatures and outputs funds to single public keys, they are miniscule in comparison to the ring signature data1in the inputs and range proofs. Later, the ring signatures may even be pruned from the database by some nodes to further save space, storing instead only the comparatively small UTXO set.
+\subsubsection{Passing Amounts to Receiver}
+Now, given any output amount, $b = b_0 2^0 + b_1 2^1 + \cdots b_n 2^n $, a sender computes a new private /public key pair and corresponding shared ECDH secret $ss$ and makes the following information available in their transaction:
+\begin{itemize}
+ \item $C_j = a_j G + (b_j 2^j) H$ where $a_i$ are some random numbers for $j=0,...,n$.
+ \item The data $\left\{(L_1^i, s_2^j),s\right\}$. 
+ \item ECDH public key and $a + ss\ mod\ \ell$ where $a = a_0 + \cdots + a_n$. 
+\end{itemize}
+The receiver then:
+\begin{itemize}
+ \item Computes their shared secret $ss$ and computes $a$ from $a + ss\ mod\ \ell$. 
+ \item Computes $C = \sum C_i$, computes $C - aG = bH$, and finds $b$ by comparing to all $bH$ in the given range $[0, 2^n]$. (In practice this will be a quick 500 kilobyte lookup with $n = 14$ as in the previous section. If on the other hand $2^{32}$ were to be chosen as the upper limit value, as in \cite{GM}, the search would become computationally intensive). 
+\end{itemize}
+
+
+\section{Conclusion}
+The Ring Confidential Transactions protocol provides a strongly decentralized cryptocurrency (i.e. there is no privileged party) which has provable security estimates regarding the hiding of amounts, origins and destinations. In addition, coin generation in the Ring Confidential Transactions protocol is trustless and verifiably secure. These five factors are a necessity of a cash-like crypto-currency such as Monero. 
+
+\bibliographystyle{plain}
+\bibliography{biblio}
+
+\appendix
+
+\section{Appendix: Security Proofs}
+
+\subsection{MLSAG Unforgeability}
+
+This follows similarly to \cite[Theorem 1]{LWW}. Let $H_{1}$ and
+$H_{2}$ random oracles, and $\mathcal{SO}$ be a signing oracle which
+returns valid MLSAG signatures. Assume there is a probabilistic polynomial
+time (PPT) adversary $\mathcal{A}$ with the ability to forge an MLSAG
+from a list of key vectors $L$ with non-negligible probability 
+\[
+Pr\left(\mathcal{A}\left(\mathcal{L}\right)\to\left(m,\sigma\right):Ver\left(L,m,\sigma\right)=True\right)>\frac{1}{Q_{1}\left(k\right)}
+\]
+ where $Q_{1}$ is a polynomial inputting a security parameter $k$
+and where $\left(m,\sigma\right)$ is not one of the signatures returned
+by $\mathcal{S}\mathcal{O}$. Assume that $\mathcal{A}$ makes no
+more than $q_{H}+nq_{S}$ (with $n$ the number of keys in $\mathcal{L}$)
+queries to the signing oracles $H_{1},H_{2}$ and $\mathcal{SO}$
+respectively. The oracles $H_{1}$ and $H_{2}$ are assumed independent
+and random and are consistent given duplicate queries. The signing
+oracle $\mathcal{SO}$ is also allowed to query $H_{1}$ and $H_{2}$.
+Given $\mathcal{A}$, I will show it is possible to create a PPT adversary
+$\mathcal{M}$ which uses $\mathcal{A}$ to find the discrete logarithm
+of one of the keys in $\mathcal{L}$. 
+
+If $L$ is a set of key vectors $\left\{ \overline{y_{1}},...,\overline{y_{n}}\right\} $
+each of size $r$, (i.e. $\overline{y_{i}}=\left(y_{1}^{i},...,y_{r}^{i}\right)$
+with $y_{1},...,y_{r}$ public keys) then a forged signature 
+\[
+\sigma=\left(c_{1},s_{1},...,s_{n},y_{0}\right)
+\]
+ produced by $\mathcal{A}$ must satisfy 
+\[
+c_{i+1}=H\left(\mathfrak{m},L_{i}^{1},R_{i}^{1},...,L_{i}^{m},R_{i}^{m}\right)
+\]
+ where the $i$ are taken mod $n$, and the $L_{i}^{j}$, $R_{i}^{j}$
+are defined as in section \ref{sub:MLSAG-Description}. The new adversary $\mathcal{M}$
+may call $\mathcal{A}$ to forge signatures a polynomial number of
+times and will record each Turing script $\mathcal{T}$ whether
+or not the forgery is successful. 
+\begin{lem}
+\label{lem:RewindingLemma}\cite[Lemma 1]{LWW} %
+{} Let $\mathcal{M}$ invoke $\mathcal{A}$ to obtain a transcript $\mathcal{T}.$
+If $\mathcal{T}$ is successful, then $\mathcal{M}$ rewinds $\mathcal{T}$
+to a header $H$ and re-simulates $\mathcal{A}$ to obtain transcript
+$\mathcal{T}^{\prime}$ . If $Pr\left(\mathcal{T}\ \mbox{succeeds}\right)=\epsilon$
+, then $Pr\left(\mathcal{T}^{\prime}\mbox{ succeeds}\right)=\epsilon.$ \end{lem}
+\begin{proof}
+Follows easily from the cited Theorem. \end{proof}
+\begin{thm}
+\label{thm:Unforgeability}The probability that an adversary $\mathcal{A}$
+forges a verifying MLSAG signature is negligible under the discrete
+logarithm assumption. 
+\end{thm}
+\begin{proof}
+I follow the notation introduced above. Similarly to \cite[Theorem 1]{LWW},
+since the probability of guessing the output of a random oracle is
+negligible, therefore, for each successful forgery $\mathcal{A}$ completes
+with transcript $\mathcal{T}$, there are $m_{\mathcal{T}}$ queries
+to $H_{1}$ matching the $n$ queries used to verify the signature.
+Thus let $X_{i_{1}},...,X_{i_{m}}$ denote these queries used
+in verification for the $i^{th}$ such forgery and let $\pi$ be the
+index corresponding to the last such verification query for a given
+forgery 
+\[
+X_{i_{m}}=H_{1}\left(m,L_{\pi-1}^{1},R_{\pi-1}^{1},...,L_{\pi-1}^{m_{\mathcal{T}}},R_{\pi-1}^{m_{\mathcal{T}}}\right).
+\]
+(Intuitively, $\pi$ corresponds to what would be the secret index
+of the forged signature, since it corresponds to the last call to
+the random oracle for the given signature).
+
+An attempted forgery $\sigma$ produced by $\mathcal{A}$ is an $\left(\ell,\pi\right)$-forgery
+if $i_{1}=\ell$ and $\pi$ is as above (so this forgery corresponds
+to queries $\ell$ through $\ell+\pi$). By assumption, there exists
+a pair $\left(\ell,\pi\right)$ such that the probability that the
+corresponding transcript $\mathcal{T}$ gives a successful forgery, 
+$\epsilon_{\ell,\pi}\left(\mathcal{T}\right)$, satisfies 
+\[
+\epsilon_{\ell,\pi}\ge\frac{1}{m_{\mathcal{T}}\left(q_{H}+m_{\mathcal{T}}q_{S}\right)}\cdot\frac{1}{Q_{1}\left(k\right)}\ge\frac{1}{n\left(q_{H}+nq_{S}\right)}\cdot\frac{1}{Q_{1}\left(k\right)}.
+\]
+ Now, rewinding $\mathcal{T}$ to just before the $\ell^{th}$ query,
+and again attempting a forgery on the same set of keys, (and letting
+$H_{1}$ compute new coin flips for all of it's succeeding queries)
+then by Lemma \ref{lem:RewindingLemma}, it follows that the probability
+that $\mathcal{\mathcal{T}^{\prime}}$ is also a successful forgery
+satisfies 
+\[
+\epsilon_{\ell,\pi}\left(\mathcal{T}^{\prime}\right)\ge\frac{1}{n\left(q_{H}+nq_{S}\right)}\cdot\frac{1}{Q_{1}\left(k\right)}.
+\]
+ Therefore, the probability that both $\mathcal{T}$ and $\mathcal{T}^{\prime}$
+correspond to verifying forgeries $\sigma$ and $\sigma^{\prime}$
+is non-negligible: 
+\[
+\epsilon_{l,\pi}\left(\mathcal{T\ }and\ \mathcal{T}^{\prime}\right)\ge\left(\epsilon_{l,\pi}\left(\mathcal{T}\right)\right)^{2}.
+\]
+
+
+As new coin-flips have been computed for the random oracle outputs
+of $H_{1},$ it follows that with overwhelming probability there is
+$j$ such that $s_{\pi}^{j}\neq s_{\pi}^{\prime j}$ and $c_{\pi}\neq c_{\pi+1}$.
+Thus we can solve for the private key of index $\pi$: 
+\[
+x_{\pi}^{j}=\frac{s_{\pi}^{\prime j}-s_{\pi}^{j}}{c_{\pi}-c_{\pi}^{\prime}}\ mod\ q
+\]
+ which contradicts the discrete logarithm assumption. 
+\end{proof}
+
+\subsection{MLSAG Linkability}
+\begin{thm}
+(Key-Image Linkability) The probability that a PPT adversary $\mathcal{A}$
+can create two verifying (and unlinked in the given setting) signatures $\sigma,\sigma^{\prime}$ signed
+with respect to key vectors $\overline{y}$ and $\overline{y}^{\prime}$respectively
+such that there exists a public key $y$ in both $\overline{y}$ and
+$\overline{y}^{\prime}$ is negligible. \end{thm}
+\begin{proof}
+Suppose to the contrary that $\mathcal{A}$ has created two verifying
+signatures $\sigma$ and $\sigma^{\prime}$ both signed with respect to key
+vectors $\overline{y}$ and $\overline{y}^{\prime}$ respectively such
+that there exists a public key $y$ in both $\overline{y}$ and $\overline{y}^{\prime}.$
+Let $y$ appear as element $j$ of $\overline{y}$,  and as element
+$j^{\prime}$ element of $\overline{y}^{\prime}.$ By Theorem \ref{thm:Unforgeability},
+it holds with overwhelming probability that there exists indices $\pi$
+and $\pi^{\prime}$ for the public keys in $\sigma$ and $\sigma^{\prime}$
+respectively such that 
+\[
+L_{\pi}^{j}=s_{\pi}^{j}G+c_{\pi}y_{\pi}^{j}
+\]
+\[
+R_{\pi}^{j}=s_{\pi}^{j}H\left(y_{\pi}^{j}\right)+c_{\pi}I_{j}
+\]
+ and 
+
+\[
+L_{\pi^{\prime}}^{j\prime}=s_{\pi^{\prime}}^{j^{\prime}}G+c_{\pi^{\prime}}y_{\pi^{\prime}}^{j^{\prime}}
+\]
+\[
+R_{\pi^{\prime}}^{j^{\prime}}=s_{\pi^{\prime}}^{j^{\prime}}H\left(y_{\pi^{\prime}}^{j^{\prime}}\right)+c_{\pi^{\prime}}I_{j^{\prime}}
+\]
+ with 
+\[
+log_{G}L_{\pi}^{j}=log_{H\left(y_{\pi}^{j}\right)}R_{\pi}^{j}
+\]
+ and 
+\[
+log_{G}L_{\pi^{\prime}}^{j^{\prime}}=log_{H\left(y_{\pi^{\prime}}^{j^{\prime}}\right)}R_{\pi^{\prime}}^{j^{\prime}}
+\]
+Letting $x$ denote the private key of $y,$ $y=xG$, then after solving
+the above for $I_{j}$ and $I_{j^{\prime}}$ it follows that $I_{j}=xH\left(y_{\pi}^{j}\right)=xH\left(y\right)$
+and similarly $I_{j^{\prime}}=xH\left(y\right).$ Thus the two signatures
+include $I_{j}=I_{j^{\prime}}$, and therefore, since duplicate key images are rejected, one of them must not verify. 
+\end{proof}
+\subsection{MLSAG Anonymity}
+To prove the anonymity of the above protocol in the random oracle
+model, let $H_{1},H_{2}$ be random oracles modeling discrete hash
+functions. Let $\mathcal{A}$ be an adversary against anonymity. I
+construct an adversary $\mathcal{M}$ against the Decisional Diffie Helman
+(DDH) assumption as follows.
+The DDH asumption says that given a
+tuple $\left(G,aG,bG,\gamma G\right)$, the probability of determining
+whether $\gamma G=abG$ is negligible. 
+\begin{thm}
+\label{thm:Ring-CT-protocol}Ring CT protocol is signer-ambiguous
+under the Decisional Diffie-Helman assumption. \end{thm}
+%asdf stopped editing here
+\begin{proof}
+(Similar proof to \cite[Theorem 2]{LWW}) Assume that the Decisional Diffie-Helman problem is hard in the cyclic group generated by $G$ and suppose there exists a PPT
+adversary $\mathcal{A}$ against signer ambiguity. Thus given a list
+$L$ of $n$ public key-vectors of length $m$, a set of $t$ private
+keys $\mathcal{D}_{t}=\left\{ x_{1},...,x_{t}\right\} $, a valid
+signature $\sigma$ on $L$ signed by a user with respect to a key-vector
+$\overline{y}$ such that the corresponding private key-vector $\overline{x}=\left(x_{1}^{\pi},...,x_{m}^{\pi}\right)$
+satisfies $x_{j}^{\pi}\notin\mathcal{D}_{t}$, then $\mathcal{A}$
+can decide $\pi$ with probability 
+\[
+Pr\left(\mathcal{A}\to\pi\right)>\frac{1}{n-t}+\frac{1}{Q\left(k\right)}
+\]
+ for some polynomial $Q\left(k\right)$. I construct a PPT adversary
+$\mathcal{M}$ which takes as inputs a tuple 
+$\left(G,aG,bG,c_{i}G\right)$ where $i\in \{0,1\}$ is randomly chosen (and not a priori known to $\mathcal{M}$), $c_{1}=ab$, and $c_{0}$ is a random scalar, and outputs $i$ with probability
+\[
+Pr\left(\mathcal{M}\left(G, aG,bG,c_{i}G\right)\to i\right)\ge\frac{1}{2}+\frac{1}{Q_{2}\left(k\right)}
+\]
+ for some polynomial $Q_{2}\left(k\right)$. 
+
+Consider an algorithm SIMNIZKP (similar to the one defined in \cite{FS}) which takes
+as input scalars $a$, $c$ , a private key vector $\overline{x}$,
+a set of public key-vectors $\overline{y}_{i},i=1,...,m$, an index
+$\pi$, and a message $\mathfrak{m}$ and acts on these as follows: 
+
+1. Generate random scalars $s_{1},...,s_{m}$ and, a random scalar
+$c_{\pi}\leftarrow H$. 
+
+2. For $j$ indexing $\overline{x}$, set
+\[
+L_{\pi}^{1}=aG
+\]
+\[
+R_{\pi}^{1}=cG
+\]
+ and for all other $j$ 
+\[
+L_{\pi}^{j}=s_{\pi}^{j}G+c_{\pi}y_{\pi}^{j}
+\]
+\[
+R_{\pi}^{j}=s_{\pi}^{j}H\left(y_{\pi}^{j}\right)+c_{\pi}x^{j}H\left(y_{\pi}^{j}\right)
+\]
+
+3. Compute a random output from the random oracle 
+\[
+c_{\pi+1}\leftarrow H\left(\mathfrak{m},L_{\pi}^{1},R_{\pi}^{1},...,L_{\pi}^{m},R_{\pi}^{m}\right).
+\]
+
+4. For each $i$, working mod $m$, compute 
+\[
+L_{i}^{j}=s_{i}^{j}G+c_{i}y_{\pi}^{j}
+\]
+\[
+R_{i}^{j}=s_{i}^{j}H\left(y_{i}^{j}\right)+c_{i}x^{j}H\left(y_{i}^{j}\right)
+\]
+\[
+c_{i+1}\leftarrow H\left(\mathfrak{m},L_{i}^{1},R_{i}^{1},...,L_{i}^{m}+R_{i}^{m}\right).
+\]
+ and note that at the last step when $i=\pi-1$, then $c_{i+1}$
+is already determined, to maintain consistency with the random oracle
+output. 
+
+Note that regardless of whether $\overline{x}$ is the actual private
+key corresponding to $\overline{y},$ due to the fact that consistency
+is maintained by the random oracles in subsequent calls, the above
+signature verifies. If $\overline{x}$ is actually the private key-vector
+of $\overline{y}$ , then there is no difference between SIMNIZKP
+and an actual signature. 
+
+Finally, given a tuple $\left(G,aG,bG,c_{i}G\right)$ where $a,b$
+are randomly selected scalars, with $c_{1}=ab$, $c_{0}$ a random
+element, $i\in\left\{ 0,1\right\} $, $\mathcal{M}$ takes the following steps to solve the Decisional Diffie
+Helman Problem with non-negligible probability. 
+$\mathcal{M}$ grabs
+a random $\gamma\leftarrow H$ from the random oracle and takes a
+private / public key-vector pair $\left(\overline{x},\overline{y}\right)$,
+and then computes $s$ such that $a=s+\gamma x$. Now $\mathcal{M}$
+performs SIMNIZKP with arbitrarily selected key-vectors $\left\{ \overline{y_{i}}\right\} _{i=1,...,n}$
+such that $\overline{y}=\overline{y}_{\pi},$ $a\to a$, $c_{i}\to c$
+some message $\mathfrak{m}$, and $\overline{x}\to\overline{x}$. 
+
+If it is the case that $i=1$, then $c=ab$, then 
+\[
+log_{G}aG=log_{bG}cG=a
+\]
+ and due to the fact that $\mathcal{A}$ is assumed to be able to
+find $\pi$ with non-negligible probability, then there is a non-negligible
+probability over $\frac{1}{2}$ that $\mathcal{A}$ returns $1$ (upon
+which $\mathcal{M}$ returns $1$). If $i=0$, then $\mathcal{A}$
+returns $1$ only with probability $\frac{1}{2}$, and so for some
+non-negligible probability over $\frac{1}{2}$, $\mathcal{M}$ returns
+the same value as $\mathcal{A}$, and thus solves the Decisional Diffie-Helman problem for randomly chosen scalars with non-negligible probability
+over $\frac{1}{2}$, which is a contradiction. 
+\end{proof}
+
+\section{Ring CT Demo Code}
+In the repository at \cite{Snoe} I have created a simple demonstration of the Ring Confidential Transactions protocol utilizing the MLSAG signatures of section \ref{MLSAGsection} and the ASNL signatures of section \ref{AgSchnorr}:
+\begin{verbatim}
+  H_ct = RingCT.getHForCT()
+print("H", H_ct)
+sr, Pr = PaperWallet.skpkGen() #receivers private/ public
+se, pe, ss = ecdh.ecdhgen(Pr) #compute shared secret ss
+digits = 14 #in practice it will be 14
+print("inputs")
+Cia, L1a, s2a, sa, ska = RingCT.genRangeProof(10000, digits)
+print("outputs")
+Cib, L1b, s2b, sb, skb = RingCT.genRangeProof(7000, digits)
+Cic, L1c, s2c, sc, skc = RingCT.genRangeProof(3000, digits)
+print("verifying range proofs of outputs")
+RingCT.verRangeProof(Cib, L1b, s2b, sb)
+RingCT.verRangeProof(Cic, L1c, s2c, sc)
+x, P1 = PaperWallet.skpkGen()
+P2 = PaperWallet.pkGen()
+C2 = PaperWallet.pkGen() 
+#some random commitment grabbed from the blockchain
+ind = 0
+Ca = RingCT.sumCi(Cia)
+Cb = RingCT.sumCi(Cib)
+Cc = RingCT.sumCi(Cic)
+sk = [x, MiniNero.sc_sub_keys(ska, MiniNero.sc_add_keys(skb, skc))]
+pk = [[P1, P2], [MiniNero.subKeys(Ca, MiniNero.addKeys(Cb, Cc)), \
+MiniNero.subKeys(C2, MiniNero.addKeys(Cb, Cc)) ] ]
+II, cc, ssVal = MLSAG.MLSAG_Sign(pk, sk, ind)
+print("Sig verified?", MLSAG.MLSAG_Ver(pk, II, cc, ssVal) )
+print("Finding received amount corresponding to Cib")
+RingCT.ComputeReceivedAmount(pe, sr, MiniNero.addScalars(ss, skb), Cib)
+print("Finding received amount corresponding to Cic")
+RingCT.ComputeReceivedAmount(pe, sr, MiniNero.addScalars(ss, skc), Cic)
+
+\end{verbatim} 
+Here is an example transaction with input $10,000$ and outputs $3,000$ and $7,000$. 
+\begin{verbatim}
+ ('H', '61fe7f0f5a607a33427d01dd1fded5ffa03fae2e9df9ebccf2e0a2f5bd77a204')
+inputs
+('b, b in binary', 10000, [0, 0, 0, 0, 1, 0, 0, 0, 1, 1, 1, 0, 0, 1])
+Generating Aggregate Schnorr Non-linkable Ring Signature
+outputs
+('b, b in binary', 7000, [0, 0, 0, 1, 1, 0, 1, 0, 1, 1, 0, 1, 1, 0])
+Generating Aggregate Schnorr Non-linkable Ring Signature
+('b, b in binary', 3000, [0, 0, 0, 1, 1, 1, 0, 1, 1, 1, 0, 1, 0, 0])
+Generating Aggregate Schnorr Non-linkable Ring Signature
+verifying range proofs of outputs
+Verifying Aggregate Schnorr Non-linkable Ring Signature
+Verified
+Verifying Aggregate Schnorr Non-linkable Ring Signature
+Verified
+('Generating MLSAG sig of dimensions ', 2, 'x ', 2)
+('verifying MLSAG sig of dimensions ', 2, 'x ', 2)
+('c', 
+['80a3cfd06dd2862307cd75c2a1566f20cd743dbb0b9feb22d79dcbecb9023f42',
+'a9b7342ba7bf2f102505ca19dab734fde638916c0a29f5b30e49833ab51393ea',
+'80a3cfd06dd2862307cd75c2a1566f20cd743dbb0b9feb22d79dcbecb9023f42'])
+('sig verifies?', True)
+('Sig verified?', True)
+Finding received amount corresponding to Cib
+('received ', 7000,
+'a488ec68732fb551841c2c6dcc7ffac895d98ec7e9378275ed20ea12805fc18e')
+Finding received amount corresponding to Cic
+('received ',3000,
+'1b46626858e130a0f3884c74c9fdeabc4d812c519103ea16a35a3f82a3d0ed6d')
+\end{verbatim}
+
+
+
+
+\end{document}
