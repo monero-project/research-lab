@@ -50,6 +50,7 @@
 
 #include "rctTypes.h"
 #include "rctOps.h"
+#include "rctSigs.h"
 
 
 
@@ -58,11 +59,8 @@ using namespace std;
 using namespace crypto;
 
 namespace rct {
-
-    int i;
-    //rctSig genRMS(ctkeyV & inSk, ctkeyV  & inPk, const keyV & destinations, const vector<xmr_amount> amounts, const int mixin);
-
-
-
+    tuple<key, key, key, key> InitiateRMS(key x);
+    key rmsMgSigStart(const keyM & pk, mgSig & rv, keyV aG, keyV aHP, const int index);
+    key rmsSign(key a, key c, key x) ;
 }
 #endif

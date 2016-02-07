@@ -129,150 +129,140 @@ namespace rct {
 		keyV II(xx.size());
 		int i = 0;
 		for (i = 0; i < xx.size(); i++) {
-			II[i] = scalarmultKey(hashToPoint(scalarmultBase(xx[i])), xx[i]);
+            II[i] = scalarmultKey(hashToPoint(scalarmultBase(xx[i])), xx[i]);
 		}
 		return II;
 	}
-
-/*
-	keyV skvGen(int n) {
-		keyV rv(n);
-		int i = 0;
-		for (i = 0; i < n; i++) {
-			skGen(rv[i]);
-		}
-		return rv;
-	}
-    */
-
+    
+    
 	//Multilayered Spontaneous Anonymous Group Signatures (MLSAG signatures)
+    //This is a just slghtly more efficient version than the ones described below
+    //(will be explained in more detail in Ring Multisig paper
 	//These are aka MG signatutes in earlier drafts of the ring ct paper
 	// c.f. http://eprint.iacr.org/2015/1098 section 2. 
 	// keyImageV just does I[i] = xx[i] * Hash(xx[i] * G) for each i
 	// Gen creates a signature which proves that for some column in the keymatrix "pk"
 	//   the signer knows a secret key for each row in that column
-	// Ver verifies that the MG sig was created correctly    
-	mgSig MLSAG_Gen(const keyM & pk, const keyV & xx, const int index) {
-
-		mgSig rv;
+	// Ver verifies that the MG sig was created correctly        
+    mgSig MLSAG_Gen(const keyM & pk, const keyV & xx, const int index) {
+        mgSig rv;
 		int rows = pk[0].size();
 		int cols = pk.size();
 		if (cols < 2) {
 			printf("Error! What is c if cols = 1!");
 		}
 		int i = 0, j = 0;
-
-		keyV c(cols);
-		keyV alpha = skvGen(rows);
-		rv.II = keyImageV(xx);
-		DP(rv.II);
+		key c, c_old, L, R, Hi;
+        sc_0(c_old.bytes);
 		vector<ge_dsmp> Ip(rows);
-		keyM L(cols, rv.II);
-		keyM R(cols, rv.II);
+        rv.II = keyV(rows);
 		rv.ss = keyM(cols, rv.II);
-		keyV Hi(rows);
+        keyV alpha(rows);
+        keyV aG(rows);
+        keyV aHP(rows);
+        key m2hash;
+        unsigned char m2[96]; 
+        DP("here1");
 		for (i = 0; i < rows; i++) {
-			L[index][i] = scalarmultBase(alpha[i]);
-			hashToPoint(Hi[i], pk[index][i]);
-			R[index][i] = scalarmultKey(Hi[i], alpha[i]);
+            skpkGen(alpha[i], aG[i]); //need to save alphas for later..
+            Hi = hashToPoint(pk[index][i]);
+            aHP[i] = scalarmultKey(Hi, alpha[i]);
+            memcpy(m2, pk[index][i].bytes, 32);
+            memcpy(m2 + 32, aG[i].bytes, 32);
+            memcpy(m2 + 64, aHP[i].bytes, 32);
+            rv.II[i] = scalarmultKey(Hi, xx[i]);
 			precomp(Ip[i], rv.II[i]);
+            m2hash = cn_fast_hash96(m2);
+            sc_add(c_old.bytes, c_old.bytes, m2hash.bytes);
 		}
-		char * m1 = (char *)malloc(32 * rows * (cols + 2));
-        //vector<char> m1(32 * rows * (cols + 2));
-		for (i = 0; i < cols; i++) {
-			for (j = 0; j < rows; j++) {
-				memcpy(m1 + rows * 32 * i + (32 * j), pk[i][j].bytes, 32);
-			}
-		}
-
+        
 		int oldi = index;
+        
 		i = (index + 1) % cols;
-		for (j = 0; j < rows; j++) {
-			memcpy(m1 + rows * 32 * cols + (32 * j), L[oldi][j].bytes, 32);
-			memcpy(m1 + rows * 32 * (cols + 1) + (32 * j), R[oldi][j].bytes, 32);
-		}
+        if (i == 0) {
+            copy(rv.cc, c_old);
+        }
 		while (i != index) {
 
-			cn_fast_hash(c[i], m1, 32 * rows * (cols + 2));
-
-			rv.ss[i] = skvGen(rows);
+            rv.ss[i] = skvGen(rows);            
+            sc_0(c.bytes);
 			for (j = 0; j < rows; j++) {
-				addKeys2(L[i][j], rv.ss[i][j], c[i], pk[i][j]);
-				hashToPoint(Hi[j], pk[i][j]);
-				addKeys3(R[i][j], rv.ss[i][j], Hi[j], c[i], Ip[j]);
+				addKeys2(L, rv.ss[i][j], c_old, pk[i][j]);
+				hashToPoint(Hi, pk[i][j]);
+				addKeys3(R, rv.ss[i][j], Hi, c_old, Ip[j]);
+                memcpy(m2, pk[i][j].bytes, 32);
+                memcpy(m2 + 32, L.bytes, 32);
+                memcpy(m2 + 64, R.bytes, 32);      
+                m2hash = cn_fast_hash96(m2);
+                sc_add(c.bytes, c.bytes, m2hash.bytes);
 			}
+            copy(c_old, c);
 			oldi = i;
-			i = (i + 1) % cols;
-			for (j = 0; j < rows; j++) {
-				memcpy(m1 + rows * 32 * cols + (32 * j), L[oldi][j].bytes, 32);
-				memcpy(m1 + rows * 32 * (cols + 1) + (32 * j), R[oldi][j].bytes, 32);
-			}
-		}
-		cn_fast_hash(c[index], m1, 32 * rows * (cols + 2));
+            i = (i + 1) % cols;
+            
+            if (i == 0) { 
+                copy(rv.cc, c_old);
+            }	
+        }
 		for (j = 0; j < rows; j++) {
-			sc_mulsub(rv.ss[index][j].bytes, c[index].bytes, xx[j].bytes, alpha[j].bytes);
-		}
-		memcpy(rv.cc.bytes, c[0].bytes, 32);
-        free(m1);
+			sc_mulsub(rv.ss[index][j].bytes, c.bytes, xx[j].bytes, alpha[j].bytes);
+		}        
 		return rv;
 	}
-
-
+    
 	//Multilayered Spontaneous Anonymous Group Signatures (MLSAG signatures)
+    //This is a just slghtly more efficient version than the ones described below
+    //(will be explained in more detail in Ring Multisig paper
 	//These are aka MG signatutes in earlier drafts of the ring ct paper
 	// c.f. http://eprint.iacr.org/2015/1098 section 2. 
 	// keyImageV just does I[i] = xx[i] * Hash(xx[i] * G) for each i
 	// Gen creates a signature which proves that for some column in the keymatrix "pk"
 	//   the signer knows a secret key for each row in that column
-	// Ver verifies that the MG sig was created correctly
-	bool MLSAG_Ver(keyM &pk, mgSig &sig) {
+	// Ver verifies that the MG sig was created correctly            
+    bool MLSAG_Ver(keyM & pk, mgSig & rv) {
+
 		int rows = pk[0].size();
 		int cols = pk.size();
 		if (cols < 2) {
 			printf("Error! What is c if cols = 1!");
-
 		}
-		DP("Verifying MG sig");
-		keyV c(cols + 1);
-		memcpy(c[0].bytes, sig.cc.bytes, 32);
+		int i = 0, j = 0;
+		key c,  L, R, Hi;
+        key c_old = copy(rv.cc);
 		vector<ge_dsmp> Ip(rows);
-		keyM L(cols, pk[0]);
-		keyM R(cols, pk[0]);
+        for (i= 0 ; i< rows ; i++) {
+            precomp(Ip[i], rv.II[i]);
+        }
+        unsigned char m2[96]; 
+        key m2hash;
 
-		int i = 0, oldi = 0, j = 0;
-		keyV Hi(rows);
-		for (i = 0; i < rows; i++) {
-			precomp(Ip[i], sig.II[i]);
-		}
-		i = 0;
-		char * m1 = (char *)malloc(32 * rows * (cols + 2));
-        //vector<char> m1(32 * rows * (cols + 2));
-		for (i = 0; i < cols; i++) {
-			for (j = 0; j < rows; j++) {
-				memcpy(m1 + rows * 32 * i + (32 * j), pk[i][j].bytes, 32);
-			}
-		}
-		i = 0;
+		int oldi = 0; 
+        i = 0;
 		while (i < cols) {
+            sc_0(c.bytes);
 			for (j = 0; j < rows; j++) {
-				addKeys2(L[i][j], sig.ss[i][j], c[i], pk[i][j]);
-				hashToPoint(Hi[j], pk[i][j]);
-				addKeys3(R[i][j], sig.ss[i][j], Hi[j], c[i], Ip[j]);
+				addKeys2(L, rv.ss[i][j], c_old, pk[i][j]);
+				hashToPoint(Hi, pk[i][j]);
+				addKeys3(R, rv.ss[i][j], Hi, c_old, Ip[j]);
+                memcpy(m2, pk[i][j].bytes, 32);
+                memcpy(m2 + 32, L.bytes, 32);
+                memcpy(m2 + 64, R.bytes, 32);      
+                m2hash = cn_fast_hash96(m2);
+                sc_add(c.bytes, c.bytes, m2hash.bytes);
 			}
+            copy(c_old, c);
 			oldi = i;
 			i = (i + 1);
-			for (j = 0; j < rows; j++) {
-				memcpy(m1 + rows * 32 * cols + (32 * j), L[oldi][j].bytes, 32);
-				memcpy(m1 + rows * 32 * (cols + 1) + (32 * j), R[oldi][j].bytes, 32);
-			}
-			cn_fast_hash(c[i], m1, 32 * rows * (cols + 2));
 		}
-		key cc;
+        DP("c0");
+        DP(rv.cc);
+        DP("c_old");
+        DP(c_old);
+		sc_sub(c.bytes, c_old.bytes, rv.cc.bytes);
+		return sc_isnonzero(c.bytes) == 0;	
+    }
+    
 
-		sc_sub(cc.bytes, c[0].bytes, c[cols].bytes);
-		free(m1);
-		return sc_isnonzero(cc.bytes) == 0;
-	}
 
 	//proveRange and verRange
 	//proveRange gives C, and mask such that \sumCi = C
