@@ -352,16 +352,43 @@ namespace rct {
         sc_reduce32(hash.bytes);
         return hash;
     }
-
-    //returns cn_fast_hash(input) * G where G is the basepoint
-    key hashToPoint(const key & in) {
-        return scalarmultBase(cn_fast_hash(in));
+    
+    //cn_fast_hash for a 96 byte unsigned char
+    key cn_fast_hash96(const void * in) {
+        uint8_t md2[32];
+        int j = 0;
+        key hash;
+        keccak((uint8_t *)in, 96, md2, 32);
+        for (j = 0; j < 32; j++) {
+            hash[j] = (unsigned char)md2[j];
+        }
+        sc_reduce32(hash.bytes);
+        return hash;
     }
-
-    //returns cn_fast_hash(input) * G where G is the basepoint
-    void hashToPoint(key & out, const key & in) {
-        scalarmultBase(out, cn_fast_hash(in));
+    
+    key hashToPoint(const key & hh) {
+        key pointk;
+        ge_p2 point;
+        ge_p1p1 point2;
+        ge_p3 res;
+        key h = cn_fast_hash(hh); 
+        ge_fromfe_frombytes_vartime(&point, h.bytes);
+        ge_mul8(&point2, &point);
+        ge_p1p1_to_p3(&res, &point2);        
+        ge_p3_tobytes(pointk.bytes, &res);
+        return pointk;
     }
+    
+    void hashToPoint(key & pointk, const key & hh) {
+        ge_p2 point;
+        ge_p1p1 point2;
+        ge_p3 res;
+        key h = cn_fast_hash(hh); 
+        ge_fromfe_frombytes_vartime(&point, h.bytes);
+        ge_mul8(&point2, &point);
+        ge_p1p1_to_p3(&res, &point2);        
+        ge_p3_tobytes(pointk.bytes, &res);
+    }    
 
     //sums a vector of curve points (for scalars use sc_add)
     void sumKeys(key & Csum, const keyV &  Cis) {

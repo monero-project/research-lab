@@ -48,6 +48,7 @@
 
 #include "rctTypes.h"
 
+
 using namespace std;
 using namespace crypto;
 
@@ -128,6 +129,8 @@ namespace rct {
 	void cn_fast_hash(key &hash, const key &in);
 	//cn_fast_hash for a 32 byte key
 	key cn_fast_hash(const key &in);
+    //for mg sigs
+    key cn_fast_hash96(const void * in);
 
 	//returns cn_fast_hash(input) * G where G is the basepoint
 	key hashToPoint(const key &in);
