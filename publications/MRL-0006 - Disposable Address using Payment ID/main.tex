@@ -1,0 +1,679 @@
+\documentclass[12pt,english]{mrl}
+\usepackage{graphicx}
+\usepackage{listings}
+\usepackage{cite}
+\usepackage{amsthm}
+\newtheorem*{example}{Example}
+
+\usepackage[toc,page]{appendix}
+
+\usepackage[T1]{fontenc}
+\usepackage[latin9]{inputenc}
+\usepackage{color}
+\usepackage{babel}
+\usepackage{verbatim}
+\usepackage{float}
+\usepackage{url}
+\usepackage{amsthm}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage[unicode=true,pdfusetitle, bookmarks=true,bookmarksnumbered=false,bookmarksopen=false,  breaklinks=false,pdfborder={0 0 1},backref=false,colorlinks=true]{hyperref}
+\usepackage{breakurl}
+
+
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb,enumerate}
+\usepackage{amsthm}
+\usepackage{cite}
+\usepackage{comment}
+\usepackage[all]{xy}
+%\usepackage[notref,notcite]{showkeys}
+\usepackage{hyperref}
+\usepackage{todonotes}
+
+% THEOREM ENVIRONMENTS
+
+\theoremstyle{definition}
+\newtheorem{lem}{Lemma}[section]
+\newtheorem{cor}[lem]{Corollary}
+\newtheorem{prop}[lem]{Proposition}
+\newtheorem{thm}[lem]{Theorem}
+\newtheorem{soln}[]{Solution}
+\newtheorem{conj}[lem]{Conjecture}
+\newtheorem{Defn}[lem]{Definition}
+\newtheorem{Ex}[lem]{Example}
+\newtheorem{Question}[lem]{Question}
+\newtheorem{Property}[lem]{Property}
+\newtheorem{Properties}[lem]{Properties}
+\newtheorem{Discussion}[lem]{Remark}
+\newtheorem{Construction}[lem]{Construction}
+\newtheorem{Notation}[lem]{Notation}
+\newtheorem{Fact}[lem]{Fact}
+\newtheorem{Notationdefinition}[lem]{Definition/Notation}
+\newtheorem{Remarkdefinition}[lem]{Remark/Definition}
+\newtheorem{rem}[lem]{Remark}
+\newtheorem{Subprops}{}[lem]
+\newtheorem{Para}[lem]{}
+\newtheorem{Exer}[lem]{Exercise}
+\newtheorem{Exerc}{Exercise}
+
+\newenvironment{defn}{\begin{Defn}\rm}{\end{Defn}}
+\newenvironment{ex}{\begin{Ex}\rm}{\end{Ex}}
+\newenvironment{question}{\begin{Question}\rm}{\end{Question}}
+\newenvironment{property}{\begin{Property}\rm}{\end{Property}}
+\newenvironment{properties}{\begin{Properties}\rm}{\end{Properties}}
+\newenvironment{notation}{\begin{Notation}\rm}{\end{Notation}}
+\newenvironment{fact}{\begin{Fact}\rm}{\end{Fact}}
+\newenvironment{notationdefinition}{\begin{Notationdefinition}\rm}{\end{Notationdefinition}}
+\newenvironment{remarkdefinition}{\begin{Remarkdefinition}\rm}{\end{Remarkdefinition}}
+\newenvironment{subprops}{\begin{Subprops}\rm}{\end{Subprops}}
+\newenvironment{para}{\begin{Para}\rm}{\end{Para}}
+\newenvironment{disc}{\begin{Discussion}\rm}{\end{Discussion}}
+\newenvironment{construction}{\begin{Construction}\rm}{\end{Construction}}
+\newenvironment{exer}{\begin{Exer}\rm}{\end{Exer}}
+\newenvironment{exerc}{\begin{Exerc}\rm}{\end{Exerc}}
+
+\newtheorem{intthm}{Theorem}
+\renewcommand{\theintthm}{\Alph{intthm}}
+
+% COMENTS
+
+%\newcommand{\ssw}[1]{\footnote{#1}}
+\newcommand{\nt}[2][$^\spadesuit$]{\hspace{0pt}#1\marginpar{\tt\raggedleft
+    #1 #2}}
+\newcommand{\dw}[2][$^\spadesuit$]{\nt[#1]{DW:#2}}
+\newcommand{\ssw}[2][$^\spadesuit$]{\nt[#1]{SSW:#2}}
+\newcommand{\ts}[2][$^\spadesuit$]{\nt[#1]{TS:#2}}
+
+\newcommand{\ds}{\displaystyle}
+
+% CATEGORIES
+
+\newcommand{\A}{\mathcal{A}}
+\newcommand{\D}{\mathcal{D}}
+\newcommand{\R}{\mathcal{R}}
+\newcommand{\cat}[1]{\mathcal{#1}}
+\newcommand{\catx}{\cat{X}}
+\newcommand{\caty}{\cat{Y}}
+\newcommand{\catm}{\cat{M}}
+\newcommand{\catv}{\cat{V}}
+\newcommand{\catw}{\cat{W}}
+\newcommand{\catg}{\cat{G}}
+\newcommand{\catp}{\cat{P}}
+\newcommand{\catf}{\cat{F}}
+\newcommand{\cati}{\cat{I}}
+\newcommand{\cata}{\cat{A}}
+\newcommand{\catabel}{\mathcal{A}b}
+\newcommand{\catc}{\cat{C}}
+\newcommand{\catb}{\cat{B}}
+\newcommand{\catgi}{\cat{GI}}
+\newcommand{\catgp}{\cat{GP}}
+\newcommand{\catgf}{\cat{GF}}
+\newcommand{\catgic}{\cat{GI}_C}
+\newcommand{\catgib}{\cat{GI}_B}
+\newcommand{\catib}{\cat{I}_B}
+\newcommand{\catgibdc}{\cat{GI}_{\bdc}}
+\newcommand{\catgicd}{\cat{GI}_{C^{\dagger}}}
+\newcommand{\caticd}{\cat{I}_{C^{\dagger}}}
+\newcommand{\catgc}{\cat{G}_C}
+\newcommand{\catgpc}{\cat{GP}_C}
+\newcommand{\catgpb}{\cat{GP}_B}
+\newcommand{\catgpcd}{\cat{GP}_{C^{\dagger}}}
+\newcommand{\catpcd}{\cat{P}_{C^{\dagger}}}
+\newcommand{\catac}{\cat{A}_C}
+\newcommand{\catab}{\cat{A}_B}
+\newcommand{\catbc}{\cat{B}_C}
+\newcommand{\catabdc}{\cat{A}_{\bdc}}
+\newcommand{\catbbdc}{\cat{B}_{\bdc}}
+\newcommand{\catbb}{\cat{B}_B}
+\newcommand{\catacd}{\cat{A}_{\da{C}}}
+\newcommand{\catbcd}{\cat{B}_{\da{C}}}
+\newcommand{\catgfc}{\cat{GF}_C}
+\newcommand{\catic}{\cat{I}_C}
+\newcommand{\catibdc}{\cat{I}_{\bdc}}
+\newcommand{\catpb}{\cat{P}_B}
+\newcommand{\catpc}{\cat{P}_C}
+\newcommand{\catfc}{\cat{F}'}
+\newcommand{\opg}{\cat{G}}
+\newcommand{\finrescat}[1]{\operatorname{res}\comp{\cat{#1}}}
+\newcommand{\proprescat}[1]{\operatorname{res}\wti{\cat{#1}}}
+\newcommand{\finrescatx}{\finrescat{X}}
+\newcommand{\finrescaty}{\finrescat{Y}}
+\newcommand{\finrescatv}{\finrescat{V}}
+\newcommand{\fincorescatggicd}{\operatorname{cores}\comp{\catg(\caticd)}}
+\newcommand{\finrescatw}{\finrescat{W}}
+\newcommand{\finrescatpc}{\operatorname{res}\comp{\catpc}}
+\newcommand{\finrescatpcr}{\operatorname{res}\comp{\catpc(R)}}
+\newcommand{\finrescatpb}{\operatorname{res}\comp{\catpb}}
+\newcommand{\finrescatpbr}{\operatorname{res}\comp{\catpb(R)}}
+\newcommand{\finrescatgpb}{\operatorname{res}\comp{\catgpb}}
+\newcommand{\finrescatgpbr}{\operatorname{res}\comp{\catgpb(R)}}
+\newcommand{\propcorescatic}{\operatorname{cores}\wti{\catic}}
+\newcommand{\propcorescatgic}{\operatorname{cores}\wti{\catgic}}
+\newcommand{\fincorescatic}{\operatorname{cores}\comp{\catic}}
+\newcommand{\fincorescaticr}{\operatorname{cores}\comp{\catic(R)}}
+\newcommand{\fincorescatir}{\operatorname{cores}\comp{\cati(R)}}
+\newcommand{\finrescatp}{\finrescat{P}}
+\newcommand{\proprescatgpc}{\operatorname{res}\wti{\catgpc}}
+\newcommand{\fincorescaticd}{\operatorname{cores}\comp{\caticd}}
+\newcommand{\finrescatgp}{\finrescat{GP}}
+\newcommand{\finrescatpcd}{\operatorname{res}\comp{\catp_{\da{C}}}}
+\newcommand{\fincorescatggic}{\operatorname{cores}\comp{\catg(\catic)}}
+\newcommand{\fincorescatibdc}{\operatorname{cores}\comp{\catibdc}}
+\newcommand{\fincorescatibdcr}{\operatorname{cores}\comp{\catibdc(R)}}
+\newcommand{\fincorescatgibdc}{\operatorname{cores}\comp{\catgibdc}}
+\newcommand{\fincorescatgibdcr}{\operatorname{cores}\comp{\catgibdc(R)}}
+\newcommand{\fincorescatibr}{\operatorname{cores}\comp{\catib(R)}}
+\newcommand{\finrescatggpc}{\operatorname{res}\comp{\catg(\catpc)}}
+\newcommand{\finrescatg}{\operatorname{res}\comp{\cat{G}}(R)}
+\newcommand{\finrescatgpr}{\operatorname{res}\comp{\cat{GP}(R)}}
+\newcommand{\finrescatpr}{\operatorname{res}\comp{\cat{P}(R)}}
+\newcommand{\finrescatgpc}{\operatorname{res}\comp{\catgp_C(R)}}
+\newcommand{\proprescatpc}{\operatorname{res}\wti{\catp_C(R)}}
+\newcommand{\propcorescatpc}{\operatorname{cores}\wti{\catp_C(R)}}
+\newcommand{\finrescatgpcd}{\operatorname{res}\comp{\catgp_{C^{\dagger}}(R)}}
+\newcommand{\proprescatp}{\proprescat{P}}
+\newcommand{\proprescatgp}{\proprescat{GP}}
+\newcommand{\proprescatx}{\proprescat{X}}
+\newcommand{\proprescaty}{\proprescat{Y}}
+\newcommand{\proprescatv}{\proprescat{V}}
+\newcommand{\proprescatw}{\proprescat{W}}
+\newcommand{\fincorescat}[1]{\operatorname{cores}\comp{\cat{#1}}}
+\newcommand{\propcorescat}[1]{\operatorname{cores}\wti{\cat{#1}}}
+\newcommand{\fincorescatx}{\fincorescat{X}}
+\newcommand{\fincorescati}{\fincorescat{I}}
+\newcommand{\fincorescatgi}{\fincorescat{GI}}
+\newcommand{\fincorescatgir}{\fincorescat{GI(R)}}
+\newcommand{\fincorescatgic}{\operatorname{cores}\comp{\catgi_C(R)}}
+\newcommand{\fincorescatgicd}{\operatorname{cores}\comp{\catgi_{C^{\dagger}}(R)}}
+\newcommand{\propcorescati}{\propcorescat{I}}
+\newcommand{\propcorescatgi}{\propcorescat{GI}}
+\newcommand{\fincorescaty}{\fincorescat{Y}}
+\newcommand{\fincorescatv}{\fincorescat{V}}
+\newcommand{\fincorescatw}{\fincorescat{W}}
+\newcommand{\propcorescatx}{\propcorescat{X}}
+\newcommand{\propcorescaty}{\propcorescat{Y}}
+\newcommand{\propcorescatv}{\propcorescat{V}}
+\newcommand{\propcorescatw}{\propcorescat{W}}
+\newcommand{\cpltrescat}[1]{\operatorname{res}\ol{\cat{#1}}}
+\newcommand{\cpltcorescat}[1]{\operatorname{cores}\ol{\cat{#1}}}
+\newcommand{\cpltrescatw}{\cpltrescat{W}}
+\newcommand{\cpltcorescatw}{\cpltcorescat{W}}
+\newcommand{\gw}{\opg(\catw)}
+\newcommand{\gnw}[1]{\opg^{#1}(\catw)}
+\newcommand{\gnx}[1]{\opg^{#1}(\catx)}
+\newcommand{\gx}{\opg(\catx)}
+\newcommand{\catao}{\cata^o}
+\newcommand{\catxo}{\catx^o}
+\newcommand{\catyo}{\caty^o}
+\newcommand{\catwo}{\catw^o}
+\newcommand{\catvo}{\catv^o}
+
+
+% DIMENSIONS
+
+\newcommand{\pdim}{\operatorname{pd}}	
+\newcommand{\pd}{\operatorname{pd}}	
+\newcommand{\gdim}{\mathrm{G}\text{-}\!\dim}	
+\newcommand{\gkdim}[1]{\mathrm{G}_{#1}\text{-}\!\dim}	
+\newcommand{\gcdim}{\gkdim{C}}	
+\newcommand{\injdim}{\operatorname{id}}	
+\newcommand{\id}{\operatorname{id}}	
+\newcommand{\fd}{\operatorname{fd}}
+\newcommand{\fdim}{\operatorname{fd}}
+\newcommand{\catpd}[1]{\cat{#1}\text{-}\pd}
+\newcommand{\xpd}{\catpd{X}}
+\newcommand{\xopd}{\catxo\text{-}\pd}
+\newcommand{\xid}{\catid{X}}
+\newcommand{\wpd}{\catpd{W}}
+\newcommand{\ypd}{\catpd{Y}}
+\newcommand{\gpd}{\catpd{G}}
+\newcommand{\gid}{\catid{G}}
+\newcommand{\catid}[1]{\cat{#1}\text{-}\id}
+\newcommand{\yid}{\catid{Y}}
+\newcommand{\vid}{\catid{V}}
+\newcommand{\wid}{\catid{W}}
+\newcommand{\pdpd}{\catpd\text{-}\pd}
+\newcommand{\idid}{\catid\text{-}\id}
+\newcommand{\pcpd}{\catpc\text{-}\pd}
+\newcommand{\pbpd}{\catpb\text{-}\pd}
+\newcommand{\icdagdim}{\caticd\text{-}\id}
+\newcommand{\icdid}{\caticd\text{-}\id}
+\newcommand{\ibdcid}{\catibdc\text{-}\id}
+\newcommand{\icdim}{\catic\text{-}\id}
+\newcommand{\icid}{\catic\text{-}\id}
+\newcommand{\ibid}{\catib\text{-}\id}
+\newcommand{\pcdim}{\catpc\text{-}\pd}
+\newcommand{\gpcpd}{\catgpc\text{-}\pd}
+\newcommand{\gfpd}{\catgf\text{-}\pd}
+\newcommand{\gppd}{\catgp\text{-}\pd}
+\newcommand{\gfcpd}{\catgfc\text{-}\pd}
+\newcommand{\gpbpd}{\catgpb\text{-}\pd}
+\newcommand{\gicid}{\catgic\text{-}\id}
+\newcommand{\gibid}{\catgib\text{-}\id}
+\newcommand{\gicdagdim}{\catgicd\text{-}\id}
+\newcommand{\gicdid}{\catgicd\text{-}\id}
+\newcommand{\ggpcpd}{\catg(\catpc)\text{-}\pd}
+\newcommand{\ggicdid}{\catg(\caticd)\text{-}\id}
+\newcommand{\ggicid}{\catg(\catic)\text{-}\id}
+\newcommand{\cmdim}{\mathrm{CM}\text{-}\dim}	
+\newcommand{\cidim}{\mathrm{CI}\text{-}\!\dim}	
+\newcommand{\cipd}{\mathrm{CI}\text{-}\!\pd}	
+\newcommand{\cifd}{\mathrm{CI}\text{-}\!\fd}	
+\newcommand{\ciid}{\mathrm{CI}\text{-}\!\id}	
+
+
+% OTHER INVARIANTS
+
+\newcommand{\Ht}{\operatorname{ht}}	
+\newcommand{\col}{\operatorname{col}}	
+\newcommand{\depth}{\operatorname{depth}}	
+\newcommand{\rank}{\operatorname{rank}}	
+\newcommand{\amp}{\operatorname{amp}}
+\newcommand{\edim}{\operatorname{edim}}
+\newcommand{\crs}{\operatorname{crs}}
+\newcommand{\rfd}{\operatorname{Rfd}}
+\newcommand{\ann}{\operatorname{Ann}}
+\newcommand{\mspec}{\mathrm{m}\text{\spec}}
+\newcommand{\soc}{\operatorname{Soc}}
+\newcommand{\len}{\operatorname{length}}
+\newcommand{\type}{\operatorname{type}}
+\newcommand{\dist}{\operatorname{dist}}
+\newcommand{\prox}{\operatorname{\sigma}}
+\newcommand{\curv}{\operatorname{curv}}
+\newcommand{\icurv}{\operatorname{inj\,curv}}
+\newcommand{\grade}{\operatorname{grade}}
+\newcommand{\card}{\operatorname{card}}
+\newcommand{\cx}{\operatorname{cx}}	
+\newcommand{\cmd}{\operatorname{cmd}}	
+\newcommand{\Span}{\operatorname{Span}}	
+\newcommand{\CM}{\operatorname{CM}}	
+
+% FUNCTORS
+
+\newcommand{\cbc}[2]{#1(#2)}
+\newcommand{\ext}{\operatorname{Ext}}	
+\newcommand{\rhom}{\mathbf{R}\!\operatorname{Hom}}	
+\newcommand{\lotimes}{\otimes^{\mathbf{L}}}
+\newcommand{\HH}{\operatorname{H}}
+\newcommand{\Hom}{\operatorname{Hom}}	
+\newcommand{\coker}{\operatorname{Coker}}
+\newcommand{\spec}{\operatorname{Spec}}
+\newcommand{\s}{\mathfrak{S}}
+\newcommand{\tor}{\operatorname{Tor}}
+\newcommand{\im}{\operatorname{Im}}
+\newcommand{\shift}{\mathsf{\Sigma}}
+\newcommand{\othershift}{\mathsf{\Sigma}}
+\newcommand{\da}[1]{#1^{\dagger}}
+\newcommand{\Cl}{\operatorname{Cl}}
+\newcommand{\Pic}{\operatorname{Pic}}
+\newcommand{\proj}{\operatorname{Proj}}
+\newcommand{\End}{\operatorname{End}}
+\newcommand{\cone}{\operatorname{Cone}}
+\newcommand{\Ker}{\operatorname{Ker}}
+\newcommand{\xext}{\ext_{\catx}}
+\newcommand{\yext}{\ext_{\caty}}
+\newcommand{\vext}{\ext_{\catv}}
+\newcommand{\wext}{\ext_{\catw}}
+\newcommand{\aext}{\ext_{\cata}}
+\newcommand{\ahom}{\Hom_{\cata}}
+\newcommand{\aoext}{\ext_{\catao}}
+\newcommand{\aohom}{\Hom_{\catao}}
+\newcommand{\xaext}{\ext_{\catx\!\cata}}
+\newcommand{\axext}{\ext_{\cata\catx}}
+\newcommand{\ayext}{\ext_{\cata\caty}}
+\newcommand{\avext}{\ext_{\cata\catv}}
+\newcommand{\awext}{\ext_{\cata\catw}}
+\newcommand{\Qext}{\ext_{\catw \cata}}
+\newcommand{\pmext}{\ext_{\catp(R)\catm(R)}}
+\newcommand{\miext}{\ext_{\catm(R)\cati(R)}}
+\newcommand{\Qtate}{\comp{\ext}_{\catw \cata}}
+\newcommand{\awtate}{\comp{\ext}_{\cata \catw}}
+\newcommand{\avtate}{\comp{\ext}_{\cata \catv}}
+\newcommand{\pmtate}{\comp{\ext}_{\catp(R) \catm(R)}}
+\newcommand{\mitate}{\comp{\ext}_{\catm(R) \cati(R)}}
+\newcommand{\pcext}{\ext_{\catpc}}
+\newcommand{\pbext}{\ext_{\catpb}}
+\newcommand{\gpcext}{\ext_{\catgpc}}
+\newcommand{\icext}{\ext_{\catic}}
+\newcommand{\gpbext}{\ext_{\catgpb}}
+\newcommand{\gibdcext}{\ext_{\catgibdc}}
+\newcommand{\ibdcext}{\ext_{\catibdc}}
+\newcommand{\gicext}{\ext_{\catgic}}
+\newcommand{\gpext}{\ext_{\catgp}}
+\newcommand{\giext}{\ext_{\catgi}}
+\newcommand{\gicdext}{\ext_{\catgicd}}
+
+% IDEALS
+
+\newcommand{\ideal}[1]{\mathfrak{#1}}
+\newcommand{\m}{\ideal{m}}
+\newcommand{\n}{\ideal{n}}
+\newcommand{\p}{\ideal{p}}
+\newcommand{\q}{\ideal{q}}
+\newcommand{\fa}{\ideal{a}}
+\newcommand{\fb}{\ideal{b}}
+\newcommand{\fN}{\ideal{N}}
+\newcommand{\fs}{\ideal{s}}
+\newcommand{\fr}{\ideal{r}}
+
+% OPERATIONS AND ACCENTS
+
+\newcommand{\wt}{\widetilde}
+\newcommand{\ti}{\tilde}
+\newcommand{\comp}[1]{\widehat{#1}}
+\newcommand{\ol}{\overline}
+\newcommand{\wti}{\widetilde}
+
+% OPERATORS
+
+\newcommand{\ass}{\operatorname{Ass}}
+\newcommand{\supp}{\operatorname{Supp}}
+\newcommand{\minh}{\operatorname{Minh}}
+\newcommand{\Min}{\operatorname{Min}}
+
+% MATHBB
+
+\newcommand{\bbz}{\mathbb{Z}}
+\newcommand{\bbn}{\mathbb{N}}
+\newcommand{\bbq}{\mathbb{Q}}
+\newcommand{\bbr}{\mathbb{R}}
+\newcommand{\bbc}{\mathbb{C}}
+
+% ARROWS
+
+\newcommand{\from}{\leftarrow}
+\newcommand{\xra}{\xrightarrow}
+\newcommand{\xla}{\xleftarrow}
+\newcommand{\onto}{\twoheadrightarrow}
+\newcommand{\res}{\xra{\simeq}}
+
+
+% MAPS
+
+\newcommand{\vf}{\varphi}
+\newcommand{\ve}{\varepsilon}
+\newcommand{\Qcomp}{\varepsilon_{\catw \cata}}
+\newcommand{\awcomp}{\varepsilon_{\cata \catw}}
+\newcommand{\avcomp}{\varepsilon_{\cata \catv}}
+\newcommand{\xQcomp}{\vartheta_{\catx \catw \cata}}
+\newcommand{\ayvcomp}{\vartheta_{\cata \caty \catv}}
+\newcommand{\Qacomp}{\varkappa_{\catw \cata}}
+\newcommand{\xaacomp}{\varkappa_{\catx \cata}}
+\newcommand{\aaycomp}{\varkappa_{\cata\caty}}
+\newcommand{\aavcomp}{\varkappa_{\cata\catv}}
+\newcommand{\gpcpccomp}{\vartheta_{\catgpc\catpc}}
+\newcommand{\gpcpbcomp}{\vartheta_{\catgpc\catpb}}
+\newcommand{\gpcgpbcomp}{\vartheta_{\catgpc\catgpb}}
+\newcommand{\gicibcomp}{\vartheta_{\catgic\catib}}
+\newcommand{\gicgibcomp}{\vartheta_{\catgic\catgib}}
+\newcommand{\giciccomp}{\vartheta_{\catgic\catic}}
+\newcommand{\pccomp}{\varkappa_{\catpc}}
+\newcommand{\gpccomp}{\varkappa_{\catgpc}}
+\newcommand{\iccomp}{\varkappa_{\catic}}
+\newcommand{\ibdccomp}{\varkappa_{\catibdc}}
+\newcommand{\icdcomp}{\varkappa_{\caticd}}
+\newcommand{\giccomp}{\varkappa_{\catgic}}
+
+% MISCELLANEOUS 
+
+\newcommand{\y}{\mathbf{y}}
+\newcommand{\te}{\theta}
+\newcommand{\x}{\mathbf{x}}
+\newcommand{\opi}{\operatorname{i}}
+\newcommand{\route}{\gamma}
+\newcommand{\sdc}[1]{\mathsf{#1}}
+\newcommand{\nls}[1]{\mathsf{#1}}
+\newcommand{\cl}{\operatorname{cl}}
+\newcommand{\cls}{\operatorname{cls}}
+\newcommand{\pic}{\operatorname{pic}}
+\newcommand{\pics}{\operatorname{pics}}
+\newcommand{\tri}{\trianglelefteq}
+\newcommand{\Mod}{\operatorname{Mod}}
+\newcommand{\bdc}{B^{\dagger_C}}
+\newcommand{\e}{\mathbf{e}}
+\newcommand{\f}{\mathbf{f}}
+
+
+% RENEWED COMMANDS
+
+\renewcommand{\geq}{\geqslant}
+\renewcommand{\leq}{\leqslant}
+\renewcommand{\ker}{\Ker}
+\renewcommand{\hom}{\Hom}
+
+
+\newcommand{\normal}{\lhd}
+\newcommand{\normaleq}{\trianglelefteqslant}
+\newcommand{\homrm}[1]{\hom_{_{#1}\catm}}
+\newcommand{\hommr}[1]{\hom_{\catm_{#1}}}
+\newcommand{\cplx}[1]{{#1}_{\bullet}}
+\newcommand{\pext}{\mathrm{P}\!\ext}
+\newcommand{\pextrm}[1]{\pext_{_{#1}\catm}}
+\newcommand{\pextmr}[1]{\pext_{\catm_{#1}}}
+\newcommand{\iext}{\mathrm{I}\!\ext}
+\newcommand{\iextrm}[1]{\iext_{_{#1}\catm}}
+\newcommand{\iextmr}[1]{\iext_{\catm_{#1}}}
+\newcommand{\catmod}[1]{#1\text{-mod}}
+\newcommand{\modcat}[1]{\text{mod-}#1}
+
+
+\newcommand{\lcm}{\textnormal{lcm}}
+\newcommand{\diff}{\backslash}
+%\setlength{\parindent}{0mm}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% LyX specific LaTeX commands.
+\floatstyle{ruled}
+\newfloat{algorithm}{tbp}{loa}
+\providecommand{\algorithmname}{Algorithm}
+\floatname{algorithm}{\protect\algorithmname}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Textclass specific LaTeX commands.
+\numberwithin{equation}{section}
+\numberwithin{figure}{section}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% User specified LaTeX commands.
+\usepackage{algpseudocode}
+
+\usepackage{subcaption}
+
+\numberwithin{equation}{section}
+
+
+\makeatletter
+
+
+\makeatletter
+
+\newcommand{\h}{\mathcal{H}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% LyX specific LaTeX commands.
+\floatstyle{ruled}
+\newfloat{algorithm}{tbp}{loa}
+\providecommand{\algorithmname}{Algorithm}
+\floatname{algorithm}{\protect\algorithmname}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Textclass specific LaTeX commands.
+\numberwithin{equation}{section}
+\numberwithin{figure}{section}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% User specified LaTeX commands.
+\usepackage{algpseudocode}
+
+\makeatother
+
+\begin{document}
+\begin{frontmatter}
+
+\begin{fmbox}
+\hfill\setlength{\fboxrule}{0px}\setlength{\fboxsep}{5px}\fbox{\includegraphics[width=2in]{moneroLogo.png}}
+\dochead{Research bulletin \hfill MRL-0006}
+\title{Disposable Address using Payment ID}
+\date{9 February 2017}
+\author[]{\fnm{@kenshi84}}
+\author[
+   addressref={mrl},
+   email={lab@getmonero.org}
+]{\snm{Monero Core Team}}
+
+
+\address[id=mrl]{
+  \orgname{Monero Research Lab}
+}
+\end{fmbox}
+
+
+\begin{abstractbox}
+\begin{abstract}
+
+In the CryptoNote protocol, wallet addresses never appear in the blockchain, protecting users' privacy from blockchain analysis. However, wallet addresses are inevitably known to senders and can be kept by them locally, which may become privacy concerns. Consider a typical example: a user buys Monero at an account-less exchange service more than once. If the user reuses the same wallet address, the exchange would know the total amount of Monero transferred to that address, which is generally not desirable for the user. A naive solution to this problem is to create a temporary wallet for each fund receipt, which is not only tedious and error-prone, but also vulnerable to temporal association analysis.
+
+In this research bulletin, we propose a new scheme where a single wallet can generate a distinct \emph{disposable address} for each one-time fund receipt by making use of payment ID. We introduce a new address format which is very similar to the existing integrated address format with the difference being that it signals the sender to include the payment ID in the transaction without encryption.
+
+\end{abstract}
+\end{abstractbox}
+
+\end{frontmatter}
+
+%\todo[inline]{Check all references; many do not exist}
+
+\section{Introduction}\label{introduction}
+
+A transaction using Monero requires that the receiver (Bob) of Monero provide a Monero destination address to the sender (Alice). This destination address never appears in the blockchain due to the use of one-time stealth addressing~\cite{CN}, so a third party (Eve) is not able to observe the amount of Monero owned by a particular address. However, if Bob uses the same wallet address in multiple transactions that receive Monero from Alice, Alice now has gained information regarding the amount of Monero owned by Bob (via internal, off-blockchain bookkeeping), degrading Bob's financial privacy. Furthermore, if Eve gains access to Alice's transactional records, multiple transfers to an identical address are naturally linked, and Eve gains information about Bob's Monero history. Another concerning issue of single address reuse is that a Monero address can become an identifier - if Alice and Bob present themselves as two individuals, but use the same Monero address, it is highly likely that they are the same individual. 
+
+A naive solution to this issue is to create a temporary wallet for each fund receipt, and once the fund is received, the user transfers the entire balance of the temporary wallet to his real wallet. Such a solution is clearly tedious and error-prone, and will be unlikely to be adopted by average users. It is also undesirable performance-wise: if a user created $n$ such temporary wallets at the same time, he would need to do $n$ times more processing in scanning the blockchain while waiting for the funds to come. Finally, if the sender uses the pre-RingCT transaction mode with many outputs of denominated amounts, this practice can reduce the ability of ring signatures to properly unlink the transfer of outputs; a newly created temporary wallet will only have outputs in a single transaction in a single block. Thus, any effort to move these new funds will most likely use these multiple outputs in a single transaction~\cite{mrl4}. 
+
+In contrast, our solution described below is easy to use and computationally efficient. The original discussion was started in Reddit on October 24th, 2016~\cite{reddit}. The scheme was later implemented and pushed as a pull request \#1345.
+
+
+\section{CryptoNote Recap}\label{cryptoNote}
+
+Before explaining our scheme, let us quickly recapitulate how the key derivation in the CryptoNote protocol works following the whitepaper~\cite{CN}. For those unfamiliar with Elliptic Curve Cryptography (ECC), MRL-0003~\cite{mrl3} is highly recommended as an educational material.
+
+A wallet address in CryptoNote is defined by a pair of ECC private keys $(a,b)$ called private view and spend keys, respectively. A public wallet address is a pair of ECC public keys $(A,B)=(aG,bG)$ where $G$ is the base point. Given $(A,B)$ from the recipient, the sender picks a random scalar $r$ called transaction private key, attaches the transaction public key $R=rG$ to the transaction data, computes a shared secret $rA$, and creates a one-time output public key using the shared secret as
+\[
+P=\mathcal{H}(rA)G+B
+\]
+where $\mathcal{H}()$ is a hash function. When the recipient sees a new transaction with public key $R$ on the blockchain, he computes the shared secret $aR$ and tests if
+\[
+P'=\mathcal{H}(aR)G+B
+\]
+equals to the transaction's output public key $P$. If it does, the recipient can recover its private key $x$ as
+\[
+x = \mathcal{H}(aR)+b.
+\]
+
+
+\section{Our Scheme}\label{ourScheme}
+
+In our scheme, the recipient tells the sender a \emph{disposable address} $(C,E,k)$ where $k$ is a 64bit payment ID integrated into the address string similar to the existing integrated address format and
+\begin{eqnarray*}
+c &=& \mathcal{H}(a \| k) \\
+C &=& cG \\
+d &=& \mathcal{H}(c) \\
+D &=& dG \\
+E &=& B + D.
+\end{eqnarray*}
+Note that the two addresses $(A,B)$ and $(C,E,k)$ cannot be linked without knowing the private view key $a$.
+
+This address format has its own network byte that distinguishes itself from the existing integrated address format so that the sender can process it differently.
+Namely, when transferring fund to a disposable address, the sender performs exactly the same procedure as before except that the 64bit payment ID $k$ is attached to the transaction \emph{without encryption} (the reason explained shortly after).
+
+When the recipient sees a new transaction with a payment ID $k$, he first performs the standard key derivation step, and if it fails, he performs another key derivation step dedicated to disposable addresses; he computes
+\begin{eqnarray*}
+c &=& \mathcal{H}(a \| k) \\
+C &=& cG \\
+d &=& \mathcal{H}(c) \\
+D &=& dG \\
+\end{eqnarray*}
+and checks if
+\[
+P' = \mathcal{H}(cR)G + B + D
+\]
+equals to the output public key $P$. If it does, the recipient can recover its private key $x$ as
+\[
+x = \mathcal{H}(cR)+b+d.
+\]
+Note that an auditor with the watch-only wallet $(a,B)$ can also recognize incoming transfers to disposable addresses.
+
+The essential difference between the existing integrated address format and the proposed disposable address format is whether the integrated 64bit payment ID $k$ is included in the transaction with or without encryption. 
+With an integrated address $(A,B,k)$, the sender encrypts the payment ID $k$ using the shared secret $rA$ which can then be decrypted by the recipient using the same secret $aR$. 
+With a disposable address $(C,E,k)$, however, the same kind of encryption is problematic because the payment ID $k$ encrypted by the sender using $rC$ cannot be decrypted by the recipient not knowing $k$ and thus $c=\mathcal{H}(a \| k)$.
+It is important to note that while integrated addresses can be safely reused thanks to encryption, disposable addresses should never be reused, since the same payment ID appearing in multiple transactions obviously links such transactions.
+
+
+\section{Performance Optimization}\label{performanceOptimization}
+
+If naively implemented, the above scheme requires another round of output key derivation step, potentially doubling the blockchain scanning time which is largely dominated by EC point multiplications. To optimize the performance, we propose the following trick of limiting the class of payment IDs that can be possibly used by the particular private view key $a$ for the disposable address scheme.
+
+When the recipient picks the payment ID $k$ randomly, he tries to find one such that the following equation holds:
+\[
+\mathcal{H}(a \| k) \ \mathrm{mod} \ 256 = k \ \mathrm{mod} \ 256.
+\]
+Statistically speaking, such $k$ should be found on average after 256 trials. When processing a new transaction, the recipient can simply skip all transactions with $k$ not satisfying this equation. This trick reduces the additional computational cost to roughly $^1/_{256}$ or $0.4\%$ of the original cost with the naive implementation.
+
+
+\section{Example with \texttt{monero-wallet-cli}}\label{walletCLI}
+
+\lstset{columns=fullflexible,frame=single,basicstyle=\ttfamily\scriptsize}
+\begin{lstlisting}
+[wallet 9uQYzG]: address
+9uQYzGZ8NFN2hamQSY7hS5PLDNrnYp9qAKaWkRgtEFNo8h9Ybzjndrd8LkLapbKZVKGFimDdq4VgzXpsh1JWF
+DVX6HVEcuY
+[wallet 9uQYzG]: integrated_address
+Random payment ID: <8c4a5ccd0d58c2be>
+Matching integrated address: A57E15NcyWt2hamQSY7hS5PLDNrnYp9qAKaWkRgtEFNo8h9Ybzjndrd8
+LkLapbKZVKGFimDdq4VgzXpsh1JWFDVX8naHwjwyymBNWZxGa1
+[wallet 9uQYzG]: disposable_address
+Disposable address: 
+ALS2PHYrvd7U8ryHDVD3rLgSbYaLJbkvLApqgrpbd5ZAhkvpRzyPtGmbNpkyQdKbnJETXeFRYqGQCUJroq3Rg
+B6Zb7qs8yUTXtUL9vfcPm
+Payment ID integrated in the above: <fa60c169be2661a9>
+[wallet 9uQYzG]: disposable_address
+Disposable address: 
+AEnpagM9hPCLKwGDJxAWXKKEgsRMADX4DEuJjjmu1giRgEHu6LrYuPsdQz4jzcyMyDj3ZSqoMtTB6YkHKt2gN
+xKhiFSLq2JphJMP9NqtN4
+Payment ID integrated in the above: <9c735a79fe2f16c4>
+[wallet 9uQYzG]: disposable_address
+Disposable address: 
+AHxjcwEpymnSe49qv8EUBwhAYBYy11KXQMNhnEpY7fPEDr4ZsoT8uhNfC83UGFkh4nWNnv2XRkjUcFsFMM1cC
+r1tUcjY95kcHCG6egUFQJ
+Payment ID integrated in the above: <1b17d598622bf532>
+\end{lstlisting}
+
+Notice how the real address is included in the integrated address, while disposable addresses are entirely different from the real address.
+
+\section{Alternative Approach Considered}\label{alternativeApproachConsidered}
+
+During the discussion in Reddit, another possible approach was suggested by \\ \texttt{/u/cloud10again} which eliminates the need for payment IDs by using a hash table. Specifically, the wallet precomputes a set 
+\[
+\{ E_k =  B + D_k \mid k=1,2,3,\cdots \}
+\]
+where
+\begin{eqnarray*}
+c_k &=& \mathcal{H}(a \| k)\\
+d_k &=& \mathcal{H}(c_k)\\
+D_k &=& d_k G
+\end{eqnarray*}
+and constructs a hash table $T[E_k]=k$. When the sender receives a disposable address $(C,E)$ with no payment ID, he uses $E$ directly as the output public key and encrypts the mask and amount for RingCT~\cite{mrl5} using the shared secret $rC$. When the recipient sees a transaction with an output public key $P$, he searches for $P$ in the hash table, and if it is found, the corresponding $k$ is used to compute the shared secret $c_k R$ to decrypt the mask and amount for RingCT.
+
+Advantages of this approach would be:
+\begin{itemize}
+	\item It does not rely on payment IDs.
+	\item Lookup in the hash table may be much faster than the CryptoNote output key derivation which consists of two multiplications and one addition of elliptic curve points.
+\end{itemize}
+Disadvantages of this approach would be:
+\begin{itemize}
+	\item It would require quite a bit more coding.
+	\item Reusing the same disposable address means reusing the same pubic output key (assuming there is no mechanism to prevent output key reuse), which means one of the associated funds would get burned. Although reuse of disposable addresses are discouraged anyway, the damage would be worse than that in the proposed approach where multiple transactions only get linked while funds can still be spent.
+	\item It may be tricky to properly maintain the hash table so that all used disposable addresses (i.e., output keys) are found by the recipient, especially when the wallet is being reconstructed from scratch using the wallet seed.
+	\item The recipient needs to remember which disposable addresses have been given out in order to avoid reuse. Such information would only exist in the recipient's computer until the senders actually transfer funds, and it can get lost if the recipient's computer got stolen or broken during such time.
+\end{itemize}
+
+\medskip{}
+
+\bibliographystyle{plain}
+\bibliography{biblio.bib}
+
+\end{document}
