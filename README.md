@@ -1,6 +1,6 @@
 # Monero Research Lab
 
-Copyright (c) 2014-2016, The Monero Project
+Copyright (c) 2014-2017, The Monero Project
 
 ## Research Resources
 
@@ -17,7 +17,7 @@ This project is covered by the BSD 3-clause license as listed below. Contributor
 
 ## Source Code and Concept License
 
-Copyright (c) 2014-2016, The Monero Project
+Copyright (c) 2014-2017, The Monero Project
 
 All rights reserved.
 
