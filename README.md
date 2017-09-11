@@ -7,7 +7,10 @@ Copyright (c) 2014-2017, The Monero Project
 Web: [getmonero.org](https://getmonero.org)  
 Forum: [forum.getmonero.org](https://forum.getmonero.org)  
 Mail: [lab@getmonero.org](mailto:lab@getmonero.org)  
-IRC: [#monero-dev on Freenode](irc://chat.freenode.net/#monero-dev)
+IRC on Freenode:
+- [#monero-research-lab](http://webchat.freenode.net/?randomnick=1&channels=%23monero-research-lab&prompt=1&uio=d4)
+- [#monero-dev](http://webchat.freenode.net/?randomnick=1&channels=%23monero-dev&prompt=1&uio=d4)
+- [#kovri-dev](http://webchat.freenode.net/?randomnick=1&channels=%23kovri-dev&prompt=1&uio=d4)
 
 ## About this Project
 
