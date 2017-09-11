@@ -12,6 +12,11 @@ IRC on Freenode:
 - [#monero-dev](http://webchat.freenode.net/?randomnick=1&channels=%23monero-dev&prompt=1&uio=d4)
 - [#kovri-dev](http://webchat.freenode.net/?randomnick=1&channels=%23kovri-dev&prompt=1&uio=d4)
 
+## Vulnerability Response
+
+- Our [Vulnerability Response Process](https://github.com/monero-project/meta/blob/master/VULNERABILITY_RESPONSE_PROCESS.md) encourages responsible disclosure
+- We are also available via [HackerOne](https://hackerone.com/monero)
+
 ## About this Project
 
 Research activities performed by members of the Monero Research Lab, and others, are stored here to make collaboration easy, and to allow for other researchers to pick up where someone leaves off.
