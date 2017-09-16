@@ -7,7 +7,15 @@ Copyright (c) 2014-2017, The Monero Project
 Web: [getmonero.org](https://getmonero.org)  
 Forum: [forum.getmonero.org](https://forum.getmonero.org)  
 Mail: [lab@getmonero.org](mailto:lab@getmonero.org)  
-IRC: [#monero-dev on Freenode](irc://chat.freenode.net/#monero-dev)
+IRC on Freenode:
+- [#monero-research-lab](http://webchat.freenode.net/?randomnick=1&channels=%23monero-research-lab&prompt=1&uio=d4)
+- [#monero-dev](http://webchat.freenode.net/?randomnick=1&channels=%23monero-dev&prompt=1&uio=d4)
+- [#kovri-dev](http://webchat.freenode.net/?randomnick=1&channels=%23kovri-dev&prompt=1&uio=d4)
+
+## Vulnerability Response
+
+- Our [Vulnerability Response Process](https://github.com/monero-project/meta/blob/master/VULNERABILITY_RESPONSE_PROCESS.md) encourages responsible disclosure
+- We are also available via [HackerOne](https://hackerone.com/monero)
 
 ## About this Project
 
