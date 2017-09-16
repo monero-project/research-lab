@@ -1,0 +1,441 @@
+               BOOTLE-RUFFING RINGCT SCHEME
+               ----------------------------
+               Sublinear-sized ring signatures without trusted 
+               set-ups or bilinear pairings. Summarized for 
+               Monero Research Lab by B Goodell
+
+We describe sublinear-sized ring signatures for use in cryptocurrency. This 
+scheme was first sent to MRL by Ruffing and co-authors. These results use 
+tools first described by Bootle, et al in the paper "Short Accountable Ring 
+Signatures Based on DDH," 2015 European Symposium on Research in Computer Sec-
+urity, use a "vanilla" elliptic curve multisignature scheme first described by 
+Bellare and Neven in "Multi-signatures in the plain public-key model and a gen-\
+eral forking lemma," 2006 Proceedings of the 13th, ACM conference on Computer and 
+Communications Security.
+
+This is a living document and will be updated. In section I, the introduction,
+we introduce the general idea of the scheme together with preliminary stuff. 
+We have a section on homomorphic commitments and encryption, a section on 
+ordinary multi-signatures, and a section on the NIZK proof systems presented 
+by Bootle et al. In section II, we present pseudocode describing Ruffing's 
+scheme. In section III, references.
+
+               I. INTRODUCTION
+
+The scheme presented by Ruffing roughly works as follows, exploiting homo-
+morphic commitments. Sender Sally uses L of her txnout keys to send some amount
+stored in a commitment to receiver Roy. Sally wishes to implicate N-1 other  
+senders, so she constructs an LxN matrix of public keys (L = # key images used,
+N = ring size) by picking random public keys from the anonymity set; she stores
+her own pubkeys in some secret column i*. Sally demonstrates that the output
+amount from her secret column and the input amount are the same without re-
+vealing that column or the amounts by using a NIZK proof from the Bootle paper
+to show that at least one commitment in a vector opens to zero. In the constru-
+ction of this proof, she uses information from her secret keys, which binds the
+index she can open to zero to the column of pubkeys in the matrix without re-
+vealing which index. She uses her secret keys to construct a multisignature on 
+the Bootle proof that is verifiable with the key images only. This way, her 
+signature consists of some random information, a Bootle proof, and a multi-
+signature on the Bootle proof. The multisignature is efficient in construction,
+verification, and storage. The Bootle proof, for a vector of commitments of
+length N = n^m, takes O(n*m) (roughly) for construction, verification, and sto-
+rage. For a ring size N=n^m, for a fixed ring base n (say all ring sizes are
+powers of n=16), the Ruffing scheme is approximately log(N).
+
+The scheme consists of four algorithms, KEYGEN, SPEND, and VER, which we des-
+cribe in the next section. The scheme uses multisignatures and Bootle proofs
+as subroutines, and hammers on homomorphic commitment very hard, so we describe
+these in this section as "pre-requisites".  The Bootle method is an interactive 
+sigma protocol that uses another interactive sigma protocol as a subroutine. We
+made these both non-interactive and present the pseudocode in PROVE1, VALID1, 
+PROVE2, VALID2 (the Ruffing scheme uses PROVE2, VALID2, which use PROVE1, 
+VALID1). The Ruffing scheme did not specify a multisignature scheme; we desc-
+ribe here the pseudocode for the Bellare-Neven multisignature scheme, KEYGEN*, 
+SIG*, VER*.
+
+               a. Commitments and Encryption
+
+To commit to a scalar x with some random mask r, we use the following options:
+
+  COMp(x; r)  := rG + xHp(xG)        # Unconditionally hiding Pedersen
+  COMeg(x; r) := (rG + xHp(xG), rG)  # Computationally hiding El Gamal
+
+We may extend these to a vector/array/matrix B=[b[j][i]; j=0...m-1,i=0..n-1]:
+
+  COMp(B; r) := rG + b[0][0]Hp(b[0][0]G) + ... + b[m-1][n-1]Hp(b[m-1][n-1]G)
+
+and we can similarly lift this to an El Gamal commitment by appending rG. In
+the first case, we refer to x or the matrix B as the "data under commitment"
+and the value r as the "mask." Given a Pedersen commitment c, we open c by 
+revealing x and r, where a verifier checks that c == rG + xHp(xG). Given an 
+El Gamal commitment (C1, C2), we open by revealing r and x, a verifier 
+computes C2' = rG, C1' = rG + xHp(xG) from these, and lastly checks that 
+C1 == C1' and C2 == C2'. 
+
+These commitments are additive under the following definition:
+
+  COMp(x; r)  + COMp(x'; r')  := COMp(x+x'; r+r')
+  COMeg(x; r) + COMeg(x'; r') := COMeg(x+x'; r+r')
+
+
+               b. Ordinary Multi-signature
+
+The Ruffing scheme utilizes as a subroutine an efficient multisignature scheme, 
+consisting of three algorithms (KEYGEN*, SIG*, VER*). We present a scheme based 
+on the scheme described by Bellare and Neven in 2006 [3] (which is, in turn, 
+based on Schnorr signatures). Our variation of the B&N scheme is that it is 
+executed only by one party holding all the keys, so interaction is unnecessary. 
+We use a group of prime order q. Ruffing's  scheme assumes that the Decisional 
+Diffie-Hellman assumption holds, so there is no harm in making this assumption 
+for the ordinary multi-signature scheme. Let G be a commonly known generator of 
+the group. Let Hs be a hash function that produces a scalar in Zq. Let Zq denote 
+the integers modulo q. 
+
+KEYGEN*: Each user selects x at random from Zq. The secret key is x. The
+public key is X=xG. Output (sk,pk) = (x,X).
+
+SIG*: Take as input a message M and a list of private keys L = x[0], x[1],
+..., x[n-1]. Let L' be the associated list of public keys X[0], ..., X[n-1], 
+and assume L' is lexicographically ordered.
+    1) Compute L* = H(L').
+    2) For each i=0,1,...,n-1, select r[i] at random from Zq.
+    3) Compute r=r[0]+r[1]+...+r[n-1] and R=rG.
+    4) For each i=0,1,...,n-1:
+        i)  Compute c[i] := Hs(X[i], R, L*, M)
+        ii) Compute s[i] := r[i] + x[i]*c[i]
+    5) Compute s = s[0] + ... + s[n-1].
+    6) Output the signature sigma = (R, s)
+
+VER*: Take as input a message M, a set of keys L' = X[0], ..., X[n-1], and a 
+signature sigma = (R,s).
+    1) Compute L* = H(L')
+    2) For each i=0,1,...,n-1, compute c[i] = Hs(X[i], R, L*, M)
+    3) Accept if and only if sG = R + c[0]*X[0] + ... + c[n-1]*X[n-1]
+
+               c. NIZK Proofs
+====|====|====|====|====|====|====|====|====|====|====|====|====|====|====|====
+Lastly, the scheme also utilizes the following algorithms, (PROVE1, VALID1), 
+and (PROVE2, VALID2), which are NIZK prove-and-verify algorithm pairs. These 
+use the Fiat-Shamir transformation to make the zero-knowledge sigma protocols 
+presented by Bootle non-interactive under the random oracle model. The second
+algorithm requires the usage of a helper algorithm, COEFs, which computes 
+coefficients of certain polynomials.
+
+The pair (PROVE1, VALID1) allows a prover to demonstrate that each row of a 
+matrix is a set of commitments to bits that open to exactly one 1 (the rest 
+open to 0). The implementation works like this:
+
+PROVE1: Take as input ([[b[0][0], b[0][1], ..., b[m-1][n-1]] ], r).
+    1)  Select r[A], r[C], r[D] at random from Zq.
+    2)  For each j=0, 1,..., m-1 and for each  i=1,2,...,n-1, select a[j][i] 
+        from Zq at random.
+    3)  For each j, compute a[j][0] = -a[j][1] - a[j][2] - ... - a[j][n-1].        
+    4)  Compute A:=COMp(a[0][0], ..., a[m-1][n-1]; r[A])
+    5)  For each j=0,...,m-1 and i=0,...,n-1, compute the values
+        c[j][i] := a[j][i]*(1-2*b[j][i])
+        d[j][i] := -a[j][i]^2
+    6)  Compute the commitments C:=COMp(c[0][0], ..., c[m-1][n-1]; r[C]) and
+        D:=COMp(d[0][0],...,d[m-1][n-1]; r[D]).
+    7)  Compute x := Hs(A,C,D)
+    8)  For each j=0,...,m-1, i=0,...,n-1, compute f[j][i]:=b[j][i]*x + a[j][i]
+    9)  Compute z[A]:= r*x + r[A], z[C]:=r[C]*x+r[D]
+    10) Output proof P:=A,C,D, f[0][1],f[0][2], ..., f[0][n-1], f[1][1], 
+        f[1][2], ..., f[1][n-1], ..., f[m-1][1], ...,  f[m-1][n-1], z[A], z[C].
+
+When PROVE1 is run as a subroutine for PROVE2, the prover will also output the 
+values of each a[j][i]; these are not part of the formal proof, but they are 
+used elsewhere. Note that we do not output the first column of the matrix F 
+whose (ji)^th entry is f[j][i]. Essentially here, we are taking a matrix, we 
+are showing each row sums to 1 and each element satisfies the equation
+b[j][i]*(1-b[j][i]) = 0.
+
+VALID1: Take as input B (the prover wishes to demonstrate B is a commitment to
+the values b[j][i] as described in PROVE1) and proof P. 
+    1)  If A,B,C,D are each elliptic curve points, both z[A] and z[C] are ele-
+        ments of Zq, and each f[j][i] are elements of Zq, compute the value 
+        x := Hs(A,C,D). Else, output FAIL and terminate.
+    2)  For each j=0, ..., m-1, compute f[j][0] = x-f[j][1] - ... - f[j][n-1].
+    3)  For each j=0, ..., m-1, i=0,...,n-1, compute each of the values
+        f'[j][i] := f[j][i]*(x-f[j][i])
+    4)  Return 1 if and only if all of the conditions hold true:
+        i)   For each j=0, ..., m-1, f[j][0]=x-f[j][1]-f[j][2]- ... -f[j][n-1]
+        ii)  xB + A = COMp(f[0][0], ..., f[m-1][n-1]; z[A])
+        iii) xC + D = COMp(f'[0][0], ..., f'[m-1][n-1]; z[C])
+        (otherwise return 0).
+
+The pair (PROVE2, VALID2) allows a prover to demonstrate that a sequence of 
+commitments contains at least one commitment to 1. The implementation works 
+like this:
+
+PROVE2: Take as input a sequence of values c[0], c[1], ... c[N-1] for
+some N= n^m, a secret index i* in this list corresponding to a commitment that
+opens to 1, and a random scalar r in Zq. For all integers j, i, define the 
+Kronecker delta function as DELTA(j,i) := 1 if j=i and 0 otherwise.
+    1)  For k=0, 1, ..., m-1, select random coefficient u[k] at random from Zq.
+    2)  Select r[B] at random from Zq.
+    3)  Write i* in n-ary i* = i*[0] + i*[1]*(n) + i*[2]*(n^2) + ... 
+            ... + i*[m-1]*(n^(m-1)), and represent i*  as the sequence i*[j].
+    4)  For each j=0, 1, ..., m-1 and i=0, 1, ..., n-1, define the values
+        d[j][i] := DELTA(i*[j],i).
+    5)  Compute B:=COMp(d[0][0], ..., d[m-1][n-1]; r[B]).
+    6)  Prover runs PROVE1 and stores the output as the list of data 
+        P <- PROVE1(B, (d[0][0], ..., d[m-1][n-1], r[B])) and stores the values
+        a[j][i] for use in the next step. Note the prover receives A, C, D from
+        PROVE1, all the values f[j][i], and the values z[A], z[C].
+    7)  coefs <- COEFS(a[0][0], ..., a[m-1][n-1], i*)
+    8)  For k=0, ..., m-1:
+        i)   G[k] := ENCeg(0, u[k])  # = (rHp(G), rG)
+        ii)  For i=0, ..., N-1, update G[k] by multiplying:
+             G[k]=G[k]*(co[i]^coefs[i][k])
+                 =(G[k][1]+coefs[i][k]*co[i][1], G[k][2]+coefs[i][k]*co[i][2])
+        The final value for each G[k] from step 8 can be written explicitly:
+           G[k]=(rHp(G)+coefs[0][k]*co[0][1] + ... +coefs[n-1][k]*co[n-1][1],
+                 rG+coefs[0][k]*co[0][2] + ... +coefs[n-1][k]*co[n-1][2])
+    9)  Compute x' = Hs(A,B,C,D, G[0], ..., G[m-1]).
+    10) Compute z:= r*(x')^m - u[m-1]*(x')^(m-1) - ... - u[1]*(x')^1 - u[0]
+    11) Output proof P':=P, B, G[0], ..., G[m-1], z.
+
+VALID2: Take as input a list of N El Gamal commitments co[0], ..., co[N-1] and a
+proof P' parsed as P, B, G[0],...,G[m-1], where P is a proof parsed as 
+P = A,C,D, f[0][1],f[0][2], ..., f[m-1][n-1], z[A], z[C]. 
+    1)  If A,B,C,D, each G[k] are all elliptic curve points, and if z[A], z[C], 
+        and z are elements of Zq, and if each f[j][i] are elements of Zq, and 
+        if VALID1(B,P)=1, then compute the value 
+            x' := Hs(A, B, C,D,G[0],...,G[m-1]). 
+        Else, output FAIL and terminate.
+    2)  Compute c := ENCeg(0,z).
+    3)  For each k=0,...,m-1, compute 
+            G[k]^(-x^k) := (-x^k*G[k][1],-x^k*G[k][2]).
+    4)  Compute (G[0]^(-(x')^0))*(G[1]^(-(x')^1))*...*(G[m-1]^(-(x')^(m-1)) 
+        which explicitly is the ordered pair (G*[1], G*[2]):
+            (-G[0][1] - (x')G[1][1] - ... - (x')^(m-1)G[m-1][1], 
+            -G[0][2] - (x')G[1][2] - ... - (x')^(m-1)G[m-1][2] )
+    5)  For each j=0, ..., m-1, i=0,...,n-1, compute each of the values
+            f[j][0] := x' - f[j][1] - f[j][2] - ... - f[j][n-1].
+    6)  For each i=0,...,N-1, write i in n-ary arithmetic as usual as
+        i = i[0] + i[1]*n + i[2]*(n^2) + ... + i[m-1]*(n^(m-1)). Compute the
+        values g[i] := f[0][i[0]]*f[1][i[1]]*...*f[m-1][i[m-1] and the
+        commitments co*[i] := co[i]^g[i] = (g[i]*co[i][1], g[i]*co[i][2]).
+    7)  Compute (co*[0])*(co*[1])*...*(co*[N-1]) which ends up as the ordered
+        pair (c**[1], c**[2])
+            (c*[0][1] + c*[1][1] + ... c*[N-1][1], c*[0][2] +  ... c*[N-1][2])
+    8)  Compute c'=(c**[1],c**[2])*(G*[1],G*[2])=(c**[1]+G*[1], c**[2] + G*[2]).
+    9)  Return 1 if and only if c' == c and 0 otherwise.
+
+COEFS: We split this into two algorithms. The outer layer, COEFS, is specific 
+to the Ruffing scheme. The inner layer, COEFPROD, takes two sequences of coef-
+ficients as input, representing polynomials, and outputs a sequence of coef-
+ficients of the resulting product of those two polynomials. We denote the 
+Discrete Fourier Transform as DFT, and the inverse IDFT. 
+
+COEFS takes as input a matrix A = a[0][0], ..., a[m-1][n-1] and index i* such
+that 0 <= i* < n^m. We decompose 0 <= i* < N into the n-ary representation
+    i* = i*[0] + i*[1]*n + ... + i*[m-1]*n^(m-1)
+In this decomposition, for each 0 <= j < m, we have the constraint 
+0 <= i*[j] < n (otherwise we could include the "runoff" above n into the co-
+efficient one index higher). For index 0 <= k < N we again decompose into 
+the n-ary representation
+    k  = k[0]  + k[1]*n  + ... + k[m-1]*n^(m-1)
+where for each index 0 <= j < m (where N=n^m), we have 0 <= k[j] < n.  We rep-
+resent the polynomial defined by DELTA(i*[j],k[j])*x + a[j][k[j]] as an array 
+    q[j][k] = [a[j][k[j]], DELTA(i*[j],k[j])]
+We then do the following:
+    1) For each k = 0, ..., N-1:
+        i)  Compute coefList[k] : = q[0][k]
+        ii) For 1<=j<m update coefList[k] = COEFPROD(coefList[k], q[j][k[j]])
+    2) Output coefList[0], coefList[1], ..., coefList[N-1].
+
+COEFPROD: Take as input lists c[0],...,c[n-1] and d[0],...,d[n-1]. If these are
+not the same length, the shorter one may be padded with zeros at the end. We
+can parse the polynomial p(x) = c[0] + c[1]*x + ... + c[n-1]*x^(n-1) and the
+polynomial q(x) = d[0] + d[1]*x + ... + d[n-1]*x^(n-1). Let m = 2n-1.
+    1) Compute P := DFT(p), Q := DFT(q). Both P and Q should have length m and
+        This should take O(n*log(n)) time.
+    2) Compute PQ := [P[0]*Q[0], P[1]*Q[1], ...]. This should take O(n) time.
+    3) Compute t:= IDFT(PQ) = t[0], t[1], ..., t[m]. This should take 
+        O(n*log(n)).
+    4) Output t as the coefficients of p(x)*q(x).
+
+
+               II. BOOTLE-RUFFING RINGCT SCHEME
+
+We are now in a position to present Ruffing's scheme in its entirety. We select 
+a group of prime order q under which the Decisional Diffie-Hellman assumption 
+holds. Let G be a commonly known generator of the group. Let Hp be a hash func-
+tion that produces an elliptic curve point. Let Hs be a hash function that prod-
+uces a scalar in Zq. Let Zq denote the integers modulo q. 
+
+KEYGEN: 
+    1) Select r,r' randomly from Zq.
+    2) Set sk := (r,r')
+    3) Set ki := r'G
+    4) Set pk := ENCeg(ki,r)
+    5) Output (sk,ki,pk).
+
+SPEND: Take as input an (L x N)  matrix of public keys PK written as 
+PK  = [pk[j][i]; j=0,1,...,L-1, i=0,1,...,N-1], such that the signer knows the 
+associated secret keys of the column with (secret) index i*, a commitment for 
+each column co = co[0], co[1], ...., co[N-1] such that co[i*] opens to zero, a 
+set of secret keys sk = sk[0],sk[1],...,sk[L-1], a set of key images ki, a 
+message M, and a random scalar s from Zq. Write each secret key as 
+sk[i]=(r[i],r'[i]).
+
+    1) Compute co' := sG.
+    2) Set f := (ki, PK, co, co', M)
+    3) Compute (c, f') := SUB(f)
+    4) Compute s' := s + r[0]*f'[0] + r[1]*f'[1] + ... + r[L-1]*f'[L-1]
+    5) Compute sigma[1] := PROVE2(c, i*,s')
+    6) Compute sigma[2] := SIG*((r'[0], r'[1], ..., r'[L-1]), (sigma[1], f))
+    7) Output signature = (co', sigma[1], sigma[2])
+
+SUB: Take as input key images ki = ki[0], ki[1], ..., ki[L-1], a matrix of 
+public keys PK = [pk[j][i]; j=1,2,...,L, i=1,2,...,N], a set of Pedersen com-
+mitments co = co[1], ..., co[N], an elliptic curve point co', and message M.
+
+    1) For j=0, 1, ..., L-1:
+        i)  Compute pkz[j] := (ki[j],0) 
+        ii) Compute f[j]   := Hs(ki[j],f,j)
+    2) For i=0, 1, ..., N-1 do:
+        i)   Set c[i] := (co[i], co')
+        ii)  For j=0,1, ..., L-1, update c[i] = c[i]*(pk[j][i]/pkz[j])^(f[j])
+    3) Output (c,f) where c = c[0], ..., c[N-1], f=f[0], ..., f[L-1].
+
+Note that due to commitment arithmetic the result c[i] is written explicitly as:
+  (co[i]+f[0]*(pk[0][i][1]-pkz[0][1])+ ... +f[L-1]*(pk[L-1][i][1]-pkz[L-1][1]), 
+   co'+f[0]*(pk[0][i][2]-pkz[0][2])+ ... +f[L-1]*(pk[L-1][i][2]-pkz[L-1][2]))
+
+VER: This verifies a ring signature. Take as input a set of key images
+ki = ki[0], ki[1], ..., ki[L-1], a matrix of public keys PK, commitments
+co = co[0], ..., co[N-1], an elliptic curve point co', a message M, and a sig-
+nature from SPEND, signature = (co', sigma[1], sigma[2]).
+
+    1) Set f := (ki, PK, co, co', M).
+    2) Compute (c, f') := SUB(f) (we only use c for verification)
+    3) Return 1 iff 
+        (i)  the signature sigma[2] on message (sigma[1], f) passes VER* with
+             keys ki, i.e. VER*((sigma[1],f), ki, sigma[2])==1
+        (ii) the proof sigma[1] is a valid NIZK proof that one of the commit-
+             ments in co open to 0, i.e. VALID2(sigma[1], co) == 1. 
+       Return 0 otherwise.
+
+              III. Specific Example
+
+Here is a quick concrete example using integer scalars of the Bootle NIZK
+proof that a commitment opens appropriately* as in PROVE1/VALID1 above.
+We start with random data we wish to commit to. Each entry must be
+a bit and each row must sum to 1 if VALID1 is to validate the proof. We
+may as well go with the identity matrix:
+
+[ [b[0][0], b[0][1] ],   =   [ [1, 0],
+  [b[1][0], b[1][1] ] ]        [0, 1] ]
+
+We compute the commitment B = COMp([b[j][i]], rB):
+
+B = rB*G + 1*H[0,0] + 0*H[0,1] + 0*H[1,0] + 1*H[1,1]
+
+We pick random a[0][1], say 7, and a random a[1][1], say -5. We compute a[j][0]
+as -sum(a[j][i]):
+
+[ [a[0][0], a[0][1] ],   =   [ [-7,  7],
+  [a[1][0], a[1][1] ] ]        [ 5, -5] ]
+
+We compute commitment A = COMp( [a[j][i]], rA):
+
+A = rA*G - 7*H[0,0] + 7*H[0,1] + 5*H[1,0] - 5*H[1,1]
+
+We compute c[j][i] = a[j][i]*(1-2b[j][i]), d[j][i] = -a[j][i]^2:
+
+[ [c[0][0], c[0][1] ],   =   [ [7, 7],
+  [c[1][0], c[1][1] ] ]        [5, 5] ]
+
+[ [d[0][0], d[0][1] ],   =   [ [-49, -49],
+  [d[1][0], d[1][1] ] ]        [-25, -25] ]
+
+We compute commitments C and D:
+
+C = rC*G +  7*H[0,0] +  7*H[0,1] +  5*H[1,0] +  5*H[1,1]
+D = rD*G - 49*H[0,0] - 49*H[0,1] - 25*H[1,0] - 25*H[1,1]
+
+We compute x = Hs(A,C,D). We compute f[j][i] = b[j][i]*x + a[j][i]:
+
+[ [f[0][0], f[0][1] ],   =   [ [x-7,   7],
+  [f[1][0], f[1][1] ] ]        [  5, x-5] ]
+
+We compute zA = rB*x + rA, zC = rC*x + rD and send [A,B,C,D, zA, zC] together
+with all columns except the first column of [f[j][i]] as our NIZK proof that B
+is a well-formed Bootle commitment*. Now a verifier receives the left hand side
+of the following system of equations
+
+A       = rA*G -  7*H[0,0] +  7*H[0,1] +  5*H[1,0] -  5*H[1,1]
+B       = rB*G +  1*H[0,0] +  0*H[0,1] +  0*H[1,0] +  1*H[1,1]
+C       = rC*G +  7*H[0,0] +  7*H[0,1] +  5*H[1,0] +  5*H[1,1]
+D       = rD*G - 49*H[0,0] - 49*H[0,1] - 25*H[1,0] - 25*H[1,1]
+f[0][1] = 7
+f[1][1] = x-5
+zA      = rB*x + rA
+zC      = rC*x + rD
+
+Using the left hand side only, the verifier computes:
+x       := H(A,C,D)
+f[0][0] := x - f[0][1]
+f[1][0] := x - f[1][1]
+Now the verifier computes the matrix [f'[j][i]] = [f[j][i]*(x-f[j][i])]:
+[ [f'[0][0], f'[0][1] ],   =   [ [f[0][0]*(x-f[0][0]), f[0][1]*(x-f[0][1])],
+  [f'[1][0], f'[1][1] ] ]        [ f[1][0]*(x-f[1][0]), f[1][1]*(x-f[1][1])] ]
+and computes the commitments COM(f[j][i], zA), COM(f'[j][i], zC):
+
+COM( f[j][i], zA) := zA*G +  f[0][0]*H[0,0] +  f[0][1]*H[0,1] + ...
+COM(f'[j][i], zC) := zC*G + f'[0][0]*H[0,0] + f'[0][1]*H[0,1] + ...
+
+The verifier can now check whether
+  i)  xB + A =? COM(f[j][i], zA)
+  ii) xC + D =? COM(f'[j][i], zC)
+
+Note that if the verifier received the values as specified above, she computes
+the same f[0][0], f[1][0] as the prover used, x-7 and 5, so the verifier 
+obtains the matrix 
+
+[ [f[0][0], f[0][1] ],   =   [ [x-7,   7],
+  [f[1][0], f[1][1] ] ]        [  5, x-5] ]
+  
+and computes
+
+[ [f'[0][0], f'[0][1] ],   =   [ [7(x-7), 7(x-7)],
+  [f'[1][0], f'[1][1] ] ]        [5(x-5), 5(x-5)] ]
+  
+And thus computes the commitments
+
+COM([ f[j][i]], zA) = zA*G + (x-7)*H[0,0] + 7*H[0,1] + 5*H[1,0] + (x-5)*H[1,1]
+COM([f'[j][i]], zC) = zC*G + 7(x-7)*H[0,0] + 7(x-7)*H[0,1] + 5*(x-5)*H[1,0] 
+                      + 5(x-5)*H[1,1]
+
+On the other hand, she is given B and A, and with her x, she can compute xB+A:
+
+xB + A = x(rB*G +  1*H[0,0] +  0*H[0,1] +  0*H[1,0] +  1*H[1,1])
+         + (rA*G -  7*H[0,0] +  7*H[0,1] +  5*H[1,0] -  5*H[1,1])
+       = (rB*x + rA)*G  + (x-7)*H[0,0] + 7*H[0,1] + 5*H[1,0] + (x-5)*H[1,1]
+
+Lo and behold, this matches COM([ f[j][i]], zA). She can do the same with C,D:
+
+xC + D = x(rC*G +  7*H[0,0] +  7*H[0,1] +  5*H[1,0] +  5*H[1,1])
+         + (rD*G - 49*H[0,0] - 49*H[0,1] - 25*H[1,0] - 25*H[1,1])
+       = (rC*x + rD)*G + 7(x-7)*H[0,0] + 7(x-7)*H[0,1] + 5(x-5)*H[1,0] 
+         + 5*(x-5)*H[1,1]
+
+Voila!
+
+
+
+               IV. REFERENCES
+
+    [1] Ruffing, Thyagarajan, Ronge, Schröder. "Boosting Private Payments in 
+        Monero: New Attacks, Exact Cryptographic Definitions, and Sublinear 
+        Ring Signatures." In preparation.
+    [2] Bootle, Cerulli, Chaidos, Ghadafi, Groth, Petit. "Short accountable 
+        ring signatures based on DDH." European Symposium on Research in 
+        Computer Security. Springer, Cham, 2015.
+    [3] Bellare, Mihir, and Gregory Neven. "Multi-signatures in the plain 
+        public-key model and a general forking lemma." Proceedings of the 13th
+        ACM conference on Computer and communications security. ACM, 2006.
+
+       
