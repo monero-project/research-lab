@@ -12,7 +12,7 @@ import java.util.Date;
 import static how.monero.hodl.crypto.CryptoUtil.*;
 import static how.monero.hodl.ringSignature.StringCT.*;
 
-public class BootleRuffingSpendTest {
+public class StringCTSpendTest {
 
   public static SpendParams createTestSpendParams(int decompositionBase, int decompositionExponent, int inputs) {
 
@@ -138,7 +138,7 @@ public class BootleRuffingSpendTest {
     Curve25519Point.scalarBaseMults = 0;
 
     //Ed25519GroupElement.enableLineRecording = true;
-    Curve25519Point.lineRecordingSourceFile = "BootleRuffing.java";
+    Curve25519Point.lineRecordingSourceFile = "StringCT.java";
 
     // verify the spend transaction
     for (int i=0; i<testIterations; i++) {

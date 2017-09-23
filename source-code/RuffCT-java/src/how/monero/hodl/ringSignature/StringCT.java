@@ -3,7 +3,7 @@ package how.monero.hodl.ringSignature;
 import how.monero.hodl.crypto.Curve25519Point;
 import how.monero.hodl.crypto.Curve25519PointPair;
 import how.monero.hodl.crypto.Scalar;
-import how.monero.hodl.cursor.BootleRuffingCursor;
+import how.monero.hodl.cursor.StringCTCursor;
 import how.monero.hodl.util.VarInt;
 
 import java.math.BigInteger;
@@ -111,7 +111,7 @@ public class StringCT {
       return result;
     }
     public static SpendSignature fromBytes(byte[] a) {
-      BootleRuffingCursor cursor = new BootleRuffingCursor(a);
+      StringCTCursor cursor = new StringCTCursor(a);
       int decompositionBase = (int) cursor.readVarInt();
       int decompositionExponent = (int) cursor.readVarInt();
       return new SpendSignature(decompositionBase, decompositionExponent,

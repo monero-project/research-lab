@@ -4,10 +4,10 @@ import how.monero.hodl.crypto.Curve25519Point;
 import how.monero.hodl.crypto.Curve25519PointPair;
 import how.monero.hodl.crypto.Scalar;
 
-public class BootleRuffingCursor extends Cursor {
+public class StringCTCursor extends Cursor {
   public byte[] data;
 
-  public BootleRuffingCursor(byte[] data) {
+  public StringCTCursor(byte[] data) {
     super(data);
   }
 
