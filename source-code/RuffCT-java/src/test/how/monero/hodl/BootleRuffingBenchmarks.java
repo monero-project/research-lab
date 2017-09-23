@@ -1,7 +1,7 @@
 package test.how.monero.hodl;
 
+import how.monero.hodl.crypto.Curve25519Point;
 import how.monero.hodl.ringSignature.SpendParams;
-import org.nem.core.crypto.ed25519.arithmetic.Ed25519GroupElement;
 
 import java.io.File;
 import java.io.IOException;
@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import static how.monero.hodl.ringSignature.BootleRuffing.*;
+import static how.monero.hodl.ringSignature.StringCT.*;
 import static test.how.monero.hodl.BootleRuffingSpendTest.createTestSpendParams;
 
 public class BootleRuffingBenchmarks {
@@ -54,12 +54,12 @@ public class BootleRuffingBenchmarks {
         // create a transaction to spend the outputs, resulting in a signature that proves the authority to send them
         SpendSignature[] spendSignature = new SpendSignature[testIterations];
         for (int i=0; i<testIterations; i++) {
-          Ed25519GroupElement.scalarMults = 0;
-          Ed25519GroupElement.scalarBaseMults = 0;
+          Curve25519Point.scalarMults = 0;
+          Curve25519Point.scalarBaseMults = 0;
           spendSignature[i] = SPEND(sp[i]);
         }
-        int spendScalarMults = Ed25519GroupElement.scalarMults;
-        int spendScalarBaseMults = Ed25519GroupElement.scalarBaseMults;
+        int spendScalarMults = Curve25519Point.scalarMults;
+        int spendScalarBaseMults = Curve25519Point.scalarBaseMults;
 
         long spendSignatureGenerationDuration = (new Date().getTime()-startMs);
         System.out.println("Spend signature generation duration: " + spendSignatureGenerationDuration + " ms");
@@ -72,13 +72,13 @@ public class BootleRuffingBenchmarks {
 
         // verify the spend transaction
         for (int i=0; i<testIterations; i++) {
-          Ed25519GroupElement.scalarMults = 0;
-          Ed25519GroupElement.scalarBaseMults = 0;
+          Curve25519Point.scalarMults = 0;
+          Curve25519Point.scalarBaseMults = 0;
           boolean verified = VER(sp[i].ki, sp[i].pk, sp[i].co, spendSignature[i].co1, sp[i].M, spendSignature[i]);
           System.out.println("verified: " + verified);
         }
-        int verifyScalarMults = Ed25519GroupElement.scalarMults;
-        int verifyScalarBaseMults = Ed25519GroupElement.scalarBaseMults;
+        int verifyScalarMults = Curve25519Point.scalarMults;
+        int verifyScalarBaseMults = Curve25519Point.scalarBaseMults;
 
 
         long spendSignatureVerificationDuration = (new Date().getTime()-startMs);

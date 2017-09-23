@@ -1,16 +1,16 @@
 package how.monero.hodl.ringSignature;
 
-import how.monero.hodl.crypto.PointPair;
+import how.monero.hodl.crypto.Curve25519Point;
+import how.monero.hodl.crypto.Curve25519PointPair;
 import how.monero.hodl.crypto.Scalar;
-import org.nem.core.crypto.ed25519.arithmetic.Ed25519GroupElement;
 
 public class SpendParams {
 
   public int iAsterisk;
-  public PointPair[][] pk;
-  public BootleRuffing.SK[] sk;
-  public Ed25519GroupElement[] ki;
-  public Ed25519GroupElement[] co;
+  public Curve25519PointPair[][] pk;
+  public StringCT.SK[] sk;
+  public Curve25519Point[] ki;
+  public Curve25519Point[] co;
   public byte[] M;
   public Scalar s;
   public int decompositionBase;

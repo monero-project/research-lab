@@ -1,17 +1,16 @@
 package test.how.monero.hodl;
 
-import how.monero.hodl.crypto.PointPair;
+import how.monero.hodl.crypto.Curve25519Point;
+import how.monero.hodl.crypto.Curve25519PointPair;
 import how.monero.hodl.crypto.Scalar;
 import how.monero.hodl.ringSignature.SpendParams;
-import org.nem.core.crypto.ed25519.arithmetic.Ed25519GroupElement;
 
 import java.math.BigInteger;
 import java.util.Arrays;
 import java.util.Date;
-import java.util.HashMap;
 
 import static how.monero.hodl.crypto.CryptoUtil.*;
-import static how.monero.hodl.ringSignature.BootleRuffing.*;
+import static how.monero.hodl.ringSignature.StringCT.*;
 
 public class BootleRuffingSpendTest {
 
@@ -39,35 +38,35 @@ public class BootleRuffingSpendTest {
 
     // input commitments
     // commitments to the amounts of all inputs referenced in the transaction (real inputs and decoys)
-    Ed25519GroupElement[][] inputCommitments = new Ed25519GroupElement[inputs][ringSize];
+    Curve25519Point[][] inputCommitments = new Curve25519Point[inputs][ringSize];
     for(int j=0; j<inputs; j++) {
       for(int i=0; i<ringSize; i++) {
         if(i==sp.iAsterisk) inputCommitments[j][i] = realInputs[j].co;
-        else inputCommitments[j][i] = randomPoint();
+        else inputCommitments[j][i] = Curve25519Point.randomPoint();
       }
     }
 
     // there is a co commitment for each ring
     // each member of co is sum(COMp(input amt i)) - sum(COMp(output amt i))
-    sp.co = new Ed25519GroupElement[ringSize];
+    sp.co = new Curve25519Point[ringSize];
     for(int i=0; i<ringSize; i++) {
       sp.co[i] = inputCommitments[0][i];
       for(int j=1; j<inputs; j++) {
-        sp.co[i] = sp.co[i].toP3().add(inputCommitments[j][i].toP3().toCached());
+        sp.co[i] = sp.co[i].add(inputCommitments[j][i]);
       }
       for(int k=0; k<outputs.length; k++) {
-        sp.co[i] = sp.co[i].toP3().subtract(outputs[k].co.toP3().toCached());
+        sp.co[i] = sp.co[i].subtract(outputs[k].co);
       }
     }
 
     // the public keys for every input referenced (including real inputs and decoys)
-    sp.pk = new PointPair[inputs][ringSize];
+    sp.pk = new Curve25519PointPair[inputs][ringSize];
 
     // the secret key for every real input referenced
     sp.sk = new SK[inputs];
 
     // the key image for every real input referenced
-    sp.ki = new Ed25519GroupElement[inputs];
+    sp.ki = new Curve25519Point[inputs];
 
     for(int j=0; j<inputs; j++) {
       for(int i=0; i<ringSize; i++) {
@@ -84,14 +83,14 @@ public class BootleRuffingSpendTest {
     for(int i=0; i<realInputs.length; i++) sp.s = sp.s.add(realInputs[i].mask);
     for(int i=0; i<outputs.length; i++) sp.s = sp.s.sub(outputs[i].mask);
 
-    Ed25519GroupElement S = realInputs[0].co;
-    for(int i=1; i<realInputs.length; i++) S = S.toP3().add(realInputs[i].co.toP3().toCached());
-    S = S.toP3().subtract(G.scalarMultiply(new Scalar(fee)).toP3().toCached());
-    for(int i=0; i<outputs.length; i++) S = S.toP3().subtract(outputs[i].co.toP3().toCached());
+    Curve25519Point S = realInputs[0].co;
+    for(int i=1; i<realInputs.length; i++) S = S.add(realInputs[i].co);
+    S = S.subtract(Curve25519Point.G.scalarMultiply(new Scalar(fee)));
+    for(int i=0; i<outputs.length; i++) S = S.subtract(outputs[i].co);
 
-    Ed25519GroupElement S1 = getHpnGLookup(1).scalarMultiply(sp.s);
+    Curve25519Point S1 = getHpnGLookup(1).scalarMultiply(sp.s);
 
-    if(!S.toP3().equals(S1)) throw new RuntimeException("S != S'");
+    if(!S.equals(S1)) throw new RuntimeException("S != S'");
 
     return sp;
   }
@@ -114,8 +113,8 @@ public class BootleRuffingSpendTest {
 
     if(pauseAtEachStage) { System.out.println("Press enter to continue"); try { System.in.read(); } catch (Exception e) {}; System.out.println("Continuing..."); }
 
-    Ed25519GroupElement.scalarMults = 0;
-    Ed25519GroupElement.scalarBaseMults = 0;
+    Curve25519Point.scalarMults = 0;
+    Curve25519Point.scalarBaseMults = 0;
 
     startMs = new Date().getTime();
     // create a transaction to spend the outputs, resulting in a signature that proves the authority to send them
@@ -133,29 +132,29 @@ public class BootleRuffingSpendTest {
     if(pauseAtEachStage) { System.out.println("Press enter to continue"); try { System.in.read(); } catch (Exception e) {}; System.out.println("Continuing..."); }
     startMs = new Date().getTime();
 
-    System.out.println("Spend ScalarMults: " + Ed25519GroupElement.scalarMults);
-    System.out.println("Spend BaseScalarMults: " + Ed25519GroupElement.scalarBaseMults);
-    Ed25519GroupElement.scalarMults = 0;
-    Ed25519GroupElement.scalarBaseMults = 0;
+    System.out.println("Spend ScalarMults: " + Curve25519Point.scalarMults);
+    System.out.println("Spend BaseScalarMults: " + Curve25519Point.scalarBaseMults);
+    Curve25519Point.scalarMults = 0;
+    Curve25519Point.scalarBaseMults = 0;
 
     //Ed25519GroupElement.enableLineRecording = true;
-    Ed25519GroupElement.lineRecordingSourceFile = "BootleRuffing.java";
+    Curve25519Point.lineRecordingSourceFile = "BootleRuffing.java";
 
     // verify the spend transaction
     for (int i=0; i<testIterations; i++) {
 
-      spendSignature[i] = SpendSignature.fromBytes(spendSignatureBytes[i]);
+      //spendSignature[i] = SpendSignature.fromBytes(spendSignatureBytes[i]);
 
       boolean verified = VER(sp[i].ki, sp[i].pk, sp[i].co, spendSignature[i].co1, sp[i].M, spendSignature[i]);
       System.out.println("verified: " + verified);
     }
 
-    System.out.println("Verify ScalarMults: " + Ed25519GroupElement.scalarMults);
-    System.out.println("Verify BaseScalarMults: " + Ed25519GroupElement.scalarBaseMults);
+    System.out.println("Verify ScalarMults: " + Curve25519Point.scalarMults);
+    System.out.println("Verify BaseScalarMults: " + Curve25519Point.scalarBaseMults);
 
     System.out.println("Signature verification duration: " + (new Date().getTime()-startMs) + " ms");
 
-    if(Ed25519GroupElement.enableLineRecording) Ed25519GroupElement.lineNumberCallFrequencyMap.entrySet().stream().forEach(e->{System.out.println("line: " + e.getKey() + ", calls: " + e.getValue());});
+    if(Curve25519Point.enableLineRecording) Curve25519Point.lineNumberCallFrequencyMap.entrySet().stream().forEach(e->{System.out.println("line: " + e.getKey() + ", calls: " + e.getValue());});
 
   }
 
