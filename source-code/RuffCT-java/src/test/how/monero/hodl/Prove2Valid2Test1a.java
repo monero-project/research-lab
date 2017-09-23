@@ -1,10 +1,10 @@
 package test.how.monero.hodl;
 
-import how.monero.hodl.crypto.PointPair;
+import how.monero.hodl.crypto.Curve25519PointPair;
 import how.monero.hodl.crypto.Scalar;
 
 import static how.monero.hodl.crypto.CryptoUtil.COMeg;
-import static how.monero.hodl.ringSignature.BootleRuffing.*;
+import static how.monero.hodl.ringSignature.StringCT.*;
 
 public class Prove2Valid2Test1a {
 
@@ -14,7 +14,7 @@ public class Prove2Valid2Test1a {
 
     Scalar r = Scalar.ONE;
 
-    PointPair[] co = new PointPair[]{
+    Curve25519PointPair[] co = new Curve25519PointPair[]{
       COMeg(Scalar.ONE,Scalar.ONE),
       COMeg(Scalar.ONE,Scalar.ONE),
       COMeg(Scalar.ONE,Scalar.ONE),

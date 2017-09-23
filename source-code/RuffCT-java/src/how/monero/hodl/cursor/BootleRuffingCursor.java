@@ -1,11 +1,8 @@
 package how.monero.hodl.cursor;
 
-import how.monero.hodl.crypto.PointPair;
+import how.monero.hodl.crypto.Curve25519Point;
+import how.monero.hodl.crypto.Curve25519PointPair;
 import how.monero.hodl.crypto.Scalar;
-import org.nem.core.crypto.ed25519.arithmetic.Ed25519EncodedFieldElement;
-import org.nem.core.crypto.ed25519.arithmetic.Ed25519EncodedGroupElement;
-import org.nem.core.crypto.ed25519.arithmetic.Ed25519FieldElement;
-import org.nem.core.crypto.ed25519.arithmetic.Ed25519GroupElement;
 
 public class BootleRuffingCursor extends Cursor {
   public byte[] data;
@@ -14,15 +11,12 @@ public class BootleRuffingCursor extends Cursor {
     super(data);
   }
 
-  public Ed25519GroupElement readGroupElement() {
-    return new Ed25519EncodedGroupElement(readBytes(32)).decode();
+  public Curve25519Point readGroupElement() {
+    return new Curve25519Point(readBytes(32));
   }
-  public Ed25519FieldElement readFieldElement() {
-    return new Ed25519EncodedFieldElement(readBytes(32)).decode();
-  }
-  public PointPair[] readPointPairArray(int len) {
-    PointPair[] result = new PointPair[len];
-    for(int i=0; i<len; i++) result[i] = new PointPair(readGroupElement(), readGroupElement());
+  public Curve25519PointPair[] readPointPairArray(int len) {
+    Curve25519PointPair[] result = new Curve25519PointPair[len];
+    for(int i=0; i<len; i++) result[i] = new Curve25519PointPair(readGroupElement(), readGroupElement());
     return result;
   }
   public Scalar[][] readScalar2DArray(int m, int n) {

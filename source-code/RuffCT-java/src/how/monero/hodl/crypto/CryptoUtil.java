@@ -6,7 +6,6 @@ import org.apache.commons.pool2.BasePooledObjectFactory;
 import org.apache.commons.pool2.PooledObject;
 import org.apache.commons.pool2.impl.DefaultPooledObject;
 import org.apache.commons.pool2.impl.GenericObjectPool;
-import org.nem.core.crypto.ed25519.arithmetic.*;
 
 import java.math.BigInteger;
 import java.security.SecureRandom;
@@ -14,7 +13,6 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
 
-import static how.monero.hodl.crypto.HashToPoint.hashToPoint;
 import static how.monero.hodl.util.ByteUtil.*;
 
 public class CryptoUtil {
@@ -31,12 +29,6 @@ public class CryptoUtil {
       return new Keccak(256);
     }
   });
-
-  public static final Ed25519GroupElement G = Ed25519Group.BASE_POINT;
-  public static final Ed25519GroupElement H = new Ed25519EncodedGroupElement(hexToBytes("8b655970153799af2aeadc9ff1add0ea6c7251d54154cfa92c173a0dd39c1f94")).decode();
-  static {
-    H.precomputeForScalarMultiplication();
-  }
 
   public static Scalar hashToScalar(byte[] a) {
     return new Scalar(scReduce32(fastHash(a)));
@@ -89,21 +81,15 @@ public class CryptoUtil {
   }
 
   public static final Random random = new SecureRandom();
-  public static byte[] randomPointAsBytes() {
-    return randomPoint().encode().getRaw();
-  }
-  public static Ed25519GroupElement randomPoint() {
-    return Ed25519Group.BASE_POINT.scalarMultiply(Scalar.randomScalar());
-  }
   public static byte[] randomMessage(int len) {
     byte[] m = new byte[len];
     random.nextBytes(m);
     return m;
   }
 
-  public static byte[] toBytes(Ed25519GroupElement[] a) {
+  public static byte[] toBytes(Curve25519Point[] a) {
     byte[] r = new byte[0];
-    for(Ed25519GroupElement ai : a) r = concat(r, ai.encode().getRaw());
+    for(Curve25519Point ai : a) r = concat(r, ai.toBytes());
     return r;
   }
 
@@ -115,40 +101,39 @@ public class CryptoUtil {
 
 
 
-  public static PointPair COMeg(Scalar xAmount, Scalar rMask) {
-    return new PointPair(G.scalarMultiply(xAmount).add(getHpnGLookup(1).scalarMultiply(rMask).toCached()), G.scalarMultiply(rMask));
+  public static Curve25519PointPair COMeg(Scalar xAmount, Scalar rMask) {
+    return new Curve25519PointPair(Curve25519Point.G.scalarMultiply(xAmount).add(getHpnGLookup(1).scalarMultiply(rMask)), Curve25519Point.G.scalarMultiply(rMask));
   }
 
-  public static Ed25519GroupElement COMp(Scalar xAmount, Scalar rMask) {
-    return G.scalarMultiply(xAmount).add(getHpnGLookup(1).scalarMultiply(rMask).toCached());
+  public static Curve25519Point COMp(Scalar xAmount, Scalar rMask) {
+    return Curve25519Point.G.scalarMultiply(xAmount).add(getHpnGLookup(1).scalarMultiply(rMask));
   }
 
-  public static Ed25519GroupElement COMb(Scalar[][] x, Scalar r) {
+  public static Curve25519Point COMb(Scalar[][] x, Scalar r) {
     int m = x.length;
     int n = x[0].length;
-    Ed25519GroupElement A = G.scalarMultiply(r);
+    Curve25519Point A = Curve25519Point.G.scalarMultiply(r);
     for(int j=0; j<m; j++) {
       for(int i=0; i<n; i++) {
-        A = A.toP3().add(getHpnGLookup(j * n + i + 1).scalarMultiply(x[j][i]).toCached());
+        A = A.add(getHpnGLookup(j * n + i + 1).scalarMultiply(x[j][i]));
       }
     }
     return A;
   }
 
 
-  public static Map<Integer, Ed25519GroupElement> HpnGLookup = new HashMap<>();
+  public static Map<Integer, Curve25519Point> HpnGLookup = new HashMap<>();
 
-  public static Ed25519GroupElement getHpnGLookup(int n) {
+  public static Curve25519Point getHpnGLookup(int n) {
     if(!HpnGLookup.containsKey(n)) {
-      Ed25519GroupElement HpnG = hashToPoint(G.scalarMultiply(Scalar.intToScalar(n)));
-      //HpnG.precomputeForScalarMultiplication(); // try precomputed vs non-precomputed to check best performance
+      Curve25519Point HpnG = Curve25519Point.hashToPoint(Curve25519Point.G.scalarMultiply(Scalar.intToScalar(n)));
       HpnGLookup.put(n, HpnG);
     }
     return HpnGLookup.get(n);
   }
 
-  public static PointPair ENCeg(Ed25519GroupElement X, Scalar r) {
-    return new PointPair(getHpnGLookup(1).scalarMultiply(r).toP3().add(X.toCached()), G.scalarMultiply(r));
+  public static Curve25519PointPair ENCeg(Curve25519Point X, Scalar r) {
+    return new Curve25519PointPair(getHpnGLookup(1).scalarMultiply(r).add(X), Curve25519Point.G.scalarMultiply(r));
   }
 
 

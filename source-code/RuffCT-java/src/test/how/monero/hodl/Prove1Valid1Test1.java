@@ -1,10 +1,10 @@
 package test.how.monero.hodl;
 
+import how.monero.hodl.crypto.Curve25519Point;
 import how.monero.hodl.crypto.Scalar;
-import org.nem.core.crypto.ed25519.arithmetic.Ed25519GroupElement;
 
 import static how.monero.hodl.crypto.CryptoUtil.COMb;
-import static how.monero.hodl.ringSignature.BootleRuffing.*;
+import static how.monero.hodl.ringSignature.StringCT.*;
 
 public class Prove1Valid1Test1 {
 
@@ -19,7 +19,7 @@ public class Prove1Valid1Test1 {
 
     Proof1 P = PROVE1(b, r);
 
-    Ed25519GroupElement B = COMb(b, r);
+    Curve25519Point B = COMb(b, r);
 
     System.out.println("VALID1 returns " + VALID1(B, P));
 

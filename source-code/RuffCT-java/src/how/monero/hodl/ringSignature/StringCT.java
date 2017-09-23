@@ -1,23 +1,20 @@
 package how.monero.hodl.ringSignature;
 
-import how.monero.hodl.crypto.PointPair;
+import how.monero.hodl.crypto.Curve25519Point;
+import how.monero.hodl.crypto.Curve25519PointPair;
 import how.monero.hodl.crypto.Scalar;
 import how.monero.hodl.cursor.BootleRuffingCursor;
 import how.monero.hodl.util.VarInt;
-import org.nem.core.crypto.ed25519.arithmetic.*;
 
 import java.math.BigInteger;
-import java.util.HashMap;
-import java.util.Map;
 
 import static how.monero.hodl.crypto.CryptoUtil.*;
-import static how.monero.hodl.crypto.HashToPoint.hashToPoint;
 import static how.monero.hodl.crypto.Scalar.bigIntegerArrayToScalarArray;
 import static how.monero.hodl.crypto.Scalar.randomScalar;
 import static how.monero.hodl.util.ByteUtil.*;
 
 
-public class BootleRuffing {
+public class StringCT {
 
   public static class SK {
     public Scalar r;
@@ -34,39 +31,39 @@ public class BootleRuffing {
 
   public static KeyGenResult KEYGEN() {
     SK sk = new SK(randomScalar(), randomScalar());
-    Ed25519GroupElement ki = G.scalarMultiply(sk.r1);
-    PointPair pk = ENCeg(ki, sk.r);
+    Curve25519Point ki = Curve25519Point.G.scalarMultiply(sk.r1);
+    Curve25519PointPair pk = ENCeg(ki, sk.r);
     return new KeyGenResult(sk, ki, pk);
   }
   public static class KeyGenResult {
     public SK sk;
-    public Ed25519GroupElement ki;
-    public PointPair pk = null;
-    public KeyGenResult(SK sk, Ed25519GroupElement ki, PointPair pk) {
+    public Curve25519Point ki;
+    public Curve25519PointPair pk = null;
+    public KeyGenResult(SK sk, Curve25519Point ki, Curve25519PointPair pk) {
       this.sk = sk; this.ki = ki; this.pk = pk;
     }
 
     @Override
     public String toString() {
-      return "sk: " + sk.toString() + ", ki: " + bytesToHex(ki.encode().getRaw()) + ", pk: " + (pk==null ? "(no pk)" : "pk: " + pk);
+      return "sk: " + sk.toString() + ", ki: " + bytesToHex(ki.toBytes()) + ", pk: " + (pk==null ? "(no pk)" : "pk: " + pk);
     }
   }
 
   public static class F {
-    public Ed25519GroupElement[] ki;
-    public PointPair[][] pk;
-    public Ed25519GroupElement[] co;
-    public Ed25519GroupElement co1;
+    public Curve25519Point[] ki;
+    public Curve25519PointPair[][] pk;
+    public Curve25519Point[] co;
+    public Curve25519Point co1;
     byte[] M;
-    public F(Ed25519GroupElement[] ki, PointPair[][] pk, Ed25519GroupElement[] co, Ed25519GroupElement co1, byte[] M) {
+    public F(Curve25519Point[] ki, Curve25519PointPair[][] pk, Curve25519Point[] co, Curve25519Point co1, byte[] M) {
       this.ki = ki; this.pk = pk; this.co = co; this.co1 = co1; this.M = M;
     }
     byte[] toBytes() {
       byte[] r = new byte[0];
-      for(int i=0; i<ki.length; i++) r = concat(r, ki[i].encode().getRaw());
+      for(int i=0; i<ki.length; i++) r = concat(r, ki[i].toBytes());
       for(int i=0; i<pk.length; i++) for(int j=0; j<pk[i].length; j++) r = concat(r, pk[i][j].toBytes());
-      for(int i=0; i<co.length; i++) r = concat(r, co[i].encode().getRaw());
-      r = concat(r, co1.encode().getRaw());
+      for(int i=0; i<co.length; i++) r = concat(r, co[i].toBytes());
+      r = concat(r, co1.toBytes());
       r = concat(r, M);
       return r;
     }
@@ -75,16 +72,16 @@ public class BootleRuffing {
   public static SpendSignature SPEND(SpendParams sp) {
 
     int iAsterisk = sp.iAsterisk;
-    PointPair[][] pk = sp.pk;
+    Curve25519PointPair[][] pk = sp.pk;
     SK[] sk = sp.sk;
-    Ed25519GroupElement[] ki = sp.ki;
-    Ed25519GroupElement[] co = sp.co;
+    Curve25519Point[] ki = sp.ki;
+    Curve25519Point[] co = sp.co;
     byte[] M = sp.M;
     Scalar s = sp.s;
     int decompositionBase = sp.decompositionBase;
     int decompositionExponent = sp.decompositionExponent;
 
-    Ed25519GroupElement co1 = G.scalarMultiply(s);
+    Curve25519Point co1 = Curve25519Point.G.scalarMultiply(s);
     F f = new F(ki, pk, co, co1, M);
     SubResult cf1 = SUB(f);
     Scalar s1 = s;
@@ -101,16 +98,16 @@ public class BootleRuffing {
   public static class SpendSignature {
     public int decompositionBase;
     public int decompositionExponent;
-    public Ed25519GroupElement co1;
+    public Curve25519Point co1;
     public Proof2 sigma1;
     Multisignature.Signature sigma2;
-    public SpendSignature(int decompositionBase, int decompositionExponent, Ed25519GroupElement co1, Proof2 sigma1, Multisignature.Signature sigma2) {
+    public SpendSignature(int decompositionBase, int decompositionExponent, Curve25519Point co1, Proof2 sigma1, Multisignature.Signature sigma2) {
       this.decompositionBase = decompositionBase; this.decompositionExponent = decompositionExponent; this.co1 = co1; this.sigma1 = sigma1; this.sigma2 = sigma2;
     }
     public byte[] toBytes() {
       byte[] result;
       result = concat(VarInt.writeVarInt(decompositionBase), VarInt.writeVarInt(decompositionExponent));
-      result = concat(result, co1.encode().getRaw(), sigma1.toBytes(decompositionBase, decompositionExponent), sigma2.toBytes());
+      result = concat(result, co1.toBytes(), sigma1.toBytes(decompositionBase, decompositionExponent), sigma2.toBytes());
       return result;
     }
     public static SpendSignature fromBytes(byte[] a) {
@@ -131,15 +128,15 @@ public class BootleRuffing {
   public static SubResult SUB(F fin) {
     int L = fin.pk.length; // inputs
     int N = fin.pk[0].length; // ring size
-    PointPair[] pkz = new PointPair[L];
+    Curve25519PointPair[] pkz = new Curve25519PointPair[L];
     Scalar[] f = new Scalar[L];
     for(int j=0; j<L; j++) {
-      pkz[j] = new PointPair(fin.ki[j], Ed25519Group.ZERO_P3);
-      f[j] = hashToScalar(concat(fin.ki[j].encode().getRaw(), fin.toBytes(), longToLittleEndianUint32ByteArray(j)));
+      pkz[j] = new Curve25519PointPair(fin.ki[j], Curve25519Point.ZERO);
+      f[j] = hashToScalar(concat(fin.ki[j].toBytes(), fin.toBytes(), longToLittleEndianUint32ByteArray(j)));
     }
-    PointPair[] c = new PointPair[N];
+    Curve25519PointPair[] c = new Curve25519PointPair[N];
     for(int i=0; i<N; i++) {
-      c[i] = new PointPair(fin.co[i], fin.co1);
+      c[i] = new Curve25519PointPair(fin.co[i], fin.co1);
       for(int j=0; j<L; j++) {
         c[i] = c[i].add( (fin.pk[j][i].subtract(pkz[j])).multiply(f[j]) );
       }
@@ -147,9 +144,9 @@ public class BootleRuffing {
     return new SubResult(c, f);
   }
   public static class SubResult {
-    public PointPair[] c;
+    public Curve25519PointPair[] c;
     public Scalar[] f;
-    public SubResult(PointPair[] c, Scalar[] f) {
+    public SubResult(Curve25519PointPair[] c, Scalar[] f) {
       this.c = c; this.f = f;
     }
   }
@@ -177,7 +174,7 @@ public class BootleRuffing {
       }
     }
 
-    Ed25519GroupElement A = COMb(a, rA);
+    Curve25519Point A = COMb(a, rA);
 
     Scalar[][] c = new Scalar[m][n];
     Scalar[][] d = new Scalar[m][n];
@@ -188,10 +185,10 @@ public class BootleRuffing {
       }
     }
 
-    Ed25519GroupElement C = COMb(c, rC);
-    Ed25519GroupElement D = COMb(d, rD);
+    Curve25519Point C = COMb(c, rC);
+    Curve25519Point D = COMb(d, rD);
 
-    Scalar x = hashToScalar(concat(A.encode().getRaw(), C.encode().getRaw(), D.encode().getRaw()));
+    Scalar x = hashToScalar(concat(A.toBytes(), C.toBytes(), D.toBytes()));
 
     Scalar[][] f = new Scalar[m][n];
     for(int j=0; j<m; j++) {
@@ -214,20 +211,20 @@ public class BootleRuffing {
   }
 
   public static class Proof1 {
-    public Ed25519GroupElement A;
-    public Ed25519GroupElement C;
-    public Ed25519GroupElement D;
+    public Curve25519Point A;
+    public Curve25519Point C;
+    public Curve25519Point D;
     private Scalar[][] fTrimmed;
     private Scalar zA;
     private Scalar zC;
     public transient Scalar[][] a;
 
-    private Proof1(Ed25519GroupElement A, Ed25519GroupElement C, Ed25519GroupElement D, Scalar[][] fTrimmed,
+    private Proof1(Curve25519Point A, Curve25519Point C, Curve25519Point D, Scalar[][] fTrimmed,
                   Scalar zA, Scalar zC, Scalar[][] a) {
       this.A = A; this.C = C; this.D = D; this.fTrimmed = fTrimmed; this.zA = zA; this.zC = zC; this.a = a;
     }
     private byte[] toBytes(int decompositionBase, int decompositionExponent) {
-      byte[] result = concat(A.encode().getRaw(), C.encode().getRaw(), D.encode().getRaw());
+      byte[] result = concat(A.toBytes(), C.toBytes(), D.toBytes());
       for(int j=0; j<decompositionExponent; j++) {
         for(int i=0; i<decompositionBase-1; i++) {
           result = concat(result, fTrimmed[j][i].bytes);
@@ -238,7 +235,7 @@ public class BootleRuffing {
     }
   }
 
-  public static Proof2 PROVE2(PointPair[] co, int iAsterisk, Scalar r, int inputs, int decompositionBase, int decompositionExponent) {
+  public static Proof2 PROVE2(Curve25519PointPair[] co, int iAsterisk, Scalar r, int inputs, int decompositionBase, int decompositionExponent) {
 
     int ringSize = (int) Math.pow(decompositionBase, decompositionExponent);
 
@@ -256,22 +253,22 @@ public class BootleRuffing {
       }
     }
 
-    Ed25519GroupElement B = COMb(d, rB);
+    Curve25519Point B = COMb(d, rB);
 
     Proof1 P = PROVE1(d, rB);
 
     Scalar[][] coefs = COEFS(P.a, iAsterisk);
 
-    PointPair[] G = new PointPair[decompositionExponent];
+    Curve25519PointPair[] G = new Curve25519PointPair[decompositionExponent];
 
     for(int k=0; k<decompositionExponent; k++) {
-      G[k] = ENCeg(Ed25519Group.ZERO_P3, u[k]);
+      G[k] = ENCeg(Curve25519Point.ZERO, u[k]);
       for (int i = 0; i < ringSize; i++) {
         G[k] = G[k].add(co[i].multiply(coefs[i][k]));
       }
     }
 
-    byte[] bytes = concat(P.A.encode().getRaw(), P.C.encode().getRaw(), P.D.encode().getRaw());
+    byte[] bytes = concat(P.A.toBytes(), P.C.toBytes(), P.D.toBytes());
     Scalar x1 = hashToScalar(bytes);
 
     Scalar z = r.mul(x1.pow(decompositionExponent));
@@ -284,11 +281,11 @@ public class BootleRuffing {
 
   public static class Proof2 {
     Proof1 P;
-    public Ed25519GroupElement B;
-    public PointPair[] G;
+    public Curve25519Point B;
+    public Curve25519PointPair[] G;
     public Scalar z;
 
-    private Proof2(Proof1 P, Ed25519GroupElement B, PointPair[] G, Scalar z) {
+    private Proof2(Proof1 P, Curve25519Point B, Curve25519PointPair[] G, Scalar z) {
       this.P = P;
       this.B = B;
       this.G = G;
@@ -297,8 +294,8 @@ public class BootleRuffing {
 
     private byte[] toBytes(int decompositionBase, int decompositionExponent) {
       byte[] bytes;
-      bytes = concat(P.toBytes(decompositionBase, decompositionExponent), B.encode().getRaw());
-      for(PointPair g : G) bytes = concat(bytes, g.toBytes());
+      bytes = concat(P.toBytes(decompositionBase, decompositionExponent), B.toBytes());
+      for(Curve25519PointPair g : G) bytes = concat(bytes, g.toBytes());
       bytes = concat(bytes, z.bytes);
       return bytes;
     }
@@ -321,7 +318,7 @@ public class BootleRuffing {
     return r;
   }
 
-  public static boolean VALID1(Ed25519GroupElement B, Proof1 P) {
+  public static boolean VALID1(Curve25519Point B, Proof1 P) {
     boolean abcdOnCurve =
       P.A.satisfiesCurveEquation()
       && B.satisfiesCurveEquation()
@@ -342,7 +339,7 @@ public class BootleRuffing {
       }
     }
 
-    Scalar x = hashToScalar(concat(P.A.encode().getRaw(), P.C.encode().getRaw(), P.D.encode().getRaw()));
+    Scalar x = hashToScalar(concat(P.A.toBytes(), P.C.toBytes(), P.D.toBytes()));
 
     for(int j=0; j<m; j++) {
       f[j][0] = x;
@@ -369,11 +366,11 @@ public class BootleRuffing {
       }
     }
 
-    if(!B.toP3().scalarMultiply(x).toP3().add(P.A.toP3().toCached()).equals(COMb(f, P.zA))) {
+    if(!B.scalarMultiply(x).add(P.A).equals(COMb(f, P.zA))) {
       System.out.println("VALID1: FAILED xB + A == COMp(f[0][0], ..., f[m-1][n-1]; z[A])");
       return false;
     }
-    if(!P.C.toP3().scalarMultiply(x).toP3().add(P.D.toP3().toCached()).equals(COMb(f1, P.zC))) {
+    if(!P.C.scalarMultiply(x).add(P.D).equals(COMb(f1, P.zC))) {
       System.out.println("VALID1: FAILED xC + D == COMp(f'[0][0], ..., f'[m-1][n-1]; z[C])");
       return false;
     }
@@ -382,7 +379,7 @@ public class BootleRuffing {
 
   }
 
-  public static boolean VALID2(int decompositionBase, Proof2 P1, PointPair[] co) {
+  public static boolean VALID2(int decompositionBase, Proof2 P1, Curve25519PointPair[] co) {
 
     boolean abcdOnCurve =
       P1.P.A.satisfiesCurveEquation()
@@ -399,7 +396,7 @@ public class BootleRuffing {
       return false;
     }
 
-    Scalar x1 = hashToScalar(concat(P1.P.A.encode().getRaw(), P1.P.C.encode().getRaw(), P1.P.D.encode().getRaw()));
+    Scalar x1 = hashToScalar(concat(P1.P.A.toBytes(), P1.P.C.toBytes(), P1.P.D.toBytes()));
 
     int decompositionExponent = P1.P.fTrimmed.length;
     Scalar[][] f = new Scalar[decompositionExponent][decompositionBase];
@@ -411,9 +408,9 @@ public class BootleRuffing {
 
     int ringSize = (int) Math.pow(decompositionBase, decompositionExponent);
 
-    PointPair c = ENCeg(Ed25519Group.ZERO_P3, P1.z);
+    Curve25519PointPair c = ENCeg(Curve25519Point.ZERO, P1.z);
 
-    Scalar x = hashToScalar(concat(P1.P.A.encode().getRaw(), P1.P.C.encode().getRaw(), P1.P.D.encode().getRaw()));
+    Scalar x = hashToScalar(concat(P1.P.A.toBytes(), P1.P.C.toBytes(), P1.P.D.toBytes()));
     for(int j=0; j<decompositionExponent; j++) {
       f[j][0] = x;
       for(int i=1; i<decompositionBase; i++) {
@@ -427,7 +424,7 @@ public class BootleRuffing {
       g[0] = g[0].mul(f[j][0]);
     }
 
-    PointPair c1 = co[0].multiply(g[0]);
+    Curve25519PointPair c1 = co[0].multiply(g[0]);
     for(int i=1; i<ringSize; i++) {
       int[] iSequence = nAryDecompose(decompositionBase, i, decompositionExponent);
       g[i] = f[0][iSequence[0]];
@@ -445,14 +442,14 @@ public class BootleRuffing {
     boolean result = c1.equals(c);
     if(!result) {
       System.out.println("VALID2: FAILED: c' != c");
-      System.out.println("c:  (" + bytesToHex(c.P1.encode().getRaw()) + ", " + bytesToHex(c.P2.encode().getRaw()));
-      System.out.println("c': (" + bytesToHex(c1.P1.encode().getRaw()) + ", " + bytesToHex(c1.P2.encode().getRaw()));
+      System.out.println("c:  (" + bytesToHex(c.P1.toBytes()) + ", " + bytesToHex(c.P2.toBytes()));
+      System.out.println("c': (" + bytesToHex(c1.P1.toBytes()) + ", " + bytesToHex(c1.P2.toBytes()));
     }
     return result;
 
   }
 
-  public static boolean VER(Ed25519GroupElement[] ki, PointPair[][] pk, Ed25519GroupElement[] co, Ed25519GroupElement co1, byte[] M, SpendSignature spendSignature) {
+  public static boolean VER(Curve25519Point[] ki, Curve25519PointPair[][] pk, Curve25519Point[] co, Curve25519Point co1, byte[] M, SpendSignature spendSignature) {
 
     F f = new F(ki, pk, co, co1, M);
 
@@ -473,11 +470,11 @@ public class BootleRuffing {
 
   public static class Output {
     public SK sk;
-    public Ed25519GroupElement ki;
-    public PointPair pk;
+    public Curve25519Point ki;
+    public Curve25519PointPair pk;
 
     public Scalar mask;
-    public Ed25519GroupElement co;
+    public Curve25519Point co;
     public BigInteger amount;
     public static Output genRandomOutput(BigInteger amount) {
       Output o = new Output();
