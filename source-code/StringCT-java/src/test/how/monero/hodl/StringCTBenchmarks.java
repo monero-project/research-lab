@@ -11,9 +11,9 @@ import java.util.Date;
 import java.util.List;
 
 import static how.monero.hodl.ringSignature.StringCT.*;
-import static test.how.monero.hodl.BootleRuffingSpendTest.createTestSpendParams;
+import static test.how.monero.hodl.StringCTSpendTest.createTestSpendParams;
 
-public class BootleRuffingBenchmarks {
+public class StringCTBenchmarks {
 
   public static void spendTest() throws IOException {
 
@@ -112,7 +112,7 @@ public class BootleRuffingBenchmarks {
       }
     }
     System.out.println(csv);
-    Files.write(new File(System.getProperty("user.home"), "bootleruffing-benchmarks.csv").toPath(), csv.getBytes());
+    Files.write(new File(System.getProperty("user.home"), "stringCT-benchmarks.csv").toPath(), csv.getBytes());
 
   }
 
