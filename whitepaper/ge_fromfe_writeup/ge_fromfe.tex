@@ -1,0 +1,194 @@
+\documentclass[12pt,oneside,english]{amsart}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{luainputenc}
+\usepackage{color}
+\usepackage{babel}
+\usepackage{verbatim}
+\usepackage{amsthm}
+\usepackage{amssymb}
+\usepackage{mathrsfs}
+\usepackage{mathtools}
+\usepackage{setspace}
+\usepackage{listings}
+\doublespacing
+\usepackage[all]{xy}
+
+\usepackage[toc,page]{appendix} 
+\usepackage[unicode=true,pdfusetitle,
+ bookmarks=true,bookmarksnumbered=false,bookmarksopen=false,
+ breaklinks=false,pdfborder={0 0 1},backref=false,colorlinks=true]
+ {hyperref}
+
+
+\makeatletter
+
+%My theorem headers
+\numberwithin{equation}{section}
+\numberwithin{figure}{section}
+\theoremstyle{plain}
+\newtheorem{thm}{\protect\theoremname}
+  \theoremstyle{plain}
+  \newtheorem{lem}[thm]{\protect\lemmaname}
+  \theoremstyle{remark}
+  \newtheorem{rem}[thm]{\protect\remarkname}
+  \theoremstyle{plain}
+  \newtheorem{prop}[thm]{\protect\propositionname}
+  \theoremstyle{remark}
+  \newtheorem*{claim*}{\protect\claimname}
+  \theoremstyle{remark}
+  \newtheorem{claim}[thm]{\protect\claimname}
+  \theoremstyle{plain}
+  \newtheorem{cor}[thm]{\protect\corollaryname}
+  \theoremstyle{definition}
+  \newtheorem{defn}[thm]{\protect\definitionname}
+
+\makeatother
+
+  \providecommand{\claimname}{Claim}
+  \providecommand{\corollaryname}{Corollary}
+  \providecommand{\definitionname}{Definition}
+  \providecommand{\lemmaname}{Lemma}
+  \providecommand{\propositionname}{Proposition}
+  \providecommand{\remarkname}{Remark}
+\providecommand{\theoremname}{Theorem}
+
+
+
+
+\begin{document}
+\lstset{language=C} 
+
+
+\title{Understanding ge fromfe frombytes vartime}
+
+
+\author{Shen Noether:shen.noether@gmx.com- Monero Research Labs}
+\begin{abstract}
+I discuss the function ge fromfe frombytes vartime used in Monero's key-image functions. 
+\end{abstract}
+
+\maketitle
+
+\tableofcontents
+\section{Introduction}
+In this short note, I discuss the function ge-fromfe-frombytes-vartime which Monero uses for it's Key-images. Note that this code is inherited from the the original CryptoNote developers, who although seemingly competent at cryptography, have a deficiency when it comes to explaining or commenting their work. Note that I have already replaced the majority of Monero's cryptographic library last summer with Bernstein's "ref10" implementation of ed25519.
+\par
+There have been several recent research papers (from well-known authors no less) discussing how to map an arbitrary string to an elliptic curve point, see \cite{Tib2010,Tib2013}. It is interesting that the "hash to Point" function, ge-fromfe-frombytes-vartime, used in CryptoNote \cite{CN} does not seem to appear in any of these, and in fact seems to be potentially a more efficient algorithm. 
+\section{fe frombytes}
+This part is clearly fe\_frombytes from ref10. 
+\section{Unknown Part}
+Assume at first that $y\equiv 0$ on first try, and sign $\equiv $ sign. 
+
+\par
+
+Then we have: 
+\[
+2u^2 + 1 - x \equiv 0
+\]
+so that $x\equiv 2u^2 + 1$. 
+
+Thus 
+\[
+2u^2 + 1 \equiv r_x^2 (w^2 - 2A^2 u^2)
+\]
+showing that 
+\[
+r_x = \left(\frac{2u^2 + 1}{w^2 - 2A^2 u^2}\right)^{\frac{1}{2}}.
+\]
+
+In this case that we have computed the square root correctly on the first try. Now we verify that the computed $y$ and $x$ are on the curve. 
+\[
+x_{p}=w^{2}-2A^{2}u^{2}=\left(2u^{2}+1\right)^{2}-2A^{2}u^{2}
+\]
+\[
+rxt=\left(w/x_{p}\right)^{.5}
+\]
+
+
+\[
+x_{t}=rxt^{2}\left(w^{2}-2A^{2}u^{2}\right)\to\left(\frac{w}{w^{2}-2A^{2}u^{2}}\right)\left(w^{2}-2A^{2}u^{2}\right)\to w
+\]
+(if $rxt$ is actuallty the square root). 
+\[
+y=\left(2u^{2}+1-x_{t}\right)
+\]
+\[
+rx=-u\left(2A\left(A+2\right)\frac{w}{x_{p}}\right)^{\frac{1}{2}}=-\left(2A\left(A+2\right)\frac{u^{2}w}{w^{2}-2A^{2}u^{2}}\right)^{\frac{1}{2}}
+\]
+
+
+\[
+z=-2Au^{2}=-\left(w-1\right)A=\left(1-w\right)A
+\]
+
+
+(note $-z=2Au^{2},$ $zA=-2A^{2}u^{2}$
+
+\[
+ry=z-w
+\]
+
+
+\[
+Y^{2}=\left(z-w\right)^{2}
+\]
+
+
+\[
+rz=z+w
+\]
+
+
+\[
+Z^{2}=\left(z+w\right)^{2}
+\]
+
+
+\[
+r_{x-final}=\left(z+w\right)\left(2A\left(A+2\right)\frac{u^{2}w}{w^{2}+zA}\right)^{\frac{1}{2}}
+\]
+
+
+\[
+X^{2}=Z^{2}\left(\left(A+2\right)\frac{2Au^{2}w}{w^{2}+zA}\right)
+\]
+\[
+=Z^{2}\left(A+2\right)\frac{-zw}{w^{2}+Az}
+\]
+
+
+\[
+d=-\frac{A-2}{A+2}
+\]
+
+
+check that 
+\[
+-X^{2}Z^{2}+Y^{2}Z^{2}=\left(Z^{2}\right)^{2}+dX^{2}Y^{2}
+\]
+ or in other words, that 
+\[
+Z^{4}\left(A+2\right)\frac{zw}{w^{2}+Az}+Z^{2}\left(z-w\right)^{2}=Z^{4}+\left(A-2\right)Z^{2}\frac{zw}{w^{2}+Az}\left(z-w\right)^{2}
+\]
+ dividing out $Z^{2}$:
+\[
+\left(z+w\right)^{2}\left(A+2\right)\frac{zw}{w^{2}+Az}+\left(z-w\right)^{2}\overset{?}{=}\left(z+w\right)^{2}+\left(A-2\right)\frac{zw}{w^{2}+Az}\left(z-w\right)^{2}
+\]
+ Now multiply through by $w^{2}+Az$ 
+
+\[
+\left(z+w\right)^{2}\left(A+2\right)zw+\left(z-w\right)^{2}\left(w^{2}+Az\right)
+\]
+\[\overset{?}{=}\left(z+w\right)^{2}\left(w^{2}+Az\right)+\left(A-2\right)\left(zw\right)\left(z-w\right)^{2}
+\]
+ After plugging in $z=\left(1-w\right)A$, you can verify with a computer
+algebra system, such as Maxima, that both sides are equal. 
+\par
+Now there are several if statements for different cases. First it is checked if the computation actually resulted in the negative square root. If this isn't the case, then it is checked if you have computed a squareroot for the negative of the original value. Finally, noting that $p = 2^255 - 19\equiv 1\ mod\ 4$ thus $-1$ is a non-residue, so taking the products of non-residues gives a residue, and we multiply our attempt by $-1$. 
+
+
+\bibliographystyle{alpha}
+\bibliography{refs}
+
+
+\end{document}
