@@ -71,6 +71,8 @@ Using subaddresses, Alice must instead construct the transaction public key as $
 
 With standard transactions, Bob can ask Charlie to watch incoming transactions for him, or otherwise wish for Charlie to audit his wallet. To do this, Bob would reveal to Charlie the secret view key $a$ and wallet address component $B$. In the subaddress scheme, Bob can similarly reveal $a$ to Charlie. Charlie must then construct the hash table using either a list of known indices from Bob or a set range that he precomputes.
 
+Because transaction public keys must include the destination as the basepoint, Alice must include a transaction public key for each output. With multiple outputs, Alice should similarly use a separate transaction key for the change output to reduce the possibility of an adversary gaining any information about which output is the change.
+
 
 \section{Subaddress accounts}
 Since a change output can be directed to either the sender's master wallet or a subaddress, it is possible to logically group subaddresses in a natural way that parallels the function of separate wallet balances. One way to do this is to replace the subaddress index $i$ with an ordered pair $(i,j)$. For any fixed $i$, the wallet holder defines the set of subaddresses $\{i,j\}_j$ as an \textit{account}, where each subaddress has \textit{major index} $i$ and \textit{minor index} $j$.
