@@ -1,0 +1,507 @@
+\documentclass{mrl}
+\usepackage{enumerate}
+\usepackage{todo}
+
+\theoremstyle{definition}
+\newtheorem{theorem}{Theorem}[subsection]
+\newtheorem{defn}[theorem]{Definition}
+\newtheorem{disc}[theorem]{Remark}
+
+
+
+\title{Ring Threshold Multisignature Schemes and Security Models}
+\authors{Brandon Goodell\footnote{\texttt{surae.noether@protonmail.com}} and Sarang Noether\footnote{\texttt{sarang.noether@protonmail.com}}}
+\affiliations{Monero Research Lab}
+\date{\today}
+
+\type{RESEARCH BULLETIN}
+\ident{MRL-XXXX}
+
+\begin{document}
+
+\begin{abstract}
+This research bulletin extends \cite{noether2016ring} by constructing a $t$-of-$n$ threshold multi-layered linkable spontaneous anonymous group signature scheme ($t$-of-$n$ MLSAG) in the same style as the LSAG schemes put forth by \cite{liu2004linkable}. %We present security models for this scheme, present security proofs in those models, describe an implementation, and explain some use-cases for the scheme in cryptocurrencies.
+\end{abstract}
+
+\section{Introduction and Background}
+
+Collaboration to construct, compute, share, and leak a secret is a central goal in the construction of cryptographic systems. Although the idea of constructing a shared secret has a very long history, modern secret sharing through threshold cryptosystems found its most successful footing in \cite{shamir1979share}. These and related ideas (as in \cite{shamir1981mental}) formed the historical foundation of secure multi-party computation, threshold encryption, and threshold authentication. For example, threshold multisignatures play a critical role in multi-factor message authentication in general and off-chain transactions for cryptocurrencies in particular, e.g.\ the Bitcoin Lightning Network.  For a more modern treatment of threshold cryptosystems, see \cite{bonehthreshold}.
+
+Ring signatures are digital signatures that are verifiably signed by one of possibly several public keys (\textit{ring members}), and can play a critical role in promoting signer during message authentication. It is therefore natural to apply the notion of threshold cryptosystems to ring signatures for implementation in cryptocurrencies, resulting in signer-ambiguous threshold multisignatures. 
+
+A $t$-of-$N$ threshold multisignature scheme specifies sets containing $N$ public keys and thresholds $t$ such that any subset with at least $t$ elements may collaborate to fashion a signature. A \textit{ring threshold multisignature} (RTM) scheme allows any set of $N$ keys to collaborate as a coalition of signers with threshold $t$. The coalition is assigned a shared public key $X_{\texttt{shared}}$ such that any $t$ coalition members may collaborate to fashion a ring signature with $X_{\texttt{shared}}$. The ring of signatories $\mathcal{Q}$ contains the key $X_{\texttt{shared}}$, but an adversary cannot determine which element of $Q$ computed the signature. This may be made into a \textit{linkable} signature scheme using key images, and this may be made into a \textit{one-time} signature scheme by inserting a one-time key exchange step between signing and the construction of $X_{\texttt{shared}}$. A one-time signature scheme inserts a barrier between user key pairs and one-time signature key pairs. Due to this utility, one-time ring signature schemes enjoy application in many cryptocurrency protocols. 
+
+A usual digital signature scheme is a $1$-of-$1$ multisignature scheme, so we can regard all keys as shared public keys (just perhaps with a coalition of only one member). A $1$-of-$N$ multisignature scheme can be trivially accomplished by handing out the same private key to each coalition member. 
+
+If the number of users cooperating in the construction of a signature is not secret, naive multisignature schemes can be constructed from any signature scheme (ring signature or otherwise) by simply requiring each participating user to present a separate signature. These signatures can be combined into a list to obtain signature sizes that vary according to the number of signers, or can be combined in more sophisticated ways that are more private (see \cite{bonehthreshold}).  If a user does not desire to reveal to an adversary how many devices were used for some multi-factor authentication, it should be difficult for an adversary to determine the size of a coalition behind some shared public key. We investigate some security definitions for a one-time linkable ring threshold multisignature (OT-LRTM) scheme.
+
+%This property cannot be satisfied if the adversary has corrupted any public key in the coalition. If some coalition member for $X$, say $X^{\prime}$, is a shared $t^{\prime}$-of-$N^{\prime}$ public key, this means that if the adversary has corrupted $t^{\prime}$ or more members of the coalition for $X^{\prime}$, then coalition-indistinguishability is impossible. Thus we investigate the notion of \textit{subthreshold corruption oracle access}.
+
+%Moreover, for multifactor authentication purposes, $(N-1)$-of-$N$ and $N$-of-$N$ schemes are of particular interest. Due to this, we consider only $t$-of-$N$ threshold ring signatures with $N-1 \leq t \leq N$, with $t > 1$, and with $N > 1$.
+
+
+
+\subsection{Our Contribution}
+
+
+We consider a formal definition of one-time linkable ring threshold multisignature (OT-LRTM) schemes. We introduce the definition of \textit{coalition-indistinguishable keys}, \textit{signer ambiguity}, and \textit{existential unforgeability} in these schemes. We describe a modified implementation of $t$-of-$N$ linkable ring threshold multisignature (under the restriction $N-1 \leq t \leq N$ with $2 
+\leq t$ and $2 \leq N$) first described by previous Monero Research Lab (MRL) contributors Shen Noether in \cite{noether2016ring} and implemented for use in Monero by contributor \texttt{Luigi}. We prove that this implementation satisfies our security definitions. Lastly, we remark on some recent advancements in thresholdizing cryptoschemes from \cite{bonehthreshold} using different security definitions.
+
+
+\subsection{Notation and Prerequisites}
+
+We let $\mathbb{G}$ be a group with prime order $\mathfrak{q}$ and we let $G \in \mathbb{G}$ denote a commonly-known point with order $\mathfrak{q}$. Let $H_p$ and $H_s$ be secure cryptographic hash-to-point and hash-to-scalar functions. Denote the user and transaction key spaces, respectively, as $\mathcal{K}_{\texttt{user}}, \mathcal{K}_{\texttt{txn}}$. In implementations involving cryptocurrencies, there exists a function $\texttt{dest}:\mathcal{K}_{\texttt{txn}} \to \mathcal{K}_{\texttt{user}}$ describing the user key pair to whom a certain transaction key pair is addressed. For any transaction key pair $(q,Q) \in \mathcal{K}_{\texttt{txn}}$, we say $\texttt{dest}(q,Q)$ is the \textit{destination} user key pair for $(q,Q)$. %We sometimes write $Q$ as $Q_X$ to emphasize the destination user key $X$ associated with the transaction key $Q$.
+%We denote the message space $\mathcal{M}=\left\{0,1\right\}^*$. We let $\mathbb{G}$ be an additive group with prime order $q$ an an arbitrary generator $G$. We denote $H_{\mathcal{X},\mathcal{Y}}(-)$ as a cryptographic hash function from the space $\mathcal{X}$ to $\mathcal{Y}$. For example $H_{\mathbb{G},\mathbb{Z}_q}(-)$ is a cryptographic point-to-scalar function. We assume that any two hash functions $H_{\mathcal{X},\mathcal{Y}}(-)$ and $H_{\mathcal{X}^{\prime},\mathcal{Y}^{\prime}}(-)$ are statistically independent.
+
+
+\section{MLSAG and Straightforward Threshold Set-ups}
+
+
+We briefly describe LSAG ring signatures in the sense of \cite{liu2004linkable} and their MLSAG variant as used in Monero, and then a straightforward implementation of an LRTM scheme (which is one-time if the transaction keys are one-time). 
+
+\subsection{MLSAGs}
+
+A user with user key pair $(y,Y)$ wishes to spend an old transaction output with private-public transaction key pair $(q,Q) \in \mathcal{K}_{\texttt{txn}}$ such that $\texttt{dest}(q,Q) = (y,Y)$. With a destination user key $X$, the user computes a new transaction public key $Q*$, constructs an appropriate message $M$, computes the key image $J = qH_p(Q)$, and selects a ring of public transaction keys $\mathcal{Q}=\left\{Q_1, \ldots Q_L\right\}$ such that, for a secret distinguished index $k$, $Q_{k}=Q$. For each $i=1,\ldots,L$, the signer computes an elliptic curve point from the $i^{th}$ ring member public key  as $H_i := H_{p}(Q_i)$. The signer computes $M^* = (M, J, Q^*, \mathcal{Q})$.
+
+The signer selects a random secret scalar $u$, computes an initial temporary pair of points $uG$ and $uH_{k}$, and computes an initial commitment $c_{k+1} := H_{s}(M^*,uG, uH_k)$. The signer sequentially proceeds through indices $i=k+1, k+2, \ldots, L, 1, 2, \ldots, k-1$  by selecting a random scalar $s_i$, computing the next pair of points $s_iG + c_i Q_i$ and $s_i H_i + c_i J$, and computes the next commitment $c_{i+1}:=H_{s}(M^*,s_i G + c_i Q_i, s_i H_i + c_i J)$. The signer continues proceeding through the set of keys until commitments $c_i$ have been computed for each $i=1, \ldots, L$. The signer then computes $s_{k}:=u - c_{k}q_{k}$. 
+
+Now $\sigma=(c_1, s_1, \ldots, s_L)$ is the signature on $M^*$. A verifier checks this $M^*$ signed by at least one member of $\mathcal{Q}$ in the following way. Given a message $M^*$ and signature $\sigma$, the verifier parses $M^* = (M,J,Q^*,\mathcal{Q})$ and $\sigma = (c_1, s_1, \ldots, s_L)$. For each $i=1,2,\ldots, L$, the verifier computes $z_{i} = s_i^* G + c_i^* Q_i$ and $z_{i}^{\prime} = s_i^* H_i + c_i^* J^*$ and uses these to compute the $(i+1)^{th}$ commitment $c_{i+1} = H_{s}(M^*, z_i, z^{\prime}_i)$. After computing $c_2, c_3, \ldots, c_L, c_1$, the verifier approves of the signature if and only if $c_1 = c_1^*$. A verifier can check against double spends by comparing the key images of two signature-tag pairs. 
+
+\begin{disc}
+The MLSAG generalization, where transaction keys are represented by vectors, is straightforward. With transaction keys $\underline{q}=(q_1,\ldots,q_w)$, each component of $\underline{q}$ is used to generate a temporary pair of points starting with $u_jG$, $u_j H_k$ and then $s_{j,i} G + c_{i} Q_{j,i}$, $s_{j,i} H_{j,i} + c_{i} J$, providing the associated commitments
+\[c_{i+1}:=H_{s}\left(M^*,\left\{(s_{j,i} G + c_i Q_{j,i}, s_{j,i} H_{j,i} + c_i J)\right\}_{j=1}^{w}\right).\]
+\end{disc}
+
+
+\begin{disc}
+Note that user keys are not used above except as a destination for the transaction key. Anyone with a destination public user key in mind and knowledge of a transaction private key may fashion a signature like the one above. In the reference CryptoNote protocol \cite{van2013cryptonote}, the private transaction key $q$ associated to some public transaction key $Q$ is only feasibly computable by a user who knows the private destination user key in $\texttt{dest}(q,Q)$ or by an adversary who can solve the discrete logarithm problem.
+\end{disc}
+
+\subsection{Extending to Threshold Signatures} \label{naiveImplement}
+
+%Note that a $1$-of-$N$ threshold signature scheme may be accomplished by simply handing out an identical set of keys to $N$ individuals: whoever decides to use them first will be able to fashion a signature. We consider this a degenerate case. On the other hand, a $1$-of-$1$ signature scheme is a usual signature scheme, as we mentioned. So we only consider $t$-of-$N$ signatures with $2 \leq t \leq N$.
+
+Generally, we wish to allow a coalition of (distinct) public user keys $C=\left\{X_{1}, X_{2}, \ldots, X_{N}\right\} \subseteq \mathcal{K}_{\texttt{user}}$ (where each $X_i = x_iG$) to collaboratively fashion a shared public user key $X_{\texttt{shared}}$ such that, for any transaction key pair $(q,Q) \in \mathcal{K}_{\texttt{txn}}$ such that $\texttt{dest}(q,Q) = X_{\texttt{shared}}$, any subset of at least $t$ of the users in $C$ can collaborate to fashion a signature on a message $M$ corresponding to public transaction key $Q$. Certainly we wish that no member of $C$ reveal their own private user key $x_i$, but moreover we wish that coalition members cannot feasibly learn the private transaction key $q$. 
+
+In the $N$-of-$N$ case, we may use CryptoNote-styled user and transaction keys to see an example implementation. For this example, we assume user private-public key pairs $(x,X)$ take the form $x=(a,b)$ for some scalars $a$, $b$ and $X=(A,B)$ where $A=aG$ and $B=bG$. The private-public transaction key pair $(q,Q)$ takes the form $Q=(S,P)$, $q=(s,p)$ where $s$ is a scalar, $S=sG$, $p=H_s(aS)+b$, and $P=pG$\footnote{In the CryptoNote whitepaper, the private key $p$ was denoted $x$, the random scalar $s$ wa denoted $r$, and the random point $S=sG$ was denoted $R=rG$. The point $S=sG$ (originally denoted $R$) in the original CryptoNote whitepaper was the \textit{public transaction key}, the value $P$ was the \textit{public output key}. This allowed for many outputs (each with their own signature) to have a common transaction output key. However, in MLSAG, we only use one output per signature anyway, so the value in distinguishing between $S$ as a transaction key and $P$ as an output key is diminished.}.
+
+Given a message $M$, the coalition of user keys $C$ compute their shared public key as $X_{\texttt{shared}} := (\sum_i A_i, \sum_i B_i)$, which is published. The coalition members secretly compute and share $a^*=\sum_i a_i$ and share this secret view key among themselves. With a destination user key $X$, the coalition computes a new transaction public key $Q^*$. Assume $(q,Q)=((s,p),(S,P))$ is a transaction key pair such that $\texttt{dest}(q,Q) = X_{\texttt{shared}}$. The coalition $C$ selects a ring of public transaction keys $\mathcal{Q} = \left\{Q_1, Q_2, \ldots, Q_L\right\}$ such that $Q = Q_{k}$ for some secret index $k$.  For each $j=1, \ldots, N$, the $j^{th}$ coalition member in $C$ computes a partial key image $J_j = b_j H_p(Q)$, picks a random secret scalar $u_j$, and computes $H_i = H_{p}(Q_i)$ for each $Q_i \in R$. The coalition $C$ computes the key image $J = H_s(a^* S) + \sum_j J_j$. The coalition constructs an appropriate message $M^*=(M,J,Q^*,\mathcal{Q})$.
+
+The coalition computes the points $u_{k} G = \sum_j u_{j} G$ and $u_{k} H_{k}= \sum_j u_{j} H_{k}$. The coalition $C$ decides upon random values $s_{k+1}, \ldots, s_{L}, s_1, \ldots, s_{k-1}$. Any member in $C$ may compute the commitments 
+\begin{align*}
+c_{k+1} :=& H_{s}(M^*,  u_k G, u_k H_k) \text{ and}\\
+c_{i+1} :=& H_{s}(M^*,  s_{i} G + c_i Q_i, s_{i} H_i + c_i J)\text{ for }i=k+1, \ldots, k-1.
+\end{align*}
+All coalition members then use $c_k$ to compute their personal $s_{k,j} = u_j - c_{k} b_j$. The signers share their $s_{k,j}$ with the other signers. Any threshold member may then compute the value $s_{k} = (\sum_j s_{k,j}) - c_k H_s(a^* S)$ and publishes as before. Any user may verify this signature corresponds to the $N$-of-$N$ shared public key $X_{\texttt{shared}}$ using the same method as above.
+
+This set-up extends naturally to an $(N-1)$-of-$N$ set-up. As before, a set of $N$ public keys $\left\{X_{1}, X_{2}, \ldots, X_{N}\right\}$ form a coalition. Each pair of users has a shared secret scalar $z_{i,j} = H_{s}(x_i X_j)$ with associated point $Z_{i,j} = z_{i,j}G$. There are $\frac{N(N-1)}{2}$ such pairs; if any $N-1$ members get together, all of the associated shared secrets are known. Hence, we may simply instantiate the $(N-1)$-of-$N$ threshold as an $N^*$-of-$N^*$ set-up with $N^* = \frac{N(N-1)}{2}$. All values $Z_{i,j}$ are necessary to compute the shared public user key $Z_{\texttt{shared}}$, and all values of $z_{i,j}$ are necessary to fashion a signature with a public transaction key $Q$ with $\texttt{dest}(Q)=Z_{\texttt{shared}}$.
+
+\begin{disc}
+Note that members in $C$ do not directly learn the private transaction key $q=H_s(a^* S)+\sum_j b_j$ and do not directly reveal their own private \textit{spend} keys $b_j$ (although they collaborate to compute their shared private view key $a^*$. Assuming at least one contributing user key in $C$ was honestly generated from a uniform random scalar, an adversary who has learned a public threshold address cannot determine the number of summands contributing to it, let alone determine the summands.  \end{disc}
+
+%Coalition members certainly do not want to reveal their secret keys during participation, but dually, coalitions may not want the fact that an address has been collaboratively fashioned to be publicized. We should prefer, then, that implementations produce keys and signatures that are indistinguishable by an adversary from a usual signature scheme. We discuss this in more detail later.
+\begin{disc}\label{remark:recursion}
+Note that the same basic extension works for coalitions containing coalitions also: each time a member of a coalition must make a decision in a signing protocol, the coalition may simply compute a sum. For example, when the $j^{th}$ coalition member computes the partial key image $J_j$, if this coalition member is some sub-coalition, then each member of the sub-coalition can compute their own partial key image $J_{j,k}$ and the sub-coalition can report the sum $J_j = \sum_k J_{j,k}$. In this manner, signatures involving nested coalitions may be executed recursively. We elaborate on this in Section \ref{sec:otlrtm}.
+\end{disc}
+
+\begin{disc}\label{hashed-keys}
+Note that an adversary with knowledge of some set of public keys can compute the sums of all subsets to brute-force test whether a certain user key $X$ is a threshold key. Moreover, if the computation of sums is done inappropriately, the summands may be accidentally revealed. Using hash functions and encrypt-then-authenticate communication, we may resolve these problems.
+
+Consider modifying the $N$-of-$N$ implementation by having coalition members select secret scalars $\mu_j$ associated with the threshold $t$ and coalition $C$, e.g.:
+\[\mu_j = H_s(\text{``multisig constant for escrow at local coffee shop''}, \texttt{secret salt})\] 
+Now merely require that participating members not use their private user keys in the construction of their shared user key pair, but instead the $i^{th}$ coalition member selects a constant $\mu_i$ associated with their coalition and instead uses $x^*_i = H(x_i, \mu_i)$ as their private key (or in the $(N-1)$-of-$N$ case, computing $z^*_{i,j} = H_s(x_i^* X_j^*)$ instead of $z_{i,j} = H_s(x_i X_j)$ and communicating the points $Z^*_{i,j}$ to the coalition). In the case of CryptoNote keys of the form $((a,b), (A,B))$, select constants $\mu_j, \gamma_j$ and set $a^* = H_s(a, \mu_j)$, $b^*=H_s(b,\gamma_j)$.
+
+With this modification, an adversary cannot use strictly public information to determine if a certain key is a threshold key or not. The possibility remains that the adversary may overhear the associated public points $X^*_i$ (or $Z^*_{i,j}$) being communicated within the coalition, allowing the adversary to fall back on the brute force approach again. Hence, the points $X^*_i$ (or $Z^*_{i,j}$) should be communicated with a secure encrypt-then-authenticate scheme. Note that either step alone (hashing, then encrypt-then-authenticating) is insufficient to prevent the adversary from using brute force. Also note that the above does not take into account the possibility of malicious coalition members.
+\end{disc}
+
+
+
+\section{Security Models}
+
+%In this section we present definitions we use later on. Any signature scheme requires unforgeability. Moreover, a ring signature scheme requires signature ambiguity. In a threshold multisignature scheme, coalitions of users collaborate to generate new threshold keys from sets of old keys and to generate signatures on messages using those threshold keys. A linkable signature
+
+\subsection{One-Time Linkable Ring Threshold Multisignatures}\label{sec:otlrtm}
+
+We begin by defining a one-time linkable ring threshold multisignature (OT-LRTM) scheme. A central idea to our security models is that a coalition of user keys may be merged into a new user key, which may then be again merged with other user keys. 
+
+
+\begin{defn}{[One-Time Linkable Ring Threshold Multisignature Scheme]}\label{OT-LRTM} A one-time linkable ring threshold multisignature scheme is a set of PPT algorithms (\texttt{UserKeyGen}, \texttt{Merge}, \texttt{TxnKeyGen},  \texttt{Sign}, \texttt{Verify}, \texttt{Link}) that, respectively, generates usual private-public keypairs for users, generates public transaction keys, merges user keys into new shared user keys, fashions signatures on messages given a ring of public transaction keys, verifies signatures, and links signatures. Formally:
+\begin{enumerate}[(i)]
+    \item $\texttt{UserKeyGen}(1^\lambda)$ outputs a random user key pair $(x,X)$ called a \textit{$1$-of-$1$ user key pair} where $x$ is a private user key with associated public user key $X$.
+    
+    \item $\texttt{Merge}(t,C)$ takes as input a positive integer (threshold) $t$ and coalition of private-public user keypairs $C=\left\{(x_1,X_1), (x_2,X_2), \ldots, (x_n,X_N)\right\}$ and outputs a public user key $X_{t,C}$ called a \textit{$t$-of-$N$ user key pair} or a \textit{shared user key pair}.
+    
+    \item $\texttt{TxnKeyGen}(1^\lambda, X)$ takes as input a public user key $X$ called the \textit{destination key}. A one-time random private-public transaction key pair $(q_X,Q_X)$ is generated. $\texttt{TxnKeyGen}$ outputs $Q_X$.
+    
+    %\item $\texttt{ImageGen}(1^\lambda, Q, y)$ takes as input a public transaction key $Q$ with a set of private user keys $y = \left\{x_1, \ldots\right\}$ and outputs a point $J_Q$ called the \textit{key image} for the private transaction key $q$ and outputs $J_Q$.
+    
+    \item $\texttt{Sign}(M,X,\mathcal{Q},k, y)$ takes as input message $M$, a destination user key $X$, ring of public transaction keys $\mathcal{Q}=\left\{Q_1, \ldots, Q_L\right\}$, secret index $k$, and a set of private user keys $y$. A transaction key $Q^*$ addressed to $X$ is computed $Q^* \leftarrow \texttt{TxnKeyGen}(1^\lambda, X)$, a key image $J$ is generated, and a modified message $M^*=(M, J, Q^*, \mathcal{Q})$ is constructed. $\texttt{Sign}$ outputs $(\sigma, M^*)$.
+    
+    \item $\texttt{Verify}(M^*,\sigma)$ takes as input a message $M^* = (M, J, Q^*, \mathcal{Q})$  and a signature $\sigma$, and outputs a bit $b \in \left\{0,1\right\}$. 
+    
+    \item $\texttt{Link}((M^*_0, \sigma_0), (M^*_1, \sigma_1))$ takes as input two signatures on two messages and outputs a bit $b \in \left\{0,1\right\}$.
+\end{enumerate}
+\end{defn}
+
+ Note that a $1$-of-$1$ user key may be regarded as a ``usual'' user key in a one-time linkable ring signature scheme. In this way, we may regard all user keys as $t$-of-$N$ shared user keys by simply regarding $1$-of-$1$ keys as having a coalition of a single member. We consider only \textit{restricted} OT-LRTM schemes where $\texttt{Merge}$ is modified such that (i) if $t=1$ and $\left|C\right| = 1$, then $\texttt{Merge}$ returns the public user key in $C$, (ii) if the inequalities $2 \leq t$ and $2 \leq N$ and $N-1 \leq t \leq N$ do not hold then $\texttt{Merge}$ outputs $\bot$ instead of a key.
+
+\begin{defn}
+Assume for each $i \in \{0,1\}$ that $M_i$ is an arbitrary message, $X_i$ is an arbitrary $t_i$-of-$N_i$ shared public user key with coalition $C_i$, $\mathcal{Q}_i=\left\{Q_{i,j}\right\}_{j=1}^{\left|\mathcal{Q}_i\right|}$ is an arbitrary ring of public transaction keys with associated secret index $k_i$ such that $\texttt{dest}(Q_{i,k_i}) = X_i$, each $y_i$ is a set of private user keys such that $y_i \subseteq C_i$ and $t_i \leq \left|y_i\right|$, and each signature is generated fairly from $\sigma_i \leftarrow \texttt{Sign}(M_i,X_i,\mathcal{Q}_i,k_i,y_i)$. Further say $M^*_i = (M_i, J_i, Q^*_i, \mathcal{Q}_i)$. We say an OT-LRTM scheme is \textit{complete} if
+\begin{enumerate}[(a)]
+\item $\texttt{VER}(M^*_i,\sigma_i) = 1$ and
+\item if $Q_{i,k_i} = Q_{j,k_j}$ then $\texttt{LNK}((M^*_i, \sigma_i), (M^*_j, \sigma_j))=1$.
+\end{enumerate}
+\end{defn}
+
+
+
+Recall Remark \ref{hashed-keys} and consider the hash-then-encrypt-then-authenticate approach to computing shared public keys. We let $\Pi = (\texttt{UserKeyGen}^*,\texttt{Enc}^*, \texttt{Auth}^*, \texttt{Ver}^*, \texttt{Dec}^*)$ be a secure encrypt-then-authenticate scheme (where $\Pi_{\texttt{enc}} = (\texttt{Gen}^*,\texttt{Enc}^*, \texttt{Dec}^*)$ is a secure encryption sub-scheme and $\Pi_{\texttt{auth}} = (\texttt{Gen}^*,\texttt{Auth}^*, \texttt{Ver}^*)$ is a secure message authentication sub-scheme). Augmenting the implementation of Section \ref{naiveImplement} with $\Pi$ allows the coalition for $X_{\texttt{shared}}$ to compute the appropriate values to participate in the signing of a message in a recursive fashion. 
+
+To see how, note that when the implementation of Section \ref{naiveImplement} is carried out, this $t$-of-$N$ shared public user key $X_{\texttt{shared}}$ must first compute the partial key image, next select a random secret scalar $u_j$, then compute the commitments $c_k$, and finally must compute the values $s_{k,j} = u_j - c_k b_j$, and then finally $s_k = (\sum_j s_{k,j}) - c_k H_s(a^* S)$. Denote the coalition of user key pairs for $X_{\texttt{shared}}=(A^*,B^*)$ as $\left\{((a_{j}, b_{j}), (A_{j}, B_{j}))\right\}$. The coalition for $X_\texttt{shared}$ may use $\Pi$ to share their $(H_s(a_{j} S) + b_{j})\cdot H_p(Q)$ and compute the key image $J = (H_s(a^* S) + \sum_j b_{j}) H_p(Q)$. If some index, say $j$, corresponds to a user key pair $((a_j,b_j),(A_j,B_j))$ that is a $t_j$-of-$N_j$ public key, then the secrets $a_j$ and $b_j$ are not known by the coalition and so the $j^{th}$ share of the key image, $J_j$, must be collaboratively computed by at least $t_j$ coalition members for the shared key $((a_j,b_j),(A_j,B_j))$. Denote the coalition for this key as $\left\{((a_{j,i}, b_{j,i}), (A_{j,i}, B_{j,i}))\right\}_{i=1}^{N_j}$. Each member computes their share, $J_{j,i} = b_{j,i}H_p(Q)$, this sub-coalition uses $\Pi$ to compute $J_j = (H_s(a_{j} S)H_p(Q) +   \sum_i J_{j,i}$, and the sub-coalition outputs $J_j$.
+
+Similarly the random scalar $u_j$ is computed as a sum $u_j = \sum_i u_{j,i}$ using $\Pi$. Now any of these coalition members may compute the commitments $c_k$ and disseminate them to the rest of the coalition with $\Pi$. At that point each member of the coalition may compute their individual $s_{k,j,i} = u_{j,i} - c_k x_{j,i}$ and the coalition may use $\Pi_{\texttt{auth}}$ to compute $s_{k,j} = \sum_i s_{k,j,i}$. In this way, sub-coalitions are simply handled recursively.
+
+\begin{disc} 
+In Definition \ref{threshIndist}, we formalize the notion that keys cannot be feasibly determined by a PPT algorithm to be threshold keys or $1$-of-$1$ keys. If an OT-LTRM scheme is secure under that definition, then it is not feasible for any PPT algorithm to check whether the keys used as input for $\texttt{Merge}$ are $1$-of-$1$, so modifying the straightforward implementation above to prevent recursive formation of coalition keys is not feasible. \end{disc}
+
+
+\subsection{Coalition Indistinguishable Keys} \label{subsec:CIK}
+
+Definition \ref{threshIndist} formalizes the idea that an adversary should not be able to determine information about the input of $\texttt{Merge}$ based on its output except with negligible probability. %Although we focus on restricted OT-LRTM schemes, and where thresholds are bounded by $N-1 \leq t \leq N$, this is a general definition that applies more broadly than the restricted case.  %Definition \ref{threshIndist} emphasizes the idea that the \textit{method of collaboratively fashioning keys} is not easily discernible by an adversary.
+
+\begin{defn}[Coalition Indistinguishable Keys]\label{threshIndist} Let $\mathcal{A}$ be a PPT adversary. Let $N(-)$, $L(-)$ be polynomials.
+\begin{enumerate}[(i)]
+\item A set of user key pairs $S^* \subseteq \mathcal{K}_{\texttt{user}}$ with $\left|S^*\right|=N(\lambda)$ is generated where the $i^{th}$ key pair is $t_i$-of-$N_i$ public user key for some $t_i, N_i$ such that $2 \leq t_i \leq N_i \leq L(\lambda)$. The set of public keys $S = \left\{X_i \mid \exists (x_i, X_i) \in S^*\right\}$ is sent to $\mathcal{A}$.
+
+\item $\mathcal{A}$ outputs $(\tau_0,C_0)$ where $C_0 \subseteq S$, $\tau_0 \in \mathbb{N}$, and $\tau_0 \leq \left|C_0\right|$.
+
+\item A random pair $(\tau_1, C_1)$ is selected where $C_1 \subseteq S$, $\tau_1 \in \mathbb{N}$, $\tau_1 \leq \left|C_1\right|$, $\tau_0 \neq \tau_1$, and $C_1 \neq C_0$. A random bit $b$ is selected. The key $X_{\tau_b,C_b} \leftarrow \texttt{Merge}(\tau_b, C_b)$ is sent to $\mathcal{A}$.
+
+\item $\mathcal{A}$ outputs a bit $b^{\prime}$. This counts as a success if $b=b^{\prime}$.
+\end{enumerate}
+We say an OT-LRTM scheme has Coalition Indistinguishable Keys (CIK) if the adversary can succeed with probability only negligibly more than $1/2$.
+\end{defn}
+
+%We make some remarks on the straightforward $N$-of-$N$ implementation in Section \ref{naiveImplement}. 
+
+
+
+
+ \begin{disc}
+ We may be tempted to strengthen Definition \ref{threshIndist} to take into account corruption oracle access on the part of the adversary. Unfortunately this leads to certain problems with the security definition.   However, by using the hash-then-encrypt-then-authenticate method of computing shared public keys, without knowledge of the values of $\mu_j$, even if the adversary corrupts all the public keys in $S$ and has the ability to compute discrete logs, then $\mathcal{A}$ cannot successfully run $\texttt{Merge}$ for each threshold value $1 \leq t \leq \left|S\right|$ to check the results by hand in comparison against the key $X_{t_b,C_b}$.  Thus, if the participating coalition members keep each $\mu_j$ and $\mu_j G$ secret, then even a very powerful adversary with corruption and discrete log oracle access will still be unable to discern whether some user key is a coalition key or not.
+ \end{disc}
+%In \cite{bender2006ring}, anonymity in ring signatures assumes at least two honest users in each ring, because if the adversary controls all keys except a single key controlled by an honest user, that adversary can certainly identify whether that honest user fashioned a signature!  %The adversary does not even need to know private information to violate coalition indistinguishability. %In fact, by merely knowing the CryptoNote public view key of a set $S$ of $N$ possible signers, an adversary may trivially check if some CryptoNote key pair $(A,B)$ is an $N$-of-$N$ key pair for the coalition $S$. 
+
+%If granted corruption oracle access, any threshold subset of a coalition will also degrade coalition indistinguishability. To see why, assume the adversary is granted access to a corruption oracle and has corrupted a threshold subset of $S$. The adversary will then be able to construct valid signatures without the signing oracle, and will be able to conclude some information about the threshold, allowing for non-negligible success probability in the game of Definition \ref{threshIndist}. 
+
+%Although we cannot strengthen Definition \ref{threshIndist} to take into account corruption by the adversary, 
+\subsection{Signer Ambiguity}
+
+In addition to coalition indistinguishability, we desire the ring signature property of \textit{signer ambiguity}. Variations of security models appear in \cite{bender2006ring}. 
+
+Double-spend protection in Monero relies on a one-time linkable ring signature scheme that is not signer ambiguous with respect to adversarially generated keys according to the definition presented in \cite{bender2006ring}. Indeed, in Monero, $\texttt{Link}$ simply checks if two key images $J_i$ are identical. In this way, the signer ambiguity game falls apart: $\mathcal{A}$ can obtain signature-tag pair $(\sigma_0, J_0)$ on $M_0$ using ring $R_0$ with $Q_{i_0} \in R_0$ and a pair $(\sigma_1, J_1)$ on $M_1$ using ring $R_1$ with $Q_{i_1} \in R_1$. Then, upon receipt of $(\sigma,J)$ in step (v), $\mathcal{A}$ can check if $J=J_0$ or $J=J_1$. The definition may be modified, however, to take key images into account.
+
+
+Let $\mathcal{SO}(-,-,-,-)$ be a signing oracle that takes as input $(M,X,\mathcal{Q},k)$ (a message, a destination public user key, a ring of public transaction keys, and an index $k$) and outputs a valid signature-tag pair $(\sigma, J) \leftarrow \texttt{Sign}(M,X,\mathcal{Q},k,y)$ for some set $y$ of private user keys.
+
+\begin{defn}{[Linkable Signer Ambiguity v. Adversarially Generated Keys]}\label{def:ambig} Let $N(-)$ be a positive polynomial. Let $\mathcal{A}$ be a PPT adversary. Let $\mathcal{A}$ have access to $\mathcal{SO}$. Consider the following game:
+\begin{enumerate}[(i)]
+
+\item A set of user key pairs $S^* \subseteq \mathcal{K}_{\texttt{user}}$ is selected with $\left|S^*\right| = N(\lambda)$. The public keys in $S^*$ are sent to $\mathcal{A}$.
+
+\item $\mathcal{A}$ outputs a set of user key pairs $S \subseteq S^*$.
+
+\item For each public user key $X_i \in S$, a public transaction key $Q^*_i$ addressed to $X_i$ is generated. The set $\mathcal{Q}^* := \left\{Q^*_i\right\} \subseteq \mathcal{K}_{\texttt{txn}}$ is constructed, randomly permuted, and then sent to $\mathcal{A}$.
+
+\item $\mathcal{A}$ outputs a message $M$, a destination public user key $X \in \mathcal{K}_{\texttt{user}}$, a ring of transaction public keys $\mathcal{Q}=\left\{Q_1, \ldots, Q_L\right\} \subseteq \mathcal{K}_{\texttt{txn}}$, and two indices $i_0 \neq i_1$ such that $\left\{Q_{i_0}, Q_{i_1}\right\} \subseteq \mathcal{Q} \cap \mathcal{Q}^*$.
+
+\item A random bit $b$ is chosen. The message $M^*=(M,J,Q^*,\mathcal{Q})$ and signature $\sigma \leftarrow \mathcal{SO}(M^*,X,\mathcal{Q},i_b)$ are sent to $\mathcal{A}$.
+
+\item $\mathcal{A}$ outputs a bit $b^{\prime}$. The game counts as a success if (a) $b = b^{\prime}$ and (b) if $(M^{\prime},X^{\prime},\mathcal{Q}^{\prime},i)$ is any query from $\mathcal{A}$ to $\mathcal{SO}$, then the $i^{th}$ element of $\mathcal{Q}^{\prime}$ is not $Q_{i_0}$ or $Q_{i_1}$.
+
+\end{enumerate}
+We say the scheme is \textit{linkably signer ambiguous against adversarially generated keys} (LSA-AGK) if the probability that $\mathcal{A}$ succeeds is negligibly close to $1/2$ (with respect to $\lambda$).
+\end{defn}
+
+Definition \ref{def:ambig} essentially modifies the signer ambiguity game in \cite{bender2006ring} by adding requirements in step (vi) that the transcript for $\mathcal{A}$ reveals the key images for $\left\{Q_{i_0}, Q_{i_1}\right\}$ for the first time in step (v).
+
+\subsection{Unforgeability}
+ 
+
+Unforgeability of any threshold signature scheme must take into account subthreshold corruption oracle access. Multisignatures must not be forgeable by a subthreshold collection of malicious coalition members, otherwise they have no utility as signatures, of course. A naive definition may be something like this:
+
+\begin{defn}{[Prototype: Subthreshold Oracle Access]}\label{def:prot:subthresh}
+Given a $S = \left\{X_1, \ldots, X_N\right\} \subseteq \mathcal{K}_{\texttt{user}}$ where each $X_i \in S$ is a $t_i$-of-$N_i$ public user key, we say that any PPT adversary $\mathcal{A}$ with access to an oracle $\mathcal{O}(-)$ has had \textit{subthreshold oracle access} to $S$ if, for any $X_i \in S$, at most $t_{i}-1$ coalition members for $X_i$ appear in the transcript between $\mathcal{A}$ and $\mathcal{O}(-)$.
+\end{defn}
+
+However, since $\texttt{Merge}$ allows inputs of arbitrary (possibly threshold) user keys, this definition is insufficient. %At the risk of abusing notation, we call $\texttt{Merge}^{-1}(-)$ an oracle that inverts $\texttt{Merge}$ by taking as input a public $t$-of-$N$ key $X$ and producing as output $\texttt{Merge}^{-1}(X)=C$ such that $X = \texttt{Merge}(t,C)$ for some $t$. If $X$ is a usual user key, $\texttt{Merge}^{-1}(X)=(1,\left\{X\right\})$. We can apply $\texttt{Merge}^{-1}$ to sets of keys by taking the union of the output, $\texttt{Merge}^{-1}\left(\left\{X_1, \ldots, X_L\right\}\right) = \cup_{i=1}^{L} \texttt{Merge}^{-1}(X_i)$. We can define $\texttt{Merge}^{-1}\left(\texttt{Merge}^{-1}(X)\right) = \texttt{Merge}^{-2}(X) = \cup_{Y \in \texttt{Merge}^{-1}(X)} \texttt{Merge}^{-1}(Y)$, and so on iteratively. For any public key $X$, the sequence of sets $\left\{\texttt{Merge}^{-i}(X)\right\}_{i=1,2,\ldots}$ eventually terminates at the empty set. In other words, for any public key $X$, there exists an integer $\tilde{k}$ such that $\texttt{Merge}^{-i}(X) = \emptyset$ for any $i \geq \tilde{k}$. Define $\texttt{Merge}^{\leftarrow}(X) = \cup_i \texttt{Merge}^{-i}(X)$, which is the \textit{the set of all public user keys contributing to $X$}.
+
+\begin{defn}{[Subthreshold Oracle Access]}\label{def:prot:subthresh}
+Let $S$ be a set of public user keys $S = \left\{X_1, \ldots, X_N\right\}$ where each $X_i$ is a $t_i$-of-$N_i$ public user key. We say that any PPT adversary $\mathcal{A}$ with access to an oracle $\mathcal{O}(-)$ has had \textit{subthreshold oracle access} to $S$ if, for any public user key $Y \in \texttt{Merge}^{\leftarrow}(S)$, if $Y$ is a $t_Y$-of-$N_Y$ shared public user key, then at most $t_{Y}-1$ coalition members from $\texttt{Merge}^{-1}(Y)$ appear in the transcript between $\mathcal{A}$ and $\mathcal{O}(-)$.
+\end{defn}
+
+
+% 
+
+%In this definition, we grant $\mathcal{A}$ access to $\mathcal{SO}$ as before but also $\mathcal{CO}_{\texttt{user}}(-)$, a user key corruption oracle. $\mathcal{CO}_{\texttt{user}}(-)$ accepts as input a public user key and produces as output the associated private user key. 
+
+Also for notational convenience, we call $\texttt{TxnKeyGen}^{-1}(-)$ an oracle that inverts $\texttt{TxnKeyGen}$ by taking as input a public transaction key $Q_X$ and produces as output the user key $X$. Let $\mathcal{CO}(-)$ be a corruption oracle that takes as input a public user key and outputs the associated private user key.
+
+
+
+%Every signature scheme is only as useful as its unforgeability properties in the face of an adversary with corruption and signing oracle access. Previous security definitions as in \cite{bender2006ring} do not take into account threshold multisignatures. Indeed, an attacker with at most subthreshold corruption oracle access to $R$ should also be unable to forge a signature:
+
+
+
+\begin{defn}{[Existential Unforgeability v. Adaptive Chosen Message and Subthreshold Insider Corruption]}\label{steuf} Let $\mathcal{A}$ be a PPT adversary and $N(-)$ be a polynomials. $\mathcal{A}$ is given access to a signing oracle $\mathcal{SO}$, a corruption oracle $\mathcal{CO}_{\texttt{user}}$. Consider the following game:
+
+\begin{enumerate}[(i)]
+\item A set of user key pairs $S^* \subseteq  \mathcal{K}_{\texttt{user}}$ is selected with $\left|S^*\right| = N(\lambda)$. The public keys in $S^*$ are sent to $\mathcal{A}$.
+\item $\mathcal{A}$ outputs a set of user key pairs $S \subseteq S^*$.
+\item For each public user key $X_i \in S$, a public transaction key $Q_i^* \leftarrow \texttt{TxnKeyGen}(1^\lambda, X_i)$ is generated and the set $\mathcal{Q}^* := \left\{Q_i^*\right\}$ is constructed, randomly permuted, and then sent to $\mathcal{A}$.
+\item $\mathcal{A}$ outputs a message $M$, a destination public user key $X \in \mathcal{K}_{\texttt{user}}$, ring $\mathcal{Q} \subseteq \mathcal{K}_{\texttt{txn}}$ of public transaction keys, and a signature $\sigma$. The game counts as a success if 
+\begin{enumerate}[(a)]
+\item $\mathcal{Q} \subseteq \mathcal{Q}^*$,
+\item $\texttt{VER}(M,\sigma)=1$,
+\item for each index $k$ in $R$, $(M,X,\mathcal{Q},k)$ does not appear in the queries between $\mathcal{A}$ and $\mathcal{SO}$
+\item for each $Q_k \in \mathcal{Q}$, $\mathcal{CO}_{\texttt{user}}$ is not queried with the public user key $\texttt{TxnKeyGen}^{-1}(Q_k)$, and
+\item $\mathcal{A}$ has had subthreshold $\mathcal{CO}_{\texttt{user}}$ access to the set $\left\{\texttt{TxnKeyGen}^{-1}(Q_k) \mid Q_k \in R\right\}$.
+
+\end{enumerate}
+\end{enumerate}
+A scheme in which an adversary is only negligibly likely to succeed is said to be \textit{existentially unforgeable with respect to adaptive chosen message attacks and subthreshold insider corruption} (or \textit{st-EUF} for subthreshold existentially unforgeable).
+\end{defn}
+
+
+
+
+
+\section{Proposed Implementation}\label{sec:implement}
+
+We provide an implementation of a restricted OT-LRTM scheme allowing only for $N-1 \leq t \leq N$ in the spirit of the original CryptoNote methodology. We assume a coordinating member of the coalition is constructing the signature and has persuaded threshold members to participate. User secret keys and public keys are both ordered pairs of keys, i.e.\ private key $(a,b)$ and public key $(A,B)$. Following terminology from \cite{van2013cryptonote}, we refer to $(a,A)$ as the \textit{view keypair} and $(b,B)$ and the \textit{spend keypair}.  We let $\Pi = (\texttt{Gen}^*,\texttt{Enc}^*, \texttt{Auth}^*, \texttt{Ver}^*, \texttt{Dec}^*)$ be a secure encrypt-then-authenticate scheme (where $\Pi_{\texttt{enc}} = (\texttt{Gen}^*,\texttt{Enc}^*, \texttt{Dec}^*)$ is a secure encryption sub-scheme and $\Pi_{\texttt{auth}} = (\texttt{Gen}^*,\texttt{Auth}^*, \texttt{Ver}^*)$ is a secure message authentication sub-scheme). %We use both of these schemes for computing sums, so the encryption and decryption algorithms may be taken as an homomorphic encryption scheme.
+\begin{enumerate}[(I)]
+\item \texttt{UserKeyGen} generates the secret key $z=(a,b)$ by selecting $a,b$ from an i.i.d.\ uniform distribution on $\mathbb{Z}_q$, and computing $Z=(A,B)$ with $A:=aG$ and $B:=bG$. \texttt{UserKeyGen} then outputs $(z,Z)$.
+
+\item \texttt{Merge} takes as input a threshold $t$ and a set of key pairs $C=\left\{(z_1,Z_1), \ldots, (z_n,Z_N)\right\}$  such that $2 \leq t$ and $2 \leq N$ and $N-1 \leq t \leq N$ where each $Z_i = (A_i,B_i)$, and outputs a shared public user key $Z_{\texttt{shared}}$.
+\begin{enumerate}[(1)]
+\item Each member of the coalition selects constants $\mu_i, \gamma_i$ for the multisig address. 
+\item Each member derives a partial secret keypair $(a^*_i, b^*_i)$ where $a^*_i = H_s(a_i, \mu_i)$ and $b^*_i = H_s(b_i, \gamma_i)$ and computes their associated public points $A^*_i=a^*_i G$ and $B^*_i = b^*_i G$. 
+%\item Each member uses $\Pi_{\texttt{auth}}$ to send $(A^*_i, B^*_i)$ to the coalition.
+\item If $t=N$, then each coalition member uses $\Pi$ to send $a^*_i$ to the coordinating user, who computes the shared secret view key $a^* = \sum_i a^*_i$\footnote{Note that although secret information is about $a_i$ not being directly shared with the coalition, the result of the computation is, in fact, a secret key, $a^*$.} The coordinating user computes the shared public spend key $B^* = \sum_{i=1}^{N} B^*_i$. The coordinating user outputs $(A^*, B^*)$, which may be made public.
+\item If $t=N-1$, then 
+\begin{enumerate}[(a)]
+\item For each $i,j$, a partial shared secret view key $\alpha_{i,j} := H_s(a^*_iA^*_j)$ and a partial shared secret spend key $\beta_{i,j} := H_s(b^*_iB^*_j)$ is computed by either participant $i$ or $j$.
+\item Set $N^* := \frac{N(N+1)}{2}$, $S^* := \left\{((\alpha_{i,j},\beta_{i,j}), (\alpha_{i,j}G, \beta_{i,j}G))\right\}_{1 \leq i < j \leq N}$, and run $\texttt{Merge}(N^*, S^*)$.
+\end{enumerate}
+\end{enumerate}
+
+\item \texttt{TxnKeyGen} takes as input a set of destination user public keys $\left\{(A_i,B_i)\right\}_{i}$. For each destination, the coordinating user selects a random scalar $s_i$, computes $S_i=s_iG$ and $P_i = H_s(s_iA_i)G + B_i$, outputs the (public) pairs $\left\{(S_i,P_i)\right\}_i$.%The coalition uses $\Pi$ to share $s$ with each other and 
+
+%\item \texttt{ImageGen} takes as input a set of private user keys $y = \left\{(a_1, b_1), \ldots, (a_N, b_N)\right\}$ and a public transaction key $(R,P)$. For each $i=1,\ldots,N$, the $i^{th}$ member of $y$ computes partial key image $J_i = (H_s(a_i R)+ b_i)H_p(R,P)$. The participating members use $\Pi_\texttt{auth}$ to compute $J = \sum_i J_i$.
+
+\item \texttt{Sign} takes as input a message $M$, a destination public user key $(A_{\texttt{dest}}, B_{\texttt{dest}})$, a set of input public transaction keys $\left\{(S_i, P_i)\right\}_{i=1}^{I}$, a set of output public transaction keys $\left\{(\widetilde{S}_d, \widetilde{P}_d)\right\}_{d=1}^{D}$, a secret index $1 \leq i^* \leq I$, and a set of $t$ user private keys $y=\left\{(a^*_n, b^*_n)\right\}_{n=1}^{t}$ such that $a^*_n = a^*_m$ for each $n,m$.
+\begin{enumerate}[(1)]
+\item The coalition computes $(S^*, P^*) \leftarrow \texttt{TxnKeyGen}(1^\lambda, (A_{\texttt{dest}}, B_{\texttt{dest}}))$.
+\item For each $(a_i, b_i) \in y$, the points $b_i H_p(S_k, P_k)$ are computed and communicated with $\Pi$ to the coalition. The sum $\sum_i b_i H_p(S_k, P_k)$ is computed together with the key image $J = (H_s(a^*_1 S_k)+\sum_i b_i)H_p(S_k, P_k)$ by any member of the coalition and shared with the coalition using $\Pi$.
+\item The coalition computes $M^* = (M, J, S^*, P^*, \mathcal{Q})$.
+\item A set $\left\{s_{k+1}, s_{k+2}, \ldots, s_{k-1}\right\}$ of i.i.d.\ observations of uniform random variables are generated by the coalition and shared among the coalition using $\Pi$.
+
+\item For each $j$, the $j^{th}$ signatory selects a random scalar $u_{k,j}$, computes $H_i:=H_{p}(B_i)$ for each index $1 \leq i \leq L$, and computes the points $u_{k,j}G$ and $u_{k,j}H_{k}$. The coalition uses $\Pi$ to collaboratively compute $u_{k}G := \sum_j u_{k,j} G$ and $u_k H_k:= \sum_j u_{k,j} H_{k}$.
+
+\item Some threshold member computes 
+\begin{align*}
+    c_{k+1} =& H_{p}(M^*, u_{k} G, u_{k} H_{k})\text{ and }\\
+    c_{i+1} =& H_{p}(M^*, s_i G + c_i P_i, s_i H_{i} + c_i J)\text{ for }i=k+1, k+2, \ldots, k-1.
+\end{align*}
+\item The threshold member from the previous step uses $\Pi$ to send $c_{k}$ to all other signers with authentication. These signers may check that their received $c_k$ matches their expected computations.
+\item If $t=N$, each signatory computes their personal $s_{k,j} := u_j - c_{k} b_j^*$. If $t=N-1$, each signatory computes $s_{k,j} = u_j - c_{k} \sum_{i=1}^{L}z_{i,j}$. The coalition uses $\Pi$ to collaboratively compute $s_k = \sum_j s_{k,j}$ and construct $\sigma = (c_1, s_1, s_2, \ldots, s_L)$.
+\item Any signatory may now publish the signature $\sigma=(c_1, s_1, \ldots, s_N)$, and any verifier may use the usual MLSAG verification to check that some member of the ring $\left\{(S_i, P_i)\right\}$ fashioned the signature.
+ \end{enumerate}
+ \end{enumerate}
+ 
+\begin{disc} The resulting signature takes the same form as LSAG signatures as in \cite{liu2004linkable}. Modifying the above to appropriately to take into account key vectors provides the generalization to MLSAG signatures. Thus the verification algorithm for these signatures is identical to the verification algorithm for usual MLSAG signatures and we omit its description. Similarly, $\texttt{Link}$ merely outputs a bit signifying whether two key images are identical, so we don't describe it further either.
+
+\end{disc}
+
+
+ 
+ \begin{disc}
+ Each $u_j$ is kept secret from the other users and is generated randomly when the signature process begins. Certainly if $u_j$ is revealed to another signatory, since the values of $s_j$ and $c_i$ are communicated in with authentication but not encryption, revealing the value $u_j - c_{i^{\prime}} x_j$ can lead an observer to deduce $x_j$. Encryption does not solve the problem if threshold members are untrustworthy.
+ 
+ 
+ Similarly, if some value of $u_j$ is re-used twice with the same private key, an observer can deduce the private key. Indeed, assuming we are using a hash function resistant to second pre-image attacks, the commitments from two signature processes $c_{i^{\prime}}, c_{i^{\prime}}^*$ are unequal except with negligible probability even if the other threshold members are colluding. Hence since $s_{i^{\prime},j} = u_j - c_{i^{\prime}} x_{j}$ and $s_{i^{\prime},j}^* = u_j - c_{i^{\prime}}^* x_{j}$, an observer may solve for the private key $x_j$. Don't re-use values of $u_j$, keep them secret, generate them randomly.
+ 
+ \end{disc}
+ 
+ \begin{disc}  Note that users in $(N-1)$-of-$N$ processes are prompted to select constants $\mu, \gamma$ multiple times for multiple sets of keys. If our hash function $H_s(-)$ is suitably secure, the lazy user can re-use the same constants $\mu$ and $\gamma$ without concern; nevertheless, it is recommended that users do not re-use constants in $\texttt{Merge}$. 
+ \end{disc}
+ 
+ \begin{disc}
+ When a transaction is relayed on the Monero network, the transaction key pair $(S,P)$ is scanned by any of the coalition members. Any of these members can use their shared secret view key $a^*$ to check whether $B^* = P - H_s(a^* S)G$. If so, they can execute $\texttt{Sign}$ to sign a message with the private key $p$ without revealing it.
+ \end{disc}
+ 
+ 
+ \section{Security}
+ 
+ %Note that for our restricted RTM described in Section \ref{sec:implement} only accepts thresholds $t$ such that $2 \leq N-1 \leq t \leq N$ and only merges keys of depth zero. 
+ 
+ Recall the critical fact proven in \cite{scozzafava1993uniform} that the sum of a uniform random variable with any indepenent random variable in $\mathbb{Z}/m\mathbb{Z}$ results in a uniform random variable (and conversely when $m$ is prime). Hence, no PPT algorithm will be able to distinguish between a uniform random variable $U$ and a sum of uniform random variables, $\sum_i U_i$. 
+ 
+ Assume $H_s$, $H_p$ in the OT-LRTM implementation from Section \ref{sec:implement} are cryptographic hash functions under the random oracle model whose outputs are statistically indistinguishable from a uniform distribution except with non-negligible probability, and whose outputs are independent of one another. Assume $\texttt{UserKeyGen}$ produces keys from a distribution  that is statistically indistinguishable from a uniform distribution. 
+ 
+
+
+\begin{theorem}
+If $H_s$ is a secure hash function under the random oracle model, the restricted OT-LRTM implementation from Section \ref{sec:implement} is CIK.
+\end{theorem}
+\begin{proof}
+Either the key pair $X_b = (A,B)$ received by $\mathcal{A}$ in step (iii) of Definition \ref{threshIndist} is $N$-of-$N$ for some $N \geq 2$, $(N-1)$-of-$N$ for some $N \geq 3$, or a mere $1$-of-$1$ user key. Of course, $(N-1)$-of-$N$ key pairs are $N^*$-of-$N^*$ key pairs. Thus, we really only need to deal with two cases: an $N$-of-$N$ key pair with $N > 1$ or a $1$-of-$1$ key pair.
+  
+If $(A,B)$ is an $N$-of-$N$ key pair, then the keys defined in $\texttt{Merge}$ are $A^* = \sum_{i} H_s(a_i, \mu_i) G$ and $B^* = \sum_i H_s(b_i, \gamma_i) G$. Since $H_s$ is a random oracle, any one of its outputs is uniformly random, and so any sum of its outputs is uniformly random \cite{scozzafava1993uniform}, so no PPT adversary may determine the number of signatories. On the other hand, if $(A,B)$ is a $1$-of-$1$ key pair, then $A$ and $B$ are each independent uniform random variables from $\texttt{UserKeyGen}$, so no PPT algorithm can determine whether $A$ or $B$ is a sum or not.
+  
+\end{proof}
+  
+  \begin{theorem} If the Decisional Diffie Hellman hardness assumption holds in $\mathbb{G}$, then the OT-LRTM implementation from Section \ref{sec:implement} is LSA-AGK.
+  \end{theorem}
+  \begin{proof}
+  Assume $\mathcal{A}$ has a non-negligible advantage in the game of Definition \ref{def:ambig} played with the above implementation, namely let us say there exists some polynomial $f_1(\lambda)$ such that 
+  \[\mathbb{P}\left[\mathcal{A}\text{ succeeds in Definition \ref{def:ambig}}\right] > \frac{1}{2} + \frac{1}{f_1(\lambda)}\]
+  
+  
+  We construct an algorithm $\mathcal{M}$ that gains a non-negligible advantage in solving the DDH game by running $\mathcal{A}$ as a subroutine, leading us to a contradiction.  A base point $G$ is chosen and given to $\mathcal{M}$. Random scalars $r$, $s$, and $t$ are selected, a random bits $c \in \left\{0,1\right\}$ are chosen. The points $Q_0 = tG$, $Q_1 = rsG$, $Q_2 = rG$, $Q_3 = sG$ are computed. The points $(Q_c, Q_2,Q_3)$ are given to $\mathcal{M}$, who outputs a bit $c^{\prime}$. The game counts as a success if $c=c^{\prime}$.    
+  
+  The algorithm $\mathcal{M}$ receives $(Q_1^*, Q_2^*, Q_3^*)$ and executes part (i) from Definition \ref{def:ambig} by calling $\texttt{UserKeyGen}(1^{\lambda})$, and calls $\mathcal{A}$ to execute (ii) as usual. In (iii), $\mathcal{M}$ constructs $\mathcal{Q}^*$ to include $Q_i^*$ for $i=1,2,3$ in the following way. First, $\mathcal{M}$ instructs $\mathcal{A}$ to select three user public keys $X_1, X_2, X_3 \in S$, picks a random permutation $\tau \in S_3$, and assigns $\texttt{dest}(Q_i^*):=X_{\tau(i)}$ for each $i=1,2,3$. Next, $\mathcal{M}$ calls $\texttt{TxnKeyGen}$ using the other members of $S$ as usual to build $\mathcal{Q}^*$. Denote the index for $Q_i^*$ in $\mathcal{Q}^*$ as $j_i$ for $i=1,2,3$. Now $\mathcal{M}$ instructs $\mathcal{A}$ to select $i_0 = j_1$ and $i_1 \in \left\{j_2, j_3\right\}$. Steps (v) and (vi) execute as usual. If $\mathcal{A}$ succeeds, then $\mathcal{M}$ outputs $c^{\prime}=1$, otherwise selects a random bit as an output. We have the following from the law of total probability.
+ \begin{align*}
+ \mathbb{P}\left[\mathcal{M}\text{ succeeds at DDH}\right] =& \mathbb{P}\left[\mathcal{M}(Q^*_1, Q^*_2, Q^*_3)=c \mid c=0\right]\mathbb{P}\left[c=0\right] + \mathbb{P}\left[\mathcal{M}(Q^*_1, Q^*_2, Q^*_3)=c \mid c=1\right]\mathbb{P}\left[c=1\right]
+ \end{align*}
+ Certainly, $\mathbb{P}\left[c=0\right] = \mathbb{P}\left[c=1\right] = \frac{1}{2}$. If $c=0$, then $\mathcal{A}$ did not succeed so $\mathcal{M}$ can only guess. In this case,  $\mathbb{P}\left[\mathcal{M}(Q^*_1, Q^*_2, Q^*_3)=c \mid c=0\right] = \frac{1}{2}$. We have
+ \begin{align*}
+ \mathbb{P}\left[\mathcal{M}\text{ succeeds at DDH}\right] =& \frac{1}{4} + \frac{1}{2}\mathbb{P}\left[\mathcal{M}(Q^*_1, Q^*_2, Q^*_3)=c \mid c=1\right]
+ \end{align*}
+ Moreover, $\mathcal{M}$ outputs $1$ if and only if $\mathcal{A}$ has succeeded:
+  \begin{align*}
+ \mathbb{P}\left[\mathcal{M}\text{ succeeds at DDH}\right] =& \frac{1}{4} + \frac{1}{2}\mathbb{P}\left[\mathcal{A}\text{ succeeds in Definition \ref{def:ambig}}\right]\\
+ >& \frac{1}{4} + \frac{1}{2}\left(\frac{1}{2} + \frac{1}{f(\lambda)}\right)\\
+ >& \frac{1}{2} + \frac{1}{2f(\lambda)}
+ \end{align*}
+  
+  
+  \end{proof}
+ 
+ \begin{theorem} The OT-LRTM implementation from Section \ref{sec:implement} is st-EUF.
+ \end{theorem}
+ \begin{proof} 
+ Assume $\mathcal{A}$ is a PPT adversary that can succeed at the game in Definition \ref{} with non-negligible advantage. The adversary has sub-threshold access to the ring, $\mathcal{A}$ cannot execute $\texttt{Sign}$ fairly and must attempt a forgery by generating additional random numbers. In this case, the adversary is merely attempting to forge a usual LSAG signature, and the security proof reduces to the one presented by \cite{liu2004linkable}.
+ 
+ %We use the rewind-on-success approach presented in \cite{liu2004linkable}.  Assume a reduction master $\mathcal{M}$ simulates adversary $\mathcal{A}$ who can succeed at the game presented in Definition \ref{steuf} with non-negligible probability, bounded below by $1/Q_1(\lambda)$ for some polynomial $Q_1(-)$. Let $q_{H}$ be the number of queries $\mathcal{A}$ makes to the $H_s(-)$ or $H_p(-)$, $q_C$ be the number of queries $\mathcal{A}$ makes to the corruption oracle, let $q_S$ be the number of queries $\mathcal{A}$ makes to the signing oracle.
+ 
+ %Then $\mathcal{A}$ produces a signature $\sigma$, a message $M$, and a set $R \subseteq S$ such that $\texttt{VER}(M,R,\sigma) = 1$. Denote the number of public keys $\left|R\right|$. 
+ 
+ %We first show that, except with negligible probability, $\mathcal{A}$ must have included all verification queries to $H_p$ of the form 
+ %\[c_{i+1} = H_p(m, s_i G + c_i B_i, s_i H_i + c_i J)\]
+ %among their $q_H$ queries. To pass this verification, $\left|R\right|$ solutions to these equations must be presented. Let $E$ be the event that all $\left|R\right|$ of these queries are included in the $q_H$ queries made by $\mathcal{A}$, and $\overline{E}$ the set complement. In the event $\overline{E}$, $\mathcal{M}$ needs to generate additional random numbers in order to verify the forgery; but $\mathcal{A}$ did not make oracle queries for these random numbers, so $\mathcal{A}$ could only guess the outcomes of those queries. Consequently, the probability that $c_1$ matches the required validation is at most $1/(q - q_H - n q_S)$. Since this is negligible, the probability of the intersection of $E$ with a forgery by $\mathcal{A}$ is non-negligible. Note that this result is independent of corruption oracle and signing oracle access, since the adversary cannot invert $H_p(-)$ except with negligible probability.
+ 
+ %Thus, in any transcript where $\mathcal{A}$ computes a successful forgery there exists an oracle query of the form $H_p(m, s_i G + c_i B_i, s_i H_i + c_i J)$.
+ 
+ %Moreover, $\mathcal{A}$ has not directly corrupted any keys in $R$, $\mathcal{A}$ has at most subthreshold corruption oracle access to any threshold keys in $R$, and $\mathcal{A}$ has not send $(k,M,R)$ in a query to $\mathcal{SO}$. 
+ \end{proof}
+
+%If we assume all threshold members are honest, the scheme reduces to the usual LSAG signature as in \cite{liu2004linkable}. However, this is an undesirable assumption for applications in cryptocurrency. Definition \ref{defn:unf} is inadequate in the threshold setting because, if some $B_i$ is a $t_i$-of-$n_i$ shared public key in the ring, the adversary may query the oracle $\mathcal{SO}$ to sign messages on behalf of some of the $n_i$ members sharing the public key $B_i$ without violating the conditions of Definition \ref{defn:unf}. Do to this, we consider Definition \ref{defn:unf2} to describe adaptive chosen message attacks where insiders. 
+
+%Since we may regard any $(n-1)$-of-$n$ instantiation of the above scheme as an $n^*$-of-$n^*$ instantiation, it is sufficient to prove that any $n$-of-$n$ instantiation is secure. The $1$-of-$1$ instantiation is merely the LSAG signature from \cite{liu2004linkable}; in this setting, Definitions \ref{defn:unf} and \ref{defn:unf2} coincide, so we only must concern ourselves with $n$-of-$n$ instantiations with $n \geq 2$.
+
+%The strength of the security proof from \cite{liu2004linkable} rests on novel rewind-on-success simulations. Rewind simulations were first presented as the forking lemma in \cite{pointcheval1996security} and the heavy row lemma in \cite{ohta1998concrete}; rewind-on-success simulations are first presented in \cite{liu2004linkable}. With a master PPT $\mathcal{M}$ invoking a PPT adversary $\mathcal{A}$ to obtain a transcript $\mathcal{T}$ in an attack game on some scheme $\Pi$ may, the rewind-on-success simulation will, upon finding a success in $\mathcal{T}$,  rewind $\mathcal{T}$ to some point, header $h$ and ``begin again'' to seek an additional success. Resimulating $\mathcal{A}$ with new random data, $\mathcal{M}$ generates a new transcript $\mathcal{T}^*$ where $\mathcal{T}$ and $\mathcal{T}^*$ are identical up to (and including) header $h$. It is established in \protect{\cite[Lem E.1]{liu2004linkable}} that the probabilities of success of $\mathcal{T}$ and $\mathcal{T}^*$ are identical (although this says nothing of their independence). Thus an attacker who can find one success with non-negligible probability can find any finite number they desire using rewind-on-success with non-negligible probability.
+
+%Thus, if the adversary can successfully compute one forged signature on a message with non-negligible probability, say $\sigma = (c_1, s_1, \ldots, s_N, J)$, then that adversary can rewind and compute a second forged signature with the same key image but different random values $s_i^*$, say $\sigma^* = (c_1^*, s_1^*, \ldots, s_N^*, J)$, also with non-negligible probability. In checking that these forgeries satisfy verification, the adversary must compute the commitments in the LSAG signature, and hence must query some hash function $H$ at least once per commitment. So the adversary must make as many queries to $H$ as there are ring members, $L$, each of the form $H(J,m, sG + cB, sH(B) + cJ)$, where $B$ is a public key in the ring and $J$ is the key image associated to the signature. In computing the first forgery, the adversary must compute some first commitment $H(m,J, uG, vG^{\prime}) = H(m,J, sG + cB, sH(B) + cJ)$, where $u$, $v$, and the base point $G^{\prime}$ are each unknown before rewinding. After rewinding and computing a second forgery, the adversary has the system of equations
+%\begin{align*}
+    %uG =& sG + cB\\
+    %uG =& s^*G + c^*B\\
+    %vG^{\prime} =& sH(B) + cJ\\
+    %vG^{\prime} =& s^*H(B) + c^*J\\
+%\end{align*}
+%The adversary can then compute the secret key $b = \frac{s-s^*}{c^*-c}$, solving the discrete log problem $B = bG$.
+
+%This proof extends directly to MLSAG signatures; this was claimed in \cite{noether2016ring} but the proof therein contained a mistake, which we correct here:
+%\todo{Shen's security theorem and corrected proof}
+%\begin{thm}
+%*
+%\end{thm}
+ 
+
+%The signatories must make several joint decisions in the process described under Section \ref{sec:implement}. We are vague in their description because the implementation of these steps can be done in many ways. 
+
+%For example, in Step 3, the signatories decide upon a ring and a secret index to store their public keys. This may be done by merely having some member do it randomly (introducing a sort of Byzantine General problem), or using some deterministic (but seemingly random) method chosen ahead of time in meatspace based on the input message. The secret index should appear to be uniformly random, regardless of method employed. Note that one of the signatories can publicly communicate a sort of encryption of the secret index without harm by merely publishing the ring of public keys $Q$; other signatories know their own public keys, so they can inspect the ring and determine the secret index without any further information from the first signatory and without observers being able to discern which index is the threshold key.
+
+%Also in Step 3, the signatories decide on the values of $s_i$ randomly. One method is for each signatory to compute their own $s_{i,j}$ and computing the shared sums $s_i = \sum_j s_{i,j}$. This requires a lot of interaction; another method is to simply let one threshold member do it and communicate the values to the group with authentication. Note that the values $s_i$ are eventually made public in the signature and there is no harm in sharing these values without encryption. Similarly, in step 8, we compute the sum $\sum_j s_{i^{\prime},j}$; since each user keeps their $u_j$ secret, they can reveal their $u_j - c_{i^{\prime}} b_j^*$ or $u_j - c_{i^{\prime}} \sum_{i=1}^{L} z_{i,j}$ without risking their private keys, so there is no harm in sharing these values without encryption.
+
+%To communicate a message with authentication, we use the HMAC scheme: for the $j^{th}$ threshold member to communicate a message $M$ to the $i^{th}$ threshold member, a shared secret $t_{i,j}$ is computed and $(M, \texttt{HMAC}(t_{i,j}, M))$ is sent. For a CCA-secure encrypt-and-authenticate scheme \cite{katzAndLindell}, two users generate two shared secrets $t_{i,j}$, $t^*_{i,j}$. The sending user computes the ciphertext $C = \texttt{Enc}(t_{i,j}, M)$ and the authentication codes $\tau = \texttt{HMAC}(t^*_{i,j}, C)$ and sends $(C,\tau)$ to the receiver. If a receiver sees some $(C,\tau)$, they can check if $\tau$ is a valid HMAC on $C$ for any of their shared secrets. If so, they can decrypt $C$ with the other shared secret.
+
+
+
+
+%\begin{comment}
+
+
+%Additional properties are often required in application, such as \textit{linkability}: an adversary can feasibly identify whether two signatures have been fashioned by some common private keys. In the case of usual ring signatures, this is an obvious question: if the true signer of two signatures is the same, output $1$, otherwise $0$. Linkability schemes can be de-anonymizing if the process reveals more than just a bit, like the associated user public key (or worse, the user secret key). Unfortunately, in the case of $t$-of-$n$ threshold signatures, the property of linkability comes in several flavors.
+
+
+%A brief notational consideration: for some signature $\sigma$ generated by following the protocol honestly, denote $P^*_\sigma$ as the ring of public signing keys associated with $\sigma$, denote $(sk^*_\sigma, pk^*_\sigma)$ as the signing keypair of the signatory for $\sigma$. For such a signature, there must have existed a $t$-of-$n$ configuration of users (recall this is a collection of user secret keys), which comes equipped with a set of user public keys $P_\sigma$, and a subset of the associated user secret keys $S_\sigma$. Denote the set of public keys associated with the user secret keys in $S_\sigma$ as $P(S_\sigma)$.
+
+%A t-of-n threshold ring signature scheme can be made into a linkable $t$-of-$n$ threshold ring signature if it comes equipped with an PPT algorithm \texttt{Lnk} that outputs a bit if two input signatures are linked. Implementation of \texttt{Lnk} depends critically on the application. If linkability is defined such that we only detect when \textit{exact same} $t$-of-$n$ configuration of users signed two signatures, then it is possible that a group of $n=t+1$ users conspire to fashion $t+1$ different $t$-of-$n$ threshold ring signatures, each with a unique $t$-of-$n$ configuration. Hence, these signers are able to fashion as many different $t$-of-$n$ signatures as they have conspirators before linkability reveals their behavior. On the other hand, by requiring all user keys from \texttt{GenUserKey} be one-time keypairs generated in a Diffie-Hellman exchange, this forces all of our signatures to be one-time signatures and the problem is resolved.
+
+%On the other end of the spectrum, presume linkability is defined such that two signatures are linked if \textit{at least one} user private key is used in common between two signatures. Then each private key can participate in at most one signing, regardless of the size of coalition of users $n$ or threshold $t$, before use of their private key will lead to linkage. This may be undesirable for many applications, but the appeal for use in e-cash schemes is obvious. 
+
+%We use the following terminology. If an adversary can feasibly compute some nontrivial function of the sets $P(S_{\sigma_1})$ and $P(S_{\sigma_2})$, we say the scheme is \textit{leaky}.  If an attacker can feasibly determine whether $P(S_{\sigma_1}) = P(S_{\sigma_2})$, then we say that the scheme is \textit{linkable}. If an attacker can feasibly determine whether $P(S_{\sigma_1}) \cap P(S_{\sigma_2}) = \emptyset$, then we say that the scheme is \textit{individually linkable}.   Certainly every linkable scheme and every individually linkable scheme is leaky. If an adversary can feasibly compute some nontrivial function of the sets $S_{\sigma_1}$ and $S_{\sigma_2}$, we say the scheme is \textit{very leaky}. Note that every very leaky scheme is leaky. We attain a hierarchy induced by both linkability and leakage.
+
+
+%Recall that a usual ring signature is a $1$-of-$1$ threshold ring signature. Thus, a linkable ring signature is a linkable $1$-of-$1$ threshold ring signature. In particular, given two signatures, an adversary can feasibly determine whether the public key of the signer of both signatures is the same. It's clear that in this scenario, the notion of linkability and the notion of individual linkability coincide.
+
+
+%For our purposes, we use a \texttt{Lnk} algorithm that takes as input a $t_1$-of-$n_1$ signature $\sigma_1$ on message $M_1$ with possible signing public keys $P^*_1$, a $t_2$-of-$n_2$ signature $\sigma_2$ on message $M_2$ with possible signing public keys $P^*_2$. The algorithm outputs a bit if any secret key used to generate $\sigma_1$ was also used to generate $\sigma_2$.
+
+%In a linkable $t$-of-$n$ threshold ring signature with, say $L$ ring members, each ring member consists of some $t$-of-$n$ threshold configuration of user keys. In this way, each signature implicates $L$ threshold configurations, each with $t$ users, so each signature implicates $tL$ users. If any particular $t$-of-$n$ threshold configuration
+
+
+\section{Further Analysis}
+
+\subsection{Efficiency and comparisons}
+
+The signatures resulting from the OT-LRTM scheme are indistinguishable from MLSAG signatures, so space complexity and verification time complexity of the OT-LRTM scheme is identical to that of MLSAGs. Due to the use of $\Pi$ and several (possibly recursive) rounds of communication between coalition participants, efficiency of signatures is greatly reduced. 
+
+For a coalition consisting of $1$-of-$1$ keys, $\texttt{Merge}$ takes one round of communication inside the coalition with $\Pi$, $\texttt{ImageGen}$ takes one round of communication inside the coalition with $\Pi_{\texttt{auth}}$, $\texttt{Sign}$ takes three distinct rounds of communication with $\Pi_{\texttt{auth}}$ and calls $\texttt{TxnKeyGen}$ and $\texttt{ImageGen}$ each once. In total, this amounts to five rounds of communication inside the coalition per signature. For a coalition containing shared user keys for sub-coalitions, the rounds of communication in $\texttt{Sign}$ must also take place inside each sub-coalition (and sub-sub-coalition, and so on).
+
+In total, if we define the \textit{depth} of $1$-of-$1$ public user key as depth $0$, and the \textit{depth} of any $t$-of-$N$ public user key $X$ with coalition $C$ as $\max\left\{\texttt{depth}(X) \mid X \in C\right\}+1$. Then for a signature with a coalition of depth $D$ where each coalition has at most $N$ members, we require at most $2 + 3\cdot D^N$ rounds of communication to fashion a signature.
+
+\subsection{Elaborations}
+
+
+ %A stronger version of Definition \ref{threshIndist} is available by granting the adversary access to a signing oracle, providing coalition indistinguishable keys and signatures against chosen message attacks (CIKS-CMA), which guarantees that not only are \textit{keys} coalition-indistinguishable, but also signatures, even if the adversary can obtain arbitrary signatures.
+ 
+
+
+
+
+%Modifications to the CryptoNote-styled constructions of key images may allow for stronger notions of signer ambiguity in the future without sacrificing robustness against double-spend attacks. For example, by taking key images as homomorphic commitments, two commitments may be linked if their difference is a commitment to zero without revealing their masks. This is beyond the scope of this document.
+
+In \cite{bonehthreshold}, a very general fully homomorphic thresholdizing set-up is described, leading to fully homomorphic threshold signatures and encryption. The threshold signature scheme defined in \cite{bonehthreshold} generates a unique verification key (akin to our transaction keys) for each coalition and access structure, so the scheme in \cite{bonehthreshold} vacuously satisfies CIK. On the other hand, in our proposed implementation, keys are being combined into new keys, so it is critical to check that combined keys do not reveal anything about the participating members.
+
+Coalition indistinguishability on keys is related to two distinct security notions defined in \cite{bonehthreshold}, where a highly general fully homomorphic thresholdizing scheme using only one round of communication is presented. Threshold signatures described in \cite{bonehthreshold} are required to be \textit{anonymous} and \textit{succinct}. Anonymity in \cite{bonehthreshold} is defined such that an adversary should be unable to discern which subset of the coalition produced the signature, and succinctness is defined such that signature size is dependent only on the security parameter. 
+
+Our proposed implementation is certainly \textit{succinct} because it produces a signature in the format of a usual MLSAG signature, regardless of the details of the coalition. Our scheme is anonymous because all signatures are, without loss of generality, $N$-of-$N$, so each signature is fashioned with a full subset. 
+
+A natural question is to ask whether the definition of CIK can be expanded to coalition indistinguishability on keys and signatures (say CIKS) by demanding that signatures also provide no information about the signing subset or signing coalition.  With an LRTM, an expansion of Definition \ref{threshIndist} to take into account an adaptive chosen message attack is nontrivial but straightforward. A CIKS LRTM scheme is necessarily succinct and anonymous according to the definition in \cite{bonehthreshold}. Moreover, a succinct and anonymous threshold signature scheme from \cite{bonehthreshold} that generates verification keys for each coalition randomly is also CIKS. In this sense, CIKS is equivalent to succinct anonymity. 
+
+%More importantly, \cite{bonehthreshold} presents some new definitions regarding thresholdizing cryptoschemes. 
+
+Additional helpful definitions appear in \cite{bonehthreshold}. For example, a threshold cryptoscheme may be regarded as \textit{private} if no subthreshold collection of key shares can reveal any information about the shared secrets, and \textit{robust} if maliciously generated evaluation key shares can always be detected. Since our implementation never reveals the shared secret key even with a threshold number of coalition members participating, our implementation is private. However, in the presence of maliciously generated choices in the signature process, we have no guarantee of robustness: although a malicious subthreshold party will only enjoy a negligible advantage in constructing a forgery, their attempt will merely appear to be an invalid signature.
+
+\vspace{0.1in}
+
+\textbf{Special Thanks}: We would like to issue a special thanks to the members of the Monero community who used the \texttt{GetMonero.org} Community Forum Funding System to support the Monero Research Lab. Readers may also regard this as a statement of conflict of interest, since our funding is denominated in Monero and provided directly by members of the Monero community by the Forum Funding System.
+
+\medskip{}
+
+\bibliographystyle{plain}
+\bibliography{biblio.bib}
+
+\end{document}
