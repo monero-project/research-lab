@@ -292,20 +292,6 @@ class Test_Spectre(unittest.TestCase):
         self.assertTrue(("3", "4") in vote)
         self.assertFalse(("4", "2") in vote)
         
-        block3 = Block(idIn="3", parentList=shepard.dag.leaves)
-        shepard.addBlock(block3)
-        vote = shepard.getVote()
-        for ov in oldVote:
-            self.assertTrue(ov in vote)
-        oldVote = copy.deepcopy(vote)
-        for key in vote:
-            print("key = ", key, " \t val = ", vote[key], "\n")
-        self.assertTrue(("0","1") in vote)
-        self.assertTrue(("1","2b") in vote)
-        self.assertTrue(("2b","2a") in vote)
-        self.assertTrue(("2a","3ab") in vote)
-        self.assertTrue(("3ab","3b") in vote)
-        self.assertFalse(("3b","1") in vote)
         
 suite = unittest.TestLoader().loadTestsFromTestCase(Test_Spectre)
 unittest.TextTestRunner(verbosity=1).run(suite)
