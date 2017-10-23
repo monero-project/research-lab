@@ -4,6 +4,7 @@
 \usepackage[top=1in,bottom=1in,right=1in,left=1in]{geometry}
 \usepackage{color}
 \usepackage{graphicx}
+\usepackage{hyperref}
 
 \definecolor{bloo}{rgb}{0,0.2,0.4}
 \renewcommand*{\thefootnote}{\fnsymbol{footnote}}
