@@ -7,14 +7,14 @@
     between blocks.
     
     Another handler will extract a coherent/robust list of non-conflict-
-    ing transactions from a reduced/robust RoBlocks object.
+    ing transactions from a reduced/robust BlockHandler object.
 '''
 from Block import *
 
-class RoBlocks(object):
+class BlockHandler(object):
     def __init__(self):
         print("Initializing")
-        # Initialize a RoBlocks object. 
+        # Initialize a BlockHandler object. 
         self.data = None
         self.blocks = {} # Set of blocks (which track parents)
         self.family = {} # Doubly linked list tracks parent-and-child links
@@ -214,7 +214,7 @@ class RoBlocks(object):
             
     def pruneLeaves(self):
         print("Pruning leaves")
-        out = RoBlocks()
+        out = BlockHandler()
         q = deque()
         for rootIdent in self.roots:
             q.append(rootIdent)
@@ -227,8 +227,8 @@ class RoBlocks(object):
         return out
 
 class Test_RoBlock(unittest.TestCase):
-    def test_RoBlocks(self):
-        R = RoBlocks()
+    def test_BlockHandler(self):
+        R = BlockHandler()
         b = Block()
         b.data = "zirconium encrusted tweezers"
         b._recomputeIdent()
