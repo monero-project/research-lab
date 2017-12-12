@@ -1,77 +1,85 @@
 import unittest
 import math
-import numpy as np
 import copy
 from collections import deque
 import time
+import hashlib
 
 class Block(object):
-    """ Fundamental object. Contains dict of blockIDs:(parent blocks) """
+    """ 
+        Fundamental object. Attributes:
+            data    = payload dict with keys "timestamp" and "txns" and others
+            ident   = string
+            parents = dict {blockID : parentBlock}
+        Functions:
+            addParents      : takes dict {blockID : parentBlock} as input 
+                              and updates parents to include.
+            _recomputeIdent : recomputes identity
+        Usage:
+            b0 = Block() 
+            b0.data = ...
+            b1 = Block()
+            b1.data = ...
+            b1.addParents({b0.ident:b0})
+        
+    """
     def __init__(self):
-        self.id = ""           # string
-        self.timestamp = None  # format tbd
-        self.data = None       # payload
-        self.parents = {}      # block ID : pointer to block
-        self.children = {}     # block ID : pointer to block
-    def addChild(self, childIn):
-        if childIn not in self.children:
-            self.children.update({childIn.id:childIn})
-    def addChildren(self, childrenIn):
-        for child in childrenIn:
-            self.addChild(childrenIn[child])
-    def addParent(self, parentIn):
-        if parentIn not in self.parents:
-            self.parents.update({parentIn.id:parentIn})
-    def addParents(self, parentsIn):
-        for parent in parentsIn:
-            self.addParent(parentsIn[parent])
-    
-    
+        # Initialize with empty payload, no identity, and empty parents.
+        self.data = None 
+        self.ident = hash(str(0))
+        self.parents = None
+        self.addParents({})
+        
+    def addParents(self, parentsIn): # dict of parents
+        if self.parents is None:
+            self.parents = parentsIn
+        else:
+            self.parents.update(parentsIn)
+        self._recomputeIdent()
+        
+    def _recomputeIdent(self):
+        m = str(0) + str(self.data) + str(self.parents)
+        self.ident = hash(m)
+		
+		
 class Test_Block(unittest.TestCase):
     def test_Block(self):
+		# b0 -> b1 -> {both b2, b3} -> b4... oh, and say  b3 -> b5 also
         b0 = Block()
-        b0.id = "0"
-        self.assertTrue(b0.data is None)
-        self.assertTrue(len(b0.parents)==0)
+        b0.data = {"timestamp" : time.time()}
+        time.sleep(1)
         
         b1 = Block()
-        b1.parents.update({"0":b0})
-        b1.id = "1"
-        for parentID in b1.parents:
-            b1.parents[parentID].children.update({b1.id:b1})
-        self.assertTrue(b1.data is None)
-        self.assertTrue(len(b1.parents)==1)
-        self.assertTrue("0" in b1.parents)
+        b1.data = {"timestamp" : time.time(), "txns" : [1,2,3]}
+        b1.addParents({b0.ident:b0}) # updateIdent called with addParent.
+        time.sleep(1)
         
         b2 = Block()
-        b2.parents.update({"0":b0})
-        b2.id = "2"
-        for parentID in b2.parents:
-            b2.parents[parentID].children.update({b2.id:b2})
-        self.assertTrue(b2.data is None)
-        self.assertTrue(len(b2.parents)==1)
-        self.assertTrue("0" in b2.parents)
-
+        b2.data = {"timestamp" : time.time(), "txns" : None}
+        b2.addParents({b1.ident:b1})
+        time.sleep(1)
+        
         b3 = Block()
-        b3.parents.update({"1":b1, "2":b2})
-        b3.id = "3" 
-        for parentID in b3.parents:
-            b3.parents[parentID].children.update({b3.id:b3})
-        self.assertTrue(b3.data is None)
-        self.assertTrue(len(b3.parents)==2)
-        self.assertTrue("1" in b3.parents)
-        self.assertTrue("2" in b3.parents)
-        self.assertFalse("0" in b3.parents)
-
+        b3.data = {"timestamp" : time.time(), "txns" : None}
+        b3.addParents({b1.ident:b1})
+        time.sleep(1)
+        
         b4 = Block()
-        b4.parents.update({"2":b2})
-        b4.id = "4"
-        for parentID in b4.parents:
-            b4.parents[parentID].children.update({b4.id:b4})
-        self.assertTrue(b4.data is None)
-        self.assertTrue(len(b4.parents)==1)
-        self.assertTrue("2" in b4.parents)
-
-suite = unittest.TestLoader().loadTestsFromTestCase(Test_Block)
-unittest.TextTestRunner(verbosity=1).run(suite)
-
+        b4.data = {"timestamp" : time.time()} # see how sloppy we can be wheeee
+        b4.addParents({b2.ident:b2, b3.ident:b3})
+        time.sleep(1)
+        
+        b5 = Block()
+        b5.data = {"timestamp" : time.time(), "txns" : "stuff" }
+        b5.addParents({b3.ident:b3})
+        
+        self.assertTrue(len(b1.parents)==1 and b0.ident in b1.parents)
+        self.assertTrue(len(b2.parents)==1 and b1.ident in b2.parents)
+        self.assertTrue(len(b3.parents)==1 and b1.ident in b3.parents)
+        self.assertTrue(len(b4.parents)==2)
+        self.assertTrue(b2.ident in b4.parents and b3.ident in b4.parents)
+        self.assertTrue(len(b5.parents)==1 and b3.ident in b5.parents)
+        
+        
+#suite = unittest.TestLoader().loadTestsFromTestCase(Test_Block)
+#unittest.TextTestRunner(verbosity=1).run(suite)
