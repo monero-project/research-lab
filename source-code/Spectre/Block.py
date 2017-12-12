@@ -16,18 +16,15 @@ class Block(object):
                               and updates parents to include.
             _recomputeIdent : recomputes identity
         Usage:
-            b0 = Block() 
-            b0.data = ...
-            b1 = Block()
-            b1.data = ...
-            b1.addParents({b0.ident:b0})
+            b0 = Block(dataIn = stuff, parentsIn = None)
+            b1 = Block(dataIn = otherStuff, parentsIn = { b0.ident : b0 })
         
     """
-    def __init__(self):
+    def __init__(self, dataIn=None, parentsIn=None):
         # Initialize with empty payload, no identity, and empty parents.
-        self.data = None 
+        self.data = dataIn
         self.ident = hash(str(0))
-        self.parents = None
+        self.parents = parentsIn
         self.addParents({})
         
     def addParents(self, parentsIn): # dict of parents
