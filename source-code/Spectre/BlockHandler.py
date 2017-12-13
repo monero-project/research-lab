@@ -417,7 +417,7 @@ class Test_RoBlock(unittest.TestCase):
         R.voteFor((gcid,xid,yid),{})
         self.assertEqual(R.votes[(gcid,xid,yid)],1)
         self.assertEqual(R.votes[(gcid,yid,xid)],-1)
-        for pid in R.blocks[vid].parents:
+        for pid in R.blocks[gcid].parents:
             if pid in R.vids:
                 q.append(gpid)
         while(len(q)>0):
@@ -432,13 +432,13 @@ class Test_RoBlock(unittest.TestCase):
         R.voteFor((gcid,yid,xid),{})
         self.assertEqual(R.votes[(gcid,xid,yid)],-1)
         self.assertEqual(R.votes[(gcid,yid,xid)],1)
-        for pid in R.blocks[vid].parents:
+        for pid in R.blocks[gcid].parents:
             if pid in R.vids:
                 q.append(gpid)
         while(len(q)>0):
             wid = q.popleft()
             self.assertEqual(R.pendingVotes[(wid,xid,yid)],0)
-            self.assertEqual(R.pendingVotes[(wid,yid,yid)],0)
+            self.assertEqual(R.pendingVotes[(wid,yid,xid)],0)
             for pid in R.blocks[wid].parents:
                 if pid in R.vids:
                     q.append(pid)
@@ -446,18 +446,23 @@ class Test_RoBlock(unittest.TestCase):
         R.voteFor((gcid,yid,xid),{})
         self.assertEqual(R.votes[(gcid,xid,yid)],-1)
         self.assertEqual(R.votes[(gcid,yid,xid)],1)
-        for pid in R.blocks[vid].parents:
+        for pid in R.blocks[gcid].parents:
             if pid in R.vids:
                 q.append(gpid)
         while(len(q)>0):
             wid = q.popleft()
             self.assertEqual(R.pendingVotes[(wid,xid,yid)],-1)
-            self.assertEqual(R.pendingVotes[(wid,yid,yid)],-1)
+            self.assertEqual(R.pendingVotes[(wid,yid,xid)],1)
             for pid in R.blocks[wid].parents:
                 if pid in R.vids:
                     q.append(pid)
 
-
+        # Test sumPendingVotes
+        R.sumPendingVote(gcid, {})
+        self.assertTrue((gcid,xid,yid) in R.votes)
+        self.assertTrue((gcid,yid,xid) in R.votes)
+        self.assertEqual(R.votes[(gcid,xid,yid)],-1)
+        self.assertEqual(R.votes[(gcid,yid,xid)],1)
 
 
 
