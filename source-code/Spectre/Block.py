@@ -20,18 +20,19 @@ class Block(object):
             b1 = Block(dataIn = otherStuff, parentsIn = { b0.ident : b0 })
         
     """
-    def __init__(self, dataIn=None, parentsIn=None):
+    def __init__(self, dataIn=None, parentsIn=[]):
         # Initialize with empty payload, no identity, and empty parents.
         self.data = dataIn
         self.ident = hash(str(0))
+        assert type(parentsIn)==type([])
         self.parents = parentsIn
-        self.addParents({})
+        self._recomputeIdent()
         
-    def addParents(self, parentsIn): # dict of parents
+    def addParents(self, parentsIn=[]): # list of parentIdents
         if self.parents is None:
             self.parents = parentsIn
         else:
-            self.parents.update(parentsIn)
+            self.parents = self.parents + parentsIn
         self._recomputeIdent()
         
     def _recomputeIdent(self):
