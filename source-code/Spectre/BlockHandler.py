@@ -28,6 +28,38 @@ class BlockHandler(object):
         self.pendingVotes = {}
         self.votes = {}
         self.oldVotes = {}
+
+    def vote(self):
+        U, V = self.leafBackAntichain()
+        self.antichains = U
+        touched = {}
+        for i in range(len(U)):
+            for vid in U[i]: # ID of voting block
+                touched = self.sumPendingVote(vid, touched)
+                for j in range(i+1):
+                    for xid in U[j]: # Voting block compares self to xid
+                        # Note if j=i, xid and vid are incomparable.
+                        # If j < i, then xid may have vid as an ancestor.
+                        # vid can never have xid as an ancestor.
+                        # In all cases, vid votes that vid precedes xid
+                        if xid==vid:
+                            continue
+                        else:
+                            touched = self.voteFor((vid,vid,xid),touched)
+                            # For each ancestor of xid that is not an ancestor of vid,
+                            # we can apply the same!
+                            q = deque()
+                            for pid in self.blocks[xid].parents:
+                                if pid in self.vids and not self._hasAncestor(vid,pid):
+                                    q.append(pid)
+                            while(len(q)>0):
+                                wid = q.popleft()
+                                for pid in self.blocks[wid].parents:
+                                    if pid in self.vids and not self._hasAncestor(vid, pid):
+                                        q.append(pid)
+                                touched = self.voteFor((vid,vid,wid),touched)
+        return touched
+
     def sumPendingVote(self, vid, touched):
         for (xid,yid) in zip(self.vids,self.vids):
             if (vid, xid, yid) in self.pendingVotes:
@@ -199,7 +231,7 @@ class BlockHandler(object):
             temp = temp.pruneLeaves()
         return decomposition, vulnIdents
      
-class Test_RoBlock(unittest.TestCase):
+class Test_BlockHandler(unittest.TestCase):
     def test_betterTest(self):
         R = BlockHandler()
         self.assertTrue(R.data is None)
@@ -464,13 +496,21 @@ class Test_RoBlock(unittest.TestCase):
         self.assertEqual(R.votes[(gcid,xid,yid)],-1)
         self.assertEqual(R.votes[(gcid,yid,xid)],1)
 
+        touched = R.vote()
+        print("\n ==== ==== ==== ==== ==== ==== ==== ==== ==== ==== ==== ==== ==== ==== ==== ====")
+        print("Antichain layers:\n")
+        for layer in R.antichains:
+            print(layer)
+        print("\n ==== ==== ==== ==== ==== ==== ==== ==== ==== ==== ==== ==== ==== ==== ==== ====")
+        for key in R.votes:
+            print("key = ", key, ", vote = ", R.votes[key])
 
-
+        print("\n ==== ==== ==== ==== ==== ==== ==== ==== ==== ==== ==== ==== ==== ==== ==== ====")
                 
         #R.vote()
         #print(R.votes)
 
 
         
-suite = unittest.TestLoader().loadTestsFromTestCase(Test_RoBlock)
+suite = unittest.TestLoader().loadTestsFromTestCase(Test_BlockHandler)
 unittest.TextTestRunner(verbosity=1).run(suite)
