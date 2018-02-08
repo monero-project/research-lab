@@ -51,9 +51,49 @@ class Blockchain(object):
             elif tempCumDiff == maxCumDiff:
                 self.miningIdents.append(ident)
             #print("leaf ident = ", str(ident), ", and tempCumDiff = ", str(tempCumDiff), " and maxCumDiff = ", str(maxCumDiff))
-            
+        assert len(self.miningIdents) > 0
            
 class Test_Blockchain(unittest.TestCase):
+    def test_addBlock(self):
+        bill = Blockchain([], verbosity=True)
+        
+        name = newIdent(0)
+        t = time.time()
+        s = t+random.random()
+        diff = 1.0
+        params = {"ident":name, "disco":t, "arriv":s, "parent":None, "diff":diff}
+        genesis = Block(params)
+        
+        self.assertEqual(genesis.ident,name)
+        self.assertEqual(genesis.discoTimestamp,t)
+        self.assertEqual(genesis.arrivTimestamp,s)
+        self.assertTrue(genesis.parent is None)
+        self.assertEqual(genesis.diff,diff)
+        
+        bill.addBlock(genesis)
+        
+        self.assertTrue(genesis.ident in bill.blocks)
+        self.assertTrue(genesis.ident in bill.leaves)
+        self.assertEqual(len(bill.miningIdents),1)
+        self.assertEqual(genesis.ident, bill.miningIdents[0])
+        self.assertEqual(len(bill.blocks),1)
+        
+        name = newIdent(1)
+        t = time.time()
+        s = t+random.random()
+        diff = 1.0
+        params = {"ident":name, "disco":t, "arriv":s, "parent":genesis.ident, "diff":diff}
+        blockA = Block(params)
+        bill.addBlock(blockA)
+        
+        self.assertTrue(blockA.ident in bill.blocks)
+        self.assertTrue(blockA.ident in bill.leaves)
+        self.assertTrue(genesis.ident not in bill.leaves)
+        self.assertEqual(len(bill.miningIdents),1)
+        self.assertEqual(blockA.ident, bill.miningIdents[0])
+        self.assertEqual(len(bill.blocks),2)
+        
+        
     def test_bc(self):
         bill = Blockchain([], verbosity=True)
         
@@ -115,7 +155,7 @@ class Test_Blockchain(unittest.TestCase):
         self.assertTrue(bill.blocks[genesis.ident].parent is None)
         
         bill.whichLeaf()
-        print(bill.miningIdents)
+        #print(bill.miningIdents)
         
         self.assertEqual(type(bill.miningIdents), type([]))
         self.assertTrue(len(bill.miningIdents), 2)
