@@ -1,721 +1,644 @@
-<!DOCTYPE html>
-<!-- saved from url=(0122)https://mail.protonmail.com/inbox/vkfsM9weXcjQ9x-xWpdn0Tl6AY_wP5lQ447JUyptW5o6M63f-h6Snie_8jSA9PaMxBsvjg2HrlRVqjSU6iQ9Vw== -->
-<html lang="en" ng-app="proton" ng-csp="no-unsafe-eval" class="protonmail ua-windows_nt ua-windows_nt-10 ua-windows_nt-10-0 ua-chrome ua-chrome-63 ua-chrome-63-0 ua-chrome-63-0-3239 ua-chrome-63-0-3239-132 ua-desktop ua-desktop-windows ua-webkit ua-webkit-537 ua-webkit-537-36 js"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><style type="text/css">@charset "UTF-8";[ng\:cloak],[ng-cloak],[data-ng-cloak],[x-ng-cloak],.ng-cloak,.x-ng-cloak,.ng-hide:not(.ng-hide-animate){display:none !important;}ng\:form{display:block;}.ng-animate-shim{visibility:hidden;}.ng-anchor{position:absolute;}</style><meta name="viewport" content="width=device-width,user-scalable=no"><meta http-equiv="x-dns-prefetch-control" content="off"><!--<base href="/">--><base href="."><title>(2) Inbox | surae.noether@protonmail.com | ProtonMail</title><meta name="description" content="Log in or create an account."><link rel="apple-touch-icon" sizes="57x57" href="https://mail.protonmail.com/assets/favicons/apple-touch-icon-57x57.png"><link rel="apple-touch-icon" sizes="60x60" href="https://mail.protonmail.com/assets/favicons/apple-touch-icon-60x60.png"><link rel="apple-touch-icon" sizes="72x72" href="https://mail.protonmail.com/assets/favicons/apple-touch-icon-72x72.png"><link rel="apple-touch-icon" sizes="76x76" href="https://mail.protonmail.com/assets/favicons/apple-touch-icon-76x76.png"><link rel="apple-touch-icon" sizes="114x114" href="https://mail.protonmail.com/assets/favicons/apple-touch-icon-114x114.png"><link rel="apple-touch-icon" sizes="120x120" href="https://mail.protonmail.com/assets/favicons/apple-touch-icon-120x120.png"><link rel="apple-touch-icon" sizes="144x144" href="https://mail.protonmail.com/assets/favicons/apple-touch-icon-144x144.png"><link rel="apple-touch-icon" sizes="152x152" href="https://mail.protonmail.com/assets/favicons/apple-touch-icon-152x152.png"><link rel="apple-touch-icon" sizes="180x180" href="https://mail.protonmail.com/assets/favicons/apple-touch-icon-180x180.png"><link rel="icon" type="image/png" href="https://mail.protonmail.com/assets/favicons/favicon-32x32.png" sizes="32x32"><link rel="icon" type="image/png" href="https://mail.protonmail.com/assets/favicons/favicon-194x194.png" sizes="194x194"><link rel="icon" type="image/png" href="https://mail.protonmail.com/assets/favicons/favicon-96x96.png" sizes="96x96"><link rel="icon" type="image/png" href="https://mail.protonmail.com/assets/favicons/android-chrome-192x192.png" sizes="192x192"><link rel="icon" type="image/png" href="https://mail.protonmail.com/assets/favicons/favicon-16x16.png" sizes="16x16"><link rel="manifest" href="https://mail.protonmail.com/manifest.json"><link rel="mask-icon" href="https://mail.protonmail.com/assets/favicons/safari-pinned-tab.svg" color="#333366"><link rel="shortcut icon" href="https://mail.protonmail.com/assets/favicons/favicon.ico"><meta name="apple-mobile-web-app-title" content="ProtonMail"><meta name="application-name" content="ProtonMail"><meta name="msapplication-TileColor" content="#333366"><meta name="msapplication-TileImage" content="/assets/favicons/mstile-144x144.png"><meta name="theme-color" content="#333366"><meta name="apple-itunes-app" content="app-id=979659905"><link href="./MultiBulletproof_files/styles.b582eccd440356a987a61b4e3eab9ea7054faab6.css" rel="stylesheet"><script src="./MultiBulletproof_files/vendorLazy.a4e69a3c65340d05db9873954ed456d527bcd6a7.js.download" async=""></script><script src="./MultiBulletproof_files/appLazy.4b4970e9617d5a5bb0060c746629ae761eab815d.js.download" async=""></script><script type="text/javascript" async="" defer="" src="./MultiBulletproof_files/proton.js.download"></script></head><body ng-class="{
-    locked: (isLoggedIn &amp;&amp; isLocked) || (&#39;login&#39;|isState) || (&#39;login.unlock&#39;|isState) || (&#39;eo.unlock&#39;|isState) || (&#39;eo.message&#39;|isState) || (&#39;reset&#39;|isState) || (&#39;eo.reply&#39;|isState) || (&#39;reset&#39;|isState),
-    login:!isLoggedIn,
-    unlock:isLocked,
-    secure:isSecure,
-    light: (&#39;support.reset-password&#39;|isState) || (&#39;signup&#39;|isState) || (&#39;login.setup&#39;|isState) || (&#39;pre-invite&#39;|isState) || (&#39;support.message&#39;|isState),
-    scroll: (&#39;signup&#39;|isState) || (&#39;login.setup&#39;|isState) || (&#39;secured.print&#39;|isState)
-}" data-app-config-body="" class="secure" id="secured-inbox-element"><!----><style id="customTheme" ng-if="(isLoggedIn &amp;&amp; !isLocked)"></style><!----><div id="pm_loading" class="protonLoader" ng-class="{ &#39;show&#39;: loggingOut }"> <div class="protonLoaderIcon"> <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" width="12px" height="16px"> <g xmlns="http://www.w3.org/2000/svg"> <path fill="#9397cd" d="M5.642,0.23c0,0-4.677-0.154-5.642,5.035v3.534c0,0,0.04,0.378,1.104,1.146   c1.064,0.768,3.817,2.931,4.538,2.931s3.475-2.163,4.538-2.931c1.064-0.768,1.104-1.146,1.104-1.146V5.264   C10.319,0.076,5.642,0.23,5.642,0.23z M8.845,7.191H5.642H2.439V5.264c0.65-2.577,3.203-2.612,3.203-2.612s2.553,0.035,3.203,2.612   V7.191z"></path> <path fill="#9397cd" d="M5.642,13.672c0,0-0.725-0.071-1.292-0.465C3.783,12.813,0,10.11,0,10.11v5.35c0,0,0.032,0.622,0.718,0.622   s4.925,0,4.925,0s4.239,0,4.925,0s0.718-0.622,0.718-0.622v-5.35c0,0-3.783,2.703-4.35,3.097   C6.367,13.601,5.642,13.672,5.642,13.672z"></path> </g> </svg> </div> </div><!----><div ui-view="main" autoscroll="false" id="body"><header class="headerSecured-container headerDesktop-container"> <!----><div class="headerSecuredDesktop-container" ng-if="!mobileMode"> <a href="https://mail.protonmail.com/inbox" ui-sref="secured.inbox" class="headerSecuredDesktop-logo headerDesktop-logo protonmailLogo-container logo" data-plan-name=""></a> <!----><form method="post" class="searchForm-container ng-pristine ng-valid" ng-if="!(&#39;secured.contacts&#39; | includedByState)"> <div class="search-form-fieldset"> <button class="searchForm-action-button-default"> <i class="fa fa-search"></i> </button> <input type="search" autocomplete="off" ng-model="query" class="search-form-fieldset-input placeholder-white ng-pristine ng-untouched ng-valid ng-empty" placeholder="Search messages"> <button type="button" class="searchForm-action-button-toggle btnAdvancedSearch-container" pt-tooltip-translate-context="Action" pt-placement="bottom" pt-tooltip="Advanced search" title="" aria-label="Advanced search" data-original-title="Advanced search"> <i class="fa fa-angle-down btnAdvancedSearch-icon-desktop"></i> <i class="fa fa-search btnAdvancedSearch-icon-mobile"></i> </button> <button type="button" class="searchForm-action-button-advanced btnAdvancedSearch-container" data-action="close"> <i class="fa btnAdvancedSearch-icon-desktop fa-times"></i> <i class="fa fa-search btnAdvancedSearch-icon-mobile"></i> </button> </div> <!----></form><!----> <!----> <ul class="navigation"> <li class="navigationBlackFriday"> <button class="navigationBlackFriday-button navigation-link"> <i class="navigation-icon navigationBlackFriday-icon"></i> <span class="navigation-title">Black Friday</span> </button> </li> <!----><li class="navigation-upgrade-item" ng-if="isFree"> <a class="navigation-link" ui-sref="secured.dashboard({scroll: true})" href="https://mail.protonmail.com/dashboard"> <i class="navigation-icon fa fa-cubes"></i> <span class="navigation-title" translate="" translate-context="Action">Upgrade</span> </a> </li><!----> <li ng-class="{&#39;active&#39;: activeSettings()}"> <a id="tour-settings" class="navigation-link" ui-sref="secured.account" href="https://mail.protonmail.com/account"> <i class="navigation-icon fa fa-cogs"></i> <span class="navigation-title" translate="" translate-context="Action">Settings</span> </a> </li> <li ui-sref-active="active"> <a class="navigation-link" ui-sref="secured.contacts" href="https://mail.protonmail.com/contacts"> <i class="navigation-icon fa fa-address-book-o"></i> <span class="navigation-title" translate="" translate-context="Action">Contacts</span> </a> </li> <li class="navigationReport"> <a class="navigation-link pm_trigger" dropdown="" href="https://mail.protonmail.com/#" id="tour-support"> <span class="navigation-icons"> <i class="fa fa-life-ring"></i> <i class="fa fa-angle-down"></i> </span> <span class="navigation-title" translate="" translate-context="Action">Report bug</span> </a> <span class="pm_dropdown navigationReport-dropdown wide right"> <a href="https://protonmail.com/support" target="_blank" class="navigationReport-help"> <i class="fa fa-question-circle"></i> <span translate="" translate-context="Action">I have a question</span> </a> <button type="button" class="navigationReport-help newBugReport-container" id="reportBugBtn"> <div class="newBugReport-wrapper"> <i class="newBugReport-icon fa fa-bug sidebarApp-icon"></i> <span translate-context="Action" translate="">Report bug</span> </div> </button> </span> </li> <li class="navigationUser"> <a class="navigation-link navigationUser-link pm_trigger" dropdown="" href="https://mail.protonmail.com/#"> <span class="navigation-icons"> <i class="fa fa-user"></i> <i class="fa fa-angle-down"></i> </span> <span class="navigation-title">Surae Noether</span> </a> <span class="pm_dropdown navigationUser-dropdown wide right"> <span class="navigationUser-head"> <strong class="navigationUser-head-display-name" title="Surae Noether">Surae Noether</strong> <span class="navigationUser-head-email" title="surae.noether@protonmail.com">surae.noether@protonmail.com</span> <span class="navigationUser-head-organization" title=""></span> </span> <!----><button class="navigationUser-help" ng-if="wizardEnabled" data-display-wizard-button=""> <i class="fa fa-magic"></i> <span translate="" translate-context="Action">Tutorial</span> </button><!----> <a class="navigationUser-help" target="_blank" href="https://protonmail.com/support"> <i class="fa fa-life-ring"></i> <span translate="" translate-context="Action">Help &amp; answers</span> </a> <a class="navigationUser-help" target="_blank" href="https://shop.protonmail.com/"> <i class="fa fa-shopping-cart"></i> <span translate="" translate-context="Action">ProtonMail Shop</span> </a> <a ui-sref="login" class="pm_button primary text-center navigationUser-logout" translate="" translate-context="Action" href="https://mail.protonmail.com/login">Logout</a> <a data-prefix="ProtonMail  v" href="https://protonmail.com/blog/protonmail-v3-12-release-notes/" title="Wed Feb 07 2018" target="_blank" class="navigationUser-version text-center appVersion-container">3.12.30</a> </span> </li> </ul> </div><!----> <!----> </header> <!----><div id="ptSidebar" ui-view="sidebar"><!----> <!----> <!----><section class="pm_opensans sidebar sidebarApp-container" data-pt-dropzone="" id="pm_sidebar" ng-if="inboxSidebar &amp;&amp; !mobileMode"> <button class="compose pm_button sidebar-btn-compose" action-compose="" action-compose-type="new" translate-context="Action" translate="" translate-comment="compose button in sidebar">Compose</button> <ul class="menu sidebarApp-menu"> <!----><li class="sidebarApp-item navigationItem-container active" data-key="inbox" ng-repeat="state in listStates track by $id(state)"><a href="https://mail.protonmail.com/inbox" title="Inbox (2)" data-label="Inbox" data-state="inbox" class="navigationItem-item ptDnd-dropzone-container" data-pt-dropzone-item="inbox" data-pt-drop-id="dropgcog3">
-<i class="sidebarApp-icon navigationItem-icon fa fa-inbox"></i>
-<span class="navigationItem-title">Inbox</span>
-<div class="navigationItem-aside">
-    <em class="navigationItem-counter">(2)</em>
-    <button class="fa fa-repeat refresh navigationItem-btn-refresh"></button>
-</div>
-</a></li><!----><li class="sidebarApp-item navigationItem-container" data-key="drafts" ng-repeat="state in listStates track by $id(state)"><a href="https://mail.protonmail.com/drafts" title="Drafts" data-label="Drafts" data-state="drafts" class="navigationItem-item ptDnd-dropzone-container" data-pt-dropzone-item="drafts" data-pt-drop-id="drop09i2cs">
-<i class="sidebarApp-icon navigationItem-icon fa fa-file-text-o"></i>
-<span class="navigationItem-title">Drafts</span>
-<div class="navigationItem-aside">
-    <em class="navigationItem-counter"></em>
-    <button class="fa fa-repeat refresh navigationItem-btn-refresh"></button>
-</div>
-</a></li><!----><li class="sidebarApp-item navigationItem-container" data-key="sent" ng-repeat="state in listStates track by $id(state)"><a href="https://mail.protonmail.com/sent" title="Sent" data-label="Sent" data-state="sent" class="navigationItem-item ptDnd-dropzone-container" data-pt-dropzone-item="sent" data-pt-drop-id="dropzxkbb">
-<i class="sidebarApp-icon navigationItem-icon fa fa-send"></i>
-<span class="navigationItem-title">Sent</span>
-<div class="navigationItem-aside">
-    <em class="navigationItem-counter"></em>
-    <button class="fa fa-repeat refresh navigationItem-btn-refresh"></button>
-</div>
-</a></li><!----><li class="sidebarApp-item navigationItem-container" data-key="starred" ng-repeat="state in listStates track by $id(state)"><a href="https://mail.protonmail.com/starred" title="Starred" data-label="Starred" data-state="starred" class="navigationItem-item ptDnd-dropzone-container" data-pt-dropzone-item="starred" data-pt-drop-id="droppelhu">
-<i class="sidebarApp-icon navigationItem-icon fa fa-star-o"></i>
-<span class="navigationItem-title">Starred</span>
-<div class="navigationItem-aside">
-    <em class="navigationItem-counter"></em>
-    <button class="fa fa-repeat refresh navigationItem-btn-refresh"></button>
-</div>
-</a></li><!----><li class="sidebarApp-item navigationItem-container" data-key="archive" ng-repeat="state in listStates track by $id(state)"><a href="https://mail.protonmail.com/archive" title="Archive" data-label="Archive" data-state="archive" class="navigationItem-item ptDnd-dropzone-container" data-pt-dropzone-item="archive" data-pt-drop-id="dropkx5bpo">
-<i class="sidebarApp-icon navigationItem-icon fa fa-archive"></i>
-<span class="navigationItem-title">Archive</span>
-<div class="navigationItem-aside">
-    <em class="navigationItem-counter"></em>
-    <button class="fa fa-repeat refresh navigationItem-btn-refresh"></button>
-</div>
-</a></li><!----><li class="sidebarApp-item navigationItem-container" data-key="spam" ng-repeat="state in listStates track by $id(state)"><a href="https://mail.protonmail.com/spam" title="Spam" data-label="Spam" data-state="spam" class="navigationItem-item ptDnd-dropzone-container" data-pt-dropzone-item="spam" data-pt-drop-id="drophu05ia">
-<i class="sidebarApp-icon navigationItem-icon fa fa-ban"></i>
-<span class="navigationItem-title">Spam</span>
-<div class="navigationItem-aside">
-    <em class="navigationItem-counter"></em>
-    <button class="fa fa-repeat refresh navigationItem-btn-refresh"></button>
-</div>
-</a></li><!----><li class="sidebarApp-item navigationItem-container" data-key="trash" ng-repeat="state in listStates track by $id(state)"><a href="https://mail.protonmail.com/trash" title="Trash" data-label="Trash" data-state="trash" class="navigationItem-item ptDnd-dropzone-container" data-pt-dropzone-item="trash" data-pt-drop-id="drop5bghl">
-<i class="sidebarApp-icon navigationItem-icon fa fa-trash-o"></i>
-<span class="navigationItem-title">Trash</span>
-<div class="navigationItem-aside">
-    <em class="navigationItem-counter"></em>
-    <button class="fa fa-repeat refresh navigationItem-btn-refresh"></button>
-</div>
-</a></li><!----><li class="sidebarApp-item navigationItem-container" data-key="allmail" ng-repeat="state in listStates track by $id(state)"><a href="https://mail.protonmail.com/allmail" title="All Mail (2)" data-label="All Mail" data-state="allmail" class="navigationItem-item">
-<i class="sidebarApp-icon navigationItem-icon fa"></i>
-<span class="navigationItem-title">All Mail</span>
-<div class="navigationItem-aside">
-    <em class="navigationItem-counter">(2)</em>
-    <button class="fa fa-repeat refresh navigationItem-btn-refresh"></button>
-</div>
-</a></li><!----> </ul> <ul class="menu sidebarApp-menu" id="labelSettings"> <li class="sidebarApp-item"> <a ui-sref="secured.labels" class="sidebarApp-link" href="https://mail.protonmail.com/labels"> <i class="fa fa-cog sidebarApp-icon"></i> <span id="tour-label-settings" class="sidebarApp-label" translate-context="Action" translate="">Folders / Labels</span> </a> </li> </ul> <div id="sidebarLabels" ng-scrollbars="" ng-scrollbars-config="::scrollbarConfig" ng-scrollbars-update="updateScrollbar" class="mCustomScrollbar _mCS_2 mCS_no_scrollbar"><div id="mCSB_2" class="mCustomScrollBox mCS-light mCSB_vertical_horizontal mCSB_inside" style="max-height: none;" tabindex="0"><div id="mCSB_2_container_wrapper" class="mCSB_container_wrapper mCS_y_hidden mCS_no_scrollbar_y mCS_x_hidden mCS_no_scrollbar_x"><div id="mCSB_2_container" class="mCSB_container" style="position: relative; top: 0px; left: 0px; width: 100%;" dir="ltr"> <div class="labels"> <ul class="sidebarApp-menu menuLabel-container"></ul> </div> </div></div><div id="mCSB_2_scrollbar_vertical" class="mCSB_scrollTools mCSB_2_scrollbar mCS-light mCSB_scrollTools_vertical" style="display: none;"><div class="mCSB_draggerContainer"><div id="mCSB_2_dragger_vertical" class="mCSB_dragger" style="position: absolute; min-height: 30px; top: 0px;"><div class="mCSB_dragger_bar" style="line-height: 30px;"></div></div><div class="mCSB_draggerRail"></div></div></div><div id="mCSB_2_scrollbar_horizontal" class="mCSB_scrollTools mCSB_2_scrollbar mCS-light mCSB_scrollTools_horizontal" style="display: none;"><div class="mCSB_draggerContainer"><div id="mCSB_2_dragger_horizontal" class="mCSB_dragger" style="position: absolute; min-width: 30px; width: 0px; left: 0px;"><div class="mCSB_dragger_bar"></div></div><div class="mCSB_draggerRail"></div></div></div></div></div> <div class="footer"> <div class="wrap storageProgress-container"> <div class="link" hide-upgrade="space"> <a ui-sref="secured.dashboard({scroll: true})" href="https://mail.protonmail.com/dashboard"> <span translate="" translate-context="Action">Upgrade storage</span> </a> </div> <div class="storage text-center"> <strong title="Storage">10.03 MB / 500.00 MB</strong> </div> <div class="storageBar"> <div class="storageBar-progress" ng-style="storageStyle()" style="width: 2%;"></div> </div> </div> <a data-prefix="v" href="https://protonmail.com/blog/protonmail-v3-12-release-notes/" title="Wed Feb 07 2018" target="_blank" class="version appVersion-container">3.12.30</a> </div> </section><!----> <!----> </div> <!----><div id="pm_main" ui-view="content"><!----><nav class="toolbarDesktop-container pm_toolbar pm_toolbar_withSelector" ng-if="!mobileMode"> <!----> <!----><div class="toolBar-select-all elements-selector" ng-class="{disabled: !conversations.length}" ng-if="displayPaginator()"> <div class="elements-selector-check"> <label class="elements-selector-label"> <div class="elements-selector-label customCheckbox-container customMaskInput-container" ng-class="{disabled: !conversations.length}" for="selectAll" pt-tooltip-translate-context="Action" pt-tooltip="Select messages" title="" aria-label="Select messages" data-original-title="Select messages"> <input type="checkbox" class="customCheckbox-input customMaskInput-input-checkbox mousetrap elements-selector-checkbox element-selector-input" id="selectAll" name="selectAll" data-ng-checked="checkedSelectorState() &amp;&amp; conversations.length" data-ng-click="$event.stopPropagation()" value="all" data-pt-select-elements="" data-ng-disabled="!conversations.length"> <div class="customCheckbox-mask customMaskInput-mask"></div> </div> </label> </div> <!----><a class="inheritPadding pm_trigger elements-selector-trigger-dropdown" dropdown="" ng-class="{disabled: !conversations.length}" ng-if="!idDefined() || viewLayout === 0"> <i class="elements-selector-trigger-dropdown-fa-angle-down fa fa-angle-down"></i> </a><!----> <span class="element-selector-set-scope pm_dropdown">
-<button data-action="all" class="elementsSelector-btn-action">
-    <i class="fa fa-check-square-o"></i>
-    <span>Select All</span>
-</button>
+// NOTE: this interchanges the roles of G and H to match other code's behavior
 
-<button data-action="read" class="elementsSelector-btn-action">
-    <i class="fa fa-eye"></i>
-    <span>All Read</span>
-</button>
+package how.monero.hodl.bulletproof;
 
-<button data-action="unread" class="elementsSelector-btn-action">
-    <i class="fa fa-eye-slash"></i>
-    <span>All Unread</span>
-</button>
+import how.monero.hodl.crypto.Curve25519Point;
+import how.monero.hodl.crypto.Scalar;
+import how.monero.hodl.crypto.CryptoUtil;
+import java.math.BigInteger;
+import java.util.Random;
 
-<button data-action="starred" class="elementsSelector-btn-action">
-    <i class="fa fa-star"></i>
-    <span>All Starred</span>
-</button>
+import static how.monero.hodl.crypto.Scalar.randomScalar;
+import static how.monero.hodl.crypto.CryptoUtil.*;
+import static how.monero.hodl.util.ByteUtil.*;
 
-<button data-action="unstarred" class="elementsSelector-btn-action">
-    <i class="fa fa-star-o"></i>
-    <span>All Unstarred</span>
-</button>
-</span> </div><!----> <span class="pm_buttons readUnread-container" data-ng-class="{ disabled: isDisabled(), &#39;readUnread-container-ur&#39;: messageButtons === 1 }"> <a href="https://mail.protonmail.com/#" class="fa fa-eye readUnread-btn-read" data-action="read" pt-tooltip-translate-context="Action" pt-tooltip="Mark as read" title="" aria-label="Mark as read" data-original-title="Mark as read"></a> <a href="https://mail.protonmail.com/#" class="fa fa-eye-slash readUnread-btn-unread" data-action="unread" pt-tooltip-translate-context="Action" pt-tooltip="Mark as unread" title="" aria-label="Mark as unread" data-original-title="Mark as unread"></a> </span> <div class="pm_buttons moveElement-container"> <button type="button" class="pm_buttons-child fa fa-trash-o toolbar-btn-trash moveElement-btn-trash" data-action="trash" pt-tooltip-translate-context="Action" pt-tooltip="Move to trash" title="" aria-label="Move to trash" data-original-title="Move to trash"></button> <button type="button" class="pm_buttons-child fa fa-inbox toolbar-btn-inbox moveElement-btn-inbox" data-action="inbox" pt-tooltip-translate-context="Action" pt-tooltip="Move to inbox" title="" aria-label="Move to inbox" data-original-title="Move to inbox"></button> <button type="button" class="pm_buttons-child fa fa-archive toolbar-btn-archive moveElement-btn-archive" data-action="archive" pt-tooltip-translate-context="Action" pt-tooltip="Move to archive" title="" aria-label="Move to archive" data-original-title="Move to archive"></button> <button type="button" class="pm_buttons-child fa fa-ban toolbar-btn-spam moveElement-btn-spam" data-action="spam" pt-tooltip-translate-context="Action" pt-tooltip="Move to spam" title="" aria-label="Move to spam" data-original-title="Move to spam"></button> <button type="button" class="pm_buttons-child fa fa-times-circle-o toolbar-btn-delete moveElement-btn-delete" data-action="delete" pt-tooltip-translate-context="Action" pt-tooltip="Delete" title="" aria-label="Delete" data-original-title="Delete"></button> </div> <span class="pm_buttons"> <div class="pm_buttons" ng-class="{disabled: isDisabled()}"> <a class="pm_trigger open-folder" dropdown="" ng-class="{disabled: isDisabled()}" pt-tooltip="Move to" title="" aria-label="Move to" data-original-title="Move to"> <i class="fa fa-folder"></i> <i class="fa fa-angle-down"></i> </a> <div class="pm_dropdown wide"> <div class="dropdown-folder-container" data-elements="getElements"> <div class="dropdown-folder-title"> <p translate="" translate-context="title">Move to</p> </div> <label class="dropdown-folder-search"> <i class="fa fa-search dropdown-folder-search-icon"></i> <input class="dropdown-folder-search-input ng-pristine ng-untouched ng-valid ng-empty ng-valid-minlength" type="search" ng-model="searchValue" ng-minlength="1" placeholder="Filter folders"> </label> <!----> <div class="dropdown-folder-create"> <button class="dropdown-folder-create-button" translate-context="Action" translate="">Create a new folder</button> </div> </div> </div> </div> <div id="tour-label-dropdown" class="pm_buttons" ng-class="{disabled: isDisabled()}"> <a class="pm_trigger open-label" dropdown="" ng-class="{disabled: isDisabled()}" pt-tooltip="Label as" title="" aria-label="Label as" data-original-title="Label as"> <i class="fa fa-tag"></i> <i class="fa fa-angle-down"></i> </a> <div class="pm_dropdown wide"> <form novalidate="" class="dropdown-label-container ng-pristine ng-valid ng-valid-minlength" ng-class="{&#39;dropdown-label-hasLabels&#39;: labels.length}" autocomplete="off" messages="getElements" save="saveLabels"> <div class="dropdown-label-title"> <p class="dropdown-label-title-hasLabels" translate="" translate-context="title">Label as</p> <p class="alert alert-info" translate="" translate-context="Info">No labels</p> </div> <label class="dropdown-label-search"> <i class="fa fa-search dropdown-label-search-icon"></i> <input class="dropdown-label-search-input ng-pristine ng-untouched ng-valid ng-empty ng-valid-minlength" type="search" ng-model="searchLabels" ng-minlength="1" placeholder="Filter labels"> </label> <!----> <div class="dropdown-label-create pm-flex-content" data-message="message" data-label-name="searchLabels"> <button type="button" class="createLabel-button" ng-class="{&#39;createLabel-withName&#39;: name.length}"> <span class="createLabel-new-name"> <span translate="" translate-context="action">Create label</span> <i>""</i> ? </span> <span class="createLabel-new-label" translate="" translate-context="action">Create a new label</span> </button> </div> <label class="dropdown-label-alsoArchive"> <span class="dropdown-label-alsoArchive-txt label-fillWidth" translate="" translate-comment="Form checkbox option">Also Archive</span> <div class="dropdown-label-alsoArchive-checkbox"> <div class="customCheckbox-container customMaskInput-container"> <input type="checkbox" class="customCheckbox-input customMaskInput-input-checkbox mousetrap dropdownLabels-input-archive ng-pristine ng-untouched ng-valid ng-empty" data-ng-model="alsoArchive" data-ng-change="changeAlsoArchive()"> <div class="customCheckbox-mask customMaskInput-mask"></div> </div> </div> </label> <button class="pm_button primary dropdown-label-apply" tabindex="1" ng-disabled="networkActivity.loading()" translate-context="Action" translate="">Apply</button> </form> </div> </div> </span> <div class="pm_buttons advancedFilterElement-container" ng-class="{
-    &#39;advancedFilterElement-state-drafts&#39;: (&#39;secured.drafts.**&#39; | includedByState) || (&#39;secured.allDrafts.**&#39; | includedByState),
-    &#39;advancedFilterElement-state-spam&#39;: (&#39;secured.spam.**&#39; | includedByState),
-    &#39;advancedFilterElement-state-trash&#39;: (&#39;secured.trash.**&#39; | includedByState)
-}"> <a class="pm_trigger advancedFilterElement-btn-dropdown" dropdown=""> <small translate="">More</small> <i class="fa fa-angle-down"></i> </a> <div class="pm_dropdown widest noPadding advancedFilterElement-content"> <button class="advancedFilterElement-btn-drafts" data-action="empty" data-action-arg="drafts"> <div> <i class="fa fa-times-circle-o"></i> <span translate="" translate-context="Action">Empty drafts</span> </div> </button> <button class="advancedFilterElement-btn-spam" data-action="empty" data-action-arg="spam"> <div> <i class="fa fa-times-circle-o"></i> <span translate="" translate-context="Action">Empty spam</span> </div> </button> <button class="advancedFilterElement-btn-trash" data-action="empty" data-action-arg="trash"> <div> <i class="fa fa-times-circle-o"></i> <span translate="" translate-context="Action">Empty trash</span> </div> </button> <button class="advancedFilterElement-btn-folder" data-action="empty" data-action-arg="folder"> <div> <i class="fa fa-times-circle-o"></i> <span translate="" translate-context="Action">Empty folder</span> </div> </button> <button class="advancedFilterElement-btn-small-to-large" data-action="orderBy" data-action-arg="size"> <div> <i class="fa fa-sort-amount-asc"></i> <span translate="" translate-context="Action">Size: Small to large</span> </div> </button> <button class="advancedFilterElement-btn-large-to-small" data-action="orderBy" data-action-arg="-size"> <div> <i class="fa fa-sort-amount-desc"></i> <span translate="" translate-context="Action">Size: Large to small</span> </div> </button> <button class="advancedFilterElement-btn-new-to-old active" data-action="orderBy" data-action-arg="-date"> <div> <i class="fa fa-clock-o"></i> <span translate="" translate-context="Action">Date: New to old</span> </div> </button> <button class="advancedFilterElement-btn-old-to-new" data-action="orderBy" data-action-arg="date"> <div> <i class="fa fa-history"></i> <span translate="" translate-context="Action">Date: Old to new</span> </div> </button> <button class="advancedFilterElement-btn-show-all active" data-action="clearFilter"> <div> <i class="fa fa-list"></i> <span translate="" translate-context="Action">Show all</span> </div> </button> <button class="advancedFilterElement-btn-unread" data-action="filterBy" data-action-arg="unread"> <div> <i class="fa fa-eye-slash"></i> <span translate="" translate-context="Action">Show unread</span> </div> </button> <button class="advancedFilterElement-btn-read" data-action="filterBy" data-action-arg="read"> <div> <i class="fa fa-eye"></i> <span translate="" translate-context="Action">Show read</span> </div> </button> <!----> </div> </div> <div class="pull-right action toolbarDesktop-actions-right"> <div class="pm_buttons layout chooseLayoutBtns-container" id="tour-layout"> <a href="https://mail.protonmail.com/#" class="chooseLayoutBtns-btn-column" pt-tooltip-translate-context="Action" data-action="columns" pt-tooltip="Change layout" title="" aria-label="Change layout" data-original-title="Change layout"> <img src="./MultiBulletproof_files/columnview.svg"> </a> <a href="https://mail.protonmail.com/#" class="chooseLayoutBtns-btn-rows" pt-tooltip-translate-context="Action" data-action="rows" pt-tooltip="Change layout" title="" aria-label="Change layout" data-original-title="Change layout"> <img src="./MultiBulletproof_files/rowview.svg"> </a> </div> <div class="navElements-container pm_buttons"> <button class="navElements-btn-next pm_button" data-dest="next" pt-tooltip-translate-context="Action" pt-tooltip="Previous" title="" aria-label="Previous" data-original-title="Previous"> <i class="fa fa-chevron-left"></i> </button> <button class="navElements-btn-previous pm_button" data-dest="previous" pt-tooltip-translate-context="Action" pt-tooltip="Next" title="" aria-label="Next" data-original-title="Next"> <i class="fa fa-chevron-right"></i> </button> </div> <!----><span class="pm_buttons paginator paginator-container paginator-disabled-previous" ng-if="displayPaginator()"> <a pt-tooltip-translate-context="Action" class="paginator-btn-previous" pt-tooltip="Previous" title="" aria-label="Previous" data-original-title="Previous"> <i class="fa fa-chevron-left"></i> </a> <span class="pull-left paginator-dropdown-list"> <a class="pm_trigger paginator-dropdown" dropdown="" pt-tooltip-translate-context="Action" pt-tooltip="Page number" title="" aria-label="Page number" data-original-title="Page number"> <small>1</small> <i class="fa fa-angle-down"></i> </a> <span class="pm_dropdown right"> <!----><a ng-repeat="p in pages track by p" data-value="1" class="paginator-dropdown-item"> <em class="paginator-label" translate="" translate-comment="current page dropdown in paginator">Page</em> 1 </a><!----><a ng-repeat="p in pages track by p" data-value="2" class="paginator-dropdown-item"> <em class="paginator-label" translate="" translate-comment="current page dropdown in paginator">Page</em> 2 </a><!----> </span> </span> <a class="paginator-btn-next" pt-tooltip-translate-context="Action" pt-tooltip="Next" title="" aria-label="Next" data-original-title="Next"> <i class="fa fa-chevron-right"></i> </a> </span><!----> </div> </nav><!----> <!----> <div id="wrapper" ng-class="{hasElementsSelected: numberElementChecked}"> <!----> <!----> <!----><div id="conversation-list-columns" data-pt-select-multiple-elements="" ng-if="displayType(&#39;columns&#39;)"> <div class="request-timeout"> <i class="fa fa-exclamation-triangle request-timeout-icon" aria-hidden="true"></i> <h3 class="request-timeout-title" translate="" translate-context="Title">Request timed out, please try again.</h3> <button class="pm_button request-timeout-button-refresh"> <div> <span translate="" translate-context="Action">Try again</span> </div> </button> </div> <!----> <section class="conversation-wrapper"> <!----><div ng-repeat="conversation in conversations track by conversation.ID" class="conversation hasLabels" elements-container="" data-pt-draggable="" ng-class="{
-                selected: conversation.Selected,
-                active: active(conversation),
-                read: isRead(conversation),
-                marked: conversation.ID === markedElement.ID,
-                hasLabels: hasLabels(conversation),
-                hasAttachments: hasAttachments(conversation),
-                expiring: (conversation.ExpirationTime &gt; 0)
-            }" draggable="true" data-pt-id="drag-ub08wm"> <span class="expiration"><i class="fa fa-hourglass-end"></i></span> <div class="selection ptSelectConversation-container" data-index="0"> <label class="ptSelectConversation-label"> <div class="customCheckbox-container customMaskInput-container"> <input type="checkbox" class="customCheckbox-input customMaskInput-input-checkbox mousetrap ptSelectConversation-input" data-ng-checked="conversations[$index].Selected" data-index="0"> <div class="customCheckbox-mask customMaskInput-mask"></div> </div> </label> </div> <div class="conversation-meta"> <div class="row top"> <h4 class="subject" ng-attr-title="{{ conversation.Subject | unescape }}" title="Your eyes only RTRS RingCT"> <i class="fa" ng-class="{
-                &#39;fa-mail-reply&#39;: conversation.IsReplied,
-                &#39;fa-mail-reply-all&#39;: conversation.IsRepliedAll,
-                &#39;fa-mail-forward&#39;: conversation.IsForwarded
-            }"></i> <span class="folderConversations-container" data-conversation="conversation"></span> <!----><span class="subject-num-message" ng-if="conversation.NumMessages &gt; 1">(4)</span><!----> <span class="subject-text ellipsis">Your eyes only RTRS RingCT</span> </h4> <span class="meta"> <i class="fa fa-paperclip conversation-icon-attachment"></i> <div class="singleStar starButton" ng-class="isStarred() ? &#39;starButton-starred&#39; : &#39;&#39;" data-model="conversation"> <a pt-tooltip-translate-context="Toggle Star message/conversation" class="starButton-unstar fa fa-star" pt-tooltip="Unstar" title="" aria-label="Unstar" data-original-title="Unstar"></a> <a pt-tooltip-translate-context="Toggle Star message/conversation" class="starButton-star fa fa-star-o" pt-tooltip="Star" title="" aria-label="Star" data-original-title="Star"></a> </div> <time class="time">Feb 7, 2018</time> </span> </div> <div class="row bottom"> <span class="senders ellipsis" ng-class="{ &#39;full&#39;: !hasLabels(conversation) }"> <!----><!----><span ng-if="!((&#39;secured.sent.**&#39; | includedByState) || (&#39;secured.drafts.**&#39; | includedByState) || (&#39;secured.allSent.**&#39; | includedByState) || (&#39;secured.allDrafts.**&#39; | includedByState))" class="senders-name" ng-repeat="contact in senders(conversation)" title="huohuli@protonmail.ch">huohuli@protonmail.ch</span><!----><!----><!----><span ng-if="!((&#39;secured.sent.**&#39; | includedByState) || (&#39;secured.drafts.**&#39; | includedByState) || (&#39;secured.allSent.**&#39; | includedByState) || (&#39;secured.allDrafts.**&#39; | includedByState))" class="senders-name" ng-repeat="contact in senders(conversation)" title="surae.noether@protonmail.com">Surae Noether</span><!----><!----> <!----><!----><!----><!----><!----> </span> <div class="pm_labels labelsElement-container" data-format="stack" data-element="conversation"> <!----> <div class="labelsElement-more labelsElement-hidden" pt-tooltip="More labels" title="" aria-label="More labels" data-original-title="More labels">…</div> </div> </div> </div> </div><!----><div ng-repeat="conversation in conversations track by conversation.ID" class="conversation hasLabels hasAttachments active marked read" elements-container="" data-pt-draggable="" ng-class="{
-                selected: conversation.Selected,
-                active: active(conversation),
-                read: isRead(conversation),
-                marked: conversation.ID === markedElement.ID,
-                hasLabels: hasLabels(conversation),
-                hasAttachments: hasAttachments(conversation),
-                expiring: (conversation.ExpirationTime &gt; 0)
-            }" draggable="true" data-pt-id="drag-dpe3cso"> <span class="expiration"><i class="fa fa-hourglass-end"></i></span> <div class="selection ptSelectConversation-container" data-index="1"> <label class="ptSelectConversation-label"> <div class="customCheckbox-container customMaskInput-container"> <input type="checkbox" class="customCheckbox-input customMaskInput-input-checkbox mousetrap ptSelectConversation-input" data-ng-checked="conversations[$index].Selected" data-index="1"> <div class="customCheckbox-mask customMaskInput-mask"></div> </div> </label> </div> <div class="conversation-meta"> <div class="row top"> <h4 class="subject" ng-attr-title="{{ conversation.Subject | unescape }}" title="Repo changes"> <i class="fa" ng-class="{
-                &#39;fa-mail-reply&#39;: conversation.IsReplied,
-                &#39;fa-mail-reply-all&#39;: conversation.IsRepliedAll,
-                &#39;fa-mail-forward&#39;: conversation.IsForwarded
-            }"></i> <span class="folderConversations-container" data-conversation="conversation"></span> <!----> <span class="subject-text ellipsis">Repo changes</span> </h4> <span class="meta"> <i class="fa fa-paperclip conversation-icon-attachment"></i> <div class="singleStar starButton" ng-class="isStarred() ? &#39;starButton-starred&#39; : &#39;&#39;" data-model="conversation"> <a pt-tooltip-translate-context="Toggle Star message/conversation" class="starButton-unstar fa fa-star" pt-tooltip="Unstar" title="" aria-label="Unstar" data-original-title="Unstar"></a> <a pt-tooltip-translate-context="Toggle Star message/conversation" class="starButton-star fa fa-star-o" pt-tooltip="Star" title="" aria-label="Star" data-original-title="Star"></a> </div> <time class="time">Feb 7, 2018</time> </span> </div> <div class="row bottom"> <span class="senders ellipsis" ng-class="{ &#39;full&#39;: !hasLabels(conversation) }"> <!----><!----><span ng-if="!((&#39;secured.sent.**&#39; | includedByState) || (&#39;secured.drafts.**&#39; | includedByState) || (&#39;secured.allSent.**&#39; | includedByState) || (&#39;secured.allDrafts.**&#39; | includedByState))" class="senders-name" ng-repeat="contact in senders(conversation)" title="sarang.noether@protonmail.com">Sarang Noether</span><!----><!----> <!----><!----><!----> </span> <div class="pm_labels labelsElement-container" data-format="stack" data-element="conversation"> <!----> <div class="labelsElement-more labelsElement-hidden" pt-tooltip="More labels" title="" aria-label="More labels" data-original-title="More labels">…</div> </div> </div> </div> </div><!----><div ng-repeat="conversation in conversations track by conversation.ID" class="conversation hasLabels" elements-container="" data-pt-draggable="" ng-class="{
-                selected: conversation.Selected,
-                active: active(conversation),
-                read: isRead(conversation),
-                marked: conversation.ID === markedElement.ID,
-                hasLabels: hasLabels(conversation),
-                hasAttachments: hasAttachments(conversation),
-                expiring: (conversation.ExpirationTime &gt; 0)
-            }" draggable="true" data-pt-id="drag-6sj4e"> <span class="expiration"><i class="fa fa-hourglass-end"></i></span> <div class="selection ptSelectConversation-container" data-index="2"> <label class="ptSelectConversation-label"> <div class="customCheckbox-container customMaskInput-container"> <input type="checkbox" class="customCheckbox-input customMaskInput-input-checkbox mousetrap ptSelectConversation-input" data-ng-checked="conversations[$index].Selected" data-index="2"> <div class="customCheckbox-mask customMaskInput-mask"></div> </div> </label> </div> <div class="conversation-meta"> <div class="row top"> <h4 class="subject" ng-attr-title="{{ conversation.Subject | unescape }}" title="Re: Speaker Nominations..."> <i class="fa" ng-class="{
-                &#39;fa-mail-reply&#39;: conversation.IsReplied,
-                &#39;fa-mail-reply-all&#39;: conversation.IsRepliedAll,
-                &#39;fa-mail-forward&#39;: conversation.IsForwarded
-            }"></i> <span class="folderConversations-container" data-conversation="conversation"></span> <!----><span class="subject-num-message" ng-if="conversation.NumMessages &gt; 1">(4)</span><!----> <span class="subject-text ellipsis">Re: Speaker Nominations...</span> </h4> <span class="meta"> <i class="fa fa-paperclip conversation-icon-attachment"></i> <div class="singleStar starButton" ng-class="isStarred() ? &#39;starButton-starred&#39; : &#39;&#39;" data-model="conversation"> <a pt-tooltip-translate-context="Toggle Star message/conversation" class="starButton-unstar fa fa-star" pt-tooltip="Unstar" title="" aria-label="Unstar" data-original-title="Unstar"></a> <a pt-tooltip-translate-context="Toggle Star message/conversation" class="starButton-star fa fa-star-o" pt-tooltip="Star" title="" aria-label="Star" data-original-title="Star"></a> </div> <time class="time">Feb 7, 2018</time> </span> </div> <div class="row bottom"> <span class="senders ellipsis" ng-class="{ &#39;full&#39;: !hasLabels(conversation) }"> <!----><!----><span ng-if="!((&#39;secured.sent.**&#39; | includedByState) || (&#39;secured.drafts.**&#39; | includedByState) || (&#39;secured.allSent.**&#39; | includedByState) || (&#39;secured.allDrafts.**&#39; | includedByState))" class="senders-name" ng-repeat="contact in senders(conversation)" title="sarang.noether@protonmail.com">Sarang Noether</span><!----><!----><!----><span ng-if="!((&#39;secured.sent.**&#39; | includedByState) || (&#39;secured.drafts.**&#39; | includedByState) || (&#39;secured.allSent.**&#39; | includedByState) || (&#39;secured.allDrafts.**&#39; | includedByState))" class="senders-name" ng-repeat="contact in senders(conversation)" title="kevin.r@tedxyouthcolumbia.com">Kevin Rabinovich</span><!----><!----><!----><span ng-if="!((&#39;secured.sent.**&#39; | includedByState) || (&#39;secured.drafts.**&#39; | includedByState) || (&#39;secured.allSent.**&#39; | includedByState) || (&#39;secured.allDrafts.**&#39; | includedByState))" class="senders-name" ng-repeat="contact in senders(conversation)" title="chris@covestar.com">Christopher Gragtmans</span><!----><!----> <!----><!----><!----><!----><!----><!----><!----><!----><!----> </span> <div class="pm_labels labelsElement-container" data-format="stack" data-element="conversation"> <!----> <div class="labelsElement-more labelsElement-hidden" pt-tooltip="More labels" title="" aria-label="More labels" data-original-title="More labels">…</div> </div> </div> </div> </div><!----><div ng-repeat="conversation in conversations track by conversation.ID" class="conversation read hasLabels" elements-container="" data-pt-draggable="" ng-class="{
-                selected: conversation.Selected,
-                active: active(conversation),
-                read: isRead(conversation),
-                marked: conversation.ID === markedElement.ID,
-                hasLabels: hasLabels(conversation),
-                hasAttachments: hasAttachments(conversation),
-                expiring: (conversation.ExpirationTime &gt; 0)
-            }" draggable="true" data-pt-id="drag-1nkyzk"> <span class="expiration"><i class="fa fa-hourglass-end"></i></span> <div class="selection ptSelectConversation-container" data-index="3"> <label class="ptSelectConversation-label"> <div class="customCheckbox-container customMaskInput-container"> <input type="checkbox" class="customCheckbox-input customMaskInput-input-checkbox mousetrap ptSelectConversation-input" data-ng-checked="conversations[$index].Selected" data-index="3"> <div class="customCheckbox-mask customMaskInput-mask"></div> </div> </label> </div> <div class="conversation-meta"> <div class="row top"> <h4 class="subject" ng-attr-title="{{ conversation.Subject | unescape }}" title="[bpase18attendees] BPASE 18 videos and slides online; thank you!"> <i class="fa" ng-class="{
-                &#39;fa-mail-reply&#39;: conversation.IsReplied,
-                &#39;fa-mail-reply-all&#39;: conversation.IsRepliedAll,
-                &#39;fa-mail-forward&#39;: conversation.IsForwarded
-            }"></i> <span class="folderConversations-container" data-conversation="conversation"></span> <!----> <span class="subject-text ellipsis">[bpase18attendees] BPASE 18 videos and slides online; thank you!</span> </h4> <span class="meta"> <i class="fa fa-paperclip conversation-icon-attachment"></i> <div class="singleStar starButton" ng-class="isStarred() ? &#39;starButton-starred&#39; : &#39;&#39;" data-model="conversation"> <a pt-tooltip-translate-context="Toggle Star message/conversation" class="starButton-unstar fa fa-star" pt-tooltip="Unstar" title="" aria-label="Unstar" data-original-title="Unstar"></a> <a pt-tooltip-translate-context="Toggle Star message/conversation" class="starButton-star fa fa-star-o" pt-tooltip="Star" title="" aria-label="Star" data-original-title="Star"></a> </div> <time class="time">Feb 2, 2018</time> </span> </div> <div class="row bottom"> <span class="senders ellipsis" ng-class="{ &#39;full&#39;: !hasLabels(conversation) }"> <!----><!----><span ng-if="!((&#39;secured.sent.**&#39; | includedByState) || (&#39;secured.drafts.**&#39; | includedByState) || (&#39;secured.allSent.**&#39; | includedByState) || (&#39;secured.allDrafts.**&#39; | includedByState))" class="senders-name" ng-repeat="contact in senders(conversation)" title="aberke@stanford.edu">Allison Berke</span><!----><!----> <!----><!----><!----> </span> <div class="pm_labels labelsElement-container" data-format="stack" data-element="conversation"> <!----> <div class="labelsElement-more labelsElement-hidden" pt-tooltip="More labels" title="" aria-label="More labels" data-original-title="More labels">…</div> </div> </div> </div> </div><!----><div ng-repeat="conversation in conversations track by conversation.ID" class="conversation read hasLabels" elements-container="" data-pt-draggable="" ng-class="{
-                selected: conversation.Selected,
-                active: active(conversation),
-                read: isRead(conversation),
-                marked: conversation.ID === markedElement.ID,
-                hasLabels: hasLabels(conversation),
-                hasAttachments: hasAttachments(conversation),
-                expiring: (conversation.ExpirationTime &gt; 0)
-            }" draggable="true" data-pt-id="drag-u3jzpa"> <span class="expiration"><i class="fa fa-hourglass-end"></i></span> <div class="selection ptSelectConversation-container" data-index="4"> <label class="ptSelectConversation-label"> <div class="customCheckbox-container customMaskInput-container"> <input type="checkbox" class="customCheckbox-input customMaskInput-input-checkbox mousetrap ptSelectConversation-input" data-ng-checked="conversations[$index].Selected" data-index="4"> <div class="customCheckbox-mask customMaskInput-mask"></div> </div> </label> </div> <div class="conversation-meta"> <div class="row top"> <h4 class="subject" ng-attr-title="{{ conversation.Subject | unescape }}" title="Chris &lt;&gt; Sarang and Surae"> <i class="fa" ng-class="{
-                &#39;fa-mail-reply&#39;: conversation.IsReplied,
-                &#39;fa-mail-reply-all&#39;: conversation.IsRepliedAll,
-                &#39;fa-mail-forward&#39;: conversation.IsForwarded
-            }"></i> <span class="folderConversations-container" data-conversation="conversation"></span> <!----><span class="subject-num-message" ng-if="conversation.NumMessages &gt; 1">(4)</span><!----> <span class="subject-text ellipsis">Chris &lt;&gt; Sarang and Surae</span> </h4> <span class="meta"> <i class="fa fa-paperclip conversation-icon-attachment"></i> <div class="singleStar starButton" ng-class="isStarred() ? &#39;starButton-starred&#39; : &#39;&#39;" data-model="conversation"> <a pt-tooltip-translate-context="Toggle Star message/conversation" class="starButton-unstar fa fa-star" pt-tooltip="Unstar" title="" aria-label="Unstar" data-original-title="Unstar"></a> <a pt-tooltip-translate-context="Toggle Star message/conversation" class="starButton-star fa fa-star-o" pt-tooltip="Star" title="" aria-label="Star" data-original-title="Star"></a> </div> <time class="time">Jan 31, 2018</time> </span> </div> <div class="row bottom"> <span class="senders ellipsis" ng-class="{ &#39;full&#39;: !hasLabels(conversation) }"> <!----><!----><span ng-if="!((&#39;secured.sent.**&#39; | includedByState) || (&#39;secured.drafts.**&#39; | includedByState) || (&#39;secured.allSent.**&#39; | includedByState) || (&#39;secured.allDrafts.**&#39; | includedByState))" class="senders-name" ng-repeat="contact in senders(conversation)" title="chris@covestar.com">Christopher Gragtmans</span><!----><!----><!----><span ng-if="!((&#39;secured.sent.**&#39; | includedByState) || (&#39;secured.drafts.**&#39; | includedByState) || (&#39;secured.allSent.**&#39; | includedByState) || (&#39;secured.allDrafts.**&#39; | includedByState))" class="senders-name" ng-repeat="contact in senders(conversation)" title="sarang.noether@protonmail.com">Sarang Noether</span><!----><!----><!----><span ng-if="!((&#39;secured.sent.**&#39; | includedByState) || (&#39;secured.drafts.**&#39; | includedByState) || (&#39;secured.allSent.**&#39; | includedByState) || (&#39;secured.allDrafts.**&#39; | includedByState))" class="senders-name" ng-repeat="contact in senders(conversation)" title="pshapiro138@gmail.com">Paul Shapiro</span><!----><!----> <!----><!----><!----><!----><!----><!----><!----><!----><!----> </span> <div class="pm_labels labelsElement-container" data-format="stack" data-element="conversation"> <!----> <div class="labelsElement-more labelsElement-hidden" pt-tooltip="More labels" title="" aria-label="More labels" data-original-title="More labels">…</div> </div> </div> </div> </div><!----><div ng-repeat="conversation in conversations track by conversation.ID" class="conversation read hasLabels" elements-container="" data-pt-draggable="" ng-class="{
-                selected: conversation.Selected,
-                active: active(conversation),
-                read: isRead(conversation),
-                marked: conversation.ID === markedElement.ID,
-                hasLabels: hasLabels(conversation),
-                hasAttachments: hasAttachments(conversation),
-                expiring: (conversation.ExpirationTime &gt; 0)
-            }" draggable="true" data-pt-id="drag-qer5bj"> <span class="expiration"><i class="fa fa-hourglass-end"></i></span> <div class="selection ptSelectConversation-container" data-index="5"> <label class="ptSelectConversation-label"> <div class="customCheckbox-container customMaskInput-container"> <input type="checkbox" class="customCheckbox-input customMaskInput-input-checkbox mousetrap ptSelectConversation-input" data-ng-checked="conversations[$index].Selected" data-index="5"> <div class="customCheckbox-mask customMaskInput-mask"></div> </div> </label> </div> <div class="conversation-meta"> <div class="row top"> <h4 class="subject" ng-attr-title="{{ conversation.Subject | unescape }}" title="RTRS RingCT linkability and amortization"> <i class="fa" ng-class="{
-                &#39;fa-mail-reply&#39;: conversation.IsReplied,
-                &#39;fa-mail-reply-all&#39;: conversation.IsRepliedAll,
-                &#39;fa-mail-forward&#39;: conversation.IsForwarded
-            }"></i> <span class="folderConversations-container" data-conversation="conversation"></span> <!----><span class="subject-num-message" ng-if="conversation.NumMessages &gt; 1">(5)</span><!----> <span class="subject-text ellipsis">RTRS RingCT linkability and amortization</span> </h4> <span class="meta"> <i class="fa fa-paperclip conversation-icon-attachment"></i> <div class="singleStar starButton" ng-class="isStarred() ? &#39;starButton-starred&#39; : &#39;&#39;" data-model="conversation"> <a pt-tooltip-translate-context="Toggle Star message/conversation" class="starButton-unstar fa fa-star" pt-tooltip="Unstar" title="" aria-label="Unstar" data-original-title="Unstar"></a> <a pt-tooltip-translate-context="Toggle Star message/conversation" class="starButton-star fa fa-star-o" pt-tooltip="Star" title="" aria-label="Star" data-original-title="Star"></a> </div> <time class="time">Jan 28, 2018</time> </span> </div> <div class="row bottom"> <span class="senders ellipsis" ng-class="{ &#39;full&#39;: !hasLabels(conversation) }"> <!----><!----><span ng-if="!((&#39;secured.sent.**&#39; | includedByState) || (&#39;secured.drafts.**&#39; | includedByState) || (&#39;secured.allSent.**&#39; | includedByState) || (&#39;secured.allDrafts.**&#39; | includedByState))" class="senders-name" ng-repeat="contact in senders(conversation)" title="surae.noether@protonmail.com">Surae Noether</span><!----><!----><!----><span ng-if="!((&#39;secured.sent.**&#39; | includedByState) || (&#39;secured.drafts.**&#39; | includedByState) || (&#39;secured.allSent.**&#39; | includedByState) || (&#39;secured.allDrafts.**&#39; | includedByState))" class="senders-name" ng-repeat="contact in senders(conversation)" title="lai@i13.informatik.uni-erlangen.de">Russell W. F. Lai</span><!----><!----><!----><span ng-if="!((&#39;secured.sent.**&#39; | includedByState) || (&#39;secured.drafts.**&#39; | includedByState) || (&#39;secured.allSent.**&#39; | includedByState) || (&#39;secured.allDrafts.**&#39; | includedByState))" class="senders-name" ng-repeat="contact in senders(conversation)" title="tim.ruffing@mmci.uni-saarland.de">Tim Ruffing</span><!----><!----> <!----><!----><!----><!----><!----><!----><!----><!----><!----> </span> <div class="pm_labels labelsElement-container" data-format="stack" data-element="conversation"> <!----> <div class="labelsElement-more labelsElement-hidden" pt-tooltip="More labels" title="" aria-label="More labels" data-original-title="More labels">…</div> </div> </div> </div> </div><!----><div ng-repeat="conversation in conversations track by conversation.ID" class="conversation read hasLabels" elements-container="" data-pt-draggable="" ng-class="{
-                selected: conversation.Selected,
-                active: active(conversation),
-                read: isRead(conversation),
-                marked: conversation.ID === markedElement.ID,
-                hasLabels: hasLabels(conversation),
-                hasAttachments: hasAttachments(conversation),
-                expiring: (conversation.ExpirationTime &gt; 0)
-            }" draggable="true" data-pt-id="drag-vhwxu"> <span class="expiration"><i class="fa fa-hourglass-end"></i></span> <div class="selection ptSelectConversation-container" data-index="6"> <label class="ptSelectConversation-label"> <div class="customCheckbox-container customMaskInput-container"> <input type="checkbox" class="customCheckbox-input customMaskInput-input-checkbox mousetrap ptSelectConversation-input" data-ng-checked="conversations[$index].Selected" data-index="6"> <div class="customCheckbox-mask customMaskInput-mask"></div> </div> </label> </div> <div class="conversation-meta"> <div class="row top"> <h4 class="subject" ng-attr-title="{{ conversation.Subject | unescape }}" title="[bpase18attendees] BPASE Day Three (1/26) Schedule"> <i class="fa" ng-class="{
-                &#39;fa-mail-reply&#39;: conversation.IsReplied,
-                &#39;fa-mail-reply-all&#39;: conversation.IsRepliedAll,
-                &#39;fa-mail-forward&#39;: conversation.IsForwarded
-            }"></i> <span class="folderConversations-container" data-conversation="conversation"></span> <!----> <span class="subject-text ellipsis">[bpase18attendees] BPASE Day Three (1/26) Schedule</span> </h4> <span class="meta"> <i class="fa fa-paperclip conversation-icon-attachment"></i> <div class="singleStar starButton" ng-class="isStarred() ? &#39;starButton-starred&#39; : &#39;&#39;" data-model="conversation"> <a pt-tooltip-translate-context="Toggle Star message/conversation" class="starButton-unstar fa fa-star" pt-tooltip="Unstar" title="" aria-label="Unstar" data-original-title="Unstar"></a> <a pt-tooltip-translate-context="Toggle Star message/conversation" class="starButton-star fa fa-star-o" pt-tooltip="Star" title="" aria-label="Star" data-original-title="Star"></a> </div> <time class="time">Jan 25, 2018</time> </span> </div> <div class="row bottom"> <span class="senders ellipsis" ng-class="{ &#39;full&#39;: !hasLabels(conversation) }"> <!----><!----><span ng-if="!((&#39;secured.sent.**&#39; | includedByState) || (&#39;secured.drafts.**&#39; | includedByState) || (&#39;secured.allSent.**&#39; | includedByState) || (&#39;secured.allDrafts.**&#39; | includedByState))" class="senders-name" ng-repeat="contact in senders(conversation)" title="aberke@stanford.edu">Allison Berke</span><!----><!----> <!----><!----><!----> </span> <div class="pm_labels labelsElement-container" data-format="stack" data-element="conversation"> <!----> <div class="labelsElement-more labelsElement-hidden" pt-tooltip="More labels" title="" aria-label="More labels" data-original-title="More labels">…</div> </div> </div> </div> </div><!----><div ng-repeat="conversation in conversations track by conversation.ID" class="conversation read hasLabels" elements-container="" data-pt-draggable="" ng-class="{
-                selected: conversation.Selected,
-                active: active(conversation),
-                read: isRead(conversation),
-                marked: conversation.ID === markedElement.ID,
-                hasLabels: hasLabels(conversation),
-                hasAttachments: hasAttachments(conversation),
-                expiring: (conversation.ExpirationTime &gt; 0)
-            }" draggable="true" data-pt-id="drag-okqshl"> <span class="expiration"><i class="fa fa-hourglass-end"></i></span> <div class="selection ptSelectConversation-container" data-index="7"> <label class="ptSelectConversation-label"> <div class="customCheckbox-container customMaskInput-container"> <input type="checkbox" class="customCheckbox-input customMaskInput-input-checkbox mousetrap ptSelectConversation-input" data-ng-checked="conversations[$index].Selected" data-index="7"> <div class="customCheckbox-mask customMaskInput-mask"></div> </div> </label> </div> <div class="conversation-meta"> <div class="row top"> <h4 class="subject" ng-attr-title="{{ conversation.Subject | unescape }}" title="[bpase18attendees] BPASE Day Two 1/25 schedule"> <i class="fa" ng-class="{
-                &#39;fa-mail-reply&#39;: conversation.IsReplied,
-                &#39;fa-mail-reply-all&#39;: conversation.IsRepliedAll,
-                &#39;fa-mail-forward&#39;: conversation.IsForwarded
-            }"></i> <span class="folderConversations-container" data-conversation="conversation"></span> <!----> <span class="subject-text ellipsis">[bpase18attendees] BPASE Day Two 1/25 schedule</span> </h4> <span class="meta"> <i class="fa fa-paperclip conversation-icon-attachment"></i> <div class="singleStar starButton" ng-class="isStarred() ? &#39;starButton-starred&#39; : &#39;&#39;" data-model="conversation"> <a pt-tooltip-translate-context="Toggle Star message/conversation" class="starButton-unstar fa fa-star" pt-tooltip="Unstar" title="" aria-label="Unstar" data-original-title="Unstar"></a> <a pt-tooltip-translate-context="Toggle Star message/conversation" class="starButton-star fa fa-star-o" pt-tooltip="Star" title="" aria-label="Star" data-original-title="Star"></a> </div> <time class="time">Jan 24, 2018</time> </span> </div> <div class="row bottom"> <span class="senders ellipsis" ng-class="{ &#39;full&#39;: !hasLabels(conversation) }"> <!----><!----><span ng-if="!((&#39;secured.sent.**&#39; | includedByState) || (&#39;secured.drafts.**&#39; | includedByState) || (&#39;secured.allSent.**&#39; | includedByState) || (&#39;secured.allDrafts.**&#39; | includedByState))" class="senders-name" ng-repeat="contact in senders(conversation)" title="aberke@stanford.edu">Allison Berke</span><!----><!----> <!----><!----><!----> </span> <div class="pm_labels labelsElement-container" data-format="stack" data-element="conversation"> <!----> <div class="labelsElement-more labelsElement-hidden" pt-tooltip="More labels" title="" aria-label="More labels" data-original-title="More labels">…</div> </div> </div> </div> </div><!----><div ng-repeat="conversation in conversations track by conversation.ID" class="conversation read hasLabels" elements-container="" data-pt-draggable="" ng-class="{
-                selected: conversation.Selected,
-                active: active(conversation),
-                read: isRead(conversation),
-                marked: conversation.ID === markedElement.ID,
-                hasLabels: hasLabels(conversation),
-                hasAttachments: hasAttachments(conversation),
-                expiring: (conversation.ExpirationTime &gt; 0)
-            }" draggable="true" data-pt-id="drag-yne7hc"> <span class="expiration"><i class="fa fa-hourglass-end"></i></span> <div class="selection ptSelectConversation-container" data-index="8"> <label class="ptSelectConversation-label"> <div class="customCheckbox-container customMaskInput-container"> <input type="checkbox" class="customCheckbox-input customMaskInput-input-checkbox mousetrap ptSelectConversation-input" data-ng-checked="conversations[$index].Selected" data-index="8"> <div class="customCheckbox-mask customMaskInput-mask"></div> </div> </label> </div> <div class="conversation-meta"> <div class="row top"> <h4 class="subject" ng-attr-title="{{ conversation.Subject | unescape }}" title="Verify Your Email Address"> <i class="fa" ng-class="{
-                &#39;fa-mail-reply&#39;: conversation.IsReplied,
-                &#39;fa-mail-reply-all&#39;: conversation.IsRepliedAll,
-                &#39;fa-mail-forward&#39;: conversation.IsForwarded
-            }"></i> <span class="folderConversations-container" data-conversation="conversation"></span> <!----> <span class="subject-text ellipsis">Verify Your Email Address</span> </h4> <span class="meta"> <i class="fa fa-paperclip conversation-icon-attachment"></i> <div class="singleStar starButton" ng-class="isStarred() ? &#39;starButton-starred&#39; : &#39;&#39;" data-model="conversation"> <a pt-tooltip-translate-context="Toggle Star message/conversation" class="starButton-unstar fa fa-star" pt-tooltip="Unstar" title="" aria-label="Unstar" data-original-title="Unstar"></a> <a pt-tooltip-translate-context="Toggle Star message/conversation" class="starButton-star fa fa-star-o" pt-tooltip="Star" title="" aria-label="Star" data-original-title="Star"></a> </div> <time class="time">Jan 17, 2018</time> </span> </div> <div class="row bottom"> <span class="senders ellipsis" ng-class="{ &#39;full&#39;: !hasLabels(conversation) }"> <!----><!----><span ng-if="!((&#39;secured.sent.**&#39; | includedByState) || (&#39;secured.drafts.**&#39; | includedByState) || (&#39;secured.allSent.**&#39; | includedByState) || (&#39;secured.allDrafts.**&#39; | includedByState))" class="senders-name" ng-repeat="contact in senders(conversation)" title="bi-rose@t-online.de">Verification</span><!----><!----> <!----><!----><!----> </span> <div class="pm_labels labelsElement-container" data-format="stack" data-element="conversation"> <!----> <div class="labelsElement-more labelsElement-hidden" pt-tooltip="More labels" title="" aria-label="More labels" data-original-title="More labels">…</div> </div> </div> </div> </div><!----><div ng-repeat="conversation in conversations track by conversation.ID" class="conversation read hasLabels" elements-container="" data-pt-draggable="" ng-class="{
-                selected: conversation.Selected,
-                active: active(conversation),
-                read: isRead(conversation),
-                marked: conversation.ID === markedElement.ID,
-                hasLabels: hasLabels(conversation),
-                hasAttachments: hasAttachments(conversation),
-                expiring: (conversation.ExpirationTime &gt; 0)
-            }" draggable="true" data-pt-id="drag-oc2kgt"> <span class="expiration"><i class="fa fa-hourglass-end"></i></span> <div class="selection ptSelectConversation-container" data-index="9"> <label class="ptSelectConversation-label"> <div class="customCheckbox-container customMaskInput-container"> <input type="checkbox" class="customCheckbox-input customMaskInput-input-checkbox mousetrap ptSelectConversation-input" data-ng-checked="conversations[$index].Selected" data-index="9"> <div class="customCheckbox-mask customMaskInput-mask"></div> </div> </label> </div> <div class="conversation-meta"> <div class="row top"> <h4 class="subject" ng-attr-title="{{ conversation.Subject | unescape }}" title="DHL Consignment Notification Arrival:PKO-HAF10803271, Please Receive Your Packages!"> <i class="fa" ng-class="{
-                &#39;fa-mail-reply&#39;: conversation.IsReplied,
-                &#39;fa-mail-reply-all&#39;: conversation.IsRepliedAll,
-                &#39;fa-mail-forward&#39;: conversation.IsForwarded
-            }"></i> <span class="folderConversations-container" data-conversation="conversation"></span> <!----><span class="subject-num-message" ng-if="conversation.NumMessages &gt; 1">(2)</span><!----> <span class="subject-text ellipsis">DHL Consignment Notification Arrival:PKO-HAF10803271, Please Receive Your Packages!</span> </h4> <span class="meta"> <i class="fa fa-paperclip conversation-icon-attachment"></i> <div class="singleStar starButton" ng-class="isStarred() ? &#39;starButton-starred&#39; : &#39;&#39;" data-model="conversation"> <a pt-tooltip-translate-context="Toggle Star message/conversation" class="starButton-unstar fa fa-star" pt-tooltip="Unstar" title="" aria-label="Unstar" data-original-title="Unstar"></a> <a pt-tooltip-translate-context="Toggle Star message/conversation" class="starButton-star fa fa-star-o" pt-tooltip="Star" title="" aria-label="Star" data-original-title="Star"></a> </div> <time class="time">Jan 17, 2018</time> </span> </div> <div class="row bottom"> <span class="senders ellipsis" ng-class="{ &#39;full&#39;: !hasLabels(conversation) }"> <!----><!----><span ng-if="!((&#39;secured.sent.**&#39; | includedByState) || (&#39;secured.drafts.**&#39; | includedByState) || (&#39;secured.allSent.**&#39; | includedByState) || (&#39;secured.allDrafts.**&#39; | includedByState))" class="senders-name" ng-repeat="contact in senders(conversation)" title="bi-rose@t-online.de">DHL Online</span><!----><!----> <!----><!----><!----> </span> <div class="pm_labels labelsElement-container" data-format="stack" data-element="conversation"> <!----> <div class="labelsElement-more labelsElement-hidden" pt-tooltip="More labels" title="" aria-label="More labels" data-original-title="More labels">…</div> </div> </div> </div> </div><!----><div ng-repeat="conversation in conversations track by conversation.ID" class="conversation read hasLabels" elements-container="" data-pt-draggable="" ng-class="{
-                selected: conversation.Selected,
-                active: active(conversation),
-                read: isRead(conversation),
-                marked: conversation.ID === markedElement.ID,
-                hasLabels: hasLabels(conversation),
-                hasAttachments: hasAttachments(conversation),
-                expiring: (conversation.ExpirationTime &gt; 0)
-            }" draggable="true" data-pt-id="drag-v6isvn"> <span class="expiration"><i class="fa fa-hourglass-end"></i></span> <div class="selection ptSelectConversation-container" data-index="10"> <label class="ptSelectConversation-label"> <div class="customCheckbox-container customMaskInput-container"> <input type="checkbox" class="customCheckbox-input customMaskInput-input-checkbox mousetrap ptSelectConversation-input" data-ng-checked="conversations[$index].Selected" data-index="10"> <div class="customCheckbox-mask customMaskInput-mask"></div> </div> </label> </div> <div class="conversation-meta"> <div class="row top"> <h4 class="subject" ng-attr-title="{{ conversation.Subject | unescape }}" title="[reddit] 1 new message from u/rugbrn"> <i class="fa" ng-class="{
-                &#39;fa-mail-reply&#39;: conversation.IsReplied,
-                &#39;fa-mail-reply-all&#39;: conversation.IsRepliedAll,
-                &#39;fa-mail-forward&#39;: conversation.IsForwarded
-            }"></i> <span class="folderConversations-container" data-conversation="conversation"></span> <!----> <span class="subject-text ellipsis">[reddit] 1 new message from u/rugbrn</span> </h4> <span class="meta"> <i class="fa fa-paperclip conversation-icon-attachment"></i> <div class="singleStar starButton" ng-class="isStarred() ? &#39;starButton-starred&#39; : &#39;&#39;" data-model="conversation"> <a pt-tooltip-translate-context="Toggle Star message/conversation" class="starButton-unstar fa fa-star" pt-tooltip="Unstar" title="" aria-label="Unstar" data-original-title="Unstar"></a> <a pt-tooltip-translate-context="Toggle Star message/conversation" class="starButton-star fa fa-star-o" pt-tooltip="Star" title="" aria-label="Star" data-original-title="Star"></a> </div> <time class="time">Jan 15, 2018</time> </span> </div> <div class="row bottom"> <span class="senders ellipsis" ng-class="{ &#39;full&#39;: !hasLabels(conversation) }"> <!----><!----><span ng-if="!((&#39;secured.sent.**&#39; | includedByState) || (&#39;secured.drafts.**&#39; | includedByState) || (&#39;secured.allSent.**&#39; | includedByState) || (&#39;secured.allDrafts.**&#39; | includedByState))" class="senders-name" ng-repeat="contact in senders(conversation)" title="notifications@redditmail.com">Reddit</span><!----><!----> <!----><!----><!----> </span> <div class="pm_labels labelsElement-container" data-format="stack" data-element="conversation"> <!----> <div class="labelsElement-more labelsElement-hidden" pt-tooltip="More labels" title="" aria-label="More labels" data-original-title="More labels">…</div> </div> </div> </div> </div><!----><div ng-repeat="conversation in conversations track by conversation.ID" class="conversation read hasLabels" elements-container="" data-pt-draggable="" ng-class="{
-                selected: conversation.Selected,
-                active: active(conversation),
-                read: isRead(conversation),
-                marked: conversation.ID === markedElement.ID,
-                hasLabels: hasLabels(conversation),
-                hasAttachments: hasAttachments(conversation),
-                expiring: (conversation.ExpirationTime &gt; 0)
-            }" draggable="true" data-pt-id="drag-wbwzl"> <span class="expiration"><i class="fa fa-hourglass-end"></i></span> <div class="selection ptSelectConversation-container" data-index="11"> <label class="ptSelectConversation-label"> <div class="customCheckbox-container customMaskInput-container"> <input type="checkbox" class="customCheckbox-input customMaskInput-input-checkbox mousetrap ptSelectConversation-input" data-ng-checked="conversations[$index].Selected" data-index="11"> <div class="customCheckbox-mask customMaskInput-mask"></div> </div> </label> </div> <div class="conversation-meta"> <div class="row top"> <h4 class="subject" ng-attr-title="{{ conversation.Subject | unescape }}" title="[reddit] 1 new message from u/snirpie"> <i class="fa" ng-class="{
-                &#39;fa-mail-reply&#39;: conversation.IsReplied,
-                &#39;fa-mail-reply-all&#39;: conversation.IsRepliedAll,
-                &#39;fa-mail-forward&#39;: conversation.IsForwarded
-            }"></i> <span class="folderConversations-container" data-conversation="conversation"></span> <!----><span class="subject-num-message" ng-if="conversation.NumMessages &gt; 1">(3)</span><!----> <span class="subject-text ellipsis">[reddit] 1 new message from u/snirpie</span> </h4> <span class="meta"> <i class="fa fa-paperclip conversation-icon-attachment"></i> <div class="singleStar starButton" ng-class="isStarred() ? &#39;starButton-starred&#39; : &#39;&#39;" data-model="conversation"> <a pt-tooltip-translate-context="Toggle Star message/conversation" class="starButton-unstar fa fa-star" pt-tooltip="Unstar" title="" aria-label="Unstar" data-original-title="Unstar"></a> <a pt-tooltip-translate-context="Toggle Star message/conversation" class="starButton-star fa fa-star-o" pt-tooltip="Star" title="" aria-label="Star" data-original-title="Star"></a> </div> <time class="time">Jan 15, 2018</time> </span> </div> <div class="row bottom"> <span class="senders ellipsis" ng-class="{ &#39;full&#39;: !hasLabels(conversation) }"> <!----><!----><span ng-if="!((&#39;secured.sent.**&#39; | includedByState) || (&#39;secured.drafts.**&#39; | includedByState) || (&#39;secured.allSent.**&#39; | includedByState) || (&#39;secured.allDrafts.**&#39; | includedByState))" class="senders-name" ng-repeat="contact in senders(conversation)" title="notifications@redditmail.com">Reddit</span><!----><!----> <!----><!----><!----> </span> <div class="pm_labels labelsElement-container" data-format="stack" data-element="conversation"> <!----> <div class="labelsElement-more labelsElement-hidden" pt-tooltip="More labels" title="" aria-label="More labels" data-original-title="More labels">…</div> </div> </div> </div> </div><!----><div ng-repeat="conversation in conversations track by conversation.ID" class="conversation read hasLabels" elements-container="" data-pt-draggable="" ng-class="{
-                selected: conversation.Selected,
-                active: active(conversation),
-                read: isRead(conversation),
-                marked: conversation.ID === markedElement.ID,
-                hasLabels: hasLabels(conversation),
-                hasAttachments: hasAttachments(conversation),
-                expiring: (conversation.ExpirationTime &gt; 0)
-            }" draggable="true" data-pt-id="drag-q7v0c"> <span class="expiration"><i class="fa fa-hourglass-end"></i></span> <div class="selection ptSelectConversation-container" data-index="12"> <label class="ptSelectConversation-label"> <div class="customCheckbox-container customMaskInput-container"> <input type="checkbox" class="customCheckbox-input customMaskInput-input-checkbox mousetrap ptSelectConversation-input" data-ng-checked="conversations[$index].Selected" data-index="12"> <div class="customCheckbox-mask customMaskInput-mask"></div> </div> </label> </div> <div class="conversation-meta"> <div class="row top"> <h4 class="subject" ng-attr-title="{{ conversation.Subject | unescape }}" title="[reddit] 1 new message from u/Vespco"> <i class="fa" ng-class="{
-                &#39;fa-mail-reply&#39;: conversation.IsReplied,
-                &#39;fa-mail-reply-all&#39;: conversation.IsRepliedAll,
-                &#39;fa-mail-forward&#39;: conversation.IsForwarded
-            }"></i> <span class="folderConversations-container" data-conversation="conversation"></span> <!----><span class="subject-num-message" ng-if="conversation.NumMessages &gt; 1">(2)</span><!----> <span class="subject-text ellipsis">[reddit] 1 new message from u/Vespco</span> </h4> <span class="meta"> <i class="fa fa-paperclip conversation-icon-attachment"></i> <div class="singleStar starButton" ng-class="isStarred() ? &#39;starButton-starred&#39; : &#39;&#39;" data-model="conversation"> <a pt-tooltip-translate-context="Toggle Star message/conversation" class="starButton-unstar fa fa-star" pt-tooltip="Unstar" title="" aria-label="Unstar" data-original-title="Unstar"></a> <a pt-tooltip-translate-context="Toggle Star message/conversation" class="starButton-star fa fa-star-o" pt-tooltip="Star" title="" aria-label="Star" data-original-title="Star"></a> </div> <time class="time">Jan 15, 2018</time> </span> </div> <div class="row bottom"> <span class="senders ellipsis" ng-class="{ &#39;full&#39;: !hasLabels(conversation) }"> <!----><!----><span ng-if="!((&#39;secured.sent.**&#39; | includedByState) || (&#39;secured.drafts.**&#39; | includedByState) || (&#39;secured.allSent.**&#39; | includedByState) || (&#39;secured.allDrafts.**&#39; | includedByState))" class="senders-name" ng-repeat="contact in senders(conversation)" title="notifications@redditmail.com">Reddit</span><!----><!----> <!----><!----><!----> </span> <div class="pm_labels labelsElement-container" data-format="stack" data-element="conversation"> <!----> <div class="labelsElement-more labelsElement-hidden" pt-tooltip="More labels" title="" aria-label="More labels" data-original-title="More labels">…</div> </div> </div> </div> </div><!----><div ng-repeat="conversation in conversations track by conversation.ID" class="conversation read hasLabels" elements-container="" data-pt-draggable="" ng-class="{
-                selected: conversation.Selected,
-                active: active(conversation),
-                read: isRead(conversation),
-                marked: conversation.ID === markedElement.ID,
-                hasLabels: hasLabels(conversation),
-                hasAttachments: hasAttachments(conversation),
-                expiring: (conversation.ExpirationTime &gt; 0)
-            }" draggable="true" data-pt-id="drag-31skx"> <span class="expiration"><i class="fa fa-hourglass-end"></i></span> <div class="selection ptSelectConversation-container" data-index="13"> <label class="ptSelectConversation-label"> <div class="customCheckbox-container customMaskInput-container"> <input type="checkbox" class="customCheckbox-input customMaskInput-input-checkbox mousetrap ptSelectConversation-input" data-ng-checked="conversations[$index].Selected" data-index="13"> <div class="customCheckbox-mask customMaskInput-mask"></div> </div> </label> </div> <div class="conversation-meta"> <div class="row top"> <h4 class="subject" ng-attr-title="{{ conversation.Subject | unescape }}" title="[reddit] 2 new messages from u/snirpie"> <i class="fa" ng-class="{
-                &#39;fa-mail-reply&#39;: conversation.IsReplied,
-                &#39;fa-mail-reply-all&#39;: conversation.IsRepliedAll,
-                &#39;fa-mail-forward&#39;: conversation.IsForwarded
-            }"></i> <span class="folderConversations-container" data-conversation="conversation"></span> <!----> <span class="subject-text ellipsis">[reddit] 2 new messages from u/snirpie</span> </h4> <span class="meta"> <i class="fa fa-paperclip conversation-icon-attachment"></i> <div class="singleStar starButton" ng-class="isStarred() ? &#39;starButton-starred&#39; : &#39;&#39;" data-model="conversation"> <a pt-tooltip-translate-context="Toggle Star message/conversation" class="starButton-unstar fa fa-star" pt-tooltip="Unstar" title="" aria-label="Unstar" data-original-title="Unstar"></a> <a pt-tooltip-translate-context="Toggle Star message/conversation" class="starButton-star fa fa-star-o" pt-tooltip="Star" title="" aria-label="Star" data-original-title="Star"></a> </div> <time class="time">Jan 15, 2018</time> </span> </div> <div class="row bottom"> <span class="senders ellipsis" ng-class="{ &#39;full&#39;: !hasLabels(conversation) }"> <!----><!----><span ng-if="!((&#39;secured.sent.**&#39; | includedByState) || (&#39;secured.drafts.**&#39; | includedByState) || (&#39;secured.allSent.**&#39; | includedByState) || (&#39;secured.allDrafts.**&#39; | includedByState))" class="senders-name" ng-repeat="contact in senders(conversation)" title="notifications@redditmail.com">Reddit</span><!----><!----> <!----><!----><!----> </span> <div class="pm_labels labelsElement-container" data-format="stack" data-element="conversation"> <!----> <div class="labelsElement-more labelsElement-hidden" pt-tooltip="More labels" title="" aria-label="More labels" data-original-title="More labels">…</div> </div> </div> </div> </div><!----><div ng-repeat="conversation in conversations track by conversation.ID" class="conversation read hasLabels" elements-container="" data-pt-draggable="" ng-class="{
-                selected: conversation.Selected,
-                active: active(conversation),
-                read: isRead(conversation),
-                marked: conversation.ID === markedElement.ID,
-                hasLabels: hasLabels(conversation),
-                hasAttachments: hasAttachments(conversation),
-                expiring: (conversation.ExpirationTime &gt; 0)
-            }" draggable="true" data-pt-id="drag-r5bysz"> <span class="expiration"><i class="fa fa-hourglass-end"></i></span> <div class="selection ptSelectConversation-container" data-index="14"> <label class="ptSelectConversation-label"> <div class="customCheckbox-container customMaskInput-container"> <input type="checkbox" class="customCheckbox-input customMaskInput-input-checkbox mousetrap ptSelectConversation-input" data-ng-checked="conversations[$index].Selected" data-index="14"> <div class="customCheckbox-mask customMaskInput-mask"></div> </div> </label> </div> <div class="conversation-meta"> <div class="row top"> <h4 class="subject" ng-attr-title="{{ conversation.Subject | unescape }}" title="[reddit] 1 new message from u/gr33d3r"> <i class="fa" ng-class="{
-                &#39;fa-mail-reply&#39;: conversation.IsReplied,
-                &#39;fa-mail-reply-all&#39;: conversation.IsRepliedAll,
-                &#39;fa-mail-forward&#39;: conversation.IsForwarded
-            }"></i> <span class="folderConversations-container" data-conversation="conversation"></span> <!----> <span class="subject-text ellipsis">[reddit] 1 new message from u/gr33d3r</span> </h4> <span class="meta"> <i class="fa fa-paperclip conversation-icon-attachment"></i> <div class="singleStar starButton" ng-class="isStarred() ? &#39;starButton-starred&#39; : &#39;&#39;" data-model="conversation"> <a pt-tooltip-translate-context="Toggle Star message/conversation" class="starButton-unstar fa fa-star" pt-tooltip="Unstar" title="" aria-label="Unstar" data-original-title="Unstar"></a> <a pt-tooltip-translate-context="Toggle Star message/conversation" class="starButton-star fa fa-star-o" pt-tooltip="Star" title="" aria-label="Star" data-original-title="Star"></a> </div> <time class="time">Jan 13, 2018</time> </span> </div> <div class="row bottom"> <span class="senders ellipsis" ng-class="{ &#39;full&#39;: !hasLabels(conversation) }"> <!----><!----><span ng-if="!((&#39;secured.sent.**&#39; | includedByState) || (&#39;secured.drafts.**&#39; | includedByState) || (&#39;secured.allSent.**&#39; | includedByState) || (&#39;secured.allDrafts.**&#39; | includedByState))" class="senders-name" ng-repeat="contact in senders(conversation)" title="notifications@redditmail.com">Reddit</span><!----><!----> <!----><!----><!----> </span> <div class="pm_labels labelsElement-container" data-format="stack" data-element="conversation"> <!----> <div class="labelsElement-more labelsElement-hidden" pt-tooltip="More labels" title="" aria-label="More labels" data-original-title="More labels">…</div> </div> </div> </div> </div><!----><div ng-repeat="conversation in conversations track by conversation.ID" class="conversation read hasLabels" elements-container="" data-pt-draggable="" ng-class="{
-                selected: conversation.Selected,
-                active: active(conversation),
-                read: isRead(conversation),
-                marked: conversation.ID === markedElement.ID,
-                hasLabels: hasLabels(conversation),
-                hasAttachments: hasAttachments(conversation),
-                expiring: (conversation.ExpirationTime &gt; 0)
-            }" draggable="true" data-pt-id="drag-4um37c"> <span class="expiration"><i class="fa fa-hourglass-end"></i></span> <div class="selection ptSelectConversation-container" data-index="15"> <label class="ptSelectConversation-label"> <div class="customCheckbox-container customMaskInput-container"> <input type="checkbox" class="customCheckbox-input customMaskInput-input-checkbox mousetrap ptSelectConversation-input" data-ng-checked="conversations[$index].Selected" data-index="15"> <div class="customCheckbox-mask customMaskInput-mask"></div> </div> </label> </div> <div class="conversation-meta"> <div class="row top"> <h4 class="subject" ng-attr-title="{{ conversation.Subject | unescape }}" title="[bpase18attendees] BPASE &#39;18 Registration confirmation and attendee details"> <i class="fa" ng-class="{
-                &#39;fa-mail-reply&#39;: conversation.IsReplied,
-                &#39;fa-mail-reply-all&#39;: conversation.IsRepliedAll,
-                &#39;fa-mail-forward&#39;: conversation.IsForwarded
-            }"></i> <span class="folderConversations-container" data-conversation="conversation"></span> <!----> <span class="subject-text ellipsis">[bpase18attendees] BPASE '18 Registration confirmation and attendee details</span> </h4> <span class="meta"> <i class="fa fa-paperclip conversation-icon-attachment"></i> <div class="singleStar starButton" ng-class="isStarred() ? &#39;starButton-starred&#39; : &#39;&#39;" data-model="conversation"> <a pt-tooltip-translate-context="Toggle Star message/conversation" class="starButton-unstar fa fa-star" pt-tooltip="Unstar" title="" aria-label="Unstar" data-original-title="Unstar"></a> <a pt-tooltip-translate-context="Toggle Star message/conversation" class="starButton-star fa fa-star-o" pt-tooltip="Star" title="" aria-label="Star" data-original-title="Star"></a> </div> <time class="time">Jan 8, 2018</time> </span> </div> <div class="row bottom"> <span class="senders ellipsis" ng-class="{ &#39;full&#39;: !hasLabels(conversation) }"> <!----><!----><span ng-if="!((&#39;secured.sent.**&#39; | includedByState) || (&#39;secured.drafts.**&#39; | includedByState) || (&#39;secured.allSent.**&#39; | includedByState) || (&#39;secured.allDrafts.**&#39; | includedByState))" class="senders-name" ng-repeat="contact in senders(conversation)" title="aberke@stanford.edu">Allison Berke</span><!----><!----> <!----><!----><!----> </span> <div class="pm_labels labelsElement-container" data-format="stack" data-element="conversation"> <!----> <div class="labelsElement-more labelsElement-hidden" pt-tooltip="More labels" title="" aria-label="More labels" data-original-title="More labels">…</div> </div> </div> </div> </div><!----><div ng-repeat="conversation in conversations track by conversation.ID" class="conversation read hasLabels" elements-container="" data-pt-draggable="" ng-class="{
-                selected: conversation.Selected,
-                active: active(conversation),
-                read: isRead(conversation),
-                marked: conversation.ID === markedElement.ID,
-                hasLabels: hasLabels(conversation),
-                hasAttachments: hasAttachments(conversation),
-                expiring: (conversation.ExpirationTime &gt; 0)
-            }" draggable="true" data-pt-id="drag-fb4dwf"> <span class="expiration"><i class="fa fa-hourglass-end"></i></span> <div class="selection ptSelectConversation-container" data-index="16"> <label class="ptSelectConversation-label"> <div class="customCheckbox-container customMaskInput-container"> <input type="checkbox" class="customCheckbox-input customMaskInput-input-checkbox mousetrap ptSelectConversation-input" data-ng-checked="conversations[$index].Selected" data-index="16"> <div class="customCheckbox-mask customMaskInput-mask"></div> </div> </label> </div> <div class="conversation-meta"> <div class="row top"> <h4 class="subject" ng-attr-title="{{ conversation.Subject | unescape }}" title="[reddit] 1 new message from u/0x263a"> <i class="fa" ng-class="{
-                &#39;fa-mail-reply&#39;: conversation.IsReplied,
-                &#39;fa-mail-reply-all&#39;: conversation.IsRepliedAll,
-                &#39;fa-mail-forward&#39;: conversation.IsForwarded
-            }"></i> <span class="folderConversations-container" data-conversation="conversation"></span> <!----> <span class="subject-text ellipsis">[reddit] 1 new message from u/0x263a</span> </h4> <span class="meta"> <i class="fa fa-paperclip conversation-icon-attachment"></i> <div class="singleStar starButton" ng-class="isStarred() ? &#39;starButton-starred&#39; : &#39;&#39;" data-model="conversation"> <a pt-tooltip-translate-context="Toggle Star message/conversation" class="starButton-unstar fa fa-star" pt-tooltip="Unstar" title="" aria-label="Unstar" data-original-title="Unstar"></a> <a pt-tooltip-translate-context="Toggle Star message/conversation" class="starButton-star fa fa-star-o" pt-tooltip="Star" title="" aria-label="Star" data-original-title="Star"></a> </div> <time class="time">Dec 27, 2017</time> </span> </div> <div class="row bottom"> <span class="senders ellipsis" ng-class="{ &#39;full&#39;: !hasLabels(conversation) }"> <!----><!----><span ng-if="!((&#39;secured.sent.**&#39; | includedByState) || (&#39;secured.drafts.**&#39; | includedByState) || (&#39;secured.allSent.**&#39; | includedByState) || (&#39;secured.allDrafts.**&#39; | includedByState))" class="senders-name" ng-repeat="contact in senders(conversation)" title="notifications@redditmail.com">Reddit</span><!----><!----> <!----><!----><!----> </span> <div class="pm_labels labelsElement-container" data-format="stack" data-element="conversation"> <!----> <div class="labelsElement-more labelsElement-hidden" pt-tooltip="More labels" title="" aria-label="More labels" data-original-title="More labels">…</div> </div> </div> </div> </div><!----><div ng-repeat="conversation in conversations track by conversation.ID" class="conversation read hasLabels" elements-container="" data-pt-draggable="" ng-class="{
-                selected: conversation.Selected,
-                active: active(conversation),
-                read: isRead(conversation),
-                marked: conversation.ID === markedElement.ID,
-                hasLabels: hasLabels(conversation),
-                hasAttachments: hasAttachments(conversation),
-                expiring: (conversation.ExpirationTime &gt; 0)
-            }" draggable="true" data-pt-id="drag-comaw"> <span class="expiration"><i class="fa fa-hourglass-end"></i></span> <div class="selection ptSelectConversation-container" data-index="17"> <label class="ptSelectConversation-label"> <div class="customCheckbox-container customMaskInput-container"> <input type="checkbox" class="customCheckbox-input customMaskInput-input-checkbox mousetrap ptSelectConversation-input" data-ng-checked="conversations[$index].Selected" data-index="17"> <div class="customCheckbox-mask customMaskInput-mask"></div> </div> </label> </div> <div class="conversation-meta"> <div class="row top"> <h4 class="subject" ng-attr-title="{{ conversation.Subject | unescape }}" title="[reddit] 1 new message from u/pebx"> <i class="fa" ng-class="{
-                &#39;fa-mail-reply&#39;: conversation.IsReplied,
-                &#39;fa-mail-reply-all&#39;: conversation.IsRepliedAll,
-                &#39;fa-mail-forward&#39;: conversation.IsForwarded
-            }"></i> <span class="folderConversations-container" data-conversation="conversation"></span> <!----><span class="subject-num-message" ng-if="conversation.NumMessages &gt; 1">(5)</span><!----> <span class="subject-text ellipsis">[reddit] 1 new message from u/pebx</span> </h4> <span class="meta"> <i class="fa fa-paperclip conversation-icon-attachment"></i> <div class="singleStar starButton" ng-class="isStarred() ? &#39;starButton-starred&#39; : &#39;&#39;" data-model="conversation"> <a pt-tooltip-translate-context="Toggle Star message/conversation" class="starButton-unstar fa fa-star" pt-tooltip="Unstar" title="" aria-label="Unstar" data-original-title="Unstar"></a> <a pt-tooltip-translate-context="Toggle Star message/conversation" class="starButton-star fa fa-star-o" pt-tooltip="Star" title="" aria-label="Star" data-original-title="Star"></a> </div> <time class="time">Dec 27, 2017</time> </span> </div> <div class="row bottom"> <span class="senders ellipsis" ng-class="{ &#39;full&#39;: !hasLabels(conversation) }"> <!----><!----><span ng-if="!((&#39;secured.sent.**&#39; | includedByState) || (&#39;secured.drafts.**&#39; | includedByState) || (&#39;secured.allSent.**&#39; | includedByState) || (&#39;secured.allDrafts.**&#39; | includedByState))" class="senders-name" ng-repeat="contact in senders(conversation)" title="notifications@redditmail.com">Reddit</span><!----><!----> <!----><!----><!----> </span> <div class="pm_labels labelsElement-container" data-format="stack" data-element="conversation"> <!----> <div class="labelsElement-more labelsElement-hidden" pt-tooltip="More labels" title="" aria-label="More labels" data-original-title="More labels">…</div> </div> </div> </div> </div><!----><div ng-repeat="conversation in conversations track by conversation.ID" class="conversation read hasLabels" elements-container="" data-pt-draggable="" ng-class="{
-                selected: conversation.Selected,
-                active: active(conversation),
-                read: isRead(conversation),
-                marked: conversation.ID === markedElement.ID,
-                hasLabels: hasLabels(conversation),
-                hasAttachments: hasAttachments(conversation),
-                expiring: (conversation.ExpirationTime &gt; 0)
-            }" draggable="true" data-pt-id="drag-j6dh7s"> <span class="expiration"><i class="fa fa-hourglass-end"></i></span> <div class="selection ptSelectConversation-container" data-index="18"> <label class="ptSelectConversation-label"> <div class="customCheckbox-container customMaskInput-container"> <input type="checkbox" class="customCheckbox-input customMaskInput-input-checkbox mousetrap ptSelectConversation-input" data-ng-checked="conversations[$index].Selected" data-index="18"> <div class="customCheckbox-mask customMaskInput-mask"></div> </div> </label> </div> <div class="conversation-meta"> <div class="row top"> <h4 class="subject" ng-attr-title="{{ conversation.Subject | unescape }}" title="Fw: Monero Research Lab"> <i class="fa" ng-class="{
-                &#39;fa-mail-reply&#39;: conversation.IsReplied,
-                &#39;fa-mail-reply-all&#39;: conversation.IsRepliedAll,
-                &#39;fa-mail-forward&#39;: conversation.IsForwarded
-            }"></i> <span class="folderConversations-container" data-conversation="conversation"></span> <!----><span class="subject-num-message" ng-if="conversation.NumMessages &gt; 1">(2)</span><!----> <span class="subject-text ellipsis">Fw: Monero Research Lab</span> </h4> <span class="meta"> <i class="fa fa-paperclip conversation-icon-attachment"></i> <div class="singleStar starButton" ng-class="isStarred() ? &#39;starButton-starred&#39; : &#39;&#39;" data-model="conversation"> <a pt-tooltip-translate-context="Toggle Star message/conversation" class="starButton-unstar fa fa-star" pt-tooltip="Unstar" title="" aria-label="Unstar" data-original-title="Unstar"></a> <a pt-tooltip-translate-context="Toggle Star message/conversation" class="starButton-star fa fa-star-o" pt-tooltip="Star" title="" aria-label="Star" data-original-title="Star"></a> </div> <time class="time">Dec 26, 2017</time> </span> </div> <div class="row bottom"> <span class="senders ellipsis" ng-class="{ &#39;full&#39;: !hasLabels(conversation) }"> <!----><!----><span ng-if="!((&#39;secured.sent.**&#39; | includedByState) || (&#39;secured.drafts.**&#39; | includedByState) || (&#39;secured.allSent.**&#39; | includedByState) || (&#39;secured.allDrafts.**&#39; | includedByState))" class="senders-name" ng-repeat="contact in senders(conversation)" title="surae.noether@protonmail.com">Surae Noether</span><!----><!----><!----><span ng-if="!((&#39;secured.sent.**&#39; | includedByState) || (&#39;secured.drafts.**&#39; | includedByState) || (&#39;secured.allSent.**&#39; | includedByState) || (&#39;secured.allDrafts.**&#39; | includedByState))" class="senders-name" ng-repeat="contact in senders(conversation)" title="whythat@protonmail.com">mrwhythat</span><!----><!----> <!----><!----><!----><!----><!----> </span> <div class="pm_labels labelsElement-container" data-format="stack" data-element="conversation"> <!----> <div class="labelsElement-more labelsElement-hidden" pt-tooltip="More labels" title="" aria-label="More labels" data-original-title="More labels">…</div> </div> </div> </div> </div><!----><div ng-repeat="conversation in conversations track by conversation.ID" class="conversation read hasLabels" elements-container="" data-pt-draggable="" ng-class="{
-                selected: conversation.Selected,
-                active: active(conversation),
-                read: isRead(conversation),
-                marked: conversation.ID === markedElement.ID,
-                hasLabels: hasLabels(conversation),
-                hasAttachments: hasAttachments(conversation),
-                expiring: (conversation.ExpirationTime &gt; 0)
-            }" draggable="true" data-pt-id="drag-55h5zx"> <span class="expiration"><i class="fa fa-hourglass-end"></i></span> <div class="selection ptSelectConversation-container" data-index="19"> <label class="ptSelectConversation-label"> <div class="customCheckbox-container customMaskInput-container"> <input type="checkbox" class="customCheckbox-input customMaskInput-input-checkbox mousetrap ptSelectConversation-input" data-ng-checked="conversations[$index].Selected" data-index="19"> <div class="customCheckbox-mask customMaskInput-mask"></div> </div> </label> </div> <div class="conversation-meta"> <div class="row top"> <h4 class="subject" ng-attr-title="{{ conversation.Subject | unescape }}" title="test"> <i class="fa" ng-class="{
-                &#39;fa-mail-reply&#39;: conversation.IsReplied,
-                &#39;fa-mail-reply-all&#39;: conversation.IsRepliedAll,
-                &#39;fa-mail-forward&#39;: conversation.IsForwarded
-            }"></i> <span class="folderConversations-container" data-conversation="conversation"></span> <!----><span class="subject-num-message" ng-if="conversation.NumMessages &gt; 1">(2)</span><!----> <span class="subject-text ellipsis">test</span> </h4> <span class="meta"> <i class="fa fa-paperclip conversation-icon-attachment"></i> <div class="singleStar starButton" ng-class="isStarred() ? &#39;starButton-starred&#39; : &#39;&#39;" data-model="conversation"> <a pt-tooltip-translate-context="Toggle Star message/conversation" class="starButton-unstar fa fa-star" pt-tooltip="Unstar" title="" aria-label="Unstar" data-original-title="Unstar"></a> <a pt-tooltip-translate-context="Toggle Star message/conversation" class="starButton-star fa fa-star-o" pt-tooltip="Star" title="" aria-label="Star" data-original-title="Star"></a> </div> <time class="time">Dec 26, 2017</time> </span> </div> <div class="row bottom"> <span class="senders ellipsis" ng-class="{ &#39;full&#39;: !hasLabels(conversation) }"> <!----><!----><span ng-if="!((&#39;secured.sent.**&#39; | includedByState) || (&#39;secured.drafts.**&#39; | includedByState) || (&#39;secured.allSent.**&#39; | includedByState) || (&#39;secured.allDrafts.**&#39; | includedByState))" class="senders-name" ng-repeat="contact in senders(conversation)" title="brandon.g.goodell@gmail.com">Brandon Goodell</span><!----><!----> <!----><!----><!----> </span> <div class="pm_labels labelsElement-container" data-format="stack" data-element="conversation"> <!----> <div class="labelsElement-more labelsElement-hidden" pt-tooltip="More labels" title="" aria-label="More labels" data-original-title="More labels">…</div> </div> </div> </div> </div><!----><div ng-repeat="conversation in conversations track by conversation.ID" class="conversation read hasLabels" elements-container="" data-pt-draggable="" ng-class="{
-                selected: conversation.Selected,
-                active: active(conversation),
-                read: isRead(conversation),
-                marked: conversation.ID === markedElement.ID,
-                hasLabels: hasLabels(conversation),
-                hasAttachments: hasAttachments(conversation),
-                expiring: (conversation.ExpirationTime &gt; 0)
-            }" draggable="true" data-pt-id="drag-t3l4oi"> <span class="expiration"><i class="fa fa-hourglass-end"></i></span> <div class="selection ptSelectConversation-container" data-index="20"> <label class="ptSelectConversation-label"> <div class="customCheckbox-container customMaskInput-container"> <input type="checkbox" class="customCheckbox-input customMaskInput-input-checkbox mousetrap ptSelectConversation-input" data-ng-checked="conversations[$index].Selected" data-index="20"> <div class="customCheckbox-mask customMaskInput-mask"></div> </div> </label> </div> <div class="conversation-meta"> <div class="row top"> <h4 class="subject" ng-attr-title="{{ conversation.Subject | unescape }}" title="⬆️  The Best of Reddit 2017 ⬆️"> <i class="fa" ng-class="{
-                &#39;fa-mail-reply&#39;: conversation.IsReplied,
-                &#39;fa-mail-reply-all&#39;: conversation.IsRepliedAll,
-                &#39;fa-mail-forward&#39;: conversation.IsForwarded
-            }"></i> <span class="folderConversations-container" data-conversation="conversation"></span> <!----> <span class="subject-text ellipsis">⬆️  The Best of Reddit 2017 ⬆️</span> </h4> <span class="meta"> <i class="fa fa-paperclip conversation-icon-attachment"></i> <div class="singleStar starButton" ng-class="isStarred() ? &#39;starButton-starred&#39; : &#39;&#39;" data-model="conversation"> <a pt-tooltip-translate-context="Toggle Star message/conversation" class="starButton-unstar fa fa-star" pt-tooltip="Unstar" title="" aria-label="Unstar" data-original-title="Unstar"></a> <a pt-tooltip-translate-context="Toggle Star message/conversation" class="starButton-star fa fa-star-o" pt-tooltip="Star" title="" aria-label="Star" data-original-title="Star"></a> </div> <time class="time">Dec 20, 2017</time> </span> </div> <div class="row bottom"> <span class="senders ellipsis" ng-class="{ &#39;full&#39;: !hasLabels(conversation) }"> <!----><!----><span ng-if="!((&#39;secured.sent.**&#39; | includedByState) || (&#39;secured.drafts.**&#39; | includedByState) || (&#39;secured.allSent.**&#39; | includedByState) || (&#39;secured.allDrafts.**&#39; | includedByState))" class="senders-name" ng-repeat="contact in senders(conversation)" title="noreply@redditnewsletters.com">Reddit Newsletter</span><!----><!----> <!----><!----><!----> </span> <div class="pm_labels labelsElement-container" data-format="stack" data-element="conversation"> <!----> <div class="labelsElement-more labelsElement-hidden" pt-tooltip="More labels" title="" aria-label="More labels" data-original-title="More labels">…</div> </div> </div> </div> </div><!----><div ng-repeat="conversation in conversations track by conversation.ID" class="conversation read hasLabels hasAttachments" elements-container="" data-pt-draggable="" ng-class="{
-                selected: conversation.Selected,
-                active: active(conversation),
-                read: isRead(conversation),
-                marked: conversation.ID === markedElement.ID,
-                hasLabels: hasLabels(conversation),
-                hasAttachments: hasAttachments(conversation),
-                expiring: (conversation.ExpirationTime &gt; 0)
-            }" draggable="true" data-pt-id="drag-y3y5zr"> <span class="expiration"><i class="fa fa-hourglass-end"></i></span> <div class="selection ptSelectConversation-container" data-index="21"> <label class="ptSelectConversation-label"> <div class="customCheckbox-container customMaskInput-container"> <input type="checkbox" class="customCheckbox-input customMaskInput-input-checkbox mousetrap ptSelectConversation-input" data-ng-checked="conversations[$index].Selected" data-index="21"> <div class="customCheckbox-mask customMaskInput-mask"></div> </div> </label> </div> <div class="conversation-meta"> <div class="row top"> <h4 class="subject" ng-attr-title="{{ conversation.Subject | unescape }}" title="Multi BP update"> <i class="fa" ng-class="{
-                &#39;fa-mail-reply&#39;: conversation.IsReplied,
-                &#39;fa-mail-reply-all&#39;: conversation.IsRepliedAll,
-                &#39;fa-mail-forward&#39;: conversation.IsForwarded
-            }"></i> <span class="folderConversations-container" data-conversation="conversation"></span> <!----> <span class="subject-text ellipsis">Multi BP update</span> </h4> <span class="meta"> <i class="fa fa-paperclip conversation-icon-attachment"></i> <div class="singleStar starButton" ng-class="isStarred() ? &#39;starButton-starred&#39; : &#39;&#39;" data-model="conversation"> <a pt-tooltip-translate-context="Toggle Star message/conversation" class="starButton-unstar fa fa-star" pt-tooltip="Unstar" title="" aria-label="Unstar" data-original-title="Unstar"></a> <a pt-tooltip-translate-context="Toggle Star message/conversation" class="starButton-star fa fa-star-o" pt-tooltip="Star" title="" aria-label="Star" data-original-title="Star"></a> </div> <time class="time">Dec 18, 2017</time> </span> </div> <div class="row bottom"> <span class="senders ellipsis" ng-class="{ &#39;full&#39;: !hasLabels(conversation) }"> <!----><!----><span ng-if="!((&#39;secured.sent.**&#39; | includedByState) || (&#39;secured.drafts.**&#39; | includedByState) || (&#39;secured.allSent.**&#39; | includedByState) || (&#39;secured.allDrafts.**&#39; | includedByState))" class="senders-name" ng-repeat="contact in senders(conversation)" title="sarang.noether@protonmail.com">Sarang Noether</span><!----><!----> <!----><!----><!----> </span> <div class="pm_labels labelsElement-container" data-format="stack" data-element="conversation"> <!----> <div class="labelsElement-more labelsElement-hidden" pt-tooltip="More labels" title="" aria-label="More labels" data-original-title="More labels">…</div> </div> </div> </div> </div><!----><div ng-repeat="conversation in conversations track by conversation.ID" class="conversation read hasLabels hasAttachments" elements-container="" data-pt-draggable="" ng-class="{
-                selected: conversation.Selected,
-                active: active(conversation),
-                read: isRead(conversation),
-                marked: conversation.ID === markedElement.ID,
-                hasLabels: hasLabels(conversation),
-                hasAttachments: hasAttachments(conversation),
-                expiring: (conversation.ExpirationTime &gt; 0)
-            }" draggable="true" data-pt-id="drag-0u2dnd"> <span class="expiration"><i class="fa fa-hourglass-end"></i></span> <div class="selection ptSelectConversation-container" data-index="22"> <label class="ptSelectConversation-label"> <div class="customCheckbox-container customMaskInput-container"> <input type="checkbox" class="customCheckbox-input customMaskInput-input-checkbox mousetrap ptSelectConversation-input" data-ng-checked="conversations[$index].Selected" data-index="22"> <div class="customCheckbox-mask customMaskInput-mask"></div> </div> </label> </div> <div class="conversation-meta"> <div class="row top"> <h4 class="subject" ng-attr-title="{{ conversation.Subject | unescape }}" title="Updated BP code"> <i class="fa" ng-class="{
-                &#39;fa-mail-reply&#39;: conversation.IsReplied,
-                &#39;fa-mail-reply-all&#39;: conversation.IsRepliedAll,
-                &#39;fa-mail-forward&#39;: conversation.IsForwarded
-            }"></i> <span class="folderConversations-container" data-conversation="conversation"></span> <!----><span class="subject-num-message" ng-if="conversation.NumMessages &gt; 1">(3)</span><!----> <span class="subject-text ellipsis">Updated BP code</span> </h4> <span class="meta"> <i class="fa fa-paperclip conversation-icon-attachment"></i> <div class="singleStar starButton" ng-class="isStarred() ? &#39;starButton-starred&#39; : &#39;&#39;" data-model="conversation"> <a pt-tooltip-translate-context="Toggle Star message/conversation" class="starButton-unstar fa fa-star" pt-tooltip="Unstar" title="" aria-label="Unstar" data-original-title="Unstar"></a> <a pt-tooltip-translate-context="Toggle Star message/conversation" class="starButton-star fa fa-star-o" pt-tooltip="Star" title="" aria-label="Star" data-original-title="Star"></a> </div> <time class="time">Dec 18, 2017</time> </span> </div> <div class="row bottom"> <span class="senders ellipsis" ng-class="{ &#39;full&#39;: !hasLabels(conversation) }"> <!----><!----><span ng-if="!((&#39;secured.sent.**&#39; | includedByState) || (&#39;secured.drafts.**&#39; | includedByState) || (&#39;secured.allSent.**&#39; | includedByState) || (&#39;secured.allDrafts.**&#39; | includedByState))" class="senders-name" ng-repeat="contact in senders(conversation)" title="sarang.noether@protonmail.com">Sarang Noether</span><!----><!----> <!----><!----><!----> </span> <div class="pm_labels labelsElement-container" data-format="stack" data-element="conversation"> <!----> <div class="labelsElement-more labelsElement-hidden" pt-tooltip="More labels" title="" aria-label="More labels" data-original-title="More labels">…</div> </div> </div> </div> </div><!----><div ng-repeat="conversation in conversations track by conversation.ID" class="conversation read hasLabels" elements-container="" data-pt-draggable="" ng-class="{
-                selected: conversation.Selected,
-                active: active(conversation),
-                read: isRead(conversation),
-                marked: conversation.ID === markedElement.ID,
-                hasLabels: hasLabels(conversation),
-                hasAttachments: hasAttachments(conversation),
-                expiring: (conversation.ExpirationTime &gt; 0)
-            }" draggable="true" data-pt-id="drag-o7iw5v"> <span class="expiration"><i class="fa fa-hourglass-end"></i></span> <div class="selection ptSelectConversation-container" data-index="23"> <label class="ptSelectConversation-label"> <div class="customCheckbox-container customMaskInput-container"> <input type="checkbox" class="customCheckbox-input customMaskInput-input-checkbox mousetrap ptSelectConversation-input" data-ng-checked="conversations[$index].Selected" data-index="23"> <div class="customCheckbox-mask customMaskInput-mask"></div> </div> </label> </div> <div class="conversation-meta"> <div class="row top"> <h4 class="subject" ng-attr-title="{{ conversation.Subject | unescape }}" title="[reddit] 1 new message from u/justaq1233"> <i class="fa" ng-class="{
-                &#39;fa-mail-reply&#39;: conversation.IsReplied,
-                &#39;fa-mail-reply-all&#39;: conversation.IsRepliedAll,
-                &#39;fa-mail-forward&#39;: conversation.IsForwarded
-            }"></i> <span class="folderConversations-container" data-conversation="conversation"></span> <!----> <span class="subject-text ellipsis">[reddit] 1 new message from u/justaq1233</span> </h4> <span class="meta"> <i class="fa fa-paperclip conversation-icon-attachment"></i> <div class="singleStar starButton" ng-class="isStarred() ? &#39;starButton-starred&#39; : &#39;&#39;" data-model="conversation"> <a pt-tooltip-translate-context="Toggle Star message/conversation" class="starButton-unstar fa fa-star" pt-tooltip="Unstar" title="" aria-label="Unstar" data-original-title="Unstar"></a> <a pt-tooltip-translate-context="Toggle Star message/conversation" class="starButton-star fa fa-star-o" pt-tooltip="Star" title="" aria-label="Star" data-original-title="Star"></a> </div> <time class="time">Dec 11, 2017</time> </span> </div> <div class="row bottom"> <span class="senders ellipsis" ng-class="{ &#39;full&#39;: !hasLabels(conversation) }"> <!----><!----><span ng-if="!((&#39;secured.sent.**&#39; | includedByState) || (&#39;secured.drafts.**&#39; | includedByState) || (&#39;secured.allSent.**&#39; | includedByState) || (&#39;secured.allDrafts.**&#39; | includedByState))" class="senders-name" ng-repeat="contact in senders(conversation)" title="notifications@redditmail.com">Reddit</span><!----><!----> <!----><!----><!----> </span> <div class="pm_labels labelsElement-container" data-format="stack" data-element="conversation"> <!----> <div class="labelsElement-more labelsElement-hidden" pt-tooltip="More labels" title="" aria-label="More labels" data-original-title="More labels">…</div> </div> </div> </div> </div><!----><div ng-repeat="conversation in conversations track by conversation.ID" class="conversation read hasLabels" elements-container="" data-pt-draggable="" ng-class="{
-                selected: conversation.Selected,
-                active: active(conversation),
-                read: isRead(conversation),
-                marked: conversation.ID === markedElement.ID,
-                hasLabels: hasLabels(conversation),
-                hasAttachments: hasAttachments(conversation),
-                expiring: (conversation.ExpirationTime &gt; 0)
-            }" draggable="true" data-pt-id="drag-psewsp"> <span class="expiration"><i class="fa fa-hourglass-end"></i></span> <div class="selection ptSelectConversation-container" data-index="24"> <label class="ptSelectConversation-label"> <div class="customCheckbox-container customMaskInput-container"> <input type="checkbox" class="customCheckbox-input customMaskInput-input-checkbox mousetrap ptSelectConversation-input" data-ng-checked="conversations[$index].Selected" data-index="24"> <div class="customCheckbox-mask customMaskInput-mask"></div> </div> </label> </div> <div class="conversation-meta"> <div class="row top"> <h4 class="subject" ng-attr-title="{{ conversation.Subject | unescape }}" title="[reddit] 1 new message from u/endogenic"> <i class="fa" ng-class="{
-                &#39;fa-mail-reply&#39;: conversation.IsReplied,
-                &#39;fa-mail-reply-all&#39;: conversation.IsRepliedAll,
-                &#39;fa-mail-forward&#39;: conversation.IsForwarded
-            }"></i> <span class="folderConversations-container" data-conversation="conversation"></span> <!----><span class="subject-num-message" ng-if="conversation.NumMessages &gt; 1">(2)</span><!----> <span class="subject-text ellipsis">[reddit] 1 new message from u/endogenic</span> </h4> <span class="meta"> <i class="fa fa-paperclip conversation-icon-attachment"></i> <div class="singleStar starButton" ng-class="isStarred() ? &#39;starButton-starred&#39; : &#39;&#39;" data-model="conversation"> <a pt-tooltip-translate-context="Toggle Star message/conversation" class="starButton-unstar fa fa-star" pt-tooltip="Unstar" title="" aria-label="Unstar" data-original-title="Unstar"></a> <a pt-tooltip-translate-context="Toggle Star message/conversation" class="starButton-star fa fa-star-o" pt-tooltip="Star" title="" aria-label="Star" data-original-title="Star"></a> </div> <time class="time">Dec 10, 2017</time> </span> </div> <div class="row bottom"> <span class="senders ellipsis" ng-class="{ &#39;full&#39;: !hasLabels(conversation) }"> <!----><!----><span ng-if="!((&#39;secured.sent.**&#39; | includedByState) || (&#39;secured.drafts.**&#39; | includedByState) || (&#39;secured.allSent.**&#39; | includedByState) || (&#39;secured.allDrafts.**&#39; | includedByState))" class="senders-name" ng-repeat="contact in senders(conversation)" title="notifications@redditmail.com">Reddit</span><!----><!----> <!----><!----><!----> </span> <div class="pm_labels labelsElement-container" data-format="stack" data-element="conversation"> <!----> <div class="labelsElement-more labelsElement-hidden" pt-tooltip="More labels" title="" aria-label="More labels" data-original-title="More labels">…</div> </div> </div> </div> </div><!----><div ng-repeat="conversation in conversations track by conversation.ID" class="conversation read hasLabels" elements-container="" data-pt-draggable="" ng-class="{
-                selected: conversation.Selected,
-                active: active(conversation),
-                read: isRead(conversation),
-                marked: conversation.ID === markedElement.ID,
-                hasLabels: hasLabels(conversation),
-                hasAttachments: hasAttachments(conversation),
-                expiring: (conversation.ExpirationTime &gt; 0)
-            }" draggable="true" data-pt-id="drag-c6nfgh"> <span class="expiration"><i class="fa fa-hourglass-end"></i></span> <div class="selection ptSelectConversation-container" data-index="25"> <label class="ptSelectConversation-label"> <div class="customCheckbox-container customMaskInput-container"> <input type="checkbox" class="customCheckbox-input customMaskInput-input-checkbox mousetrap ptSelectConversation-input" data-ng-checked="conversations[$index].Selected" data-index="25"> <div class="customCheckbox-mask customMaskInput-mask"></div> </div> </label> </div> <div class="conversation-meta"> <div class="row top"> <h4 class="subject" ng-attr-title="{{ conversation.Subject | unescape }}" title="[reddit] 1 new message from u/NASA_Welder"> <i class="fa" ng-class="{
-                &#39;fa-mail-reply&#39;: conversation.IsReplied,
-                &#39;fa-mail-reply-all&#39;: conversation.IsRepliedAll,
-                &#39;fa-mail-forward&#39;: conversation.IsForwarded
-            }"></i> <span class="folderConversations-container" data-conversation="conversation"></span> <!----> <span class="subject-text ellipsis">[reddit] 1 new message from u/NASA_Welder</span> </h4> <span class="meta"> <i class="fa fa-paperclip conversation-icon-attachment"></i> <div class="singleStar starButton" ng-class="isStarred() ? &#39;starButton-starred&#39; : &#39;&#39;" data-model="conversation"> <a pt-tooltip-translate-context="Toggle Star message/conversation" class="starButton-unstar fa fa-star" pt-tooltip="Unstar" title="" aria-label="Unstar" data-original-title="Unstar"></a> <a pt-tooltip-translate-context="Toggle Star message/conversation" class="starButton-star fa fa-star-o" pt-tooltip="Star" title="" aria-label="Star" data-original-title="Star"></a> </div> <time class="time">Dec 7, 2017</time> </span> </div> <div class="row bottom"> <span class="senders ellipsis" ng-class="{ &#39;full&#39;: !hasLabels(conversation) }"> <!----><!----><span ng-if="!((&#39;secured.sent.**&#39; | includedByState) || (&#39;secured.drafts.**&#39; | includedByState) || (&#39;secured.allSent.**&#39; | includedByState) || (&#39;secured.allDrafts.**&#39; | includedByState))" class="senders-name" ng-repeat="contact in senders(conversation)" title="notifications@redditmail.com">Reddit</span><!----><!----> <!----><!----><!----> </span> <div class="pm_labels labelsElement-container" data-format="stack" data-element="conversation"> <!----> <div class="labelsElement-more labelsElement-hidden" pt-tooltip="More labels" title="" aria-label="More labels" data-original-title="More labels">…</div> </div> </div> </div> </div><!----><div ng-repeat="conversation in conversations track by conversation.ID" class="conversation read hasLabels" elements-container="" data-pt-draggable="" ng-class="{
-                selected: conversation.Selected,
-                active: active(conversation),
-                read: isRead(conversation),
-                marked: conversation.ID === markedElement.ID,
-                hasLabels: hasLabels(conversation),
-                hasAttachments: hasAttachments(conversation),
-                expiring: (conversation.ExpirationTime &gt; 0)
-            }" draggable="true" data-pt-id="drag-3jzmkm"> <span class="expiration"><i class="fa fa-hourglass-end"></i></span> <div class="selection ptSelectConversation-container" data-index="26"> <label class="ptSelectConversation-label"> <div class="customCheckbox-container customMaskInput-container"> <input type="checkbox" class="customCheckbox-input customMaskInput-input-checkbox mousetrap ptSelectConversation-input" data-ng-checked="conversations[$index].Selected" data-index="26"> <div class="customCheckbox-mask customMaskInput-mask"></div> </div> </label> </div> <div class="conversation-meta"> <div class="row top"> <h4 class="subject" ng-attr-title="{{ conversation.Subject | unescape }}" title="[reddit] 1 new message from u/malabaribiriyani"> <i class="fa" ng-class="{
-                &#39;fa-mail-reply&#39;: conversation.IsReplied,
-                &#39;fa-mail-reply-all&#39;: conversation.IsRepliedAll,
-                &#39;fa-mail-forward&#39;: conversation.IsForwarded
-            }"></i> <span class="folderConversations-container" data-conversation="conversation"></span> <!----> <span class="subject-text ellipsis">[reddit] 1 new message from u/malabaribiriyani</span> </h4> <span class="meta"> <i class="fa fa-paperclip conversation-icon-attachment"></i> <div class="singleStar starButton" ng-class="isStarred() ? &#39;starButton-starred&#39; : &#39;&#39;" data-model="conversation"> <a pt-tooltip-translate-context="Toggle Star message/conversation" class="starButton-unstar fa fa-star" pt-tooltip="Unstar" title="" aria-label="Unstar" data-original-title="Unstar"></a> <a pt-tooltip-translate-context="Toggle Star message/conversation" class="starButton-star fa fa-star-o" pt-tooltip="Star" title="" aria-label="Star" data-original-title="Star"></a> </div> <time class="time">Dec 7, 2017</time> </span> </div> <div class="row bottom"> <span class="senders ellipsis" ng-class="{ &#39;full&#39;: !hasLabels(conversation) }"> <!----><!----><span ng-if="!((&#39;secured.sent.**&#39; | includedByState) || (&#39;secured.drafts.**&#39; | includedByState) || (&#39;secured.allSent.**&#39; | includedByState) || (&#39;secured.allDrafts.**&#39; | includedByState))" class="senders-name" ng-repeat="contact in senders(conversation)" title="notifications@redditmail.com">Reddit</span><!----><!----> <!----><!----><!----> </span> <div class="pm_labels labelsElement-container" data-format="stack" data-element="conversation"> <!----> <div class="labelsElement-more labelsElement-hidden" pt-tooltip="More labels" title="" aria-label="More labels" data-original-title="More labels">…</div> </div> </div> </div> </div><!----><div ng-repeat="conversation in conversations track by conversation.ID" class="conversation read hasLabels hasAttachments" elements-container="" data-pt-draggable="" ng-class="{
-                selected: conversation.Selected,
-                active: active(conversation),
-                read: isRead(conversation),
-                marked: conversation.ID === markedElement.ID,
-                hasLabels: hasLabels(conversation),
-                hasAttachments: hasAttachments(conversation),
-                expiring: (conversation.ExpirationTime &gt; 0)
-            }" draggable="true" data-pt-id="drag-jy3kmj"> <span class="expiration"><i class="fa fa-hourglass-end"></i></span> <div class="selection ptSelectConversation-container" data-index="27"> <label class="ptSelectConversation-label"> <div class="customCheckbox-container customMaskInput-container"> <input type="checkbox" class="customCheckbox-input customMaskInput-input-checkbox mousetrap ptSelectConversation-input" data-ng-checked="conversations[$index].Selected" data-index="27"> <div class="customCheckbox-mask customMaskInput-mask"></div> </div> </label> </div> <div class="conversation-meta"> <div class="row top"> <h4 class="subject" ng-attr-title="{{ conversation.Subject | unescape }}" title="zcash linkability draft"> <i class="fa" ng-class="{
-                &#39;fa-mail-reply&#39;: conversation.IsReplied,
-                &#39;fa-mail-reply-all&#39;: conversation.IsRepliedAll,
-                &#39;fa-mail-forward&#39;: conversation.IsForwarded
-            }"></i> <span class="folderConversations-container" data-conversation="conversation"></span> <!----><span class="subject-num-message" ng-if="conversation.NumMessages &gt; 1">(14)</span><!----> <span class="subject-text ellipsis">zcash linkability draft</span> </h4> <span class="meta"> <i class="fa fa-paperclip conversation-icon-attachment"></i> <div class="singleStar starButton" ng-class="isStarred() ? &#39;starButton-starred&#39; : &#39;&#39;" data-model="conversation"> <a pt-tooltip-translate-context="Toggle Star message/conversation" class="starButton-unstar fa fa-star" pt-tooltip="Unstar" title="" aria-label="Unstar" data-original-title="Unstar"></a> <a pt-tooltip-translate-context="Toggle Star message/conversation" class="starButton-star fa fa-star-o" pt-tooltip="Star" title="" aria-label="Star" data-original-title="Star"></a> </div> <time class="time">Dec 4, 2017</time> </span> </div> <div class="row bottom"> <span class="senders ellipsis" ng-class="{ &#39;full&#39;: !hasLabels(conversation) }"> <!----><!----><span ng-if="!((&#39;secured.sent.**&#39; | includedByState) || (&#39;secured.drafts.**&#39; | includedByState) || (&#39;secured.allSent.**&#39; | includedByState) || (&#39;secured.allDrafts.**&#39; | includedByState))" class="senders-name" ng-repeat="contact in senders(conversation)" title="jquesnelle@protonmail.com">JQ</span><!----><!----><!----><span ng-if="!((&#39;secured.sent.**&#39; | includedByState) || (&#39;secured.drafts.**&#39; | includedByState) || (&#39;secured.allSent.**&#39; | includedByState) || (&#39;secured.allDrafts.**&#39; | includedByState))" class="senders-name" ng-repeat="contact in senders(conversation)" title="surae.noether@protonmail.com">Surae Noether</span><!----><!----> <!----><!----><!----><!----><!----><!----><!----><!----><!----> </span> <div class="pm_labels labelsElement-container" data-format="stack" data-element="conversation"> <!----> <div class="labelsElement-more labelsElement-hidden" pt-tooltip="More labels" title="" aria-label="More labels" data-original-title="More labels">…</div> </div> </div> </div> </div><!----><div ng-repeat="conversation in conversations track by conversation.ID" class="conversation read hasLabels" elements-container="" data-pt-draggable="" ng-class="{
-                selected: conversation.Selected,
-                active: active(conversation),
-                read: isRead(conversation),
-                marked: conversation.ID === markedElement.ID,
-                hasLabels: hasLabels(conversation),
-                hasAttachments: hasAttachments(conversation),
-                expiring: (conversation.ExpirationTime &gt; 0)
-            }" draggable="true" data-pt-id="drag-rssduh"> <span class="expiration"><i class="fa fa-hourglass-end"></i></span> <div class="selection ptSelectConversation-container" data-index="28"> <label class="ptSelectConversation-label"> <div class="customCheckbox-container customMaskInput-container"> <input type="checkbox" class="customCheckbox-input customMaskInput-input-checkbox mousetrap ptSelectConversation-input" data-ng-checked="conversations[$index].Selected" data-index="28"> <div class="customCheckbox-mask customMaskInput-mask"></div> </div> </label> </div> <div class="conversation-meta"> <div class="row top"> <h4 class="subject" ng-attr-title="{{ conversation.Subject | unescape }}" title="[reddit] 1 new message from u/e-mess"> <i class="fa" ng-class="{
-                &#39;fa-mail-reply&#39;: conversation.IsReplied,
-                &#39;fa-mail-reply-all&#39;: conversation.IsRepliedAll,
-                &#39;fa-mail-forward&#39;: conversation.IsForwarded
-            }"></i> <span class="folderConversations-container" data-conversation="conversation"></span> <!----> <span class="subject-text ellipsis">[reddit] 1 new message from u/e-mess</span> </h4> <span class="meta"> <i class="fa fa-paperclip conversation-icon-attachment"></i> <div class="singleStar starButton" ng-class="isStarred() ? &#39;starButton-starred&#39; : &#39;&#39;" data-model="conversation"> <a pt-tooltip-translate-context="Toggle Star message/conversation" class="starButton-unstar fa fa-star" pt-tooltip="Unstar" title="" aria-label="Unstar" data-original-title="Unstar"></a> <a pt-tooltip-translate-context="Toggle Star message/conversation" class="starButton-star fa fa-star-o" pt-tooltip="Star" title="" aria-label="Star" data-original-title="Star"></a> </div> <time class="time">Dec 2, 2017</time> </span> </div> <div class="row bottom"> <span class="senders ellipsis" ng-class="{ &#39;full&#39;: !hasLabels(conversation) }"> <!----><!----><span ng-if="!((&#39;secured.sent.**&#39; | includedByState) || (&#39;secured.drafts.**&#39; | includedByState) || (&#39;secured.allSent.**&#39; | includedByState) || (&#39;secured.allDrafts.**&#39; | includedByState))" class="senders-name" ng-repeat="contact in senders(conversation)" title="notifications@redditmail.com">Reddit</span><!----><!----> <!----><!----><!----> </span> <div class="pm_labels labelsElement-container" data-format="stack" data-element="conversation"> <!----> <div class="labelsElement-more labelsElement-hidden" pt-tooltip="More labels" title="" aria-label="More labels" data-original-title="More labels">…</div> </div> </div> </div> </div><!----><div ng-repeat="conversation in conversations track by conversation.ID" class="conversation read hasLabels" elements-container="" data-pt-draggable="" ng-class="{
-                selected: conversation.Selected,
-                active: active(conversation),
-                read: isRead(conversation),
-                marked: conversation.ID === markedElement.ID,
-                hasLabels: hasLabels(conversation),
-                hasAttachments: hasAttachments(conversation),
-                expiring: (conversation.ExpirationTime &gt; 0)
-            }" draggable="true" data-pt-id="drag-8obmpk"> <span class="expiration"><i class="fa fa-hourglass-end"></i></span> <div class="selection ptSelectConversation-container" data-index="29"> <label class="ptSelectConversation-label"> <div class="customCheckbox-container customMaskInput-container"> <input type="checkbox" class="customCheckbox-input customMaskInput-input-checkbox mousetrap ptSelectConversation-input" data-ng-checked="conversations[$index].Selected" data-index="29"> <div class="customCheckbox-mask customMaskInput-mask"></div> </div> </label> </div> <div class="conversation-meta"> <div class="row top"> <h4 class="subject" ng-attr-title="{{ conversation.Subject | unescape }}" title="[reddit] 1 new message from u/cryptobrant"> <i class="fa" ng-class="{
-                &#39;fa-mail-reply&#39;: conversation.IsReplied,
-                &#39;fa-mail-reply-all&#39;: conversation.IsRepliedAll,
-                &#39;fa-mail-forward&#39;: conversation.IsForwarded
-            }"></i> <span class="folderConversations-container" data-conversation="conversation"></span> <!----><span class="subject-num-message" ng-if="conversation.NumMessages &gt; 1">(2)</span><!----> <span class="subject-text ellipsis">[reddit] 1 new message from u/cryptobrant</span> </h4> <span class="meta"> <i class="fa fa-paperclip conversation-icon-attachment"></i> <div class="singleStar starButton" ng-class="isStarred() ? &#39;starButton-starred&#39; : &#39;&#39;" data-model="conversation"> <a pt-tooltip-translate-context="Toggle Star message/conversation" class="starButton-unstar fa fa-star" pt-tooltip="Unstar" title="" aria-label="Unstar" data-original-title="Unstar"></a> <a pt-tooltip-translate-context="Toggle Star message/conversation" class="starButton-star fa fa-star-o" pt-tooltip="Star" title="" aria-label="Star" data-original-title="Star"></a> </div> <time class="time">Dec 2, 2017</time> </span> </div> <div class="row bottom"> <span class="senders ellipsis" ng-class="{ &#39;full&#39;: !hasLabels(conversation) }"> <!----><!----><span ng-if="!((&#39;secured.sent.**&#39; | includedByState) || (&#39;secured.drafts.**&#39; | includedByState) || (&#39;secured.allSent.**&#39; | includedByState) || (&#39;secured.allDrafts.**&#39; | includedByState))" class="senders-name" ng-repeat="contact in senders(conversation)" title="notifications@redditmail.com">Reddit</span><!----><!----> <!----><!----><!----> </span> <div class="pm_labels labelsElement-container" data-format="stack" data-element="conversation"> <!----> <div class="labelsElement-more labelsElement-hidden" pt-tooltip="More labels" title="" aria-label="More labels" data-original-title="More labels">…</div> </div> </div> </div> </div><!----><div ng-repeat="conversation in conversations track by conversation.ID" class="conversation read hasLabels" elements-container="" data-pt-draggable="" ng-class="{
-                selected: conversation.Selected,
-                active: active(conversation),
-                read: isRead(conversation),
-                marked: conversation.ID === markedElement.ID,
-                hasLabels: hasLabels(conversation),
-                hasAttachments: hasAttachments(conversation),
-                expiring: (conversation.ExpirationTime &gt; 0)
-            }" draggable="true" data-pt-id="drag-gfj87"> <span class="expiration"><i class="fa fa-hourglass-end"></i></span> <div class="selection ptSelectConversation-container" data-index="30"> <label class="ptSelectConversation-label"> <div class="customCheckbox-container customMaskInput-container"> <input type="checkbox" class="customCheckbox-input customMaskInput-input-checkbox mousetrap ptSelectConversation-input" data-ng-checked="conversations[$index].Selected" data-index="30"> <div class="customCheckbox-mask customMaskInput-mask"></div> </div> </label> </div> <div class="conversation-meta"> <div class="row top"> <h4 class="subject" ng-attr-title="{{ conversation.Subject | unescape }}" title="[reddit] 1 new message from u/Truseus"> <i class="fa" ng-class="{
-                &#39;fa-mail-reply&#39;: conversation.IsReplied,
-                &#39;fa-mail-reply-all&#39;: conversation.IsRepliedAll,
-                &#39;fa-mail-forward&#39;: conversation.IsForwarded
-            }"></i> <span class="folderConversations-container" data-conversation="conversation"></span> <!----> <span class="subject-text ellipsis">[reddit] 1 new message from u/Truseus</span> </h4> <span class="meta"> <i class="fa fa-paperclip conversation-icon-attachment"></i> <div class="singleStar starButton" ng-class="isStarred() ? &#39;starButton-starred&#39; : &#39;&#39;" data-model="conversation"> <a pt-tooltip-translate-context="Toggle Star message/conversation" class="starButton-unstar fa fa-star" pt-tooltip="Unstar" title="" aria-label="Unstar" data-original-title="Unstar"></a> <a pt-tooltip-translate-context="Toggle Star message/conversation" class="starButton-star fa fa-star-o" pt-tooltip="Star" title="" aria-label="Star" data-original-title="Star"></a> </div> <time class="time">Dec 2, 2017</time> </span> </div> <div class="row bottom"> <span class="senders ellipsis" ng-class="{ &#39;full&#39;: !hasLabels(conversation) }"> <!----><!----><span ng-if="!((&#39;secured.sent.**&#39; | includedByState) || (&#39;secured.drafts.**&#39; | includedByState) || (&#39;secured.allSent.**&#39; | includedByState) || (&#39;secured.allDrafts.**&#39; | includedByState))" class="senders-name" ng-repeat="contact in senders(conversation)" title="notifications@redditmail.com">Reddit</span><!----><!----> <!----><!----><!----> </span> <div class="pm_labels labelsElement-container" data-format="stack" data-element="conversation"> <!----> <div class="labelsElement-more labelsElement-hidden" pt-tooltip="More labels" title="" aria-label="More labels" data-original-title="More labels">…</div> </div> </div> </div> </div><!----><div ng-repeat="conversation in conversations track by conversation.ID" class="conversation read hasLabels" elements-container="" data-pt-draggable="" ng-class="{
-                selected: conversation.Selected,
-                active: active(conversation),
-                read: isRead(conversation),
-                marked: conversation.ID === markedElement.ID,
-                hasLabels: hasLabels(conversation),
-                hasAttachments: hasAttachments(conversation),
-                expiring: (conversation.ExpirationTime &gt; 0)
-            }" draggable="true" data-pt-id="drag-loirlk"> <span class="expiration"><i class="fa fa-hourglass-end"></i></span> <div class="selection ptSelectConversation-container" data-index="31"> <label class="ptSelectConversation-label"> <div class="customCheckbox-container customMaskInput-container"> <input type="checkbox" class="customCheckbox-input customMaskInput-input-checkbox mousetrap ptSelectConversation-input" data-ng-checked="conversations[$index].Selected" data-index="31"> <div class="customCheckbox-mask customMaskInput-mask"></div> </div> </label> </div> <div class="conversation-meta"> <div class="row top"> <h4 class="subject" ng-attr-title="{{ conversation.Subject | unescape }}" title="[reddit] 1 new message from u/daveselbow"> <i class="fa" ng-class="{
-                &#39;fa-mail-reply&#39;: conversation.IsReplied,
-                &#39;fa-mail-reply-all&#39;: conversation.IsRepliedAll,
-                &#39;fa-mail-forward&#39;: conversation.IsForwarded
-            }"></i> <span class="folderConversations-container" data-conversation="conversation"></span> <!----> <span class="subject-text ellipsis">[reddit] 1 new message from u/daveselbow</span> </h4> <span class="meta"> <i class="fa fa-paperclip conversation-icon-attachment"></i> <div class="singleStar starButton" ng-class="isStarred() ? &#39;starButton-starred&#39; : &#39;&#39;" data-model="conversation"> <a pt-tooltip-translate-context="Toggle Star message/conversation" class="starButton-unstar fa fa-star" pt-tooltip="Unstar" title="" aria-label="Unstar" data-original-title="Unstar"></a> <a pt-tooltip-translate-context="Toggle Star message/conversation" class="starButton-star fa fa-star-o" pt-tooltip="Star" title="" aria-label="Star" data-original-title="Star"></a> </div> <time class="time">Dec 2, 2017</time> </span> </div> <div class="row bottom"> <span class="senders ellipsis" ng-class="{ &#39;full&#39;: !hasLabels(conversation) }"> <!----><!----><span ng-if="!((&#39;secured.sent.**&#39; | includedByState) || (&#39;secured.drafts.**&#39; | includedByState) || (&#39;secured.allSent.**&#39; | includedByState) || (&#39;secured.allDrafts.**&#39; | includedByState))" class="senders-name" ng-repeat="contact in senders(conversation)" title="notifications@redditmail.com">Reddit</span><!----><!----> <!----><!----><!----> </span> <div class="pm_labels labelsElement-container" data-format="stack" data-element="conversation"> <!----> <div class="labelsElement-more labelsElement-hidden" pt-tooltip="More labels" title="" aria-label="More labels" data-original-title="More labels">…</div> </div> </div> </div> </div><!----><div ng-repeat="conversation in conversations track by conversation.ID" class="conversation read hasLabels" elements-container="" data-pt-draggable="" ng-class="{
-                selected: conversation.Selected,
-                active: active(conversation),
-                read: isRead(conversation),
-                marked: conversation.ID === markedElement.ID,
-                hasLabels: hasLabels(conversation),
-                hasAttachments: hasAttachments(conversation),
-                expiring: (conversation.ExpirationTime &gt; 0)
-            }" draggable="true" data-pt-id="drag-pkbvd"> <span class="expiration"><i class="fa fa-hourglass-end"></i></span> <div class="selection ptSelectConversation-container" data-index="32"> <label class="ptSelectConversation-label"> <div class="customCheckbox-container customMaskInput-container"> <input type="checkbox" class="customCheckbox-input customMaskInput-input-checkbox mousetrap ptSelectConversation-input" data-ng-checked="conversations[$index].Selected" data-index="32"> <div class="customCheckbox-mask customMaskInput-mask"></div> </div> </label> </div> <div class="conversation-meta"> <div class="row top"> <h4 class="subject" ng-attr-title="{{ conversation.Subject | unescape }}" title="[reddit] 1 new message from u/driedapricots"> <i class="fa" ng-class="{
-                &#39;fa-mail-reply&#39;: conversation.IsReplied,
-                &#39;fa-mail-reply-all&#39;: conversation.IsRepliedAll,
-                &#39;fa-mail-forward&#39;: conversation.IsForwarded
-            }"></i> <span class="folderConversations-container" data-conversation="conversation"></span> <!----> <span class="subject-text ellipsis">[reddit] 1 new message from u/driedapricots</span> </h4> <span class="meta"> <i class="fa fa-paperclip conversation-icon-attachment"></i> <div class="singleStar starButton" ng-class="isStarred() ? &#39;starButton-starred&#39; : &#39;&#39;" data-model="conversation"> <a pt-tooltip-translate-context="Toggle Star message/conversation" class="starButton-unstar fa fa-star" pt-tooltip="Unstar" title="" aria-label="Unstar" data-original-title="Unstar"></a> <a pt-tooltip-translate-context="Toggle Star message/conversation" class="starButton-star fa fa-star-o" pt-tooltip="Star" title="" aria-label="Star" data-original-title="Star"></a> </div> <time class="time">Dec 2, 2017</time> </span> </div> <div class="row bottom"> <span class="senders ellipsis" ng-class="{ &#39;full&#39;: !hasLabels(conversation) }"> <!----><!----><span ng-if="!((&#39;secured.sent.**&#39; | includedByState) || (&#39;secured.drafts.**&#39; | includedByState) || (&#39;secured.allSent.**&#39; | includedByState) || (&#39;secured.allDrafts.**&#39; | includedByState))" class="senders-name" ng-repeat="contact in senders(conversation)" title="notifications@redditmail.com">Reddit</span><!----><!----> <!----><!----><!----> </span> <div class="pm_labels labelsElement-container" data-format="stack" data-element="conversation"> <!----> <div class="labelsElement-more labelsElement-hidden" pt-tooltip="More labels" title="" aria-label="More labels" data-original-title="More labels">…</div> </div> </div> </div> </div><!----><div ng-repeat="conversation in conversations track by conversation.ID" class="conversation read hasLabels" elements-container="" data-pt-draggable="" ng-class="{
-                selected: conversation.Selected,
-                active: active(conversation),
-                read: isRead(conversation),
-                marked: conversation.ID === markedElement.ID,
-                hasLabels: hasLabels(conversation),
-                hasAttachments: hasAttachments(conversation),
-                expiring: (conversation.ExpirationTime &gt; 0)
-            }" draggable="true" data-pt-id="drag-mzrxin"> <span class="expiration"><i class="fa fa-hourglass-end"></i></span> <div class="selection ptSelectConversation-container" data-index="33"> <label class="ptSelectConversation-label"> <div class="customCheckbox-container customMaskInput-container"> <input type="checkbox" class="customCheckbox-input customMaskInput-input-checkbox mousetrap ptSelectConversation-input" data-ng-checked="conversations[$index].Selected" data-index="33"> <div class="customCheckbox-mask customMaskInput-mask"></div> </div> </label> </div> <div class="conversation-meta"> <div class="row top"> <h4 class="subject" ng-attr-title="{{ conversation.Subject | unescape }}" title="[reddit] 1 new message from u/foyamoon"> <i class="fa" ng-class="{
-                &#39;fa-mail-reply&#39;: conversation.IsReplied,
-                &#39;fa-mail-reply-all&#39;: conversation.IsRepliedAll,
-                &#39;fa-mail-forward&#39;: conversation.IsForwarded
-            }"></i> <span class="folderConversations-container" data-conversation="conversation"></span> <!----> <span class="subject-text ellipsis">[reddit] 1 new message from u/foyamoon</span> </h4> <span class="meta"> <i class="fa fa-paperclip conversation-icon-attachment"></i> <div class="singleStar starButton" ng-class="isStarred() ? &#39;starButton-starred&#39; : &#39;&#39;" data-model="conversation"> <a pt-tooltip-translate-context="Toggle Star message/conversation" class="starButton-unstar fa fa-star" pt-tooltip="Unstar" title="" aria-label="Unstar" data-original-title="Unstar"></a> <a pt-tooltip-translate-context="Toggle Star message/conversation" class="starButton-star fa fa-star-o" pt-tooltip="Star" title="" aria-label="Star" data-original-title="Star"></a> </div> <time class="time">Dec 2, 2017</time> </span> </div> <div class="row bottom"> <span class="senders ellipsis" ng-class="{ &#39;full&#39;: !hasLabels(conversation) }"> <!----><!----><span ng-if="!((&#39;secured.sent.**&#39; | includedByState) || (&#39;secured.drafts.**&#39; | includedByState) || (&#39;secured.allSent.**&#39; | includedByState) || (&#39;secured.allDrafts.**&#39; | includedByState))" class="senders-name" ng-repeat="contact in senders(conversation)" title="notifications@redditmail.com">Reddit</span><!----><!----> <!----><!----><!----> </span> <div class="pm_labels labelsElement-container" data-format="stack" data-element="conversation"> <!----> <div class="labelsElement-more labelsElement-hidden" pt-tooltip="More labels" title="" aria-label="More labels" data-original-title="More labels">…</div> </div> </div> </div> </div><!----><div ng-repeat="conversation in conversations track by conversation.ID" class="conversation read hasLabels" elements-container="" data-pt-draggable="" ng-class="{
-                selected: conversation.Selected,
-                active: active(conversation),
-                read: isRead(conversation),
-                marked: conversation.ID === markedElement.ID,
-                hasLabels: hasLabels(conversation),
-                hasAttachments: hasAttachments(conversation),
-                expiring: (conversation.ExpirationTime &gt; 0)
-            }" draggable="true" data-pt-id="drag-6h4bx"> <span class="expiration"><i class="fa fa-hourglass-end"></i></span> <div class="selection ptSelectConversation-container" data-index="34"> <label class="ptSelectConversation-label"> <div class="customCheckbox-container customMaskInput-container"> <input type="checkbox" class="customCheckbox-input customMaskInput-input-checkbox mousetrap ptSelectConversation-input" data-ng-checked="conversations[$index].Selected" data-index="34"> <div class="customCheckbox-mask customMaskInput-mask"></div> </div> </label> </div> <div class="conversation-meta"> <div class="row top"> <h4 class="subject" ng-attr-title="{{ conversation.Subject | unescape }}" title="[reddit] 1 new message from u/not_really_a_troll"> <i class="fa" ng-class="{
-                &#39;fa-mail-reply&#39;: conversation.IsReplied,
-                &#39;fa-mail-reply-all&#39;: conversation.IsRepliedAll,
-                &#39;fa-mail-forward&#39;: conversation.IsForwarded
-            }"></i> <span class="folderConversations-container" data-conversation="conversation"></span> <!----> <span class="subject-text ellipsis">[reddit] 1 new message from u/not_really_a_troll</span> </h4> <span class="meta"> <i class="fa fa-paperclip conversation-icon-attachment"></i> <div class="singleStar starButton" ng-class="isStarred() ? &#39;starButton-starred&#39; : &#39;&#39;" data-model="conversation"> <a pt-tooltip-translate-context="Toggle Star message/conversation" class="starButton-unstar fa fa-star" pt-tooltip="Unstar" title="" aria-label="Unstar" data-original-title="Unstar"></a> <a pt-tooltip-translate-context="Toggle Star message/conversation" class="starButton-star fa fa-star-o" pt-tooltip="Star" title="" aria-label="Star" data-original-title="Star"></a> </div> <time class="time">Dec 1, 2017</time> </span> </div> <div class="row bottom"> <span class="senders ellipsis" ng-class="{ &#39;full&#39;: !hasLabels(conversation) }"> <!----><!----><span ng-if="!((&#39;secured.sent.**&#39; | includedByState) || (&#39;secured.drafts.**&#39; | includedByState) || (&#39;secured.allSent.**&#39; | includedByState) || (&#39;secured.allDrafts.**&#39; | includedByState))" class="senders-name" ng-repeat="contact in senders(conversation)" title="notifications@redditmail.com">Reddit</span><!----><!----> <!----><!----><!----> </span> <div class="pm_labels labelsElement-container" data-format="stack" data-element="conversation"> <!----> <div class="labelsElement-more labelsElement-hidden" pt-tooltip="More labels" title="" aria-label="More labels" data-original-title="More labels">…</div> </div> </div> </div> </div><!----><div ng-repeat="conversation in conversations track by conversation.ID" class="conversation read hasLabels" elements-container="" data-pt-draggable="" ng-class="{
-                selected: conversation.Selected,
-                active: active(conversation),
-                read: isRead(conversation),
-                marked: conversation.ID === markedElement.ID,
-                hasLabels: hasLabels(conversation),
-                hasAttachments: hasAttachments(conversation),
-                expiring: (conversation.ExpirationTime &gt; 0)
-            }" draggable="true" data-pt-id="drag-v0uwt"> <span class="expiration"><i class="fa fa-hourglass-end"></i></span> <div class="selection ptSelectConversation-container" data-index="35"> <label class="ptSelectConversation-label"> <div class="customCheckbox-container customMaskInput-container"> <input type="checkbox" class="customCheckbox-input customMaskInput-input-checkbox mousetrap ptSelectConversation-input" data-ng-checked="conversations[$index].Selected" data-index="35"> <div class="customCheckbox-mask customMaskInput-mask"></div> </div> </label> </div> <div class="conversation-meta"> <div class="row top"> <h4 class="subject" ng-attr-title="{{ conversation.Subject | unescape }}" title="[reddit] 1 new message from u/TheCryptoDivision"> <i class="fa" ng-class="{
-                &#39;fa-mail-reply&#39;: conversation.IsReplied,
-                &#39;fa-mail-reply-all&#39;: conversation.IsRepliedAll,
-                &#39;fa-mail-forward&#39;: conversation.IsForwarded
-            }"></i> <span class="folderConversations-container" data-conversation="conversation"></span> <!----> <span class="subject-text ellipsis">[reddit] 1 new message from u/TheCryptoDivision</span> </h4> <span class="meta"> <i class="fa fa-paperclip conversation-icon-attachment"></i> <div class="singleStar starButton" ng-class="isStarred() ? &#39;starButton-starred&#39; : &#39;&#39;" data-model="conversation"> <a pt-tooltip-translate-context="Toggle Star message/conversation" class="starButton-unstar fa fa-star" pt-tooltip="Unstar" title="" aria-label="Unstar" data-original-title="Unstar"></a> <a pt-tooltip-translate-context="Toggle Star message/conversation" class="starButton-star fa fa-star-o" pt-tooltip="Star" title="" aria-label="Star" data-original-title="Star"></a> </div> <time class="time">Dec 1, 2017</time> </span> </div> <div class="row bottom"> <span class="senders ellipsis" ng-class="{ &#39;full&#39;: !hasLabels(conversation) }"> <!----><!----><span ng-if="!((&#39;secured.sent.**&#39; | includedByState) || (&#39;secured.drafts.**&#39; | includedByState) || (&#39;secured.allSent.**&#39; | includedByState) || (&#39;secured.allDrafts.**&#39; | includedByState))" class="senders-name" ng-repeat="contact in senders(conversation)" title="notifications@redditmail.com">Reddit</span><!----><!----> <!----><!----><!----> </span> <div class="pm_labels labelsElement-container" data-format="stack" data-element="conversation"> <!----> <div class="labelsElement-more labelsElement-hidden" pt-tooltip="More labels" title="" aria-label="More labels" data-original-title="More labels">…</div> </div> </div> </div> </div><!----><div ng-repeat="conversation in conversations track by conversation.ID" class="conversation read hasLabels" elements-container="" data-pt-draggable="" ng-class="{
-                selected: conversation.Selected,
-                active: active(conversation),
-                read: isRead(conversation),
-                marked: conversation.ID === markedElement.ID,
-                hasLabels: hasLabels(conversation),
-                hasAttachments: hasAttachments(conversation),
-                expiring: (conversation.ExpirationTime &gt; 0)
-            }" draggable="true" data-pt-id="drag-v56qpc"> <span class="expiration"><i class="fa fa-hourglass-end"></i></span> <div class="selection ptSelectConversation-container" data-index="36"> <label class="ptSelectConversation-label"> <div class="customCheckbox-container customMaskInput-container"> <input type="checkbox" class="customCheckbox-input customMaskInput-input-checkbox mousetrap ptSelectConversation-input" data-ng-checked="conversations[$index].Selected" data-index="36"> <div class="customCheckbox-mask customMaskInput-mask"></div> </div> </label> </div> <div class="conversation-meta"> <div class="row top"> <h4 class="subject" ng-attr-title="{{ conversation.Subject | unescape }}" title="[reddit] 1 new message from u/AsianHouseShrew"> <i class="fa" ng-class="{
-                &#39;fa-mail-reply&#39;: conversation.IsReplied,
-                &#39;fa-mail-reply-all&#39;: conversation.IsRepliedAll,
-                &#39;fa-mail-forward&#39;: conversation.IsForwarded
-            }"></i> <span class="folderConversations-container" data-conversation="conversation"></span> <!----> <span class="subject-text ellipsis">[reddit] 1 new message from u/AsianHouseShrew</span> </h4> <span class="meta"> <i class="fa fa-paperclip conversation-icon-attachment"></i> <div class="singleStar starButton" ng-class="isStarred() ? &#39;starButton-starred&#39; : &#39;&#39;" data-model="conversation"> <a pt-tooltip-translate-context="Toggle Star message/conversation" class="starButton-unstar fa fa-star" pt-tooltip="Unstar" title="" aria-label="Unstar" data-original-title="Unstar"></a> <a pt-tooltip-translate-context="Toggle Star message/conversation" class="starButton-star fa fa-star-o" pt-tooltip="Star" title="" aria-label="Star" data-original-title="Star"></a> </div> <time class="time">Dec 1, 2017</time> </span> </div> <div class="row bottom"> <span class="senders ellipsis" ng-class="{ &#39;full&#39;: !hasLabels(conversation) }"> <!----><!----><span ng-if="!((&#39;secured.sent.**&#39; | includedByState) || (&#39;secured.drafts.**&#39; | includedByState) || (&#39;secured.allSent.**&#39; | includedByState) || (&#39;secured.allDrafts.**&#39; | includedByState))" class="senders-name" ng-repeat="contact in senders(conversation)" title="notifications@redditmail.com">Reddit</span><!----><!----> <!----><!----><!----> </span> <div class="pm_labels labelsElement-container" data-format="stack" data-element="conversation"> <!----> <div class="labelsElement-more labelsElement-hidden" pt-tooltip="More labels" title="" aria-label="More labels" data-original-title="More labels">…</div> </div> </div> </div> </div><!----><div ng-repeat="conversation in conversations track by conversation.ID" class="conversation read hasLabels" elements-container="" data-pt-draggable="" ng-class="{
-                selected: conversation.Selected,
-                active: active(conversation),
-                read: isRead(conversation),
-                marked: conversation.ID === markedElement.ID,
-                hasLabels: hasLabels(conversation),
-                hasAttachments: hasAttachments(conversation),
-                expiring: (conversation.ExpirationTime &gt; 0)
-            }" draggable="true" data-pt-id="drag-vqp7z"> <span class="expiration"><i class="fa fa-hourglass-end"></i></span> <div class="selection ptSelectConversation-container" data-index="37"> <label class="ptSelectConversation-label"> <div class="customCheckbox-container customMaskInput-container"> <input type="checkbox" class="customCheckbox-input customMaskInput-input-checkbox mousetrap ptSelectConversation-input" data-ng-checked="conversations[$index].Selected" data-index="37"> <div class="customCheckbox-mask customMaskInput-mask"></div> </div> </label> </div> <div class="conversation-meta"> <div class="row top"> <h4 class="subject" ng-attr-title="{{ conversation.Subject | unescape }}" title="[reddit] 1 new message from u/xmr_eric"> <i class="fa" ng-class="{
-                &#39;fa-mail-reply&#39;: conversation.IsReplied,
-                &#39;fa-mail-reply-all&#39;: conversation.IsRepliedAll,
-                &#39;fa-mail-forward&#39;: conversation.IsForwarded
-            }"></i> <span class="folderConversations-container" data-conversation="conversation"></span> <!----> <span class="subject-text ellipsis">[reddit] 1 new message from u/xmr_eric</span> </h4> <span class="meta"> <i class="fa fa-paperclip conversation-icon-attachment"></i> <div class="singleStar starButton" ng-class="isStarred() ? &#39;starButton-starred&#39; : &#39;&#39;" data-model="conversation"> <a pt-tooltip-translate-context="Toggle Star message/conversation" class="starButton-unstar fa fa-star" pt-tooltip="Unstar" title="" aria-label="Unstar" data-original-title="Unstar"></a> <a pt-tooltip-translate-context="Toggle Star message/conversation" class="starButton-star fa fa-star-o" pt-tooltip="Star" title="" aria-label="Star" data-original-title="Star"></a> </div> <time class="time">Dec 1, 2017</time> </span> </div> <div class="row bottom"> <span class="senders ellipsis" ng-class="{ &#39;full&#39;: !hasLabels(conversation) }"> <!----><!----><span ng-if="!((&#39;secured.sent.**&#39; | includedByState) || (&#39;secured.drafts.**&#39; | includedByState) || (&#39;secured.allSent.**&#39; | includedByState) || (&#39;secured.allDrafts.**&#39; | includedByState))" class="senders-name" ng-repeat="contact in senders(conversation)" title="notifications@redditmail.com">Reddit</span><!----><!----> <!----><!----><!----> </span> <div class="pm_labels labelsElement-container" data-format="stack" data-element="conversation"> <!----> <div class="labelsElement-more labelsElement-hidden" pt-tooltip="More labels" title="" aria-label="More labels" data-original-title="More labels">…</div> </div> </div> </div> </div><!----><div ng-repeat="conversation in conversations track by conversation.ID" class="conversation read hasLabels" elements-container="" data-pt-draggable="" ng-class="{
-                selected: conversation.Selected,
-                active: active(conversation),
-                read: isRead(conversation),
-                marked: conversation.ID === markedElement.ID,
-                hasLabels: hasLabels(conversation),
-                hasAttachments: hasAttachments(conversation),
-                expiring: (conversation.ExpirationTime &gt; 0)
-            }" draggable="true" data-pt-id="drag-o8f2k"> <span class="expiration"><i class="fa fa-hourglass-end"></i></span> <div class="selection ptSelectConversation-container" data-index="38"> <label class="ptSelectConversation-label"> <div class="customCheckbox-container customMaskInput-container"> <input type="checkbox" class="customCheckbox-input customMaskInput-input-checkbox mousetrap ptSelectConversation-input" data-ng-checked="conversations[$index].Selected" data-index="38"> <div class="customCheckbox-mask customMaskInput-mask"></div> </div> </label> </div> <div class="conversation-meta"> <div class="row top"> <h4 class="subject" ng-attr-title="{{ conversation.Subject | unescape }}" title="[reddit] 1 new message from u/BBQ_RIBS"> <i class="fa" ng-class="{
-                &#39;fa-mail-reply&#39;: conversation.IsReplied,
-                &#39;fa-mail-reply-all&#39;: conversation.IsRepliedAll,
-                &#39;fa-mail-forward&#39;: conversation.IsForwarded
-            }"></i> <span class="folderConversations-container" data-conversation="conversation"></span> <!----> <span class="subject-text ellipsis">[reddit] 1 new message from u/BBQ_RIBS</span> </h4> <span class="meta"> <i class="fa fa-paperclip conversation-icon-attachment"></i> <div class="singleStar starButton" ng-class="isStarred() ? &#39;starButton-starred&#39; : &#39;&#39;" data-model="conversation"> <a pt-tooltip-translate-context="Toggle Star message/conversation" class="starButton-unstar fa fa-star" pt-tooltip="Unstar" title="" aria-label="Unstar" data-original-title="Unstar"></a> <a pt-tooltip-translate-context="Toggle Star message/conversation" class="starButton-star fa fa-star-o" pt-tooltip="Star" title="" aria-label="Star" data-original-title="Star"></a> </div> <time class="time">Dec 1, 2017</time> </span> </div> <div class="row bottom"> <span class="senders ellipsis" ng-class="{ &#39;full&#39;: !hasLabels(conversation) }"> <!----><!----><span ng-if="!((&#39;secured.sent.**&#39; | includedByState) || (&#39;secured.drafts.**&#39; | includedByState) || (&#39;secured.allSent.**&#39; | includedByState) || (&#39;secured.allDrafts.**&#39; | includedByState))" class="senders-name" ng-repeat="contact in senders(conversation)" title="notifications@redditmail.com">Reddit</span><!----><!----> <!----><!----><!----> </span> <div class="pm_labels labelsElement-container" data-format="stack" data-element="conversation"> <!----> <div class="labelsElement-more labelsElement-hidden" pt-tooltip="More labels" title="" aria-label="More labels" data-original-title="More labels">…</div> </div> </div> </div> </div><!----><div ng-repeat="conversation in conversations track by conversation.ID" class="conversation read hasLabels" elements-container="" data-pt-draggable="" ng-class="{
-                selected: conversation.Selected,
-                active: active(conversation),
-                read: isRead(conversation),
-                marked: conversation.ID === markedElement.ID,
-                hasLabels: hasLabels(conversation),
-                hasAttachments: hasAttachments(conversation),
-                expiring: (conversation.ExpirationTime &gt; 0)
-            }" draggable="true" data-pt-id="drag-eaqawu"> <span class="expiration"><i class="fa fa-hourglass-end"></i></span> <div class="selection ptSelectConversation-container" data-index="39"> <label class="ptSelectConversation-label"> <div class="customCheckbox-container customMaskInput-container"> <input type="checkbox" class="customCheckbox-input customMaskInput-input-checkbox mousetrap ptSelectConversation-input" data-ng-checked="conversations[$index].Selected" data-index="39"> <div class="customCheckbox-mask customMaskInput-mask"></div> </div> </label> </div> <div class="conversation-meta"> <div class="row top"> <h4 class="subject" ng-attr-title="{{ conversation.Subject | unescape }}" title="[reddit] 3 new messages from u/captainintarrnet, u/john_alan"> <i class="fa" ng-class="{
-                &#39;fa-mail-reply&#39;: conversation.IsReplied,
-                &#39;fa-mail-reply-all&#39;: conversation.IsRepliedAll,
-                &#39;fa-mail-forward&#39;: conversation.IsForwarded
-            }"></i> <span class="folderConversations-container" data-conversation="conversation"></span> <!----> <span class="subject-text ellipsis">[reddit] 3 new messages from u/captainintarrnet, u/john_alan</span> </h4> <span class="meta"> <i class="fa fa-paperclip conversation-icon-attachment"></i> <div class="singleStar starButton" ng-class="isStarred() ? &#39;starButton-starred&#39; : &#39;&#39;" data-model="conversation"> <a pt-tooltip-translate-context="Toggle Star message/conversation" class="starButton-unstar fa fa-star" pt-tooltip="Unstar" title="" aria-label="Unstar" data-original-title="Unstar"></a> <a pt-tooltip-translate-context="Toggle Star message/conversation" class="starButton-star fa fa-star-o" pt-tooltip="Star" title="" aria-label="Star" data-original-title="Star"></a> </div> <time class="time">Dec 1, 2017</time> </span> </div> <div class="row bottom"> <span class="senders ellipsis" ng-class="{ &#39;full&#39;: !hasLabels(conversation) }"> <!----><!----><span ng-if="!((&#39;secured.sent.**&#39; | includedByState) || (&#39;secured.drafts.**&#39; | includedByState) || (&#39;secured.allSent.**&#39; | includedByState) || (&#39;secured.allDrafts.**&#39; | includedByState))" class="senders-name" ng-repeat="contact in senders(conversation)" title="notifications@redditmail.com">Reddit</span><!----><!----> <!----><!----><!----> </span> <div class="pm_labels labelsElement-container" data-format="stack" data-element="conversation"> <!----> <div class="labelsElement-more labelsElement-hidden" pt-tooltip="More labels" title="" aria-label="More labels" data-original-title="More labels">…</div> </div> </div> </div> </div><!----><div ng-repeat="conversation in conversations track by conversation.ID" class="conversation read hasLabels" elements-container="" data-pt-draggable="" ng-class="{
-                selected: conversation.Selected,
-                active: active(conversation),
-                read: isRead(conversation),
-                marked: conversation.ID === markedElement.ID,
-                hasLabels: hasLabels(conversation),
-                hasAttachments: hasAttachments(conversation),
-                expiring: (conversation.ExpirationTime &gt; 0)
-            }" draggable="true" data-pt-id="drag-1x883d"> <span class="expiration"><i class="fa fa-hourglass-end"></i></span> <div class="selection ptSelectConversation-container" data-index="40"> <label class="ptSelectConversation-label"> <div class="customCheckbox-container customMaskInput-container"> <input type="checkbox" class="customCheckbox-input customMaskInput-input-checkbox mousetrap ptSelectConversation-input" data-ng-checked="conversations[$index].Selected" data-index="40"> <div class="customCheckbox-mask customMaskInput-mask"></div> </div> </label> </div> <div class="conversation-meta"> <div class="row top"> <h4 class="subject" ng-attr-title="{{ conversation.Subject | unescape }}" title="[reddit] 1 new message from u/IeatBitcoins"> <i class="fa" ng-class="{
-                &#39;fa-mail-reply&#39;: conversation.IsReplied,
-                &#39;fa-mail-reply-all&#39;: conversation.IsRepliedAll,
-                &#39;fa-mail-forward&#39;: conversation.IsForwarded
-            }"></i> <span class="folderConversations-container" data-conversation="conversation"></span> <!----> <span class="subject-text ellipsis">[reddit] 1 new message from u/IeatBitcoins</span> </h4> <span class="meta"> <i class="fa fa-paperclip conversation-icon-attachment"></i> <div class="singleStar starButton" ng-class="isStarred() ? &#39;starButton-starred&#39; : &#39;&#39;" data-model="conversation"> <a pt-tooltip-translate-context="Toggle Star message/conversation" class="starButton-unstar fa fa-star" pt-tooltip="Unstar" title="" aria-label="Unstar" data-original-title="Unstar"></a> <a pt-tooltip-translate-context="Toggle Star message/conversation" class="starButton-star fa fa-star-o" pt-tooltip="Star" title="" aria-label="Star" data-original-title="Star"></a> </div> <time class="time">Dec 1, 2017</time> </span> </div> <div class="row bottom"> <span class="senders ellipsis" ng-class="{ &#39;full&#39;: !hasLabels(conversation) }"> <!----><!----><span ng-if="!((&#39;secured.sent.**&#39; | includedByState) || (&#39;secured.drafts.**&#39; | includedByState) || (&#39;secured.allSent.**&#39; | includedByState) || (&#39;secured.allDrafts.**&#39; | includedByState))" class="senders-name" ng-repeat="contact in senders(conversation)" title="notifications@redditmail.com">Reddit</span><!----><!----> <!----><!----><!----> </span> <div class="pm_labels labelsElement-container" data-format="stack" data-element="conversation"> <!----> <div class="labelsElement-more labelsElement-hidden" pt-tooltip="More labels" title="" aria-label="More labels" data-original-title="More labels">…</div> </div> </div> </div> </div><!----><div ng-repeat="conversation in conversations track by conversation.ID" class="conversation read hasLabels" elements-container="" data-pt-draggable="" ng-class="{
-                selected: conversation.Selected,
-                active: active(conversation),
-                read: isRead(conversation),
-                marked: conversation.ID === markedElement.ID,
-                hasLabels: hasLabels(conversation),
-                hasAttachments: hasAttachments(conversation),
-                expiring: (conversation.ExpirationTime &gt; 0)
-            }" draggable="true" data-pt-id="drag-ex5cij"> <span class="expiration"><i class="fa fa-hourglass-end"></i></span> <div class="selection ptSelectConversation-container" data-index="41"> <label class="ptSelectConversation-label"> <div class="customCheckbox-container customMaskInput-container"> <input type="checkbox" class="customCheckbox-input customMaskInput-input-checkbox mousetrap ptSelectConversation-input" data-ng-checked="conversations[$index].Selected" data-index="41"> <div class="customCheckbox-mask customMaskInput-mask"></div> </div> </label> </div> <div class="conversation-meta"> <div class="row top"> <h4 class="subject" ng-attr-title="{{ conversation.Subject | unescape }}" title="[reddit] 1 new message from u/fresheneesz"> <i class="fa" ng-class="{
-                &#39;fa-mail-reply&#39;: conversation.IsReplied,
-                &#39;fa-mail-reply-all&#39;: conversation.IsRepliedAll,
-                &#39;fa-mail-forward&#39;: conversation.IsForwarded
-            }"></i> <span class="folderConversations-container" data-conversation="conversation"></span> <!----> <span class="subject-text ellipsis">[reddit] 1 new message from u/fresheneesz</span> </h4> <span class="meta"> <i class="fa fa-paperclip conversation-icon-attachment"></i> <div class="singleStar starButton" ng-class="isStarred() ? &#39;starButton-starred&#39; : &#39;&#39;" data-model="conversation"> <a pt-tooltip-translate-context="Toggle Star message/conversation" class="starButton-unstar fa fa-star" pt-tooltip="Unstar" title="" aria-label="Unstar" data-original-title="Unstar"></a> <a pt-tooltip-translate-context="Toggle Star message/conversation" class="starButton-star fa fa-star-o" pt-tooltip="Star" title="" aria-label="Star" data-original-title="Star"></a> </div> <time class="time">Dec 1, 2017</time> </span> </div> <div class="row bottom"> <span class="senders ellipsis" ng-class="{ &#39;full&#39;: !hasLabels(conversation) }"> <!----><!----><span ng-if="!((&#39;secured.sent.**&#39; | includedByState) || (&#39;secured.drafts.**&#39; | includedByState) || (&#39;secured.allSent.**&#39; | includedByState) || (&#39;secured.allDrafts.**&#39; | includedByState))" class="senders-name" ng-repeat="contact in senders(conversation)" title="notifications@redditmail.com">Reddit</span><!----><!----> <!----><!----><!----> </span> <div class="pm_labels labelsElement-container" data-format="stack" data-element="conversation"> <!----> <div class="labelsElement-more labelsElement-hidden" pt-tooltip="More labels" title="" aria-label="More labels" data-original-title="More labels">…</div> </div> </div> </div> </div><!----><div ng-repeat="conversation in conversations track by conversation.ID" class="conversation read hasLabels" elements-container="" data-pt-draggable="" ng-class="{
-                selected: conversation.Selected,
-                active: active(conversation),
-                read: isRead(conversation),
-                marked: conversation.ID === markedElement.ID,
-                hasLabels: hasLabels(conversation),
-                hasAttachments: hasAttachments(conversation),
-                expiring: (conversation.ExpirationTime &gt; 0)
-            }" draggable="true" data-pt-id="drag-0szg9a"> <span class="expiration"><i class="fa fa-hourglass-end"></i></span> <div class="selection ptSelectConversation-container" data-index="42"> <label class="ptSelectConversation-label"> <div class="customCheckbox-container customMaskInput-container"> <input type="checkbox" class="customCheckbox-input customMaskInput-input-checkbox mousetrap ptSelectConversation-input" data-ng-checked="conversations[$index].Selected" data-index="42"> <div class="customCheckbox-mask customMaskInput-mask"></div> </div> </label> </div> <div class="conversation-meta"> <div class="row top"> <h4 class="subject" ng-attr-title="{{ conversation.Subject | unescape }}" title="[reddit] 2 new messages from u/drfloydch, u/CapnFartfaceMcGee"> <i class="fa" ng-class="{
-                &#39;fa-mail-reply&#39;: conversation.IsReplied,
-                &#39;fa-mail-reply-all&#39;: conversation.IsRepliedAll,
-                &#39;fa-mail-forward&#39;: conversation.IsForwarded
-            }"></i> <span class="folderConversations-container" data-conversation="conversation"></span> <!----> <span class="subject-text ellipsis">[reddit] 2 new messages from u/drfloydch, u/CapnFartfaceMcGee</span> </h4> <span class="meta"> <i class="fa fa-paperclip conversation-icon-attachment"></i> <div class="singleStar starButton" ng-class="isStarred() ? &#39;starButton-starred&#39; : &#39;&#39;" data-model="conversation"> <a pt-tooltip-translate-context="Toggle Star message/conversation" class="starButton-unstar fa fa-star" pt-tooltip="Unstar" title="" aria-label="Unstar" data-original-title="Unstar"></a> <a pt-tooltip-translate-context="Toggle Star message/conversation" class="starButton-star fa fa-star-o" pt-tooltip="Star" title="" aria-label="Star" data-original-title="Star"></a> </div> <time class="time">Dec 1, 2017</time> </span> </div> <div class="row bottom"> <span class="senders ellipsis" ng-class="{ &#39;full&#39;: !hasLabels(conversation) }"> <!----><!----><span ng-if="!((&#39;secured.sent.**&#39; | includedByState) || (&#39;secured.drafts.**&#39; | includedByState) || (&#39;secured.allSent.**&#39; | includedByState) || (&#39;secured.allDrafts.**&#39; | includedByState))" class="senders-name" ng-repeat="contact in senders(conversation)" title="notifications@redditmail.com">Reddit</span><!----><!----> <!----><!----><!----> </span> <div class="pm_labels labelsElement-container" data-format="stack" data-element="conversation"> <!----> <div class="labelsElement-more labelsElement-hidden" pt-tooltip="More labels" title="" aria-label="More labels" data-original-title="More labels">…</div> </div> </div> </div> </div><!----><div ng-repeat="conversation in conversations track by conversation.ID" class="conversation read hasLabels" elements-container="" data-pt-draggable="" ng-class="{
-                selected: conversation.Selected,
-                active: active(conversation),
-                read: isRead(conversation),
-                marked: conversation.ID === markedElement.ID,
-                hasLabels: hasLabels(conversation),
-                hasAttachments: hasAttachments(conversation),
-                expiring: (conversation.ExpirationTime &gt; 0)
-            }" draggable="true" data-pt-id="drag-7wf90k"> <span class="expiration"><i class="fa fa-hourglass-end"></i></span> <div class="selection ptSelectConversation-container" data-index="43"> <label class="ptSelectConversation-label"> <div class="customCheckbox-container customMaskInput-container"> <input type="checkbox" class="customCheckbox-input customMaskInput-input-checkbox mousetrap ptSelectConversation-input" data-ng-checked="conversations[$index].Selected" data-index="43"> <div class="customCheckbox-mask customMaskInput-mask"></div> </div> </label> </div> <div class="conversation-meta"> <div class="row top"> <h4 class="subject" ng-attr-title="{{ conversation.Subject | unescape }}" title="[reddit] 1 new message from u/Wasabi567"> <i class="fa" ng-class="{
-                &#39;fa-mail-reply&#39;: conversation.IsReplied,
-                &#39;fa-mail-reply-all&#39;: conversation.IsRepliedAll,
-                &#39;fa-mail-forward&#39;: conversation.IsForwarded
-            }"></i> <span class="folderConversations-container" data-conversation="conversation"></span> <!----> <span class="subject-text ellipsis">[reddit] 1 new message from u/Wasabi567</span> </h4> <span class="meta"> <i class="fa fa-paperclip conversation-icon-attachment"></i> <div class="singleStar starButton" ng-class="isStarred() ? &#39;starButton-starred&#39; : &#39;&#39;" data-model="conversation"> <a pt-tooltip-translate-context="Toggle Star message/conversation" class="starButton-unstar fa fa-star" pt-tooltip="Unstar" title="" aria-label="Unstar" data-original-title="Unstar"></a> <a pt-tooltip-translate-context="Toggle Star message/conversation" class="starButton-star fa fa-star-o" pt-tooltip="Star" title="" aria-label="Star" data-original-title="Star"></a> </div> <time class="time">Dec 1, 2017</time> </span> </div> <div class="row bottom"> <span class="senders ellipsis" ng-class="{ &#39;full&#39;: !hasLabels(conversation) }"> <!----><!----><span ng-if="!((&#39;secured.sent.**&#39; | includedByState) || (&#39;secured.drafts.**&#39; | includedByState) || (&#39;secured.allSent.**&#39; | includedByState) || (&#39;secured.allDrafts.**&#39; | includedByState))" class="senders-name" ng-repeat="contact in senders(conversation)" title="notifications@redditmail.com">Reddit</span><!----><!----> <!----><!----><!----> </span> <div class="pm_labels labelsElement-container" data-format="stack" data-element="conversation"> <!----> <div class="labelsElement-more labelsElement-hidden" pt-tooltip="More labels" title="" aria-label="More labels" data-original-title="More labels">…</div> </div> </div> </div> </div><!----><div ng-repeat="conversation in conversations track by conversation.ID" class="conversation read hasLabels" elements-container="" data-pt-draggable="" ng-class="{
-                selected: conversation.Selected,
-                active: active(conversation),
-                read: isRead(conversation),
-                marked: conversation.ID === markedElement.ID,
-                hasLabels: hasLabels(conversation),
-                hasAttachments: hasAttachments(conversation),
-                expiring: (conversation.ExpirationTime &gt; 0)
-            }" draggable="true" data-pt-id="drag-4j82wk"> <span class="expiration"><i class="fa fa-hourglass-end"></i></span> <div class="selection ptSelectConversation-container" data-index="44"> <label class="ptSelectConversation-label"> <div class="customCheckbox-container customMaskInput-container"> <input type="checkbox" class="customCheckbox-input customMaskInput-input-checkbox mousetrap ptSelectConversation-input" data-ng-checked="conversations[$index].Selected" data-index="44"> <div class="customCheckbox-mask customMaskInput-mask"></div> </div> </label> </div> <div class="conversation-meta"> <div class="row top"> <h4 class="subject" ng-attr-title="{{ conversation.Subject | unescape }}" title="[reddit] 2 new messages from u/c-789, u/TinusMars"> <i class="fa" ng-class="{
-                &#39;fa-mail-reply&#39;: conversation.IsReplied,
-                &#39;fa-mail-reply-all&#39;: conversation.IsRepliedAll,
-                &#39;fa-mail-forward&#39;: conversation.IsForwarded
-            }"></i> <span class="folderConversations-container" data-conversation="conversation"></span> <!----> <span class="subject-text ellipsis">[reddit] 2 new messages from u/c-789, u/TinusMars</span> </h4> <span class="meta"> <i class="fa fa-paperclip conversation-icon-attachment"></i> <div class="singleStar starButton" ng-class="isStarred() ? &#39;starButton-starred&#39; : &#39;&#39;" data-model="conversation"> <a pt-tooltip-translate-context="Toggle Star message/conversation" class="starButton-unstar fa fa-star" pt-tooltip="Unstar" title="" aria-label="Unstar" data-original-title="Unstar"></a> <a pt-tooltip-translate-context="Toggle Star message/conversation" class="starButton-star fa fa-star-o" pt-tooltip="Star" title="" aria-label="Star" data-original-title="Star"></a> </div> <time class="time">Dec 1, 2017</time> </span> </div> <div class="row bottom"> <span class="senders ellipsis" ng-class="{ &#39;full&#39;: !hasLabels(conversation) }"> <!----><!----><span ng-if="!((&#39;secured.sent.**&#39; | includedByState) || (&#39;secured.drafts.**&#39; | includedByState) || (&#39;secured.allSent.**&#39; | includedByState) || (&#39;secured.allDrafts.**&#39; | includedByState))" class="senders-name" ng-repeat="contact in senders(conversation)" title="notifications@redditmail.com">Reddit</span><!----><!----> <!----><!----><!----> </span> <div class="pm_labels labelsElement-container" data-format="stack" data-element="conversation"> <!----> <div class="labelsElement-more labelsElement-hidden" pt-tooltip="More labels" title="" aria-label="More labels" data-original-title="More labels">…</div> </div> </div> </div> </div><!----><div ng-repeat="conversation in conversations track by conversation.ID" class="conversation read hasLabels hasAttachments" elements-container="" data-pt-draggable="" ng-class="{
-                selected: conversation.Selected,
-                active: active(conversation),
-                read: isRead(conversation),
-                marked: conversation.ID === markedElement.ID,
-                hasLabels: hasLabels(conversation),
-                hasAttachments: hasAttachments(conversation),
-                expiring: (conversation.ExpirationTime &gt; 0)
-            }" draggable="true" data-pt-id="drag-b3hlkn"> <span class="expiration"><i class="fa fa-hourglass-end"></i></span> <div class="selection ptSelectConversation-container" data-index="45"> <label class="ptSelectConversation-label"> <div class="customCheckbox-container customMaskInput-container"> <input type="checkbox" class="customCheckbox-input customMaskInput-input-checkbox mousetrap ptSelectConversation-input" data-ng-checked="conversations[$index].Selected" data-index="45"> <div class="customCheckbox-mask customMaskInput-mask"></div> </div> </label> </div> <div class="conversation-meta"> <div class="row top"> <h4 class="subject" ng-attr-title="{{ conversation.Subject | unescape }}" title="Bulletproof code"> <i class="fa" ng-class="{
-                &#39;fa-mail-reply&#39;: conversation.IsReplied,
-                &#39;fa-mail-reply-all&#39;: conversation.IsRepliedAll,
-                &#39;fa-mail-forward&#39;: conversation.IsForwarded
-            }"></i> <span class="folderConversations-container" data-conversation="conversation"></span> <!----> <span class="subject-text ellipsis">Bulletproof code</span> </h4> <span class="meta"> <i class="fa fa-paperclip conversation-icon-attachment"></i> <div class="singleStar starButton" ng-class="isStarred() ? &#39;starButton-starred&#39; : &#39;&#39;" data-model="conversation"> <a pt-tooltip-translate-context="Toggle Star message/conversation" class="starButton-unstar fa fa-star" pt-tooltip="Unstar" title="" aria-label="Unstar" data-original-title="Unstar"></a> <a pt-tooltip-translate-context="Toggle Star message/conversation" class="starButton-star fa fa-star-o" pt-tooltip="Star" title="" aria-label="Star" data-original-title="Star"></a> </div> <time class="time">Nov 28, 2017</time> </span> </div> <div class="row bottom"> <span class="senders ellipsis" ng-class="{ &#39;full&#39;: !hasLabels(conversation) }"> <!----><!----><span ng-if="!((&#39;secured.sent.**&#39; | includedByState) || (&#39;secured.drafts.**&#39; | includedByState) || (&#39;secured.allSent.**&#39; | includedByState) || (&#39;secured.allDrafts.**&#39; | includedByState))" class="senders-name" ng-repeat="contact in senders(conversation)" title="sarang.noether@protonmail.com">Sarang Noether</span><!----><!----> <!----><!----><!----> </span> <div class="pm_labels labelsElement-container" data-format="stack" data-element="conversation"> <!----> <div class="labelsElement-more labelsElement-hidden" pt-tooltip="More labels" title="" aria-label="More labels" data-original-title="More labels">…</div> </div> </div> </div> </div><!----><div ng-repeat="conversation in conversations track by conversation.ID" class="conversation read hasLabels" elements-container="" data-pt-draggable="" ng-class="{
-                selected: conversation.Selected,
-                active: active(conversation),
-                read: isRead(conversation),
-                marked: conversation.ID === markedElement.ID,
-                hasLabels: hasLabels(conversation),
-                hasAttachments: hasAttachments(conversation),
-                expiring: (conversation.ExpirationTime &gt; 0)
-            }" draggable="true" data-pt-id="drag-akfcd"> <span class="expiration"><i class="fa fa-hourglass-end"></i></span> <div class="selection ptSelectConversation-container" data-index="46"> <label class="ptSelectConversation-label"> <div class="customCheckbox-container customMaskInput-container"> <input type="checkbox" class="customCheckbox-input customMaskInput-input-checkbox mousetrap ptSelectConversation-input" data-ng-checked="conversations[$index].Selected" data-index="46"> <div class="customCheckbox-mask customMaskInput-mask"></div> </div> </label> </div> <div class="conversation-meta"> <div class="row top"> <h4 class="subject" ng-attr-title="{{ conversation.Subject | unescape }}" title="[reddit] 1 new message from u/yoyoyodayoyo"> <i class="fa" ng-class="{
-                &#39;fa-mail-reply&#39;: conversation.IsReplied,
-                &#39;fa-mail-reply-all&#39;: conversation.IsRepliedAll,
-                &#39;fa-mail-forward&#39;: conversation.IsForwarded
-            }"></i> <span class="folderConversations-container" data-conversation="conversation"></span> <!----> <span class="subject-text ellipsis">[reddit] 1 new message from u/yoyoyodayoyo</span> </h4> <span class="meta"> <i class="fa fa-paperclip conversation-icon-attachment"></i> <div class="singleStar starButton" ng-class="isStarred() ? &#39;starButton-starred&#39; : &#39;&#39;" data-model="conversation"> <a pt-tooltip-translate-context="Toggle Star message/conversation" class="starButton-unstar fa fa-star" pt-tooltip="Unstar" title="" aria-label="Unstar" data-original-title="Unstar"></a> <a pt-tooltip-translate-context="Toggle Star message/conversation" class="starButton-star fa fa-star-o" pt-tooltip="Star" title="" aria-label="Star" data-original-title="Star"></a> </div> <time class="time">Nov 20, 2017</time> </span> </div> <div class="row bottom"> <span class="senders ellipsis" ng-class="{ &#39;full&#39;: !hasLabels(conversation) }"> <!----><!----><span ng-if="!((&#39;secured.sent.**&#39; | includedByState) || (&#39;secured.drafts.**&#39; | includedByState) || (&#39;secured.allSent.**&#39; | includedByState) || (&#39;secured.allDrafts.**&#39; | includedByState))" class="senders-name" ng-repeat="contact in senders(conversation)" title="notifications@redditmail.com">Reddit</span><!----><!----> <!----><!----><!----> </span> <div class="pm_labels labelsElement-container" data-format="stack" data-element="conversation"> <!----> <div class="labelsElement-more labelsElement-hidden" pt-tooltip="More labels" title="" aria-label="More labels" data-original-title="More labels">…</div> </div> </div> </div> </div><!----><div ng-repeat="conversation in conversations track by conversation.ID" class="conversation read hasLabels hasAttachments" elements-container="" data-pt-draggable="" ng-class="{
-                selected: conversation.Selected,
-                active: active(conversation),
-                read: isRead(conversation),
-                marked: conversation.ID === markedElement.ID,
-                hasLabels: hasLabels(conversation),
-                hasAttachments: hasAttachments(conversation),
-                expiring: (conversation.ExpirationTime &gt; 0)
-            }" draggable="true" data-pt-id="drag-50hv5"> <span class="expiration"><i class="fa fa-hourglass-end"></i></span> <div class="selection ptSelectConversation-container" data-index="47"> <label class="ptSelectConversation-label"> <div class="customCheckbox-container customMaskInput-container"> <input type="checkbox" class="customCheckbox-input customMaskInput-input-checkbox mousetrap ptSelectConversation-input" data-ng-checked="conversations[$index].Selected" data-index="47"> <div class="customCheckbox-mask customMaskInput-mask"></div> </div> </label> </div> <div class="conversation-meta"> <div class="row top"> <h4 class="subject" ng-attr-title="{{ conversation.Subject | unescape }}" title="SB linking"> <i class="fa" ng-class="{
-                &#39;fa-mail-reply&#39;: conversation.IsReplied,
-                &#39;fa-mail-reply-all&#39;: conversation.IsRepliedAll,
-                &#39;fa-mail-forward&#39;: conversation.IsForwarded
-            }"></i> <span class="folderConversations-container" data-conversation="conversation"></span> <!----><span class="subject-num-message" ng-if="conversation.NumMessages &gt; 1">(28)</span><!----> <span class="subject-text ellipsis">SB linking</span> </h4> <span class="meta"> <i class="fa fa-paperclip conversation-icon-attachment"></i> <div class="singleStar starButton" ng-class="isStarred() ? &#39;starButton-starred&#39; : &#39;&#39;" data-model="conversation"> <a pt-tooltip-translate-context="Toggle Star message/conversation" class="starButton-unstar fa fa-star" pt-tooltip="Unstar" title="" aria-label="Unstar" data-original-title="Unstar"></a> <a pt-tooltip-translate-context="Toggle Star message/conversation" class="starButton-star fa fa-star-o" pt-tooltip="Star" title="" aria-label="Star" data-original-title="Star"></a> </div> <time class="time">Nov 10, 2017</time> </span> </div> <div class="row bottom"> <span class="senders ellipsis" ng-class="{ &#39;full&#39;: !hasLabels(conversation) }"> <!----><!----><span ng-if="!((&#39;secured.sent.**&#39; | includedByState) || (&#39;secured.drafts.**&#39; | includedByState) || (&#39;secured.allSent.**&#39; | includedByState) || (&#39;secured.allDrafts.**&#39; | includedByState))" class="senders-name" ng-repeat="contact in senders(conversation)" title="surae.noether@protonmail.com">Surae Noether</span><!----><!----><!----><span ng-if="!((&#39;secured.sent.**&#39; | includedByState) || (&#39;secured.drafts.**&#39; | includedByState) || (&#39;secured.allSent.**&#39; | includedByState) || (&#39;secured.allDrafts.**&#39; | includedByState))" class="senders-name" ng-repeat="contact in senders(conversation)" title="sarang.noether@protonmail.com">Sarang Noether</span><!----><!----><!----><span ng-if="!((&#39;secured.sent.**&#39; | includedByState) || (&#39;secured.drafts.**&#39; | includedByState) || (&#39;secured.allSent.**&#39; | includedByState) || (&#39;secured.allDrafts.**&#39; | includedByState))" class="senders-name" ng-repeat="contact in senders(conversation)" title="jquesnelle@protonmail.com">JQ</span><!----><!----> <!----><!----><!----><!----><!----><!----><!----><!----><!----> </span> <div class="pm_labels labelsElement-container" data-format="stack" data-element="conversation"> <!----> <div class="labelsElement-more labelsElement-hidden" pt-tooltip="More labels" title="" aria-label="More labels" data-original-title="More labels">…</div> </div> </div> </div> </div><!----><div ng-repeat="conversation in conversations track by conversation.ID" class="conversation read hasLabels" elements-container="" data-pt-draggable="" ng-class="{
-                selected: conversation.Selected,
-                active: active(conversation),
-                read: isRead(conversation),
-                marked: conversation.ID === markedElement.ID,
-                hasLabels: hasLabels(conversation),
-                hasAttachments: hasAttachments(conversation),
-                expiring: (conversation.ExpirationTime &gt; 0)
-            }" draggable="true" data-pt-id="drag-pt2png"> <span class="expiration"><i class="fa fa-hourglass-end"></i></span> <div class="selection ptSelectConversation-container" data-index="48"> <label class="ptSelectConversation-label"> <div class="customCheckbox-container customMaskInput-container"> <input type="checkbox" class="customCheckbox-input customMaskInput-input-checkbox mousetrap ptSelectConversation-input" data-ng-checked="conversations[$index].Selected" data-index="48"> <div class="customCheckbox-mask customMaskInput-mask"></div> </div> </label> </div> <div class="conversation-meta"> <div class="row top"> <h4 class="subject" ng-attr-title="{{ conversation.Subject | unescape }}" title="[reddit] 1 new message from u/captainintarrnet"> <i class="fa" ng-class="{
-                &#39;fa-mail-reply&#39;: conversation.IsReplied,
-                &#39;fa-mail-reply-all&#39;: conversation.IsRepliedAll,
-                &#39;fa-mail-forward&#39;: conversation.IsForwarded
-            }"></i> <span class="folderConversations-container" data-conversation="conversation"></span> <!----> <span class="subject-text ellipsis">[reddit] 1 new message from u/captainintarrnet</span> </h4> <span class="meta"> <i class="fa fa-paperclip conversation-icon-attachment"></i> <div class="singleStar starButton" ng-class="isStarred() ? &#39;starButton-starred&#39; : &#39;&#39;" data-model="conversation"> <a pt-tooltip-translate-context="Toggle Star message/conversation" class="starButton-unstar fa fa-star" pt-tooltip="Unstar" title="" aria-label="Unstar" data-original-title="Unstar"></a> <a pt-tooltip-translate-context="Toggle Star message/conversation" class="starButton-star fa fa-star-o" pt-tooltip="Star" title="" aria-label="Star" data-original-title="Star"></a> </div> <time class="time">Nov 1, 2017</time> </span> </div> <div class="row bottom"> <span class="senders ellipsis" ng-class="{ &#39;full&#39;: !hasLabels(conversation) }"> <!----><!----><span ng-if="!((&#39;secured.sent.**&#39; | includedByState) || (&#39;secured.drafts.**&#39; | includedByState) || (&#39;secured.allSent.**&#39; | includedByState) || (&#39;secured.allDrafts.**&#39; | includedByState))" class="senders-name" ng-repeat="contact in senders(conversation)" title="notifications@redditmail.com">Reddit</span><!----><!----> <!----><!----><!----> </span> <div class="pm_labels labelsElement-container" data-format="stack" data-element="conversation"> <!----> <div class="labelsElement-more labelsElement-hidden" pt-tooltip="More labels" title="" aria-label="More labels" data-original-title="More labels">…</div> </div> </div> </div> </div><!----><div ng-repeat="conversation in conversations track by conversation.ID" class="conversation read hasLabels" elements-container="" data-pt-draggable="" ng-class="{
-                selected: conversation.Selected,
-                active: active(conversation),
-                read: isRead(conversation),
-                marked: conversation.ID === markedElement.ID,
-                hasLabels: hasLabels(conversation),
-                hasAttachments: hasAttachments(conversation),
-                expiring: (conversation.ExpirationTime &gt; 0)
-            }" draggable="true" data-pt-id="drag-gdq4ee"> <span class="expiration"><i class="fa fa-hourglass-end"></i></span> <div class="selection ptSelectConversation-container" data-index="49"> <label class="ptSelectConversation-label"> <div class="customCheckbox-container customMaskInput-container"> <input type="checkbox" class="customCheckbox-input customMaskInput-input-checkbox mousetrap ptSelectConversation-input" data-ng-checked="conversations[$index].Selected" data-index="49"> <div class="customCheckbox-mask customMaskInput-mask"></div> </div> </label> </div> <div class="conversation-meta"> <div class="row top"> <h4 class="subject" ng-attr-title="{{ conversation.Subject | unescape }}" title="[reddit] 1 new message from u/Whooshless"> <i class="fa" ng-class="{
-                &#39;fa-mail-reply&#39;: conversation.IsReplied,
-                &#39;fa-mail-reply-all&#39;: conversation.IsRepliedAll,
-                &#39;fa-mail-forward&#39;: conversation.IsForwarded
-            }"></i> <span class="folderConversations-container" data-conversation="conversation"></span> <!----> <span class="subject-text ellipsis">[reddit] 1 new message from u/Whooshless</span> </h4> <span class="meta"> <i class="fa fa-paperclip conversation-icon-attachment"></i> <div class="singleStar starButton" ng-class="isStarred() ? &#39;starButton-starred&#39; : &#39;&#39;" data-model="conversation"> <a pt-tooltip-translate-context="Toggle Star message/conversation" class="starButton-unstar fa fa-star" pt-tooltip="Unstar" title="" aria-label="Unstar" data-original-title="Unstar"></a> <a pt-tooltip-translate-context="Toggle Star message/conversation" class="starButton-star fa fa-star-o" pt-tooltip="Star" title="" aria-label="Star" data-original-title="Star"></a> </div> <time class="time">Nov 1, 2017</time> </span> </div> <div class="row bottom"> <span class="senders ellipsis" ng-class="{ &#39;full&#39;: !hasLabels(conversation) }"> <!----><!----><span ng-if="!((&#39;secured.sent.**&#39; | includedByState) || (&#39;secured.drafts.**&#39; | includedByState) || (&#39;secured.allSent.**&#39; | includedByState) || (&#39;secured.allDrafts.**&#39; | includedByState))" class="senders-name" ng-repeat="contact in senders(conversation)" title="notifications@redditmail.com">Reddit</span><!----><!----> <!----><!----><!----> </span> <div class="pm_labels labelsElement-container" data-format="stack" data-element="conversation"> <!----> <div class="labelsElement-more labelsElement-hidden" pt-tooltip="More labels" title="" aria-label="More labels" data-original-title="More labels">…</div> </div> </div> </div> </div><!----> </section> <!----> </div><!----> <!----><div id="conversation-view" ui-view="view"><element-view>
-    <!----><div class="conversationView-container" ng-if="type === &#39;conversation&#39;"><!----><section class="conversation-container" ng-if="conversation" data-conversation="conversation"> <header id="conversationHeader"> <h1> <!----> <span>Repo changes</span> <div class="pm_buttons starButton" ng-class="isStarred() ? &#39;starButton-starred&#39; : &#39;&#39;" data-model="conversation" data-pt-star-type="conversation"> <a pt-tooltip-translate-context="Toggle Star message/conversation" class="starButton-unstar fa fa-star" pt-tooltip="Unstar" title="" aria-label="Unstar" data-original-title="Unstar"></a> <a pt-tooltip-translate-context="Toggle Star message/conversation" class="starButton-star fa fa-star-o" pt-tooltip="Star" title="" aria-label="Star" data-original-title="Star"></a> </div> </h1> <div ng-hide="(&#39;secured.search.**&#39; | includedByState) || (&#39;secured.label.**&#39; | includedByState)" class="containsMessage"> <!----> </div> </header> <div id="pm_thread" tabindex="0"> <!----><article class="message hasSender open" ng-class="{
-    &#39;open&#39;: message.expand,
-    &#39;errorDecryption&#39;: message.failedDecryption,
-    &#39;marked&#39;: message.ID === marked.ID,
-    &#39;unread&#39;: message.IsRead === 0,
-    &#39;details&#39;: message.toggleDetails === true,
-    &#39;draft&#39;: message.Type === 1,
-    &#39;sent&#39;: message.Type === 2 || message.Type === 3,
-    &#39;hasSender&#39;: message.Sender.Address.length,
-    &#39;message-mode-plain&#39;: message.viewMode === &#39;plain&#39;
-}" id="message0" data-model="message" data-marked="markedMessage" data-last="$last" data-index="$index" ng-repeat="message in messages | filter: filterMessages:showTrashed:showNonTrashed track by message.ID"> <div class="summary" toggle-message=""> <div class="pull-left"> <div class="meta"> <!----> <!----> <!----> <span class="contact message-contact"> <span class="from message-contact-from"><span translate-context="Message sender label" translate="">From</span>:</span> <strong>Sarang Noether</strong> <em>&lt;sarang.noether@protonmail.com&gt;<button class="message-contact-sender fa fa-pencil messageComposeTo-container" data-key="Sender" pt-tooltip="Compose to" title="" aria-label="Compose to" data-original-title="Compose to"></button></em> </span> </div> <div class="location message-summary-folder"> <span class="foldersMessage-container"></span> </div> </div> <div class="labels message-summary-labels"> <div class="message-summary-labels-list pm_labels labelsElement-container" data-format="stack" data-button="remove" data-element="message"> <!----> <div class="labelsElement-more labelsElement-hidden" pt-tooltip="More labels" title="" aria-label="More labels" data-original-title="More labels">…</div> </div> </div> <div class="time"> <i class="fa fa-paperclip" ng-show="message.NumAttachments &gt; 0"></i> <time class="time-readable">February 7, 2018 12:53 PM</time> <time class="time-machine" time-refreshed="1518033203" time-filter="messageTime" time-interval="30000" datetime="2018-02-07T19:53:23.000Z">02/07/2018 (a day ago)</time> </div> <div class="status"> <div class="singleStar starButton" ng-class="isStarred() ? &#39;starButton-starred&#39; : &#39;&#39;" data-model="message" data-pt-star-type="message"> <a pt-tooltip-translate-context="Toggle Star message/conversation" class="starButton-unstar fa fa-star" pt-tooltip="Unstar" title="" aria-label="Unstar" data-original-title="Unstar"></a> <a pt-tooltip-translate-context="Toggle Star message/conversation" class="starButton-star fa fa-star-o" pt-tooltip="Star" title="" aria-label="Star" data-original-title="Star"></a> </div> <span class="fa locks fa-lock text-purple" ng-class="{
-                &#39;fa-lock&#39;: !!!(message.IsEncrypted == &#39;0&#39;),
-                &#39;text-purple&#39;: !!(message.IsEncrypted == &#39;1&#39;) || !!(message.IsEncrypted == &#39;3&#39;) || !!(message.IsEncrypted == &#39;5&#39;) || !!(message.IsEncrypted == &#39;6&#39;),
-                &#39;fa-unlock-alt&#39;: !!(message.IsEncrypted == &#39;0&#39;),
-                &#39;pgp&#39;: !!(message.IsEncrypted == &#39;7&#39;) || !!(message.IsEncrypted == &#39;8&#39;)
-            }" title="End to end encrypted internal message"> </span> </div> </div> <!----><div ng-if="message.expand"> <div class="details"> <div class="recipients-summary"> <strong translate-context="Message recipient label" translate="">To</strong>: <!----><span class="recipients-summary-label" ng-repeat="email in recipients() track by $id(email)" title="&lt;surae.noether@protonmail.com&gt;">Surae Noether</span><!----> <!----> </div> <div class="recipients-details"> <!----><div class="recipients-details-toGroup messageContacts-container" ng-if="message.ToList.length" data-model="::message.ToList" data-list="To"> <span class="messageContacts-where">To</span> <ul class="messageContacts-list"> <!----><li class="messageContacts-list-item" ng-repeat="email in model track by $id(email)"> <span title="&lt;surae.noether@protonmail.com&gt;">Surae Noether</span> <em class="messageContacts-email">&lt;surae.noether@protonmail.com&gt;<button class="messageContacts-btn-compose fa fa-pencil messageComposeTo-container" pt-tooltip="Compose to" title="" aria-label="Compose to" data-original-title="Compose to"></button> </em> </li><!----> </ul> </div><!----> <!----> <!----> </div> <!----> <div class="action-row"> <!----><div class="actions pull-right" ng-if="message.decrypting === false"> <div class="pm_buttons"> <div class="pm_buttons" data-message="message"> <a href="https://mail.protonmail.com/#" class="pm_trigger open-label" pt-tooltip-translate-context="Action" pt-tooltip-translate-comment="Tooltip" dropdown="" pt-tooltip="Custom Filter" title="" aria-label="Custom Filter" data-original-title="Custom Filter"> <small><i class="fa fa-filter"></i> <i class="fa fa-angle-down"></i></small> </a> <div class="pm_dropdown wide"> <ul class="filterButton-container"> <li><b translate-context="Filter message" translate="">Filter on:</b></li> <li class="filterButton-item"> <label class="filterButton-label"> <span class="filterButton-label-text" translate-context="Filter message" translate="">Subject</span> <div class="filterButton-checkbox customCheckbox-container customMaskInput-container"> <input type="checkbox" class="customCheckbox-input customMaskInput-input-checkbox mousetrap ng-pristine ng-untouched ng-valid ng-empty" data-ng-model="model.subject"> <div class="customCheckbox-mask customMaskInput-mask"></div> </div> </label> </li> <li class="filterButton-item"> <label class="filterButton-label"> <span class="filterButton-label-text" translate-context="Filter message" translate="">Sender</span> <div class="filterButton-checkbox customCheckbox-container customMaskInput-container"> <input type="checkbox" class="customCheckbox-input customMaskInput-input-checkbox mousetrap ng-pristine ng-untouched ng-valid ng-empty" data-ng-model="model.sender"> <div class="customCheckbox-mask customMaskInput-mask"></div> </div> </label> </li> <li class="filterButton-item"> <label class="filterButton-label"> <span class="filterButton-label-text" translate-context="Filter message" translate="">Recipient</span> <div class="filterButton-checkbox customCheckbox-container customMaskInput-container"> <input type="checkbox" class="customCheckbox-input customMaskInput-input-checkbox mousetrap ng-pristine ng-untouched ng-valid ng-empty" data-ng-model="model.recipient"> <div class="customCheckbox-mask customMaskInput-mask"></div> </div> </label> </li> <li class="filterButton-item"> <label class="filterButton-label" translate-context="Filter message" translate=""><span class="filterButton-label-text">Attachments</span> <div class="filterButton-checkbox customCheckbox-container customMaskInput-container"> <input type="checkbox" class="customCheckbox-input customMaskInput-input-checkbox mousetrap ng-pristine ng-untouched ng-valid ng-empty" data-ng-model="model.attachments"> <div class="customCheckbox-mask customMaskInput-mask"></div> </div></label> </li> </ul> <footer class="filterButton-footer"> <button class="pm_button primary filterButton-btn-next" translate-context="Filter message" translate="">Next</button> </footer> </div> </div> <div class="pm_buttons"> <a class="pm_trigger open-folder pull-left" pt-tooltip-translate-context="Action" pt-tooltip-translate-comment="Tooltip" dropdown="" pt-tooltip="Move to" title="" aria-label="Move to" data-original-title="Move to"> <small><i class="fa fa-folder"></i> <i class="fa fa-angle-down"></i></small> </a> <div class="pm_dropdown right wide pull-left"> <div class="dropdown-folder-container" data-elements="getElements"> <div class="dropdown-folder-title"> <p translate="" translate-context="title">Move to</p> </div> <label class="dropdown-folder-search"> <i class="fa fa-search dropdown-folder-search-icon"></i> <input class="dropdown-folder-search-input ng-pristine ng-untouched ng-valid ng-empty ng-valid-minlength" type="search" ng-model="searchValue" ng-minlength="1" placeholder="Filter folders"> </label> <!----> <div class="dropdown-folder-create"> <button class="dropdown-folder-create-button" translate-context="Action" translate="">Create a new folder</button> </div> </div> </div> </div> <div class="pm_buttons"> <a class="pm_trigger open-label pull-left" pt-tooltip-translate-context="Action" pt-tooltip-translate-comment="Tooltip" dropdown="" pt-tooltip="Label as" title="" aria-label="Label as" data-original-title="Label as"> <small><i class="fa fa-tag"></i> <i class="fa fa-angle-down"></i></small> </a> <div class="pm_dropdown right wide pull-left"> <form novalidate="" class="dropdown-label-container ng-pristine ng-valid ng-valid-minlength" ng-class="{&#39;dropdown-label-hasLabels&#39;: labels.length}" autocomplete="off" data-messages="getMessage" data-message="message" data-save="saveLabels"> <div class="dropdown-label-title"> <p class="dropdown-label-title-hasLabels" translate="" translate-context="title">Label as</p> <p class="alert alert-info" translate="" translate-context="Info">No labels</p> </div> <label class="dropdown-label-search"> <i class="fa fa-search dropdown-label-search-icon"></i> <input class="dropdown-label-search-input ng-pristine ng-untouched ng-valid ng-empty ng-valid-minlength" type="search" ng-model="searchLabels" ng-minlength="1" placeholder="Filter labels"> </label> <!----> <div class="dropdown-label-create pm-flex-content" data-message="message" data-label-name="searchLabels"> <button type="button" class="createLabel-button" ng-class="{&#39;createLabel-withName&#39;: name.length}"> <span class="createLabel-new-name"> <span translate="" translate-context="action">Create label</span> <i>""</i> ? </span> <span class="createLabel-new-label" translate="" translate-context="action">Create a new label</span> </button> </div> <label class="dropdown-label-alsoArchive"> <span class="dropdown-label-alsoArchive-txt label-fillWidth" translate="" translate-comment="Form checkbox option">Also Archive</span> <div class="dropdown-label-alsoArchive-checkbox"> <div class="customCheckbox-container customMaskInput-container"> <input type="checkbox" class="customCheckbox-input customMaskInput-input-checkbox mousetrap dropdownLabels-input-archive ng-pristine ng-untouched ng-valid ng-empty" data-ng-model="alsoArchive" data-ng-change="changeAlsoArchive()"> <div class="customCheckbox-mask customMaskInput-mask"></div> </div> </div> </label> <button class="pm_button primary dropdown-label-apply" tabindex="1" ng-disabled="networkActivity.loading()" translate-context="Action" translate="">Apply</button> </form> </div> </div> </div> <nav class="pm_buttons"> <a class="message-actionBtn-reply" data-action-compose="::message" data-action-compose-type="reply" pt-tooltip-translate-context="Action" pt-tooltip="Reply" title="" aria-label="Reply" data-original-title="Reply"> <i class="fa fa-mail-reply"></i> </a> <a class="message-actionBtn-replyall" data-action-compose="::message" data-action-compose-type="replyall" pt-tooltip-translate-context="Action" pt-tooltip="Reply all" title="" aria-label="Reply all" data-original-title="Reply all"> <i class="fa fa-mail-reply-all"></i> </a> <a class="message-actionBtn-forward" data-action-compose="::message" data-action-compose-type="forward" pt-tooltip-translate-context="Action" pt-tooltip="Forward" title="" aria-label="Forward" data-original-title="Forward"> <i class="fa fa-mail-forward"></i> </a> <a href="https://mail.protonmail.com/#" class="pm_trigger" dropdown="" pt-tooltip-translate-context="Action" pt-tooltip="More" title="" aria-label="More" data-original-title="More"> <i class="fa fa-angle-down"></i> </a> <div class="pm_dropdown wide right"> <button data-action-message="move" data-action-message-type="inbox"> <i class="fa fa-inbox"></i> <span translate="" translate-context="Action">Move to inbox</span> </button> <button data-action-message="move" data-action-message-type="trash"> <i class="fa fa-trash-o"></i> <span translate="" translate-context="Action">Move to trash</span> </button> <button data-action-message="unread"> <i class="fa fa-eye-slash"></i> <span translate="" translate-context="Action">Mark as unread</span> </button> <button data-action-message="move" data-action-message-type="spam" ng-hide="&#39;secured.spam.**&#39; | includedByState"> <i class="fa fa-ban"></i> <span translate="" translate-context="Action">Mark as spam</span> </button> <!----> <button data-action-message="togglePlainHtml"> <span ng-show="message.viewMode === &#39;html&#39;"> <i class="fa fa-file-text-o"></i> <span translate="" translate-context="Action">View source code</span> </span> <span ng-show="message.viewMode === &#39;plain&#39;" class="ng-hide"> <i class="fa fa-file-photo-o"></i> <span translate="" translate-context="Action">View rendered HTML</span> </span> </button> <button data-action-message="viewPgp"> <i class="fa fa-code"></i> <!----><span translate="" translate-context="Action" ng-if="message.IsEncrypted !== 0">View headers</span><!----> <!----> </button> <button data-action-message="print"> <i class="fa fa-print"></i> <span translate="" translate-context="Action">Print</span> </button> </div> </nav> </div><!----> <button class="toggleDetails" data-action-message="toggleDetails"> <span class="toggleDetails-label-show" translate="" translate-context="Action">Show details</span> <span class="toggleDetails-label-hide" translate="" translate-context="Action">Hide details</span> </button> </div> </div> <!----> <section class="messageExtra-container"> <!----> <!----> <!----> <!----> <section class="displayContentBtn-container" ng-class="{
-        &#39;displayContentBtn-type-embedded&#39;: message.showEmbedded === false,
-        &#39;displayContentBtn-type-remote&#39;: message.showImages === false}" data-action="remote"> <div class="displayContentBtn-notice"> <span class="displayContentBtn-notice-text">This message contains remote content</span> </div> <button class="displayContentBtn-button pm_button" translate="" translate-context="Action">Load</button> </section> <section class="displayContentBtn-container" ng-class="{
-        &#39;displayContentBtn-type-embedded&#39;: message.showEmbedded === false,
-        &#39;displayContentBtn-type-remote&#39;: message.showImages === false}" data-action="embedded"> <div class="displayContentBtn-notice"> <span class="displayContentBtn-notice-text">This message contains embedded images</span> </div> <button class="displayContentBtn-button pm_button" translate="" translate-context="Action">Load</button> </section> </section> <div class="frame message-frame" data-embedded-img-loader="" data-inject-message-media=""> <!----> <!----> <!----><div class="bodyDecrypted email message-body-container" ng-class="{&#39;plain&#39;: message.isPlain}" render-message-body="" ng-if="message.viewMode === &#39;html&#39; &amp;&amp; !message.failedDecryption" toggle-blockquote="" mail-to="" scroll="true"><div>Please make the following change to the repo.<br></div><div>- Move the contents of (<a href="https://github.com/b-g-goodell/research-lab/tree/master/source-code/BulletProofs" rel="noreferrer nofollow noopener" target="_blank">https://github.com/b-g-goodell/research-lab/tree/master/source-code/BulletProofs</a>) to (<a href="https://github.com/b-g-goodell/research-lab/tree/master/source-code/StringCT-java/src/how/monero/hodl/bulletproof" rel="noreferrer nofollow noopener" target="_blank">https://github.com/b-g-goodell/research-lab/tree/master/source-code/StringCT-java/src/how/monero/hodl/bulletproof</a>), since you can't compile or run from the first directory.<br></div><div>- Delete the now-empty&nbsp;(<a href="https://github.com/b-g-goodell/research-lab/tree/master/source-code/BulletProofs" rel="noreferrer nofollow noopener" target="_blank">https://github.com/b-g-goodell/research-lab/tree/master/source-code/BulletProofs</a>) directory.<br></div><div>- In the (.../hodl/bulletproof) directory that now contains the moved files, replace MultiBulletproof.java with the new attached version. The commit message for these three steps should state something like "batch verification, optimizations, and directory reorganization".<br></div><div>- Add the new MRL-XXXX technical note files to wherever those live.<br></div><div>- Party on.<br></div><div><br></div><div>SN<br></div><div><br></div><div class="protonmail_signature_block"><div class="protonmail_signature_block-user protonmail_signature_block-empty"><br></div><div class="protonmail_signature_block-proton">Sent with <a href="https://protonmail.com/" rel="noreferrer nofollow noopener" target="_blank">ProtonMail</a> Secure Email.<br></div></div><div><br></div></div><!----> <!----> </div> <!----><div id="attachmentArea" class="listAttachments-container" ng-if="message.Attachments.length" data-model="message"> <header> <span class="title"> <strong class="listAttachments-title-size">70.20 KB</strong> <!----><span ng-if="model.Attachments.length - model.NumEmbedded &gt; 0" class="listAttachments-title-files"> <i class="fa fa-paperclip"></i> 2 <span translate="" translate-n="model.Attachments.length - model.NumEmbedded" translate-plural="files attached">files attached</span> </span><!----> <!----> <!----><span ng-if="model.Attachments.length - model.NumEmbedded &gt; 1" class="listAttachments-title-download"> <a class="listAttachments-btn-downloadAll btnDownloadAttachments-container" pt-tooltip-translate-context="Download attachments" data-model="model" pt-tooltip="Download all" title="" aria-label="Download all" data-original-title="Download all"> <i class="fa fa-cog fa-spin btnDownloadAttachments-icon-loader"></i> <i class="fa fa-download btnDownloadAttachments-icon-download"></i> </a> </span><!----> </span> </header> <section class="listAttachments-list"> <!----><div class="listAttachments-att pm_button" ng-repeat="attachment in model.Attachments track by $id(attachment)"> <a data-attachment-id="HeA22N_fI_-IJpJJZDbY8fmNUD5sf3Mbg6sa--jYNtxs3c4CuKIOOmq9IleJ7kU_dZ9frmuBBnR-FPiYTyxm6Q==" class="listAttachments-item" ng-class="{ &#39;dead&#39;: attachment.decrypting, &#39;remove&#39;: (&#39;eo.reply&#39; | includedByState) }" data-download-text="Download" title="MultiBulletproof.java (23.43 KB)"> <em></em> <i class="listAttachments-icon fa fa-file-o"></i> <i class="fa fa-cog fa-spin listAttachments-icon-loader"></i> <i class="fa fa-download listAttachments-icon-download"></i> <strong class="name">MultiBulletproof.java</strong> <span class="size">23.43 KB</span> </a> <button data-attachment-id="HeA22N_fI_-IJpJJZDbY8fmNUD5sf3Mbg6sa--jYNtxs3c4CuKIOOmq9IleJ7kU_dZ9frmuBBnR-FPiYTyxm6Q==" class="listAttachments-btn-action-remove removeButton"> <i class="fa fa-times"></i> </button> </div><!----><div class="listAttachments-att pm_button" ng-repeat="attachment in model.Attachments track by $id(attachment)"> <a data-attachment-id="MvkjhUM9RsgCZLuNlXdxIEbri2Eb5RY2iVjqiEcmWvqShGIQyORR7wTfuwM7Y-KPqq8Fk--PmLi9K-wCfViO-g==" class="listAttachments-item" ng-class="{ &#39;dead&#39;: attachment.decrypting, &#39;remove&#39;: (&#39;eo.reply&#39; | includedByState) }" data-download-text="Download" title="mrl-bulletproofs.zip (46.77 KB)"> <em></em> <i class="listAttachments-icon fa fa-file-o fa-archive-o"></i> <i class="fa fa-cog fa-spin listAttachments-icon-loader"></i> <i class="fa fa-download listAttachments-icon-download"></i> <strong class="name">mrl-bulletproofs.zip</strong> <span class="size">46.77 KB</span> </a> <button data-attachment-id="MvkjhUM9RsgCZLuNlXdxIEbri2Eb5RY2iVjqiEcmWvqShGIQyORR7wTfuwM7Y-KPqq8Fk--PmLi9K-wCfViO-g==" class="listAttachments-btn-action-remove removeButton"> <i class="fa fa-times"></i> </button> </div><!----> </section> </div><!----> </div><!----> <div class="clear"></div> </article><!----> </div> </section><!----></div><!---->
-    <!---->
-    </element-view></div> <!----> </div> </div> <form name="composeForm" id="pm_composer" composer-container="" novalidate="" class="ng-pristine ng-valid"> <!---->  </form> <div id="pm_wizard" class="wizardStep-1 wizardStep-hidden" tabindex="0"> <!----> </div> <form class="commandPalette-container ng-pristine ng-valid" novalidate="" ng-class="{ &#39;commandPalette-visible&#39;: isVisible }"> <button type="reset" class="commandPalette-btn-close fa fa-close"></button> <div class="commandPalette-field"> <label for="" class="commandPalette-label">Command</label> <div class="commandPalette-input-command autocompleteCommand-container" data-is-visible="isVisible"> <div class="autocomplete-container"> <mark class="autocompleteCommand-scope"></mark> <div class="awesomplete"><input id="autocompleteCommand3lnbpggfab-1518118665879" name="autocompleteCommand" type="text" ng-model="value" autocomplete="off" spellcheck="false" autocapitalize="off" class="autocompleteCommand-input ng-pristine ng-untouched ng-valid ng-empty" placeholder="Type a command" aria-owns="awesomplete_list_1" role="combobox"><span class="visually-hidden" role="status" aria-live="assertive" aria-atomic="true">Type 1 or more characters for results.</span></div> </div> <ul class="autocompleteEmails-autocomplete"></ul> </div> </div> </form> <detect-time-width></detect-time-width> </div><noscript class="pm_noscript">ProtonMail requires Javascript. Enable Javascript and reload this page to continue.</noscript><script>function isGoodPrngAvailable(){return!("undefined"==typeof window||!window.crypto||!window.crypto.getRandomValues)||"undefined"!=typeof window&&"object"==typeof window.msCrypto&&"function"==typeof window.msCrypto.getRandomValues}!1===navigator.cookieEnabled&&(alert("Cookies are required to use ProtonMail. Please enable cookies in your browser."),window.location="https://protonmail.com/compatibility"),"undefined"==typeof Storage&&(alert("sessionStorage is required to use ProtonMail. Please enable sessionStorage in your browser."),window.location="https://protonmail.com/compatibility"),isGoodPrngAvailable()||(alert("A browser that has a Pseudo Random Number Generator is required to use ProtonMail. Please update your browser."),window.location="https://protonmail.com/compatibility")</script><script src="./MultiBulletproof_files/openpgp.min.js.download"></script><script src="./MultiBulletproof_files/vendor.1a039fbba0fdaec09d86599b1d8f547f947983e3.js.download"></script><script type="text/javascript" src="./MultiBulletproof_files/app.5357e63c61e3c56f3c6fabfba65ffef5bbb99bae.js.download"></script>
-<span class="ptdnd-notification"></span><style>
-              .conversation .time { width: 88px; }
-              .conversation .row .meta { width: 138px;}
-              </style></body></html>
+public class MultiBulletproof
+{
+    private static int NEXP;
+    private static int N;
+    private static Curve25519Point G;
+    private static Curve25519Point H;
+    private static Curve25519Point[] Gi;
+    private static Curve25519Point[] Hi;
+
+    public static class ProofTuple
+    {
+        private Curve25519Point V[];
+        private Curve25519Point A;
+        private Curve25519Point S;
+        private Curve25519Point T1;
+        private Curve25519Point T2;
+        private Scalar taux;
+        private Scalar mu;
+        private Curve25519Point[] L;
+        private Curve25519Point[] R;
+        private Scalar a;
+        private Scalar b;
+        private Scalar t;
+
+        public ProofTuple(Curve25519Point V[], Curve25519Point A, Curve25519Point S, Curve25519Point T1, Curve25519Point T2, Scalar taux, Scalar mu, Curve25519Point[] L, Curve25519Point[] R, Scalar a, Scalar b, Scalar t)
+        {
+            this.V = V;
+            this.A = A;
+            this.S = S;
+            this.T1 = T1;
+            this.T2 = T2;
+            this.taux = taux;
+            this.mu = mu;
+            this.L = L;
+            this.R = R;
+            this.a = a;
+            this.b = b;
+            this.t = t;
+        }
+    }
+
+    /* Given two scalar arrays, construct a vector commitment */
+    public static Curve25519Point VectorExponent(Scalar[] a, Scalar[] b)
+    {
+        assert a.length == b.length;
+
+        Curve25519Point Result = Curve25519Point.ZERO;
+        for (int i = 0; i < a.length; i++)
+        {
+            Result = Result.add(Gi[i].scalarMultiply(a[i]));
+            Result = Result.add(Hi[i].scalarMultiply(b[i]));
+        }
+        return Result;
+    }
+
+    /* Compute a custom vector-scalar commitment */
+    public static Curve25519Point VectorExponentCustom(Curve25519Point[] A, Curve25519Point[] B, Scalar[] a, Scalar[] b)
+    {
+        assert a.length == A.length && b.length == B.length && a.length == b.length;
+
+        Curve25519Point Result = Curve25519Point.ZERO;
+        for (int i = 0; i < a.length; i++)
+        {
+            Result = Result.add(A[i].scalarMultiply(a[i]));
+            Result = Result.add(B[i].scalarMultiply(b[i]));
+        }
+        return Result;
+    }
+
+    /* Given a scalar, construct a vector of powers */
+    public static Scalar[] VectorPowers(Scalar x, int size)
+    {
+        Scalar[] result = new Scalar[size];
+        for (int i = 0; i < size; i++)
+        {
+            result[i] = x.pow(i);
+        }
+        return result;
+    }
+
+    /* Given two scalar arrays, construct the inner product */
+    public static Scalar InnerProduct(Scalar[] a, Scalar[] b)
+    {
+        assert a.length == b.length;
+
+        Scalar result = Scalar.ZERO;
+        for (int i = 0; i < a.length; i++)
+        {
+            result = result.add(a[i].mul(b[i]));
+        }
+        return result;
+    }
+
+    /* Given two scalar arrays, construct the Hadamard product */
+    public static Scalar[] Hadamard(Scalar[] a, Scalar[] b)
+    {
+        assert a.length == b.length;
+
+        Scalar[] result = new Scalar[a.length];
+        for (int i = 0; i < a.length; i++)
+        {
+            result[i] = a[i].mul(b[i]);
+        }
+        return result;
+    }
+
+    /* Given two curvepoint arrays, construct the Hadamard product */
+    public static Curve25519Point[] Hadamard2(Curve25519Point[] A, Curve25519Point[] B)
+    {
+        assert A.length == B.length;
+
+        Curve25519Point[] Result = new Curve25519Point[A.length];
+        for (int i = 0; i < A.length; i++)
+        {
+            Result[i] = A[i].add(B[i]);
+        }
+        return Result;
+    }
+
+    /* Add two vectors */
+    public static Scalar[] VectorAdd(Scalar[] a, Scalar[] b)
+    {
+        assert a.length == b.length;
+
+        Scalar[] result = new Scalar[a.length];
+        for (int i = 0; i < a.length; i++)
+        {
+            result[i] = a[i].add(b[i]);
+        }
+        return result;
+    }
+
+    /* Subtract two vectors */
+    public static Scalar[] VectorSubtract(Scalar[] a, Scalar[] b)
+    {
+        assert a.length == b.length;
+
+        Scalar[] result = new Scalar[a.length];
+        for (int i = 0; i < a.length; i++)
+        {
+            result[i] = a[i].sub(b[i]);
+        }
+        return result;
+    }
+
+    /* Multiply a scalar and a vector */
+    public static Scalar[] VectorScalar(Scalar[] a, Scalar x)
+    {
+        Scalar[] result = new Scalar[a.length];
+        for (int i = 0; i < a.length; i++)
+        {
+            result[i] = a[i].mul(x);
+        }
+        return result;
+    }
+
+    /* Exponentiate a curve vector by a scalar */
+    public static Curve25519Point[] VectorScalar2(Curve25519Point[] A, Scalar x)
+    {
+        Curve25519Point[] Result = new Curve25519Point[A.length];
+        for (int i = 0; i < A.length; i++)
+        {
+            Result[i] = A[i].scalarMultiply(x);
+        }
+        return Result;
+    }
+
+    /* Compute the inverse of a scalar, the stupid way */
+    public static Scalar Invert(Scalar x)
+    {
+        Scalar inverse = new Scalar(x.toBigInteger().modInverse(CryptoUtil.l));
+
+        assert x.mul(inverse).equals(Scalar.ONE);
+        return inverse;
+    }
+
+    /* Compute the slice of a curvepoint vector */
+    public static Curve25519Point[] CurveSlice(Curve25519Point[] a, int start, int stop)
+    {
+        Curve25519Point[] Result = new Curve25519Point[stop-start];
+        for (int i = start; i < stop; i++)
+        {
+            Result[i-start] = a[i];
+        }
+        return Result;
+    }
+
+    /* Compute the slice of a scalar vector */
+    public static Scalar[] ScalarSlice(Scalar[] a, int start, int stop)
+    {
+        Scalar[] result = new Scalar[stop-start];
+        for (int i = start; i < stop; i++)
+        {
+            result[i-start] = a[i];
+        }
+        return result;
+    }
+
+    /* Construct an aggregate range proof */
+    public static ProofTuple PROVE(Scalar[] v, Scalar[] gamma, int logM)
+    {
+        int M = v.length;
+        int logMN = logM + NEXP;
+
+        Curve25519Point[] V = new Curve25519Point[M];
+
+        V[0] = H.scalarMultiply(v[0]).add(G.scalarMultiply(gamma[0]));
+        // This hash is updated for Fiat-Shamir throughout the proof
+        Scalar hashCache = hashToScalar(V[0].toBytes());
+        for (int j = 1; j < M; j++)
+        {
+            V[j] = H.scalarMultiply(v[j]).add(G.scalarMultiply(gamma[j]));
+            hashCache = hashToScalar(concat(hashCache.bytes,V[j].toBytes()));
+        }
+        
+        // PAPER LINES 36-37
+        Scalar[] aL = new Scalar[M*N];
+        Scalar[] aR = new Scalar[M*N];
+
+        for (int j = 0; j < M; j++)
+        {
+            BigInteger tempV = v[j].toBigInteger();
+            for (int i = N-1; i >= 0; i--)
+            {
+                BigInteger basePow = BigInteger.valueOf(2).pow(i);
+                if (tempV.divide(basePow).equals(BigInteger.ZERO))
+                {
+                    aL[j*N+i] = Scalar.ZERO;
+                }
+                else
+                {
+                    aL[j*N+i] = Scalar.ONE;
+                    tempV = tempV.subtract(basePow);
+                }
+
+                aR[j*N+i] = aL[j*N+i].sub(Scalar.ONE);
+            }
+        }
+
+        // PAPER LINES 38-39
+        Scalar alpha = randomScalar();
+        Curve25519Point A = VectorExponent(aL,aR).add(G.scalarMultiply(alpha));
+
+        // PAPER LINES 40-42
+        Scalar[] sL = new Scalar[M*N];
+        Scalar[] sR = new Scalar[M*N];
+        for (int i = 0; i < M*N; i++)
+        {
+            sL[i] = randomScalar();
+            sR[i] = randomScalar();
+        }
+        Scalar rho = randomScalar();
+        Curve25519Point S = VectorExponent(sL,sR).add(G.scalarMultiply(rho));
+
+        // PAPER LINES 43-45
+        hashCache = hashToScalar(concat(hashCache.bytes,A.toBytes()));
+        hashCache = hashToScalar(concat(hashCache.bytes,S.toBytes()));
+        Scalar y = hashCache;
+        hashCache = hashToScalar(hashCache.bytes);
+        Scalar z = hashCache;
+
+        // Polynomial construction by coefficients
+        Scalar[] l0;
+        Scalar[] l1;
+        Scalar[] r0;
+        Scalar[] r1;
+
+        l0 = VectorSubtract(aL,VectorScalar(VectorPowers(Scalar.ONE,M*N),z));
+        l1 = sL;
+
+        // This computes the ugly sum/concatenation from PAPER LINE 65
+        Scalar[] zerosTwos = new Scalar[M*N];
+        for (int i = 0; i < M*N; i++)
+        {
+            zerosTwos[i] = Scalar.ZERO;
+            for (int j = 1; j <= M; j++) // note this starts from 1
+            {
+                Scalar temp = Scalar.ZERO;
+                if (i >= (j-1)*N && i < j*N)
+                    temp = Scalar.TWO.pow(i-(j-1)*N); // exponent ranges from 0..N-1
+                zerosTwos[i] = zerosTwos[i].add(z.pow(1+j).mul(temp));
+            }
+        }
+
+        r0 = VectorAdd(aR,VectorScalar(VectorPowers(Scalar.ONE,M*N),z));
+        r0 = Hadamard(r0,VectorPowers(y,M*N));
+        r0 = VectorAdd(r0,zerosTwos);
+        r1 = Hadamard(VectorPowers(y,M*N),sR);
+
+        // Polynomial construction before PAPER LINE 46
+        Scalar t0 = InnerProduct(l0,r0);
+        Scalar t1 = InnerProduct(l0,r1).add(InnerProduct(l1,r0));
+        Scalar t2 = InnerProduct(l1,r1);
+        
+        // PAPER LINES 47-48
+        Scalar tau1 = randomScalar();
+        Scalar tau2 = randomScalar();
+        Curve25519Point T1 = H.scalarMultiply(t1).add(G.scalarMultiply(tau1));
+        Curve25519Point T2 = H.scalarMultiply(t2).add(G.scalarMultiply(tau2));
+
+        // PAPER LINES 49-51
+        hashCache = hashToScalar(concat(hashCache.bytes,z.bytes));
+        hashCache = hashToScalar(concat(hashCache.bytes,T1.toBytes()));
+        hashCache = hashToScalar(concat(hashCache.bytes,T2.toBytes()));
+        Scalar x = hashCache;
+        
+        // PAPER LINES 52-53
+        Scalar taux = tau1.mul(x);
+        taux = taux.add(tau2.mul(x.sq()));
+        for (int j = 1; j <= M; j++) // note this starts from 1
+        {
+            taux = taux.add(z.pow(1+j).mul(gamma[j-1]));
+        }
+        Scalar mu = x.mul(rho).add(alpha);
+
+        // PAPER LINES 54-57
+        Scalar[] l = l0;
+        l = VectorAdd(l,VectorScalar(l1,x));
+        Scalar[] r = r0;
+        r = VectorAdd(r,VectorScalar(r1,x));
+
+        Scalar t = InnerProduct(l,r);
+
+        // PAPER LINES 32-33
+        hashCache = hashToScalar(concat(hashCache.bytes,x.bytes));
+        hashCache = hashToScalar(concat(hashCache.bytes,taux.bytes));
+        hashCache = hashToScalar(concat(hashCache.bytes,mu.bytes));
+        hashCache = hashToScalar(concat(hashCache.bytes,t.bytes));
+        Scalar x_ip = hashCache;
+
+        // These are used in the inner product rounds
+        int nprime = M*N;
+        Curve25519Point[] Gprime = new Curve25519Point[M*N];
+        Curve25519Point[] Hprime = new Curve25519Point[M*N];
+        Scalar[] aprime = new Scalar[M*N];
+        Scalar[] bprime = new Scalar[M*N];
+        for (int i = 0; i < M*N; i++)
+        {
+            Gprime[i] = Gi[i];
+            Hprime[i] = Hi[i].scalarMultiply(Invert(y).pow(i));
+            aprime[i] = l[i];
+            bprime[i] = r[i];
+        }
+        Curve25519Point[] L = new Curve25519Point[logMN];
+        Curve25519Point[] R = new Curve25519Point[logMN];
+        int round = 0; // track the index based on number of rounds
+        Scalar[] w = new Scalar[logMN]; // this is the challenge x in the inner product protocol
+
+        // PAPER LINE 13
+        while (nprime > 1)
+        {
+            // PAPER LINE 15
+            nprime /= 2;
+
+            // PAPER LINES 16-17
+            Scalar cL = InnerProduct(ScalarSlice(aprime,0,nprime),ScalarSlice(bprime,nprime,bprime.length));
+            Scalar cR = InnerProduct(ScalarSlice(aprime,nprime,aprime.length),ScalarSlice(bprime,0,nprime));
+
+            // PAPER LINES 18-19
+            L[round] = VectorExponentCustom(CurveSlice(Gprime,nprime,Gprime.length),CurveSlice(Hprime,0,nprime),ScalarSlice(aprime,0,nprime),ScalarSlice(bprime,nprime,bprime.length)).add(H.scalarMultiply(cL.mul(x_ip)));
+            R[round] = VectorExponentCustom(CurveSlice(Gprime,0,nprime),CurveSlice(Hprime,nprime,Hprime.length),ScalarSlice(aprime,nprime,aprime.length),ScalarSlice(bprime,0,nprime)).add(H.scalarMultiply(cR.mul(x_ip)));
+
+            // PAPER LINES 21-22
+            hashCache = hashToScalar(concat(hashCache.bytes,L[round].toBytes()));
+            hashCache = hashToScalar(concat(hashCache.bytes,R[round].toBytes()));
+            w[round] = hashCache;
+
+            // PAPER LINES 24-25
+            Gprime = Hadamard2(VectorScalar2(CurveSlice(Gprime,0,nprime),Invert(w[round])),VectorScalar2(CurveSlice(Gprime,nprime,Gprime.length),w[round]));
+            Hprime = Hadamard2(VectorScalar2(CurveSlice(Hprime,0,nprime),w[round]),VectorScalar2(CurveSlice(Hprime,nprime,Hprime.length),Invert(w[round])));
+
+            // PAPER LINES 28-29
+            aprime = VectorAdd(VectorScalar(ScalarSlice(aprime,0,nprime),w[round]),VectorScalar(ScalarSlice(aprime,nprime,aprime.length),Invert(w[round])));
+            bprime = VectorAdd(VectorScalar(ScalarSlice(bprime,0,nprime),Invert(w[round])),VectorScalar(ScalarSlice(bprime,nprime,bprime.length),w[round]));
+
+            round += 1;
+        }
+
+        // PAPER LINE 58 (with inclusions from PAPER LINE 8 and PAPER LINE 20)
+        return new ProofTuple(V,A,S,T1,T2,taux,mu,L,R,aprime[0],bprime[0],t);
+    }
+
+    /* Given a range proof, determine if it is valid */
+    public static boolean VERIFY(ProofTuple[] proofs)
+    {
+        // Figure out which proof is longest
+        int maxLength = 0;
+        for (int p = 0; p < proofs.length; p++)
+        {
+            if (proofs[p].L.length > maxLength)
+                maxLength = proofs[p].L.length;
+        }
+        int maxMN = (int) Math.pow(2,maxLength);
+
+        // Set up weighted aggregates for the first check
+        Scalar y0 = Scalar.ZERO; // tau_x
+        Scalar y1 = Scalar.ZERO; // t-(k+z+Sum(y^i))
+        Curve25519Point Y2 = Curve25519Point.ZERO; // z-V sum
+        Curve25519Point Y3 = Curve25519Point.ZERO; // xT_1
+        Curve25519Point Y4 = Curve25519Point.ZERO; // x^2T_2
+        
+        
+        // Set up weighted aggregates for the second check
+        Curve25519Point Z0 = Curve25519Point.ZERO; // A + xS
+        Scalar z1 = Scalar.ZERO; // mu
+        Curve25519Point Z2 = Curve25519Point.ZERO; // Li/Ri sum
+        Scalar z3 = Scalar.ZERO; // (t-ab)x_ip
+        Scalar[] z4 = new Scalar[maxMN]; // g scalar sum
+        Scalar[] z5 = new Scalar[maxMN]; // h scalar sum
+
+        for (int i = 0; i < maxMN; i++)
+        {
+            z4[i] = Scalar.ZERO;
+            z5[i] = Scalar.ZERO;
+        }
+
+        for (int p = 0; p < proofs.length; p++)
+        {
+            ProofTuple proof = proofs[p];
+            int logMN = proof.L.length;
+            int M = (int) Math.pow(2,logMN)/N;
+
+            // For the current proof, get a random weighting factor
+            // NOTE: This must not be deterministic! Only the verifier knows it
+            Scalar weight = randomScalar();
+
+            // Reconstruct the challenges
+            Scalar hashCache = hashToScalar(proof.V[0].toBytes());
+            for (int j = 1; j < M; j++)
+                hashCache = hashToScalar(concat(hashCache.bytes,proof.V[j].toBytes()));
+            hashCache = hashToScalar(concat(hashCache.bytes,proof.A.toBytes()));
+            hashCache = hashToScalar(concat(hashCache.bytes,proof.S.toBytes()));
+            Scalar y = hashCache;
+            hashCache = hashToScalar(hashCache.bytes);
+            Scalar z = hashCache;
+            hashCache = hashToScalar(concat(hashCache.bytes,z.bytes));
+            hashCache = hashToScalar(concat(hashCache.bytes,proof.T1.toBytes()));
+            hashCache = hashToScalar(concat(hashCache.bytes,proof.T2.toBytes()));
+            Scalar x = hashCache;
+            hashCache = hashToScalar(concat(hashCache.bytes,x.bytes));
+            hashCache = hashToScalar(concat(hashCache.bytes,proof.taux.bytes));
+            hashCache = hashToScalar(concat(hashCache.bytes,proof.mu.bytes));
+            hashCache = hashToScalar(concat(hashCache.bytes,proof.t.bytes));
+            Scalar x_ip = hashCache;
+
+            // PAPER LINE 61
+            y0 = y0.add(proof.taux.mul(weight));
+            
+            Scalar k = Scalar.ZERO.sub(z.sq().mul(InnerProduct(VectorPowers(Scalar.ONE,M*N),VectorPowers(y,M*N))));
+            for (int j = 1; j <= M; j++) // note this starts from 1
+            {
+                k = k.sub(z.pow(j+2).mul(InnerProduct(VectorPowers(Scalar.ONE,N),VectorPowers(Scalar.TWO,N))));
+            }
+
+            y1 = y1.add(proof.t.sub(k.add(z.mul(InnerProduct(VectorPowers(Scalar.ONE,M*N),VectorPowers(y,M*N))))).mul(weight));
+            
+            Curve25519Point temp = Curve25519Point.ZERO;
+            for (int j = 0; j < M; j++)
+            {
+                temp = temp.add(proof.V[j].scalarMultiply(z.pow(j+2)));
+            }
+            Y2 = Y2.add(temp.scalarMultiply(weight));
+            Y3 = Y3.add(proof.T1.scalarMultiply(x.mul(weight)));
+            Y4 = Y4.add(proof.T2.scalarMultiply(x.sq().mul(weight)));
+            
+            // PAPER LINE 62
+            Z0 = Z0.add((proof.A.add(proof.S.scalarMultiply(x))).scalarMultiply(weight));
+            
+            // PAPER LINES 21-22
+            // The inner product challenges are computed per round
+            Scalar[] w = new Scalar[logMN];
+            hashCache = hashToScalar(concat(hashCache.bytes,proof.L[0].toBytes()));
+            hashCache = hashToScalar(concat(hashCache.bytes,proof.R[0].toBytes()));
+            w[0] = hashCache;
+            if (logMN > 1)
+            {
+                for (int i = 1; i < logMN; i++)
+                {
+                    hashCache = hashToScalar(concat(hashCache.bytes,proof.L[i].toBytes()));
+                    hashCache = hashToScalar(concat(hashCache.bytes,proof.R[i].toBytes()));
+                    w[i] = hashCache;
+                }
+            }
+
+            // Basically PAPER LINES 24-25
+            // Compute the curvepoints from G[i] and H[i]
+            for (int i = 0; i < M*N; i++)
+            {
+                // Convert the index to binary IN REVERSE and construct the scalar exponent
+                int index = i;
+                Scalar gScalar = proof.a;
+                Scalar hScalar = proof.b.mul(Invert(y).pow(i));
+                
+                for (int j = logMN-1; j >= 0; j--)
+                {
+                    int J = w.length - j - 1; // because this is done in reverse bit order
+                    int basePow = (int) Math.pow(2,j); // assumes we don't get too big
+                    if (index / basePow == 0) // bit is zero
+                    {
+                        gScalar = gScalar.mul(Invert(w[J]));
+                        hScalar = hScalar.mul(w[J]);
+                    }
+                    else // bit is one
+                    {
+                        gScalar = gScalar.mul(w[J]);
+                        hScalar = hScalar.mul(Invert(w[J]));
+                        index -= basePow;
+                    }
+                }
+                
+                gScalar = gScalar.add(z);
+                hScalar = hScalar.sub(z.mul(y.pow(i)).add(z.pow(2+i/N).mul(Scalar.TWO.pow(i%N))).mul(Invert(y).pow(i)));
+
+                // Now compute the basepoint's scalar multiplication
+                z4[i] = z4[i].add(gScalar.mul(weight));
+                z5[i] = z5[i].add(hScalar.mul(weight));
+            }
+
+            // PAPER LINE 26
+            z1 = z1.add(proof.mu.mul(weight));
+
+            temp = Curve25519Point.ZERO;
+            for (int i = 0; i < logMN; i++)
+            {
+                temp = temp.add(proof.L[i].scalarMultiply(w[i].sq()));
+                temp = temp.add(proof.R[i].scalarMultiply(Invert(w[i]).sq()));
+            }
+            Z2 = Z2.add(temp.scalarMultiply(weight));
+            z3 = z3.add((proof.t.sub(proof.a.mul(proof.b))).mul(x_ip).mul(weight));
+
+        }
+
+        // Perform the first- and second-stage check on all proofs at once
+        // NOTE: These checks could benefit from multiexp operations
+        Curve25519Point Check1 = Curve25519Point.ZERO;
+        Check1 = Check1.add(G.scalarMultiply(y0));
+        Check1 = Check1.add(H.scalarMultiply(y1));
+        Check1 = Check1.add(Y2.scalarMultiply(Scalar.ZERO.sub(Scalar.ONE)));
+        Check1 = Check1.add(Y3.scalarMultiply(Scalar.ZERO.sub(Scalar.ONE)));
+        Check1 = Check1.add(Y4.scalarMultiply(Scalar.ZERO.sub(Scalar.ONE)));
+        if (! Check1.equals(Curve25519Point.ZERO))
+        {
+            System.out.println("Failed first-stage check");
+            return false;
+        }
+
+        Curve25519Point Check2 = Curve25519Point.ZERO;
+        Check2 = Check2.add(Z0);
+        Check2 = Check2.add(G.scalarMultiply(Scalar.ZERO.sub(z1)));
+        Check2 = Check2.add(Z2);
+        Check2 = Check2.add(H.scalarMultiply(z3));
+
+        for (int i = 0; i < maxMN; i++)
+        {
+            Check2 = Check2.add(Gi[i].scalarMultiply(Scalar.ZERO.sub(z4[i])));
+            Check2 = Check2.add(Hi[i].scalarMultiply(Scalar.ZERO.sub(z5[i])));
+        }
+
+        if (! Check2.equals(Curve25519Point.ZERO))
+        {
+            System.out.println("Failed second-stage check");
+            return false;
+        }
+
+        return true;
+    }
+
+    /* Generate a random proof with specified bit size and number of outputs */
+    public static ProofTuple randomProof(int mExp)
+    {
+        int M = (int) Math.pow(2,mExp);
+
+        Random rando = new Random();
+        Scalar[] amounts = new Scalar[M];
+        Scalar[] masks = new Scalar[M];
+
+        // Generate the outputs and masks
+        for (int i = 0; i < M; i++)
+        {
+            long amount = -1L;
+            while (amount > Math.pow(2,N)-1 || amount < 0L) // Java doesn't handle random long ranges very well
+                amount = rando.nextLong();
+            amounts[i] = new Scalar(BigInteger.valueOf(amount));
+            masks[i] = randomScalar();
+        }
+        
+        // Run and return the proof
+        // Have to pass in lg(M) because Java is stupid about logarithms
+        System.out.println("Generating proof with " + M + " outputs...");
+        return PROVE(amounts,masks,mExp);
+    }
+
+    public static void main(String[] args)
+    {
+        // Test parameters: currently only works when batching proofs of the same aggregation size
+        NEXP = 6; // N = 2^NEXP
+        N = (int) Math.pow(2,NEXP); // number of bits in amount range (so amounts are 0..2^(N-1))
+        int MAXEXP = 4; // the maximum number of outputs used is 2^MAXEXP
+        int PROOFS = 5; // number of proofs in batch
+
+        // Set the curve base points
+        G = Curve25519Point.G;
+        H = Curve25519Point.hashToPoint(G);
+        int MAXM = (int) Math.pow(2,MAXEXP);
+        Gi = new Curve25519Point[MAXM*N];
+        Hi = new Curve25519Point[MAXM*N];
+        for (int i = 0; i < MAXM*N; i++)
+        {
+            Gi[i] = getHpnGLookup(2*i);
+            Hi[i] = getHpnGLookup(2*i+1);
+        }
+        
+        // Set up all the proofs
+        ProofTuple[] proofs = new ProofTuple[PROOFS];
+        Random rando = new Random();
+        for (int i = 0; i < PROOFS; i++)
+        {
+            // Pick a random proof length: 2^0,...,2^MAXEXP
+            proofs[i] = randomProof(rando.nextInt(MAXEXP+1));
+        }
+
+        // Verify the batch
+        System.out.println("Verifying proof batch...");
+        if (VERIFY(proofs))
+            System.out.println("Success!");
+        else
+            System.out.println("ERROR: failed verification");
+            
+    }
+}
