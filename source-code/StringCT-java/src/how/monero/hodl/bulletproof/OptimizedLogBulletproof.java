@@ -1,3 +1,5 @@
+// NOTE: this interchanges the roles of G and H to match other code's behavior
+
 package how.monero.hodl.bulletproof;
 
 import how.monero.hodl.crypto.Curve25519Point;
@@ -208,10 +210,23 @@ public class OptimizedLogBulletproof
         return result;
     }
 
+    /* Compute the value of k(y,z) */
+    public static Scalar ComputeK(Scalar y, Scalar z)
+    {
+        Scalar result = Scalar.ZERO;
+        result = result.sub(z.sq().mul(InnerProduct(VectorPowers(Scalar.ONE),VectorPowers(y))));
+        result = result.sub(z.pow(3).mul(InnerProduct(VectorPowers(Scalar.ONE),VectorPowers(Scalar.TWO))));
+
+        return result;
+    }
+
     /* Given a value v (0..2^N-1) and a mask gamma, construct a range proof */
     public static ProofTuple PROVE(Scalar v, Scalar gamma)
     {
-        Curve25519Point V = G.scalarMultiply(v).add(H.scalarMultiply(gamma));
+        Curve25519Point V = H.scalarMultiply(v).add(G.scalarMultiply(gamma));
+
+        // This hash is updated for Fiat-Shamir throughout the proof
+        Scalar hashCache = hashToScalar(V.toBytes());
         
         // PAPER LINES 36-37
         Scalar[] aL = new Scalar[N];
@@ -236,7 +251,7 @@ public class OptimizedLogBulletproof
 
         // PAPER LINES 38-39
         Scalar alpha = randomScalar();
-        Curve25519Point A = VectorExponent(aL,aR).add(H.scalarMultiply(alpha));
+        Curve25519Point A = VectorExponent(aL,aR).add(G.scalarMultiply(alpha));
 
         // PAPER LINES 40-42
         Scalar[] sL = new Scalar[N];
@@ -247,11 +262,14 @@ public class OptimizedLogBulletproof
             sR[i] = randomScalar();
         }
         Scalar rho = randomScalar();
-        Curve25519Point S = VectorExponent(sL,sR).add(H.scalarMultiply(rho));
+        Curve25519Point S = VectorExponent(sL,sR).add(G.scalarMultiply(rho));
 
         // PAPER LINES 43-45
-        Scalar y = hashToScalar(concat(A.toBytes(),S.toBytes()));
-        Scalar z = hashToScalar(y.bytes);
+        hashCache = hashToScalar(concat(hashCache.bytes,A.toBytes()));
+        hashCache = hashToScalar(concat(hashCache.bytes,S.toBytes()));
+        Scalar y = hashCache;
+        hashCache = hashToScalar(hashCache.bytes);
+        Scalar z = hashCache;
 
         // Polynomial construction before PAPER LINE 46
         Scalar t0 = Scalar.ZERO;
@@ -260,9 +278,7 @@ public class OptimizedLogBulletproof
         
         t0 = t0.add(z.mul(InnerProduct(VectorPowers(Scalar.ONE),VectorPowers(y))));
         t0 = t0.add(z.sq().mul(v));
-        Scalar k = Scalar.ZERO;
-        k = k.sub(z.sq().mul(InnerProduct(VectorPowers(Scalar.ONE),VectorPowers(y))));
-        k = k.sub(z.pow(3).mul(InnerProduct(VectorPowers(Scalar.ONE),VectorPowers(Scalar.TWO))));
+        Scalar k = ComputeK(y,z);
         t0 = t0.add(k);
 
         t1 = t1.add(InnerProduct(VectorSubtract(aL,VectorScalar(VectorPowers(Scalar.ONE),z)),Hadamard(VectorPowers(y),sR)));
@@ -273,11 +289,14 @@ public class OptimizedLogBulletproof
         // PAPER LINES 47-48
         Scalar tau1 = randomScalar();
         Scalar tau2 = randomScalar();
-        Curve25519Point T1 = G.scalarMultiply(t1).add(H.scalarMultiply(tau1));
-        Curve25519Point T2 = G.scalarMultiply(t2).add(H.scalarMultiply(tau2));
+        Curve25519Point T1 = H.scalarMultiply(t1).add(G.scalarMultiply(tau1));
+        Curve25519Point T2 = H.scalarMultiply(t2).add(G.scalarMultiply(tau2));
 
         // PAPER LINES 49-51
-        Scalar x = hashToScalar(concat(z.bytes,T1.toBytes(),T2.toBytes()));
+        hashCache = hashToScalar(concat(hashCache.bytes,z.bytes));
+        hashCache = hashToScalar(concat(hashCache.bytes,T1.toBytes()));
+        hashCache = hashToScalar(concat(hashCache.bytes,T2.toBytes()));
+        Scalar x = hashCache;
         
         // PAPER LINES 52-53
         Scalar taux = Scalar.ZERO;
@@ -296,7 +315,11 @@ public class OptimizedLogBulletproof
         Scalar t = InnerProduct(l,r);
 
         // PAPER LINES 32-33
-        Scalar x_ip = hashToScalar(concat(x.bytes,taux.bytes,mu.bytes,t.bytes));
+        hashCache = hashToScalar(concat(hashCache.bytes,x.bytes));
+        hashCache = hashToScalar(concat(hashCache.bytes,taux.bytes));
+        hashCache = hashToScalar(concat(hashCache.bytes,mu.bytes));
+        hashCache = hashToScalar(concat(hashCache.bytes,t.bytes));
+        Scalar x_ip = hashCache;
 
         // These are used in the inner product rounds
         int nprime = N;
@@ -327,14 +350,13 @@ public class OptimizedLogBulletproof
             Scalar cR = InnerProduct(ScalarSlice(aprime,nprime,aprime.length),ScalarSlice(bprime,0,nprime));
 
             // PAPER LINES 18-19
-            L[round] = VectorExponentCustom(CurveSlice(Gprime,nprime,Gprime.length),CurveSlice(Hprime,0,nprime),ScalarSlice(aprime,0,nprime),ScalarSlice(bprime,nprime,bprime.length)).add(G.scalarMultiply(cL.mul(x_ip)));
-            R[round] = VectorExponentCustom(CurveSlice(Gprime,0,nprime),CurveSlice(Hprime,nprime,Hprime.length),ScalarSlice(aprime,nprime,aprime.length),ScalarSlice(bprime,0,nprime)).add(G.scalarMultiply(cR.mul(x_ip)));
+            L[round] = VectorExponentCustom(CurveSlice(Gprime,nprime,Gprime.length),CurveSlice(Hprime,0,nprime),ScalarSlice(aprime,0,nprime),ScalarSlice(bprime,nprime,bprime.length)).add(H.scalarMultiply(cL.mul(x_ip)));
+            R[round] = VectorExponentCustom(CurveSlice(Gprime,0,nprime),CurveSlice(Hprime,nprime,Hprime.length),ScalarSlice(aprime,nprime,aprime.length),ScalarSlice(bprime,0,nprime)).add(H.scalarMultiply(cR.mul(x_ip)));
 
             // PAPER LINES 21-22
-            if (round == 0)
-                w[0] = hashToScalar(concat(L[0].toBytes(),R[0].toBytes()));
-            else
-                w[round] = hashToScalar(concat(w[round-1].bytes,L[round].toBytes(),R[round].toBytes()));
+            hashCache = hashToScalar(concat(hashCache.bytes,L[round].toBytes()));
+            hashCache = hashToScalar(concat(hashCache.bytes,R[round].toBytes()));
+            w[round] = hashCache;
 
             // PAPER LINES 24-25
             Gprime = Hadamard2(VectorScalar2(CurveSlice(Gprime,0,nprime),Invert(w[round])),VectorScalar2(CurveSlice(Gprime,nprime,Gprime.length),w[round]));
@@ -355,19 +377,28 @@ public class OptimizedLogBulletproof
     public static boolean VERIFY(ProofTuple proof)
     {
         // Reconstruct the challenges
-        Scalar y = hashToScalar(concat(proof.A.toBytes(),proof.S.toBytes()));
-        Scalar z = hashToScalar(y.bytes);
-        Scalar x = hashToScalar(concat(z.bytes,proof.T1.toBytes(),proof.T2.toBytes()));
-        Scalar x_ip = hashToScalar(concat(x.bytes,proof.taux.bytes,proof.mu.bytes,proof.t.bytes));
+        Scalar hashCache = hashToScalar(proof.V.toBytes());
+        hashCache = hashToScalar(concat(hashCache.bytes,proof.A.toBytes()));
+        hashCache = hashToScalar(concat(hashCache.bytes,proof.S.toBytes()));
+        Scalar y = hashCache;
+        hashCache = hashToScalar(hashCache.bytes);
+        Scalar z = hashCache;
+        hashCache = hashToScalar(concat(hashCache.bytes,z.bytes));
+        hashCache = hashToScalar(concat(hashCache.bytes,proof.T1.toBytes()));
+        hashCache = hashToScalar(concat(hashCache.bytes,proof.T2.toBytes()));
+        Scalar x = hashCache;
+        hashCache = hashToScalar(concat(hashCache.bytes,x.bytes));
+        hashCache = hashToScalar(concat(hashCache.bytes,proof.taux.bytes));
+        hashCache = hashToScalar(concat(hashCache.bytes,proof.mu.bytes));
+        hashCache = hashToScalar(concat(hashCache.bytes,proof.t.bytes));
+        Scalar x_ip = hashCache;
 
         // PAPER LINE 61
-        Curve25519Point L61Left = H.scalarMultiply(proof.taux).add(G.scalarMultiply(proof.t));
+        Curve25519Point L61Left = G.scalarMultiply(proof.taux).add(H.scalarMultiply(proof.t));
 
-        Scalar k = Scalar.ZERO;
-        k = k.sub(z.sq().mul(InnerProduct(VectorPowers(Scalar.ONE),VectorPowers(y))));
-        k = k.sub(z.pow(3).mul(InnerProduct(VectorPowers(Scalar.ONE),VectorPowers(Scalar.TWO))));
+        Scalar k = ComputeK(y,z);
 
-        Curve25519Point L61Right = G.scalarMultiply(k.add(z.mul(InnerProduct(VectorPowers(Scalar.ONE),VectorPowers(y)))));
+        Curve25519Point L61Right = H.scalarMultiply(k.add(z.mul(InnerProduct(VectorPowers(Scalar.ONE),VectorPowers(y)))));
         L61Right = L61Right.add(proof.V.scalarMultiply(z.sq()));
         L61Right = L61Right.add(proof.T1.scalarMultiply(x));
         L61Right = L61Right.add(proof.T2.scalarMultiply(x.sq()));
@@ -386,12 +417,16 @@ public class OptimizedLogBulletproof
         // PAPER LINES 21-22
         // The inner product challenges are computed per round
         Scalar[] w = new Scalar[rounds];
-        w[0] = hashToScalar(concat(proof.L[0].toBytes(),proof.R[0].toBytes()));
+        hashCache = hashToScalar(concat(hashCache.bytes,proof.L[0].toBytes()));
+        hashCache = hashToScalar(concat(hashCache.bytes,proof.R[0].toBytes()));
+        w[0] = hashCache;
         if (rounds > 1)
         {
             for (int i = 1; i < rounds; i++)
             {
-                w[i] = hashToScalar(concat(w[i-1].bytes,proof.L[i].toBytes(),proof.R[i].toBytes()));
+                hashCache = hashToScalar(concat(hashCache.bytes,proof.L[i].toBytes()));
+                hashCache = hashToScalar(concat(hashCache.bytes,proof.R[i].toBytes()));
+                w[i] = hashCache;
             }
         }
 
@@ -434,16 +469,16 @@ public class OptimizedLogBulletproof
         }
 
         // PAPER LINE 26
-        Curve25519Point Pprime = P.add(H.scalarMultiply(Scalar.ZERO.sub(proof.mu)));
+        Curve25519Point Pprime = P.add(G.scalarMultiply(Scalar.ZERO.sub(proof.mu)));
 
         for (int i = 0; i < rounds; i++)
         {
             Pprime = Pprime.add(proof.L[i].scalarMultiply(w[i].sq()));
             Pprime = Pprime.add(proof.R[i].scalarMultiply(Invert(w[i]).sq()));
         }
-        Pprime = Pprime.add(G.scalarMultiply(proof.t.mul(x_ip)));
+        Pprime = Pprime.add(H.scalarMultiply(proof.t.mul(x_ip)));
 
-        if (!Pprime.equals(InnerProdG.add(InnerProdH).add(G.scalarMultiply(proof.a.mul(proof.b).mul(x_ip)))))
+        if (!Pprime.equals(InnerProdG.add(InnerProdH).add(H.scalarMultiply(proof.a.mul(proof.b).mul(x_ip)))))
             return false;
 
         return true;
@@ -462,8 +497,8 @@ public class OptimizedLogBulletproof
         Hi = new Curve25519Point[N];
         for (int i = 0; i < N; i++)
         {
-            Gi[i] = getHpnGLookup(i);
-            Hi[i] = getHpnGLookup(N+i);
+            Gi[i] = getHpnGLookup(2*i);
+            Hi[i] = getHpnGLookup(2*i+1);
         }
 
         // Run a bunch of randomized trials

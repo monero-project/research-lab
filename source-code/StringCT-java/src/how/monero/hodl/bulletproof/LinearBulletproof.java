@@ -1,3 +1,5 @@
+// NOTE: this interchanges the roles of G and H to match other code's behavior
+
 package how.monero.hodl.bulletproof;
 
 import how.monero.hodl.crypto.Curve25519Point;
@@ -133,10 +135,23 @@ public class LinearBulletproof
         return inverse;
     }
 
+    /* Compute the value of k(y,z) */
+    public static Scalar ComputeK(Scalar y, Scalar z)
+    {
+        Scalar result = Scalar.ZERO;
+        result = result.sub(z.sq().mul(InnerProduct(VectorPowers(Scalar.ONE),VectorPowers(y))));
+        result = result.sub(z.pow(3).mul(InnerProduct(VectorPowers(Scalar.ONE),VectorPowers(Scalar.TWO))));
+
+        return result;
+    }
+
     /* Given a value v (0..2^N-1) and a mask gamma, construct a range proof */
     public static ProofTuple PROVE(Scalar v, Scalar gamma)
     {
-        Curve25519Point V = G.scalarMultiply(v).add(H.scalarMultiply(gamma));
+        Curve25519Point V = H.scalarMultiply(v).add(G.scalarMultiply(gamma));
+
+        // This hash is updated for Fiat-Shamir throughout the proof
+        Scalar hashCache = hashToScalar(V.toBytes());
         
         // PAPER LINES 36-37
         Scalar[] aL = new Scalar[N];
@@ -174,7 +189,7 @@ public class LinearBulletproof
 
         // PAPER LINES 38-39
         Scalar alpha = randomScalar();
-        Curve25519Point A = VectorExponent(aL,aR).add(H.scalarMultiply(alpha));
+        Curve25519Point A = VectorExponent(aL,aR).add(G.scalarMultiply(alpha));
 
         // PAPER LINES 40-42
         Scalar[] sL = new Scalar[N];
@@ -185,11 +200,14 @@ public class LinearBulletproof
             sR[i] = randomScalar();
         }
         Scalar rho = randomScalar();
-        Curve25519Point S = VectorExponent(sL,sR).add(H.scalarMultiply(rho));
+        Curve25519Point S = VectorExponent(sL,sR).add(G.scalarMultiply(rho));
 
         // PAPER LINES 43-45
-        Scalar y = hashToScalar(concat(A.toBytes(),S.toBytes()));
-        Scalar z = hashToScalar(y.bytes);
+        hashCache = hashToScalar(concat(hashCache.bytes,A.toBytes()));
+        hashCache = hashToScalar(concat(hashCache.bytes,S.toBytes()));
+        Scalar y = hashCache;
+        hashCache = hashToScalar(hashCache.bytes);
+        Scalar z = hashCache;
 
         Scalar t0 = Scalar.ZERO;
         Scalar t1 = Scalar.ZERO;
@@ -197,9 +215,7 @@ public class LinearBulletproof
         
         t0 = t0.add(z.mul(InnerProduct(VectorPowers(Scalar.ONE),VectorPowers(y))));
         t0 = t0.add(z.sq().mul(v));
-        Scalar k = Scalar.ZERO;
-        k = k.sub(z.sq().mul(InnerProduct(VectorPowers(Scalar.ONE),VectorPowers(y))));
-        k = k.sub(z.pow(3).mul(InnerProduct(VectorPowers(Scalar.ONE),VectorPowers(Scalar.TWO))));
+        Scalar k = ComputeK(y,z);
         t0 = t0.add(k);
 
         // DEBUG: Test the value of t0 has the correct form
@@ -217,11 +233,14 @@ public class LinearBulletproof
         // PAPER LINES 47-48
         Scalar tau1 = randomScalar();
         Scalar tau2 = randomScalar();
-        Curve25519Point T1 = G.scalarMultiply(t1).add(H.scalarMultiply(tau1));
-        Curve25519Point T2 = G.scalarMultiply(t2).add(H.scalarMultiply(tau2));
+        Curve25519Point T1 = H.scalarMultiply(t1).add(G.scalarMultiply(tau1));
+        Curve25519Point T2 = H.scalarMultiply(t2).add(G.scalarMultiply(tau2));
 
         // PAPER LINES 49-51
-        Scalar x = hashToScalar(concat(z.bytes,T1.toBytes(),T2.toBytes()));
+        hashCache = hashToScalar(concat(hashCache.bytes,z.bytes));
+        hashCache = hashToScalar(concat(hashCache.bytes,T1.toBytes()));
+        hashCache = hashToScalar(concat(hashCache.bytes,T2.toBytes()));
+        Scalar x = hashCache;
         
         // PAPER LINES 52-53
         Scalar taux = Scalar.ZERO;
@@ -251,21 +270,26 @@ public class LinearBulletproof
     public static boolean VERIFY(ProofTuple proof)
     {
         // Reconstruct the challenges
-        Scalar y = hashToScalar(concat(proof.A.toBytes(),proof.S.toBytes()));
-        Scalar z = hashToScalar(y.bytes);
-        Scalar x = hashToScalar(concat(z.bytes,proof.T1.toBytes(),proof.T2.toBytes()));
+        Scalar hashCache = hashToScalar(proof.V.toBytes());
+        hashCache = hashToScalar(concat(hashCache.bytes,proof.A.toBytes()));
+        hashCache = hashToScalar(concat(hashCache.bytes,proof.S.toBytes()));
+        Scalar y = hashCache;
+        hashCache = hashToScalar(hashCache.bytes);
+        Scalar z = hashCache;
+        hashCache = hashToScalar(concat(hashCache.bytes,z.bytes));
+        hashCache = hashToScalar(concat(hashCache.bytes,proof.T1.toBytes()));
+        hashCache = hashToScalar(concat(hashCache.bytes,proof.T2.toBytes()));
+        Scalar x = hashCache;
 
         // PAPER LINE 60
         Scalar t = InnerProduct(proof.l,proof.r);
 
         // PAPER LINE 61
-        Curve25519Point L61Left = H.scalarMultiply(proof.taux).add(G.scalarMultiply(t));
+        Curve25519Point L61Left = G.scalarMultiply(proof.taux).add(H.scalarMultiply(t));
 
-        Scalar k = Scalar.ZERO;
-        k = k.sub(z.sq().mul(InnerProduct(VectorPowers(Scalar.ONE),VectorPowers(y))));
-        k = k.sub(z.pow(3).mul(InnerProduct(VectorPowers(Scalar.ONE),VectorPowers(Scalar.TWO))));
+        Scalar k = ComputeK(y,z);
 
-        Curve25519Point L61Right = G.scalarMultiply(k.add(z.mul(InnerProduct(VectorPowers(Scalar.ONE),VectorPowers(y)))));
+        Curve25519Point L61Right = H.scalarMultiply(k.add(z.mul(InnerProduct(VectorPowers(Scalar.ONE),VectorPowers(y)))));
         L61Right = L61Right.add(proof.V.scalarMultiply(z.sq()));
         L61Right = L61Right.add(proof.T1.scalarMultiply(x));
         L61Right = L61Right.add(proof.T2.scalarMultiply(x.sq()));
@@ -301,7 +325,7 @@ public class LinearBulletproof
             Hexp[i] = Hexp[i].add(proof.r[i]);
             Hexp[i] = Hexp[i].mul(Invert(y).pow(i));
         }
-        Curve25519Point L63Right = VectorExponent(proof.l,Hexp).add(H.scalarMultiply(proof.mu));
+        Curve25519Point L63Right = VectorExponent(proof.l,Hexp).add(G.scalarMultiply(proof.mu));
 
         if (!L63Right.equals(P))
         {
@@ -323,8 +347,8 @@ public class LinearBulletproof
         Hi = new Curve25519Point[N];
         for (int i = 0; i < N; i++)
         {
-            Gi[i] = getHpnGLookup(i);
-            Hi[i] = getHpnGLookup(N+i);
+            Gi[i] = getHpnGLookup(2*i);
+            Hi[i] = getHpnGLookup(2*i+1);
         }
 
         // Run a bunch of randomized trials
