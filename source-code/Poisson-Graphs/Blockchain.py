@@ -43,10 +43,12 @@ class Blockchain(object):
         for ident in self.leaves:
             tempCumDiff = 0.0
             thisBlockIdent = ident
-            tempCumDiff += self.blocks[thisBlockIdent].diff
+            if self.blocks[thisBlockIdent].diff is not None:
+                tempCumDiff += self.blocks[thisBlockIdent].diff
             while self.blocks[thisBlockIdent].parent is not None:
                 thisBlockIdent = self.blocks[thisBlockIdent].parent
-                tempCumDiff += self.blocks[thisBlockIdent].diff
+                if self.blocks[thisBLockIdent].diff is not None:
+                    tempCumDiff += self.blocks[thisBlockIdent].diff
             if tempCumDiff > maxCumDiff:
                 # If more than one leaf ties for maxCumDiff, each node in the 
                 # network should pick one of these two arbitrarily. Since we 

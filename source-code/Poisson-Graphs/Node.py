@@ -29,9 +29,9 @@ class Node(object):
         t = discoTime
         s = t+self.data["offset"]
         diff = self.data["blockchain"].diff
-        params = {"ident":name, "disco":t, "arriv":s, "parent":None, "diff":diff}
+        params = {"ident":newName, "disco":t, "arriv":s, "parent":None, "diff":diff}
         newBlock = Block(params)
-        self.data["blockchain"].addBlock(newBlock, mode, tr)
+        self.data["blockchain"].addBlock(newBlock)
         return newName
         
     def updateBlockchain(self, incBlocks):
@@ -43,7 +43,7 @@ class Node(object):
             if key in self.data["blockchain"].blocks:
                 del tempData[key]
             elif incBlocks[key].parent in self.data["blockchain"].blocks or incBlocks[key].parent is None:
-                self.data["blockchain"].addBlock(incBlocks[key], self.mode, self.targetRate)
+                self.data["blockchain"].addBlock(incBlocks[key])
                 del tempData[key]
         incBlocks = deepcopy(tempData)
         while len(incBlocks)>0:
@@ -58,13 +58,13 @@ class Node(object):
     def propagate(self, timeOfProp, blockIdent):
         for edgeIdent in self.edges:
             edge = self.edges[edgeIdent]
-            length = e.data["length"]
+            length = edge.data["length"]
             timeOfArrival = timeOfProp + length
-            otherIdent = e.getNeighbor(self.ident)
-            other = e.nodes[otherIdent]
+            otherIdent = edge.getNeighbor(self.ident)
+            other = edge.nodes[otherIdent]
             bc = other.data["blockchain"]
             if blockIdent not in bc.blocks:
-                pB = e.data["pendingBlocks"]
+                pB = edge.data["pendingBlocks"]
                 pendingIdent = newIdent(len(pB))
                 mybc = self.data["blockchain"]
                 blockToProp = mybc.blocks[blockIdent]

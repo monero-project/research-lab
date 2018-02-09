@@ -29,6 +29,7 @@ class Edge(object):
         
 class Test_Edge(unittest.TestCase):
     def test_e(self):
+        params = None
         nelly = Node(params)
         milly = Node(params)
         ed = Edge(params)
@@ -36,5 +37,5 @@ class Test_Edge(unittest.TestCase):
         self.assertEqual(len(self.nodes),2)
         
         
-suite = unittest.TestLoader().loadTestsFromTestCase(Test_Edge)
-unittest.TextTestRunner(verbosity=1).run(suite)
+#suite = unittest.TestLoader().loadTestsFromTestCase(Test_Edge)
+#unittest.TextTestRunner(verbosity=1).run(suite)
