@@ -29,11 +29,13 @@ class Graph(object):
         self.globalTime = deepcopy(self.startTime)
         self.birthRate = params[7]
         self.deathRate = params[8]
-        self.data = params[9] 
+        self.filename = params[9]
+        self.data = params[10] 
         
         self.blankBlockchain = Blockchain()
-        self.blankBlockchain.targetRate = self.data["targetRate"]
-        self.blankBlockchain.mode = self.data["mode"]
+        self.blankBlockchain.targetRate = self.targetRate
+        self.blankBlockchain.mode = self.mode
+        self.blankBlockchain.diff = 1.0
         
         self._createInit()
         
@@ -41,28 +43,28 @@ class Graph(object):
     def _createInit(self):
         # For simplicity, all nodes will have a genesis block with t=0.0 and no offset
         for i in range(self.numInitNodes):
-            offset = newOffset()
-            intens = newIntensity()
+            offset = newOffset(None)
+            intens = newIntensity(None)
             name = newIdent(len(self.nodes))
             dat = {"offset":offset, "intensity":intens, "blockchain":deepcopy(self.blankBlockchain)}
             params = {"ident":name, "data":dat, "verbose":self.verbosity, "mode":self.mode, "targetRate":self.targetRate}
             nelly = Node(params)
             self.nodes.update({nelly.ident:nelly})
             t = self.startTime
-            self.nodes[nelly.ident].generateBlock(t, i)
+            self.nodes[nelly.ident].generateBlock(t)
             
         touched = {}
         for xNode in self.nodes:
             for yNode in self.nodes:
                 notSameNode = (xNode != yNode)
                 xNodeHasRoom = (len(self.nodes[xNode].edges) < self.maxNeighbors)
-                yNodeHasRoom = (len(self.ndoes[yNode].edges) < self.maxNeighbors)
+                yNodeHasRoom = (len(self.nodes[yNode].edges) < self.maxNeighbors)
                 xyNotTouched = ((xNode, yNode) not in touched)
                 yxNotTouched = ((yNode, xNode) not in touched)
                 if notSameNode and xNodeHasRoom and yNodeHasRoom and xyNotTouched and yxNotTouched:
                     touched.update({(xNode,yNode):True, (yNode,xNode):True})
                     if random.random() < self.probEdge:
-                        params = [newIdent(len(self.edges)), {}, self.verbosity]
+                        params = [newIdent(len(self.edges)), {"pendingBlocks":{}, "length":random.random()}, self.verbosity]
                         ed = Edge(params)
                         ed.nodes.update({xNode:self.nodes[xNode], yNode:self.nodes[yNode]})
                         self.edges.update({ed.ident:ed})
@@ -76,13 +78,13 @@ class Graph(object):
         for xNode in self.nodes:
             xNodeHasRoom = (len(self.nodes[xNode].edges) < self.maxNeighbors)
             iStillHasRoom = (len(neighbors) < self.maxNeighbors)
-            if xNodeHasRoom and and iStillHasRoom and random.random() < self.probEdge:
+            if xNodeHasRoom and iStillHasRoom and random.random() < self.probEdge:
                 neighbors.append(xNode)
                 
         
         newNodeName = newIdent(len(self.nodes))
-        offset = newOffset()
-        intens = newIntensity()
+        offset = newOffset(None)
+        intens = newIntensity(None)
         dat = {"offset":offset, "intensity":intens, "blockchain":deepcopy(self.blankBlockchain)}
         params = {"ident":newNodeName, "data":dat, "verbose":self.verbosity, "mode":self.mode, "targetRate":self.targetRate}
         newNode = Node(params)
@@ -108,7 +110,8 @@ class Graph(object):
         leaver = self.nodes[leaverIdent]
         neighbors = []
         for ed in leaver.edges:
-            neighbors.append((ed.Ident, ed.getNeighbor(leaverIdent)))
+            edge = leaver.edges[ed]
+            neighbors.append((edge.ident, edge.getNeighbor(leaverIdent)))
         for neighbor in neighbors:
             edIdent = neighbor[0]
             neiIdent = neighbor[1]
@@ -125,19 +128,24 @@ class Graph(object):
         self.nodes[discoIdent].propagate(t, blockIdent)
         return out
         
-    def eventBlockArrival(self, destNodeIdent, edgeIdent, blockIdent, t):
-        out = str(t) + ",blockArriv," + str(destNodeIdent) + "," + str(edgeIdent) + "," + str(blockIdent) + ","
-        destNode = self.nodes[destNodeIdent]
+    def eventBlockArrival(self, pendingIdent, edgeIdent, t):
+        out = str(t) + ",blockArriv," 
         edge = self.edges[edgeIdent]
-        block = deepcopy(edge.data["pendingBlocks"][blockIdent])
-        block.arrivTimestamp = t + self.nodes[destNodeIdent].data["offset"]
-        self.nodes[destNodeIdent].updateBlockchain({blockIdent:block})
+        pendingData = edge.data["pendingBlocks"][pendingIdent] # pendingDat = {"timeOfArrival":timeOfArrival, "destIdent":otherIdent, "block":blockToProp}
+        out += str(pendingData["destIdent"]) + "," + str(edgeIdent) + "," + str(pendingData["block"].ident)
+        destNode = self.nodes[pendingData["destIdent"]]
+        edge = self.edges[edgeIdent]
+        block = deepcopy(pendingData["block"])
+        block.arrivTimestamp = t + destNode.data["offset"]
+        destNode.updateBlockchain({block.ident:block})
+        
+        del edge.data["pendingBlocks"][pendingIdent]
         return out
         
     def go(self):
         with open(self.filename,"w") as writeFile:
             writeFile.write("timestamp,eventId,eventData\n")
-        
+        eventType = None
         while self.globalTime - self.startTime< self.runTime:
             u = -1.0*math.log(1.0-random.random())/self.birthRate
             eventType = ("nodeJoins", None)
@@ -158,30 +166,39 @@ class Graph(object):
                 edge = self.edges[edgeIdent]
                 pB = edge.data["pendingBlocks"]
                 for pendingIdent in pB:
-                    pendingData = pB[pendingIdent] # pendingDat = {"timeOfArrival":timeOfArrival, "destIdent":otherIdent, "block":blockToProp}
+                    pendingData = pB[pendingIdent] 
                     if pendingData["timeOfArrival"] - self.globalTime < u:
-                        eventTime = ("blockArriv", (pendingData["destIdent"], edgeIdent, pendingData["block"]))
+                        eventType = ("blockArriv", pendingIdent, edgeIdent)
                         u = v
-                        
+            assert eventType is not None 
             self.globalTime += u
             out = ""
-            if eventTime[0] == "nodeJoins":
+            if eventType[0] == "nodeJoins":
                 out = self.eventNodeJoins(self.globalTime)
-            elif eventTime[0] == "nodeLeaves":
+            elif eventType[0] == "nodeLeaves":
                 out = self.eventNodeLeaves(self.globalTime)
-            elif eventTime[0] == "blockDisco":
-                out = self.eventBlockDiscovery(eventTime[1], self.globalTime)
-            elif eventTime[0] == "blockArriv":
-                out = self.eventBlockArrival(eventTime[1], eventTime[2], eventTime[3], self.globalTime)
+            elif eventType[0] == "blockDisco":
+                out = self.eventBlockDiscovery(eventType[1], self.globalTime)
+            elif eventType[0] == "blockArriv":
+                out = self.eventBlockArrival(eventType[1], eventType[2], self.globalTime)
             else:
                 print("WHAAAA")
                 
             with open(self.filename, "a") as writeFile:
                 writeFile.write(out + "\n")
-                        
-                        
 
-                
-            
-        
-            
+mode = "Nakamoto"
+targetRate = 1.0/600000.0
+numInitNodes = 10
+maxNeighbors = 8
+probEdge = 0.1
+verbosity = True
+startTime = time.time()
+runTime = 10.0
+globalTime = startTime
+birthRate = 1.0/10.0
+deathRate = 0.99*1.0/10.0 
+filename = "output.csv"       
+
+greg = Graph([mode, targetRate, numInitNodes, maxNeighbors, probEdge, verbosity, runTime, birthRate, deathRate, filename, []])
+greg.go()
