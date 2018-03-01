@@ -5,8 +5,7 @@ Copyright (c) 2014-2017, The Monero Project
 ## Research Resources
 
 Web: [getmonero.org](https://getmonero.org)  
-Forum: [forum.getmonero.org](https://forum.getmonero.org)  
-Mail: [lab@getmonero.org](mailto:lab@getmonero.org)  
+Forum: [forum.getmonero.org](https://forum.getmonero.org) 
 IRC on Freenode:
 - [#monero-research-lab](http://webchat.freenode.net/?randomnick=1&channels=%23monero-research-lab&prompt=1&uio=d4)
 - [#monero-dev](http://webchat.freenode.net/?randomnick=1&channels=%23monero-dev&prompt=1&uio=d4)
