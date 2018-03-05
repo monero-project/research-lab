@@ -3,6 +3,8 @@
                Sublinear-sized ring signatures without trusted 
                set-ups or bilinear pairings. Summarized for 
                Monero Research Lab by B Goodell
+               ----------------------------
+               WARNING: Many errors such wow
 
 We describe sublinear-sized ring signatures for use in cryptocurrency. This 
 scheme was first sent to MRL by Ruffing and co-authors. These results use 
