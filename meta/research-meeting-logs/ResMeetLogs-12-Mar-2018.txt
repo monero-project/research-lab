@@ -1,0 +1,78 @@
+[2018-03-12 10:46:28] <sarang> A businessperson told me they were the answer to problems
+[2018-03-12 10:46:37] <sarang> How else will we reach consensus?
+[2018-03-12 10:47:07] <moneromooo> You just obey your master(node).
+[2018-03-12 10:49:38] <endogenic> but how will i know who my master is if i am not a master
+[2018-03-12 10:49:50] <endogenic> dun dun dunnnnnnn
+[2018-03-12 10:56:19] <suraeNoether> no one is a master, everyone is flawed, the big lebowski is the latest incarnation of Buddha, etc etc
+[2018-03-12 10:59:24] <sarang> that's, like, your opinion
+[2018-03-12 10:59:25] ⇐ seacur quit (~seacur@unaffiliated/seacur): Quit: ZNC - 1.6.0 - http://znc.in
+[2018-03-12 11:00:20] <rehrar> so... :P
+[2018-03-12 11:00:41] <suraeNoether> So, greetings everyone!
+[2018-03-12 11:01:01] <MoroccanMalinois> Hi
+[2018-03-12 11:01:18] <iDunk> Hi
+[2018-03-12 11:01:18] <sarang> yo
+[2018-03-12 11:02:00] <suraeNoether> Agenda today is 1) hello, 2) BP audit update 3) other stuff Sarang has been reading/working on, 4) stuff I've been working on, 5) obligatory update on MAGIC, 6) anything anyone else wanna talk about?
+[2018-03-12 11:02:37] <suraeNoether> oh, I also want to talk about: how to educate our users about proper key usage and proper privacy practices
+[2018-03-12 11:02:58] <ArticMine> hi
+[2018-03-12 11:03:49] → Osiris1 joined (~Car@unaffiliated/osiris1)
+[2018-03-12 11:03:53] <endogenic> o/
+[2018-03-12 11:04:32] <suraeNoether> so, sarang: BP audit update? you gave us a brief one earlier
+[2018-03-12 11:04:39] <suraeNoether> but let's recap for folks who weren't here
+[2018-03-12 11:05:10] <sarang> sure thing
+[2018-03-12 11:05:24] <sarang> We have raised funds for 3 audits: Benedikt Bunz, QuarksLab, Kudelski
+[2018-03-12 11:05:34] <sarang> I'm finalizing contracts with them
+[2018-03-12 11:05:54] <sarang> We will likely need to do supplemental funding later due to market tomfoolery
+[2018-03-12 11:06:17] <sarang> I will be working with the groups during their audits, which will take place between this months and June
+[2018-03-12 11:06:52] → msvb-lab joined (~michael@x55b54289.dyn.telefonica.de)
+[2018-03-12 11:06:53] <sarang> That's the brief version
+[2018-03-12 11:07:02] <endogenic> may i ask a question regarding our auditing efforts in general?
+[2018-03-12 11:07:06] <sarang> plz
+[2018-03-12 11:07:06] <endogenic> or should i wait til end?
+[2018-03-12 11:07:23] <sarang> fire away
+[2018-03-12 11:07:44] <endogenic> so i'm also wondering about vulnerabilities in the code in general - i know we have the bounty system for that but it's not got quite the same incentive system
+[2018-03-12 11:07:54] <endogenic> just wondering if it makes sense to apply this model to other parts of the code
+[2018-03-12 11:08:00] <sarang> Hiring auditors, you mean?
+[2018-03-12 11:08:03] <endogenic> yeah
+[2018-03-12 11:08:10] <sarang> I'm seeing more and more support for it, yes
+[2018-03-12 11:08:13] <endogenic> or an FFS for an auditor
+[2018-03-12 11:08:25] <suraeNoether> endogenic: so there is this clever idea
+[2018-03-12 11:08:37] <sarang> At least for components of the code, like multisig or BPs that have a defined scope
+[2018-03-12 11:08:37] <suraeNoether> that greg maxwell and blockstream are using for their libsecp256k1 library
+[2018-03-12 11:08:49] <suraeNoether> which has a badass test suite
+[2018-03-12 11:09:15] <endogenic> sarang: right i suppose i'm thinking more from the security and cracking standpoint .. like, can we confirm what % of data input fuzzing we've done and where / if / how the code fails
+[2018-03-12 11:09:38] <sarang> That's more of a question for moneromooo I think
+[2018-03-12 11:09:47] <endogenic> that sounds interesting surae
+[2018-03-12 11:09:56] <suraeNoether> it incentivizes things very nicely
+[2018-03-12 11:10:03] <suraeNoether> but it requires a really great test suite
+[2018-03-12 11:10:09] <sarang> yes indeed
+[2018-03-12 11:10:27] <moneromooo> I don't think we can easily determine a percentage of inputs for fuzzing.
+[2018-03-12 11:10:41] <endogenic> well that was just one example
+[2018-03-12 11:10:50] <endogenic> i cant take responsibility to define all the jobs an expert cracker would do :P
+[2018-03-12 11:11:15] <suraeNoether> if we are going to start putting money into auditors, then we should consider putting a proportion of that toward beefing up our test suites. perhaps require that auditors propose new unit tests, or something along those lines, in addition to a thumbs up/down and a list of recommended changes
+[2018-03-12 11:11:22] <endogenic> yeah
+[2018-03-12 11:11:28] <endogenic> i mean we want to record the work which was done
+[2018-03-12 11:11:31] <endogenic> and tests can be nice way to do that
+[2018-03-12 11:11:36] <sarang> yes
+[2018-03-12 11:11:48] <suraeNoether> and that way, perhaps after a year or two, we will have a test suite sufficiently beefy to incentivize properly
+[2018-03-12 11:11:55] <suraeNoether> i know its' kind of a long-term plan
+[2018-03-12 11:12:01] <sarang> Too bad it's sexier to run an FFS for an auditor than for writing test suites :(
+[2018-03-12 11:12:15] <suraeNoether> short of paying some smart people to audit our whole lie-berry and come up with test suites across the board
+[2018-03-12 11:12:19] <suraeNoether> yeah, no kidding
+[2018-03-12 11:12:22] <endogenic> sarang it can be pitched in the same way
+[2018-03-12 11:12:27] <endogenic> they audit by the very activity
+[2018-03-12 11:12:36] <rehrar> do unit tests require coding? (sorry if this is a stupid question)
+[2018-03-12 11:12:42] <endogenic> yep
+[2018-03-12 11:12:42] <sarang> yes
+[2018-03-12 11:12:45] <rehrar> blerg
+[2018-03-12 11:12:52] <endogenic> it's not that bad tho rehrar
+[2018-03-12 11:12:57] <endogenic> it's more about understanding what you are testing for
+[2018-03-12 11:12:58] <sarang> The goal is to have complete scope
+[2018-03-12 11:13:00] <rehrar> it is when my coding is 1/10 :D
+[2018-03-12 11:13:41] <sarang> Any questions on the current audit that anyone has?
+[2018-03-12 11:13:53] <sarang> Kudelski will be the first to go
+[2018-03-12 11:13:54] <moneromooo> When does the C++ based one start ?
+[2018-03-12 11:14:02] <sarang> They're available this month
+[2018-03-12 11:14:23] <moneromooo> More precisely ?
+[2018-03-12 11:14:47] <sarang> TBD once we sign with them, but I can check on more specific dates if you need them
+[2018-03-12 11:15:55] <sarang> Anything in particular?
+[2018-03-12 11:19:12] <suraeNoether> ok, well
