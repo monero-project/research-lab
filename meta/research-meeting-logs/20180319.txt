@@ -108,7 +108,7 @@
 [2018-03-19 11:30:17] <suraeNoether> rehrar: while that seems like an interesting idea on the surface, keep in mind we don't necessarily let users select everything based on their trust model. for example, they can't pick a curve with smaller group order because they are so trustworthy.
 [2018-03-19 11:30:24] <moneromooo> It's 58 GB on my disk.
 [2018-03-19 11:30:26] <rehrar> luigi1111w it adds more space to your hard drive
-[2018-03-19 11:30:36] — moneromooo going by lmdb pages reported by mdb_stat
+[2018-03-19 11:30:36] Â— moneromooo going by lmdb pages reported by mdb_stat
 [2018-03-19 11:30:52] <suraeNoether> although it'd be *very* interesting to see a cryptocurrency where each transaction specifies *everything* including curves. :P heh
 [2018-03-19 11:30:52] <luigi1111w> .hmm
 [2018-03-19 11:30:55] <luigi1111w> 44.2GB on mine
