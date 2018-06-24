@@ -1,0 +1,243 @@
+﻿ng> OK, it's time to begin
+[2018-05-07 11:00:10] → naughtyfox joined (~naughtyfo@85-114-7-194.obit.ru)
+[2018-05-07 11:00:16] <sarang> Welcome to everyone; hello
+[2018-05-07 11:00:46] <sgp_[m]> Hi!
+[2018-05-07 11:02:02] <sarang> Calling others: hyc suraeNoether anonimal endogenic binaryFate fluffypony luigi1111 luigi1113 rehrar[m] monerigo[m] gingeropolous dEBRUYNE
+[2018-05-07 11:02:09] <sarang> and many others no doubt
+[2018-05-07 11:02:22] <sarang> s/monerigo[m]/moneromooo
+[2018-05-07 11:02:26] <binaryFate> présent
+[2018-05-07 11:02:40] <sarang> I suppose we can discuss recent updates and such
+[2018-05-07 11:02:51] <sarang> I have been focusing on noninteractive refund transactions
+[2018-05-07 11:02:58] <sarang> it's surprisingly tricky to get right
+[2018-05-07 11:03:34] <sarang> The idea of whether or not to hide block heights has big implications on size and complexity
+[2018-05-07 11:03:52] <sarang> and also will affect the use of old outputs
+[2018-05-07 11:04:14] → theRealSurae joined (2d248ce0@gateway/web/freenode/ip.45.36.140.224)
+[2018-05-07 11:04:27] <theRealSurae> Hey everyone, sorry I'm late (and not using my registered nick)
+[2018-05-07 11:04:33] <sarang> A good higher-level question is whether we insist that having refund transactions is enough of a priority
+[2018-05-07 11:04:36] <sarang> Hello fake suraeNoether
+[2018-05-07 11:04:42] <theRealSurae> heh
+[2018-05-07 11:05:06] <sarang> *enough of a priority to devote big plumbing-level changes
+[2018-05-07 11:06:03] → camthegeek joined (~CamTheGee@camthegeek.net)
+[2018-05-07 11:06:09] <sarang> these questions have consumed me as the Whale consumed Ahab
+[2018-05-07 11:06:24] <sarang> and, like Ahab, I spend much time in the company of Starbuck(s)
+[2018-05-07 11:06:30] <theRealSurae> gross
+[2018-05-07 11:06:45] <sarang> theRealSurae: what has consumed you lately?
+[2018-05-07 11:07:11] <UkoeHB> it feels like there should be an easier way to hide amounts. Maybe worth mulling for some time
+[2018-05-07 11:07:22] <sarang> UkoeHB: other than commitments?
+[2018-05-07 11:07:51] <rehrar[m]> Hi
+[2018-05-07 11:07:51] <UkoeHB> Yeah. Maybe a shift in perspective. Baseless intuition
+[2018-05-07 11:07:59] <silur> what
+[2018-05-07 11:08:18] <sarang> Well, the current Best Way is homomorphic commitments + range proofs to ensure balance
+[2018-05-07 11:08:18] <theRealSurae> I've been thinking about koe's reduced mlsag and how we might be able to batch-verify ring signatures with bulletproofs. and i've been speaking with a professor at clemson university about the possibility of starting a paid project for a grad student to invent a new elliptic curve with 2^255-19 points on it, or to come up with a similar sort of variant to secp256k1
+[2018-05-07 11:09:00] <theRealSurae> yeah, I think we are going to experience reduced returns in terms of hammering bulletproofs for improving our amount strucutres
+[2018-05-07 11:09:03] <sarang> theRealSurae: BPs to batch verify our current MLSAG scheme?
+[2018-05-07 11:09:10] <silur> oh yea the curve order question you asked
+[2018-05-07 11:09:32] → ArticMine joined (~ArticMine@207.194.38.218)
+[2018-05-07 11:09:43] <theRealSurae> so, i think it'd be really really helpful for both bitcoin and monero to have alternate curves
+[2018-05-07 11:10:12] → totallyNotFakeSa joined (ae40627a@gateway/web/freenode/ip.174.64.98.122)
+[2018-05-07 11:10:20] <theRealSurae> ohgod
+[2018-05-07 11:10:37] ⇐ totallyNotFakeSa quit (ae40627a@gateway/web/freenode/ip.174.64.98.122): Client Quit
+[2018-05-07 11:11:09] <theRealSurae> other than that and the multisig dump I made the night before yesterday, this week has been consumed by editing papers for other folks. Koe and my old advisor and another document. lots of reading this week
+[2018-05-07 11:11:32] <sarang> What are your thoughts on refunds?
+[2018-05-07 11:11:32] <UkoeHB> and thank you for that :) incredibly helpful
+[2018-05-07 11:11:45] <sarang> UkoeHB: any big changes to your excellent paper?
+[2018-05-07 11:12:27] <UkoeHB> Well we found out monero doesn't even use borromean sigs
+[2018-05-07 11:12:55] <UkoeHB> genBorromean should be genSAGs
+[2018-05-07 11:13:03] <UkoeHB> Or something
+[2018-05-07 11:13:11] <sarang> SAG?
+[2018-05-07 11:13:12] <theRealSurae> I've been thinking a lot about the refund structure with timelocks, and I'm trying to figure out exactly whether we have a novel "invention" in these refund transactions or whether tit is equivalent to a timelock+multisig situation
+[2018-05-07 11:13:28] <UkoeHB> spontaneous anonymous group sig. Like LSAG but no key images
+[2018-05-07 11:13:47] <sarang> for range?
+[2018-05-07 11:13:52] <UkoeHB> Yeah
+[2018-05-07 11:14:00] <UkoeHB> Check ringCT.cpp genBorromean
+[2018-05-07 11:14:05] → sneurlax joined (~r@66.63.178.170)
+[2018-05-07 11:14:09] <sarang> Yeah I'm familiar with that code
+[2018-05-07 11:14:29] <UkoeHB> It's 33% larger range proofs than a real borromean setup
+[2018-05-07 11:14:59] <theRealSurae> ... i need more details about that, koe, if you don't mind...
+[2018-05-07 11:15:11] <sarang> heh
+[2018-05-07 11:15:23] <sarang> theRealSurae: big thing is non-interactivity
+[2018-05-07 11:15:36] <sarang> I don't need the recipient's cooperation
+[2018-05-07 11:15:53] <UkoeHB> I'll see what I can do
+[2018-05-07 11:16:02] <theRealSurae> thanks koe, i'm not in a rush on that though...
+[2018-05-07 11:16:11] <theRealSurae> I want to remind everyone that I'll be mostly away from the internet from tomorrow until the 19th, with some intermittent access.
+[2018-05-07 11:16:18] <moneromooo> luigi1111: is this (genBorromean doesn't actually generate Borromean sigs) correct ?
+[2018-05-07 11:16:27] <UkoeHB> yup have fun :). Vacation right?
+[2018-05-07 11:17:31] → grubles joined (~grubles@unaffiliated/grubles)
+[2018-05-07 11:17:41] <theRealSurae> i'm not the sort who can really put work down, but i'm trying, briefly. i managed to write up a skeleton of the unforgeability proof for multisig and hand it off to sarang to familiarize himself with the musig approach
+[2018-05-07 11:17:58] <binaryFate> Zcash is also coming up with their own curve so as to speed up the particular things they need to. I find it worrying if the trend is that every project cooks up their curve to suit their particular needs.
+[2018-05-07 11:17:59] <theRealSurae> and, like I said, I'm communicating with some folks at Clemson
+[2018-05-07 11:18:02] <sarang> Yeah I've been revisiting the original musig paper
+[2018-05-07 11:18:02] <luigi1111> Not that I know of
+[2018-05-07 11:18:09] <theRealSurae> binaryFate: why would this be worrying?
+[2018-05-07 11:18:31] <luigi1111> theRealSurae: 2^255-19 isn't the number of points
+[2018-05-07 11:18:48] <theRealSurae> you are right, it's the group order
+[2018-05-07 11:18:50] <binaryFate> against the "don't invent your own crypto", and light years away from typical review process for curves
+[2018-05-07 11:18:57] <theRealSurae> right? i misspoke
+[2018-05-07 11:19:08] <vtnerd> no, 2^255-19 is the prime field
+[2018-05-07 11:20:09] <sarang> I hear it's a kind of cake
+[2018-05-07 11:20:27] <sarang> Or that feeling when your leg falls asleep and you stand up
+[2018-05-07 11:20:32] <luigi1111> Group order is l
+[2018-05-07 11:20:51] <luigi1111> 2^252+blah
+[2018-05-07 11:22:45] <sarang> aaaanyway
+[2018-05-07 11:22:50] <theRealSurae> i confess I tend to think of our group as a scrambled mirror image of Z_q, despite addition of points not even landing on the subgroup.
+[2018-05-07 11:22:58] <sarang> So theRealSurae is working on unforgeability
+[2018-05-07 11:23:16] <sarang> I am figuring out if noninteractive new-output-style refunds are worth it
+[2018-05-07 11:23:20] <sarang> Other fun times?
+[2018-05-07 11:24:10] <theRealSurae> binaryFate: yeah, I see that
+[2018-05-07 11:24:41] <sarang> binaryFate: do you have any information on the Zcash efforts? I wasn't aware of their work
+[2018-05-07 11:25:13] <theRealSurae> binaryFate: eventually that curve, even if proven to satisfy our desired properties, will have to be implemented, and the dangers or crappy implementation are huge... but I don't think that should discourage research into new curves and new proof methods using isomorphic curves
+[2018-05-07 11:25:37] <theRealSurae> yeah, I wasn't either. I thought it was just Blockstream looking for a variant of secp256k1 so far
+[2018-05-07 11:25:56] <UkoeHB> oh i messed up - they are borromean ugh
+[2018-05-07 11:26:08] <theRealSurae> that's a relief koe!
+[2018-05-07 11:26:11] <sarang> UkoeHB: what led to believe otherwise?
+[2018-05-07 11:26:47] <luigi1111> ^
+[2018-05-07 11:26:51] <UkoeHB> misreading code like a fool
+[2018-05-07 11:27:16] ⇐ donthrmo quit (~thrmo@unaffiliated/thrmo): Quit: Waiting for .007
+[2018-05-07 11:28:06] <UkoeHB> thought this hash_to_scalar(L[1]) meant an array of hashes for each L[1], instead of a hash of the entire array
+[2018-05-07 11:28:29] <sarang> Good thing hashes aren't important to borromean sigs /s
+[2018-05-07 11:29:18] — UkoeHB falls down a well
+[2018-05-07 11:29:30] <sarang> If there aren't any other big topics to discuss, we could certainly return to refunds or previous topics
+[2018-05-07 11:30:21] <sarang> There were suggestions from luigi1111 that the refunds needed for payment channels would be possible purely w/ timelocks + multisig
+[2018-05-07 11:30:27] <binaryFate> will look for some link on the zcash curve thing. It's part of their roadmap to reduce overhead to generate z-transactions iirc
+[2018-05-07 11:30:35] → pwrcycle joined (~pwrcycle@unaffiliated/pwrcycle)
+[2018-05-07 11:30:38] <sarang> I do not see how that would be possible without interaction from both parties, or a third-party arbiter
+[2018-05-07 11:30:48] <sgp_[m]> I just want to mention that I'm working on preserving the integrity of outputs held by mining pools
+[2018-05-07 11:30:50] <sarang> But I'd love to be convinced otherwise
+[2018-05-07 11:30:53] <rehrar[m]> MRL corporate cheer!
+[2018-05-07 11:31:01] <sarang> sgp_[m]: in response to the linking work?
+[2018-05-07 11:31:17] <luigi1111> It does require interaction at the start
+[2018-05-07 11:31:21] <sarang> right
+[2018-05-07 11:31:27] <sarang> it'd have to
+[2018-05-07 11:32:03] <sarang> So the recipient pre-signs for the refund?
+[2018-05-07 11:32:15] <rehrar[m]> I have a bit of other ZCash news.
+[2018-05-07 11:32:16] <sgp_[m]> sarang kinda, yeah. I don't have too much to mention now though
+[2018-05-07 11:32:19] <sarang> How does the network verify the spend of the originally-intended output?
+[2018-05-07 11:32:32] <sarang> sgp_[m]: ok, keep us updated
+[2018-05-07 11:32:45] <sneurlax> I've contacted ehanoc re: the "transaction tree" python toolkit and we will collaborate to deliver that after I finish the scraping tool which moneromooo asked for.  mooo, I'll be sending you results this week
+[2018-05-07 11:33:01] <sneurlax> sorry to interject
+[2018-05-07 11:33:06] <sarang> sneurlax: excellent! That'll provide good data
+[2018-05-07 11:33:06] <theRealSurae> rehrar[m]: tell us?
+[2018-05-07 11:33:10] <theRealSurae> sneurlax: that's fantastic news
+[2018-05-07 11:33:16] <rehrar[m]> ZCash wants to open a grant proposal jointly with a Monero community member (that'd be me atm) to donate a considerable sum of money to some FFS proposals.
+[2018-05-07 11:33:35] <sarang> What types of FFS do they want to fund?
+[2018-05-07 11:33:41] <theRealSurae> how would that work? would you have discretion over donating the funds?
+[2018-05-07 11:33:50] <rehrar[m]> https://twitter.com/socrates1024/status/993252058923925506?s=19
+[2018-05-07 11:33:54] <theRealSurae> i'll almost always take free money if it's no-strings
+[2018-05-07 11:34:08] <sarang> Aw shucks, they like us!
+[2018-05-07 11:34:24] <theRealSurae> that's... fantastic
+[2018-05-07 11:34:44] <rehrar[m]> Dunno. When next round of bp auditing funds?
+[2018-05-07 11:35:16] <rehrar[m]> We can out it up, raise the amount, and take out right away. Superior Coin also wants to help if you recall.
+[2018-05-07 11:35:41] <rehrar[m]> Perhaps we can also get subaddresses audited?
+[2018-05-07 11:35:43] <theRealSurae> hmm
+[2018-05-07 11:35:46] <sarang> Yeah, was thinking of waiting until closer to the finalization, but I suppose there's little advantage if we can coordinate w/ OSTIF quickly
+[2018-05-07 11:35:52] <theRealSurae> it seems like a lot of projects want to funnel their research funding through the Monero FFS
+[2018-05-07 11:36:23] <binaryFate> the harder we criticize them the more they like us... 10k$ is not that much compared to amounts raised typically anyway
+[2018-05-07 11:36:42] <sarang> It's a nice gesture of community spirit though
+[2018-05-07 11:36:49] <sgp_[m]> I think the best ones are the hardware wallet (which should work with Zcash iirc) and code audits
+[2018-05-07 11:37:09] <rehrar[m]> They're masochists binaryfate. If we criticize harder they'll give more.
+[2018-05-07 11:37:18] <sarang> A subaddress audit depends highly on the scope
+[2018-05-07 11:37:29] <sarang> The BP scope was narrow-ish
+[2018-05-07 11:37:35] <theRealSurae> binaryFate: yeah, it seems like a largely symbolic thing, but also: they've been really encouraging me and sarang to encourage you guys to ask for grant money.
+[2018-05-07 11:38:09] <theRealSurae> rehrar[m]: i should just take zooko out to a bdsm club in denver, see if they offer us six or seven figures. :P
+[2018-05-07 11:38:43] <rehrar[m]> In return , we can send them Monero stickers to put on their laptops.
+[2018-05-07 11:38:47] <sarang> something something meat market
+[2018-05-07 11:38:57] <theRealSurae> meat meat something market
+[2018-05-07 11:39:54] ⇐ silur quit (~silur@ch-zurich.ra4wvpn.com): Quit: leaving
+[2018-05-07 11:40:06] → Sleepingshell joined (~tyler@unaffiliated/sleepingshell)
+[2018-05-07 11:40:44] <binaryFate> <rehrar[m]> In return , we can send them Monero stickers to put on their laptops. <-- they have one at least, we've put one on zooko's back at CCC without him noticing
+[2018-05-07 11:40:49] <sarang> I'll be interested to see how the 10K is disbursed
+[2018-05-07 11:41:25] <theRealSurae> sarang: Is the implication that it would totally be up to our discretion? that's sort of what i'm getting...
+[2018-05-07 11:41:56] <rehrar[m]> Zooko is a dude.
+[2018-05-07 11:42:15] <rehrar[m]> I chilled with him in Colorado.
+[2018-05-07 11:42:27] <rehrar[m]> Can neither confirm nor deny Verge dev there too.
+[2018-05-07 11:42:42] <theRealSurae> What if we take the 10k, pay for a semester of a grad student working with some cryptographers to invent three new curves, a variant for secp256k1, a variant for x25519, and a variant for zcash's thing
+[2018-05-07 11:42:53] <sarang> tall order
+[2018-05-07 11:43:17] <theRealSurae> maybe
+[2018-05-07 11:43:24] <endogenic> sorry rehar
+[2018-05-07 11:43:36] <theRealSurae> it'd guarantee that student would spend the rest of his time in grad school working on that sort of thing
+[2018-05-07 11:43:57] <theRealSurae> which I think would be a valuable thing: seed the mind-virus among as many researchers as possible
+[2018-05-07 11:44:11] <binaryFate> They're not even asking for doing joint work with zcash stuff at this stage apparently. Would just channel to Monero topics entirely if possible.
+[2018-05-07 11:44:24] <pwrcycle> Hi all.
+[2018-05-07 11:44:26] <binaryFate> Anyway grad student is a great idea
+[2018-05-07 11:44:32] <theRealSurae> binaryFate: yeah, that's the inference I made
+[2018-05-07 11:44:34] <rehrar[m]> I'll talk with Miller.
+[2018-05-07 11:44:36] <rehrar[m]> See how he wants to do the grant proposal.
+[2018-05-07 11:44:41] <theRealSurae> binaryFate: the problem then is picking the student/school
+[2018-05-07 11:44:56] <pwrcycle> Funding grant money for school research seems cool. Pinning all the hopes on one grad student seems like a bad idea.
+[2018-05-07 11:44:58] <theRealSurae> rehrar[m]: please do, maybe CC me... I can hook him up with at least two cryptographers at Clemson who may be interested
+[2018-05-07 11:45:15] <theRealSurae> pwrcycle: yeah, you'd pick by advisor more than student
+[2018-05-07 11:46:05] <rehrar[m]> Maybe we can get some people to make a FFS that should have made one a while back in exchange for ZCash paper
+[2018-05-07 11:46:18] <rehrar[m]> Like dEBRYUNE
+[2018-05-07 11:46:29] <rehrar[m]> Then again, what use have gods for our petty currencies.
+[2018-05-07 11:46:37] <binaryFate> Btw having some sort of pulic call for the paid internship circulating in academic circles is as important as the thing actually happening, in terms of mind-virus spreading
+[2018-05-07 11:46:44] <rehrar[m]> Nothing more from me.
+[2018-05-07 11:46:51] <theRealSurae> rehrar[m]: you are the greatest orator of our time
+[2018-05-07 11:47:00] <theRealSurae> binaryFate: TRUE point
+[2018-05-07 11:47:01] <theRealSurae> very true
+[2018-05-07 11:47:03] <theRealSurae> sarang
+[2018-05-07 11:47:33] <sarang> yo
+[2018-05-07 11:47:39] <theRealSurae> when I get back I'm going to look into putting job postings on mathjobs.org
+[2018-05-07 11:47:57] <theRealSurae> i was about to ask you to do it while i'm gone, but it's not urgent and there's no need to delegate. :P if you're curious, though :D
+[2018-05-07 11:48:43] <sarang> I think using mathjobs is a really good idea for pure math applicants
+[2018-05-07 11:49:03] <theRealSurae> there are lots and lots of applied jobs on there too
+[2018-05-07 11:49:08] <theRealSurae> you should check it some time, but
+[2018-05-07 11:49:20] <theRealSurae> creation of a curve is at the intersection of applied algebraic geometry and pure cryptography
+[2018-05-07 11:49:23] <sarang> right, that wasn't what I meant
+[2018-05-07 11:49:29] <theRealSurae> so it's sort of both pure and applied
+[2018-05-07 11:49:30] <theRealSurae> oh ok
+[2018-05-07 11:49:32] <sarang> I mean to get solid reach to academics
+[2018-05-07 11:49:37] <sarang> that's the obvious choice
+[2018-05-07 11:49:38] <theRealSurae> yep
+[2018-05-07 11:50:20] <sarang> They can send us a list of all the points on their new curve, for us to check
+[2018-05-07 11:50:29] <binaryFate> good old emails circulating between labs and advisors ("if you have a really good students, consider asking them to apply. And please forward blabla") is also worth it. Reaches more senior people than a job posting probably read primarily by students directly.
+[2018-05-07 11:51:30] <sarang> Oh, so I've been seeing random reddit postings about deep reorgs
+[2018-05-07 11:51:35] <sarang> But I haven't looked into it at all
+[2018-05-07 11:51:38] <sarang> Anyone know anything?
+[2018-05-07 11:52:08] <selsta> also articles are starting to come out https://www.trustnodes.com/2018/05/07/monero-allegedly-attack-claims-double-spends-orphaned-chains-21-block-deep
+[2018-05-07 11:52:16] → marcuskosters joined (~marcuskos@f103081.upc-f.chello.nl)
+[2018-05-07 11:52:31] <moneromooo> I think it's fixed now (no PR yet).
+[2018-05-07 11:52:38] <sarang> Do you know the cause?
+[2018-05-07 11:52:40] <theRealSurae> is it known what the issue was?
+[2018-05-07 11:52:46] <sarang> jinx
+[2018-05-07 11:52:49] <binaryFate> The +20-blocks fork mentioned in the post is not an actual fork, you only see that when syncing. But somebody is fiddling with decent HR
+[2018-05-07 11:52:51] <sarang> buy me a DietMonero
+[2018-05-07 11:52:52] <theRealSurae> i thought the first few reports were possibly the OP for some reason
+[2018-05-07 11:53:03] <binaryFate> moneromooo link or summary?
+[2018-05-07 11:53:12] → Keniyal joined (~Keniyal@unaffiliated/keniyal)
+[2018-05-07 11:53:29] <moneromooo> Some init wasn't done in some cases when adding a tx.
+[2018-05-07 11:53:30] <sarang> Yeah, I want to be able to give correct information
+[2018-05-07 11:53:55] <moneromooo> So that was causing the tx to be rejected though it is valid.
+[2018-05-07 11:54:21] <theRealSurae> hrmm
+[2018-05-07 11:54:21] <sarang> OK, so that explains the "double spend" FUD
+[2018-05-07 11:54:36] <sarang> The long-chain reorgs are just related to initial sync?
+[2018-05-07 11:57:10] <sarang> It was noted that there wasn't any big spike in hashrate
+[2018-05-07 11:57:18] <sarang> so it's not outsiders coming online and futzing
+[2018-05-07 11:58:06] <moneromooo> If a pool doesn't accept a valid tx, it will continue mining on its own chain till it stops doing so.
+[2018-05-07 11:58:30] <sarang> OK, so it's a single cause with these two effects?
+[2018-05-07 11:58:56] <moneromooo> What two effects ?
+[2018-05-07 11:59:25] <sarang> Well the reports I've seen have complained about apparent double spends (rejected tx) and long-chain reorgs
+[2018-05-07 11:59:41] <theRealSurae> i feel like if a selfish miner was going to release a chain in an attack, the hashrate wouldn't necessarily look different to an observer, especially if the attacker had 33%+ attack power and was clever with their timestamp choice...
+[2018-05-07 12:00:00] <moneromooo> I don't know anything about double spends.
+[2018-05-07 12:00:23] <moneromooo> Though if a merchant is only connected to that pool, you could swindle it.
+[2018-05-07 12:00:43] <moneromooo> The merchant would have to be only connected to that pool though, but that's not a new attack.
+[2018-05-07 12:01:04] <sarang> Yeah that's just being cavalier
+[2018-05-07 12:01:04] <theRealSurae> https://www.trustnodes.com/2018/05/07/monero-allegedly-attack-claims-double-spends-orphaned-chains-21-block-deep
+[2018-05-07 12:01:12] <theRealSurae> i don't like that article for a variety of reasons, but
+[2018-05-07 12:01:14] <sarang> Yeah that's the article I keep getting linked to
+[2018-05-07 12:01:23] <sarang> it's based on some r/monero complaint posts
+[2018-05-07 12:01:33] ⇐ Sleepingshell quit (~tyler@unaffiliated/sleepingshell): Quit: WeeChat 1.0.1
+[2018-05-07 12:01:38] <sarang> so naturally it will be accepted as gospel and spread widely
+[2018-05-07 12:01:59] <theRealSurae> it would be helpful to get more information from the specific users making this complaint
+[2018-05-07 12:02:00] <sarang> A random user says one thing and the devs who know things say another thing! So there's no way to know!
+[2018-05-07 12:02:32] <binaryFate> <sarang> It was noted that there wasn't any big spike in hashrate <-- if someone is purposefully mining on alternative blocks rather than winning chain, we would not "see" the HR spike as it does not make blocks coming faster
+[2018-05-07 12:02:58] <moneromooo> You'd see a hashrate spike downwards.
+[2018-05-07 12:03:25] <binaryFate> only if that miner was mining before no?
+[2018-05-07 12:03:33] <moneromooo> Yes.
+[2018-05-07 12:04:07] <theRealSurae> not necessarily; an attacker with exactly 50% hash rate and honest timestamps will appear to be invisible. an attacker with lower hash rate could mess with timestamps slightly and appear invisible. an attacker with too low of a hash rate couldn't manipulate his timestamps enough to hide his activity
+[2018-05-07 12:04:27] <theRealSurae> (not necessarily re: downward spike)
+[2018-05-07 12:04:53] <binaryFate> Can we check how long it took them to mine a particular altchain of N blocks by checking logs on other nodes on when the last block in their chain got known to peers?
+[2018-05-07 12:08:03] <theRealSurae> we can put a bound on it, for sure, and we can use that to estimate the hash rate power they have
+[2018-05-07 12:08:11] <theRealSurae> ok y'all I gotta go
+[2018-05-07 12:08:19] <theRealSurae> have a good week and a half!
+[2018-05-07 12:08:51] ⇐ theRealSurae quit (2d248ce0@gateway/web/freenode/ip.45.36.140.224): Quit: Page closed
+[2018-05-07 12:12:45] <binaryFate> same!

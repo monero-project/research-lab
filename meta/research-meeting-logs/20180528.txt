@@ -1,0 +1,181 @@
+[2018-05-28 11:00:28] <suraeNoether> sure~
+[2018-05-28 11:00:34] <suraeNoether> Greetings everyone
+[2018-05-28 11:00:44] <suraeNoether> welcome to the MRL Research meeting for the week
+[2018-05-28 11:00:51] <rbrunner> Hi. Lurking for one here :)
+[2018-05-28 11:00:57] <sarang> yo
+[2018-05-28 11:01:00] <suraeNoether> mostly an informal discussion of what we've all been getting up to for the past week
+[2018-05-28 11:01:19] <ArticMine> hi
+[2018-05-28 11:01:24] <jwinterm> o/
+[2018-05-28 11:01:25] <sarang> Happy Memorial Day to those who celebrate it today!
+[2018-05-28 11:01:42] — jwinterm pours one out for green people
+[2018-05-28 11:02:03] <suraeNoether> i know sarang has been discussing fees with myself and ArticMine, and we both have been talking about multisig with each other... does anyone want to put an item on the agenda?
+[2018-05-28 11:02:33] <suraeNoether> otherwise, sarang and I can just describe what we've done this past week and get on to it, but i know some folks have been working on a lot of stuff
+[2018-05-28 11:02:39] <suraeNoether> oh, man i forgot to ping UkoeHB 
+[2018-05-28 11:03:26] <endogenic> ya if i may, you should ping ppl at the start of the mtg
+[2018-05-28 11:04:31] <sarang> Yes there is plenty to discuss for BPs, fees, and optimizations
+[2018-05-28 11:04:46] <suraeNoether> endogenic: I pinged people about 20 minutes ago
+[2018-05-28 11:04:54] <suraeNoether> but point taken
+[2018-05-28 11:05:00] <suraeNoether> Sarang, how about you go first
+[2018-05-28 11:05:03] <sarang> I worked with moneromooo to speed up BPs
+[2018-05-28 11:05:08] <suraeNoether> we can let people jump in with questions
+[2018-05-28 11:05:22] <sarang> Here is timing data for the expensive multiexp operations they use, to illustrate: https://imgur.com/a/rZB0vin
+[2018-05-28 11:05:29] <sarang> The green bar, Pippenger, is the new one
+[2018-05-28 11:05:44] <sarang> BPs start at 256 points, on the x-axis
+[2018-05-28 11:06:16] <suraeNoether> cool!
+[2018-05-28 11:06:20] <endogenic> suraeNoether: think both can be helpful
+[2018-05-28 11:06:22] <sarang> Once we finish up some testing, BPs will use a combination of algorithms. The speedup on the operations has been clocked at 40% of the original
+[2018-05-28 11:06:42] <sarang> The audits continue
+[2018-05-28 11:06:52] <sarang> What really remains is determining fees, as was discussed last week
+[2018-05-28 11:07:00] <suraeNoether> fluffypony knaccc luigi1111 anonimal andytoshi ArticMine binaryFate chachasmooth dEBRUYNE endogenic gingeropolous hyc iDunk IsthmusCrypto john_alan JollyMort[m] jwinterm kenshi84 medusa_ moneromooo MoroccanMalinois needmoney90 nioc nioc_ othe philkode rehrar rrol[m] sgp_[m] smooth sneurlax[m]1 stoffu TheCharlatan unknownids vtnerd waxwing
+[2018-05-28 11:07:17] <suraeNoether> okay, so let's talk about fees really quick
+[2018-05-28 11:07:30] <sarang> yes
+[2018-05-28 11:07:48] <suraeNoether> since verification times are roughly constant across powers of 2 (in terms of number of outputs) and the space is proportional to the number of outputs, we can get a good simple fee model going
+[2018-05-28 11:08:25] <sarang> This chart shows timings _before_ the new Pippenger optimizations: https://docs.google.com/spreadsheets/d/1HPk2a0atBqLqUlxQqBLiQXEJi-e1egIMYu3tS1NGHUo/edit#gid=0
+[2018-05-28 11:08:36] <sarang> It's the same chart as I presented last week, but gives an idea of timings
+[2018-05-28 11:08:43] <suraeNoether> say N = # outputs, and 2^(m-1) < N <= 2^m. then space is approximately N and verification time is approximately m = round(lg2(N)). 
+[2018-05-28 11:08:52] <sarang> The timings also do _not_ account for batch verification, since that depends on what size proofs a client has
+[2018-05-28 11:10:12] <sarang> suraeNoether: space does not scale linearly with the # of outputs
+[2018-05-28 11:10:35] <ArticMine> It essentially forces verification time as the major pricing element when comparing a 2 output proof with 2^N output proof
+[2018-05-28 11:10:55] <sarang> Yes. Compared to Borromean, space is basically constant
+[2018-05-28 11:11:06] <sarang> at least across the ranges we deal with
+[2018-05-28 11:11:29] <ArticMine> 64 bytes for each additional factor of 2
+[2018-05-28 11:11:34] <ArticMine> From the table
+[2018-05-28 11:11:39] ? thrmo joined (~thrmo@unaffiliated/thrmo)
+[2018-05-28 11:11:45] <sarang> yes, it's a very small increase
+[2018-05-28 11:12:03] <sarang> but among all costs to consider, it's the smallest
+[2018-05-28 11:12:04] <suraeNoether> wait, sarang, verificaiton time is O(N) and space is lg(N), right? according to that table we glanced at earlier
+[2018-05-28 11:12:39] <sarang> For single verification, yes, but it scales with the next power of 2 from N
+[2018-05-28 11:12:48] <suraeNoether> right
+[2018-05-28 11:13:05] <sarang> We don't have the more general BPs that can handle any number of outputs cleanly
+[2018-05-28 11:13:18] <sarang> (and we'd never get that change audited since it's tricky and not published)
+[2018-05-28 11:13:54] <suraeNoether> so, my point is: if we consider space to be wasted download time, then everything is about time, not space-and-time
+[2018-05-28 11:14:02] <suraeNoether> and so for fees
+[2018-05-28 11:14:04] <sarang> more or less
+[2018-05-28 11:14:20] <suraeNoether> we can either do space+time, and pick some constants a, b and charge fees a*lg(N) + b*N
+[2018-05-28 11:14:32] <suraeNoether> or we can do space*time and pick some constant a and charge fees a*N*lg(N)
+[2018-05-28 11:14:50] <ArticMine> Yes we can convert between space and time. The question becomes the conversion factor
+[2018-05-28 11:15:57] <suraeNoether> so, for a 2-in-2-out transaction
+[2018-05-28 11:16:08] <suraeNoether> lg(N) = 1, N=2, so we charge a base fee of 2*a
+[2018-05-28 11:16:43] <suraeNoether> whatever we think is fair for that, say a = 1 piconero
+[2018-05-28 11:17:14] <ArticMine> We have to modify the penalty formula this is critical
+[2018-05-28 11:17:38] <ArticMine> To reflect the time component
+[2018-05-28 11:18:03] <ArticMine> So converting time back to space is the simplest way
+[2018-05-28 11:18:10] <rehrar> ok here
+[2018-05-28 11:19:15] <suraeNoether> ArticMine: the time component is linear in number of outputs, and I think the penalty formula is already linear in the number of outputs?
+[2018-05-28 11:19:47] <ArticMine> We can use the 2 output proof ans the starting point. Then add a space weight linear to the number of outputs to account for the time
+[2018-05-28 11:19:50] <suraeNoether> wait, i'm getting myself confused here
+[2018-05-28 11:20:29] <sarang> Are we accounting for the fact that a 9-proof and a 15-proof take the same verification time, roughly?
+[2018-05-28 11:20:42] <suraeNoether> that's a hugely important observation
+[2018-05-28 11:20:44] <ArticMine> The penalty formula is size based and includes all the transaction inputs
+[2018-05-28 11:20:55] <suraeNoether> ArticMine: okay, so check this out
+[2018-05-28 11:20:56] <ArticMine> We have to price 9 and 16 the same
+[2018-05-28 11:21:03] <suraeNoether> ArticMine: the time to verify is approximately linear in size
+[2018-05-28 11:21:11] <suraeNoether> ArticMine: in number of outputs i mean
+[2018-05-28 11:21:39] <ArticMine> Time to verify is linear in outputs for each 2^N
+[2018-05-28 11:21:49] <ArticMine> so 9 and 16 is the same
+[2018-05-28 11:21:58] <sarang> It's linear in the number of outputs used, but we pad to ensure there are always 2^m
+[2018-05-28 11:22:17] <sarang> We'd need the unpublished BP modifications to get rid of that requirement
+[2018-05-28 11:22:18] <ArticMine> because of padding
+[2018-05-28 11:22:51] <suraeNoether> assuming everything is being rounded up to the nearest power of 2, time = O(N outs). space = O(log(N outs)), essentially. so fees can be a*N + b*log(N). agreed or disagreed? if measured in atomic units of monero, we can write this as N + c*log(N) if we like and if we want to pick c carefully.
+[2018-05-28 11:22:58] <sarang> We do get much smoother time changes if we use separate proofs
+[2018-05-28 11:23:04] <sarang> but at the cost of greater size
+[2018-05-28 11:23:21] <sarang> This discussion is all assuming we require a single proof
+[2018-05-28 11:23:28] <suraeNoether> i am not assuming that at all
+[2018-05-28 11:23:32] <suraeNoether> i'm going proof-by-proof
+[2018-05-28 11:23:41] <sarang> Well
+[2018-05-28 11:23:54] <sarang> If we split proofs, each proof is an optimal size from a verification perspective
+[2018-05-28 11:23:57] <suraeNoether> if every proof pays fees in proportion to both space and time, then there's an economic incentive for wallet software to find the best solutions for output management
+[2018-05-28 11:24:05] <sarang> If we round, some are more optimal than others
+[2018-05-28 11:24:41] <suraeNoether> if someone wants to make a sloppy BP, then *fine* let them pay for it by simply charging in proportion to number of outputs. is what i'm saying
+[2018-05-28 11:26:15] <ArticMine> suraeNoether Yes size which determines penalty which in turn sets fees would follow a*N + b*log2(N)
+[2018-05-28 11:27:02] <suraeNoether> ok so next question: how many fees should a 2-in, 2-out transaction incur? what about a 2-in, 4-out transaction?
+[2018-05-28 11:27:06] <ArticMine> Though given the data I suspect that a*N will be dominant
+[2018-05-28 11:27:12] <suraeNoether> ArticMine: it will be
+[2018-05-28 11:27:28] <suraeNoether> but since most txns are 2-in, 2-out, we're really over-optimizing the crap out of this
+[2018-05-28 11:27:41] <jwinterm> is it only the number of outputs that affects the verification time for BPs?
+[2018-05-28 11:27:52] <suraeNoether> all we need is a quick metric that asymptotically matches the cost in space and time. that's all we need. :P
+[2018-05-28 11:27:56] <ArticMine> For 2 in 2 out there is not change from the current formula
+[2018-05-28 11:28:07] <sarang> jwinterm: yes
+[2018-05-28 11:28:29] <ArticMine> Since this will be used as the base tx size
+[2018-05-28 11:28:36] <suraeNoether> okay, so call that fee F
+[2018-05-28 11:28:44] <suraeNoether> and we set F = a*2 + b*1
+[2018-05-28 11:28:50] <sarang> ArticMine: but I assume the prefactor will be smaller than currently
+[2018-05-28 11:29:09] <sarang> Since we're dropping both verification time and space from the current txns
+[2018-05-28 11:29:38] <suraeNoether> now for a 2-in 4-out transaction
+[2018-05-28 11:30:09] <suraeNoether> oh, we don't want to do that one
+[2018-05-28 11:30:14] <suraeNoether> we need linearly independent choices
+[2018-05-28 11:30:22] <suraeNoether> so what about a 1-in, 2-out transaction?
+[2018-05-28 11:30:31] <suraeNoether> ah, the fees will be the same
+[2018-05-28 11:30:32] <suraeNoether> heh
+[2018-05-28 11:31:09] <suraeNoether> okay, so what about a 3-output transaction?
+[2018-05-28 11:31:21] <suraeNoether> for a 4-output transaction, they'll pay double, so we may as well make a 3-output transaction 50% more
+[2018-05-28 11:31:22] <ArticMine> 3 out same as 4 out
+[2018-05-28 11:31:27] <suraeNoether> oh ok
+[2018-05-28 11:31:29] <suraeNoether> that works too
+[2018-05-28 11:31:35] <ArticMine> The will pay double on the proof
+[2018-05-28 11:31:54] <ArticMine> very likely but not on the rest of the tx
+[2018-05-28 11:32:00] <moneromooo> <@suraeNoether> but since most txns are 2-in, 2-out, we're really over-optimizing the crap out of this
+[2018-05-28 11:32:08] <moneromooo> No, because this is a defense against attacks.
+[2018-05-28 11:32:23] <moneromooo> So you have to consider the worst case here.
+[2018-05-28 11:33:58] <UkoeHB> jumping in: yay new chapter
+[2018-05-28 11:33:59] <UkoeHB> https://www.pdf-archive.com/2018/05/28/zero-to-monero-first-edition-v0-17/zero-to-monero-first-edition-v0-17.pdf
+[2018-05-28 11:34:24] <ArticMine> Which is why we have to add a space penalty term for the spoace gains in say 2 out to 4 out 8 out etc
+[2018-05-28 11:35:18] <suraeNoether> thanks UkoeHB 
+[2018-05-28 11:35:25] <suraeNoether> okay, so ArticMine and sarang, let's talk about fees after the meeting
+[2018-05-28 11:35:32] <ArticMine> Sure
+[2018-05-28 11:35:38] <suraeNoether> i don't want to waste a bunch of folks' time, but I think I have a formula
+[2018-05-28 11:36:04] <suraeNoether> sarang, my understanding is you are taking June off to teach, correct? and that during that time you'll be volunteering your time at MRL to complete, for example, the bulletproof audit
+[2018-05-28 11:36:33] <sarang> Yes, I'll be teaching a crypto course for Duke
+[2018-05-28 11:36:45] <sarang> w/o FFS pay
+[2018-05-28 11:36:52] <sarang> I'll be volunteering time to manage the BP udit
+[2018-05-28 11:36:55] <sarang> *audit
+[2018-05-28 11:37:13] <sarang> If it ends up being more time than expected, I can adjust the next FFS accordingly
+[2018-05-28 11:37:49] <sarang> The first week of June is BS training, so I'll be partially available
+[2018-05-28 11:37:58] <suraeNoether> cool. UkoeHB care to share/describe your newest chapter in zero-to-monero?
+[2018-05-28 11:38:11] <UkoeHB> blockchain
+[2018-05-28 11:38:23] <sarang> lol
+[2018-05-28 11:38:26] <suraeNoether> "blockchain" he said, with stars in his eyes
+[2018-05-28 11:38:27] <sarang> short and sweet
+[2018-05-28 11:38:41] <UkoeHB> and two new appendices: block content, genesis block
+[2018-05-28 11:38:44] <sarang> If I were a VC, that statement alone would get you funding
+[2018-05-28 11:38:51] <UkoeHB> lol
+[2018-05-28 11:38:56] <suraeNoether> sarang i should have asked: do you have anything else you want to talk about before we move on?
+[2018-05-28 11:39:26] <sarang> Did a little timing on the noninteractive refund stuff, turns out they're a little faster than typical signatures
+[2018-05-28 11:39:36] <sarang> finished up the tech note, hoping for internal review before we release
+[2018-05-28 11:40:04] <suraeNoether> oh yeah, i wanted to ask: think there's a way we could compute *all* our key image basepoints in a way that can exploit the speed-up you discovered?
+[2018-05-28 11:40:58] <suraeNoether> sarang, can you also give us a link to your dual output tech note?
+[2018-05-28 11:41:20] <sarang> https://www.sharelatex.com/read/vcyxgpntfsgz
+[2018-05-28 11:41:56] <sarang> I don't know a great way to do it safely with just the single pubkey value
+[2018-05-28 11:42:02] <suraeNoether> k
+[2018-05-28 11:42:27] <sarang> If anything I'd rather find a way to reconstruct MLSAG to use other speedups
+[2018-05-28 11:42:41] <sarang> but I've given almost zero thought to that
+[2018-05-28 11:43:52] <suraeNoether> so, in the past week I've read this paper in detail (https://scholar.google.com/scholar?cluster=15619301617669058049&hl=en&as_sdt=0,6) and this paper in detail (https://arxiv.org/abs/1503.08768) and this paper in detail (https://scholar.google.com/scholar?hl=en&as_sdt=0%2C6&q=okamoto+beats+schnorr&btnG=) and this paper in detail (https://eprint.iacr.org/2018/068) to get to the bottom of this multisig
+[2018-05-28 11:43:52] <suraeNoether> unforgeability proof
+[2018-05-28 11:44:30] <suraeNoether> the long story short: I believe that by adding the commit-and-reveal phase of the musig appraoch to our ring signatures will result in a provably unforgeable scheme
+[2018-05-28 11:44:58] <sarang> too bad they couldn't fix it without that phase
+[2018-05-28 11:45:06] <suraeNoether> it's fine, i like that phase in general
+[2018-05-28 11:45:08] <sarang> but it also improves the security assumptions
+[2018-05-28 11:45:10] <suraeNoether> commitment isnt' scary, sarang
+[2018-05-28 11:45:14] <suraeNoether> yes, it does
+[2018-05-28 11:45:22] <suraeNoether> unfortunately, we fork all over the place
+[2018-05-28 11:45:43] <suraeNoether> and depending on the constructions, things can get out of hand rather quickly
+[2018-05-28 11:45:50] <suraeNoether> on the plus side, the paper is, once again... smaller than it was. :D
+[2018-05-28 11:46:04] <suraeNoether> unfortunately i'm debugging some latex code so it's not viewable right now
+[2018-05-28 11:46:46] <suraeNoether> that has basically been my whole life this past week, although I spent some time looking into what it would take for a zk-ledger-based sidechain to work merge-mined with monero
+[2018-05-28 11:47:23] <suraeNoether> i believe a very private "banking system" with off-chain transaction processing through semi-trusted third parties could be a second layer on top of monero
+[2018-05-28 11:47:45] <suraeNoether> but that's not where my mind has really been at, which has been on multisignature unforgeability proofs
+[2018-05-28 11:48:03] <suraeNoether> sarang, I believe, will be posting his monthly report, as will I...
+[2018-05-28 11:48:26] <suraeNoether> and later today, I'm helping advise zcash foundation on how to spend a quarter million of their dollars on grants
+[2018-05-28 11:50:14] <suraeNoether> anyone have any questions?
+[2018-05-28 11:50:16] <sarang> Yep, my report will go up later today, once I again remind myself how markdown works on various platforms
+[2018-05-28 11:50:22] <sarang> I love how it's different EVERYWHERE
+[2018-05-28 11:50:40] <suraeNoether> oh, and we have formalized our research roadmap from our meeting last week! i can't believe I forgot to metnion that
+[2018-05-28 11:50:46] <sarang> aye
+[2018-05-28 11:50:53] <suraeNoether> https://github.com/monero-project/research-lab/issues/29
+[2018-05-28 11:51:02] <suraeNoether> if anyone has questions or concerns or comments, that's a good place to throw them
+[2018-05-28 11:51:42] <UkoeHB> oh you can update z-to-m link with new draft :)
+[2018-05-28 11:51:50] <suraeNoether> yay
+[2018-05-28 11:52:50] <IsthmusCrypto> Nice roadmap. I'll definitely want to be in the loop for item 4, the "research infrastructure" - and I'll try to contribute myself.
+[2018-05-28 11:52:57] ? antanst quit (~antanst@62.169.219.213): Ping timeout: 240 seconds
+[2018-05-28 11:53:21] <suraeNoether> good to hear :D
+[2018-05-28 11:53:25] <suraeNoether> allright, well, let's finish this </meeting> and talk about fees

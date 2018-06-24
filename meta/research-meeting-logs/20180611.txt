@@ -1,0 +1,55 @@
+[2018-06-11 11:00:39] <suraeNoether> Greetings everyone!
+[2018-06-11 11:00:42] <endogenic> ??
+[2018-06-11 11:00:57] <suraeNoether> I'm Surae, and I'll be accompanying you on this mathematical journey today
+[2018-06-11 11:02:54] <suraeNoether> Our agenda today is simple. 1. Greetings. 2. I'll give a brief update on the multisig paper, giving a brief update on MAGIC, and a brief talk about the recent paper on constant-sized ring sigs that made its rounds on twitter this morning.
+[2018-06-11 11:03:13] <suraeNoether> 3. I'll open it up for any updates or projects anyone else is officially or unofficially working on
+[2018-06-11 11:03:21] <suraeNoether> 4. Q&A
+[2018-06-11 11:04:02] <suraeNoether> So, 1. Greetings everyone! say hello if you are sitting in on this one or lurking
+[2018-06-11 11:06:20] <suraeNoether> okaaaaaaaaaay 2. Multisig paper will be done later this week, I'm just putting finishing touches on it before i send it out for review by some smarter parties than myself. it's a lot more clear and correct and compact now, and it actually makes some sense re: simulations and signing oracles. some details are still lacking, but that's what the rest of this week is for. https://v2.overleaf.com/read/bfjfkdgnhgvh
+[2018-06-11 11:07:39] <oneiric_> oh hi
+[2018-06-11 11:08:09] <suraeNoether> MAGIC and MRL are going to have a presence at defcon this year, and I was hoping sgp_[m] could say something about that, but it looks like I'm alone today, and that's okay. Hopefully we can sell some MAGIC t-shirts and start accepting donations.
+[2018-06-11 11:08:17] <suraeNoether> We had some speedbumps to overcome in terms of getting MAGIC off the ground. CPAs and lawyers who didn't really have time for new clients who thought they could waste our time, etc.
+[2018-06-11 11:08:59] <binaryFate> bonsoir
+[2018-06-11 11:09:14] <suraeNoether> howdy oneiric_ and binaryFate 
+[2018-06-11 11:09:43] <suraeNoether> I mentioned earlier about a constant-sized ring signature scheme in the random oracle model. it's actually a really neat scheme, but it uses bilinear pairings and takes a lot more verification time than our current set-up, so it isn't really suitable as a replacement. i did a little tweetstorm on it this morning you can see here. https://twitter.com/BGGoodell/status/1006203923827343361
+[2018-06-11 11:11:05] <UkoeHB> Is there a white paper for it?
+[2018-06-11 11:11:32] <suraeNoether> https://link.springer.com/article/10.1007/s11390-018-1838-z
+[2018-06-11 11:11:34] <suraeNoether> not white
+[2018-06-11 11:11:44] <endogenic> i linked it earlier
+[2018-06-11 11:11:47] <suraeNoether> Let's see here, in addition to that, I have a script for a white-board video on cryptocurrencies that i am fleshing out. rehrar mentioned he would be willing to help when he gets back, and that could be fun and cool.
+[2018-06-11 11:12:10] <binaryFate> I was quite offline last 3 days, didn't see the twitter storm. It's constant-size in space, right? How does it scale for verification time?
+[2018-06-11 11:12:35] <suraeNoether>  in the meantime, i'm interested in doing a plausibility analysis of a RLWE-based version of Monero instead of a discrete logarithm-based version, but that's a longer-term thing. I've been taking notes on all the multisig papers i've been reading for a comprehensive literature review that i plan on publishing later this summer, too, and that's coming along nicely (although no links available yet)
+[2018-06-11 11:12:41] <suraeNoether> binaryFate: it's a lot slower
+[2018-06-11 11:12:50] <suraeNoether> same nubmer of exponentiations, but also a linear number of pairings operations
+[2018-06-11 11:13:32] <binaryFate> Ok. First time someone comes up with a constant-size scheme without any sort of setup no? Neat even if not usable for us
+[2018-06-11 11:14:36] <suraeNoether> yep!
+[2018-06-11 11:14:51] <suraeNoether> Other than that, sarang and I posted the roadmap on github a few weeks ago, and we are still hoping for discussion and/or comments about additions or expansions to the topics listed. https://github.com/monero-project/research-lab/issues/29
+[2018-06-11 11:14:58] <binaryFate> Sorry if I'm behind the curve, what's RLWE?
+[2018-06-11 11:15:29] <suraeNoether> Ring-Learning-With-Errors, it is a hardness assumption that is thought to be resistant to quantum computers, and a lot of "lattice-based" crypto schemes rely on it
+[2018-06-11 11:15:37] — oneiric_ like binaryFate pun
+[2018-06-11 11:15:38] <suraeNoether> a lot of "lattice-based" ring signature schemes are available, too
+[2018-06-11 11:16:29] <binaryFate> So that would be to use ring sigs resistant to quantum computers?
+[2018-06-11 11:16:44] <oneiric_> That's awesome surae, find anything interesting/potentially usable there?
+[2018-06-11 11:17:14] <suraeNoether> oh, i don't know yet, i just know that most of the frameworks are available to be assembled together carefully
+[2018-06-11 11:17:24] <suraeNoether> it's an interesting route of inquiry, but htat's all at this point
+[2018-06-11 11:17:38] <binaryFate> How does that relate to plausible deniability (if a ring remains a ring, just using different underlying math)
+[2018-06-11 11:19:38] <suraeNoether> binaryFate: the hope is merely to replicate all of monero's current capabilities in a setting where an adversary with a quantum computer is trying to peek in on amounts, or to cheat the system to mint money, or to try to forge signatures.
+[2018-06-11 11:20:12] <suraeNoether> the signatures would still be ring signatures with plausible deniability as we currently have, just built with a scheme with a different hardness assumption
+[2018-06-11 11:21:12] <suraeNoether> there's almost no point in having ring signatures in that setting though, even if they are QC-resistant to forgery, becuase a QC computer can enumerate the spending tree and find true spenders very efficiently; a QC-resistant privacy-focused currency, I think, really has to be built on large-anon set technology
+[2018-06-11 11:21:36] <suraeNoether> otherwise you could use far less exotic QC-resistant signatures to accomplish the same deal
+[2018-06-11 11:22:07] <suraeNoether> anyway, since we are probably going to have to switch to pairings or starks or something weird eventually anyway in order to get our large anon sets, i started thinking a little more broadly
+[2018-06-11 11:22:14] <suraeNoether> UkoeHB: do you want to update us on ZTM?
+[2018-06-11 11:25:07] <suraeNoether> maybe later today :D
+[2018-06-11 11:25:18] <suraeNoether> Does anyone have any questions for me or MRL in general?
+[2018-06-11 11:25:19] <UkoeHB> mostly proofreading and edits
+[2018-06-11 11:27:30] <suraeNoether> Okay, well, if anyone has any questions or concerns for me, I'll be here for most of the rest of the day and you an always e-mail me at suraeNoether@protonmail.com
+[2018-06-11 11:27:40] <suraeNoether> </\meeting
+[2018-06-11 11:27:43] <suraeNoether> <.,>d;fhadlf
+[2018-06-11 11:28:08] <oneiric_> lol, thanks for the information suraeNoether
+[2018-06-11 11:29:37] <UkoeHB> here is latest draft https://www.pdf-archive.com/2018/06/11/zero-to-monero-first-edition-v0-20-3/zero-to-monero-first-edition-v0-20-3.pdf
+[2018-06-11 11:30:00] <suraeNoether> thanks UkoeHB 
+[2018-06-11 11:30:10] <suraeNoether> and thanks to endogenic for throwing that link in earlier
+[2018-06-11 11:30:27] <UkoeHB> aiming to close proofreading sunday night, then PR getmonero, for publish ~1 week later
+[2018-06-11 11:30:40] <UkoeHB> unless proofreaders more time, then ill push it out
+[2018-06-11 11:34:40] <oneiric_> really tremendous work coming out of the research lab, as always. much excite for 2018-2019!
+[2018-06-11 11:38:25] <binaryFate> thanks suraeNoether for the updates!

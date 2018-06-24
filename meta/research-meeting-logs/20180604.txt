@@ -1,0 +1,223 @@
+[2018-06-04 10:59:56] <sarang> I can stay ~15 min today
+[2018-06-04 11:00:06] <sarang> poor cat
+[2018-06-04 11:00:06] <unknownids> :)
+[2018-06-04 11:00:27] <sarang> Coco hates car rides, needles, and strange places. This'll go great
+[2018-06-04 11:00:28] <philkode> Hey guys
+[2018-06-04 11:00:31] <sarang> yo
+[2018-06-04 11:00:51] — erciccione_[m] will lurk
+[2018-06-04 11:00:54] <suraeNoether> so we'll go with 1. greetings, 2. give sarang a brief platform to talk with us about what he'll be up to before he has to dip out, 3. i'll give the community an update on the unforgeability of LSTAGs, 3. we'll bring up churning and best practices infographics, 4. any other projects anyone wants to talk about
+[2018-06-04 11:00:55] <philkode> Will be keeping one eye on the Apple WWDC keynote and one eye here
+[2018-06-04 11:01:04] — needmoney90 lurks 
+[2018-06-04 11:01:19] <suraeNoether> philkode: i'll post transcript after the meeting so no worries there
+[2018-06-04 11:01:25] ? Osiris1 joined (~Michael@unaffiliated/osiris1)
+[2018-06-04 11:01:32] — m2049r[m] lurks
+[2018-06-04 11:01:43] <suraeNoether> so, howdy everyone
+[2018-06-04 11:01:48] <sarang> heyo
+[2018-06-04 11:02:14] <suraeNoether> sarang, take it away~
+[2018-06-04 11:02:29] <sarang> As has been discussed elsewhere, BP reviews are humming along
+[2018-06-04 11:02:41] <sarang> moneromooo and I worked up the last big optimization we had hoped to get done for them
+[2018-06-04 11:02:46] <sarang> increasing verification speed
+[2018-06-04 11:02:59] <sarang> While I'm away I'll continue managing the review process as needed
+[2018-06-04 11:03:09] <sarang> Everything is coming up Milhouse for the next upgrade
+[2018-06-04 11:03:13] <suraeNoether> what's our "overall" verification speed improvement looking like, and do your changes only apply to the BP code for now?
+[2018-06-04 11:03:40] <suraeNoether> i recall around 50% improvement in total? or am i misremembering? 
+[2018-06-04 11:03:45] <sarang> We're looking at up to >90% size benefits and >85% speed benefits for transactions
+[2018-06-04 11:03:50] <sarang> depending on batching, size, etc.
+[2018-06-04 11:03:51] <suraeNoether> freaking fantastic
+[2018-06-04 11:03:55] <suraeNoether> you win the internet
+[2018-06-04 11:04:06] <sarang> We'll get some "official" stats for public-facing publicity stuff
+[2018-06-04 11:04:36] <sarang> And yes, this only applies to BPs for now
+[2018-06-04 11:04:51] <sarang> but in theory any multiexp operation (besides aX+bY simple terms) could probably benefit from this
+[2018-06-04 11:05:02] <sarang> But BPs are the big use case right now
+[2018-06-04 11:05:03] <suraeNoether> this makes me want us to write our own 25519 library with pippinger and blackjack
+[2018-06-04 11:05:10] <sarang> nopenopenope
+[2018-06-04 11:05:19] <suraeNoether> i know, never roll your own crypto
+[2018-06-04 11:05:32] <suraeNoether> it may be worth incentivizing the creation of test suites, though
+[2018-06-04 11:05:40] <sarang> This was a case of good algorithm deployment, nothing more
+[2018-06-04 11:05:44] <suraeNoether> not libraries themselves, but test suites for libraries
+[2018-06-04 11:05:49] <sarang> but one that was on the back burner for a while
+[2018-06-04 11:05:55] <suraeNoether> but that's another discussion
+[2018-06-04 11:06:01] <sarang> Anyway, that's my Big News for today
+[2018-06-04 11:06:06] <suraeNoether> gratzo
+[2018-06-04 11:06:08] <sarang> Tests are available on mooo's branch
+[2018-06-04 11:06:12] <suraeNoether> anyone have any questions for sarang?
+[2018-06-04 11:06:13] <sarang> for anyone wanting to play with them
+[2018-06-04 11:06:40] <sarang> https://github.com/moneromooo-monero/bitmonero/tree/bp-multi-aggregation-pippenger
+[2018-06-04 11:06:58] <sarang> thanks to mooo for fast coding of my shit Python prototypes
+[2018-06-04 11:06:59] <sarang> =p
+[2018-06-04 11:07:00] — suraeNoether thumbs up
+[2018-06-04 11:07:17] <suraeNoether> mooo is actually seven dudes in singapore
+[2018-06-04 11:07:26] <sarang> I often agree with this hypothesis
+[2018-06-04 11:07:43] <suraeNoether> okay, if no one has any questions, i'll bring up a discovery i've made
+[2018-06-04 11:07:47] <iDunk> That would explain memory lapses.
+[2018-06-04 11:07:57] <suraeNoether> in terms of LSTAGs and unforgeability
+[2018-06-04 11:08:13] <philkode> Those are amazing size and speed up figures, really well done guys
+[2018-06-04 11:08:22] <sarang> ty philkode
+[2018-06-04 11:08:34] <suraeNoether> yes, sarang and moneromooo are MVPs of the ... year so far
+[2018-06-04 11:08:42] ? ArticMine joined (~ArticMine@24.244.23.17)
+[2018-06-04 11:08:52] <suraeNoether> so, unforgeability: the Musig paper uses a double fork to accomplish their proof of unforgeability.  while working through a ring-signature version of the same approach, i realized something
+[2018-06-04 11:09:11] <sarang> suraeNoether: wasn't it three forks?
+[2018-06-04 11:09:16] <sarang> or was that changed with the fixes
+[2018-06-04 11:09:31] <suraeNoether> it was 2 before and after the changes, whereas i initially thought we would need 3 for the ring signatures
+[2018-06-04 11:09:42] <sarang> oh ok, must be thinking of something else, nvm
+[2018-06-04 11:10:13] <suraeNoether> but, i was not just trying to do a ring signature version of the proof, but also a recursive-aggregation version, where keys have trees of family members, and as long as everyone is participating, they can cooperate to construct a signature simultaneously, in a big recursive signing party
+[2018-06-04 11:11:04] <suraeNoether> now, one fact about unforgeability proofs is that they often use rewinding-on-success or forking to prove their unforgeability, and every time you do this, the security bound gets looser and looser
+[2018-06-04 11:11:54] <suraeNoether> what i realized is that forking ring signatures the way i've been trying to do it, with trees of family histories of keys... the bound gets so freaking loose that you lose non-negligibility *if the size of the family histories is a security parameter*
+[2018-06-04 11:12:35] <suraeNoether> in other words: the forking approach to proving unforgeability, afaik one of the only real ways to prove equivalence wiht the DL hardness problem, *seems to not be sufficient to allow an attacker to get the DL*
+[2018-06-04 11:12:54] <suraeNoether> this *suggests* that violating the unforgeability of ring signatures is much harder than regular signatures
+[2018-06-04 11:13:26] <suraeNoether> it's not a proof on the relation between hardness, but it means that classic proof techniques *may fail* to prove unforgeability for arbitrary recursive key aggregation
+[2018-06-04 11:14:49] <suraeNoether> so, in other words: we have to fork once for each use of the honest key in the family history, which could be a big tree of re-uses of the same key, and in this case, the attacker can't present a forgery...
+[2018-06-04 11:15:46] <suraeNoether> so, long story short: i'm looking into merely restricting things to the non-recursive case, proving it secure in that case and remarking on the crappiness of the bound (instead of forking twice as in musig, we have to fork 2+ringSize times in this case, so you have a really really loose security bound, but you still hav ea non-negligible advantage
+[2018-06-04 11:16:10] <suraeNoether> and that's what i've been working on
+[2018-06-04 11:17:15] <suraeNoether> I wanted to be explicit about this particular fact, because it may end up being useful later: rewind/forking lemmas applied recursively cause adversaries to lose non-negligible advantages very quickly
+[2018-06-04 11:17:58] <suraeNoether> any questions in that regard before we start talking about churning and infographics and microsoft and github?
+[2018-06-04 11:18:49] <UkoeHB> jw about your eta for the paper
+[2018-06-04 11:18:55] <sgp_[m]> That all went way over my head, but hopefully I can understand your work with churning!
+[2018-06-04 11:19:06] <UkoeHB> Sounds like you have some interesting stuff to work with
+[2018-06-04 11:20:10] <suraeNoether> UkoeHB: if i restrict the scope of this thing appropriately, i'll be posting a version of it later today that is a sketch of my intentions and then a more correct version of it later this week. I don't want this thing to take more time than the remainder of June.
+[2018-06-04 11:20:28] <UkoeHB> Cool :)
+[2018-06-04 11:20:32] <suraeNoether> and i've really pared this thing down, it's a lot smaller and more clear at this point
+[2018-06-04 11:21:16] <suraeNoether> now churn
+[2018-06-04 11:22:59] <suraeNoether> the biggest concern is that you receive some money from or send some money to an adversary (or first one then the other). if someone is "watching you," so to speak, then even if your transactions appear to look like background noise to the average observer and match the statistical pattern of the monero economy (somehow), the "watcher" can still sort of tell you are churning. they can look at an AML/KYC
+[2018-06-04 11:22:59] <suraeNoether> exchange's records with a warrant, for example, and see that an abnormal *number* of your transactions reference one of their poison outputs, even if the depths and distribution of those references appear to look like background noise
+[2018-06-04 11:23:28] <suraeNoether> to avoid this, even innocent parties have to reference these poison outputs *quite often*
+[2018-06-04 11:23:49] ? sgp_ joined (~justi@50-202-180-242-static.hfc.comcastbusiness.net)
+[2018-06-04 11:23:54] <suraeNoether> one solution is that *everyone always does a lot of churning.*
+[2018-06-04 11:24:05] <suraeNoether> not just people who care about securtiy
+[2018-06-04 11:24:10] <suraeNoether> sort of like ring size minimums
+[2018-06-04 11:24:18] <suraeNoether> i don't know how one could enforce that, thoguh
+[2018-06-04 11:24:42] <sgp_> I think the only way would be a large minimum (likely impractical) ringsize, yeah
+[2018-06-04 11:25:04] <sgp_> Difficult to force people to send transactions
+[2018-06-04 11:25:16] <suraeNoether> not just a minimum ring size that is large, but some sort of structure that requires "you can send this to (A,B), but only if you send it through (X,Y) and (W,Z) first"
+[2018-06-04 11:25:22] <suraeNoether> but if we do that
+[2018-06-04 11:25:28] <suraeNoether> we're talking about a massive blockchain blowup
+[2018-06-04 11:25:40] <sgp_> hmm
+[2018-06-04 11:25:53] <sgp_> The input selection algorithm can't help with this?
+[2018-06-04 11:26:19] <erciccione_[m]> maybe a timed pop-up on the GUI-CLI saying: churning help your privacy, do you want to churn now? every week or so (i don't know how stupid this can sound)
+[2018-06-04 11:27:14] <suraeNoether> input selection could be tweaked so that inputs are chosen with a probability that is inversely proportional to the number of references that have been made (so that no output goes long without being referenced a few times)
+[2018-06-04 11:27:43] <sgp_> I think that's more reasonable
+[2018-06-04 11:28:05] <suraeNoether> erciccione_[m]: we have to weigh the benefits of security against the increased weight of our blockchain in the long term, if we are going to go down that route
+[2018-06-04 11:28:33] <suraeNoether> so, i'm going to write up a proposal on input selection algorithms
+[2018-06-04 11:29:07] <sgp_> Do you have an idea how many times you want each output referenced? Obviously the more the better all else being equal
+[2018-06-04 11:29:34] <suraeNoether> simply the more the better
+[2018-06-04 11:29:45] <UkoeHB> Outputs can't be referenced more than ringsize number of times on average
+[2018-06-04 11:29:52] <erciccione_[m]> shouldn't the ringsize become larger anyway after BP get implemented?
+[2018-06-04 11:30:09] <sgp_> It sounds like you're hoping for a ringsize increase too then
+[2018-06-04 11:30:17] <suraeNoether> UkoeHB: *can't* be, or under mild assumptions, will asymptotically tend toward the ring size?
+[2018-06-04 11:31:21] <sgp_> Well, the average number of references depends on the average number of inputs and outputs in transactions
+[2018-06-04 11:31:53] <sgp_> There are likely more outputs than inputs on average, meaning that the references should be less than the ringsize over a long term
+[2018-06-04 11:32:22] <suraeNoether> each output can be referenced at most R*number of transactions ahead of it in the blockchain. so the total number of references would be R*N + R*N-1 + ... + R*2 + R, so the maximum average would be R*(N-1)/2 references (although the true average would be much smaller in general)
+[2018-06-04 11:32:22] <UkoeHB> How could the average output be referenced more or less than ringsize, if total number of references is ringsize*numouts?
+[2018-06-04 11:32:26] <sgp_> Of course there could be periods of mass consolidation where it could be the opposite
+[2018-06-04 11:34:11] <suraeNoether> anyway, this is all a bit accessory to the point, which is that the probability that an output is selected should be jointly proportional to (1) 1/# of references that already exist and (2) the gamma distribution from bitcoin's age data (although combining data from litecoin would be helpful)
+[2018-06-04 11:34:30] <suraeNoether> and probably only from the non-blackballed list
+[2018-06-04 11:34:39] <m2049r[m]> dynamic ringsize is not an option based on which inputs are actually used?
+[2018-06-04 11:34:58] <UkoeHB> It makes sense. Reduce reference spread
+[2018-06-04 11:35:12] <suraeNoether> m2049r[m]: eh, I usually think about ring size only in terms of the minimum, because people really shouldn't be advertising their behavior by selecting out-of-the-ordinary ring sizes
+[2018-06-04 11:35:22] <sgp_> those two sound good suraeNoether
+[2018-06-04 11:35:43] <suraeNoether> the question earlier about larger ring sizes
+[2018-06-04 11:35:47] <sgp_> and hope that people do the third
+[2018-06-04 11:36:42] <UkoeHB> Could you poison outputs? Simply reference one a bunch of times so it becomes extremely improbable. Then, when you spend it, it's probably real
+[2018-06-04 11:36:48] <dEBRUYNE> because people really shouldn't be advertising their behavior by selecting out-of-the-ordinary ring sizes <= A good argument to enforce static ring sizes after the next HF
+[2018-06-04 11:37:56] <suraeNoether> UkoeHB: yes, you could, actually! nuts.  that's the consequence of using things like temporal heuristics and selection frequency to try to mask erratic human behavior :(
+[2018-06-04 11:38:33] <dEBRUYNE> <UkoeHB> Could you poison outputs? Simply reference one a bunch of times so it becomes extremely improbable. Then, when you spend it, it's probably real <= You could still reference it after spending it?
+[2018-06-04 11:39:41] <UkoeHB> dEBRUYNE: if selection probability is 1/(prev references), someone can reference an output many times
+[2018-06-04 11:40:02] <UkoeHB> reduces likelihood future references ARENT real
+[2018-06-04 11:40:05] <suraeNoether> dEBRUYNE: NSA wants to know if an output has been spent. So they manufacture 1000 ring signatures referencing it. almost no one except the true spender will include it in any future ring signatures because it is 1000 times less likely to be selected at random. so after the nsa do this experiment, the first time the output in question appears on the blockchain is very likely a true spend
+[2018-06-04 11:41:00] <sgp_> "I send money to you, knowing which output I give you. Then I make 100 transactions with this output as a decoy, meaning the only likely other transaction that will include it is the real one"
+[2018-06-04 11:41:16] <suraeNoether> it's real bad
+[2018-06-04 11:41:22] <suraeNoether> it's a *real bad idea.*
+[2018-06-04 11:41:54] <UkoeHB> maybe we just triple ring size after BP
+[2018-06-04 11:42:06] <dEBRUYNE> sgp_: But an observer doesn't know when it is used as decoy and when it is actually spent
+[2018-06-04 11:42:09] <suraeNoether> it reverses the "guess newest" rule from monerolink and turns it into a "guess the last possible spender"
+[2018-06-04 11:42:42] <sgp_> dEBRUYNE right, but if the input selection algorithm is tweaked to prefer lesser-used outputs, then it may not be used outside of the actual transaction
+[2018-06-04 11:43:06] <suraeNoether> dEBRUYNE: no, but an observer can be pretty sure that the output has been spent. besides, if 1000 transactions referencing an output P occur in a single block, and then a week later a single transaction with P occurs, that is strong circumstantial evidence that this attack occurred and the single lonely P from later in the week is likely the true spender
+[2018-06-04 11:43:27] <needmoney90> Why not choose probabalistically between different selection algos
+[2018-06-04 11:43:28] <UkoeHB> Or define a 'ring sig ambiguity tree' factor, analyze as function of ring size, and select a new ring size w/ justification. Instead of arbitrarily increasing
+[2018-06-04 11:43:48] <needmoney90> One which prioritizes unused outputs, one which chooses uniformly
+[2018-06-04 11:43:51] <hyc> why wouldn't attacker spread txs across many blocks?
+[2018-06-04 11:43:52] <needmoney90> For example
+[2018-06-04 11:44:21] <dEBRUYNE> suraeNoether: Why wouldn't he spend it in one of those 1000 transactions and reference it as decoy a week later?
+[2018-06-04 11:44:39] <sgp_> Some may be stronger than others. A uniform one falls under the shortfall where the newest is typically the real one, and this phenomemon will get worse over time
+[2018-06-04 11:44:40] <dEBRUYNE> You have to account for the alternative scenario here as well
+[2018-06-04 11:44:48] <suraeNoether> hyc *shrug* they may be impatient, or they may want to expose the true spender to the whole community maliciously instead of keeping the information to themselves. there are other attack models
+[2018-06-04 11:45:06] <UkoeHB> I mean, new ring size that synergizes with a churn strat
+[2018-06-04 11:45:49] <needmoney90> Sgp_ the point was to have multiple selection strategies, where one is randomly chosen, and some of them have a chance to use a ring member previously used 100x
+[2018-06-04 11:45:53] <suraeNoether> dEBRUYNE: the point is merely that this could be exploited to make it easier for an attacker to tell if a given output they don't control has been spent. that's all. the specific threat models aren't as important as the observation that it can be exploited *somehow.*
+[2018-06-04 11:46:09] <suraeNoether> in other words: since output reference frequency can be adversarially controlled, we can't use it as part of our input selection method
+[2018-06-04 11:46:21] <needmoney90> So someone using a ring member you poisoned by including it in a ring a lot doesn't mean they're the real spender
+[2018-06-04 11:46:39] <needmoney90> They could have just used a selection algo that chose it
+[2018-06-04 11:46:41] <sgp_> I still think it is good to adapt the selection algorithm with this criteria in mind, perhaps only to a small extent though. Maybe a 10-20% preference
+[2018-06-04 11:46:45] <suraeNoether> it does if all wallet software selects outputs *in inverse proportion* to frequency of spending
+[2018-06-04 11:46:53] <suraeNoether> which is what we are talking about needmoney90 
+[2018-06-04 11:47:56] <needmoney90> Yes surae, I'm saying we can add multiple selection algos, where one of them doesn't choose with inverse proportion
+[2018-06-04 11:48:16] <needmoney90> Even if a given tx only has a 10% chance of using it
+[2018-06-04 11:48:16] <UkoeHB> sgp_: even in that case, it gives block chain analysts more power to reduce effective ring sizes
+[2018-06-04 11:48:26] <needmoney90> It adds plausible deniability
+[2018-06-04 11:48:34] <suraeNoether> needmoney90: yes, okay,  but to give you an idea of the challenges we face here, let's reduce it to a simple case where we have two algorithms, A1 and A2
+[2018-06-04 11:48:46] <suraeNoether> and we pick one with probability p and the other with probabiltiy 1-p
+[2018-06-04 11:48:56] <UkoeHB> Any programmatic deviation from natural distribution can be analyzed
+[2018-06-04 11:48:58] <sgp_> Yeah, but only by ~1 or 2 UkoeHB. May be less than the reduced risk of some outputs being referenced few times
+[2018-06-04 11:48:59] <needmoney90> It will be apparent which was used
+[2018-06-04 11:49:05] <needmoney90> For sure
+[2018-06-04 11:49:06] <needmoney90> Hm
+[2018-06-04 11:49:12] <suraeNoether> now an attacker who has success with algorihtm A1 just needs to make the attack 1/p times
+[2018-06-04 11:49:15] <suraeNoether> instead of only once
+[2018-06-04 11:49:28] <suraeNoether> so, this brings us back towards plausible deniability, which is good
+[2018-06-04 11:49:49] <suraeNoether> but it still isn't protection against the attack
+[2018-06-04 11:50:00] <needmoney90> We can continue in lounge after the meeting, sorry to derail
+[2018-06-04 11:50:06] <suraeNoether> if you have many algorithms, this increases the sample size the attacker needs to attack any one of them
+[2018-06-04 11:50:26] <UkoeHB> sgp_:  it might ok if we increase ring size dramatically
+[2018-06-04 11:50:32] <suraeNoether> which is that plausible deniability, which is good, but still gamable
+[2018-06-04 11:51:08] <suraeNoether> UkoeHB: any deviation from "natural" is identifiable, you are right, and the problem is we have small anonymity subsets chosen from a (still unfortunately rather small) anonymity superset
+[2018-06-04 11:51:24] <suraeNoether> there merely isn't a good statistical mask for behavior here, the fix has to be to replace ring sizes
+[2018-06-04 11:51:59] <ArticMine> You mean increase ring size
+[2018-06-04 11:52:10] <UkoeHB> Any good prospects for escaping ring sigs?
+[2018-06-04 11:52:11] <suraeNoether> erg.... replace ring signatures*
+[2018-06-04 11:52:45] <ArticMine> with ...
+[2018-06-04 11:52:56] <sgp_> Is there anything else that works without trust?
+[2018-06-04 11:52:59] <suraeNoether> whatever comes next :)
+[2018-06-04 11:53:05] <suraeNoether> there are untrusted stark set-ups that are slow
+[2018-06-04 11:53:13] <suraeNoether> or use weird pairings
+[2018-06-04 11:53:16] <suraeNoether> i'm looking into options
+[2018-06-04 11:53:27] <suraeNoether> but the fact of the matter is, small anon sets will need to go for this problem to really be solved
+[2018-06-04 11:53:46] <suraeNoether> in the meantime, churning isn't going to help you if all the transactions you deposit on your AML/KYC exchange originated somehow from a malicious watcher like the DEA or NSA or something
+[2018-06-04 11:54:18] <suraeNoether> and churning more than 3-4 times is probably overkill if all you are worried about is helping flesh out our anonymity sets
+[2018-06-04 11:54:51] <gingeropolous> so ... what should we put on getmonero.org regarding churning... ? :)
+[2018-06-04 11:55:02] <suraeNoether> gingeropolous: give us a few days to write up a formal thing
+[2018-06-04 11:55:25] <gingeropolous> cool
+[2018-06-04 11:55:30] <suraeNoether> gingeropolous: because i want some specific numbers on how much you are really exposing yourself 
+[2018-06-04 11:55:36] <sgp_> Can you give us a hint on the relationship between churning and ringsize? How significant is it?
+[2018-06-04 11:56:13] <UkoeHB> exponential?
+[2018-06-04 11:56:57] <suraeNoether> well, the naively computed anonymity set of a monero transaction tree of depth H with ring size R is approxiamtely O(R^H)
+[2018-06-04 11:57:40] <suraeNoether> so
+[2018-06-04 11:58:07] <suraeNoether> the question is "how many times are you going to pull a poison jelly bean out of this jar with R^H jelly beans in it, only one of which is poison?"
+[2018-06-04 11:58:57] <suraeNoether> oh, "while grabbing R jelly beans at a handful?"
+[2018-06-04 11:59:23] <suraeNoether> and these answers require some statistics involving the hypergeometric distribution, or binomial approximations...
+[2018-06-04 11:59:23] <UkoeHB> I'm having flashbacks
+[2018-06-04 11:59:26] <suraeNoether> hahah
+[2018-06-04 11:59:53] <suraeNoether> let me summarize: churning 80 times wiht ring size 10 gives you more possibilities than the number of fundamental particles in teh universe
+[2018-06-04 12:00:07] <UkoeHB> Ok we are at end of meeting so I'll jump in
+[2018-06-04 12:00:11] <suraeNoether> churning 7 or 8 times with ring size 10 gives you more possibilities than the monero blockchain
+[2018-06-04 12:00:21] <suraeNoether> but a lot of these are collisions
+[2018-06-04 12:00:24] <UkoeHB> Final draft: open for edits and feedback. Plan to publish in 2 weeks
+[2018-06-04 12:00:27] <UkoeHB> https://www.pdf-archive.com/2018/06/04/zero-to-monero-first-edition-v0-20/zero-to-monero-first-edition-v0-20.pdf
+[2018-06-04 12:00:54] <suraeNoether> by "collisions" i mean 'the true anonymity set is much smaller.'
+[2018-06-04 12:00:55] <UkoeHB> sarang will be happy to see pg 50 (57 of pdf)
+[2018-06-04 12:01:44] <suraeNoether> if everyone on the network churned 2-3 times, we'd all be better off. anyone who lives in a sensitive land of security nightmares should churn maybe 8 times, but definitely shouldn't be using AML/KYC exchanges, and if they do, the vast majority of their deposits at those exchanges should *not* be sensitive.
+[2018-06-04 12:01:45] <sgp_> makes sense suraeNoether, given the selection algorithm
+[2018-06-04 12:02:05] <suraeNoether> UkoeHB: good job, i'll try to read it before the end of the week
+[2018-06-04 12:02:17] <UkoeHB> awesome thanks :)
+[2018-06-04 12:02:26] <suraeNoether> i wanted to ask if folks were worried about github and microsoft and alternatives we may want to look into, but i think that can wait till later
+[2018-06-04 12:02:34] <suraeNoether> anyone have any last questions before we finish up?
+[2018-06-04 12:03:22] <needmoney90> Any official status updates on atomic swaps?
+[2018-06-04 12:04:15] <suraeNoether> needmoney90: dual output ring signatures for refund transactions should enable atomic swaps, but there are some security concerns involved with those that will make it easier to determine spent outputs
+[2018-06-04 12:04:59] <suraeNoether> so, there has been progress made, sarang wrote a technical note on the dual output sigs... but we are examining "what it means" for us to have two outputs with a differentiating/trigger block height.
+[2018-06-04 12:05:45] <suraeNoether> it is too easy to see if one or the other has been spent based on block height, and introduces some temporal stuff: if a transaction happens right after a trigger block height for a ring member, that ring member is likely to be the true spender in a refund
+[2018-06-04 12:05:49] <ArticMine> UkoeHB Great job. I was looking at the block size scaling part
+[2018-06-04 12:06:07] <suraeNoether> if the block height is encrypted, there are different problems that show up
+[2018-06-04 12:06:33] <ArticMine> This is on my reading list for this week
+[2018-06-04 12:06:39] <suraeNoether> oooh, i like reading lists
+[2018-06-04 12:06:56] <suraeNoether> okay, any other questions?
+[2018-06-04 12:07:03] <UkoeHB> oops mistake in range proof verification. 63 is for A+B
+[2018-06-04 12:07:56] <suraeNoether> okay, </meeting> :D

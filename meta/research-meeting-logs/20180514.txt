@@ -1,0 +1,162 @@
+﻿[2018-05-14 11:01:35] <sarang> Hullo all
+[2018-05-14 11:02:48] <sarang> andytoshi anonimal binaryFate ArticMine dEBRUYNE endogenic gingeropolous moneromooo sgp_[m] smooth stoffu UkoeHB etc
+[2018-05-14 11:03:02] <ArticMine> Hi
+[2018-05-14 11:03:05] <dEBRUYNE> Kind of present :P
+[2018-05-14 11:03:09] <sarang> close enough!
+[2018-05-14 11:03:20] <sarang> an informal meeting today, probably fairly short
+[2018-05-14 11:03:24] <endogenic> not present
+[2018-05-14 11:03:26] <sarang> 1. Greetings
+[2018-05-14 11:03:56] <sarang> yo
+[2018-05-14 11:04:23] → valentinbuza joined (~valentinb@unaffiliated/valentinbuza)
+[2018-05-14 11:04:38] <sarang> 2. Updates all around
+[2018-05-14 11:04:48] <sarang> Our pal suraeNoether is on holiday
+[2018-05-14 11:04:52] <sarang> that lucky bastard
+[2018-05-14 11:05:13] <sarang> I've been continuing to work with the Purdue researchers on noninteractive refunds
+[2018-05-14 11:05:26] <sarang> which would be much more of a hassle than an interactive refund
+[2018-05-14 11:05:44] <sarang> But it brings up some really interesting new ideas that we're formalizing to publish
+[2018-05-14 11:06:08] <sarang> Aside from that, there was some good Zcash anonymity research in the spirit of the monerolink stuff
+[2018-05-14 11:06:26] <sarang> It has good lessons about the importance of mandatory privacy
+[2018-05-14 11:06:56] <sarang> Another paper pointed out some flaws in the MuSig paper that suraeNoether had been working with
+[2018-05-14 11:07:18] <sarang> not in terms of attacks, but in terms of security proofs unfortunately
+[2018-05-14 11:08:11] <sarang> The second BP round went through, and we'll be getting that funding to OSTIF as soon as I can talk with a Core Team member about funding release (send them my way if you find them today!)
+[2018-05-14 11:08:25] <sarang> Anything else from the peanut gallery?
+[2018-05-14 11:08:54] <binaryFate> will get in touch with OSTIF again tomorrow
+[2018-05-14 11:09:02] <sarang> binaryFate! Perfect, thanks
+[2018-05-14 11:09:22] <sarang> Please release it all to lock in the exchange rate; your help is appreciated as always
+[2018-05-14 11:09:50] <sarang> Any unused amount will be return to us by OSTIF
+[2018-05-14 11:09:51] <binaryFate> Yes I understand there is some freaking out about exchange rate around :) Will do
+[2018-05-14 11:10:09] ⇐ iDunk quit (~iDunk@unaffiliated/idunk): Ping timeout: 260 seconds
+[2018-05-14 11:11:11] <sarang> It seems to be a quiet day today, not sure if anyone else has anything to share
+[2018-05-14 11:11:22] → iDunk joined (~iDunk@unaffiliated/idunk)
+[2018-05-14 11:11:26] <sarang> Or something they've run across lately
+[2018-05-14 11:12:19] <dEBRUYNE> <sarang> not in terms of attacks, but in terms of security proofs unfortunately <= What does this entail?
+[2018-05-14 11:12:50] <sarang> They had done away with a precommitment phase of their key preparation
+[2018-05-14 11:13:10] <sarang> and this led to a flaw in the proof that would be fixed by adding this step (more communication)
+[2018-05-14 11:13:31] <sarang> it would also make it secure up to discrete log, as opposed to one-more discrete log as it is now
+[2018-05-14 11:13:31] ⇐ Keniyal quit (~Keniyal@unaffiliated/keniyal): Remote host closed the connection
+[2018-05-14 11:13:45] <sarang> I had a brief chat w/ andytoshi about it earlier
+[2018-05-14 11:14:02] <dEBRUYNE> So it's not a showstopper, but would preferably be implemented right?
+[2018-05-14 11:14:46] <sarang> Right. I don't know of any big projects that were immediately applying MuSig directly, but suraeNoether was curious about using some of the ideas to reduce communication
+[2018-05-14 11:15:19] <dEBRUYNE> All right
+[2018-05-14 11:17:02] <sarang> The "upgrade" to DL security is good too IMHO
+[2018-05-14 11:19:07] <sarang> Consensus is live streaming, as mentioned earlier... so that's a source of infotainment for anyone interested
+[2018-05-14 11:19:24] <sarang> They're having Zooko interview Whit Diffie about privacy
+[2018-05-14 11:19:30] <sarang> that'll be a good watch
+[2018-05-14 11:20:21] <sarang> For this week, I plan to incorporate some suggestions from the Purdue folks into the writeup of noninteractive refunds and get that out
+[2018-05-14 11:20:31] <sarang> and look more precisely at interactive refunds and what's needed
+[2018-05-14 11:23:49] <sarang> Whelp, it looks like slim pickings today for updates, so
+[2018-05-14 11:23:55] <sarang> 3. Tearful goodbyes
+[2018-05-14 11:24:06] <sarang> Keep up the good work, and be well
+[2018-05-14 11:24:13] <sarang> We'll never forget the good times and memories
+[2018-05-14 11:25:04] <sgp_[m]> Did anyone have a chance to look at my research on mining pool outputs?
+[2018-05-14 11:25:40] <sarang> Yes! Can we talk about that openly in here?
+[2018-05-14 11:25:50] <sarang> I don't recall if you had publicly released it
+[2018-05-14 11:26:36] <sgp_[m]> Just the mitigation strategies
+[2018-05-14 11:26:50] <sgp_[m]> This is what I worked on: https://1drv.ms/b/s!AjOt8D-0YjBHgco6O7TRnzm91YACUw
+[2018-05-14 11:26:53] <sarang> My only lingering question was regarding the suggestions for churn
+[2018-05-14 11:27:05] <sarang> since that work is still ongoing to determine the optimal behavior
+[2018-05-14 11:27:59] <sgp_[m]> I think we should discourage churning as much as possible since it harms the network, but it can be used effectively to preserve the integrity of outputs. Even if it only adds plausible deniability
+[2018-05-14 11:28:24] <sarang> What's your view on it harming the network specifically?
+[2018-05-14 11:29:06] <ArticMine> Yes there is also the issue of pool transparency
+[2018-05-14 11:29:31] <sgp_[m]> Just blockchain bloat. Imagine if we recommended every mining pool churn after each payout lol
+[2018-05-14 11:29:41] <ArticMine> Any proprietary in mining is a potential danger
+[2018-05-14 11:32:10] <sgp_[m]> Note that I've only looked at publicly-available information. Many mining pools also publish the transaction amount, which could allow a recipient to remove certain decoys that are known to be under the sent value. I haven't thoroughly looked into this yet
+[2018-05-14 11:32:20] <ArticMine> Maybe we need to find a way to  blackball these outputs for future rings and leave the churning to the recipient
+[2018-05-14 11:32:53] <sarang> The recipient is also likely the one with greater incentive to do so, no?
+[2018-05-14 11:33:28] <sgp_[m]> ArticMine one option is for mining pools to be extremely transparent about all outputs they have controlled, and clients blackball these. I think there's a high risk of clients not doing this though
+[2018-05-14 11:34:20] <ArticMine> but can the blackballing not be done by the pool
+[2018-05-14 11:34:50] <sarang> We also have a broader issue of the blacklist being slow to implement
+[2018-05-14 11:35:57] <sgp_[m]> I recommend my "third best" solution for pools that still want to make everything transparent, which involves a different selection algorithm
+[2018-05-14 11:36:25] <sgp_[m]> It doesn't really matter that pools would use a different algorithm, since they publish a list of transactions anyway
+[2018-05-14 11:36:53] <sgp_[m]> And they could adapt their algorithm to include payout outputs in a single ring signature
+[2018-05-14 11:37:10] ⇐ rex4539 quit (~textual@2a02:587:3509:b800:8de9:7551:fc35:9695): Quit: Textual IRC Client: www.textualapp.com
+[2018-05-14 11:37:27] <sarang> That relies entirely on pools voluntarily complying, right?
+[2018-05-14 11:37:29] <sgp_[m]> I have diagrams in slides 11-15 of the deck I shared
+[2018-05-14 11:37:33] <ArticMine> My take is that we should be actively discouraging pools from being anything but totally transparent
+[2018-05-14 11:38:50] <sgp_[m]> sarang yes, it relies on pools complying. Pools have the potential to cause a lot of harm to outputs in the status quo
+[2018-05-14 11:38:56] <ArticMine> It is a related but different issue that is impacted here. Namely overall transparency in mining.
+[2018-05-14 11:38:56] <sarang> yeah
+[2018-05-14 11:39:35] <sarang> One of the reasons I was intrigued by the FruitChains paper was the idea of reducing the incentives to pool at all
+[2018-05-14 11:39:35] <ArticMine> A voluntary way for pools to flag these outputs as to not be used in mixins may be the best way
+[2018-05-14 11:40:20] <sgp_[m]> If a user thinks pools are malicious, they should absolutely churn individually to the extent research shows. However, I'm talking more about the pools removing the entropy of these outptus in this transparency. We can have transparent pools while still preserving the integrity of these outputs
+[2018-05-14 11:40:53] <sgp_[m]> If people feel comfortable mining to a pool that doesn't even publish coinbase history, that would be the best for the network. However, that is unrealistic
+[2018-05-14 11:42:05] <ArticMine> It is best for the network from the point of view of privacy but no from the point of view of mining integrity
+[2018-05-14 11:42:28] <sarang> ArticMine: in what way
+[2018-05-14 11:43:05] <ArticMine> For starters how does one determine the size of the pool?
+[2018-05-14 11:43:23] <ArticMine> Independently?
+[2018-05-14 11:43:56] <ArticMine> Or how much of a take the pool is getting
+[2018-05-14 11:44:46] <ArticMine> It is a special situation one step above coinbase outputs
+[2018-05-14 11:46:32] <ArticMine> Pools are in a unique position of power which is why transparency must at least be encourages and ideally enforced
+[2018-05-14 11:49:02] <sarang> But my understanding is that pools can simply not give all this information
+[2018-05-14 11:49:13] <sarang> so it'll all still based on voluntary goodwill
+[2018-05-14 11:49:24] <sarang> as in, information from self-selecting entities
+[2018-05-14 11:49:36] <ArticMine> This is true but there is a market pressure to give out this information
+[2018-05-14 11:50:01] <ArticMine> and this is very healthy
+[2018-05-14 11:50:20] <sgp_[m]> Well, even if they don't povide an easy blackball list, someone can realtively trivially put one tegether from the complete transaction history
+[2018-05-14 11:50:44] <moneromooo> sneurlax made one such tool (or may still be making one).
+[2018-05-14 11:50:57] <ArticMine> That is actually a backup answer
+[2018-05-14 11:51:27] <ArticMine> But ideally we should encourage the pools to give a blackball list
+[2018-05-14 11:52:02] <sarang> What do you think the general thoughts are about the blackball list being checkpointed and supplied non-locally?
+[2018-05-14 11:52:04] <sgp_[m]> I recommend we instead encourage them to use a different selection process so a blackball list is unnecessary
+[2018-05-14 11:52:10] <sarang> Because the local generation seems pretty intense
+[2018-05-14 11:54:08] <ArticMine> sgp_[m] So if I understand correctly these pool outputs could then be easily identified and not included in mixins
+[2018-05-14 11:54:19] <ArticMine> That of course would work very well
+[2018-05-14 11:55:33] <sgp_[m]> I believe you are explaining the blackball process ArticMine
+[2018-05-14 11:56:03] <ArticMine> Yes
+[2018-05-14 11:56:54] <ArticMine> So I am not clear how a different selction process would work
+[2018-05-14 11:57:36] → rehrar joined (~user@174-28-68-84.albq.qwest.net)
+[2018-05-14 11:57:57] <rehrar> oy, missed the meeting?
+[2018-05-14 11:58:15] <sarang> Most folks were away, but we're still chatting
+[2018-05-14 11:58:19] <sarang> whats the good word
+[2018-05-14 11:58:58] <sgp_[m]> I recommend that pools instead take the outputs in a published transaction and use all these outputs in a single ring signature. Then, outsiders don't know which outputs are paid to miners and which are change returned to the pool
+[2018-05-14 11:59:17] <sarang> Yeah I liked this approach
+[2018-05-14 11:59:36] <sarang> I didn't see any immediate downsides
+[2018-05-14 12:00:02] <sarang> It makes sense since the pools are known entities
+[2018-05-14 12:02:41] <ArticMine> but normally almost all of these outputs are paid to miners
+[2018-05-14 12:02:55] → TheoStorm joined (~dnaleor@78-23-74-78.access.telenet.be)
+[2018-05-14 12:03:04] <moneromooo> It still needs someone to volunteer to maintain a blackball list, and so far nobody has so this code is left unused :)
+[2018-05-14 12:03:59] <sgp_[m]> The goal is to make the outputs returned to the pool look the same in a random transaction decoy as how they look when miners make transactions with their payouts
+[2018-05-14 12:04:40] <rehrar> can we replace ring sigs already? that is all
+[2018-05-14 12:04:58] <sarang> That'll be our big MoneroCon unveil
+[2018-05-14 12:05:04] <sgp_[m]> This is difficult to explain, so I'm sorry I'm not doing it very well
+[2018-05-14 12:05:07] <rehrar> oh, also that article on PoW (which I'm sure had to have been discussed at this meeting). Something else.
+[2018-05-14 12:05:09] <sarang> "MoneroCon: Monero is  a con!"
+[2018-05-14 12:05:15] <ArticMine> So one is obfuscating the change output among the payouts
+[2018-05-14 12:05:18] <sarang> sgp_[m]: I think I get the point you're making
+[2018-05-14 12:05:22] <ArticMine> That I understand
+[2018-05-14 12:06:12] <sgp_[m]> ArticMine yes that's the goal, so that the outputs controlled by the pools (these change outputs) no longer need to be blacklisted
+[2018-05-14 12:06:14] <sgp_[m]> *blackballed
+[2018-05-14 12:06:34] <sgp_[m]> even if the transaction history is published
+[2018-05-14 12:07:23] → serhack joined (055a0a29@gateway/web/cgi-irc/kiwiirc.com/ip.5.90.10.41)
+[2018-05-14 12:07:57] <ArticMine> Yes that would work.
+[2018-05-14 12:08:57] <sgp_[m]> hmm actually on second thought, pools should need to still churn the coinbase outputs (not just the very first one), or they need to be blackballed. My slide 14 is incorrect
+[2018-05-14 12:09:01] <sarang> sgp_[m]: Suppose you get some fraction of pools to comply, but some don't... you'd still need to monitor for the blacklist, no?
+[2018-05-14 12:09:11] <serhack> hi :)
+[2018-05-14 12:09:16] <sarang> hullo
+[2018-05-14 12:09:39] <sgp_[m]> Yes, an end user should still blacklist as much as possible
+[2018-05-14 12:10:20] → rex4539 joined (~textual@2a02:587:3509:b800:69f3:735f:cae9:e535)
+[2018-05-14 12:10:42] <sgp_[m]> I want to limit this as much as possible though, in case users don't go through this process
+[2018-05-14 12:11:11] <sarang> Unless we more broadly support a non-local blacklist integration
+[2018-05-14 12:11:15] <sarang> but that has its own issues
+[2018-05-14 12:12:48] <ArticMine> There may be a different approach. What if we were to limit the number of ring members comprising of these troublesome outputs to say 2 fakes
+[2018-05-14 12:13:58] <ArticMine> that would include coinbase and tx outputs a certain number of steps above coinbase
+[2018-05-14 12:15:09] <sarang> What's the advantage to this?
+[2018-05-14 12:15:24] <rehrar> what if we blacklisted all of the outputs in existence
+[2018-05-14 12:15:55] <ArticMine> Ensure the ring has a minimum unexposed number of fakes
+[2018-05-14 12:16:24] <sgp_[m]> I would have to see the math before saying it would be effective. Coinbase outptus are already the minority, and they could still be revealed as decoys anyway. Would potentially limit impact to extend of all decoys compromised but hard to say
+[2018-05-14 12:17:46] <ArticMine> In my I idea I would include the real output if it was one of the gray outputs so actually two members of the ring as opposed to two fakes
+[2018-05-14 12:20:10] <ArticMine> I believe the way to deal with exposed outputs is to limit their number in a ring to two or possibly three rather than exclude them altogether
+[2018-05-14 12:21:02] <sgp_[m]> Why not exclude them? They are known to be fake
+[2018-05-14 12:21:59] <ArticMine> If they are known spent yes, but if they are known unspent then no
+[2018-05-14 12:22:16] <ArticMine> that is the key difference
+[2018-05-14 12:24:03] <ArticMine> A coinbase tx for example is a known unspent output
+[2018-05-14 12:24:34] <ArticMine> Once it is included in a ring it can become unclear if it is unspent or not
+[2018-05-14 12:27:16] <sgp_[m]> Not if a pool lists it on the site though
+[2018-05-14 12:27:44] <ArticMine> They make it a known unspent
+[2018-05-14 12:27:50] <ArticMine> by listing it
+[2018-05-14 12:29:45] <ArticMine> If they make the coinbase a known spent then it should be ideally blackballed; however if this cannot be easily automatically determined then simply including it in the limit I suggested becomes an option
+[2018-05-14 12:30:39] <ArticMine> Centralized blackball lists can also becomes an issue
+[2018-05-14 12:31:05] <sarang> ArticMine: yes, and that's why I wonder what they'll look like broadly
+[2018-05-14 12:34:30] <ArticMine> Which is why creating entropy around the exclusion of "blackballed" outputs may have some merit
+[2018-05-14 12:37:55] <ArticMine> Then it would also be impossible to as rehrar said blacklist "all of the outputs in existence"
+[2018-05-14 12:38:43] <ArticMine> It is an interesting attack by a centralized blackball list

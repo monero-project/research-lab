@@ -1,4 +1,5 @@
-﻿[2018-05-21 11:01:06] <sarang> Let's begin the meetin
+﻿[2018-05-21 11:00:44] <sarang> OMG I'd get a shirt
+[2018-05-21 11:01:06] <sarang> Let's begin the meetin
 [2018-05-21 11:01:29] <suraeNoether> sure
 [2018-05-21 11:01:33] <rehrar> ye
 [2018-05-21 11:01:36] <suraeNoether> i have a list of stuff i want to bring up
@@ -13,6 +14,7 @@
 [2018-05-21 11:03:04] <ArticMine> What are the expected time lines for each group/
 [2018-05-21 11:03:20] <sarang> Looking at mid-July all around
 [2018-05-21 11:03:33] <suraeNoether> not bad
+[2018-05-21 11:03:36] * ferretinjapan → bearretinjapan
 [2018-05-21 11:03:50] <sarang> Yeah given that they work on a lot of projects
 [2018-05-21 11:03:55] <suraeNoether> sarang: what have you been working on for the past 2 weeks?
 [2018-05-21 11:04:05] <sarang> Otherwise, I've written up a noninteractive refund scheme in collaboration w/ Purdue folks
@@ -59,17 +61,21 @@
 [2018-05-21 11:15:25] <suraeNoether> 2. Transaction graph python library (see sneurlax[m]1 comment above)
 [2018-05-21 11:15:32] <suraeNoether> 3. Sarang and I would both like a full technical report on "what happens if PRNG is terrible in Monero? Failure model and effects analysis sort of deal.
 [2018-05-21 11:15:37] <suraeNoether> 4. Codifying Monero's best practices guidelines into a nice infographic. I believe sgp and rehrar have put some effort into this so far.
+[2018-05-21 11:15:54] ⇐ thrmo quit (~thrmo@unaffiliated/thrmo): Remote host closed the connection
 [2018-05-21 11:16:03] <suraeNoether> 5. Monero Standards in general. We have lots of source material to start gathering these together, and I would like to get MOST of this done before next month; describing the current state of monero before BPs go live is probably going to be valuable later on.
 [2018-05-21 11:16:17] <sarang> 6. Payment channel infrastructure and prereqs
 [2018-05-21 11:16:26] <endogenic> ^
 [2018-05-21 11:16:31] <moneromooo> Ooooh yes please :)
 [2018-05-21 11:17:05] <sarang> We have some good work on 6 so far, but no definite path forward atm
 [2018-05-21 11:17:46] <suraeNoether> 7. network simulation library for testing things like consensus algorithms and difficulty metrics. (I am off-and-on working with a friend at University of New Mexico on using population-ecology models to look at mining incentives, etc)
+[2018-05-21 11:17:48] ⇐ ArticMine quit (~ArticMine@207.194.38.218): Read error: Connection reset by peer
 [2018-05-21 11:18:00] <sarang> There's more work on the actual channel implementation that's being worked on w/ Purdue folks, but those drafts aren't released yet
 [2018-05-21 11:18:09] <suraeNoether> 8. Ric's zk-s(t,n)ark zidechain proposal
 [2018-05-21 11:18:10] <sarang> at their request
 [2018-05-21 11:18:53] <suraeNoether> 9. I would like to write a paper on using heuristic analyses for constructing "ground truth" transaction graphs in private cryptocurrencies, and the common pitfalls that crop up from statistical points of view
+[2018-05-21 11:18:57] ⇐ lenovuh quit (~lenovuh@195.69.9.25): Ping timeout: 245 seconds
 [2018-05-21 11:19:04] <suraeNoether> (for example, my common sensitivity vs. specificity complaint)
+[2018-05-21 11:19:05] → ArticMine joined (~ArticMine@207.194.38.218)
 [2018-05-21 11:19:16] <suraeNoether> 10. Churn analysis (ties with 9)
 [2018-05-21 11:19:24] <sarang> (and with 2)
 [2018-05-21 11:19:48] <sarang> Having the library will give really useful data into the churn models
@@ -149,6 +155,7 @@
 [2018-05-21 11:33:49] <rehrar> you'd think so wouldn't you sarang?
 [2018-05-21 11:34:02] <sarang> I would
 [2018-05-21 11:34:20] <rehrar> if you'd kept up with the debates, you'd see that even good ideas, if proposed by 'the other side', become evil ideas
+[2018-05-21 11:34:32] ⇐ spaced0ut quit (~spaced0ut@unaffiliated/spaced0ut): Remote host closed the connection
 [2018-05-21 11:34:36] <sarang> MRL: ruining everything since 20xx
 [2018-05-21 11:34:39] <rehrar> "a social/technical/something else attack"
 [2018-05-21 11:34:49] <rehrar> that's going on the t shrit
