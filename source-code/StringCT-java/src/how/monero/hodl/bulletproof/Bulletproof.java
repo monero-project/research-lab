@@ -12,7 +12,7 @@ import static how.monero.hodl.crypto.Scalar.randomScalar;
 import static how.monero.hodl.crypto.CryptoUtil.*;
 import static how.monero.hodl.util.ByteUtil.*;
 
-public class MultiBulletproof
+public class Bulletproof
 {
     private static int NEXP;
     private static int N;
@@ -210,6 +210,21 @@ public class MultiBulletproof
         return result;
     }
 
+    /* Determine if a curve point is in the basepoint (order l) subgroup */
+    public static boolean Subgroup(Curve25519Point p)
+    {
+        return p.scalarMultiply(new Scalar(l)).equals(Curve25519Point.ZERO);
+    }
+    public static boolean SubgroupList(Curve25519Point[] p)
+    {
+        for (int i = 0; i < p.length; i++)
+        {
+            if (! p[i].scalarMultiply(new Scalar(l)).equals(Curve25519Point.ZERO))
+                return false;
+        }
+        return true;
+    }
+
     /* Construct an aggregate range proof */
     public static ProofTuple PROVE(Scalar[] v, Scalar[] gamma, int logM)
     {
@@ -397,6 +412,26 @@ public class MultiBulletproof
     /* Given a range proof, determine if it is valid */
     public static boolean VERIFY(ProofTuple[] proofs)
     {
+        // Confirm all curve points are in the correct subgroup
+        boolean pointsOK = true; // flag if any points fail the test
+        for (int p = 0; p < proofs.length; p++)
+        {
+            ProofTuple proof = proofs[p];
+            Curve25519Point[] points = {proof.A, proof.S, proof.T1, proof.T2};
+
+            if (! SubgroupList(points) || ! SubgroupList(proof.V) || ! SubgroupList(proof.L) || ! SubgroupList(proof.R))
+            {
+                pointsOK = false;
+                break;
+            }
+        }
+
+        if (! pointsOK)
+        {
+            System.out.println("Failed subgroup check");
+            return false;
+        }
+
         // Figure out which proof is longest
         int maxLength = 0;
         for (int p = 0; p < proofs.length; p++)
