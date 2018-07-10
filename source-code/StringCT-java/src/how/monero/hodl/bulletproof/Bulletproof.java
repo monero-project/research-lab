@@ -653,10 +653,20 @@ public class Bulletproof
         int MAXM = (int) Math.pow(2,MAXEXP);
         Gi = new Curve25519Point[MAXM*N];
         Hi = new Curve25519Point[MAXM*N];
+        for (int i = 1; i < MAXM*N+1; i++)
+        {
+            Gi[i-1] = getHpnGLookup(2*i);
+            Hi[i-1] = getHpnGLookup(2*i+1);
+        }
+
+        // Test the indexed curve base points for uniqueness against G and H
         for (int i = 0; i < MAXM*N; i++)
         {
-            Gi[i] = getHpnGLookup(2*i);
-            Hi[i] = getHpnGLookup(2*i+1);
+            if (Gi[i].equals(G) || Hi[i].equals(G) || Gi[i].equals(H) || Hi[i].equals(H))
+            {
+                System.out.println("Curve base points are not unique!");
+                return;
+            }
         }
         
         // Set up all the proofs
