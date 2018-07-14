@@ -65,6 +65,9 @@ class Scalar:
             raise TypeError
         return self.x != y.x
 
+    def __str__(self):
+        return str(self.x)
+
 class Point:
     def __init__(self,x,y):
         self.x = x
@@ -112,6 +115,9 @@ class Point:
         if y.x & 1:
             Q = self.__add__(Q)
         return Q
+
+    def __str__(self):
+        return str(self.x) + str(self.y)
 
     def on_curve(self):
         x = self.x

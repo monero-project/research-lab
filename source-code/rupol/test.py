@@ -1,6 +1,7 @@
 # Test suite for Dumb25519 and friends
 
 from dumb25519 import *
+import ecies
 import unittest
 
 class TestDumb25519(unittest.TestCase):
@@ -68,4 +69,21 @@ class TestDumb25519(unittest.TestCase):
         random_scalar()
         random_point()
 
+class TestECIES(unittest.TestCase):
+    def test_decrypt(self):
+        skey = random_scalar()
+        pkey = G*skey
+        tag = random_scalar()
+        
+        self.assertEqual(ecies.decrypt(skey,tag,ecies.encrypt(pkey,tag,'')),'')
+        self.assertEqual(ecies.decrypt(skey,tag,ecies.encrypt(pkey,tag,'message')),'message')
+        self.assertEqual(ecies.decrypt(skey,tag,ecies.encrypt(pkey,tag,'Four score and seven long messages ago')),'Four score and seven long messages ago')
+        self.assertEqual(ecies.decrypt(skey,tag,ecies.encrypt(pkey,tag,str(G))),str(G))
+
+        with self.assertRaises(TypeError):
+            ecies.decrypt(None,tag,ecies.encrypt(None,tag,''))
+        with self.assertRaises(TypeError):
+            ecies.decrypt(skey,tag,None)
+
 unittest.TextTestRunner(verbosity=2).run(unittest.TestLoader().loadTestsFromTestCase(TestDumb25519))
+unittest.TextTestRunner(verbosity=2).run(unittest.TestLoader().loadTestsFromTestCase(TestECIES))
