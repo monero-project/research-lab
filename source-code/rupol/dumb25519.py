@@ -36,21 +36,33 @@ class Scalar:
         self.x = x % l
 
     def __add__(self,y):
-        return Scalar(self.x + y)
+        if not isinstance(y,Scalar):
+            raise TypeError
+        return Scalar(self.x + y.x)
 
     def __sub__(self,y):
-        return Scalar(self.x - y)
+        if not isinstance(y,Scalar):
+            raise TypeError
+        return Scalar(self.x - y.x)
 
     def __mul__(self,y):
-        return Scalar(self.x*y)
+        if not isinstance(y,Scalar):
+            raise TypeError
+        return Scalar(self.x*y.x)
 
     def __div__(self,y):
+        if not isinstance(y,Scalar):
+            raise TypeError
         return Scalar(int(self.x/y.x))
 
     def __eq__(self,y):
+        if not isinstance(y,Scalar):
+            raise TypeError
         return self.x == y.x
 
     def __ne__(self,y):
+        if not isinstance(y,Scalar):
+            raise TypeError
         return self.x != y.x
 
 class Point:
@@ -59,12 +71,18 @@ class Point:
         self.y = y
 
     def __eq__(self,Q):
+        if not isinstance(Q,Point):
+            raise TypeError
         return self.x == Q.x and self.y == Q.y
 
     def __ne__(self,Q):
+        if not isinstance(Q,Point):
+            raise TypeError
         return self.x != Q.x or self.y != Q.y
 
     def __add__(self,Q):
+        if not isinstance(Q,Point):
+            raise TypeError
         x1 = self.x
         y1 = self.y
         x2 = Q.x
@@ -74,6 +92,8 @@ class Point:
         return Point(x3 % q, y3 % q)
 
     def __sub__(self,Q):
+        if not isinstance(Q,Point):
+            raise TypeError
         x1 = self.x
         y1 = self.y
         x2 = -Q.x
@@ -83,6 +103,8 @@ class Point:
         return Point(x3 % q, y3 % q)
 
     def __mul__(self,y):
+        if not isinstance(y,Scalar):
+            raise TypeError
         if y == Scalar(0):
             return Point(0,1)
         Q = self.__mul__(y/Scalar(2))
@@ -130,21 +152,3 @@ def random_scalar():
 # generate a random point in the G subgroup
 def random_point():
     return hash_to_point(str(random.random()))
-
-#############
-# TEST RUNS #
-#############
-print 'Running tests...'
-
-assert Z == G*Scalar(0)
-assert G == G*Scalar(1)
-assert G+G == G*Scalar(2)
-assert Z == G + G*Scalar(-1)
-assert G-G == Z
-assert G-(G*Scalar(-1)) == G+G
-test1 = G*hash_to_scalar('This is a test')
-test2 = hash_to_point('This is another test')
-test3 = hash_to_point('Four score and seven hashes ago...')
-test4 = random_point()
-
-print 'Tests complete!'
