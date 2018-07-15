@@ -2,6 +2,8 @@
 
 from dumb25519 import *
 import ecies
+import stealth
+import account
 import unittest
 
 class TestDumb25519(unittest.TestCase):
@@ -71,8 +73,8 @@ class TestDumb25519(unittest.TestCase):
 
 class TestECIES(unittest.TestCase):
     def test_decrypt(self):
-        skey = random_scalar()
-        pkey = G*skey
+        skey = ecies.gen_private_key()
+        pkey = ecies.gen_public_key(skey)
         tag = random_scalar()
         
         self.assertEqual(ecies.decrypt(skey,tag,ecies.encrypt(pkey,tag,'')),'')
@@ -85,5 +87,57 @@ class TestECIES(unittest.TestCase):
         with self.assertRaises(TypeError):
             ecies.decrypt(skey,tag,None)
 
-unittest.TextTestRunner(verbosity=2).run(unittest.TestLoader().loadTestsFromTestCase(TestDumb25519))
-unittest.TextTestRunner(verbosity=2).run(unittest.TestLoader().loadTestsFromTestCase(TestECIES))
+class TestStealthAccount(unittest.TestCase):
+    def test_gen_account(self):
+        stealth_private_key = stealth.gen_private_key()
+        stealth_public_key = stealth.gen_public_key(stealth_private_key)
+
+        self.assertIsNotNone(stealth_private_key.tsk)
+        self.assertIsNotNone(stealth_private_key.ssk)
+        self.assertIsNotNone(stealth_private_key.x)
+
+        self.assertIsNotNone(stealth_public_key.tpk)
+        self.assertIsNotNone(stealth_public_key.spk)
+        self.assertIsNotNone(stealth_public_key.X)
+
+class TestAccount(unittest.TestCase):
+    def test_gen_account(self):
+        stealth_private_key = stealth.gen_private_key()
+        stealth_public_key = stealth.gen_public_key(stealth_private_key)
+
+        a = random_scalar()
+
+        ot_account = account.gen_account(stealth_public_key,a)
+
+        self.assertIsNotNone(ot_account.pk)
+        self.assertIsNotNone(ot_account.co)
+        self.assertIsNotNone(ot_account._ek)
+        self.assertIsNotNone(ot_account._a)
+        self.assertIsNotNone(ot_account._r)
+
+    def test_recover_withdrawal(self):
+        stealth_private_key = stealth.gen_private_key()
+        stealth_public_key = stealth.gen_public_key(stealth_private_key)
+
+        a = random_scalar()
+
+        ot_account = account.gen_account(stealth_public_key,a)
+
+        account.recover_withdrawal(stealth_private_key,ot_account)
+
+    def test_bad_withdrawal(self):
+        stealth_private_key = stealth.gen_private_key()
+        other_private_key = stealth.gen_private_key()
+        stealth_public_key = stealth.gen_public_key(stealth_private_key)
+
+        a = random_scalar()
+
+        ot_account = account.gen_account(stealth_public_key,a)
+
+        with self.assertRaises(Exception):
+            account.recover_withdrawal(other_private_key,ot_account)
+
+#unittest.TextTestRunner(verbosity=2).run(unittest.TestLoader().loadTestsFromTestCase(TestDumb25519))
+#unittest.TextTestRunner(verbosity=2).run(unittest.TestLoader().loadTestsFromTestCase(TestECIES))
+#unittest.TextTestRunner(verbosity=2).run(unittest.TestLoader().loadTestsFromTestCase(TestStealthAccount))
+unittest.TextTestRunner(verbosity=2).run(unittest.TestLoader().loadTestsFromTestCase(TestAccount))
