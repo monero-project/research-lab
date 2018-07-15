@@ -56,3 +56,24 @@ def recover_withdrawal(private_key,account):
 
     xs = private_key.x+s
     return private_key.x+s,a,r,T*xs.invert()
+
+# compute the n-ary representation of an integer (lsb is index 0), and pad to a given size
+def nary(i,n,pad=None):
+    if i < 0 or n < 1:
+        raise ArithmeticError
+    if pad is not None and pad < 1:
+        raise IndexError
+
+    if i == 0:
+        bits = [0]
+    if i > 0:
+        bits = []
+        while i > 0:
+            i,r = divmod(i,n)
+            bits.append(r)
+    
+    if pad is None or pad <= len(bits):
+        return bits
+    while pad > len(bits):
+        bits.append(0)
+    return bits

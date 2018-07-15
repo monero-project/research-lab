@@ -141,7 +141,29 @@ class TestAccount(unittest.TestCase):
         with self.assertRaises(Exception):
             account.recover_withdrawal(other_private_key,ot_account)
 
-unittest.TextTestRunner(verbosity=2).run(unittest.TestLoader().loadTestsFromTestCase(TestDumb25519))
-unittest.TextTestRunner(verbosity=2).run(unittest.TestLoader().loadTestsFromTestCase(TestECIES))
-unittest.TextTestRunner(verbosity=2).run(unittest.TestLoader().loadTestsFromTestCase(TestStealthAccount))
+    def test_nary(self):
+        with self.assertRaises(ArithmeticError):
+            account.nary(None,2)
+        with self.assertRaises(ArithmeticError):
+            account.nary(1,None)
+        with self.assertRaises(ArithmeticError):
+            account.nary(0,0)
+        with self.assertRaises(ArithmeticError):
+            account.nary(-1,2)
+        with self.assertRaises(IndexError):
+            account.nary(2,2,0)
+        self.assertEqual(account.nary(0,2),[0])
+        self.assertEqual(account.nary(0,2,2),[0,0])
+        self.assertEqual(account.nary(1,2),[1])
+        self.assertEqual(account.nary(1,3),[1])
+        self.assertEqual(account.nary(8,3),[2,2])
+        self.assertEqual(account.nary(27,3),[0,0,0,1])
+        self.assertEqual(account.nary(27,3,3),[0,0,0,1])
+        self.assertEqual(account.nary(27,3,4),[0,0,0,1])
+        self.assertEqual(account.nary(27,3,5),[0,0,0,1,0])
+        self.assertEqual(account.nary(26,3,5),[2,2,2,0,0])
+
+#unittest.TextTestRunner(verbosity=2).run(unittest.TestLoader().loadTestsFromTestCase(TestDumb25519))
+#unittest.TextTestRunner(verbosity=2).run(unittest.TestLoader().loadTestsFromTestCase(TestECIES))
+#unittest.TextTestRunner(verbosity=2).run(unittest.TestLoader().loadTestsFromTestCase(TestStealthAccount))
 unittest.TextTestRunner(verbosity=2).run(unittest.TestLoader().loadTestsFromTestCase(TestAccount))
