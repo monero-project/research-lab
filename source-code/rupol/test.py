@@ -24,6 +24,10 @@ class TestDumb25519(unittest.TestCase):
         self.assertEqual(Scalar(2)/Scalar(2),Scalar(1))
         self.assertEqual(Scalar(3)/Scalar(2),Scalar(1))
         self.assertEqual(Scalar(0)/Scalar(2),Scalar(0))
+        self.assertEqual(Scalar(1).invert(),Scalar(1))
+        with self.assertRaises(ZeroDivisionError):
+            Scalar(0).invert()
+        self.assertEqual(Scalar(2)*Scalar(2).invert(),Scalar(1))
 
     def test_mixed_operations(self):
         self.assertEqual(G*Scalar(0),Z)
@@ -137,7 +141,7 @@ class TestAccount(unittest.TestCase):
         with self.assertRaises(Exception):
             account.recover_withdrawal(other_private_key,ot_account)
 
-#unittest.TextTestRunner(verbosity=2).run(unittest.TestLoader().loadTestsFromTestCase(TestDumb25519))
+unittest.TextTestRunner(verbosity=2).run(unittest.TestLoader().loadTestsFromTestCase(TestDumb25519))
 #unittest.TextTestRunner(verbosity=2).run(unittest.TestLoader().loadTestsFromTestCase(TestECIES))
 #unittest.TextTestRunner(verbosity=2).run(unittest.TestLoader().loadTestsFromTestCase(TestStealthAccount))
-unittest.TextTestRunner(verbosity=2).run(unittest.TestLoader().loadTestsFromTestCase(TestAccount))
+#unittest.TextTestRunner(verbosity=2).run(unittest.TestLoader().loadTestsFromTestCase(TestAccount))

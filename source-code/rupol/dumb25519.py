@@ -16,11 +16,11 @@ l = 2**252 + 27742317777372353535851937790883648493
 def exponent(b,e,m):
     return pow(b,e,m)
 
-def invert(x):
-    return exponent(x,q-2,q)
+def invert(x,n):
+    return exponent(x,n-2,n)
 
 def xfromy(y):
-    temp = (y*y-1) * invert(d*y*y+1)
+    temp = (y*y-1) * invert(d*y*y+1,q)
     x = exponent(temp,(q+3)/8,q)
     if (x*x - temp) % q != 0:
         x = (x*I) % q
@@ -28,12 +28,17 @@ def xfromy(y):
         x = q-x
     return x
 
-d = -121665 * invert(121666)
+d = -121665 * invert(121666,q)
 I = exponent(2,(q-1)/4,q)
 
 class Scalar:
     def __init__(self,x):
         self.x = x % l
+
+    def invert(self):
+        if self.x == 0:
+            raise ZeroDivisionError
+        return Scalar(invert(self.x,l))
 
     def __add__(self,y):
         if not isinstance(y,Scalar):
@@ -90,8 +95,8 @@ class Point:
         y1 = self.y
         x2 = Q.x
         y2 = Q.y
-        x3 = (x1*y2+x2*y1) * invert(1+d*x1*x2*y1*y2)
-        y3 = (y1*y2+x1*x2) * invert(1-d*x1*x2*y1*y2)
+        x3 = (x1*y2+x2*y1) * invert(1+d*x1*x2*y1*y2,q)
+        y3 = (y1*y2+x1*x2) * invert(1-d*x1*x2*y1*y2,q)
         return Point(x3 % q, y3 % q)
 
     def __sub__(self,Q):
@@ -101,8 +106,8 @@ class Point:
         y1 = self.y
         x2 = -Q.x
         y2 = Q.y
-        x3 = (x1*y2+x2*y1) * invert(1+d*x1*x2*y1*y2)
-        y3 = (y1*y2+x1*x2) * invert(1-d*x1*x2*y1*y2)
+        x3 = (x1*y2+x2*y1) * invert(1+d*x1*x2*y1*y2,q)
+        y3 = (y1*y2+x1*x2) * invert(1-d*x1*x2*y1*y2,q)
         return Point(x3 % q, y3 % q)
 
     def __mul__(self,y):
@@ -125,7 +130,7 @@ class Point:
         return (-x*x + y*y - 1 - d*x*x*y*y) % q == 0
 
 # common basepoint
-Gy = 4*invert(5)
+Gy = 4*invert(5,q)
 Gx = xfromy(Gy)
 G = Point(Gx % q, Gy % q)
 

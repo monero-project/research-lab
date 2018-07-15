@@ -11,6 +11,7 @@ import stealth
 # some curve points
 G = dumb25519.G
 H = dumb25519.hash_to_point('rupol H')
+T = dumb25519.hash_to_point('rupol T')
 
 class Account:
     pk = None
@@ -53,4 +54,5 @@ def recover_withdrawal(private_key,account):
     if public_key.X + H*s != account.pk:
         raise Exception('Bad account public key!')
 
-    return private_key.x + s, a, r
+    xs = private_key.x+s
+    return private_key.x+s,a,r,T*xs.invert()
