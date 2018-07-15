@@ -129,14 +129,6 @@ class Point:
         y = self.y
         return (-x*x + y*y - 1 - d*x*x*y*y) % q == 0
 
-# common basepoint
-Gy = 4*invert(5,q)
-Gx = xfromy(Gy)
-G = Point(Gx % q, Gy % q)
-
-# zero point
-Z = Point(0,1)
-
 # make a point from a given integer y (if it is on the curve)
 def make_point(y):
     x = xfromy(y)
@@ -163,3 +155,15 @@ def random_scalar():
 # generate a random point in the G subgroup
 def random_point():
     return hash_to_point(str(random.random()))
+
+# basepoint
+Gy = 4*invert(5,q)
+Gx = xfromy(Gy)
+G = Point(Gx % q, Gy % q)
+
+# zero point
+Z = Point(0,1)
+
+# a few more
+H = hash_to_point('rupol H')
+T = hash_to_point('rupol T')

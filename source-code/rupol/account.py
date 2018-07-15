@@ -8,10 +8,10 @@ import dumb25519
 import ecies
 import stealth
 
-# some curve points
+# define curve points
 G = dumb25519.G
-H = dumb25519.hash_to_point('rupol H')
-T = dumb25519.hash_to_point('rupol T')
+H = dumb25519.H
+T = dumb25519.T
 
 class Account:
     pk = None

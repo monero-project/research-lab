@@ -10,7 +10,7 @@ import binascii
 from Crypto.Cipher import AES
 from Crypto import Random
 
-# define a few curve points
+# define curve points
 G = dumb25519.G
 
 class Ciphertext:

@@ -7,9 +7,9 @@
 import dumb25519
 import ecies
 
-# some curve points
+# define curve points
 G = dumb25519.G
-H = dumb25519.hash_to_point('rupol H')
+H = dumb25519.H
 
 class PrivateKey:
     tsk = None
