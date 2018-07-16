@@ -70,8 +70,23 @@ class Scalar:
             raise TypeError
         return self.x != y.x
 
+    def __lt__(self,y):
+        if isinstance(y,Scalar):
+            return self.x < y.x
+        else:
+            return self.x < y
+
+    def __gt__(self,y):
+        if isinstance(y,Scalar):
+            return self.x > y.x
+        else:
+            return self.x > y
+
     def __str__(self):
         return str(self.x)
+
+    def to_int(self):
+        return self.x
 
 class Point:
     def __init__(self,x,y):
@@ -167,3 +182,18 @@ Z = Point(0,1)
 # a few more
 H = hash_to_point('rupol H')
 T = hash_to_point('rupol T')
+
+# helper function to recursively flatten an ugly list
+def flatten(L):
+    if L == []:
+        return L
+    if isinstance(L[0],list):
+        return flatten(L[0]) + flatten(L[1:])
+    return L[:1] + flatten(L[1:])
+
+# Pedersen vector commitment
+def pedersen_commit(v,r):
+    result = H*r
+    for i in range(len(v)):
+        result += hash_to_point('rupol Gi'+str(i))*v[i]
+    return result
