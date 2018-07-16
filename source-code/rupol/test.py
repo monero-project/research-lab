@@ -223,7 +223,5 @@ class TestAccount(unittest.TestCase):
         tx = account.Transaction([withdrawal_key.tag],accounts_ring,[ot_recipient])
         account.spend([withdrawal_key],[deposit_recipient],tx,'spend memo')
 
-unittest.TextTestRunner(verbosity=2).run(unittest.TestLoader().loadTestsFromTestCase(TestDumb25519))
-unittest.TextTestRunner(verbosity=2).run(unittest.TestLoader().loadTestsFromTestCase(TestECIES))
-unittest.TextTestRunner(verbosity=2).run(unittest.TestLoader().loadTestsFromTestCase(TestStealthAccount))
-unittest.TextTestRunner(verbosity=2).run(unittest.TestLoader().loadTestsFromTestCase(TestAccount))
+for test in [TestDumb25519,TestECIES,TestStealthAccount,TestAccount]:
+    unittest.TextTestRunner(verbosity=2,failfast=True).run(unittest.TestLoader().loadTestsFromTestCase(test))
