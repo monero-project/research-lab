@@ -8,12 +8,12 @@ import numpy as np
 
 # Some global parameters
 # Further fine-tuning of these will improve shell quality.
-minFloatParam = 2.0**-1
-maxFloatParam = 2.0**2
-minFrequency = 2.0**-3
-maxFrequency = 2.0**3
-maxGrowthRate = 5.0**(1.0/256.0) - 1.0
-maxHeightDrift = 2.0**15
+minFloatParam = 2.0**-3
+maxFloatParam = 2.0**3
+minFrequency = 2.0**-2
+maxFrequency = 2.0**2
+maxGrowthRate = 0.2
+maxHeightDrift = 1.0
 
 # We model a shell by:
 #  1) Take the parameterization of an ellipse embedded in the (r,z) plane in cylindrical coordinates
@@ -71,69 +71,9 @@ def getParams(d):
     params = {"semiAxisOneInit": None, "frequencyOne": None, "wobbleOne": None, "frequencyTwo": None, "wobbleTwo": None,
               "semiAxisTwoInit": None, "radiusInit": None, "heightInit":None, "growth": None, "heightChangeConst":None}
 
-    # Ellipse-semi-axis-one initial spatial parameter.
-    # Drawn from minFloatParam to maxFloatParam
-    next = d[:4]
-    nextInt = int.from_bytes(next, byteorder='big')
-    nextFloat = float(nextInt)*(2.0**-32)
-    assert 0.0 <= nextFloat
-    assert nextFloat < 1.0
-    nextParam = minFloatParam + (maxFloatParam - minFloatParam)*nextFloat
-    params.update({"semiAxisOneInit":nextParam}) # float, [minFloatParam, maxFloatParam)
-
-    # Ellipse-semi-axis-two initial spatial parameter.
-    # Drawn from minFloatParam to maxFloatParam
-    next = d[4:8]
-    nextInt = int.from_bytes(next, byteorder='big')
-    nextFloat = float(nextInt)*(2.0**-32)
-    assert 0.0 <= nextFloat
-    assert nextFloat < 1.0
-    nextParam = minFloatParam + (maxFloatParam - minFloatParam)*nextFloat
-    params.update({"semiAxisTwoInit":nextParam}) # float, [maxFloatParam, maxFloatParam)
-
-    # Spatial frequency at which the ellipse spins its orientation.
-    # Drawn from minFrequency to maxFrequency
-    next = d[8:12]
-    nextInt = int.from_bytes(next, byteorder='big')
-    nextFloat = float(nextInt)*(2.0**-32)
-    assert 0.0 <= nextFloat
-    assert nextFloat < 1.0
-    nextParam = minFrequency + (maxFrequency - minFrequency)*nextFloat
-    params.update({"frequencyOne":nextParam}) # float, [minFrequency, maxFrequency)
-
-    # Spatial requency at which the cross section of the shell wobbles/shell ridges
-    # Drawn from minFrequency to maxFrequency
-    next = d[12:16]
-    nextInt = int.from_bytes(next, byteorder='big')
-    nextFloat = float(nextInt)*(2.0**-32)
-    assert 0.0 <= nextFloat
-    assert nextFloat < 1.0
-    nextParam = minFrequency + (maxFrequency - minFrequency)*nextFloat
-    params.update({"frequencyTwo":nextParam}) # float, [maxFrequency, maxFrequency)
-
-    # Relative spatial amount of wobble along first semi-axis
-    # Drawn from -1.0 to 1.0
-    next = d[16:20]
-    nextInt = int.from_bytes(next, byteorder='big')
-    nextFloat = 2.0*float(nextInt)*(2.0**-32) - 1.0
-    assert -1.0 <= nextFloat
-    assert nextFloat < 1.0
-    nextParam = nextFloat
-    params.update({"wobbleOne":nextFloat}) # float, (-1, 1)
-
-    # Relative spatial amount of wobble along second semi-axis
-    # Drawn from -1.0*math.sqrt(1.0 - wobbleOne**2) to 1.0*math.sqrt(1.0 - wobbleOne**2)
-    next = d[20:24]
-    nextInt = int.from_bytes(next, byteorder='big')
-    nextFloat = 2.0*float(nextInt)*(2.0**-32) - 1.0
-    assert -1.0 <= nextFloat
-    assert nextFloat < 1.0
-    nextParam = math.sqrt(1.0 - params["wobbleOne"]**2)*nextFloat
-    params.update({"wobbleTwo":nextParam}) # float, (-1+sqrt(1-wobbleOne**2), 1-sqrt(1-wobbleOne**2))
-
     # Initial radius spatial parameter (determines centerline of logarithmic spiral)
     # Drawn from minFloatParam to maxFloatParam
-    next = d[24:28]
+    next = d[:4]
     nextInt = int.from_bytes(next, byteorder='big')
     nextFloat = float(nextInt)*(2.0**-32)
     assert 0.0 <= nextFloat
@@ -143,7 +83,7 @@ def getParams(d):
 
     # Initial height spatial parameter (determines centerline of logarithmic spiral)
     # Drawn from minFloatParam to maxFloatParam
-    next = d[28:32]
+    next = d[4:8]
     nextInt = int.from_bytes(next, byteorder='big')
     nextFloat = float(nextInt)*(2.0**-32)
     assert 0.0 <= nextFloat
@@ -151,8 +91,68 @@ def getParams(d):
     nextParam = minFloatParam + (maxFloatParam - minFloatParam)*nextFloat
     params.update({"heightInit":nextParam}) # float, [minFloatParam, maxFloatParam)
 
+    # Ellipse-semi-axis-one initial spatial parameter.
+    # Drawn from 0.0 to radiusInit
+    next = d[8:12]
+    nextInt = int.from_bytes(next, byteorder='big')
+    nextFloat = float(nextInt)*(2.0**-32)
+    assert 0.0 <= nextFloat
+    assert nextFloat < 1.0
+    nextParam = params["radiusInit"]*nextFloat
+    params.update({"semiAxisOneInit":nextParam}) # float, [minFloatParam, maxFloatParam)
+
+    # Ellipse-semi-axis-two initial spatial parameter.
+    # Drawn from -math.sqrt(params["radiusInit"]**2 - params["semiAxisOneInit"]**2) to math.sqrt(params["radiusInit"]**2 - params["semiAxisOneInit"]**2)
+    next = d[12:16]
+    nextInt = int.from_bytes(next, byteorder='big')
+    nextFloat = float(nextInt)*(2.0**-32)
+    assert 0.0 <= nextFloat
+    assert nextFloat < 1.0
+    nextParam = math.sqrt(params["radiusInit"]**2 - params["semiAxisOneInit"]**2)*nextFloat
+    params.update({"semiAxisTwoInit":nextParam}) # float, [maxFloatParam, maxFloatParam)
+
+    # Spatial frequency at which the ellipse spins its orientation.
+    # Drawn from minFrequency to maxFrequency
+    next = d[16:20]
+    nextInt = int.from_bytes(next, byteorder='big')
+    nextFloat = float(nextInt)*(2.0**-32)
+    assert 0.0 <= nextFloat
+    assert nextFloat < 1.0
+    nextParam = minFrequency + (maxFrequency - minFrequency)*nextFloat
+    params.update({"frequencyOne":nextParam}) # float, [minFrequency, maxFrequency)
+
+    # Spatial frequency at which the cross section of the shell wobbles/shell ridges
+    # Drawn from minFrequency to maxFrequency
+    next = d[20:24]
+    nextInt = int.from_bytes(next, byteorder='big')
+    nextFloat = float(nextInt)*(2.0**-32)
+    assert 0.0 <= nextFloat
+    assert nextFloat < 1.0
+    nextParam = minFrequency + (maxFrequency - minFrequency)*nextFloat
+    params.update({"frequencyTwo":nextParam}) # float, [maxFrequency, maxFrequency)
+
+    # Relative spatial amount of wobble along first semi-axis
+    # Drawn from -1.0 to 1.0
+    next = d[24:28]
+    nextInt = int.from_bytes(next, byteorder='big')
+    nextFloat = 2.0*float(nextInt)*(2.0**-32) - 1.0
+    assert -1.0 <= nextFloat
+    assert nextFloat < 1.0
+    nextParam = nextFloat
+    params.update({"wobbleOne":nextFloat}) # float, (-1, 1)
+
+    # Relative spatial amount of wobble along second semi-axis
+    # Drawn from -1.0*math.sqrt(1.0 - wobbleOne**2) to 1.0*math.sqrt(1.0 - wobbleOne**2)
+    next = d[28:32]
+    nextInt = int.from_bytes(next, byteorder='big')
+    nextFloat = 2.0*float(nextInt)*(2.0**-32) - 1.0
+    assert -1.0 <= nextFloat
+    assert nextFloat < 1.0
+    nextParam = math.sqrt(1.0 - params["wobbleOne"]**2)*nextFloat
+    params.update({"wobbleTwo":nextParam}) # float, (-1+sqrt(1-wobbleOne**2), 1-sqrt(1-wobbleOne**2))
+
     # Logarithmic growth rate.
-    # Drawn from 1.0/(1.0 + maxGrowthRate) to 1.0 + maxGrowthRate
+    # Drawn from -maxGrowthRate to +maxGrowthRate
     # Different growth rate for different things can lead to ugly seashells...
     # but having more parameters squeezed out of an address hash means the result
     # is less likely to produce a convincing visual near-duplicate... so
@@ -163,7 +163,7 @@ def getParams(d):
     nextFloat = 2.0*float(nextInt)*(2.0**-32) - 1.0
     assert -1.0 <= nextFloat
     assert nextFloat < 1.0
-    nextParam = (1.0 + maxGrowthRate)**nextFloat
+    nextParam = nextFloat*maxGrowthRate
     params.update({"growth":nextParam}) # float, [1.0/maxGrowthRate, maxGrowthRate)
 
     # Constant drift of height. If this is large, then you get a long cone-shaped shell.
@@ -181,7 +181,11 @@ def getParams(d):
 
 def getFunctions(inputAddress):
     ''' Takes as input some inputAddress, computes params, and returns params with some ambda functions describing
-        the parameterization of the resulting shell. '''
+        the parameterization of the resulting shell. To derive these functions: take the parameterization of an ellipse,
+        x = a*cos(s), y = b*sin(s); scale this vector by (1 + c1*cos(s) + c2*sin(s)); multiply the resulting vector
+        by a rotation matrix with angle f*s for some frequency f. Make the substitution x = r and y = z (or vice versa);
+        embed (r,z) into cylindrical space (r,z,t); Lastly, and this is very important: translate the result to be
+        centered on the centerline of the shell.'''
     d = getBlakeDigests(inputAddress)
     params = getParams(d)
     theta = lambda inp:inp[0]
@@ -195,53 +199,34 @@ def seeseashell(inputAddress):
         inputAddress = str(inputAddress)
     params, theta, radius, height = getFunctions(inputAddress)
 
-    U1 = np.linspace(0.0, math.pi, 256)
-    U2 = np.linspace(math.pi, 2.0*math.pi, 256)
-    T = np.linspace(0.0, 2.0*math.pi*5.0, 256)
-    X1 = []
-    X2 = []
-    Y1 = []
-    Y2 = []
-    surf1 = []
-    surf2 = []
-    for i in range(len(U1)):
-        u1 = U1[i]
-        u2 = U2[i]
-        surf1.append([])
-        X1.append([])
-        X2.append([])
-        surf2.append([])
-        Y1.append([])
-        Y2.append([])
+    U = np.linspace(0.0, 2.0*math.pi, 256)
+    T = np.linspace(0.0, 2.0*math.pi*3.0, 256)
+    X = []
+    Y = []
+    surf = []
+    for i in range(len(U)):
+        u = U[i]
+        surf.append([])
+        X.append([])
+        Y.append([])
         for j in range(len(T)):
             t = T[j]
-            z1 = height([t,u1])
-            z2 = height([t,u2])
-            r1 = radius([t,u1])
-            r2 = radius([t,u2])
-            x1 = r1 * math.cos(t)
-            x2 = r2 * math.cos(t)
-            y1 = r1 * math.sin(t)
-            y2 = r2 * math.sin(t)
-            X1[-1].append(x1)
-            X2[-1].append(x2)
-            Y1[-1].append(y1)
-            Y2[-1].append(y2)
-            surf1[-1].append(z1)
-            surf2[-1].append(z2)
-    X1 = np.array(X1)
-    X2 = np.array(X2)
-    Y1 = np.array(Y1)
-    Y2 = np.array(Y2)
-    surf1 = np.array(surf1)
-    surf2 = np.array(surf2)
+            z = height([t,u])
+            r = radius([t,u])
+            x = r * math.cos(t)
+            y = r * math.sin(t)
+            X[-1].append(x)
+            Y[-1].append(y)
+            surf[-1].append(z)
+    X = np.array(X)
+    Y = np.array(Y)
+    surf = np.array(surf)
 
     fig = plt.figure()
     ax = fig.gca(projection='3d')
 
     # Plot the surface with face colors taken from the array we made.
-    surf = ax.plot_surface(X1, Y1, surf1)
-    ssurf = ax.plot_surface(X2, Y2, surf2)
+    surf = ax.plot_surface(X, Y, surf)
 
     print(params)
     plt.show()
