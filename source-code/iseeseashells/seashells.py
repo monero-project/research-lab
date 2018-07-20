@@ -200,7 +200,7 @@ def seeseashell(inputAddress):
     params, theta, radius, height = getFunctions(inputAddress)
 
     U = np.linspace(0.0, 2.0*math.pi, 256)
-    T = np.linspace(0.0, 2.0*math.pi*3.0, 256)
+    T = np.linspace(math.pi/6.0, 2.0*math.pi*3.0, 256)
     X = []
     Y = []
     surf = []
