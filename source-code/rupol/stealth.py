@@ -1,4 +1,4 @@
-# RuPol: a dumb implementation of Ruffing's polynomial ring confidential scheme
+# RuPol: a dumb implementation of a draft ring confidential transaction scheme
 #
 # Use this code only for prototyping
 # -- putting this code into production would be dumb

@@ -180,8 +180,8 @@ G = Point(Gx % q, Gy % q)
 Z = Point(0,1)
 
 # a few more
-H = hash_to_point('rupol H')
-T = hash_to_point('rupol T')
+H = hash_to_point('dumb25519 H')
+T = hash_to_point('dumb25519 T')
 
 # helper function to recursively flatten an ugly list
 def flatten(L):
@@ -195,5 +195,5 @@ def flatten(L):
 def pedersen_commit(v,r):
     result = H*r
     for i in range(len(v)):
-        result += hash_to_point('rupol Gi'+str(i))*v[i]
+        result += hash_to_point('dumb25519 Gi'+str(i))*v[i]
     return result

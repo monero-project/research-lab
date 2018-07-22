@@ -1,4 +1,4 @@
-# RuPol: a dumb implementation of Ruffing's polynomial ring confidential scheme
+# RuPol: a dumb implementation of a draft ring confidential transaction scheme
 #
 # Use this code only for prototyping
 # -- putting this code into production would be dumb
@@ -175,7 +175,7 @@ def prepare_witness(withdrawal_keys,deposit_keys):
 
 def spend(withdrawal_keys,deposit_keys,tx,mu):
     witness = prepare_witness(withdrawal_keys,deposit_keys)
-    witness_list = [witness.d_ijk,witness.x_i,witness.a_in,witness.a_ij,witness.r_in,witness.r_out]
+    witness_list = [witness.d_ijk,witness.x_i,witness.a_in,witness.a_ij,witness.r_in,witness.r_out] # this is so we can flatten for commitment
 
     t = dumb25519.random_scalar()
     C = dumb25519.pedersen_commit(dumb25519.flatten(witness_list),t)
