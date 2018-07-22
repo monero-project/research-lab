@@ -100,7 +100,7 @@ class TestDumb25519(unittest.TestCase):
     def test_pedersen(self):
         r = random_scalar()
         self.assertEqual(pedersen_commit([Scalar(0)],r),H*r) # G*0 + H*r = H*r
-        self.assertEqual(pedersen_commit([r],Scalar(0)),hash_to_point('rupol Gi'+str(0))*r) # G_0*r + H*0 = G_0*r
+        self.assertEqual(pedersen_commit([r],Scalar(0)),hash_to_point('dumb25519 Gi'+str(0))*r) # G_0*r + H*0 = G_0*r
 
 class TestECIES(unittest.TestCase):
     def test_decrypt(self):
