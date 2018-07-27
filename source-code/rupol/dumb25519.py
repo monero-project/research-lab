@@ -60,6 +60,12 @@ class Scalar:
             raise TypeError
         return Scalar(int(self.x/y.x))
 
+    def __pow__(self,y):
+        result = Scalar(1)
+        for i in range(y):
+            result = result*self
+        return result
+
     def __eq__(self,y):
         if not isinstance(y,Scalar):
             raise TypeError

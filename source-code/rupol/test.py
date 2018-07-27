@@ -5,6 +5,7 @@ import ecies
 import stealth
 import account
 import unittest
+import polycom
 
 class TestDumb25519(unittest.TestCase):
     def test_point_operations(self):
@@ -28,6 +29,15 @@ class TestDumb25519(unittest.TestCase):
         self.assertEqual(Scalar(2)/Scalar(2),Scalar(1))
         self.assertEqual(Scalar(3)/Scalar(2),Scalar(1))
         self.assertEqual(Scalar(0)/Scalar(2),Scalar(0))
+        self.assertEqual(Scalar(2)**0,Scalar(1))
+        self.assertEqual(Scalar(2)**1,Scalar(2))
+        self.assertEqual(Scalar(2)**2,Scalar(4))
+        self.assertEqual(Scalar(2)**3,Scalar(8))
+        self.assertEqual(Scalar(1)**0,Scalar(1))
+        self.assertEqual(Scalar(1)**1,Scalar(1))
+        self.assertEqual(Scalar(1)**2,Scalar(1))
+        self.assertEqual(Scalar(0)**1,Scalar(0))
+        self.assertEqual(Scalar(0)**2,Scalar(0))
 
         # test scalar inversion
         self.assertEqual(Scalar(1).invert(),Scalar(1))
@@ -223,5 +233,45 @@ class TestAccount(unittest.TestCase):
         tx = account.Transaction([withdrawal_key.tag],accounts_ring,[ot_recipient])
         account.spend([withdrawal_key],[deposit_recipient],tx,'spend memo')
 
-for test in [TestDumb25519,TestECIES,TestStealthAccount,TestAccount]:
+class TestPolyCom(unittest.TestCase):
+    def test_m_n_d_1_1_0_steps(self):
+        m = 1
+        n = 1
+        d = 0
+
+        h = [random_scalar() for i in range(m*n+d+1)]
+
+        # test matrix construction
+        msg1,state = polycom.commit(h,m,n,d)
+        M = state[0]
+        b = state[1]
+        self.assertEqual(M,[[h[0]-b[0],Scalar(0)],[b[0],h[1]]])
+
+        # test evaluation commitments
+        x = random_scalar()
+        msg2 = polycom.evaluate(state,x)
+        hbar = msg2[0]
+        self.assertEqual(hbar[0],h[0]-b[0])
+        self.assertEqual(hbar[1],b[0]+h[1]*x)
+
+    def test_matrix_sizes(self):
+        for n in [1,2]:
+            for m in [1,2]:
+                for d in range(m):
+                    h = []
+                    for i in range(m*n+d+1):
+                        h.append(random_scalar())
+
+                    # run the proof
+                    msg1,state = polycom.commit(h,m,n,d)
+                    x = random_scalar()
+                    msg2 = polycom.evaluate(state,x)
+
+                    # verify and check for valid evaluation
+                    result = Scalar(0)
+                    for j in range(m*n+d+1):
+                        result += h[j]*(x**j)
+                    self.assertEqual(polycom.verify(msg1,msg2,x,m,n,d),result)
+
+for test in [TestDumb25519,TestECIES,TestStealthAccount,TestAccount,TestPolyCom]:
     unittest.TextTestRunner(verbosity=2,failfast=True).run(unittest.TestLoader().loadTestsFromTestCase(test))
