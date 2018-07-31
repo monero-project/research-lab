@@ -1,0 +1,189 @@
+[2018-06-25 10:59:40] <suraeNoether> fluffypony knaccc luigi1111 anonimal binaryFate chachasmooth dEBRUYNE endogenic erciccione_[m] gingeropolous hyc iDunk isthmuscrypto john_alan JollyMort[m] jwinterm kenshi84 kerber m2049r[m] moneromooo MoroccanMalinois needmoney90 nioc othe philkode pigeons rehrar rrol[m] sarang sgp_[m] silur stoffu unknownids vtnerd waxwing 
+[2018-06-25 10:59:52] <suraeNoether> let's get this partay starteeeeed
+[2018-06-25 11:00:54] <suraeNoether> Agenda today: 1. Greetings. 2. Brief MRL update. 3. Show and tell! 4. Who's going to defcon?
+[2018-06-25 11:01:00] <suraeNoether> hi everyone
+[2018-06-25 11:01:30] <oneiric_> hullo
+[2018-06-25 11:02:13] <suraeNoether> Okay, 2. I have finally posted all our meetings logs here: https://github.com/b-g-goodell/research-lab/tree/master/meta/research-meeting-logs
+[2018-06-25 11:02:29] <suraeNoether> I didn't want to fork the whole meta repo just to keep track of our research meeting logs, so I just started a folder
+[2018-06-25 11:02:43] <isthmuscrypto> Greetings!
+[2018-06-25 11:03:14] <suraeNoether> if anyone objects or wants to make PRs to monero-project's meta repo to track our logs, I'm fine with that, too, but this is easiest for me to deal with.
+[2018-06-25 11:03:17] <needmoney90> Morning all
+[2018-06-25 11:03:27] <sgp_[m]> Hello
+[2018-06-25 11:03:28] <suraeNoether> morning isthmuscrypto  and needmoney90 
+[2018-06-25 11:04:00] <suraeNoether> Another update, Sarang will be back next week I believe
+[2018-06-25 11:04:24] <suraeNoether> Other than that, Sarang and I will be at defcon, and we are excited to meet up with folks
+[2018-06-25 11:04:24] <sgp_[m]> They're more accessible if they are posted as a blog post on getmonero. Probably some value there
+[2018-06-25 11:05:00] <suraeNoether> sgp_[m]: would I make a PR to the monero-site repo then?
+[2018-06-25 11:05:31] <binaryFate> hello
+[2018-06-25 11:05:38] <sgp_[m]> There are some open PRs now for the community meetings. Best to use those as a template
+[2018-06-25 11:06:08] <suraeNoether> so the answer is yes, and to use those as a template? I haven't done any blog posts through the repo before, so I'm not sure exactly what the procedure is. :P
+[2018-06-25 11:06:24] <selsta> they require markdown change
+[2018-06-25 11:06:41] <suraeNoether> I'll look around and take care of it later today
+[2018-06-25 11:06:42] <sgp_[m]> Basically yes. It's not very difficult
+[2018-06-25 11:07:00] <suraeNoether> cool, then easy thing to check off my list later
+[2018-06-25 11:07:36] <suraeNoether> So, 3. Show and tell. Silur is here, isthmuscrypto is here, and both of them are working on rather interesting projects I'd like to hear about.
+[2018-06-25 11:08:20] <silur> I'm struggling with testing my RTRS lib, and now got into VDFs, verifiable delay functions and trying to generalize them for lattices
+[2018-06-25 11:08:36] <suraeNoether> i didn't catch isthmuscrypto's original description of his generalized adversarial networks, when he mentioned it for the first time a few weeks ago
+[2018-06-25 11:08:45] <silur> and of course as usual lattices are more interesting than testing but I need to have RTRS done for HCPP :/
+[2018-06-25 11:08:45] <suraeNoether> oooh VDFs are super super interesting to me
+[2018-06-25 11:09:11] <isthmuscrypto> Hi @suraeNoether https://github.com/Mitchellpkt/BlockchainAnalysisGAN
+[2018-06-25 11:09:31] <silur> I have a general VRF construction for DH and EC, PoC ready (I can share the notebook) and a blockchain is already adapting it, working on the lattice VRF now
+[2018-06-25 11:09:32] <isthmuscrypto> I'm tied up in a meeting for the next 50 minutes and sneaking the MRL meeting on the side, so I'll be intermittent in responding.
+[2018-06-25 11:09:40] <suraeNoether> ah silur, that's a conference I would have loved to attend if I had heard of it a few months earlier.
+[2018-06-25 11:09:41] <silur> so my next step is to make the same for VDFs
+[2018-06-25 11:09:55] <suraeNoether> that's awesome, silur!
+[2018-06-25 11:09:57] <silur> I'm sure we can figure something out
+[2018-06-25 11:10:04] <silur> about HCPP
+[2018-06-25 11:10:15] <suraeNoether> oh, no, i literally can't attend, but maybe next year. 
+[2018-06-25 11:10:50] <suraeNoether> oh that brings up something: I was thinking maybe we could start taking issues out on the monero-project/research-lab repo for conferences that the community might want us to attend
+[2018-06-25 11:11:13] <suraeNoether> a lot of them I'm willing to go to out of pocket because they are great experiences, but keeping track of the wide world of conference calendars can be challenging
+[2018-06-25 11:11:34] <isthmuscrypto> " track of the wide world of conference calendars can be challenging" < sounds like we need a decentralized solution xD
+[2018-06-25 11:11:49] <silur> MARKET GAP! :D
+[2018-06-25 11:11:55] <suraeNoether> tokenize it!
+[2018-06-25 11:11:56] <silur> ICO it
+[2018-06-25 11:12:17] <oneiric_> lol
+[2018-06-25 11:12:27] <rehrar> hi
+[2018-06-25 11:12:53] <suraeNoether> is it unreasonable to ask: if folks hear about a technical conference, literally anywhere in the world, at which MRL should have a presence, open up an issue about it on the monero-project/research-lab repo?
+[2018-06-25 11:12:54] <suraeNoether> hi rehrar 
+[2018-06-25 11:13:13] <silur> so brings me back to a interesting bottleneck I can't overcome for weeks for all my current work
+[2018-06-25 11:13:24] <silur> VDF, IVC, VRF, Bulletproofs....
+[2018-06-25 11:13:26] <silur> ACs
+[2018-06-25 11:13:41] <silur> I don't have any experience for arithmetization of boolean circuits
+[2018-06-25 11:13:47] <silur> anyone willing to help out on that?
+[2018-06-25 11:14:28] <silur> maybe not a meeting subject, let's go on with the agenda and get back on it later :D
+[2018-06-25 11:14:47] <suraeNoether> well funny thing about that silur
+[2018-06-25 11:15:00] <suraeNoether> boolean circuits are arithmetic circuits already, just not contrariwise
+[2018-06-25 11:15:08] <suraeNoether> which is one of my favorite -wise suffixed words
+[2018-06-25 11:15:34] <silur> well in Gf(2)
+[2018-06-25 11:16:06] <silur> but most protocols need a galois field with a large prime base so I thought bulletproofs won't work ever on Gf(2)
+[2018-06-25 11:16:31] <suraeNoether> ah that's what you meant
+[2018-06-25 11:17:21] <silur> anyway I'm stuck now with QSP-s and a little less-efficient snark stuff to experiment with BPs
+[2018-06-25 11:18:16] <suraeNoether> well, we'll chat about it later
+[2018-06-25 11:18:29] <silur> yea sorry for holdin' the meeting :D
+[2018-06-25 11:19:14] <suraeNoether> does anyone else have any interesting work they want to talk about? My work this past week has been into zero knowledge proofs and extractability requirements and schnorr signatures. primary reference of the week is this one (pdf link https://link.springer.com/content/pdf/10.1007/3-540-48071-4_28.pdf)
+[2018-06-25 11:20:09] <suraeNoether> primarily, I'm thinking it's possible we don't need to worry about the KOSK setting with only minor adjustments to our current scheme, and if that's the case, all the musig key computation and all the commit-and-reveal nonsense just goes away
+[2018-06-25 11:20:18] <suraeNoether> in which case the whole paper will *AGAIN* collapse to something smaller
+[2018-06-25 11:20:42] <suraeNoether> but I need some sanity checks from folks with more knowledge in the field of complexity theory
+[2018-06-25 11:21:48] <suraeNoether> Other than that, I recently finished advising the ZCash Foundation in giving out 250kUSD in grants, I'm working on encrypted memo fields in Monero transactions, and I've been writing up my backlog statements of work. I've already broken 160 hours this month, but I like this job a whole lot so I'm not really taking weekends until I start feeling burnt out.
+[2018-06-25 11:22:29] <silur> usual cryptographer's calendar :D
+[2018-06-25 11:24:22] <suraeNoether> oh, earlier this week I made some commits to my PoissonGraph simulations (see here https://github.com/b-g-goodell/research-lab/tree/simple/source-code/Poisson-Graphs/new) which are *inches* away from successfully producing human-readable transcripts describing cryptocurrency network simulations.
+[2018-06-25 11:24:39] <suraeNoether> The sim suite is for testing difficulty algorithms, consensus algorithms, and dynamical properties of the network. 
+[2018-06-25 11:25:29] <suraeNoether> a friend who just got a job at the university of Exeter (inspiration for Hogwarts) is interested in writing a population ecology-inspired paper demonstrating how ethereum can effectively prey upon bitcoin's hashrate by rewarding bitcoin block-withholding attacks using ethereum smart contracts.
+[2018-06-25 11:25:42] <silur> wow this is awesome
+[2018-06-25 11:25:46] <isthmuscrypto> o_0
+[2018-06-25 11:26:32] <suraeNoether> https://arxiv.org/abs/1805.08832
+[2018-06-25 11:26:39] <suraeNoether> this paper is sort of the foundation of that idea
+[2018-06-25 11:26:43] <suraeNoether> well
+[2018-06-25 11:26:45] <suraeNoether> one part of the foundation
+[2018-06-25 11:27:23] <oneiric_> +1000 on the sim network research suraeNoether!
+[2018-06-25 11:27:50] <silur> oh yea I saw a paper based on this .... "vulnerability"?
+[2018-06-25 11:27:52] <silur> https://eprint.iacr.org/2018/581
+[2018-06-25 11:28:26] <suraeNoether> yes, exactly
+[2018-06-25 11:28:35] <suraeNoether> that's another part of the foundation, but i haven't been able to find the reference recently, thank you
+[2018-06-25 11:28:40] <suraeNoether> i forgot that was mccrory
+[2018-06-25 11:28:44] <suraeNoether> also a nice guy
+[2018-06-25 11:28:58] <suraeNoether> hmm, published june 6
+[2018-06-25 11:29:10] <suraeNoether> i must have seen him talk about this 
+[2018-06-25 11:29:29] <suraeNoether> Allright, next meeting agenda point: who's going to defcon?
+[2018-06-25 11:29:36] <rehrar> I am
+[2018-06-25 11:29:43] <rehrar> and all of you should also
+[2018-06-25 11:29:50] <suraeNoether> yay, i think most of the board of directors of MAGIC will be there, if not all of us
+[2018-06-25 11:30:00] <suraeNoether> we should all go out for a dinner
+[2018-06-25 11:30:07] <silur> but... it's in the... USA :'(
+[2018-06-25 11:30:34] <suraeNoether> ugh, no kidding
+[2018-06-25 11:31:17] <rehrar> 'murica
+[2018-06-25 11:31:19] <suraeNoether> who wants to start a sea-cooled, solar-powered mining farm with me on the pacific coast of Costa Rica?
+[2018-06-25 11:31:34] <oneiric_> yes please
+[2018-06-25 11:31:40] <oneiric_> :)
+[2018-06-25 11:31:49] <suraeNoether> who wants to fund it?
+[2018-06-25 11:32:05] <oneiric_> Elon Musk
+[2018-06-25 11:32:12] <suraeNoether> good ole' elon
+[2018-06-25 11:32:43] ⇐ ArticMine quit (~ArticMine@184.70.226.34): Ping timeout: 268 seconds
+[2018-06-25 11:33:34] <suraeNoether> okay
+[2018-06-25 11:33:37] <silur> i'm still thinking about defcon, also I have another blockchain security conf in vegas in october that I'm invited as a speaker but still couldn't get my head over getting into US
+[2018-06-25 11:33:54] <silur> last year I think 2 ppl got arrested at defcon?
+[2018-06-25 11:34:07] <silur> the wannacry and the election machine guy
+[2018-06-25 11:34:19] <sgp_[m]> ooh what conference?
+[2018-06-25 11:34:26] <rehrar> just surround them so po po can't get to them
+[2018-06-25 11:34:33] <rehrar> civil disobedience of whatever
+[2018-06-25 11:34:48] <suraeNoether> if you are invited as a speaker, the conference should be able to write you a letter requesting a temporary visa for your visit, but i'm not sure if hungary is on the list of countries that need temporary visas even for a conference visit. i would assume so, because we have shut our borders to friggin canada
+[2018-06-25 11:35:18] <silur> it's more complicated than that, I'm stateless
+[2018-06-25 11:35:24] <suraeNoether> !
+[2018-06-25 11:35:27] <suraeNoether> good freaking luck
+[2018-06-25 11:35:43] <silur> https://www.hoshocon.com/
+[2018-06-25 11:36:08] <rehrar> does being stateless suck?
+[2018-06-25 11:36:37] <rehrar> it sucks that you wouldn't be able to get into USA :/
+[2018-06-25 11:36:41] <suraeNoether> being stateless is a desirable state for a hash-based signature scheme.
+[2018-06-25 11:36:42] <rehrar> they should see about holding Defcon in Canada
+[2018-06-25 11:37:24] <sgp_[m]> Ugh Tues-Thurs
+[2018-06-25 11:37:29] <suraeNoether> should we hold the monero conference in another country?
+[2018-06-25 11:37:49] <silur> HCPP last year had a "secret" monero meeting, I met a dev guy there
+[2018-06-25 11:38:18] <silur> he was giving away SO MANY stickers
+[2018-06-25 11:38:40] <silur> so I guess HCPP is ideal :P
+[2018-06-25 11:38:59] <suraeNoether> Okay, so anyway
+[2018-06-25 11:39:02] <suraeNoether> :D
+[2018-06-25 11:39:13] <oneiric_> hold monero conf in Liberland: http://www.liberland.org/
+[2018-06-25 11:39:18] <suraeNoether> Let's call this meeting what it is: done
+[2018-06-25 11:39:24] <suraeNoether> </meeting>
+[2018-06-25 11:39:45] <isthmuscrypto> Quick Q, I wanted to poll MRL as we plan the best uses of Monero Archival Project data. Once we have a few archival nodes on each continent, we can use their data in real time to watch how each transaction or block propagates across the globe.
+[2018-06-25 11:39:49] <isthmuscrypto> Of course, this tells us nothing about the originating source of a given block/txn (e.g. because of VPNs), however we can learn a bit about how data travels in general.
+[2018-06-25 11:39:53] <isthmuscrypto> Thinking about making a public-facing interface with visualizations to watch this historically & in real-time. Probably interactive for anecdotally browsing individual txns/blocks, and with broader statistical analyses (heatmaps, overall trends, etc).
+[2018-06-25 11:40:00] <isthmuscrypto> Would there be interest in this? What features would be useful?
+[2018-06-25 11:40:53] <suraeNoether> i'd be interested in that, and pretty much any statistical information that could be extracted. very helpful for simulation parameterization.
+[2018-06-25 11:41:13] <sgp_[m]> I don't know how useful it would be but it sounds cool
+[2018-06-25 11:41:58] <suraeNoether> isthmuscrypto: i was also thinking it'd be fun to try to use evolutionary algorithms with your generalized adversarial network somehow
+[2018-06-25 11:42:23] <suraeNoether> try to evolve a sophisticated adversary simulator, or something
+[2018-06-25 11:44:22] → apxs94 joined (~textual@host86-169-195-110.range86-169.btcentralplus.com)
+[2018-06-25 11:46:31] <isthmuscrypto> That sounds interesting, could you elaborate? I was thinking about 'arming' the discriminator via some feature engineering (e.g. giving it a feature based on shortest hops to help it track churn, or giving it a hint to look for time from closest coinbase to catch miners, etc). And then I would leave it a lot of room to adapt those by unsupervised learning.
+[2018-06-25 11:46:34] <silur> this sounds awesome
+[2018-06-25 11:46:52] <suraeNoether> so
+[2018-06-25 11:46:59] <suraeNoether> the idea is simple
+[2018-06-25 11:47:13] <suraeNoether> if you look at the parameters that you instantiate a simulation with as an array of values par = [par[0], par[1], ...]
+[2018-06-25 11:47:19] <suraeNoether> you can pretend that's a gene sequence
+[2018-06-25 11:47:28] <suraeNoether> the result of the simulation can be used to evaluate "fitness"
+[2018-06-25 11:48:06] <isthmuscrypto> 🤔
+[2018-06-25 11:48:10] <suraeNoether> in an adversarial approach to breaking consensus algorithms, the gene sequence could be an encoding of some attack method/route/behavior, and the "fitness" would be the % of simulations that see a successful double spend attack
+[2018-06-25 11:48:21] <suraeNoether> so you look at each simulation as an individual
+[2018-06-25 11:48:34] <suraeNoether> with this gene sequence. you simulate your simulator, and you get your output result, which is your fitness
+[2018-06-25 11:48:40] <suraeNoether> you do this for a big population of *randomly chosen* individuals
+[2018-06-25 11:49:07] <suraeNoether> you keep the top performers, and "mate" a bunch of them together using some form of gluing gene sequences together
+[2018-06-25 11:49:19] <suraeNoether> that's generation 1
+[2018-06-25 11:49:20] <silur> and add a little bit of random changes (mutations)
+[2018-06-25 11:49:22] <suraeNoether> yep
+[2018-06-25 11:49:26] <suraeNoether> then you repeat
+[2018-06-25 11:49:42] <suraeNoether> 10^5 or 10^6 times or something like that
+[2018-06-25 11:49:59] <suraeNoether> the result should be a set of gene sequences that are close to locally optimal performances
+[2018-06-25 11:50:09] <suraeNoether> if you tweak their gene sequences a little bit, their optimality plummets
+[2018-06-25 11:50:16] <suraeNoether> some of them do better than others in different situations, etc
+[2018-06-25 11:50:38] <suraeNoether> it's a ... toy mode of finding a set of "good choices" of the gene sequence parameters par = [par[0], par[1], ...]
+[2018-06-25 11:51:29] <silur> my favorite kind of AI, so elegant. also very compatible with cellular automata
+[2018-06-25 11:51:38] <suraeNoether> it'd be *fun* to write a paper on that and just describe how rapidly the simulations come to equilibrium, stuff like that, very flashy stuff that has no real purpose, but gets you fun talks at fun conferences. :D if things go *well* then what you end up with is some badass simulations at the end
+[2018-06-25 11:53:08] <suraeNoether> you can emulate simulated annealing too by having the mutation rates "cool" and drop to zero over the generations so that the improvements become more and more fine-grained
+[2018-06-25 11:53:34] <suraeNoether> the only really practical use cases for these things are to optimize over *huge* search spaces, like... the space of all adversarial behavior
+[2018-06-25 11:54:50] <gingeropolous> kinda along these lines, i've been trying to find a biomimic of these kind of networks, to see if biology has already solved any of the problems, like the scaling problem of a single state consensus network
+[2018-06-25 11:54:56] <gingeropolous> haven't stumbled into anything yet
+[2018-06-25 11:55:29] → serhack joined (1f9df37a@gateway/web/cgi-irc/kiwiirc.com/ip.31.157.243.122)
+[2018-06-25 11:55:51] <isthmuscrypto> Ah yes, let me straighten this all out in my head. I have two projects that I had been considering separately
+[2018-06-25 11:55:55] <isthmuscrypto> #1 uses GANs to evolve new strategies for decoy selection and churn methods to empirically maximize fungibility.
+[2018-06-25 11:55:59] <isthmuscrypto> #2 is the Monero Archival Project, with the archival nodes tracking tracking all received data (both main chain txns/blocks, and orphaned txns/blocks) so we can check for double spend attacks/attempts, perform temporal analyses to detect selfish mining, and look at network topology/latency/propogation
+[2018-06-25 11:56:03] <isthmuscrypto> I think what you were saying for evolution jives very much with #1. But you also mention using this kind of thing for project #2, which is a very exciting juxtaposition I hadn’t considered yet!
+[2018-06-25 11:56:39] <isthmuscrypto> Oh, #1 https://github.com/Mitchellpkt/BlockchainAnalysisGAN
+[2018-06-25 11:56:39] <isthmuscrypto> and #2
+[2018-06-25 11:56:39] <isthmuscrypto> https://github.com/Mitchellpkt/Monero_AltBlock_Research
+[2018-06-25 11:57:31] <isthmuscrypto> @suraeNoether I'm writing down these notes, I like your framing.
+[2018-06-25 11:57:50] <suraeNoether> oh so project #2 would help us find parameters for simulating project #1 "well"
+[2018-06-25 11:58:00] <suraeNoether> dovetail.gif
+[2018-06-25 11:58:13] <isthmuscrypto> 👍
+[2018-06-25 11:58:56] <suraeNoether> gingeropolous: i think EM fields and force fields may be the closest thing that nature has to a consensus: you add up bits of force from every point in all of space-time, and the force felt at that point is the majority vote.
+[2018-06-25 12:00:46] <_Slack> <sean> surae, silur: I just had a weird idea. What would happen if you used genetic algorithms for adversarial testing? Like, use the profiler as the objective function to see what unit tests/UI button clicks cause the worst memory leaks, slowest performance?
+[2018-06-25 12:01:27] <isthmuscrypto> Ooooh, where we consider that the users are "accidental" advesaries depending on how they use the software?
+[2018-06-25 12:01:32] <isthmuscrypto> *adversaries
+[2018-06-25 12:01:44] <silur> _parity2_
+[2018-06-25 12:01:54] <_Slack> <sean> Yeah. I bet that could lead to rather awesome bug finding scripts.
+[2018-06-25 12:02:19] <silur> you can use afl for that :D
+[2018-06-25 12:02:23] <isthmuscrypto> Anybody see the paper about probabilistic debugging? Makes me think of that a little bit...
+[2018-06-25 12:02:26] <silur> it's a genetic algo based fuzzer
+[2018-06-25 12:03:56] <_Slack> <sean> silur: Looks like good stuff. :slightly_smiling_face: https://en.wikipedia.org/wiki/American_fuzzy_lop_(fuzzer)
+[2018-06-25 12:04:50] <silur> there is a fork for that especially made for network testing
+[2018-06-25 12:05:31] <_Slack> <sean> Will check into. Thx.
+[2018-06-25 12:12:37] <silur> gotta go now, see ya later guys

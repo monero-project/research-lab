@@ -1,0 +1,156 @@
+[2018-07-09 10:31:14] <sarang> I always forget people, but it doesn't mean that I don't love you all dearly
+[2018-07-09 10:31:31] * sarang set the topic to Research meeting TODAY at 17:00 UTC (30 minutes from this posting)
+[2018-07-09 10:31:33] — endogenic stretches
+[2018-07-09 10:31:43] — scoobybejesus feels the love
+[2018-07-09 10:44:03] → ArticMine joined (~ArticMine@d154-20-3-240.bchsia.telus.net)
+[2018-07-09 10:48:31] ⇐ ArticMine quit (~ArticMine@d154-20-3-240.bchsia.telus.net): Ping timeout: 265 seconds
+[2018-07-09 10:48:50] — hyc stumbles in
+[2018-07-09 10:50:13] → rehrar joined (~user@c-174-56-54-122.hsd1.nm.comcast.net)
+[2018-07-09 10:52:59] <sarang> welcome welcome
+[2018-07-09 10:59:39] <sarang> Let's begin the meeting!
+[2018-07-09 10:59:42] <sarang> Greetings
+[2018-07-09 10:59:46] <hyc> hola
+[2018-07-09 11:00:02] <oneiric_> hi
+[2018-07-09 11:00:06] * sarang set the topic to Research meeting right now
+[2018-07-09 11:00:30] <knaccc> hey
+[2018-07-09 11:00:46] <sarang> Our pal suraeNoether is unavailable today, so this inmate will be running the asylum today
+[2018-07-09 11:00:49] → ArticMine joined (~ArticMine@184.70.226.34)
+[2018-07-09 11:01:12] <sarang> Let's go around the room and mention any present or ongoing work of interest to the group
+[2018-07-09 11:01:18] <sarang> In the spirit of fairness, I'll go first
+[2018-07-09 11:01:38] <rrol[m]> hi
+[2018-07-09 11:01:46] <sarang> Waiting on reports from our reviewers, all of which are finalizing with a few delays due to last-minute checks
+[2018-07-09 11:01:53] <sarang> (on BPs, that is)
+[2018-07-09 11:02:11] <sarang> There was a delightful twitteresearcher who pointed out lack of small-subgroup checking
+[2018-07-09 11:02:22] <sarang> Reviewers also noted this, but were unable to identify an exploit
+[2018-07-09 11:02:27] <ArticMine> hi
+[2018-07-09 11:02:31] <sarang> Regardless, this is now included in the code
+[2018-07-09 11:02:42] <hyc> reviewers clearly lack imagination of twitterati
+[2018-07-09 11:03:00] <sarang> As always, we welcome external research but appreciate responsible disclosure (the lack of which makes a researcher ineligible for hackerone moneyz)
+[2018-07-09 11:03:38] <sarang> Relating to the audit, there was some work on other aspects of the BP code, like generator specifications, fixes to multiexp, etc
+[2018-07-09 11:03:51] → vp11 joined (Elite21755@gateway/shell/elitebnc/x-ihwtfeshxkmrxrpw)
+[2018-07-09 11:04:01] <sarang> I posted some code and other materials to my research-lab repo, including notes from my summer course
+[2018-07-09 11:04:22] <sarang> I'll be giving a talk in Portland on fungible digital assets, and another at defcon
+[2018-07-09 11:04:56] <sarang> I got a recent email from someone with an idea for including a transaction-specific subaddress within transactions, which could be used for (among other things) refunds
+[2018-07-09 11:05:24] <sarang> or returns for misdirected funds to exchanges
+[2018-07-09 11:05:46] <sarang> Finally, I've been working through additional sublinear ring sig material and some math on non-power-of-2 bulletproofs (a future thing)
+[2018-07-09 11:06:09] ⇐ thrmo quit (~thrmo@unaffiliated/thrmo): Quit: Waiting for .007
+[2018-07-09 11:06:16] <hyc> why NPO2?
+[2018-07-09 11:06:20] <sgp_[m]> Hello everyone. Sorry I'm late
+[2018-07-09 11:06:24] <knaccc> does that subaddress email come with the condition of restricted circulation?
+[2018-07-09 11:07:15] <sarang> hyc: NPO2 gives better verification efficiency, which is relevant for any later work involving larger circuits
+[2018-07-09 11:07:35] <hyc> ah cool
+[2018-07-09 11:07:37] <sarang> knaccc: I can share the info if desired
+[2018-07-09 11:07:51] <sarang> just need to check if the researcher wants their name released
+[2018-07-09 11:08:02] <knaccc> yes a fedorapaste or something, with name redacted, would be interesting for discussion
+[2018-07-09 11:08:21] <sarang> Yeah, he's been emailing me just before the meeting. When I hear back I'll make a paste of the info
+[2018-07-09 11:09:30] <sarang> Anyway, that's my work this week
+[2018-07-09 11:09:37] <sarang> Move on to others, or questions on my stuff?
+[2018-07-09 11:10:13] <hyc> sounds good
+[2018-07-09 11:10:17] <sarang> I know suraeNoether has been working on nonprofit stuff and also recently on some churn analysis. We really need information on output depth, which a few folks said they were interested in coding
+[2018-07-09 11:11:10] → cryptochange joined (55cb0d3a@gateway/web/freenode/ip.85.203.13.58)
+[2018-07-09 11:11:10] <moneromooo> What is output depth ?
+[2018-07-09 11:11:14] <sarang> Oh, link to my repo with that material: https://github.com/SarangNoether/research-lab
+[2018-07-09 11:11:48] <sarang> The distribution of coinbase outputs tracked back through the spend tree of a transaction
+[2018-07-09 11:12:09] <sarang> It's useful as parameters for churn analysis
+[2018-07-09 11:12:28] <moneromooo> Is this something that's been pending for a while ?
+[2018-07-09 11:12:33] <moneromooo> Kinda rings a bell...
+[2018-07-09 11:12:46] <sarang> yup
+[2018-07-09 11:13:15] <moneromooo> If it's a few folks that siad they would, then flaked out, I can do it. If it's a few folk that recently said so and are doing it, I won't.
+[2018-07-09 11:13:31] <sarang> Not sure if flaked, or busy, or what
+[2018-07-09 11:13:42] <sarang> I have little experience in lmdb, or I'd jump on it
+[2018-07-09 11:14:08] <sarang> clearly moneromooo sits around all day doing... very little =p
+[2018-07-09 11:14:18] <moneromooo> Well, remind me whenever you feel like you waited enough :)
+[2018-07-09 11:14:23] <sarang> lol ok
+[2018-07-09 11:14:29] <sarang> I can give more details after meeting
+[2018-07-09 11:14:30] <sarang> ty
+[2018-07-09 11:14:37] <hyc> if you want to poke and prod at the blockchain before writing actual code, I suggest the CLI in py-lmdb
+[2018-07-09 11:14:51] <sarang> hyc: I thought our implementation was non compatible?
+[2018-07-09 11:15:14] <hyc> eh? you point the python module at out liblmdb, no problem
+[2018-07-09 11:15:18] <hyc> at our
+[2018-07-09 11:15:39] <sarang> Ah ok, I had tried a while back to no avail, and had read that we were using too new a version or something
+[2018-07-09 11:15:53] <hyc> py-lmdb itself works great
+[2018-07-09 11:16:01] <hyc> with any recent version of liblmdb
+[2018-07-09 11:16:17] <sarang> great
+[2018-07-09 11:16:23] <sarang> I'll revisit it then
+[2018-07-09 11:16:37] <sarang> Who else wishes to share anything of group interest?
+[2018-07-09 11:17:06] <hyc> on the subject of LMDB, I've been doing a bunch of benchmarking on $secret $systems lately
+[2018-07-09 11:17:28] <sarang> orly
+[2018-07-09 11:17:32] <hyc> point of interest - common filesystems today are all journaling filesystems - they log FS ops before they perform them
+[2018-07-09 11:18:07] <hyc> to give them crash resilience. With LMDB such logging is superfluous. turns out you can creatae Linux ext4 filesystems without journals
+[2018-07-09 11:18:12] <hyc> which gives a nice performance boost
+[2018-07-09 11:18:33] <hyc> also, I've got a patch that lets LMDB use a raw device directly, without any filesystem at all
+[2018-07-09 11:19:13] <hyc> on a bulk load test (loading records sequentially, as fast as possible) this is 2x faster than ext4 with no journal
+[2018-07-09 11:19:23] <sarang> oh wow
+[2018-07-09 11:19:26] <hyc> it turns out you spend a lot of time just growing the file, on a filesystem
+[2018-07-09 11:19:57] <hyc> that's what I can share at the moment. actual results/numbers are under NDA
+[2018-07-09 11:20:08] <ArticMine> So LMDB on a dedicated GNU / Linux partition
+[2018-07-09 11:20:14] <hyc> yes
+[2018-07-09 11:20:27] <spaced0ut_> very cool
+[2018-07-09 11:20:39] <knaccc> is there a way to ask an commonly used filesystems to just allow raw access to some regions?
+[2018-07-09 11:20:42] <ArticMine> With way faster sync for Monero
+[2018-07-09 11:20:43] <knaccc> any*
+[2018-07-09 11:20:45] <sarang> Throwback time... here's the email regarding subaddys: https://paste.fedoraproject.org/paste/KTgF84V-pHPL-dO8V8mAjw
+[2018-07-09 11:21:04] <hyc> knaccc: unfortunately not
+[2018-07-09 11:21:09] <knaccc> doh
+[2018-07-09 11:21:18] <hyc> you create a filesystem, it owns all that space
+[2018-07-09 11:21:19] <sarang> Researcher asked to be identified as "that Russian dude"
+[2018-07-09 11:21:27] <hyc> won't give it to you :P
+[2018-07-09 11:21:29] <knaccc> haha
+[2018-07-09 11:21:31] <moneromooo> BTW, iDunk reported much faster sync on HDD with some particular options.
+[2018-07-09 11:21:35] <scoobybejesus> i think it was sneurlax who was writing up spend tree code in python
+[2018-07-09 11:21:47] <moneromooo> Just needs... a lot of data points. To fix a new default.
+[2018-07-09 11:21:55] <rrol[m]> re: churn, i have been planning to put together a 'best practices' infographic that collects some of surae's findings, as well as other usage guidelines, but work keeps eating my headspace. if ppl want to help maybe reach out and we can coordinate together
+[2018-07-09 11:21:57] <sarang> scoobybejesus: righto, didn't see any final product, unless there is and I don't know about it
+[2018-07-09 11:22:10] <sarang> rrol[m]: that'll be great; just waiting on some final numbers
+[2018-07-09 11:22:26] <oneiric_> is there a way to setup a partition without root? then on make install, partition sets up automatically?
+[2018-07-09 11:22:44] <hyc> oneiric_: I think it always requires root access
+[2018-07-09 11:23:20] <sneurlax> soon™ -- do you want the mining pool traceability analysis first or the generalized spend tree code first?
+[2018-07-09 11:23:29] <oneiric_> damn, very cool work hyc
+[2018-07-09 11:23:42] <moneromooo> Kinda loses the point of a fs, which is to allow files to live in parallel. So you have to preallocate loads of space to your raw partition.
+[2018-07-09 11:23:50] <hyc> thanks. I guess mostly theoretical for now, impractical for most people to deploy
+[2018-07-09 11:23:51] <sgp_[m]> rrol sarang: I also want to see what's known about churning for my Defcon talk
+[2018-07-09 11:23:59] <sarang> sneurlax: getting the distribution of output depths (back to coinbase) for a given txn sample will be the most relevant right now
+[2018-07-09 11:24:06] <sarang> sgp_[m]: righto
+[2018-07-09 11:24:39] <hyc> oh, and like sarang, I'll be giving a talk at defcon. unlike sarang's.
+[2018-07-09 11:24:41] <ArticMine> I am not so sure this is impractical to deploy
+[2018-07-09 11:25:44] <spaced0ut_> i think thats really exciting you're giving a talk about fungibility at defcon. from what i've seen, people change their mind on that topic fairly easily once presented with some evidence
+[2018-07-09 11:26:14] <spaced0ut_> "people" == people that think btc is fungible
+[2018-07-09 11:26:40] <sarang> Yeah, I think it'll be really relevant at the Portland event too, which is attended by a very nontechnical audience
+[2018-07-09 11:26:54] <sarang> I'm shifting my language from private to fungible more and more
+[2018-07-09 11:27:18] <hyc> ^good
+[2018-07-09 11:27:21] <oneiric_> less overtones/baggage?
+[2018-07-09 11:27:24] <sarang> Telling people how much it would suck if your salary wasn't exchangeable because of some ransomware crap you had nothing to do with
+[2018-07-09 11:27:39] <sarang> oneiric_: easier to explain why people should care
+[2018-07-09 11:27:58] <ArticMine> My favorite paying for a meal with two $20 bills
+[2018-07-09 11:28:06] <ArticMine> In the US
+[2018-07-09 11:28:31] <knaccc> fungibility requires a weaker form of untraceability than privacy though
+[2018-07-09 11:28:44] <sarang> sure
+[2018-07-09 11:28:49] <spaced0ut_> knaccc, in cryptocurrency though?
+[2018-07-09 11:28:50] <sarang> and I still talk about privacy too
+[2018-07-09 11:28:59] <knaccc> so as long as it's not an admission of defeat :)
+[2018-07-09 11:29:33] <hyc> knaccc: weaker, how so?
+[2018-07-09 11:29:56] <sarang> I assume knaccc means breaking links between outputs
+[2018-07-09 11:30:01] <sarang> not necessarily identities of use
+[2018-07-09 11:30:06] <hyc> I use physical coinsas my example, since they have no serial numbers (as opposed to paper bills)
+[2018-07-09 11:30:07] <knaccc> privacy can be exposed after the fact
+[2018-07-09 11:30:12] <spaced0ut_> weaker is fine for something like cash imo. there are serial numbers so it may only be 99.9999% fungible. with cryptocurrency its either private or extremely public
+[2018-07-09 11:30:14] <knaccc> fungibility counts in the moment more
+[2018-07-09 11:30:36] <spaced0ut_> very good point
+[2018-07-09 11:30:59] <ArticMine> In many countries fiat is fungible by law
+[2018-07-09 11:31:10] <sarang> A fun topic, but to keep us on track...
+[2018-07-09 11:31:24] <sarang> Are there other research topics on anyone's plate?
+[2018-07-09 11:31:30] <sarang> (I'd love to continue talking fungibility afterward)
+[2018-07-09 11:31:37] <unknownids> ArticMine, as in no serial numbers on bills?
+[2018-07-09 11:31:41] <knaccc> I was interested to know if anyone thought that a 38% reduction in wallet output scanning time was significant enough to justify altering the one-time output public key construction. UkoeHB and vtnerd had some interesting comments which I've incorporated into this: https://paste.fedoraproject.org/paste/h069cKbPYUC3ixgVJIPVYw/raw  This is very low priority of course
+[2018-07-09 11:33:15] ⇐ cryptochange quit (55cb0d3a@gateway/web/freenode/ip.85.203.13.58): Ping timeout: 252 seconds
+[2018-07-09 11:34:32] <sarang> I need to think more about changes to any security properties by removing the hash and replacing with a sum in this way
+[2018-07-09 11:35:07] <knaccc> yes, I'm sure it would need a thorough security analysis. That's why I was wondering specifically if people thought 38% was enough to bother looking into it
+[2018-07-09 11:39:30] <moneromooo> To decide whether it's worth it, you'd need to give actual speedup, not speedup for a particular step.
+[2018-07-09 11:39:38] <smooth> /win/win1
+[2018-07-09 11:40:16] <knaccc> moneromooo true, I'm sure there are other factors that I'm not taking into account
+[2018-07-09 11:40:46] ⇐ spaced0ut_ quit (~spaced0ut@206.193.225.133.nauticom.net): Quit: Leaving
+[2018-07-09 11:41:07] → spaced0ut joined (~spaced0ut@unaffiliated/spaced0ut)
+[2018-07-09 11:45:42] <sarang> Seems the topics are winding down a bit, but interesting on all counts
+[2018-07-09 11:48:21] <sarang> Well, thanks to all for attending today, and let's continue the discussions now that the meeting is formally concluded!
+[2018-07-09 11:48:43] <knaccc> ^^
+[2018-07-09 11:48:53] <oneiric_> thanks everybody :)

@@ -1,0 +1,141 @@
+[2018-06-18 10:58:07] <suraeNoether> fluffypony knaccc luigi1111 anonimal binaryFate chachasmooth dEBRUYNE endogenic erciccione_[m] gingeropolous hyc iDunk isthmuscrypto john_alan JollyMort[m] jwinterm kenshi84 kerber m2049r[m] moneromooo MoroccanMalinois needmoney90 nioc othe philkode pigeons rehrar rrol[m] sarang sgp_[m] stoffu unknownids vtnerd waxwing, research meeting in three minutes~
+[2018-06-18 10:58:30] → ArticMine joined (~ArticMine@207.194.38.218)
+[2018-06-18 10:59:21] <suraeNoether> and of course UkoeHB who is already here and aware :D
+[2018-06-18 11:00:03] <silur> it's time \o/
+[2018-06-18 11:00:10] <ArticMine> Hi
+[2018-06-18 11:02:03] <rehrar> hi
+[2018-06-18 11:02:07] <suraeNoether> 1. Greetings! 2. Work from this past week. I was hoping to chat about BP fees and where they are currently at, i wanted to update folks on the multisignature paper and literature review, I wanted to share a few links to papers I'm reading... and open up the floor to anyone else doing anything fun and math and crypto related. 3. Plans for this upcoming week and defcon?
+[2018-06-18 11:02:35] <suraeNoether> So, hi everyone :D
+[2018-06-18 11:02:49] <suraeNoether> does anyone want to add anything to our little makeshift agenda before we get goin?
+[2018-06-18 11:03:48] <suraeNoether> okay, cool
+[2018-06-18 11:04:46] <suraeNoether> as far as bulletproofs go, apparently Quarkslab will be done by the end of the week and Benedikt has begun work (I think). Quarkslab has apparently found a few small optimizations, but no bugs so far (but that could be outdated info)
+[2018-06-18 11:05:10] <suraeNoether> ArticMine: do you want to bring the community up to speed on where we are currently sitting in terms of bulletproofs fees? you've led the charge for a lot of that discussion
+[2018-06-18 11:06:26] <rehrar> yay ArticMine
+[2018-06-18 11:06:51] <ArticMine> I have the basic concept down
+[2018-06-18 11:07:20] <ArticMine> Replacement of the blcoksize with block weight
+[2018-06-18 11:08:25] <ArticMine> That is linear with an increase in verification time
+[2018-06-18 11:10:00] <suraeNoether> i believe the last time we talked about this, taking space and time together into account led to a formula that was like n + log(n) in number of outputs.  by picking fees based on n only, this means we are slightly under-compensating miners for large bulletproofs and slightly overcompensating them for smaller ones, leading to a weak batching incentivization without distorting our ideas of cost paid by the
+[2018-06-18 11:10:00] <suraeNoether> miner in both space and time. since the space paid is logarithmic, its impact is rather small, even for large bulletproofs.
+[2018-06-18 11:10:02] <ArticMine> This will replace the blocksize in the determination of the penalty. Fees then follow from the penalty based weight calculation using the current formula
+[2018-06-18 11:10:37] <suraeNoether> *nod* are we not modifying the current formula to make overall fees lower?
+[2018-06-18 11:11:43] ⇐ thrmo_ quit (~thrmo@unaffiliated/thrmo): Quit: Waiting for .007
+[2018-06-18 11:11:45] <ArticMine> We are not modifying the formula  however the weight will be a lot lower than our current blocksize
+[2018-06-18 11:12:04] <ArticMine> So we still have to change the minimum fee
+[2018-06-18 11:12:16] ⇐ rehrar quit (~user@174-28-176-129.albq.qwest.net): Quit: Leaving.
+[2018-06-18 11:12:43] → rehrar joined (~user@174-28-176-129.albq.qwest.net)
+[2018-06-18 11:12:44] <ArticMine> For a 2 output transaction the block weight will equal the block size
+[2018-06-18 11:13:23] <suraeNoether> ah i see
+[2018-06-18 11:14:12] <suraeNoether> we should get a formal description of our proposed bulletproof fee structure out to the community so they can start discussing it soon
+[2018-06-18 11:14:52] <suraeNoether> so I'll try to put 2-3 hours into that this week
+[2018-06-18 11:15:07] <ArticMine> What really matters is that as the number of outputs the weight scales linearly with number of outputs
+[2018-06-18 11:15:48] <ArticMine> I expect to have a formal description out by the middle to the end of next week
+[2018-06-18 11:16:24] <suraeNoether> cool, let us know if you need more hands
+[2018-06-18 11:16:25] ⇐ antanst quit (~antanst@adsl-133.37.6.77.tellas.gr): Read error: Connection reset by peer
+[2018-06-18 11:16:31] <ArticMine> After the weekend I expect to have 2-3 days I can dedicate to this
+[2018-06-18 11:16:43] → antanst joined (~antanst@adsl-133.37.6.77.tellas.gr)
+[2018-06-18 11:17:06] <ArticMine> There are a lot of details
+[2018-06-18 11:17:30] <suraeNoether> we have some folks who are interested in contributing to MRL but don't necessarily have a project, so there are lots of eyes we can put on it as well
+[2018-06-18 11:17:51] <suraeNoether> Allright, moving on
+[2018-06-18 11:19:31] <suraeNoether> I've been discussing our multisig scheme with UkoeHB and a few other folks. I have contacted one of the musig authors about an issue UkoeHB brought up. It's... causing me sufficient pause to reach out. Essentially, my first (and second and third) reading of the scheme seems to allow for a replay attack
+[2018-06-18 11:20:01] <silur> our multisig scheme ?= RTRS multisig?
+[2018-06-18 11:20:35] ⇐ TheoStorm quit (~dnaleor@host-lzquwqj.cbn1.zeelandnet.nl): Ping timeout: 240 seconds
+[2018-06-18 11:21:27] <moneromooo> no, threshold sigs.
+[2018-06-18 11:21:30] <suraeNoether> the musig scheme + our scheme. it *seems* to allow an honest adversary to be cloned or rewound in a way that may be dangerous. of course, in the musig paper there is a whole section on derandomization and not re-using signature data... this is a *known issue* but I'm not sure if their security model is sufficient. 
+[2018-06-18 11:21:38] <suraeNoether> our threshold scheme, not RTRS
+[2018-06-18 11:22:35] → TheoStorm joined (~dnaleor@host-lzquwqj.cbn1.zeelandnet.nl)
+[2018-06-18 11:22:38] <suraeNoether> so, due to this, i've gone back to some older papers on multisignatures and simulation theory to look into it
+[2018-06-18 11:23:21] <suraeNoether> right now i'm reading a primer on simulation theory by Lindell, who is a good author and has written a rather comprehensive document on the matter  (pdf link https://eprint.iacr.org/2016/046.pdf)
+[2018-06-18 11:23:54] <suraeNoether> and i've gone back to some of the original certificate authority and/or KOSK assumption papers because their security models are highly relevant
+[2018-06-18 11:23:54] <suraeNoether> https://hovav.net/ucsd/dist/agg-sig.pdf
+[2018-06-18 11:24:16] <suraeNoether> during all this, by the way, I'm taking copious notes on multisignature schemes and old papers for a future literature review
+[2018-06-18 11:24:35] <dEBRUYNE> ArticMine: Great to hear (about the fee stuff). I, however, hope we're not making it unnecessarily complex
+[2018-06-18 11:25:37] <ArticMine> The concepts are very simple and elegant if we work at the protocol level and change the penalty from block size to block weight
+[2018-06-18 11:26:10] <suraeNoether> dEBRUYNE: eh, essentially we are merely changing the fee structure to count the outputs in a block instead of absolute size in bits, or bytes, or kb, or what have you, that's the core idea of the change
+[2018-06-18 11:28:14] <ArticMine> Strictly speaking we are changing the penalty formula to take into account ^
+[2018-06-18 11:28:41] <suraeNoether> other than that (deep diving into the simulation theory and the dark corners of the multisig world), I wanted to see what other folks are working on (silur?), and maybe chat about defcon first, a monero conference second, and a MAGIC conference in privacy technologies third. things seem so quiet around here without sarang
+[2018-06-18 11:29:21] <ArticMine> The fees then follow with essentially no change other than the minimum fee to account fro the much lower overall weight
+[2018-06-18 11:30:25] <rehrar> sarang was the heart and soul of MRL
+[2018-06-18 11:30:30] <ArticMine> A very important distinction is that the penalty formula is consensus while the fees are not
+[2018-06-18 11:30:32] <rehrar> read: was
+[2018-06-18 11:30:59] <ArticMine> was?
+[2018-06-18 11:31:05] <silur> I'm continuing my RTRS implementation
+[2018-06-18 11:31:06] <rehrar> was talking to suraeNoether, ArticMine
+[2018-06-18 11:31:16] <silur> HCPP invited me to make a demo there
+[2018-06-18 11:31:37] <suraeNoether> silur are you implementing that on github? have a link?
+[2018-06-18 11:31:48] <silur> RTRS still needs heavy testing, i kinda tend to do 'if it compiles it's ready'
+[2018-06-18 11:31:51] <silur> sure
+[2018-06-18 11:31:54] <silur> https://github.com/Silur/libstringct
+[2018-06-18 11:33:12] <suraeNoether> tim ruffing contacted me, their scheme has been modified and they are coming out with a newer version of it. as a sample, their signatures are about 1.12 kb for a ring size of 64
+[2018-06-18 11:33:19] <suraeNoether> thanks silur 
+[2018-06-18 11:33:38] <rehrar> how long is verification for that ring size?
+[2018-06-18 11:33:49] <silur> great to hear, although the current docs are already outdated
+[2018-06-18 11:33:54] <silur> would be nice to have that paper out :D
+[2018-06-18 11:34:28] <silur> are there any sketches on the mods?
+[2018-06-18 11:35:21] <suraeNoether> he has been loose with details silur, but he contacted me about it tuesday last week and he said he'd get me the paper this week. maybe, maybe not. :P it's how research goes, even at universities like saarlang
+[2018-06-18 11:35:34] <suraeNoether> rehrar: no idea, i don't wnat to speculate
+[2018-06-18 11:36:12] <suraeNoether> rehrar but my knee jerk instinct is "about as much time as an LSAG with 128 ring members"
+[2018-06-18 11:36:23] <ArticMine> Also are there any non linear with size verification times
+[2018-06-18 11:36:24] <suraeNoether> or "no less than" instead of "about as much time as"
+[2018-06-18 11:37:24] <suraeNoether> ArticMine: not with a usual ring signature model. technically you could count zk-snarks as sublinear verification time ring signatures that require a trusted set-up, but htere is nothing in the chasm/gulf between our untrusted set-up hash-based ring signatures and the zk-snark world
+[2018-06-18 11:38:59] <suraeNoether> everything with RTRS has to take around double the amount of time for each group operation, since keys are double in length... and our hash-based set-up is pretty much as close to an information-theoretic minimum allowable in terms of "number of group operations" in order to compute a ring signature, we are very optimal in that regard, very few wasted computations... so "best case" RTRS will be double the
+[2018-06-18 11:38:59] <suraeNoether> verification time of an LSAG
+[2018-06-18 11:39:40] → flipper joined (flipper@gateway/vpn/privateinternetaccess/flipper)
+[2018-06-18 11:39:43] <suraeNoether> so, uh... what's up with defcon
+[2018-06-18 11:40:33] <ArticMine> The bottom line we do not have to deal with a situation similar with bulletproof verification times
+[2018-06-18 11:42:14] <suraeNoether> who all is going to be at defcon?
+[2018-06-18 11:42:22] <ArticMine> I am
+[2018-06-18 11:42:36] <ArticMine> I am alos giving a talk related to the fee question
+[2018-06-18 11:42:39] <ArticMine> also
+[2018-06-18 11:43:05] <suraeNoether> nice
+[2018-06-18 11:43:15] <suraeNoether> i heard something about a booth
+[2018-06-18 11:43:52] <suraeNoether> i believe that sarang and I both declined actually having an MRL booth, but I'm happy to sit around at the monero booth for awhile, presuming... we have a booth (and now the word booth is meaningless, it's been said too much.  like the word kiosk)
+[2018-06-18 11:44:33] <rehrar> hmmm....then there was a misunderstanding
+[2018-06-18 11:44:50] <rehrar> I thought it was "we'd man the booth if there was one, but not for the whole time cuz we want to enjoy the conference"
+[2018-06-18 11:45:14] <rehrar> I'll communicate and change that right away if I was incorrect.
+[2018-06-18 11:45:53] <suraeNoether> oh, no, i think i'm mis-remembering
+[2018-06-18 11:45:56] <suraeNoether> we can totally do a booth
+[2018-06-18 11:46:03] <suraeNoether> i need to make a t-shirt or something
+[2018-06-18 11:46:09] <rehrar> it'd probably be split with Kovri temporally
+[2018-06-18 11:46:17] <suraeNoether> turf warrrrr
+[2018-06-18 11:47:31] <rehrar> I don't think MRL needs to prepare anything special unless you guys want to
+[2018-06-18 11:47:42] <rehrar> just sitting at the table and fielding questions would be sufficient
+[2018-06-18 11:48:15] <suraeNoether> but i want a t shirt ;(
+[2018-06-18 11:48:20] <suraeNoether> wait that's winking
+[2018-06-18 11:48:30] <suraeNoether> i meant :*(
+[2018-06-18 11:48:37] <suraeNoether> semicolons are so hard to use correctly
+[2018-06-18 11:49:06] <rehrar> we'll get you a tshirt, but it may not be what you expect
+[2018-06-18 11:49:09] <rehrar> ;P
+[2018-06-18 11:49:20] <rehrar> anyways, nothing else regarding defcon as far as I know
+[2018-06-18 11:49:53] <suraeNoether> okay, so, in terms of other conferences, we originally had this idea to have the first Monero conference in Denver next spring, perhaps funded or hosted by the MAGIC non-profit (me, rehrar, sgp, and sarang and some non-monero-related people)
+[2018-06-18 11:50:21] <suraeNoether> but we are trying to keep MAGIC more or less separate from Monero, (we are looking for some non-monero members to be on the board) becuase it's an educational organization, not a project-oriented one
+[2018-06-18 11:50:56] <suraeNoether> so we are going to host the MAGIC conference as a general privacy enhancing technology conference instead
+[2018-06-18 11:51:06] <suraeNoether> and all funding for that will be through MAGIC, we won't be starting an FFS for that
+[2018-06-18 11:51:08] <suraeNoether> totally independent
+[2018-06-18 11:51:10] <suraeNoether> BUT
+[2018-06-18 11:51:17] <suraeNoether> the monero community deserves a freaking technical conference!
+[2018-06-18 11:51:36] ⇐ TheoStorm quit (~dnaleor@host-lzquwqj.cbn1.zeelandnet.nl): Ping timeout: 260 seconds
+[2018-06-18 11:52:59] → TheoStorm joined (~dnaleor@host-lzquwqj.cbn1.zeelandnet.nl)
+[2018-06-18 11:53:00] <suraeNoether> so i wanted to get the community's thoughts on starting a Monero conference-specific FFS. If I took charge of this, I would hire an event organizer to take care of a lot of it and spend time trying to get speakers for the conference.
+[2018-06-18 11:53:16] <silur> FFS?
+[2018-06-18 11:53:23] <suraeNoether> forum funding system
+[2018-06-18 11:53:26] <silur> oooh
+[2018-06-18 11:53:26] <endogenic> cool, go for it
+[2018-06-18 11:53:29] <silur> great
+[2018-06-18 11:53:53] <silur> really sorry I gotta run
+[2018-06-18 11:54:12] <silur> best to y'all
+[2018-06-18 11:54:17] <suraeNoether> ta silur
+[2018-06-18 11:54:19] ⇐ silur quit (~silur@109-74-52-186.static.acetelecom.hu): Quit: leaving
+[2018-06-18 11:54:52] <suraeNoether> okay, the way i figure it, the monero conference is a good use of MRL resources and time, so I'll post it under ideas with the current estimated price tag and we'll see what happens from there. i think anything over-funded should go to the general fund
+[2018-06-18 11:55:40] <suraeNoether> well, we're rounding up on the hour here
+[2018-06-18 11:56:07] <suraeNoether> does anyone have any questions?
+[2018-06-18 11:56:19] <suraeNoether> maybe about the proceedings at MRL, what's going on recently and what's going to be going on over the next few weeks, any other general questions?
+[2018-06-18 11:56:38] <suraeNoether> (my favorite color is blue and i'm probably a taurus and i like long walks on the beach)
+[2018-06-18 11:57:11] <rehrar> hmmm...
+[2018-06-18 11:57:21] <rehrar> I think I'm a gemini, would we work well together?
+[2018-06-18 11:57:26] <rehrar> Or am I a something else?
+[2018-06-18 11:57:31] <dEBRUYNE> ArticMine: Sounds interesting. Looking forward to the details of your fee proposal
+[2018-06-18 11:57:31] <nioc_> a question earlier from the lounge >>  <lenovuh> some while ago, was there a discussion about letting new nodes bootstrap the blockchain quickly, that required new crypto techniques, afaik? i might have this completely wrong, but think i read about it in the research-lab channel
+[2018-06-18 12:01:05] <m2049r[m]> if the meeting is over i would like to get back to the topic of exposing the index of a subaddress - from what i understood there are mixed statements about this. it may be a problem and it may not be. ??!?
+[2018-06-18 12:01:10] <suraeNoether> nioc_: not sure about htat
+[2018-06-18 12:01:16] <suraeNoether> yeah, we can call this meeting over :D
+[2018-06-18 12:01:20] <suraeNoether> thanks everyone </meeting>
