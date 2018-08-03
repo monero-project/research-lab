@@ -21,6 +21,13 @@ def scalar_to_bits(s,N):
 def exp_scalar(s,l):
     return ScalarVector([s**i for i in range(l)])
 
+# sum the powers of a scalar
+def sum_scalar(s,l):
+    r = Scalar(0)
+    for i in range(l):
+        r += s**i
+    return r
+
 # perform an inner-product proof round
 # G,H: PointVector
 # U: Point
@@ -165,14 +172,14 @@ def verify(proofs,N):
     global cache
 
     # determine the length of the longest proof
-    MN = 2**max([len(proof[7]) for proof in proofs])
+    max_MN = 2**max([len(proof[7]) for proof in proofs])
 
     # curve points
     Z = dumb25519.Z
     G = dumb25519.G
     H = dumb25519.H
-    Gi = PointVector([hash_to_point('pybullet Gi ' + str(i)) for i in range(MN)])
-    Hi = PointVector([hash_to_point('pybullet Hi ' + str(i)) for i in range(MN)])
+    Gi = PointVector([hash_to_point('pybullet Gi ' + str(i)) for i in range(max_MN)])
+    Hi = PointVector([hash_to_point('pybullet Hi ' + str(i)) for i in range(max_MN)])
 
     # verify that all points are in the correct subgroup
     for item in dumb25519.flatten(proofs):
@@ -191,8 +198,8 @@ def verify(proofs,N):
     z1 = Scalar(0)
     Z2 = Z
     z3 = Scalar(0)
-    z4 = [Scalar(0)]*MN
-    z5 = [Scalar(0)]*MN
+    z4 = [Scalar(0)]*max_MN
+    z5 = [Scalar(0)]*max_MN
 
     # run through each proof
     for proof in proofs:
@@ -222,4 +229,68 @@ def verify(proofs,N):
         x_ip = cache
 
         y0 += taux*w
+        
+        k = Scalar(0)
+        k -= z**2*sum_scalar(y,M*N)
+        for j in range(1,M+1):
+            k -= z**(j+2)*sum_scalar(Scalar(2),M*N)
 
+        y1 += (t - (k + z*sum_scalar(y,M*N)))*w
+
+        Temp = Z
+        for j in range(M):
+            Temp += V[j]*(z**(j+2))
+        Y2 += Temp*w
+        Y3 += T1*x*w
+        Y4 += T2*(x**2)*w
+
+        Z0 += (A+S*x)*w
+
+        # inner product
+        W = []
+        for i in range(len(L)):
+            mash(L)
+            mash(R)
+            W.append(cache)
+
+        for i in range(M*N):
+            index = i
+            g = a
+            h = b*(y.invert())**i
+            for j in range(len(L)-1,-1,-1):
+                J = len(W)-j-1
+                base_power = 2**j
+                if index/base_power == 0:
+                    g *= W[J].invert()
+                    h *= W[J]
+                else:
+                    g *= W[J]
+                    h *= W[J].invert()
+                    index -= base_power
+
+            g += z
+            h -= (z*(y**i) + z**(2+i/N)*Scalar(2)**(i%N))*(y.invert())**i
+
+            z4[i] += g*w
+            z5[i] += h*w
+
+        z1 += mu*w
+
+        Temp = Z
+        for i in range(len(L)):
+            Temp += L[i]*(W[i]**2) + R[i]*(W[i].invert())**2
+        Z2 += Temp*w
+        z3 += (t-a*b)*x_ip*w
+    
+    # now check all proofs together
+    if not G*y0 + H*y1 - Y2 - Y3 - Y4 == Z:
+        return False
+
+    Temp = Z0 - G*z1 + Z2 + H*z3
+    for i in range(max_MN):
+        Temp -= Gi[i]*z4[i]
+        Temp -= Hi[i]*z5[i]
+    if not Temp == Z:
+        return False
+
+    return True

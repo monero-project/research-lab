@@ -167,8 +167,14 @@ class TestBullet(unittest.TestCase):
         M = 1
         data = [[Scalar(random.randint(0,2**N-1)),dumb25519.random_scalar()] for j in range(M)]
         proof = pybullet.prove(data,N)
-        pybullet.verify([proof],N)
+        self.assertTrue(pybullet.verify([proof],N))
 
-#for test in [TestVectorOps,TestBulletOps,TestBullet]:
-for test in [TestBullet]:
+    def test_prove_verify_m_2_n_4(self):
+        N = 4
+        M = 2
+        data = [[Scalar(random.randint(0,2**N-1)),dumb25519.random_scalar()] for j in range(M)]
+        proof = pybullet.prove(data,N)
+        self.assertTrue(pybullet.verify([proof],N))
+
+for test in [TestVectorOps,TestBulletOps,TestBullet]:
     unittest.TextTestRunner(verbosity=2,failfast=True).run(unittest.TestLoader().loadTestsFromTestCase(test))
