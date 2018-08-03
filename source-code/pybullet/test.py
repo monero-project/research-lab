@@ -162,11 +162,13 @@ class TestBulletOps(unittest.TestCase):
             self.assertEqual(result,scalar)
 
 class TestBullet(unittest.TestCase):
-    def test_prove_m_1(self):
-        N = 8
+    def test_prove_verify_m_1_n_4(self):
+        N = 4
         M = 1
         data = [[Scalar(random.randint(0,2**N-1)),dumb25519.random_scalar()] for j in range(M)]
-        pybullet.prove(data,N)
+        proof = pybullet.prove(data,N)
+        pybullet.verify([proof],N)
 
-for test in [TestVectorOps,TestBulletOps,TestBullet]:
+#for test in [TestVectorOps,TestBulletOps,TestBullet]:
+for test in [TestBullet]:
     unittest.TextTestRunner(verbosity=2,failfast=True).run(unittest.TestLoader().loadTestsFromTestCase(test))

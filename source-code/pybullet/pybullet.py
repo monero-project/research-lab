@@ -30,11 +30,7 @@ def exp_scalar(s,l):
 def inner_product(data):
     global cache
 
-    G = data[0]
-    H = data[1]
-    U = data[2]
-    a = data[3]
-    b = data[4]
+    G,H,U,a,b,L,R = data
 
     n = len(G)
     if n == 1:
@@ -60,7 +56,10 @@ def inner_product(data):
 
 # generate a multi-output proof
 def prove(data,N):
+    global cache
+
     M = len(data)
+    cache = ''
 
     # curve points
     G = dumb25519.G
@@ -140,7 +139,6 @@ def prove(data,N):
     r = r0 + r1*x
     t = l**r
 
-    mash(x)
     mash(taux)
     mash(mu)
     mash(t)
@@ -150,14 +148,78 @@ def prove(data,N):
     R = PointVector([])
    
     # initial inner product inputs
-    data = [Gi,PointVector([Hi[i]*(y.invert()**i) for i in range(len(Hi))]),H*x_ip,l,r]
+    data_ip = [Gi,PointVector([Hi[i]*(y.invert()**i) for i in range(len(Hi))]),H*x_ip,l,r,None,None]
     while True:
-        data = inner_product(data)
+        data_ip = inner_product(data_ip)
 
         # we have reached the end of the recursion
-        if len(data) == 2:
-            return [V,A,S,T1,T2,taux,mu,L,R,data[0],data[1],t]
+        if len(data_ip) == 2:
+            return [V,A,S,T1,T2,taux,mu,L,R,data_ip[0],data_ip[1],t]
 
         # we are not done yet
-        L.append(data[-2])
-        R.append(data[-1])
+        L.append(data_ip[-2])
+        R.append(data_ip[-1])
+
+# verify a batch of multi-output proofs
+def verify(proofs,N):
+    global cache
+
+    # determine the length of the longest proof
+    MN = 2**max([len(proof[7]) for proof in proofs])
+
+    # curve points
+    Z = dumb25519.Z
+    G = dumb25519.G
+    H = dumb25519.H
+    Gi = PointVector([hash_to_point('pybullet Gi ' + str(i)) for i in range(MN)])
+    Hi = PointVector([hash_to_point('pybullet Hi ' + str(i)) for i in range(MN)])
+
+    # verify that all points are in the correct subgroup
+    for item in dumb25519.flatten(proofs):
+        if not isinstance(item,Point):
+            continue
+        if not item*Scalar(dumb25519.l) == Z:
+            raise ArithmeticError
+
+    # set up weighted aggregates
+    y0 = Scalar(0)
+    y1 = Scalar(0)
+    Y2 = Z
+    Y3 = Z
+    Y4 = Z
+    Z0 = Z
+    z1 = Scalar(0)
+    Z2 = Z
+    z3 = Scalar(0)
+    z4 = [Scalar(0)]*MN
+    z5 = [Scalar(0)]*MN
+
+    # run through each proof
+    for proof in proofs:
+        V,A,S,T1,T2,taux,mu,L,R,a,b,t = proof
+
+        # get size information
+        M = 2**len(L)/N
+
+        # weighting factor for batching
+        w = random_scalar()
+
+        # reconstruct all challenges
+        cache = ''
+        for v in V:
+            mash(V)
+        mash(A)
+        mash(S)
+        y = cache
+        mash('')
+        z = cache
+        mash(T1)
+        mash(T2)
+        x = cache
+        mash(taux)
+        mash(mu)
+        mash(t)
+        x_ip = cache
+
+        y0 += taux*w
+
