@@ -210,35 +210,23 @@ public class Bulletproof
         return result;
     }
 
-    /* Determine if a curve point is in the basepoint (order l) subgroup */
-    public static boolean Subgroup(Curve25519Point p)
-    {
-        return p.scalarMultiply(new Scalar(l)).equals(Curve25519Point.ZERO);
-    }
-    public static boolean SubgroupList(Curve25519Point[] p)
-    {
-        for (int i = 0; i < p.length; i++)
-        {
-            if (! p[i].scalarMultiply(new Scalar(l)).equals(Curve25519Point.ZERO))
-                return false;
-        }
-        return true;
-    }
-
     /* Construct an aggregate range proof */
     public static ProofTuple PROVE(Scalar[] v, Scalar[] gamma, int logM)
     {
         int M = v.length;
         int logMN = logM + NEXP;
 
+        // 8^(-1) to offset curve points
+        Scalar inv8 = Invert(new Scalar(BigInteger.valueOf(8)));
+
         Curve25519Point[] V = new Curve25519Point[M];
 
-        V[0] = H.scalarMultiply(v[0]).add(G.scalarMultiply(gamma[0]));
+        V[0] = H.scalarMultiply(v[0]).add(G.scalarMultiply(gamma[0])).scalarMultiply(inv8);
         // This hash is updated for Fiat-Shamir throughout the proof
         Scalar hashCache = hashToScalar(V[0].toBytes());
         for (int j = 1; j < M; j++)
         {
-            V[j] = H.scalarMultiply(v[j]).add(G.scalarMultiply(gamma[j]));
+            V[j] = H.scalarMultiply(v[j]).add(G.scalarMultiply(gamma[j])).scalarMultiply(inv8);
             hashCache = hashToScalar(concat(hashCache.bytes,V[j].toBytes()));
         }
         
@@ -268,7 +256,7 @@ public class Bulletproof
 
         // PAPER LINES 38-39
         Scalar alpha = randomScalar();
-        Curve25519Point A = VectorExponent(aL,aR).add(G.scalarMultiply(alpha));
+        Curve25519Point A = VectorExponent(aL,aR).add(G.scalarMultiply(alpha)).scalarMultiply(inv8);
 
         // PAPER LINES 40-42
         Scalar[] sL = new Scalar[M*N];
@@ -279,7 +267,7 @@ public class Bulletproof
             sR[i] = randomScalar();
         }
         Scalar rho = randomScalar();
-        Curve25519Point S = VectorExponent(sL,sR).add(G.scalarMultiply(rho));
+        Curve25519Point S = VectorExponent(sL,sR).add(G.scalarMultiply(rho)).scalarMultiply(inv8);
 
         // PAPER LINES 43-45
         hashCache = hashToScalar(concat(hashCache.bytes,A.toBytes()));
@@ -324,8 +312,8 @@ public class Bulletproof
         // PAPER LINES 47-48
         Scalar tau1 = randomScalar();
         Scalar tau2 = randomScalar();
-        Curve25519Point T1 = H.scalarMultiply(t1).add(G.scalarMultiply(tau1));
-        Curve25519Point T2 = H.scalarMultiply(t2).add(G.scalarMultiply(tau2));
+        Curve25519Point T1 = H.scalarMultiply(t1).add(G.scalarMultiply(tau1)).scalarMultiply(inv8);
+        Curve25519Point T2 = H.scalarMultiply(t2).add(G.scalarMultiply(tau2)).scalarMultiply(inv8);
 
         // PAPER LINES 49-51
         hashCache = hashToScalar(concat(hashCache.bytes,z.bytes));
@@ -386,8 +374,8 @@ public class Bulletproof
             Scalar cR = InnerProduct(ScalarSlice(aprime,nprime,aprime.length),ScalarSlice(bprime,0,nprime));
 
             // PAPER LINES 18-19
-            L[round] = VectorExponentCustom(CurveSlice(Gprime,nprime,Gprime.length),CurveSlice(Hprime,0,nprime),ScalarSlice(aprime,0,nprime),ScalarSlice(bprime,nprime,bprime.length)).add(H.scalarMultiply(cL.mul(x_ip)));
-            R[round] = VectorExponentCustom(CurveSlice(Gprime,0,nprime),CurveSlice(Hprime,nprime,Hprime.length),ScalarSlice(aprime,nprime,aprime.length),ScalarSlice(bprime,0,nprime)).add(H.scalarMultiply(cR.mul(x_ip)));
+            L[round] = VectorExponentCustom(CurveSlice(Gprime,nprime,Gprime.length),CurveSlice(Hprime,0,nprime),ScalarSlice(aprime,0,nprime),ScalarSlice(bprime,nprime,bprime.length)).add(H.scalarMultiply(cL.mul(x_ip))).scalarMultiply(inv8);
+            R[round] = VectorExponentCustom(CurveSlice(Gprime,0,nprime),CurveSlice(Hprime,nprime,Hprime.length),ScalarSlice(aprime,nprime,aprime.length),ScalarSlice(bprime,0,nprime)).add(H.scalarMultiply(cR.mul(x_ip))).scalarMultiply(inv8);
 
             // PAPER LINES 21-22
             hashCache = hashToScalar(concat(hashCache.bytes,L[round].toBytes()));
@@ -412,25 +400,8 @@ public class Bulletproof
     /* Given a range proof, determine if it is valid */
     public static boolean VERIFY(ProofTuple[] proofs)
     {
-        // Confirm all curve points are in the correct subgroup
-        boolean pointsOK = true; // flag if any points fail the test
-        for (int p = 0; p < proofs.length; p++)
-        {
-            ProofTuple proof = proofs[p];
-            Curve25519Point[] points = {proof.A, proof.S, proof.T1, proof.T2};
-
-            if (! SubgroupList(points) || ! SubgroupList(proof.V) || ! SubgroupList(proof.L) || ! SubgroupList(proof.R))
-            {
-                pointsOK = false;
-                break;
-            }
-        }
-
-        if (! pointsOK)
-        {
-            System.out.println("Failed subgroup check");
-            return false;
-        }
+        // The all-powerful number 8, for bashing points into the correct subgroup
+        Scalar eight = new Scalar(BigInteger.valueOf(8));
 
         // Figure out which proof is longest
         int maxLength = 0;
@@ -506,14 +477,14 @@ public class Bulletproof
             Curve25519Point temp = Curve25519Point.ZERO;
             for (int j = 0; j < M; j++)
             {
-                temp = temp.add(proof.V[j].scalarMultiply(z.pow(j+2)));
+                temp = temp.add(proof.V[j].scalarMultiply(z.pow(j+2).mul(eight)));
             }
             Y2 = Y2.add(temp.scalarMultiply(weight));
-            Y3 = Y3.add(proof.T1.scalarMultiply(x.mul(weight)));
-            Y4 = Y4.add(proof.T2.scalarMultiply(x.sq().mul(weight)));
+            Y3 = Y3.add(proof.T1.scalarMultiply(x.mul(weight).mul(eight)));
+            Y4 = Y4.add(proof.T2.scalarMultiply(x.sq().mul(weight).mul(eight)));
             
             // PAPER LINE 62
-            Z0 = Z0.add((proof.A.add(proof.S.scalarMultiply(x))).scalarMultiply(weight));
+            Z0 = Z0.add((proof.A.scalarMultiply(eight).add(proof.S.scalarMultiply(x.mul(eight)))).scalarMultiply(weight));
             
             // PAPER LINES 21-22
             // The inner product challenges are computed per round
@@ -571,8 +542,8 @@ public class Bulletproof
             temp = Curve25519Point.ZERO;
             for (int i = 0; i < logMN; i++)
             {
-                temp = temp.add(proof.L[i].scalarMultiply(w[i].sq()));
-                temp = temp.add(proof.R[i].scalarMultiply(Invert(w[i]).sq()));
+                temp = temp.add(proof.L[i].scalarMultiply(w[i].sq().mul(eight)));
+                temp = temp.add(proof.R[i].scalarMultiply(Invert(w[i]).sq().mul(eight)));
             }
             Z2 = Z2.add(temp.scalarMultiply(weight));
             z3 = z3.add((proof.t.sub(proof.a.mul(proof.b))).mul(x_ip).mul(weight));
