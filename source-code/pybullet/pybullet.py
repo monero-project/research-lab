@@ -7,6 +7,10 @@ def mash(s):
     global cache
     cache = hash_to_scalar(str(cache) + str(s))
 
+def clear_cache():
+    global cache
+    cache = ''
+
 def scalar_to_bits(s,N):
     result = []
     for i in range(N-1,-1,-1):
@@ -35,8 +39,6 @@ def sum_scalar(s,l):
 #
 # returns: G',H',U,a',b',L,R
 def inner_product(data):
-    global cache
-
     G,H,U,a,b,L,R = data
 
     n = len(G)
@@ -63,10 +65,8 @@ def inner_product(data):
 
 # generate a multi-output proof
 def prove(data,N):
-    global cache
-
+    clear_cache()
     M = len(data)
-    cache = ''
 
     # curve points
     G = dumb25519.G
@@ -81,6 +81,7 @@ def prove(data,N):
         V.append(H*v + G*gamma)
         mash(V[-1])
         aL.extend(scalar_to_bits(v,N))
+    assert len(V) == M
 
     # set bit arrays
     aR = ScalarVector([])
@@ -92,6 +93,8 @@ def prove(data,N):
 
     sL = ScalarVector([random_scalar()]*(M*N))
     sR = ScalarVector([random_scalar()]*(M*N))
+    assert len(sL) == M*N
+    assert len(sR) == M*N
     rho = random_scalar()
     S = Gi*sL + Hi*sR + G*rho
 
@@ -114,12 +117,12 @@ def prove(data,N):
             temp = Scalar(0)
             if i >= (j-1)*N and i < j*N:
                 temp = Scalar(2)**(i-(j-1)*N)
-            zeros_twos[-1] = zeros_twos[-1] + temp*(z**(i+j))
+            zeros_twos[-1] += temp*(z**(1+j))
     
     # more polynomial coefficients
     r0 = aR + ScalarVector([z]*(M*N))
     r0 = r0*exp_scalar(y,M*N)
-    r0 = r0 + ScalarVector(zeros_twos)
+    r0 += ScalarVector(zeros_twos)
     r1 = exp_scalar(y,M*N)*sR
 
     # build the polynomials
@@ -139,7 +142,7 @@ def prove(data,N):
     taux = tau1*x + tau2*(x**2)
     for j in range(1,M+1):
         gamma = data[j-1][1]
-        taux += z**(i+j)*gamma
+        taux += z**(1+j)*gamma
     mu = x*rho+alpha
     
     l = l0 + l1*x
@@ -161,7 +164,7 @@ def prove(data,N):
 
         # we have reached the end of the recursion
         if len(data_ip) == 2:
-            return [V,A,S,T1,T2,taux,mu,L,R,data_ip[0],data_ip[1],t]
+            return [V,A,S,T1,T2,taux,mu,L,R,data_ip[0],data_ip[1],t,x,y,z,x_ip] # TODO: remove challenges
 
         # we are not done yet
         L.append(data_ip[-2])
@@ -169,8 +172,6 @@ def prove(data,N):
 
 # verify a batch of multi-output proofs
 def verify(proofs,N):
-    global cache
-
     # determine the length of the longest proof
     max_MN = 2**max([len(proof[7]) for proof in proofs])
 
@@ -203,7 +204,9 @@ def verify(proofs,N):
 
     # run through each proof
     for proof in proofs:
-        V,A,S,T1,T2,taux,mu,L,R,a,b,t = proof
+        clear_cache()
+
+        V,A,S,T1,T2,taux,mu,L,R,a,b,t,x_proof,y_proof,z_proof,x_ip_proof = proof
 
         # get size information
         M = 2**len(L)/N
@@ -212,30 +215,32 @@ def verify(proofs,N):
         w = random_scalar()
 
         # reconstruct all challenges
-        cache = ''
         for v in V:
-            mash(V)
+            mash(v)
         mash(A)
         mash(S)
         y = cache
+        assert y == y_proof
         mash('')
         z = cache
+        assert z == z_proof
         mash(T1)
         mash(T2)
         x = cache
+        assert x == x_proof
         mash(taux)
         mash(mu)
         mash(t)
         x_ip = cache
+        assert x_ip == x_ip_proof
 
         y0 += taux*w
         
-        k = Scalar(0)
-        k -= z**2*sum_scalar(y,M*N)
+        k = (z-z**2)*sum_scalar(y,M*N)
         for j in range(1,M+1):
-            k -= z**(j+2)*sum_scalar(Scalar(2),M*N)
+            k -= (z**(j+2))*sum_scalar(Scalar(2),N)
 
-        y1 += (t - (k + z*sum_scalar(y,M*N)))*w
+        y1 += (t-k)*w
 
         Temp = Z
         for j in range(M):
@@ -249,14 +254,14 @@ def verify(proofs,N):
         # inner product
         W = []
         for i in range(len(L)):
-            mash(L)
-            mash(R)
+            mash(L[i])
+            mash(R[i])
             W.append(cache)
 
         for i in range(M*N):
             index = i
             g = a
-            h = b*(y.invert())**i
+            h = b*((y.invert())**i)
             for j in range(len(L)-1,-1,-1):
                 J = len(W)-j-1
                 base_power = 2**j
@@ -269,7 +274,7 @@ def verify(proofs,N):
                     index -= base_power
 
             g += z
-            h -= (z*(y**i) + z**(2+i/N)*Scalar(2)**(i%N))*(y.invert())**i
+            h -= (z*(y**i) + (z**(2+i/N))*(Scalar(2)**(i%N)))*((y.invert())**i)
 
             z4[i] += g*w
             z5[i] += h*w
@@ -278,19 +283,17 @@ def verify(proofs,N):
 
         Temp = Z
         for i in range(len(L)):
-            Temp += L[i]*(W[i]**2) + R[i]*(W[i].invert())**2
+            Temp += L[i]*(W[i]**2) + R[i]*((W[i].invert())**2)
         Z2 += Temp*w
         z3 += (t-a*b)*x_ip*w
     
     # now check all proofs together
     if not G*y0 + H*y1 - Y2 - Y3 - Y4 == Z:
-        return False
+        raise ArithmeticError('Bad y check!')
 
     Temp = Z0 - G*z1 + Z2 + H*z3
     for i in range(max_MN):
         Temp -= Gi[i]*z4[i]
         Temp -= Hi[i]*z5[i]
     if not Temp == Z:
-        return False
-
-    return True
+        raise ArithmeticError('Bad z check!')
