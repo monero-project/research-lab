@@ -161,20 +161,62 @@ class TestBulletOps(unittest.TestCase):
                 result += bit*Scalar(2**i)
             self.assertEqual(result,scalar)
 
+            self.assertEqual(len(bits),N)
+
+    def test_sum_scalar(self):
+        s = Scalar(2)
+        l = 4
+        self.assertEqual(pybullet.sum_scalar(s,l),Scalar(15))
+
 class TestBullet(unittest.TestCase):
     def test_prove_verify_m_1_n_4(self):
-        N = 4
         M = 1
-        data = [[Scalar(random.randint(0,2**N-1)),dumb25519.random_scalar()] for j in range(M)]
-        proof = pybullet.prove(data,N)
-        self.assertTrue(pybullet.verify([proof],N))
+        N = 4
+        data = [[Scalar(random.randint(0,2**N-1)),dumb25519.random_scalar()] for i in range(M)]
+        pybullet.verify([pybullet.prove(data,N)],N)
 
     def test_prove_verify_m_2_n_4(self):
-        N = 4
         M = 2
-        data = [[Scalar(random.randint(0,2**N-1)),dumb25519.random_scalar()] for j in range(M)]
-        proof = pybullet.prove(data,N)
-        self.assertTrue(pybullet.verify([proof],N))
+        N = 4
+        data = [[Scalar(random.randint(0,2**N-1)),dumb25519.random_scalar()] for i in range(M)]
+        pybullet.verify([pybullet.prove(data,N)],N)
+
+    def test_invalid_value(self):
+        M = 1
+        N = 4
+        data = [[Scalar(random.randint(2**N,2**(N+1)-1)),dumb25519.random_scalar()]]
+        with self.assertRaises(ArithmeticError):
+            pybullet.verify([pybullet.prove(data,N)],N)
+
+    def test_batch_2_m_1_n_4(self):
+        M = 1
+        N = 4
+        data = [[Scalar(random.randint(0,2**N-1)),dumb25519.random_scalar()] for i in range(M)]
+        proof1 = pybullet.prove(data,N)
+        data = [[Scalar(random.randint(0,2**N-1)),dumb25519.random_scalar()] for i in range(M)]
+        proof2 = pybullet.prove(data,N)
+        pybullet.verify([proof1,proof2],N)
+
+    def test_batch_2_m_1_2_n_4(self):
+        M = 1
+        N = 4
+        data = [[Scalar(random.randint(0,2**N-1)),dumb25519.random_scalar()] for i in range(M)]
+        proof1 = pybullet.prove(data,N)
+        M = 2
+        data = [[Scalar(random.randint(0,2**N-1)),dumb25519.random_scalar()] for i in range(M)]
+        proof2 = pybullet.prove(data,N)
+        pybullet.verify([proof1,proof2],N)
+
+    def test_invalid_batch_2_m_1_2_n_4(self):
+        M = 1
+        N = 4
+        data = [[Scalar(random.randint(0,2**N-1)),dumb25519.random_scalar()] for i in range(M)]
+        proof1 = pybullet.prove(data,N)
+        M = 2
+        data = [[Scalar(random.randint(2**N,2**(N+1)-1)),dumb25519.random_scalar()] for i in range(M)]
+        proof2 = pybullet.prove(data,N)
+        with self.assertRaises(ArithmeticError):
+            pybullet.verify([proof1,proof2],N)
 
 for test in [TestVectorOps,TestBulletOps,TestBullet]:
     unittest.TextTestRunner(verbosity=2,failfast=True).run(unittest.TestLoader().loadTestsFromTestCase(test))

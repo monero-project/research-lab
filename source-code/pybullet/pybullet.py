@@ -11,6 +11,7 @@ def clear_cache():
     global cache
     cache = ''
 
+# turn a scalar into a vector of bit scalars
 def scalar_to_bits(s,N):
     result = []
     for i in range(N-1,-1,-1):
@@ -81,20 +82,17 @@ def prove(data,N):
         V.append(H*v + G*gamma)
         mash(V[-1])
         aL.extend(scalar_to_bits(v,N))
-    assert len(V) == M
 
     # set bit arrays
     aR = ScalarVector([])
     for bit in aL.scalars:
-        aR.append(Scalar(1)-bit)
+        aR.append(bit-Scalar(1))
 
     alpha = random_scalar()
     A = Gi*aL + Hi*aR + G*alpha
 
     sL = ScalarVector([random_scalar()]*(M*N))
     sR = ScalarVector([random_scalar()]*(M*N))
-    assert len(sL) == M*N
-    assert len(sR) == M*N
     rho = random_scalar()
     S = Gi*sL + Hi*sR + G*rho
 
@@ -164,7 +162,7 @@ def prove(data,N):
 
         # we have reached the end of the recursion
         if len(data_ip) == 2:
-            return [V,A,S,T1,T2,taux,mu,L,R,data_ip[0],data_ip[1],t,x,y,z,x_ip] # TODO: remove challenges
+            return [V,A,S,T1,T2,taux,mu,L,R,data_ip[0],data_ip[1],t]
 
         # we are not done yet
         L.append(data_ip[-2])
@@ -206,7 +204,7 @@ def verify(proofs,N):
     for proof in proofs:
         clear_cache()
 
-        V,A,S,T1,T2,taux,mu,L,R,a,b,t,x_proof,y_proof,z_proof,x_ip_proof = proof
+        V,A,S,T1,T2,taux,mu,L,R,a,b,t = proof
 
         # get size information
         M = 2**len(L)/N
@@ -220,19 +218,15 @@ def verify(proofs,N):
         mash(A)
         mash(S)
         y = cache
-        assert y == y_proof
         mash('')
         z = cache
-        assert z == z_proof
         mash(T1)
         mash(T2)
         x = cache
-        assert x == x_proof
         mash(taux)
         mash(mu)
         mash(t)
         x_ip = cache
-        assert x_ip == x_ip_proof
 
         y0 += taux*w
         
