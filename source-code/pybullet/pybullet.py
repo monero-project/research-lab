@@ -2,6 +2,7 @@ import dumb25519
 from dumb25519 import Scalar, Point, ScalarVector, PointVector, random_scalar, random_point, hash_to_scalar, hash_to_point
 
 cache = '' # rolling transcript hash
+inv8 = Scalar(8).invert()
 
 def mash(s):
     global cache
@@ -49,8 +50,8 @@ def inner_product(data):
     n /= 2
     cL = a[:n]**b[n:]
     cR = a[n:]**b[:n]
-    L = G[n:]*a[:n] + H[:n]*b[n:] + U*cL
-    R = G[:n]*a[n:] + H[n:]*b[:n] + U*cR
+    L = (G[n:]*a[:n] + H[:n]*b[n:] + U*cL)*inv8
+    R = (G[:n]*a[n:] + H[n:]*b[:n] + U*cR)*inv8
 
     mash(L)
     mash(R)
@@ -79,7 +80,7 @@ def prove(data,N):
     V = PointVector([])
     aL = ScalarVector([])
     for v,gamma in data:
-        V.append(H*v + G*gamma)
+        V.append((H*v + G*gamma)*inv8)
         mash(V[-1])
         aL.extend(scalar_to_bits(v,N))
 
@@ -89,12 +90,12 @@ def prove(data,N):
         aR.append(bit-Scalar(1))
 
     alpha = random_scalar()
-    A = Gi*aL + Hi*aR + G*alpha
+    A = (Gi*aL + Hi*aR + G*alpha)*inv8
 
     sL = ScalarVector([random_scalar()]*(M*N))
     sR = ScalarVector([random_scalar()]*(M*N))
     rho = random_scalar()
-    S = Gi*sL + Hi*sR + G*rho
+    S = (Gi*sL + Hi*sR + G*rho)*inv8
 
     # get challenges
     mash(A)
@@ -130,8 +131,8 @@ def prove(data,N):
 
     tau1 = random_scalar()
     tau2 = random_scalar()
-    T1 = H*t1 + G*tau1
-    T2 = H*t2 + G*tau2
+    T1 = (H*t1 + G*tau1)*inv8
+    T2 = (H*t2 + G*tau2)*inv8
 
     mash(T1)
     mash(T2)
@@ -238,12 +239,12 @@ def verify(proofs,N):
 
         Temp = Z
         for j in range(M):
-            Temp += V[j]*(z**(j+2))
+            Temp += V[j]*(z**(j+2)*Scalar(8))
         Y2 += Temp*w
-        Y3 += T1*x*w
-        Y4 += T2*(x**2)*w
+        Y3 += T1*(x*w*Scalar(8))
+        Y4 += T2*((x**2)*w*Scalar(8))
 
-        Z0 += (A+S*x)*w
+        Z0 += (A*Scalar(8)+S*(x*Scalar(8)))*w
 
         # inner product
         W = []
@@ -277,7 +278,7 @@ def verify(proofs,N):
 
         Temp = Z
         for i in range(len(L)):
-            Temp += L[i]*(W[i]**2) + R[i]*((W[i].invert())**2)
+            Temp += L[i]*(Scalar(8)*(W[i]**2)) + R[i]*(Scalar(8)*(W[i].invert())**2)
         Z2 += Temp*w
         z3 += (t-a*b)*x_ip*w
     
