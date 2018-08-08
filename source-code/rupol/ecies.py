@@ -10,7 +10,7 @@ import binascii
 from Crypto.Cipher import AES
 from Crypto import Random
 
-# define a few curve points
+# define curve points
 G = dumb25519.G
 
 class Ciphertext:
@@ -22,6 +22,12 @@ class Ciphertext:
         self.R = R
         self.e = e
         self.sigma = sigma
+
+def gen_private_key():
+    return dumb25519.random_scalar()
+
+def gen_public_key(private_key):
+    return G*private_key
 
 def encrypt(public_key,tag,message):
     if not isinstance(public_key,dumb25519.Point):

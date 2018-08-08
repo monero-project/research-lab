@@ -150,6 +150,124 @@ class Point:
         y = self.y
         return (-x*x + y*y - 1 - d*x*x*y*y) % q == 0
 
+class PointVector:
+    def __init__(self,points):
+        for point in points:
+            if not isinstance(point,Point):
+                raise TypeError
+        self.points = points
+
+    def __add__(self,W):
+        if not len(self.points) == len(W.points):
+            raise IndexError
+        if not isinstance(W,PointVector):
+            raise TypeError
+        return PointVector([self.points[i] + W.points[i] for i in range(len(self.points))])
+
+    def __sub__(self,W):
+        if not len(self.points) == len(W.points):
+            raise IndexError
+        if not isinstance(W,PointVector):
+            raise TypeError
+        return PointVector([self.points[i] - W.points[i] for i in range(len(self.points))])
+
+    # multiplying a PointVector by a scalar or ScalarVector or Hadamard
+    def __mul__(self,s):
+        if isinstance(s,Scalar):
+            return PointVector([self.points[i]*s for i in range(len(self.points))])
+        if isinstance(s,ScalarVector):
+            if not len(self.points) == len(s.scalars):
+                raise IndexError
+            R = Z
+            for i in range(len(self.points)):
+                R += self.points[i]*s.scalars[i]
+            return R
+        if isinstance(s,PointVector):
+            if not len(self.points) == len(s.points):
+                raise IndexError
+            return PointVector([self.points[i] + s.points[i] for i in range(len(self.points))])
+        raise TypeError
+
+    def __len__(self):
+        return len(self.points)
+
+    def __getitem__(self,i):
+        if not isinstance(i,slice):
+            return self.points[i]
+        return PointVector(self.points[i])
+
+    def append(self,item):
+        if not isinstance(item,Point):
+            raise typeError
+        self.points.append(item)
+
+    def extend(self,items):
+        for item in items.points:
+            if not isinstance(item,Point):
+                raise TypeError
+            self.points.append(item)
+
+class ScalarVector:
+    def __init__(self,scalars):
+        for scalar in scalars:
+            if not isinstance(scalar,Scalar):
+                raise TypeError
+        self.scalars = scalars
+
+    def __add__(self,s):
+        if not len(self.scalars) == len(s.scalars):
+            raise IndexError
+        if not isinstance(s,ScalarVector):
+            raise TypeError
+        return ScalarVector([self.scalars[i] + s.scalars[i] for i in range(len(self.scalars))])
+
+    def __sub__(self,s):
+        if not len(self.scalars) == len(s.scalars):
+            raise IndexError
+        if not isinstance(s,ScalarVector):
+            raise TypeError
+        return ScalarVector([self.scalars[i] - s.scalars[i] for i in range(len(self.scalars))])
+
+    # hadamard product and multiplying a scalar vector by a scalar
+    def __mul__(self,s):
+        if isinstance(s,Scalar):
+            return ScalarVector([self.scalars[i]*s for i in range(len(self.scalars))])
+        if not len(self.scalars) == len(s.scalars):
+            raise IndexError
+        if not isinstance(s,ScalarVector):
+            raise TypeError
+        return ScalarVector([self.scalars[i]*s.scalars[i] for i in range(len(self.scalars))])
+
+    # inner product
+    def __pow__(self,s):
+        if not len(self.scalars) == len(s.scalars):
+            raise IndexError
+        if not isinstance(s,ScalarVector):
+            raise TypeError
+        r = Scalar(0)
+        for i in range(len(self.scalars)):
+            r += self.scalars[i]*s.scalars[i]
+        return r
+
+    def __len__(self):
+        return len(self.scalars)
+
+    def __getitem__(self,i):
+        if not isinstance(i,slice):
+            return self.scalars[i]
+        return ScalarVector(self.scalars[i])
+
+    def append(self,item):
+        if not isinstance(item,Scalar):
+            raise TypeError
+        self.scalars.append(item)
+
+    def extend(self,items):
+        for item in items.scalars:
+            if not isinstance(item,Scalar):
+                raise TypeError
+            self.scalars.append(item)
+
 # make a point from a given integer y (if it is on the curve)
 def make_point(y):
     x = xfromy(y)
@@ -181,25 +299,15 @@ def random_point():
 Gy = 4*invert(5,q)
 Gx = xfromy(Gy)
 G = Point(Gx % q, Gy % q)
+H = hash_to_point('dumb25519 H')
 
 # zero point
 Z = Point(0,1)
 
-# a few more
-H = hash_to_point('dumb25519 H')
-T = hash_to_point('dumb25519 T')
-
-# helper function to recursively flatten an ugly list
+# helper function to recursively flatten an arbitrary nested list
 def flatten(L):
     if L == []:
         return L
     if isinstance(L[0],list):
         return flatten(L[0]) + flatten(L[1:])
     return L[:1] + flatten(L[1:])
-
-# Pedersen vector commitment
-def pedersen_commit(v,r):
-    result = H*r
-    for i in range(len(v)):
-        result += hash_to_point('dumb25519 Gi'+str(i))*v[i]
-    return result
