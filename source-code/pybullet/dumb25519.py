@@ -41,58 +41,99 @@ class Scalar:
         return Scalar(invert(self.x,l))
 
     def __add__(self,y):
-        if not isinstance(y,Scalar):
-            raise TypeError
-        return Scalar(self.x + y.x)
+        if isinstance(y,int):
+            return Scalar(self.x + y)
+        if isinstance(y,Scalar):
+            return Scalar(self.x + y.x)
+        raise TypeError
 
     def __sub__(self,y):
-        if not isinstance(y,Scalar):
-            raise TypeError
-        return Scalar(self.x - y.x)
+        if isinstance(y,int):
+            return Scalar(self.x - y)
+        if isinstance(y,Scalar):
+            return Scalar(self.x - y.x)
+        raise TypeError
 
     def __mul__(self,y):
-        if not isinstance(y,Scalar):
-            raise TypeError
-        return Scalar(self.x*y.x)
+        if isinstance(y,int):
+            return Scalar(self.x * y)
+        if isinstance(y,Scalar):
+            return Scalar(self.x * y.x)
+        raise TypeError
 
     def __div__(self,y):
-        if not isinstance(y,Scalar):
-            raise TypeError
-        return Scalar(int(self.x/y.x))
+        if isinstance(y,int):
+            return Scalar(self.x / y)
+        if isinstance(y,Scalar):
+            return Scalar(self.x / y.x)
+        raise TypeError
 
     def __pow__(self,y):
+        if not isinstance(y,int):
+            raise TypeError
+
         result = Scalar(1)
         for i in range(y):
             result = result*self
         return result
 
     def __eq__(self,y):
-        if not isinstance(y,Scalar):
-            raise TypeError
-        return self.x == y.x
+        if isinstance(y,int):
+            return self.x == Scalar(y).x
+        if isinstance(y,Scalar):
+            return self.x == y.x
+        raise TypeError
 
     def __ne__(self,y):
-        if not isinstance(y,Scalar):
-            raise TypeError
-        return self.x != y.x
+        if isinstance(y,int):
+            return self.x != Scalar(y).x
+        if isinstance(y,Scalar):
+            return self.x != y.x
+        raise TypeError
 
     def __lt__(self,y):
         if isinstance(y,Scalar):
             return self.x < y.x
-        else:
-            return self.x < y
+        if isinstance(y,int):
+            return self.x < Scalar(y).x
+        raise TypeError
 
     def __gt__(self,y):
         if isinstance(y,Scalar):
             return self.x > y.x
-        else:
-            return self.x > y
+        if isinstance(y,int):
+            return self.x > Scalar(y).x
+        raise TypeError
+
+    def __le__(self,y):
+        if isinstance(y,Scalar):
+            return self.x <= y.x
+        if isinstance(y,int):
+            return self.x <= Scalar(y).x
+        raise TypeError
+
+    def __ge__(self,y):
+        if isinstance(y,Scalar):
+            return self.x >= y.x
+        if isinstance(y,int):
+            return self.x >= Scalar(y).x
+        raise TypeError
 
     def __str__(self):
         return str(self.x)
 
     def to_int(self):
         return self.x
+
+    def __mod__(self,mod):
+        if isinstance(mod,int):
+            return Scalar(self.x % mod)
+        if isinstance(mod,Scalar):
+            return Scalar(self.x % mod.x)
+        raise TypeError
+
+    def __neg__(self):
+        return Scalar(-self.x)
 
 class Point:
     def __init__(self,x,y):
@@ -178,10 +219,10 @@ class PointVector:
         if isinstance(s,ScalarVector):
             if not len(self.points) == len(s.scalars):
                 raise IndexError
-            R = Z
+            R = []
             for i in range(len(self.points)):
-                R += self.points[i]*s.scalars[i]
-            return R
+                R.append([self.points[i],s.scalars[i]])
+            return multiexp(R)
         if isinstance(s,PointVector):
             if not len(self.points) == len(s.points):
                 raise IndexError
@@ -311,3 +352,56 @@ def flatten(L):
     if isinstance(L[0],list):
         return flatten(L[0]) + flatten(L[1:])
     return L[:1] + flatten(L[1:])
+
+# multiexponention operation using simplified Pippenger
+# -- input data is of form [[P1,a1],[P2,a2],...]
+def multiexp(data):
+    if len(data) == 0:
+        return Z
+
+    scalars = [datum[1] for datum in data]
+    points = [datum[0] for datum in data]
+    buckets = None
+    nonzero = False
+    result = Z # zero point
+   
+    c = 4 # window parameter; NOTE: the optimal value actually depends on len(points) empirically
+
+    # really we want to use the max bitlength to compute groups
+    maxscalar = max(scalars).to_int()
+    groups = 0
+    while maxscalar >= 2**groups:
+        groups += 1
+    groups = int((groups + c - 1) / c)
+    
+    # loop is really (groups-1)..0
+    for k in range(groups-1,-1,-1):
+        if result != Z:
+            for i in range(c):
+                result += result
+        
+        buckets = [Z]*(2**c) # clear all buckets
+        
+        # partition scalars into buckets
+        for i in range(len(scalars)):
+            bucket = 0
+            for j in range(c):
+                if scalars[i].to_int() & (1 << (k*c+j)): # test for bit
+                    bucket |= 1 << j
+            
+            if bucket == 0: # zero bucket is never used
+                continue
+            
+            if buckets[bucket] != Z:
+                buckets[bucket] += points[i]
+            else:
+                buckets[bucket] = points[i]
+        
+        # sum the buckets
+        pail = Z
+        for i in range(len(buckets)-1,0,-1):
+            if buckets[i] != Z:
+                pail += buckets[i]
+            if pail != Z:
+                result += pail
+    return result

@@ -276,19 +276,22 @@ def verify(proofs,N):
 
         z1 += mu*w
 
-        Temp = Z
+        Multiexp = []
         for i in range(len(L)):
-            Temp += L[i]*(Scalar(8)*(W[i]**2)) + R[i]*(Scalar(8)*(W[i].invert())**2)
-        Z2 += Temp*w
+            Multiexp.append([L[i],Scalar(8)*(W[i]**2)])
+            Multiexp.append([R[i],Scalar(8)*(W[i].invert()**2)])
+        Z2 += dumb25519.multiexp(Multiexp)*w
         z3 += (t-a*b)*x_ip*w
     
     # now check all proofs together
     if not G*y0 + H*y1 - Y2 - Y3 - Y4 == Z:
         raise ArithmeticError('Bad y check!')
 
-    Temp = Z0 - G*z1 + Z2 + H*z3
+    Multiexp = [[Z0,Scalar(1)],[G,-z1],[Z2,Scalar(1)],[H,z3]]
     for i in range(max_MN):
-        Temp -= Gi[i]*z4[i]
-        Temp -= Hi[i]*z5[i]
-    if not Temp == Z:
+        Multiexp.append([Gi[i],-z4[i]])
+        Multiexp.append([Hi[i],-z5[i]])
+    if not dumb25519.multiexp(Multiexp) == Z:
         raise ArithmeticError('Bad z check!')
+
+    return True
