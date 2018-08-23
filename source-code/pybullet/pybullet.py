@@ -181,13 +181,6 @@ def verify(proofs,N):
     Gi = PointVector([hash_to_point('pybullet Gi ' + str(i)) for i in range(max_MN)])
     Hi = PointVector([hash_to_point('pybullet Hi ' + str(i)) for i in range(max_MN)])
 
-    # verify that all points are in the correct subgroup
-    for item in dumb25519.flatten(proofs):
-        if not isinstance(item,Point):
-            continue
-        if not item*Scalar(dumb25519.l) == Z:
-            raise ArithmeticError
-
     # set up weighted aggregates
     y0 = Scalar(0)
     y1 = Scalar(0)
