@@ -271,6 +271,20 @@ class TestVectorOps(unittest.TestCase):
         self.assertEqual(len(w),l)
         self.assertEqual(w.scalars,scalars[:l])
 
+    def test_batch_inversion(self):
+        l = 8
+        v = ScalarVector([random_scalar() for i in range(l)])
+        v.append(Scalar(1))
+        v.append(Scalar(dumb25519.l-1))
+        w = v.invert()
+
+        for i in range(len(v)):
+            self.assertEqual(v[i]*w[i],Scalar(1))
+
+    def test_bad_batch_inversion(self):
+        with self.assertRaises(ArithmeticError):
+            ScalarVector([Scalar(1),Scalar(0)]).invert()
+
 class TestBulletOps(unittest.TestCase):
     def test_scalar_to_bits(self):
         N = 8
