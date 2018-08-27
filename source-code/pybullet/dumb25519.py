@@ -309,6 +309,27 @@ class ScalarVector:
                 raise TypeError
             self.scalars.append(item)
 
+    # return a vector of inverses
+    def invert(self):
+        inputs = self.scalars[:]
+        n = len(inputs)
+        scratch = [Scalar(1)]*n
+        acc = Scalar(1)
+
+        for i in range(n):
+            if inputs[i] == Scalar(0):
+                raise ArithmeticError
+            scratch[i] = acc
+            acc *= inputs[i]
+        acc = Scalar(invert(acc.x,l))
+        for i in range(n-1,-1,-1):
+            temp = acc*inputs[i]
+            inputs[i] = acc*scratch[i]
+            acc = temp
+
+        return inputs
+
+
 # make a point from a given integer y (if it is on the curve)
 def make_point(y):
     x = xfromy(y)

@@ -101,6 +101,7 @@ def prove(data,N):
     mash(A)
     mash(S)
     y = cache
+    y_inv = y.invert()
     mash('')
     z = cache
 
@@ -157,7 +158,7 @@ def prove(data,N):
     R = PointVector([])
    
     # initial inner product inputs
-    data_ip = [Gi,PointVector([Hi[i]*(y.invert()**i) for i in range(len(Hi))]),H*x_ip,l,r,None,None]
+    data_ip = [Gi,PointVector([Hi[i]*(y_inv**i) for i in range(len(Hi))]),H*x_ip,l,r,None,None]
     while True:
         data_ip = inner_product(data_ip)
 
@@ -213,6 +214,7 @@ def verify(proofs,N):
         if cache == Scalar(0):
             raise ArithmeticError
         y = cache
+        y_inv = y.invert()
         mash('')
         if cache == Scalar(0):
             raise ArithmeticError
@@ -246,31 +248,32 @@ def verify(proofs,N):
         BigAssMultiexp.append([S,Scalar(8)*x*weight_z])
 
         # inner product
-        W = []
+        W = ScalarVector([])
         for i in range(len(L)):
             mash(L[i])
             mash(R[i])
             if cache == Scalar(0):
                 raise ArithmeticError
             W.append(cache)
+        W_inv = W.invert()
 
         for i in range(M*N):
             index = i
             g = a
-            h = b*((y.invert())**i)
+            h = b*((y_inv)**i)
             for j in range(len(L)-1,-1,-1):
                 J = len(W)-j-1
                 base_power = 2**j
                 if index/base_power == 0:
-                    g *= W[J].invert()
+                    g *= W_inv[J]
                     h *= W[J]
                 else:
                     g *= W[J]
-                    h *= W[J].invert()
+                    h *= W_inv[J]
                     index -= base_power
 
             g += z
-            h -= (z*(y**i) + (z**(2+i/N))*(Scalar(2)**(i%N)))*((y.invert())**i)
+            h -= (z*(y**i) + (z**(2+i/N))*(Scalar(2)**(i%N)))*((y_inv)**i)
 
             z4[i] += g*weight_z
             z5[i] += h*weight_z
@@ -279,7 +282,7 @@ def verify(proofs,N):
 
         for i in range(len(L)):
             BigAssMultiexp.append([L[i],Scalar(8)*(W[i]**2)*weight_z])
-            BigAssMultiexp.append([R[i],Scalar(8)*(W[i].invert()**2)*weight_z])
+            BigAssMultiexp.append([R[i],Scalar(8)*(W_inv[i]**2)*weight_z])
         z3 += (t-a*b)*x_ip*weight_z
     
     # now check all proofs together
