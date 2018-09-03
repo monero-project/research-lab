@@ -1,0 +1,1094 @@
+\documentclass{iacrtrans}
+\usepackage{amsmath}
+\usepackage{enumerate}
+\usepackage{todonotes}
+\usepackage{comment}
+\usepackage[pagewise,mathlines]{lineno}
+%\linenumbers
+\theoremstyle{definition}
+%\newtheorem{theorem}{Theorem}
+\numberwithin{theorem}{subsection}
+\numberwithin{lemma}{theorem}
+
+%\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{cor}[theorem]{Corollary}
+\newtheorem{defn}[theorem]{Definition}
+\newtheorem{disc}[theorem]{Remark}
+\newtheorem{ex}[theorem]{Example}
+\newcommand{\adversary}{\mathcal{A}}
+\newcommand{\scalarField}{\mathbb{Z}_{\mathfrak{p}}}
+\newcommand{\group}{\mathbb{G}}
+\newcommand{\p}{\mathfrak{p}}
+\newcommand{\m}{\mathfrak{m}}
+\newcommand{\bbz}{\mathbb{Z}}
+\newcommand{\bbn}{\mathbb{N}}
+\newcommand{\reduxChain}{\adversary \leadsto \adversary^\prime \leadsto \texttt{fork}^{\adversary^\prime}  \leadsto \adversary^{\prime \prime} \leadsto \texttt{fork}^{\adversary^{\prime \prime}} \leadsto \mathcal{B}}
+\renewcommand{\thefootnote}{\arabic{footnote}}
+%\usepackage{algpseudocode}
+\usepackage[boxed]{algorithm2e}
+\usepackage{graphicx}
+\graphicspath{ {images/} }
+\usepackage{caption}
+\usepackage{subcaption}
+\usepackage{enumitem}
+\usepackage{amssymb}
+\usepackage{xypic}
+
+\title{Thring Signatures and their Applications to Spender-Ambiguous Digital Currencies}
+\author{Brandon Goodell \and Sarang Noether }
+\institute{Monero Research Lab \email[surae@getmonero.org, sarang@getmonero.org]{{surae,sarang}@getmonero.org}}
+\date{\today}
+
+\keywords{ring signatures, confidential transactions, spender ambiguity, threshold multi-signatures, thring signatures, atomic swaps, public-key cryptography, implementation, applications}
+
+
+\begin{document}
+
+
+\maketitle
+
+\begin{abstract}
+We present threshold ring multi-signatures (\textit{thring signatures}) for collaborative computation of ring signatures, discuss a game of existential forgery for thring signatures, and discuss the uses of thring signatures in digital currencies, including spender-ambiguous cross-chain atomic swaps for confidential amounts without a trusted set-up. We present an implementation of thring signatures inspired by the works of \cite{liu2004linkable}, \cite{qian2010non}, \cite{maxwell2015confidential}, \cite{backLSAG}, \cite{noether2016ring}, \cite{maxwell2018simple} we call linkable spontaneous threshold anonymous group (LSTAG) signatures, and we prove the implementation existentially unforgeable. 
+\end{abstract}
+
+\section{Introduction}
+
+
+Cryptocurrencies and e-cash schemes critically rely upon unforgeable digital signatures, and many use cases exist for threshold signatures in these settings, ranging from multi-factor authentication in transaction approval to cross-chain atomic swaps. The idea is simple: a group of collaborating users decide upon a threshold and some members of the group can collaborate to compute signatures just so long as more group members agree to a computation than the threshold. Upon inception, Bitcoin used ECDSA on secp256k1 for signatures, but this is by no means the only option available to cryptocurrency engineers. More recently, Schnorr signatures \cite{schnorr1991efficient} have gained popularity and functionality, including threshold multi-signatures as presented in \cite{maxwell2018simple}, and Okamoto signatures \cite{okamoto1992provably} have also been investigated for use in multi-signatures in cryptocurrencies \cite{drijvers2018okamoto}. Other options, like ring signatures \cite{liu2004linkable} or zerocoin-style accumulators \cite{miers2013zerocoin} allow for signer-ambiguous message authentication, where verifiers can check that a member of an anonymity set authenticates a message, and yet have a negligible advantage in determining which member. 
+
+In the cryptocurrency setting, signer-ambiguous message authentication is necessary for \textit{spender ambiguity}. We interpret this ambiguity as a property regarding plausible deniability in the history of transactions: financial systems employing these options allow for publicly verifiable ledgers yet allow users the ability to at least plausibly deny their involvement in any one transaction (or some small set of them). It is therefore natural to seek threshold extensions to ambiguous message authentication like ring signatures. These ring signatures can also be exploited to construct ring confidential transactions in a digital currency. Multi-signature functionality in a digital currency also allows, for example, cross-chain atomic swaps. Hence, a thresholdized ring signature scheme can allow for spender-ambiguous cross-chain atomic swaps for confidential amounts without a trusted set-up.
+
+We refer to thresholdized ring signatures as \textit{thring signatures}. Previous proposals for thring signatures (e.g.\ \cite{bresson2002threshold}, \cite{liu2003separable}, \cite{tsang2004separable}) are leaky (They reveal properties of the signing coalition such as the number of signers, or even publish the list of signing public keys with signatures), or use key computations akin to those presented in \cite{bellare2006multi}, which are vulnerable to rogue key attacks. For these reasons, we find these proposals to be inappropriate for use in privacy-focused digital currencies.
+
+We construct a thring signature implementation using a Musig-style approach applied to the linkable spontaneous anonymous group (LSAG) signatures of \cite{liu2004linkable}, taking into account the modifications presented in \cite{backLSAG} and \cite{noether2016ring} intended for use in digital currency applications. The Musig approach from \cite{maxwell2018simple} aggregates keys with an approach first proposed in \cite{qian2010non} that is resistant to rogue-key attacks. As is usual for multisignature schemes, we replace the random data for use in signing with sums of data selected by participants, which is revealed in a commit-and-reveal phase. Lastly, like the Musig approach, we include signing keys in signature challenge computation which prevents oracle queries in the proof of existential unforgeability from taking place in a bad order. 
+
+
+\subsection{Our contribution}
+
+We present an LSTAG signature scheme, which resembles the Musig multi-signatures from \cite{maxwell2018simple}, and is a thresholdized version of LSAG signatures. We present a definition of existential unforgeability in the ring signature setting and prove the scheme secure under this definition. We also make remarks on the difference between our scheme and ostensible applications for cryptocurrency purposes. 
+
+The scheme we present is $n$-of-$n$ but can be extended to $m$-of-$n$ threshold schemes using standard techniques, and can be extended to a multi-layered scheme for use in ring confidential transactions. The scheme is aggregate-keyed, in the sense that signature verification does not require knowledge of the signing threshold. Signature sizes are not dependent upon the number of colluding signers. The security proof is under the plain public key model. We use the same three-step process of Musig, and verification of the signatures proceeds identically to usual LSAG signatures.
+
+In Section \ref{notation}, we explain our notation, assumptions, and other pre-requisites. In Section \ref{motivation}, we loosely explain how LSAG signatures presently work in Monero, how to apply the Musig thresholdizing heuristic to them to obtain LSTAGs, and applications of LSTAGs for use in ring confidential transactions. In Section \ref{schemeAndImp}, we define LSTAG signatures, present an implementation example. In Section \ref{security}, we define an unforgeability game for LSTAG signatures, prove the implementation from Section \ref{schemeAndImp} is secure under this definition. We also discuss linkability, exculpability, signer ambiguity, and key aggregation indistinguishability. 
+
+
+\subsection{Related works and challenges}
+
+In \cite{liu2004linkable}, LSAG signatures were first described; modifications were suggested in \cite{backLSAG}.
+In \cite{maxwell2015confidential}, confidential transactions for use in digital currencies were first described, and in \cite{noether2016ring}, ring signature extensions of confidential transactions using a key-vector extension of LSAG signatures called multi-layered linkable spontaneous anonymous group (MLSAG) signatures were first described. We generally use the approach from \cite{bellare2006multi} for computing multi-signatures, with the Musig-style key aggregation from \cite{qian2010non} and the commit-and-reveal approach of \cite{maxwell2018simple}. Our unforgeability proof, like that of \cite{maxwell2018simple}, uses a double application of the rewind-on-success forking method (ostensibly first presented in \cite{liu2004linkable}). 
+
+Other multi-signature techniques, especially in the pairings- and learning-with-errors based worlds, are available. See, for example, \cite{bonehthreshold}, a novel and quite general fully homomorphic thresholdizing set-up using only one round of communication is described in the learning-with-errors environment, leading to fully homomorphic threshold signatures and encryption.  More recently, \cite{bonehcompact} uses a pairings-based setting to provide compact multi-signatures with extremely valuable properties.
+
+Note that the thresholdizing heuristic described in \cite{bellare2006multi} presented a general multi-signature scheme in the plain public key model, but also presented a detailed discussion of the knowledge-of-secret-key (KOSK) assumption. It is worth noting that there are some problems with practically and securely implementing schemes that are proven secure under the KOSK setting using proofs of possession of secret keys unless special care is taken (see, for example, \cite{ristenpart2007power}). For this reason, we avoid the KOSK assumption, although the security proofs for schemes such as ours are dramatically simpler in the KOSK setting with proofs of possession replacing the certificate authority. In \cite{qian2010non}, the KOSK-free method of aggregating a shared multi-signature public key we use here was presented which is resistant to rogue key attacks (albeit in a pairings-based setting).  An early version of Musig used a single round of communication, which was later modified to include a commit-and-reveal stage to signing. Indeed, in \cite{drijvers2018okamoto} it is demonstrated that it is very unlikely that a single round of communication in a Musig-like signature scheme can be proven secure under the discrete logarithm hardness assumption.  
+ 
+
+
+
+For use in digital currency applications in ring confidential transactions, these thring signatures must be further extended. For example, in applications to digital currencies employing (some variant of) the Cryptonote protocol such as Monero, implementation must account for keypair vectors including a view key in addition to a spend/signing key, and must account for one-time key computations. Proving the security of our scheme under these extensions is beyond the scope of this document. For more detailed formalizations of ring confidential transactions and thring signatures, see for example \cite{ruffct2}.
+
+ 
+
+
+
+\subsection{Special thanks} 
+
+We want to specially thank the members of the Monero community who used the \texttt{GetMonero.org} Community Forum Funding System to support the Monero Research Lab. Readers may also regard this as a statement of conflict of interest, since our funding is denominated in Monero and provided directly by members of the Monero community by the Forum Funding System. We also wish to extend particular thanks to Andrew Poelstra and Yannick Seurin, and many others, for some extremely helpful comments.
+
+
+\section{Notation and assumptions}\label{notation}
+
+%For any set $S$, we denote with $S^*$ the set of all finite sequences of letters from $S$ (the free monoid generated by $S$ over $\mathbb{N}$).
+We generally use calligraphic font to denote PPT algorithms and oracles: $\adversary, \adversary^\prime, \adversary^{\prime \prime}, \mathcal{B}$ are PPT algorithms, $\mathcal{H}$ is a random oracle, $\mathcal{SO}$ is a signing oracle. We often grant an algorithm oracle access, which we denote with a superscript: $\mathcal{A}^{\mathcal{SO}}$ means $\mathcal{A}$ has oracle access to $\mathcal{SO}$. We shall often leave the superscripts implicit for clarity, unless there is risk of confusion. We use \texttt{teletype font} to describe the inputs and outputs of algorithms, or as the names of special algorithms from a cryptographic scheme: $\texttt{inp}_\adversary$ is the input for $\adversary$, $\texttt{out}_\adversary$ is the output, $\texttt{Sign}$ is the signing algorithm in our implementation, and so on. Algorithms often come with a distinguished failure symbol (or a set of them) which we denote $\bot$: $\bot_\adversary$ is the failure symbol of $\adversary$, $\bot_{\texttt{Sign}}$ is the failure symbol of $\texttt{Sign}$, and so on.
+
+We use miniscule english letters and greek letters for integers: $n, r, q, \ell, i, j, k, \alpha, \eta$ are all in $\bbn$. For any $r \in \bbn = \left\{1, 2, \ldots\right\}$, we denote the set of $r$ elements $\left\{1, 2, \ldots, r\right\}$ with $\left[r\right]$. We use underlines to denote vectors, ordered lists, sequences, and sets indexed by well-ordered indexing sets. For example, for an unordered list of independent random oracles $\underline{H}$ indexed by some arbitrary finite set $\Lambda$ with $n = \left|\Lambda\right|$ elements, we can harmlessly re-index and assume $\Lambda = [n]$ and write $\underline{\mathcal{H}} = \left\{\mathcal{H}_i\right\}_{i \in [n]}$. 
+
+For any $n > 1$, we denote $\bbz/n\bbz$ with $\bbz_n$. We assume a set-up phase is executed with a security parameter $\eta > 1$ before beginning, resulting in some $(\p, \group, G, \underline{\mathcal{H}}, \phi, \Phi)$, namely a cyclic group $\group$ of order $\p$ with generator $G$ such that elements from $\bbz_\p$ and $\mathbb{G}$ admit $\eta$-bit representations, a sequence $\underline{\mathcal{H}}$ of cryptographic hash functions, and two key aggregation functions $\phi, \Phi$. We say an element of $\group$ is a \textit{public key}, which we denote these throughout this document with majuscule english letters. For example, $A, B, C, T, P, X$ are public keys, and $\underline{P} = \left\{P_\ell \right\}_{\ell \in [r]}$ denotes a sequence of $r$ public keys.  We say such a sequence is a \textit{ring} if it is to be used as input for a ring signature. For computing ring signatures with $r \in \bbn, r > 1$ ring members, we allow indices from $[r]$ to ``wrap around'' by identifying the ring index $r+1$ with the ring index $1$. We only use this convention for ring member indices, not for other indices. 
+
+We say members of $\scalarField$ are \textit{private keys}. Since these are equivalence classes of integers, we also use miniscule english letters to denote these private keys, but we tend to use different sets of letters than for integers: $a$, $b$, $t$, $p$, and $x$ are private keys from $\scalarField$. We say that some $X \in \group$ is a public key \textit{associated with} some private key $x \in \scalarField$ if $X = xG$ for the generator $G$ specified above, and we match letters: the public key associated with the private key $a$ is $A = aG$, the public key associated with the private key $b$ is $B = bG$, and so on. For a list of private keys, say $\underline{x} =  (x_1, \ldots, x_n)$, we write the list of corresponding public keys as $\underline{X} = (X_1, \ldots, X_n)$ where each $X_i = x_i G$. We denote this $\underline{X} = \underline{x}G$ at the risk of abusing notation. 
+
+We use the convention that $\phi(x, \left\{X\right\}) = x$ and $\Phi(\left\{X\right\}) = X$. Here, $\Phi$ takes as input a non-empty multiset $\underline{X} = (X_1, \ldots, X_n)$ of public keys and produces as output a shared public key $X_{\text{sh}} \leftarrow \Phi(\underline{X})$, and $\phi$ takes as input a private key $x_i$ with a non-empty multiset $\underline{X}$ of public keys (such that $X_i = x_iG$ in $\underline{X}$ at least once) and produces as output a coefficient $\beta_i = \phi(x_i, \underline{X})$. Users set their private share as $x_i^* := \beta_i x_i = \phi(x_i, \underline{X}) x_i$. We say $X_{\text{sh}}$ is \textit{related to} or a \textit{child of} the keys in $\underline{X}$ and we use \[\Phi(\underline{X}) := \sum_{i \in [n]} \beta_i X_i = \sum_i x_i^* G = X_{\text{sh}}.\]
+
+We specify $\underline{\mathcal{H}}$, six arbitrary-length-input, $\eta$-bit-output cryptographic hash functions with independent outputs
+\begin{align*}
+\mathcal{H}_{\text{ki}}:& \left\{0,1\right\}^* \to \group & \mathcal{H}_{\text{com}}:& \left\{0,1\right\}^* \to \left\{0,1\right\}^\eta & \mathcal{H}_{\text{agg}}:&  \left\{0,1\right\}^* \to \scalarField \\ \mathcal{H}_{\text{sig}}:& \left\{0,1\right\}^* \to \scalarField &
+\mathcal{H}_{\text{msg}}:& \left\{0,1\right\}^* \to \scalarField &
+\mathcal{H}_{\text{sess}}:& \left\{0,1\right\}^* \to \scalarField
+\end{align*} under the random oracle model. We denote concatenation of bitstrings with the symbol $\mid \mid$. Since elements of $\scalarField$ can be described with $\eta$ bits, we may as well take $\mathcal{H}_{\text{agg}}$, $\mathcal{H}_{\text{sig}}$, $\mathcal{H}_{\text{com}}$, $\mathcal{H}_{\text{msg}}$, and $\mathcal{H}_{\text{sess}}$ to all five have the same codomain. This way, for implementation purposes, these hash functions can be realized with a single hash function $\mathcal{H}_{\text{sc}}:\left\{0,1\right\}^* \to \scalarField$ using domain separation:
+
+\begin{align*}
+\mathcal{H}_{\text{com}}(x) :=& \mathcal{H}_{\text{sc}}(000 \mid \mid x)\\
+\mathcal{H}_{\text{agg}}(x) :=& \mathcal{H}_{\text{sc}}(001 \mid \mid x) \\ 
+\mathcal{H}_{\text{sig}}(x) :=& \mathcal{H}_{\text{sc}}(010\mid \mid x) \\
+\mathcal{H}_{\text{msg}}(x) :=& \mathcal{H}_{\text{sc}}(011\mid \mid x) \\
+\mathcal{H}_{\text{sess}}(x) :=& \mathcal{H}_{\text{sc}}(111\mid \mid x)
+\end{align*} This allows us to only require two hash functions for implementation, $\mathcal{H}_{\text{ki}}$ and $\mathcal{H}_{\text{sc}}$. Also, we only use $\mathcal{H}_{\text{sess}}$ in an early example; our implementation could use just the first four $\mathcal{H}_{sc}$ variants and use only two bits of prefixes. Note that although these functions will each have $\eta$-bit outputs, their effective entropy is actually somewhat lower due to this domain separation.%\footnote{NOTE: I don't think it's a full 3 bits lower, though...}.
+
+Of course, if $\mathcal{H}_{\text{ki}}$ can be factored into some $\mathcal{H}_{\text{ki}} = \mu_G \cdot \mathcal{H}_{\text{ki}}^*$ for some $\mathcal{H}_{\text{ki}}^*:\left\{0,1\right\}^* \to \scalarField$ (where $\mu_G: \scalarField \to \group$ is the canonical hard-to-invert homomorphism defined by mapping $x \mapsto xG$), then whoever knows this factorization  of $\mathcal{H}_{\text{ki}}$ can compute the discrete logarithm of outputs of $\mathcal{H}_{\text{ki}}$, which is a highly undesirable property. We assume no such factorization is easily computable.
+
+%We take the message space to be the free monoid generated by the set $\left\{0,1\right\}$ with the operation of string concatenation, which we denote $\left\{0,1\right\}^*$. Instead of signing an arbitrary message $\m \in \left\{0,1\right\}^*$, which lives in a space much bigger than $\group$, we instead produce a signature on a $\scalarField$ element $M = \mathcal{H}(\m)$ for some collision resistant hash function $\mathcal{H}:\left\{0,1\right\}^* \to \scalarField$.  As before, we implement this $\mathcal{H}$ using domain separation by defining $\mathcal{H}(\m) := \mathcal{H}_{\text{sc}}(11 \mid \mid \m)$, but since we never use $\m$ directly, we never actually make use of this fact. In the sequel, we forget about $\m$ and deal merely wtih $M$, assuming messages $M$ are elements from $\scalarField$.
+
+\section{Motivation of scheme}\label{motivation}
+
+In this section, we describe the motivation behind our thring signature scheme. We begin by describing, loosely, how Back-style LSAG signatures are computed using the particular CryptoNote-style key spaces. We then describe a thresholdizing heuristic for use in constructing our implementation, and then we make some brief comments on the application of these signatures in Monero. %In future sections, we define our approach formally and demonstrate the unforgeability of these signatures.
+
+\subsection{Back-style LSAG signatures}\label{lsagFirst}
+
+In this section we provide a brief look at how signatures work in Cryptonote-styled digital currencies like Monero. The signatures in \cite{liu2004linkable} use key images that are dependent upon the ring of signers, making them inappropriate for linkability in this setting. In \cite{backLSAG}, a modification was presented, which we summarize here. Our description makes use of four cryptographic hash functions modeled as random oracles, $\mathcal{H}_{\text{sess}}$, $\mathcal{H}_{\text{sig}}$,  $\mathcal{H}_{\text{ki}}$, and $\mathcal{H}_{\text{msg}}$. 
+
+Consider first the CryptoNote-styled key spaces of Monero. Users have \textit{user keypairs} (consisting of a \textit{view key} and a \textit{spend key}) and they sign with \textit{signing keypairs} (consisting of a \textit{transaction key} and a \textit{session key} [alternately, a \textit{one-time key} or \textit{stealth key}]). Session keys are computed from user keypairs and transaction keys; ring signatures are computed using the session keys. A generic keypair space is made available, $\mathfrak{K} = \scalarField^2 \times \group^2$ and both sorts of keypairs come from $\mathfrak{K}$. 
+
+A user keypair is denoted $((a,b),(A,B)) \in  \mathfrak{K}$ and we say $a$ is the \textit{private view key}, $b$ is the \textit{private spend key}, $A$ is the \textit{public view key}, and $B$ is the \textit{public spend key}. Honest users select their private keys uniformly at random. A signing keypair is some  $((t,p),(T,P)) \in \mathfrak{K}$ and we say $t$ is the \textit{private transaction key}, $p$ is the \textit{private session key}, $T$ is the \textit{public transaction key}, and $P$ is the \textit{public session key}. Honest users receive the public part of their transaction key $T$ from a sender. In Monero, we say a public signing key pair $(T,P)$ with index $i$ in some transaction is \textit{addressed to} a public user key pair $(A,B)$ if $P = \mathcal{H}_{\text{sess}}(aT, i)G + B$. Given $T, a, B, i$ or $t, A, B, i$, ownership of a session key can be easily tested: merely check if $P - \mathcal{H}_{\text{sess}}(aT, i) = B$. Given $T, a, b, i$ or given $t, A, b, i$, the private session key can be easily computed: $p = \mathcal{H}_{\text{sess}}(aT, i) + b$.  In the sequel we ``forget'' the transaction index $i$ for clarity in our notation.
+
+If Alice has a user key $((a,b),(A,B)) \in  \mathfrak{K}$, has previously received a message containing some public signing keys $(T, P)$ addressed to $(A,B)$, and Alice wishes to address some keys to Bob (who has public user key $(A^{\prime}, B^{\prime})$). Alice computes $p$, picks a new private transaction key $t^{\prime} \leftarrow \scalarField$, and computes a new public session key $P^{\prime} := \mathcal{H}_{\text{sess}}(t^{\prime} A^{\prime})G + B^\prime$ for Bob. Alice then sends $(T^{\prime}, P^{\prime})$ to Bob in a message $\m$, and produces a ring signature $\sigma$ on a modified message $\m^*$ that contains $\m$ and some ring $\underline{P}$ such that $P \in \underline{P}$. Alice computes the ring signature in the following way.
+
+Alice selects a message $\m \in \left\{0,1\right\}^*$, computes her one-time key image $J = p\mathcal{H}_{\text{ki}}(P)$, and selects a ring of public signing keys $\underline{P}=\left\{P_1, \ldots P_r\right\}$ such that, for a secret distinguished index $\pi$, $P_{\pi}=P$.  Alice assembles a modified message $\m^* = (\m, \underline{P}, J, T^{\prime}, P^{\prime})$ and computes $M = \mathcal{H}(\m^*)$. For each $\ell=1,\ldots,r$, the signer computes an elliptic curve point from the $\ell^{th}$ ring member $H_\ell := \mathcal{H}_{\text{ki}}(P_\ell)$. The signer selects a random secret scalar $u \overset{\$}{\leftarrow} \scalarField$ 
+and computes an initial temporary pair of points $L_{\pi} := uG$,  $R_{\pi} := u\mathcal{H}_{\pi}$. The signer computes an initial commitment $c_{\pi+1} := \mathcal{H}_{\text{sig}}(M,L_{\pi}, R_{\pi})$. We shall later use the \textit{key prefixed variant} of this commitment, $c_{\pi+1} := \mathcal{H}_{\text{sig}}(M,P_\pi, L_{\pi}, R_{\pi})$
+
+The signer proceeds through indices $\ell=\pi+1, \pi+2, \ldots, r-1, r, 1, 2, \ldots, \pi-1$ 
+by selecting a random scalar $s_\ell$, computing the next pair of points $L_\ell := s_\ell G + c_\ell P_\ell$ and $R_\ell := s_\ell H_\ell + c_\ell J$, and computes the next commitment $c_{\ell+1}:=\mathcal{H}_{\text{sig}}(M,L_\ell, R_\ell)$ (or the key-prefixed variant $c_{\ell+1}:=\mathcal{H}_{\text{sig}}(M,P_\ell, L_\ell, R_\ell)$). Once all commitments $c_\ell$ have been computed, the signer then computes $s_{\pi} := u - c_{\pi}p$ for the distinguished index $\pi$.   $\sigma=(c_1, \underline{s})$  is the signature on $\m$. Alice sends $(\m^*, \sigma)$ to Bob. We say the set of equations \begin{align*}
+c_2 =& \mathcal{H}_{\text{sig}}(M, s_1 G + c_1 P_1, s_1 H_1 + c_1 J) = \mathcal{H}_{\text{sig}}(M, L_1, R_1)\\
+c_3 =& \mathcal{H}_{\text{sig}}(M, L_2, R_2)\\
+& \vdots \\
+c_r =& \mathcal{H}_{\text{sig}}(M, L_{r-1}, R_{r-1})\\
+c_1 =& \mathcal{H}_{\text{sig}}(M, L_r, R_r)
+\end{align*} (or their key-prefixed variants) are the \textit{verification equations}.
+
+Upon receiving $(\m^*, \sigma)$, Bob parses $\m^* = (\m, \underline{P}, J, (T^\prime, P^\prime))$ and checks that $M = \mathcal{H}(\m^*)$. Bob can easily test if $P^{\prime} - \mathcal{H}_{\text{sess}}(a^\prime T^\prime)G = B^\prime$ to see if he is the addressee for the keys. Bob can also extract the private signing key by computing $p^\prime = \mathcal{H}_{\text{sess}}(a^\prime T^\prime) + b^\prime$. This way, Bob can perform the same procedure Alice does above to pass new signing keys to other users. However, Bob may not be convinced the signature is genuine, so he verifies the signature in the following way.
+
+Given $(\m^*, \sigma)$, the verifier parses $\sigma = (c_1, \underline{s})$ and computes $M = \mathcal{H}(\m^*)$. The verifier computes each $H_\ell = \mathcal{H}_{\text{ki}}(P_\ell)$. For each $1 \leq \ell \leq r$, the verifier finds $L_{\ell}^{\prime} = s_\ell G + c_\ell P_\ell$, $R_{\ell}^{\prime} = s_\ell H_\ell + c_\ell J$. The verifier uses these to compute the $(\ell+1)^{th}$ commitment $c_{\ell+1} = \mathcal{H}_{\text{sig}}(M, L_{\ell}^{\prime}, R_{\ell}^{\prime})$. After computing $\underline{c} = (c_2, c_3, \ldots, c_r, c_{r+1})$, the verifier identifies index $r+1$ with index $1$ and checks that $c_{r+1} = c_1$. If so, the verifier is convinced the signature is genuine. A verifier can check whether two signatures are signed by the same key by simply comparing key images.
+
+\subsection{Thresholdizing Back LSAG signatures with Musig-style aggregation} \label{naiveImplement}
+
+In this section, Alice and Bob wish to collaborate in constructing a $2$-of-$2$ threshold version of an LSAG signature to send a key to Charlene. Signatures are verified exactly as before without any knowledge that they were constructed by a coalition rather than a single user. We proceed similarly to how we did before, making changes according to the following heuristics.
+\begin{description}
+\item [Keys are sums:] Replace spend keys with linear combinations of spend key shares.
+
+\item [Signing data are sums:] Replace the (random) signing data with sums.
+
+\item [Commit and reveal:] Insert a commitment step before revealing the signing data.
+
+\item [Key-prefixing:] Insert the ring member into each signature challenge.
+\end{description} 
+
+In Musig, the key-aggregation function is $\phi(b_i, (\underline{A},\underline{B})) := \mathcal{H}_{\text{agg}}(B_i, (\underline{A}, \underline{B}))$. Note that computing $\phi(b_i, (\underline{A}, \underline{B}))$ does not require the secret $b_i$. Alice picks a new private user key $(a_1, b_1)$, computes the public key $A_1 = a_1 G$, $B_1 = b_1G$, and sends $(a_1, B_1)$ to Bob by secure side channel. Bob does the same by selecting $(a_2, b_2)$ and sending $(a_2, B_2)$ to Alice.  They compute a private shared view key $a_{\text{sh}} = a_1 + a_2$ and a public shared spend key \[B_{\text{sh}} = \mathcal{H}_{\text{agg}}(B_1, (\underline{A}, \underline{B}))B_1 + \mathcal{H}_{\text{agg}}(B_2, (\underline{A}, \underline{B}))B_2 = \beta_1 B_1 + \beta_2 B_2.\] Alice and Bob could, alternatively, compute the private shared view key $a_{\text{sh}}$ using any number of methods of computing a shared secret. 
+
+Alice and Bob receive a message $\m$ containing some public signing keys $(T,P)$ addressed to $(A_{\text{sh}},B_{\text{sh}})$ so that $P = \mathcal{H}_{\text{sess}}(a_{\text{sh}} T)G + B_{\text{sh}}$.  Alice and Bob wish to pass this along to Charlene, who has public user key $(A^\prime, B^\prime)$, by ring multi-signing some message $\m^\prime$. Alice and Bob decide by side channel upon some ring $\underline{P} = (P_1, \ldots, P_r)$ and a secret index $\pi$ such that with $P_\pi = P$. Alice and Bob compute by side channel the key image 
+\[J = \left(\underbrace{\mathcal{H}_{\text{sess}}(a_{\text{sh}} T)}_{\text{view}} + \underbrace{b_1\mathcal{H}_{\text{agg}}(B_1, (\underline{A}, \underline{B}))}_{\text{first participant}} + \underbrace{b_2\mathcal{H}_{\text{agg}}(B_2, (\underline{A}, \underline{B}))}_{\text{second participant}}\right)\mathcal{H}_{\text{ki}}(P).\] Alice and Bob also pick a new private transaction key $t^{\prime} \leftarrow \scalarField$ (some member unilaterally selects or it is decided upon collaboratively somehow, similarly to the shared view key). Alice and Bob compute a new public session key for Charlene $P^{\prime} = \mathcal{H}_{\text{sess}}(t^{\prime} A^{\prime})G + B^\prime$.  Alice and Bob compute a basepoint for each ring member, $H_\ell = \mathcal{H}_{\text{ki}}(P_\ell)$. Then Alice and Bob execute the ring signing algorithm in the following steps.
+
+\begin{description}
+\item [Commit:] Alice selects $u_1 \overset{\$}{\leftarrow} \bbz_\p$ and Bob selects $u_2 \overset{\$}{\leftarrow} \bbz_\p$. Alice computes temporary pair of points $(L_{1, \pi}, R_{1,\pi}) = (u_1 G, u_1 H_\pi)$ and Bob computes temporary pair of points $(L_{2, \pi}, R_{2,\pi}) = (u_2 G, u_2 H_\pi)$. Alice selects random secret scalars $\underline{s}^{(1)} = \left\{s_{1, \ell}\right\}_{\ell \neq \pi}$ and Bob selects random secret scalars $\underline{s}^{(2)} = \left\{s_{2,\ell}\right\}_{\ell \neq \pi}$. Alice computes her partial key image $J_1 = b_1 \mathcal{H}_{\text{agg}}(B_1, (\underline{A}, \underline{B}))\mathcal{H}_{\text{ki}}(P)$ and Bob computes his partial key image $J_2 = b_2 \mathcal{H}_{\text{agg}}(B_2, (\underline{A}, \underline{B}))\mathcal{H}_{\text{ki}}(P)$. Alice computes the commitment $\texttt{com}_1 = \mathcal{H}_{\text{com}}(L_{1,\pi}, R_{1,\pi}, \underline{s}^{(1)})$ and Bob computes the commitment  $\texttt{com}_2 = \mathcal{H}_{\text{com}}(L_{2,\pi}, R_{2,\pi}, \underline{s}^{(2)})$. Alice sends Bob $(J_1, \texttt{com}_1)$ and Bob sends Alice $(J_2,\texttt{com}_2)$.
+
+\item [Reveal:] After receiving $(J_2, \texttt{com}_2)$, Alice sends $(L_{1,\pi}, R_{1,\pi}, \underline{s}^{(1)})$ to Bob; after receiving $(J_1, \texttt{com}_1)$, Bob sends $(L_{2,\pi}, R_{2,\pi}, \underline{s}^{(2)})$ to Alice. After receiving  $(L_{2,\pi}, R_{2,\pi}, \underline{s}^{(2)})$, Alice checks that $\texttt{com}_2 = \mathcal{H}_{\text{com}}(L_{2,\pi}, R_{2,\pi}, \underline{s}^{(2)})$. If not, Alice outputs $\bot$ and terminates. After receiving $(L_{1,\pi}, R_{1,\pi}, \underline{s}^{(1)})$, Bob checks that $\texttt{com}_1 = \mathcal{H}_{\text{com}}(L_{1,\pi}, R_{1,\pi}, \underline{s}^{(1)})$. If not, Bob outputs $\bot$ and terminates.
+
+\item [Pre-compute signature:] Alice and Bob compute the total key image $J = J_1 + J_2 + \mathcal{H}_{\text{sess}}(a_{\text{sh}}T)$, assemble a modified message $\m^* = (\m, \underline{P}, J, (T^{\prime}, P^{\prime}))$, compute $M = \mathcal{H}(\m^*)$, compute the sums $L_\pi = L_{1,\pi} + L_{2,\pi}$, $R_\pi = R_{1,\pi} + R_{2,\pi}$, and $s_\ell = s_{1,\ell} + s_{2, \ell}$ for each $\ell \neq \pi$. Alice and Bob can then compute the sequential commitments $c_{\ell+1} := \mathcal{H}_{\text{sig}}(M,P_\ell, L_{\ell}, R_{\ell})$, proceeding through indices $\ell=\pi+1, \pi+2, \ldots, \pi-1$ with $L_\ell = s_\ell G + c_\ell P_\ell$ and $R_\ell = s_\ell H_\ell + c_\ell J$.   The partial signature $\widehat{\sigma} = (c_1, \left\{s_\ell\right\}_{\ell \in [r] \setminus \pi})$ can be stored until later.
+
+\item [Complete signature:] Alice computes $s_{1, \pi} = u_1 - c_\pi \beta_1 b_1$. Bob computes $s_{2, \pi} = u_2 - c_\pi \beta_2 b_2$. Alice sends $s_{1, \pi}$ to Bob and Bob sends $s_{2, \pi}$ to Alice.   Either can compute $s_\pi = s_{1, \pi} + s_{2, \pi}$ and publish the completed signature $\sigma = (c_1, \underline{s})$ with the modified message $\m^*$.
+\end{description} Observe that signature challenges have the ring member $P_\ell$ in their pre-image (compare to Section \ref{lsagFirst}); this forces oracle queries to occur in a safe order in our security proofs.
+
+
+
+
+
+\section{Linkable thring signatures and an  implementation}\label{schemeAndImp}
+
+%In this section, we present a formal definition of LSTAG signatures and an example implementation.%, a definition of an unforgeability game and a description of a signing oracle for use in that game.
+
+
+
+\begin{defn}
+A \textit{Linkable Thring Signature} is a quadruple of collaboratively computed polynomial-time algorithms $(\texttt{KeyGen}, \texttt{Sign}, \texttt{Ver}, \texttt{Link})$. We neglect notation for the common input $\eta$, the security parameter in our description:
+
+\begin{enumerate}
+
+\item $\texttt{KeyGen}$ produces as output a new random $x \overset{\$}{\leftarrow} \scalarField$, computes $X = xG$, and outputs $\texttt{out}_{\texttt{KeyGen}} = (x,X)$.
+
+\item $\texttt{Sign}$ is a multi-party algorithm executed by participants with private keys $\underline{x} = \left\{x_i\right\}_{i=1}^{n}$. Each participant uses their key $x_i$ as private input and all participants use some shared input $\texttt{inp}_{\texttt{Sign}} = (\m, \underline{P}, \pi)$ where $\m \in \left\{0,1\right\}^*$, $\underline{P} = \left\{P_i\right\}_{i=1}^{r}$ is a ring of public keys, and $\pi$ is a secret index satisfying $1 \leq \pi \leq r$. $\texttt{Sign}$ outputs either a distinguished failure symbol $\texttt{out}_{\texttt{Sign}} = \bot_{\texttt{Sign}}$ to each participant or some $\texttt{out}_{\texttt{Sign}} = (\m^*, \sigma)$ to each participant where  $\sigma$ is a ring signature and $\m^* = (\m, \underline{P}, J, \texttt{aux}_{\texttt{Sign}})$ for a linkability tag $J$ and some auxiliary data $\texttt{aux}_{\texttt{Sign}}$.
+
+
+
+\item $\text{Ver}$ takes as input some $\texttt{inp}_{\texttt{Ver}} = (\m^*, \sigma)$ and outputs a bit $\texttt{out}_{\texttt{Ver}} = b \in \left\{0,1\right\}$. %indicating whether $\sigma$ is a valid ring signature on message $M \in \left\{0,1\right\}^*$ with ring of public keys $Q = \left\{Y_1, \ldots, Y_R\right\}$ and linkability tag $J$.
+
+\item $\text{Link}$ takes as input some $\texttt{inp}_{\texttt{Link}} = (\m_1^*, \sigma_1)$, $(\m_2^*, \sigma_2)$ and outputs a bit $\texttt{out}_{\texttt{Link}} = b \in \left\{0,1\right\}$.
+
+\end{enumerate} 
+\end{defn} We include the auxiliary data in the modified message to allow, for example, packing of a recipients' keys into $\m^*$, although we do not make use of $\texttt{aux}$ directly.
+
+\begin{defn}[Correctness]
+For any $\m^* \in \left\{0,1\right\}^*$ and any $\sigma \in \mathbb{Z}_{\mathfrak{p}}^*$, denote the event that $\texttt{Ver}(\m^*, \sigma) = 1$ as $V(\m^*, \sigma)$. For any $((\m, \underline{P}, \pi, \underline{x}), (\m^*, \sigma))$, denote the event that $\texttt{Sign}(\m, \underline{P}, \pi, \underline{x}) = (\m^*, \sigma)$ and $P_\pi = \Phi(\underline{X})$ with $S\left((\m, \underline{P}, \pi, \underline{x}), (\m^*, \sigma)\right)$. We say a linkable thring signature scheme is \textit{correct} when, by measuring the probability over all input coins and all choices of hash functions, $\mathbb{P}\left[ V(\m^*, \sigma) \mid S\left((\m, \underline{P}, \pi, \underline{x}), (\m^*, \sigma)\right)\right] = 1$ for any $(\m, \underline{P}, \pi, \underline{x})$.
+\end{defn}
+
+\begin{defn}[Linkability]
+For any pair of signatures, $(\m^*_1, \sigma_1)$, and $(\m^*_2, \sigma_2)$, denote the event that $\texttt{Link}(\m^*_1, \sigma_1, \m^*_2, \sigma_2) = 1$ as $L(\m^*_1, \sigma_1, \m^*_2, \sigma_2)$. We define the sub-event $S^{\prime}(\m^*_1, \sigma_1, \m^*_2, \sigma_2) \subseteq V(\m^*_1, \sigma_1) \cap V(\m^*_2, \sigma_2)$ as the event that there exists some $\underline{x}$, some messages $\m_1$, $\m_2$, some rings $\underline{P}_1, \underline{P}_2$, and some indices $\pi_1, \pi_2$ satisfying both  $\texttt{Sign}(\m_1, \underline{P}_1, \pi_1, \underline{x}) = (\m^*_1, \sigma_1)$ and $\texttt{Sign}(\m_2, \underline{P}_2, \pi_2, \underline{x}) = (\m^*_2, \sigma_2)$. We say a linkable thring signature scheme is \textit{linkable} when, for any $(\m^*_1, \sigma_1, \m^*_2, \sigma_2)$, \[\mathbb{P}\left[L(\m^*_1, \sigma_1, \m^*_2, \sigma_2)\mid S^{\prime}(\m^*_1, \sigma_1, \m^*_2, \sigma_2)\right] = 1,\] where this probability is measured over all participants' coins and all choices of hash functions.
+\end{defn} 
+
+\begin{ex}[LSTAGs]\label{implementation}
+We present a linkable thring signature scheme inspired by the LSAG signatures of \cite{liu2004linkable}; we say this scheme is a \textit{linkable spontaneous threshold anonymous group} signature, or an LSTAG signature. 
+
+We aggregate keys using the Musig approach by setting $\Phi(\underline{X}) = \sum_{i \in [n]} \beta_i X_i$ where $\beta_i = \phi(x_i, \underline{X}) = \mathcal{H}_{\text{agg}}(X_i, \underline{X})$. To ensure each participant computes keys in a consistent way, we assume users have, during some set-up phase, decided upon a canonical linear ordering of keys in $\underline{X}$ such as a bit-by-bit little endian lexicographic ordering. The $i^{th}$ member has a share of the private key $x^*_i = \beta_i x_i = \phi(x_i, \underline{X})x_i$. The key image is computed as is usual in Monero: for any private key $x \in \scalarField$, the key image is $x\mathcal{H}_{\text{ki}}(xG)$, so the key image of $X_{\text{sh}}$ is exactly $\sum_i \beta_i x_i \mathcal{H}_{\text{ki}}(X_{\text{sh}})$.
+
+\begin{enumerate}
+\item $\texttt{KeyGen}$ selects some $x \in \scalarField$ at random, computes $X := xG$, and outputs $(x,X)$.
+
+\item $\texttt{Sign}$ is initiated by side channel when the group agrees upon a message $\m$, decides upon a ring $\underline{P}$ and a secret index $\pi$, pre-computes the key image basepoints for each ring member, $H_\ell := \mathcal{H}_{\text{ki}}(P_\ell)$, computes the key image $J = \sum_j J_j = \sum_j x^*_j H_\pi$, assembles the modified message $\m^* = (\m, \underline{P}, J, \texttt{aux})$, and computes $M = \mathcal{H}_{\text{msg}}(\m^*)$. The remainder is run collaboratively:
+
+\begin{description}
+\item [Commit:] Each signer, say with index $j$ such that $1 \leq j \leq n$, does the following: 
+\begin{enumerate}
+\item Selects a random scalar $u_j$. Compute the points $U_j = u_j G$ and $V_j = u_j H_\pi$ and select random scalars $s_{\pi+1, j}, s_{\pi+2, j}, \ldots, s_{\pi-1,j}$. 
+
+\item Set $\texttt{dat}_{j} := (U_j, V_j, \left\{s_{\ell,j}\right\}_{\ell\neq \pi})$.
+
+\item Compute commitment $\texttt{com}_{j} = \mathcal{H}_{\text{com}}(\texttt{dat}_{j})$.
+
+\item Send $\texttt{com}_{j}$ to all other signers.
+\end{enumerate}
+
+\item [Reveal:] After receiving each $\texttt{com}_{j}$ from the rest of the coalition, each signer indexed as before does the following:
+\begin{enumerate}
+\item Send $\texttt{dat}_{j}$ to all other signers.
+
+\item After all $\texttt{dat}_{j^\prime}$ have been received, verify that $\mathcal{H}_{\text{com}}(\texttt{dat}_{j^\prime}) = \texttt{com}_{j^\prime}$ for each $j \neq j^\prime$. If not all commitments open appropriately, output $\bot_{\texttt{Sign}}$ and terminate.
+\end{enumerate}
+
+\item [Offline signature pre-processing] Each signer indexed as before does the following:
+\begin{enumerate}
+\item Compute $L_\pi = \sum_j U_j$, $R_\pi = \sum_j V_j$.
+\item Compute each $s_{\ell} = \sum_j s_{\ell,j}$ for each $1 \leq \ell  \leq r$ such that $\ell \neq \pi$. 
+\item For each $\ell = \pi, \pi+1, \ldots, \pi - 1$ (where we re-assign overflow indices by mapping $r+1 \mapsto 1$, $r+2 \mapsto 2$, and so on), compute the following.
+\begin{align*}
+c_{\ell+1} =& \mathcal{H}_{\text{sig}}(M, P_\ell, L_\ell, R_\ell) \\
+L_{\ell+1} =& s_{\ell+1}G + c_{\ell+1}P_{\ell+1}\\
+R_{\ell+1} =& s_{\ell+1}H_{\ell+1} + c_{\ell+1}J
+\end{align*}
+\item Store the pre-processed signature $(u_j, \m^*, c_1, c_\pi, \left\{s_{\ell}\right\}_{\ell \neq \pi})$ for later.
+\end{enumerate}
+
+\item [Signature completion] To finish signing with $(u_j, \m^*, c_1, c_\pi, \left\{s_{\ell}\right\}_{\ell \neq \pi})$, each signer indexed as before does the following:
+\begin{enumerate}
+\item Compute $s_{\pi, j} = u_j - c_\pi x^*_j$.
+\item Send $s_{\pi, j}$ to the other signers.%\footnote{This value should not be computed before this step.}. 
+\item After receiving all $\left\{s_{\pi, j^\prime}\right\}_{j \neq j^\prime}$, compute $s_\pi = \sum_j s_{\pi,j}$.
+\item Output $(\m^*, \sigma)$ where $\sigma = (c_1, \underline{s})$ where $\underline{s} = (s_1, s_2, \ldots, s_r)$.
+\end{enumerate}
+\end{description}
+
+\item $\texttt{Ver}$ takes as input some $(\mathfrak{m}^*, \sigma)$.
+\begin{enumerate}
+\item Parse $\mathfrak{m}^* = (\mathfrak{m}, \underline{P}, J, \texttt{aux})$ and $\sigma = (c_1, \underline{s})$.
+\item For $\ell = 1, 2, \ldots, r-1$, compute $L_\ell = s_\ell G + c_\ell P_\ell$, $R_\ell = s_\ell H_\ell + c_\ell J$, and $c_{\ell+1} = \mathcal{H}_{\text{sig}}(M, P_\ell, L_\ell, R_\ell)$. 
+\item Compute $c_1^\prime = \mathcal{H}_{\text{sig}}(M, P_r, L_r, R_r)$.
+\item Output $1$ if $c_1^\prime = c_1$ and $0$ otherwise.
+\end{enumerate}
+
+\item $\texttt{Link}$ operates just like a Back LSAG signature: check if key images $J$ match.
+\end{enumerate}
+
+\end{ex}
+
+%Note that since key aggregation requires queries from $\mathcal{H}_{\text{agg}}$, an algorithm that collaborates with other algorithms to execute $\texttt{Sign}$ simulated inside of a black box reveals the keys in each $L$ used. %The question remains whether Example \ref{} can be expanded to take iterative key aggregation into account. In the sequel, we make use of the following definitions that naturally come up while discussing iterative aggregation of keys using multisets of multisets $\left\{L_{\ell, \lambda}\right\}_{\lambda \in \Lambda_\ell}$ to obtain some $Y_\ell \in Q$.
+
+%\begin{defn} We say the \textit{famgraph} is the following directed multigraph. Nodes are public keys in $\cup_{\ell} \cup_{\lambda \in \Lambda_\ell}  L_{\ell,\lambda}$. For each node $Y$, there is some set of nodes $L_{\ell, \lambda}$ in this set; for each occurrence of each key $Y^\prime \in L_{\ell,\lambda}$, we declare a directed edge $Y \to Y^\prime$ (there are as many directed edges $Y \to Y^\prime$ as the number of copies of $Y^\prime$ used to compute $Y$). We say each $Y^\prime \in L$ is a \textit{parent key} of $Y$. Naturally, we say the keys with no parents in a famgraph are the \textit{orphans}, and we say two keys are \textit{related} if there is a path connecting them in the famgraph for one or the other. \end{defn}
+
+
+
+%\begin{disc} We consider an expansion of the above scheme to take into account iteratively aggregated keys. Let $A, B, C, D$ be public keys of some participants, who do the following. $A$ and $B$ collaborate to compute a shared key $X$. $A$ and $B$ then cooperate with each other to use $X$ to collaborate with $C$ to obtain another shared key, $Y$ (possibly $Y$ does not k  that $X$ is shared between two parties).   $A$, $B$, and $C$ cooperate with each other to use $Y$ again with the key $A$ to obtain a shared key, $Z$, resulting in the following famgraph.
+%\[\xymatrix{
+%  &   & Z \ar[dddll] \ar[dr] &   & \\
+%  &   &   & Y \ar[dll] \ar[ddr] & \\
+%  & X \ar[dl] \ar[dr] &   &   & \\
+%A &   & B &   & C
+%}\]
+
+%There are two paths from $Z$ to $A$ but there is a unique path from $Z$ to $B$ and $Z$ to $C$. Consider how this famgraph may be used to compute a key image.  that the key $Z$ can be written as $Z = \alpha A + \beta B + \gamma C$ where $\alpha = H_{\texttt{agg}}(A,\left\{A,B\right\}) + H_{\texttt{agg}}(A, \left\{A,Y\right\})$, $\beta = H(B, \left\{A,B\right\})$, and $\gamma = H(C,\left\{C,X\right\})$; we see that $A$ has two contributions to the key, one for each path. Likewise, an orphan key has as many contributions to the key as there are paths from the ancestor to the orphan. Hence, in the case of iterative key aggregation, key images and random signing data must be computed as sums over paths in the famgraph (this does not impact the commit-and-reveal stage of the process). For example, if orphan $j$ has partial key image $x^*_j H_{\pi}$ and there are $\nu_j$ paths from the ancestor signing key to the orphan, then the total key image is therefore $J = \sum_j \nu_j J_j$. \end{disc}
+
+%\begin{ex}
+%We modify $\texttt{Sign}$ to allow the true signer to be a key that has been iteratively aggregated. The modification requires taking the famgraph of the signing key as additional input (and, of course, requiring the participation of the private keys of all orphans in the famgraph).
+
+%\begin{enumerate}\label{implementationAgg}
+%\item[2.] $\texttt{Sign}$ is initiated by side channel when the group of orphan keys does the following: they agree upon a message $M$, a ring $Q$, a secret index $\pi$, and a famgraph for their signing key $Y \in Q$, they pre-compute the key image basepoints for each ring member $H_\ell := \mathcal{H}_{\text{ki}}(Y_\ell)$, they enumerate all paths in the famgraph from the ancestor signing key to the $j^{th}$ orphan, say there are $\nu_j$ of these,  they compute their partial key images $J_j = x^*_{j} H_\pi$, and they compute the key image $J = \sum_j \nu_j J_j$. The remainder is run by the orphan keys with the following three-step process.
+%\begin{description}
+%\item [Commit and reveal] This step is identical to Example \ref{}.
+
+%\item [Offline signature pre-processing] Each orphan key computes the points $U = \sum_j \nu_j U_j$, $V = \sum_j \nu_j V_j$, and each $s_{\ell} = \sum_j \nu_j s_{\ell,j}$. Each orphan key computes the verification commitments:
+%\begin{align*}
+%c_{\pi+1} =& \mathcal{H}_{\text{sig}}(M, U, V)\\
+%c_{\pi+2} =& \mathcal{H}_{\text{sig}}(M, s_{\pi+1}G + c_{\pi+1} Y_{\pi+1}, s_{\pi+1}H_{\pi+1} + c_{\pi+1}J)\\
+%&\vdots \\
+%c_{\pi} =& \mathcal{H}_{\text{sig}}(M, s_{\pi-1}G + c_{\pi-1}Y_{\pi-1}, s_{\pi-1}H_{\pi-1} + c_{\pi-1}J)
+%\end{align*}
+%  the pre-processed signature $c_1, \left\{s_{\ell}\right\}_{\ell \neq \pi}$ can be stored for later.
+
+%\item [Signature completion] Each signer recalls their $u_j$,  computes $s_{\pi, j} = u_j - c_\pi \nu_j x^*_j$, and sends $s_{\pi, j}$ to the other signers. Any of them can complete the signature by computing $s_\pi = \sum_j s_{\pi,j}$ and publishing $(\sigma, J)$ where $\sigma = (c_1, s_1, \ldots, s_R)$.
+%\end{description}
+
+%\end{enumerate}
+%\end{ex}
+
+
+
+
+\section{Unforgeability and thring signatures}\label{unf}
+
+%In this section we define an existential unforgeability game and a signing oracle for that game, and we demonstrate that the thring signature scheme from Example \ref{implementation} is existentially unforgeable as described in Definition \ref{game}. Our proof strategy uses the double forking technique of \cite{maxwell2018simple}.
+
+\subsection{Defining a forgery}
+
+What, exactly, does it mean to be a forger, or to present a forgery? A forgery should be some $(\m^*, \sigma)$ such that $\sigma$ is not an output in the transcript of queries made by $\adversary$ to $\mathcal{SO}$ and $\texttt{Ver}(\m^*, \sigma)=1$. However, this is not enough. Indeed, if none of the keys in $\underline{P}$ are aggregated, a forgery of our scheme reduces to forgery of the underlying LSAG scheme; without loss of generality, a successful forgery should have at least one aggregate key in $\underline{P}$. Additionally, even if some key is aggregate, the forger could simply place their own key in $\underline{P}$ along with the aggregate key. So, if the forger knows the discrete logarithm of any public key in some ring $\underline{P}$, then the forger can simply produce an honest signature with $\underline{P}$, which cannot count as a forgery. Without loss of generality, all ring members must either be an honest key (i.e.\ a discrete log challenge) or be a child of an honest key. Since the most powerful adversary has corrupted all keys except one, we assume only one target honest key $X_h$. 
+
+Hence, we modify the usual unforgeability game: given $X_h$ and ring $\underline{P}$, a forgery is only successful if it comes equipped with evidence that every ring member is either $X_h$ itself or a child of $X_h$, and that $\underline{P}$ has least one child of $X_h$.  The forger can simply produce evidence of these relationships by presenting the aggregating sets $\left\{\underline{X}^{(\ell)}\right\}_{\ell \in [r]}$ such that $X_h \in \underline{X}^{(\ell)}$ and $P_\ell = \Phi(\underline{X}^{(\ell)})$ for each $1 \leq \ell \leq r$. In the following, a forger is a PPT algorithm $\adversary$ that takes as input some $X_h$ and produces as output a distinguished failure symbol $\bot_\adversary$ or a successful forgery $\texttt{out}_{\adversary} = \texttt{forg} = (\m^*, \sigma, \left\{\underline{X}^{(\ell)}\right\}_{\ell \in [r]})$.
+%In the degenerate case where $P_\ell=X_h$, we write $L_\ell = \left\{X_h\right\}$ and we assume $\Phi$ is the identity function.
+
+
+
+
+%In \cite{maxwell2018simple}, the most powerful forger is modeled by corrupting all keys except a single distinguished honest key. In the ring signature framework, though, requiring every key in $Q$ to either be equal or be aggregated from this sole distinguished honest key seems, superficially, like an artificial constraint. An alternative is to require the forgery challenger to fix a ring size $R = \left|Q\right| > 2$ and identify $R$ distinguished honest keys $X_h \in \left\{X_1, X_2, \ldots, X_R\right\}$ for use by $\adversary$ in computing the ring members of $Q$. As we will see later, the forger selects a specific $X_i$ as a target for breaking the discrete logarithm, and we can freely re-index this to be $X_1$, so this approach is equivalent to the approach in \cite{maxwell2018simple}.
+
+
+%Let $\adversary^{\mathcal{SO},\underline{\mathcal{H}}}$ be a $(t,\epsilon,q)$-forger with oracle access to $\mathcal{SO}$ and the family of random oracles $\underline{\mathcal{H}}$ that takes as input some set of target honest keys $\left\{X_\ell\right\}_{\ell=1}^R$ and produces as output a successful forgery $(M,Q, \left\{L_{\ell,\lambda}\right\}_{1 \leq \ell \leq R, \lambda \in \Lambda_\ell})$ or a failure symbol $\bot$. 
+
+
+
+
+
+
+
+
+ 
+
+
+\begin{defn}[Existential Unforgeability for LSTAGs]\label{game}
+We say a PPT algorithm $\adversary$ is a $(t, \epsilon, q,n)$-forger if, within time at most $t$ and with at most $q$ oracle queries, $\adversary$ can succeed at the following game with probability at least $\epsilon$.
+\begin{enumerate}
+\item The challenger picks an honest key pair $(x_h,X_h) \leftarrow \texttt{KeyGen}$ and sends the public key $X_h$ to $\adversary.$
+
+\item $\adversary$ can generate keys, can aggregate any group elements with $X_h$, and is granted access to a signing oracle $\mathcal{SO}$ and the random oracles $\mathcal{H}_{\text{agg}}$, $\mathcal{H}_{\text{sig}}$, $\mathcal{H}_{\text{com}}$, $\mathcal{H}_{\text{msg}}$, and $\mathcal{H}_{\text{ki}}$. $\adversary$ can perform any of these in any order, adaptively responding to previous results.
+
+\item $\adversary$ outputs some $(\m^*, \sigma, \left\{\underline{X}^{(\ell)}\right\}_{\ell = 1}^r)$.
+
+\item $\adversary$ wins if all the following conditions are satisfied. 
+
+\begin{description}
+\item [Correct:] For each $\ell$, $P_\ell = \Phi(\underline{X}^{(\ell)})$.
+\item [Bounded:] For each $\ell$, $1 \leq \left|\underline{X}^{(\ell)}\right| \leq n$.
+\item [Honest parent:] For each $\ell$, $X_h \in \underline{X}^{(\ell)}$.
+\item [Aggregated: ] For some $\ell$, $\left|\underline{X}^{(\ell)}\right| \geq 2$ (so at least one key is aggregated).
+\item [Non-trivial: ] $\sigma$ is not an output in the transcript between $\mathcal{A}$ and $\mathcal{SO}$; and of course
+\item [Valid: ] $\texttt{Ver}(\m^*, \sigma) = 1$.
+\end{description}
+
+\end{enumerate}
+
+\end{defn}
+
+While it seems not realistic for the adversary to present evidence of their forgery, we note that if a forger is placed in a black box by some master algorithm, the key aggregation queries made by the forger must be simulated by or also made by the master algorithm. Hence, evidence of these relationships are extractable from the transcript resulting any successful forgery.
+
+%\begin{disc}
+%Note that, given any $Q$ that is not strictly adversarially controlled, given the famgraph of each $Y_i \in Q$, each key $Y_i \in Q$ can be written $\alpha X_1$  or $Y_{\adversary, i} + \alpha X_1$  for some publicly computable $\alpha$, some adversarially controlled point $Y_{\adversary, i}$. Indeed, the aggregated keys in $Q$ are linear combinations of keys (which may, in turn, be linear combinations, and so on, but only a finite number of times). All the terms with $X_h$ can be collected into $\alpha X_h$ and all other keys are collected into $Y_{\adversary, i}$. The coefficient $\alpha$ is computable using the famgraph. We do not assume the adversary knows the discrete logarithm of $Y_{\adversary, i}$, since this brings in the KOSK assumption.
+%\end{disc}
+
+%\begin{disc} Compare our definition to the non-threshold ring signature cases of the past. The definition of \textit{unforgeability with respect to insider corruption} described in \cite{bender} provides several honest keys to the adversary and grants the adversary access to a corruption oracle, but only allows the adversary to win if each key in the ring of the purported forgery has not been corrupted. Of course, if multiple honest keys were not made available, then a forged ring signature could only occur with a singleton ring in their model. \end{disc}
+
+%\subsection{Strategy for proving unforgeability}
+
+\subsection{Strategy for proving unforgeability}\label{strat}
+
+Suppose $\mathcal{B}$ is a meta-reduction of $\adversary$ that produces, for some fixed message $\mathfrak{m}$, four forged signatures $\sigma$, $\sigma^\prime$, $\sigma^{\prime \prime}$, $\sigma^{\prime \prime \prime}$ with rings $\underline{P}$, $\underline{P}^\prime$, $\underline{P}^{\prime \prime}$, $\underline{P}^{\prime \prime \prime}$ with family histories $\underline{X} = \left\{\underline{X}^{(\ell)}\right\}_{\ell \in [r]}$, $\underline{X}^\prime = \left\{(\underline{X}^{ (\ell)})^\prime\right\}_{\ell \in [r^\prime] }$, $\underline{X}^{\prime \prime} = \left\{(\underline{X}^{(\ell)})^{\prime \prime}\right\}_{\ell \in [r^{\prime \prime}]}$, and $\underline{X}^{\prime \prime \prime} = \left\{(\underline{X}^{ (\ell)})^{\prime \prime \prime}\right\}_{\ell \in [r^{\prime \prime\prime}]}$. Suppose furthermore that $\mathcal{B}$ can extract from the oracles made by $\adversary$ a distinguished index $\ell$ such that \[L_\ell = L_\ell^\prime, \vspace{0.05in} L_\ell^{\prime \prime} = L_\ell^{\prime \prime \prime}, \vspace{0.05in} 
+P_\ell = P_\ell^\prime, \vspace{0.05in}  P_\ell^{\prime \prime} = P_\ell^{\prime \prime \prime}.\] Then $\mathcal{B}$ can compute the discrete logarithm of $P_\ell$ as $(c_\ell - c_\ell^\prime)^{-1}(s_\ell^\prime - s_\ell)$ and the discrete logarithm of $P_\ell^{\prime \prime}$ as $(c_\ell^{\prime \prime} - c_\ell^{\prime \prime \prime})^{-1}(s_\ell^{\prime \prime \prime} - s_\ell^{\prime \prime})$.  However, the keys $P_\ell = P_\ell^\prime$ are aggregated from $\underline{X}$ and $\underline{X}^{\prime}$, respectively. Due to this, we can write $P_\ell = P_\ell^\prime = \alpha X_h + Z$ for some $\alpha$ and for some $Z$ using the key aggregation function $\Phi$. Similarly $P_\ell^{\prime \prime} = P_\ell^{\prime \prime \prime}$ and can be written as $\alpha^\prime X_h + Z^\prime$ for some $\alpha^\prime, Z^\prime$. 
+
+If $\mathcal{B}$ can ensure that $Z = Z^\prime$ and $\alpha \neq \alpha^\prime$, then $P_\ell - P_\ell^{\prime \prime} = (\alpha - \alpha^\prime)X_h$ and so $\mathcal{B}$ can obtain the discrete logarithm of $X_h$: \[x_h = (\alpha - \alpha^\prime)^{-1}\left(\frac{s_\ell^\prime - s_\ell}{c_\ell - c_\ell^\prime} - \frac{s_\ell^{\prime \prime \prime} - s_\ell^{\prime \prime}}{c_\ell^{\prime \prime} - c_\ell^{\prime \prime \prime}}.\right)\] Hence, to demonstrate the absurdity of the existence of a forger $\adversary$, it is sufficient to demonstrate the existence of a meta-reduction that can produce four transcripts such that the following is extractable from those transcripts: an index $1 \leq \ell$, some public keys $(P_\ell, P_\ell^\prime, P_\ell^{\prime \prime}, P_\ell^{\prime \prime \prime}, L_\ell, L_\ell^\prime, L_\ell^{\prime \prime}, L_\ell^{\prime \prime \prime}, Z, Z^\prime)$, and some scalars $(s_\ell, s_\ell^\prime, s_\ell^{\prime \prime}, s_\ell^{\prime \prime \prime}, c_\ell, c_\ell^\prime, c_\ell^{\prime \prime}, c_\ell^{\prime \prime \prime}, \alpha, \alpha^\prime)$ such that
+\begin{align*}
+L_\ell = & s_\ell G + c_\ell P_\ell & 
+L_{\ell}^\prime =& s_\ell^\prime G + c_\ell^\prime P_\ell^\prime\\
+L_\ell^{\prime \prime} =& s_\ell^{\prime \prime} G + c_\ell^{\prime \prime} P_\ell^{\prime \prime} & 
+L_{\ell}^{\prime \prime \prime} =& s_\ell^{\prime\prime \prime} G + c_\ell^{\prime \prime \prime} P_\ell^{\prime \prime\prime}\\
+L_\ell =& L_\ell^{\prime} & 
+L_\ell^{\prime \prime} =& L_\ell^{\prime \prime \prime}\\
+P_\ell =& P_\ell^{\prime} & 
+P_\ell^{\prime \prime} =& P_\ell^{\prime \prime \prime}\\
+P_\ell =& \alpha X_h + Z & 
+P_\ell^{\prime \prime} =&  \alpha^\prime X_h + Z^\prime
+\end{align*} and such that $c_\ell^{\prime \prime} \neq c_\ell^{\prime \prime \prime}$, $c_\ell \neq c_\ell^\prime$, and $\alpha \neq \alpha^\prime$. We say this is the \textit{system of forgery-to-discrete-log equations and inequalities}.
+
+We do this in Appendix \ref{security} with careful construction of oracles and by forking twice: the first time upon the very first signature verification query of the form $\mathcal{H}(M,P_\ell,L_\ell,R_\ell)$, ensuring that $L_\ell = L_\ell^\prime$ and $L_\ell^{\prime \prime} = L_\ell^{\prime \prime \prime}$, and the second time upon the computation of key aggregation coefficients, ensuring that $Z_\ell = Z_\ell^\prime = Z$ and $\alpha \neq \alpha^\prime$.
+
+
+
+%We fork a second time in a way that guarantees we have  transcripts with $c_\ell \neq c_\ell^\prime$ but such that $P_\ell = P_\ell^\prime$
+
+%If $P_\ell$ is aggregated, $P_{\ell}$ can be written $P_\ell = Z_\ell + \alpha X_h$ where $\alpha = \mathcal{H}_{\text{agg}}(X_h, \underline{X}^{(\ell)})$. Likewise, $P_\ell^\prime = Z_\ell^\prime + \alpha^\prime X_h$  where $\alpha^\prime = \mathcal{H}_{\text{agg}}(X_h, (\underline{X}^{(\ell)})^\prime$. If not aggregated, $P_\ell = X_h$ (or $P_\ell^\prime = X_h$) exactly, but this, too, can be written as $Z_\ell + \alpha X_h$ by setting $Z_\ell = 0$ and $\alpha = 1$. Hence the equality extracted from the transcript above provides the following:
+%\begin{align*}
+%L_\ell = s_\ell G + c_\ell P_\ell =& s^\prime_\ell G + c^\prime_\ell P_\ell^\prime  = L_{\ell}^\prime\\
+%s_\ell G + c_\ell Z_\ell + c_\ell \alpha X_h =& s_\ell^\prime G + c_\ell^\prime Z_\ell^\prime + c_\ell^\prime \alpha^\prime X_h.
+%\end{align*}
+
+%Since $P_\ell, P_\ell^\prime$ are included in the queries $\mathcal{H}_{\text{sig}}(M, P_\ell, L_\ell, R_\ell)$ and $\mathcal{H}_{\text{sig}}(M, P_\ell^\prime, L_\ell^\prime, R_\ell^\prime)$, they must have been aggregated before this signature query (except with negligible probability). 
+
+%It is sufficient for $\mathcal{B}$ to learn $z_\ell$ and $z_\ell^\prime$ to compute the discrete logarithm of $X_h$ here. 
+
+%$c_\ell Z_\ell = c_\ell^\prime Z_{\ell}^\prime$ and $c_\ell \alpha \neq c_\ell^\prime \alpha^\prime$, then $\mathcal{B}$ can compute the discrete logarithm of $X_h$ without $z_\ell$ or $z_\ell^\prime$ very simply: $x_h = (c_\ell \alpha - c_\ell^\prime \alpha^\prime)^{-1}(s_\ell^\prime - s_\ell)$. Alternatively, ...
+
+%Hence, $\mathcal{B}$ can be used as a discrete logarithm solver, even outside of the KOSK setting (where each $z_\ell$ and $z_\ell^\prime$ is known by $\mathcal{B}$) if these conditions are satisfied. To prove unforgeability of our scheme, then, it is sufficient to prove that a forger $\adversary$ with non-negligible advantage at the existential unforgeability game can be reduced to some $\mathcal{B}$ that produces two forgeries from which, for some $\ell$, the following system of equations can be extracted
+%\begin{align}
+%P_\ell =& Z_\ell + \alpha X_h\\
+%P^\prime_\ell =& Z_\ell^\prime + \alpha^\prime X_h\\
+%s_\ell G + c_\ell P_\ell =& s^\prime_\ell G + c^\prime_\ell P_\ell^\prime \\
+%c_\ell Z_\ell =& c_\ell^\prime Z_\ell^\prime
+%\end{align} subject to the constraint that $c_\ell \alpha \neq c_\ell^\prime \alpha^\prime$. We say this is the \textit{system of forgery-to-discrete-log equations and inequalities}.
+
+
+
+
+
+
+
+\section{Use and abuse of applications and implementations}
+
+In this section, we discuss some implementation considerations for thring signature schemes, their extensions, and their applications in ring confidential transactions. %We discuss security properties of our scheme in the appendix. %One primary difference between the LSTAG example of Section \ref{} and the current Monero approach is that we prefix each ring signature challenge with the associated ring member. 
+
+
+
+\subsection{Danger in non-random or repeated signing}
+
+
+The protocol is dangerous if data is not randomly generated for each attempted signature or if more than one signature per key is ever published. If the same signature data $u_{j,\pi}$ is used by a participating member twice, they risk revealing their private keys: the equalities $s = u - c b^*$ and $s^\prime = u - c^\prime b^*$ can be used to compute $b^* = \frac{s-s^\prime}{c^\prime - c}$. Hence, any non-random method of selecting signing data should never be used. Similarly, two signatures with the same session key should never be provided, as the discrete logarithm of the signing key can be extracted.
+
+\subsection{Group property considerations}
+
+Also note that it is perfectly safe to use a group $\mathbb{G}$ with \textit{composite order} instead of prime order. However, we must restrict our choices of public key to a specific prime-order subgroup of $\mathbb{G}$. Using the so-called Ed25519 curve (which is a twisted Edwards curve presented in \cite{bernstein2012high} that is birationally equivalent to the so-called Curve25519 curve presented in \cite{bernstein2006curve25519}), there are some implementation risks in selecting a public key outside of the prime-order subgroup. 
+
+Indeed, the prime-order subgroup has cofactor $8$, introducing the possibility of malleability exploitations. To prevent these exploitations, all implementations with this curve require checking that group elements for use as public keys lie on the prime order subgroup by checking their order. Certainly any private key $x \in \mathbb{Z}_\p$ will have a corresponding public key $X = xG$ on this prime-order subgroup since $G$ is a generator of that subgroup. On the other hand, selecting a public key at random does not guarantee a discrete logarithm pre-image with respect to $G$. We must modify the hash-to-point function $\mathcal{H}_{\text{ki}}$ to have a codomain equal to the prime-order subgroup. This means multiplying public keys without corresponding private keys by the cofactor $8$ when using the Ed25519 or Curve25519 curves.
+
+
+\subsection{View key extension and thring confidential transactions}
+
+Among other reasons, our thring signatures are not directly comparable to signatures employed in digital currencies like the MLSAG signatures used in protocols like Cryptonote. Indeed, Cryptonote user keys come in pairs with a view key and a spend key, and signatures are computed with one-time keys derived from these. The thresholdizing heuristic described in Section \ref{naiveImplement} extends naturally to a system with this one-time key extension, but our proofs of security properties do not immediately apply to these extensions without some further work.Establishing the unforgeability of an implementation of LSTAG thring signatures using Cryptonote-styled one-time keys with a view key extension remains an open task.
+
+One model that may be helpful in proving the unforgeability of a view key extension of our implementation below is for collaborators to each receive a common shared secret $y = a_{\text{sh}}$ and use keys $\underline{x} = (x_1, \ldots, x_n)$ to compute a shared key of the form $Y + \Phi(\underline{X})$. Rogue-key or key cancellation attacks using this method may be mitigated by careful construction of $y$. For example, in Cryptonote protocols, tampering with $Y$ requires tampering with the hash digest of a key from a Diffie-Hellman exchange.
+
+Similarly, our heuristic also extends naturally to the MLSAG setting, but our security proofs again do not immediately apply without some further work.  We briefly describe ring confidential transactions in Monero and a thresholdized extension to thring confidential transactions. 
+
+MLSAG signatures are constructed from vectors of keys of the form $(\mathcal{H}_{\text{sess}}(a T) G + B, \texttt{PedCom}(v, r))$ where $\texttt{PedCom}$ is a Pedersen commitment scheme, $v$ is a transaction amount, and $r$ is a private amount-commitment key. MLSAG signatures, by construction, are multisignatures since they use multiple keys to sign a message but they are not collaboratively computed. They produce a signature size that is independent of the number of signers, but MLSAG signatures still reveal the number of signing keys. With a list of signing public keys $\underline{P} = (P_1,\ldots,P_n)$ interpreted as a vector, the signer (or signers) randomly selects similar vectors from the blockchain to construct a ring of such key vectors $\widetilde{\underline{P}}$, packing $\underline{P}$ into the $\pi^{th}$ column for a secret $\pi$. \begin{align*}
+\widetilde{\underline{P}} = 
+\begin{pmatrix} 
+P_{1,1} & P_{1, 2} & \cdots & P_{1, r} \\
+P_{2,1} & P_{2, 2} & \cdots & P_{2, r} \\
+\vdots &  & & \vdots \\
+P_{n,1} & P_{n, 2} & \cdots & P_{n,r} \\
+\end{pmatrix} = (\underline{P}_1, \ldots, \underline{P}_r)\end{align*} where each $\underline{P}_\ell = \left\{P_{j,\ell}\right\}_{j \in [n]}$. For each $j = 1, 2, \ldots, n$ and $\ell = 1, 2, \ldots, r$, with the entry $P_{j,\ell}$ in $\widetilde{\underline{P}}$ we compute $H_{j,\ell} := \mathcal{H}_{\text{ki}}(P_{j,\ell})$. For each component $p_j \in \underline{p}$, the signer computes key image $J_j = p_j \mathcal{H}_{\text{ki}}(p_j G)$. The signer selects a vector of random scalars $\underline{u} = (u_1, \ldots, u_n) \in \scalarField^n$ for the $\pi^{th}$ column and, for each $\ell \neq \pi$, the signer selects a vector of random scalars $\underline{s}_\ell = (s_{1,\ell}, s_{2,\ell}, \ldots, s_{n,\ell})$. Now, for each signing key $P_{j, \ell}$, the signer computes the pair of points and the commitment
+\begin{align*}
+L_{j, \ell} =& s_{j,\ell} G + c_\ell P_{j, \ell},  & R_{j,\ell} =& s_{j,\ell} H_{j, \ell} + c_\ell J_j, &
+c_{\ell+1} =& \mathcal{H}_{\text{sig}}\left(M,\left\{(L_{\ell}^{j}, R_{\ell}^{j} )\right\}_{j=1}^{n}\right).
+\end{align*}
+Once each commitment has been computed, the signer computes each $s_{j,\pi} = u_j - c_\pi p_j$ as usual, assembles $\underline{s}_\pi = (s_{j, \pi})_{j \in [n]}$, and the MLSAG signature is then $\sigma = (c_1, (\underline{s}_\ell)_{\ell \in [r]})$, which is verified similarly to LSAG signatures. 
+
+Initially, this scheme may seem to not be particularly ambiguous with respect to signer identification. Anyone can discern that one of these columns contains all the signing keys. That is to say, it is not possible that $p_{2,2}$ and $p_{1,1}$ may both be the true keys used in this ring signature. Rather than a drawback, this is how Monero links signing keys with transaction amounts. In Monero, the first row of keys in $\widetilde{\underline{P}}$ are signing keys, the second row consists of the differences between Pedersen commitments to transaction input amounts and output amounts. Signing with this matrix means both knowing the private signing key for the special index and being able to open the amount commitment at that index to zero.
+
+To see how our thresholdizing heuristic extends naturally to the MLSAG setting, consider the following. For a collaborating coalition of signers, presume that each participating signer has a share of a key, which are aggregated in the Musig style, and each participant contributes some random scalars to be summed for $u_j$, $s_{j,\ell}$, etc, in a commit-and-reveal stage. Formally establishing the unforgeability of such an implementation of MLSTAG thring confidential transactions using Cryptonote-styled one-time keys with a view key extension also remains an open task. We leave the task of presenting more general formal definitions and implementations of thring confidential transactions and their security properties for future works, such as the upcoming work of \cite{ruffct2}.
+
+
+
+
+
+
+
+
+
+%The first requirement to securely extend a threshold LSAG scheme to include CryptoNote-styled key structures and support ring confidential transactions with threshold MLSAGs is to demonstrate the security of the underlying scheme. While thresholdized MLSAG-style (MLSTAG) ring confidential transactions are perfectly functional (i.e.\ correct, linkable), the unforgeability of MLSTAGs remain an open question.
+
+
+
+
+
+\subsubsection{Extending to $m$-of-$n$}
+
+Section \ref{naiveImplement} presents a simple $2$-of-$2$ example, which extends naturally to $n$-of-$n$. With a Diffie-Hellman exchange, we may extend the above approach to an $(n-1)$-of-$n$ threshold signature scheme in the following way: participants share their $B_j$ with each other and compute pairwise shared secrets $z_{i,j} = \mathcal{H}_{\text{agg}}(b_i B_j)$. There are $\frac{n(n-1)}{2}$ distinct shared secrets split across $n$ parties such that any $n-1$ members can regain all of the secrets.  Hence, an $(n-1)$-of-$n$ scheme may be implemented as an $\frac{n(n-1)}{2}$-of-$\frac{n(n-1)}{2}$ scheme. More general approaches for $m$-of-$n$ are obviously available, and we go no further describing them here.
+
+
+\subsection{Cross-chain, confidential, spender-ambiguous atomic swaps}
+
+Simple cross-chain atomic swaps using thring signatures are possible. If all goes well, the swap goes like this: Alice sends $x$ AliceCoins to the $2$-of-$2$ key on the AliceCoin chain, Bob sends $y$ BobCoins to the $2$-of-$2$ key on the BobCoin chain, and once both parties are satisfied, they can collaborate to claim their funds. Of course, we cannot assume all goes well; as described in \cite{back2014enabling}, refund transactions allow for semi-honest parties to halt the process in an adversarial environment. All that remains to complete a spender-ambiguous model of the cross-chain atomic swaps from \cite{back2014enabling} for a digital currency using confidential transactions is to formalize refund transaction capabilities for that currency (c.f.\ \cite{noether2018dlsag}).
+
+
+\bibliographystyle{plain}
+\bibliography{biblio.bib}
+
+
+\appendix 
+
+\section{Security}\label{security}
+
+In this Appendix, we prove the following theorem based on the game of Definition \ref{game}. In Appendix \ref{otherProperties}, we discuss some other security properties of thring signatures and their LSTAG implementation. In \ref{sigoracle} we detail the signing oracle of Definition \ref{game} and its simulation. In \ref{forkingLemma}, we review the rewind-on-success forking lemma. In \ref{reducingA}, we discuss the first reduction of the forging adversary and establish some probability bounds. In \ref{forkingTwice}, we explain our twice-forking approach, concluding the proof of the following theorem.
+
+
+\begin{theorem}
+Let $\adversary$ be a $(t,\epsilon,q,n)$-forger for some non-negligible $\epsilon$. There exists some $t^\prime > 0$ and an algorithm $\mathcal{B}$ that is a $(t+t^\prime, \epsilon^\prime, q)$-solver of the discrete logarithm problem for some non-negligible $\epsilon^\prime$.
+\end{theorem}
+
+\subsection{The signing oracle}\label{sigoracle}
+
+In this section, we explain the signing oracle for use in the unforgeability game of Definition \ref{game}.
+
+The signing oracle in the unforgeability game captures the situation where an adversary $\adversary$ can persuade an honest party to sign some documents before attempting a forgery. In the multisignature case, we must also capture the implications of a malicious $\adversary$ persuading an honest party to collaborate to construct some multisignatures on similar documents. Due to this collaboration, $\adversary$ has some control over signing data so $\mathcal{SO}$ must be interactive.  In an honest collaboration, $\adversary$ would also know which index $\pi$ corresponds with the true signer, so we allow the signing oracle to be queried with the special signing index $\pi$. Moreover, a reduction $\adversary^\prime$ of $\adversary$ must simulate interactions between $\adversary$ and any oracles, in particular the signing oracle.
+
+$\mathcal{SO}$ takes as input some $\texttt{inp}_{\mathcal{SO}} = (\m, \underline{P}, \pi, \left\{\underline{X}^{(\ell)}\right\}_{\ell \in [r]})$ where $\m \in \left\{0,1\right\}^*$ is a message, $\underline{P}$ is a ring of public keys, $\pi$ is a special index, and $\left\{\underline{X}^{(\ell)}\right\}_{\ell \in [r]}$ is a a multi-set of multi-sets of public keys. $\mathcal{SO}$ and $\adversary$ interact. $\mathcal{SO}$ outputs a distinguished failure symbol $\bot_{\mathcal{SO}}$ or $\adversary$ successfully simulates collaborating with an honest party to obtain a multi-signature.
+
+\begin{description}
+\item [The Oracle:] $\adversary$ queries $\mathcal{SO}$ with some $\left(M, \underline{P}, \pi, \left\{\underline{X}^{(\ell)}\right\}_{\ell \in [r]}\right)$.
+
+\begin{enumerate}
+\item $\mathcal{SO}$ checks if, for each $\ell$, $P_\ell = \Phi(\underline{X}^{(\ell)})$ and checks if $X_h \in \underline{X}^{(\ell)}$ and checks that at least one $P_\ell$ is aggregated. If not, $\mathcal{SO}$ outputs $\bot_{\mathcal{SO}}$ and terminates.
+
+
+\item \label{dat1} Otherwise, $\mathcal{SO}$ selects signing data $\texttt{dat}_1 = (U_1, V_1, \left\{s_{1, \ell}\right\}_{\ell \neq \pi})$, computes the commitment $\texttt{com}_1 \leftarrow \mathcal{H}_{\text{com}}(\texttt{dat}_1)$ and send  $\texttt{com}_1$ to $\adversary$. %Otherwise, for each $\ell$, an honest orphan is selected randomly from the set of honest orphans in $\left\{L_{\ell,\lambda}\right\}_{\lambda \in \Lambda_\ell}$. Denote the associated index in $\left\{X_1, \ldots, X_R\right\}$ as $i(\ell)$. $\mathcal{SO}$ plays the role of one instance of the honest key $X_{i(\pi)}$ and $\adversary$ plays the role of all other keys in the famgraph of $Y_\pi$.  
+
+\item After $\adversary$ responds with a set $\left\{\texttt{com}_j\right\}_{j = 2}^{n}$, $\mathcal{SO}$ sends $\texttt{dat}_{1}$ to $\adversary$. 
+
+\item After $\adversary$ responds with $\left\{\texttt{dat}_{j}\right\}_{j=2}^{n}$, $\mathcal{SO}$ checks that $\texttt{com}_j = \mathcal{H}_{\text{com}}(\texttt{dat}_j)$ for each $j$. If not, $\mathcal{SO}$ outputs $\bot_{\mathcal{SO}}$ and terminates.
+
+\item $\mathcal{SO}$ completes the off-line signature pre-processing stage, solves for $s_{\pi, j}$, and sends $s_{\pi,j}$ to $\adversary$. 
+
+\end{enumerate} 
+
+\end{description}
+
+The symbol $\bot_{\mathcal{SO}}$ only indicates a failed simulation of  $\mathcal{SO}$.  If $\adversary$ misbehaves but $\mathcal{SO}$ is successfully simulated, then it is possible that $\mathcal{SO}$ successfully simulates a bad execution of $\texttt{Sign}$. Since $\mathcal{SO}$ was successful, this does not result in $\bot_{\mathcal{SO}}$ but results in an invalid signature or the failure symbol $\bot_{\texttt{Sign}}$ from $\texttt{Sign}$. 
+
+
+
+\subsection{Rewind-on-success forking lemma}\label{forkingLemma}
+
+In this section, we explain the double forking technique and present the general forking lemma. Recall that, to prove unforgeability of our scheme, it is sufficient to prove that a forger $\adversary$ with non-negligible advantage at the existential unforgeability game can be reduced to some $\mathcal{B}$ that produces four forgeries as described above. As usual, we use reductions and meta-reductions of $\adversary$ with a general forking lemma to complete our task. We denote a reduction of $\adversary$ with black-box access to $\adversary$ as $(\adversary^\prime)^\adversary$, and we denote the process of taking reductions with the notation $\adversary \leadsto \adversary^\prime$. Our proof strategy, roughly following the strategy from \cite{maxwell2018simple}, can be visualized this way:
+\[\reduxChain.\]
+
+That is to say: our strategy is to prove that if a forger $\mathcal{A}$ exists, then there exists a reduction $\adversary^\prime$ of $\adversary$ that satisfies the hypotheses of Lemma \ref{genfork}, which can be forked. The forking algorithm can be put in a wrapper $\adversary^{\prime \prime}$, which can be again forked. If $\adversary^\prime$ and $\adversary^{\prime \prime}$ have non-negligible acceptance probability, so does $\texttt{fork}^{\adversary^{\prime \prime}}$, which we reduce to some discrete logarithm solver $\mathcal{B}$.
+
+%We first reduce the forger $\adversary$ to some $\adversary^\prime$ that produces a forgery and some transcript information. We use a rewind-on-success forking meta-reduction  $\texttt{fork}^{\adversary^\prime}$ to rewind the transcript of $\adversary$ to the first oracle query for a verification equation $c_{\ell+1} = H_{\texttt{sig}}(M,U_\ell,V_\ell)$ for some $\ell$ used in the successful forgery, seeking a second successful forgery. If successful, we have two forgeries with different $c_{\ell+1}$ values. We wrap $\texttt{fork}^{\adversary^\prime}$ in a reduction $\adversary^{\prime \prime}$ compatible with the forking lemma. We then use $\texttt{fork}^{\adversary^{\prime \prime}}$ to rewind the transcript of $\adversary^{\prime \prime}$ to the final key aggregation query of the form $\mathcal{H}_{\text{agg}}(X_h,L_\ell)$ that is used to compute any ring member $P_\ell$ or $P_\ell^\prime$ used in either forgery. $\texttt{fork}^{\adversary^{\prime \prime}}$ proceeds from this second rewind point with a new aggregation coefficient, looking for another success;  that all previously computed aggregation coefficients are preserved. We then reduce $\texttt{fork}^{\adversary^{\prime \prime}}$ to some $\mathcal{B}$ that takes as input a discrete logarithm challenge $X_h$, has black-box access to $\texttt{fork}^{\adversary^{\prime \prime}}$, extracts oracle queries from its transcript, and uses them to solve the discrete logarithm problem for $X_h$. 
+
+\begin{lemma}[General Forking Lemma]\label{genfork}
+Let $q, \eta \geq 1$. Let $\mathcal{P}$ be any PPT algorithm which takes as input some $\texttt{inp}_\mathcal{P} = (\texttt{inp}, \underline{h})$ where $\underline{h} = (h_1, \ldots, h_q)$ is a sequence of oracle query responses ($\eta$-bit strings) and returns as output $\texttt{out}_{\mathcal{P}}$ either a distinguished failure symbol $\bot$ or a pair $(i, \texttt{out})$ where $i \in [q]$ and $\texttt{out}$ is some output. Let $\texttt{acc}_{\mathcal{P}}$ denote the probability that $\mathcal{P}$ does not output $\bot$ (where this probability is taken over all random coins of $\mathcal{P}$, the distribution of $\texttt{inp}$, all choices $\underline{h}$). 
+
+There exists an algorithm, $\texttt{fork}^{\mathcal{P}}$ that takes as input some $\texttt{inp}_{\texttt{fork}^{\mathcal{P}}} = \texttt{inp}_{\mathcal{P}}$ and produces as output $\texttt{out}_{\texttt{fork}^{\mathcal{P}}}$ either a distinguished failure symbol $\bot$ or a pair of pairs $((i, \texttt{out}), (i^\prime, \texttt{out}^\prime))$, where $(i, \texttt{out})$ and $(i^\prime, \texttt{out}^\prime)$ are outputs from $\mathcal{P}$ such that $i = i^\prime$. Furthermore, the accepting probability of $\texttt{fork}^{\mathcal{P}}$ is bounded from below such that \[\texttt{acc}_{\texttt{fork}^{\mathcal{P}}} \geq \texttt{acc}_{\mathcal{P}} \left(\frac{\texttt{acc}_{\mathcal{P}}}{q} - \frac{1}{2^\eta}\right).\]
+\end{lemma}
+
+We refer the reader to \cite{bellare2006multi} for a proof.% of a version of this lemma where $\underline{i}$ is a single index, say $i^*$, not a vector of indices;  that if $\adversary$ satisfies our definition with a list $\underline{i}$, we can parse the output $(\underline{i}, \texttt{out}) = ((i_1, i_2, \ldots), \texttt{out})$ as $(i_1, ((i_2, i_3, \ldots), \texttt{out}))$, to interpret as $(i^\prime, \texttt{out}^\prime)$ where $i^\prime = i_1$ and $\texttt{out}^\prime = ((i_2, i_3, \ldots), \texttt{out})$. Certainly this is also possibly with any of the indices. That is to say, the above vector extension of the index output $\underline{i}$ still satisfies the forking lemma from \cite{}.
+%  that since any finite totally ordered set with $k$ elements is order isomorphic to $\left\{1, 2, \ldots, k\right\}$, the lemma still holds true if the output $i$ can refer to an element in any finite totally ordered set.
+
+
+\begin{description}
+\item [Algorithm $\texttt{fork}^{\mathcal{P}}$:]  Let $\eta > 1$ be a security parameter, $q > 1$ be a polynomial function of $\eta$. Let $\mathcal{P}$ any PPT algorithm satisfying the hypotheses of Lemma \ref{genfork}. %Let $\mathcal{I}$ be a deterministic polynomial-time algorithm that takes as input some $\texttt{inp}_{\mathcal{I}} = \texttt{out}_{\mathcal{P}}$ and produces as output an index $\texttt{out}_{\mathcal{I}} = j \in [q]$.
+
+%The algorithm $\texttt{fork}^{\mathcal{P}}$ has access to $\mathcal{I}$, takes as input some $\texttt{inp}_{\texttt{fork}^{\mathcal{P}}} = \texttt{inp}_{\mathcal{P}}$, and 
+
+The algorithm $\texttt{fork}^{\mathcal{P}}$ produces as output a distinguished failure symbol $\texttt{out}_{\texttt{fork}^{\mathcal{P}}} = \bot$ or some $\texttt{out}_{\texttt{fork}^{\mathcal{P}}} = (i^\prime, \texttt{out}^\prime)$ where $j$ is an index in $[q]$ and $\texttt{out}^\prime = (\texttt{out}, \texttt{out}^{\prime\prime}, \texttt{aux})$ such that $\texttt{out}$, $\texttt{out}^{\prime\prime}$ are two outputs from $\mathcal{P}$. \begin{enumerate}
+\item Pick random coins $\rho=\rho_\mathcal{P}$ for $\mathcal{P}$ and select $\underline{h} \leftarrow (\left\{0,1\right\}^{\eta})^q$.
+
+\item Execute $\texttt{out}_\mathcal{P} \leftarrow \mathcal{P}(\texttt{inp}_{\mathcal{P}}, \underline{h};  \rho)$.
+
+\item If $\texttt{out}_\mathcal{P} = \bot_\mathcal{P}$, output $\bot_{\texttt{fork}^{\mathcal{P}}}$ and terminate. Otherwise, $\texttt{out}_{\mathcal{P}} = (i, \texttt{out})$ for some $\texttt{out}$.
+
+\item Pick new $\underline{h}^\prime \leftarrow (\left\{0,1\right\}^\eta)^q$.
+
+\item Glue the oracle query sequences together: $\underline{h}^* := (h_1, \ldots, h_{i-1}, h^\prime_i, \ldots, h^\prime_q)$.
+
+\item Execute $\texttt{out}_{\mathcal{P}}^{\prime \prime} \leftarrow \mathcal{P}(\texttt{inp}_{\mathcal{P}}, \underline{h}^*; \rho)$.
+
+\item If $\texttt{out}_{\mathcal{P}}^{\prime \prime} = \bot_\mathcal{P}$, output $\bot_{\texttt{fork}^{\mathcal{P}}}$ and terminate. Otherwise, $\texttt{out}_{\mathcal{P}}^{\prime \prime} = (i^{\prime \prime}, \texttt{out}^{\prime \prime})$. 
+
+\item If $i \neq i^{\prime \prime}$ or $i = i^{\prime \prime}$ but $h_{i} = h^{\prime}_{i}$, output $\bot_{\texttt{fork}^{\mathcal{P}}}$ and terminate.
+
+\item Otherwise, select some auxiliary data $\texttt{aux}$, assemble $\texttt{out}^\prime = (\texttt{out}, \texttt{out}^{\prime\prime}, \texttt{aux})$, output $(i, \texttt{out}^\prime)$, and terminate. 
+\end{enumerate}
+
+\end{description} %These immediately provide the following corollary.
+If $\mathcal{P}$ takes as input several sequences of oracle queries together, we can parse these as to be included in $\texttt{inp} \in \texttt{inp}_{\mathcal{P}}$. If $\texttt{inp}_{\mathcal{P}}$ has some other sequence $\underline{h}^*$ of oracle queries packed into it like this,  then $\texttt{fork}^{\mathcal{P}}$ can be forked again in a chain. In the next section, we describe each algorithm in the chain  of reductions comprising our proof strategy $\reduxChain$, proving their existence and the non-negligibility of their accepting probability as we go.
+
+\subsection{Reducing \texorpdfstring{$\adversary$}{the forger}}\label{reducingA}
+
+In this section, we begin our forking journey by constructing the first reduction $\adversary^\prime$ of $\adversary$ in the chain of reductions. We explain how $\adversary^\prime$ simulates each oracle, and we establish some lemmata regarding the accepting probability of $\adversary^\prime$.
+
+We construct a reduction $\adversary^\prime$ of $\adversary$ compatible by Lemma \ref{genfork}, which applies to an algorithm $\mathcal{P}$ that takes as input some $\texttt{inp}_\mathcal{P} = (\texttt{inp}, \underline{h})$.  $\adversary^\prime$ takes as input $\texttt{inp}_{\adversary^\prime} = (\texttt{inp}, \underline{h}_{\text{sig}})$. However, $\adversary^\prime$ must simulate both $\mathcal{H}_{\text{sig}}$ and $\mathcal{H}_{\text{agg}}$ queries, so we define $\texttt{inp} := (\texttt{inp}_{\adversary}, \underline{h}_{\text{agg}})$. That is to say, $\adversary^\prime$ takes as input $\texttt{inp}_{\adversary^\prime} = (\texttt{inp}_\mathcal{P}, \underline{h}_{\text{agg}}) = \left((X_h, \underline{h}_{\text{agg}}), \underline{h}_{\text{sig}}\right)$. 
+
+$\adversary^\prime$ responds to oracle queries with $\underline{h}_{\text{agg}}$ and $\underline{h}_{\text{sig}}$ as described below. $\adversary^\prime$ augments the output of $\adversary$, producing as output $\bot$ when $\adversary$ fails. On the other hand, if $\adversary$ produces a non-$\bot$ output, say $\texttt{forg} = \left(\m^*, \sigma, \left\{\underline{X}^{(\ell)}\right\}_\ell\right)$, $\adversary^\prime$ repeats this in its output but augments this with some transcript information, $\texttt{out}_{\adversary^\prime} = (i_{\text{sig}}, \texttt{out}^*)$ where $\texttt{out}^* = (\texttt{forg}, i_{\text{sig}}, h_{\text{sig}, i_{\text{sig}}}, \ell_{\text{sig}}, \pi_{\text{sig}}, i_{\text{agg}}, h_{\text{agg}, i_{\text{agg}}}, \underline{a})$ for some signature and aggregation query indices $i_{\text{sig}}, i_{\text{agg}}$ and responses $h_{\text{sig}, i_{\text{sig}}}, h_{\text{agg}, i_{\text{agg}}}$, some ring indices $\ell_{\text{sig}}, \pi_{\text{sig}}$, and a list of coefficients $\underline{a}$ extracted from the transcript in the following way:
+\begin{enumerate}
+\item $(i_{\text{sig}}, \ell_{\text{sig}})$ are defined such that the response to first query made by $\adversary$ to $\mathcal{H}_{\text{sig}}$ to compute any verification equation used in the forgery is the $i_{\text{sig}}^{th}$ such query and takes place for the $\ell_{\text{sig}}^{th}$ ring member, i.e.\ $h_{\text{sig}, i_{\text{sig}}} = c_{\ell_{\text{sig}}+1} = \mathcal{H}_{\text{sig}}(M, P_{\ell_{\text{sig}}}, L_{\ell_{\text{sig}}}, R_{\ell_{\text{sig}}})$ for some index $\ell$; and
+
+\item $\pi_{\text{sig}}$ is defined such that the response to the final query made by $\adversary$ to $\mathcal{H}_{\text{sig}}$ to compute any verification equation used in the forgery is used in the $\pi_{\text{sig}}^{th}$ signature challenge, i.e.\ the final signature challenge to be computed in the transcript is $c_{\pi_{\text{sig}}} = \mathcal{H}_{\text{sig}}(M, P_{\pi_{\text{sig}}-1},  L_{\pi_{\text{sig}}-1}, R_{\pi_{\text{sig}}-1})$; and
+
+\item $i_{\text{agg}}$ is the index of the first aggregation query made for any member of $\underline{X}^{(\ell_{\text{sig}})}$, i.e.\ the aggregation coefficient on $X_h$ in $\underline{X}^{(\ell)}$ is $h_{\text{agg},i_{\text{agg}}}$; and
+
+\item $\underline{a}$ contains the aggregation coefficients of all adversarially selected keys in $\underline{X}^{(\ell_{\text{sig}})}$ (arranged in some canonical manner).
+
+
+%\item the aggregation coefficients are $\underline{a} = (\underline{a}^{(1)}, \ldots, \underline{a}^{(R)})$ where each $\underline{a}^{(\ell)} = (a^{(\ell)}_1, a^{(\ell)}_2, \ldots)$ are the aggregation coefficients for the keys in $\underline{X}^{(\ell)}$.
+\end{enumerate}
+%In particular, $\adversary$ sees the first oracle response from $\mathcal{H}_{\text{sig}}$ used in a verification equation as $c_{\ell_{\text{sig}}+1} = h_{\text{sig}, i_{\text{sig}}}$, sees the final oracle response from $\mathcal{H}_{\text{sig}}$ used in a verification equation used to compute $c_{\pi_{\text{sig}}}$, and sees the coefficient on $X_h$ for the $\ell_{\text{sig}}^{th}$ ring member as $\alpha = h_{\text{agg}, i_{\text{agg}}}$. $\adversary^\prime$ reports all this information together with the forgery itself (and possibly additional data packed into $\texttt{out}$ besides $\texttt{forg}$). 
+
+
+\begin{lemma}
+Assume $\adversary$ makes at most $q$ random oracle queries and does not output $\bot_\adversary$. Every query made to $\mathcal{H}_{\text{sig}}$ for the verification equations is made by $\adversary$ before terminating except with a probability bounded above by $1 - (1-(\p - q)^{-1})^{r}$ (conditioned upon the event that $\adversary$ does not output $\bot_\adversary$).
+\end{lemma}
+\begin{proof}
+The event that $\adversary$ does not query $\mathcal{H}_{\text{sig}}$ for some verification query requires that $\adversary$ guess the output of $\mathcal{H}_{\text{sig}}$ for some query by flipping coins. This occurs with probability at most $(\p - q)^{-1}$ (the result must avoid the queries already made). The probability of successfully doing this even once for any of the $r$ verification queries is therefore $1 - (1 - (\p - q)^{-1})^{r}$. This is the upper bound on the probability that $\adversary$ can get away with flipping coins instead of querying for a verification equation.
+\end{proof}
+
+As a corollary to this lemma, $\adversary^\prime$ can find $i_{\text{sig}}$, $h_{\text{sig}, i_{\text{sig}}}$, $\ell_{\text{sig}}$, and $\pi_{\text{sig}}$ easily.
+
+\begin{lemma}
+Assume $\adversary$ makes at most $q$ random oracle queries and does not output $\bot$. Every query made to $\mathcal{H}_{\text{agg}}$ for every aggregation coefficient for $X_h$ is made by $\adversary$ before terminating, except with a probability bounded above by $1 - (1- (\p - q)^{-1})^{nr}$ (conditioned upon the event that $\adversary$ does not output $\bot_\adversary$).
+\end{lemma}
+\begin{proof}
+The event that $\adversary$ does not make one of these queries is requires that $\adversary$ guess the output of $\mathcal{H}_{\text{agg}}$. With $r$ ring members, each with some contributing keys $\underline{X}^{(\ell)}$ such that each $\left|\underline{X}^{(\ell)}\right| \leq n$ has at most $nr$ such queries, each with a successful guess probability of $(\p - q)^{-1}$. The probability of doing this successfully even once in a trial of $nr$ attempts is therefore $1 - (1- (\p - q)^{-1})^{nr}$.
+\end{proof}
+
+As a corollary, $\adversary^\prime$ can extract $i_{\text{agg}}$ and $h_{\text{agg}, i_{\text{agg}}}$ easily.
+
+\begin{lemma}
+Assume $\adversary$ is a $(t, \epsilon, n, q)$-forger. Let $E$ be the event that $\adversary$ does not output $\bot$. In $E$, for each $1 \leq \ell \leq r$, the query made to $\mathcal{H}_{\text{sig}}$ for the verification equation challenge $c_{\ell+1}$ is made after the query to $\mathcal{H}_{\text{agg}}$ for the aggregation coefficient on $X_h$ in the associated $\underline{X}^{(\ell)}$, except with probability bounded above by $1-(1-(\p - q)^{-1})^{r}$.
+\end{lemma}
+\begin{proof} Since $\Phi(\underline{X}^{(\ell)}) = P_\ell$ is part of the pre-image for $c_{\ell+1}$, the probability that $\adversary$ can compute $c_{\ell+1}$ before querying to compute $P_\ell$ (and assuming all queries are made except this final one) is at most  $(\p - q)^{-1}$, and there are at most $r$ such queries relevant to the forgery.
+\end{proof}
+
+These lemmata and corollaries demonstrate that all verification queries appear, and each of them appears after the aggregation coefficients have been computed. With these lemmata at hand, we can   describe $\adversary^\prime$. $\adversary^\prime$ places $\adversary$ in a black box, simulating all oracle queries made by $\adversary$. $\adversary^\prime$ keeps internal tables denoted with $\mathbb{T}_{\text{sig}}$, $\mathbb{T}_{\texttt{agg}}$ and a counter denoted $\texttt{ctr}$ to keep track of queries made to maintain internal consistency and track oracle query indices.
+
+
+
+
+\begin{description}
+\item [Algorithm $\adversary^\prime$:] $\adversary^\prime$ takes as input $\texttt{inp}_{\adversary^\prime} = ((X_h, \underline{h}_{\text{agg}}), \underline{h}_{\text{sig}})$. $\adversary^\prime$ has black-box access to $\adversary$, simulating oracle queries as described below and produces as output either a distinguished failure symbol $\bot$ or some $(\underline{i}, \texttt{out})$. 
+\begin{enumerate}
+\item $\adversary^\prime$ selects random coins $\rho = \rho_\adversary$, sets $\texttt{ctr}:=0$, and sets $\texttt{inp}_\adversary := \left\{X_h\right\}$.
+
+\item $\adversary^\prime$ executes $\adversary(\texttt{inp}_\adversary; \rho_\adversary)$, answering oracle queries made by $\adversary$ as described below.
+
+\item If $\adversary$ outputs $\bot_\adversary$, $\adversary^\prime$ outputs $\bot_{\adversary^\prime}$ and terminates. 
+
+\item Otherwise, $\adversary$ outputs a forgery $\texttt{forg} = (\m^*, \sigma, \left\{\underline{X}^{(\ell)}\right\}_{\ell})$. 
+
+\item $\adversary^\prime$ finds all verification queries in the transcript and finds the following:
+\begin{enumerate} 
+\item the query index $i_{\text{sig}}$  of the first verification equation used in the forgery, and
+
+\item the response $h_{\text{sig},i_{\text{sig}}}$ to that first verification query, and
+
+\item the ring index $\ell_{\text{sig}}$ of the input to that first verification query (satisfying the verification equation $c_{\ell_{\text{sig}}+1} = \mathcal{H}(M, P_{\ell_{\text{sig}}}, L_{\ell_{\text{sig}}}, R_{\ell_{\text{sig}}}) = h_{\text{sig}, i_{\text{sig}}}$), and
+
+\item the response $h_{\text{sig}, i_{\text{sig}}^\prime}$ to the final verification query, and
+
+\item the ring index $\pi_{\text{sig}}-1$ of the input to this query, which satisfies a similar verification equation $c_{\pi_{\text{sig}}} = \mathcal{H}(M, P_{\pi_{\text{sig}}-1}, L_{\pi_{\text{sig}} -1}, R_{\pi_{\text{sig}} - 1})$, and
+
+\item the query index $i_{\text{agg}}$ of the first aggregation query for any member of $\underline{X}^{(\ell_{\text{sig}})}$, and
+
+\item the response $h_{\text{agg}, i_{\text{agg}}}$ to that query, and lastly
+
+\item $\adversary^\prime$ finds all other aggregation coefficients for members of $\underline{X}^{(\ell_\text{sig})}$ in $\mathbb{T}_{\texttt{agg}}$, say $\underline{a}$. See description of $\mathcal{H}_{\text{agg}}$ oracle for more information.
+\end{enumerate}
+%\item $\adversary^\prime$ c
+
+\item $\adversary^\prime$ outputs $\texttt{out}_{\adversary^\prime} = (i_{\text{sig}}, (\texttt{forg}, i_{\text{sig}}, h_{\text{sig}, i_{\text{sig}}}, \ell_{\text{sig}}, \pi_{\text{sig}}, i_{\text{agg}}, h_{\text{agg}, i_{\text{agg}}}, \underline{a}))$.
+\end{enumerate}
+
+%A complete description of $\adversary^\prime$ requires describing oracle query responses. 
+
+
+%From $\mathcal{A}^{\mathcal{SO},\underline{\mathcal{H}}}$, we consider how a reduction $\adversary^\prime$ simulates $\mathcal{SO}$ and the members of $\underline{\mathcal{H}}$ for $\adversary$. We assume $\mathcal{A}^\prime$ takes as input an honest key $X_h$, a pair of oracle query responses $\underline{h}_{\text{agg}} = (h_{\text{agg},1}, h_{\text{agg},2}, \ldots)$ and $\underline{h}_{\text{sig}} = (h_{\text{sig},1}, h_{\text{sig},2}, \ldots)$, and we assume $\adversary^\prime$ tracks internal tables $\mathbb{T}_{\texttt{com}}$, $\mathbb{T}_{\texttt{agg}}$, $\mathbb{T}_{\texttt{sig}}$, and counters $\texttt{ctr}_{\texttt{agg}}, \texttt{ctr}_{\texttt{sig}}$.
+
+\begin{description}
+
+
+\item [Simulating $\mathcal{H}_{\text{com}}$:] To simulate queries of the form $\mathcal{H}_{\text{com}}(\texttt{inp})$, $\adversary^\prime$ keeps track of an internal table $\mathbb{T}_{\text{com}}$. $\adversary^\prime$ checks if $\mathbb{T}_{\text{com}}[\texttt{inp}]$ is empty. If so, a random $\texttt{out} \overset{\$}{\leftarrow} \left\{0,1\right\}^\eta$ is selected and stored $\mathbb{T}_{\text{com}}[\texttt{inp}] \leftarrow \texttt{out}$. In either case, $\mathbb{T}_{\text{com}}[\texttt{inp}]$ is sent to $\adversary$.
+
+\item [Simulating $\mathcal{H}_{\text{ki}}$:] To simulate queries made by $\adversary$ of the form $\mathcal{H}_{\text{ki}}(\texttt{inp})$, $\adversary^\prime$ keeps track of an internal table $\mathbb{T}_{\text{ki}}$. $\adversary^\prime$ checks if $\mathbb{T}_{\text{ki}}[\texttt{inp}]$ is empty. If so, a random point $Y^\prime \in \group$ is selected and stored $\mathbb{T}_{\text{ki}}[\texttt{inp}] \leftarrow Y^\prime$. In either case, $\mathbb{T}_{\text{ki}}[\texttt{inp}]$ is sent to $\adversary$.
+
+
+\item [Simulating $\mathcal{H}_{\text{agg}}$:] $\adversary^\prime$ tracks aggregation queries carefully and always ensures that the aggregation coefficient for $X_h$ is selected after all other coefficients.
+\begin{enumerate}
+\item $\adversary$ queries $\mathcal{H}_{\text{agg}}$ with $\texttt{inp}$.
+
+\item $\adversary^\prime$ checks if $\mathbb{T}_{\text{agg}}[\texttt{inp}]$ is undefined. If so, $\adversary$ does the following:
+
+\begin{enumerate}
+\item $\adversary^\prime$ checks if $\texttt{inp}$ can be parsed as some $(Y,\underline{X})$. If not, $\adversary^\prime$ picks a random entry $\mathbb{T}_{\texttt{agg}}[\texttt{inp}] \overset{\$}{\leftarrow} \scalarField$. 
+
+\item Otherwise, $\adversary^\prime$ parses $\texttt{inp} = (Y,\underline{X})$ and checks if $X_h \in \underline{X}$. If not, then for each $Y^\prime \in \underline{X}$, $\adversary^\prime$ picks a random entry $\mathbb{T}_{\texttt{agg}}[Y^\prime, \underline{X}] \overset{\$}{\leftarrow} \scalarField$. 
+
+\item Otherwise, $\texttt{inp} = (Y, \underline{X})$ for some $Y \in \underline{X}$ such that $X_h \in \underline{X}$ and yet $\mathbb{T}_{\texttt{agg}}[\texttt{inp}]$ is undefined. $\adversary^\prime$ checks if $\mathbb{T}_{\texttt{agg}}[X_h, \underline{X}]$ is defined. If so, $\adversary^\prime$ outputs $\bot_{\text{agg}}$ and terminates
+
+\item Otherwise, for each $Y^\prime \in \underline{X} \setminus\left\{X_h\right\}$ such that $\mathbb{T}_{\text{agg}}[Y^\prime, \underline{X}]$ is undefined, $\adversary^\prime$ selects a random entry $\mathbb{T}_{\texttt{agg}}[Y^\prime, \underline{X}] \overset{\$}{\leftarrow} \scalarField$. 
+
+\item After all entries of $\underline{X}$ except $X_h$ have an entry in $\mathbb{T}_{\text{agg}}$, $\adversary^\prime$ increments $\texttt{ctr}_{\texttt{agg}}$ and stores $\mathbb{T}_{\texttt{agg}}[X_h, \underline{X}] \leftarrow h_{\text{agg}, \texttt{ctr}_{\texttt{agg}}}$.
+\end{enumerate}
+
+\item  $\adversary^\prime$ outputs $\mathbb{T}_{\text{agg}}[\texttt{inp}]$.
+
+
+\end{enumerate}
+
+Note that $\adversary^\prime$ responds with $\bot_{\text{agg}}$ if and only if $\mathbb{T}_{\text{agg}}[X_h, \underline{X}]$ is defined but some $Y \in \underline{X}$ has $\mathbb{T}_{\text{agg}}[Y, \underline{X}]$ defined. If $\adversary^\prime$ follows the protocol as described, this never happens. In all other cases, the aggregation coefficient for $X_h$ is decided after all other aggregation coefficients have been decided. This is important to our proof of unforgeability.
+
+\item [Simulating $\mathcal{H}_{\text{sig}}$:] To simulate queries made by $\adversary$ for signing, $\mathcal{H}_{\text{sig}}(\texttt{inp})$, $\adversary^\prime$ checks if $\mathbb{T}_{\texttt{sig}}[\texttt{inp}]$ is defined. If not, $\adversary^\prime$ checks if $\texttt{inp}$ can be parsed as $\texttt{inp} = (M,P,U,V)$ for some $M$ and group points $P,U,V$. If not, $\mathbb{T}_{\texttt{sig}}[\texttt{inp}] \overset{\$}{\leftarrow} \left\{0,1\right\}^\eta$ is selected at random. Otherwise, $\texttt{ctr}_{\texttt{sig}}$ is incremented and $\mathbb{T}_{\texttt{sig}}[M,P,U,V] \leftarrow h_{\text{sig},\texttt{ctr}_{\texttt{sig}}}$ is stored. Either way, $\adversary^\prime$ sends $\mathbb{T}_{\texttt{sig}}[\texttt{inp}]$ to $\adversary$.
+
+\item [Simulating $\mathcal{SO}$:] For notational simplicity, $\mathcal{SO}$ uses notations assuming it is the first member of the coalition to begin signing (with index $j=1$ in the coalition). $\adversary^\prime$ simulates $\mathcal{SO}$ in the following way:%We now describe how the reduction $\adversary^\prime$ simulates signing oracle queries made by $\adversary$. We take care to construct $\adversary^\prime$ so as to output some $\bot_i$ if oracle queries occur in an order that does not allow simulation of $\mathcal{SO}$ by backpatching as described in \cite{} and \cite{maxwell2018simple}. 
+
+
+
+\begin{enumerate}
+\item $\adversary$ queries $\mathcal{SO}$ with $\texttt{inp}_{\mathcal{SO}}$.
+
+\item After receiving the query, $\adversary^\prime$ parses $\texttt{inp}$ as $\left(M, \underline{P}, \pi, \left\{\underline{X}^{(\ell)}\right\}_{1 \leq \ell \leq r}\right)$ such that $\left|\underline{X}^{(\ell)}\right| \geq 2$ for some $\ell$ and, for each $\ell$, $\left|\underline{X}^{(\ell)}\right| \leq n$, $X_h \in \underline{X}^{(\ell)}$, and $P_\ell \in \underline{P}$ is derived from the corresponding $\underline{X}^{(\ell)}$. If $\adversary^\prime$ cannot parse this way, $\adversary^\prime$ sends $\bot_{\mathcal{SO}}$ to $\adversary$ indicate the query is rejected and halts simulating $\mathcal{SO}$.
+
+\item Otherwise, $\adversary^\prime$ selects signing data $\texttt{dat}_1$ as in step \ref{dat1} in Section \ref{sigoracle}, computes the commitment $\texttt{com}_1$, and send $\texttt{com}_1$ to $\adversary$ in the following way: 
+\begin{enumerate}
+\item $\adversary^\prime$ increments $\texttt{ctr}$ and picks the critical commitment $c_\pi \leftarrow h_{\text{sig},\texttt{ctr}_{\texttt{sig}}}$. 
+
+\item $\adversary^\prime$ selects a random set of signing data $\left\{s_{1,\ell}\right\}_{\ell \in [r]}$ (including the index $\ell = \pi$). 
+
+\item $\adversary^\prime$ computes $L_{1, \pi} = s_{1,\pi} G + c_{\pi} P_\pi$ and $R_{1, \pi} = s_{1,\pi} H_\pi + c_\pi J$, assembles $\texttt{dat}_1 := (L_{1,\pi}, R_{1,\pi}, \left\{s_{1,\ell}\right\}_{\ell \in [r], \ell \neq \pi})$, and selects a random $\texttt{com}_1 \overset{\$}{\leftarrow} \left\{0,1\right\}^\eta$. 
+
+\item If $\mathbb{T}_{\texttt{com}}[\texttt{dat}_1]$ is defined, $\adversary^\prime$ halts simulating $\mathcal{SO}$, outputs $\bot_1$ to indicate that some $\texttt{dat}_1$ has already been used, and terminate. 
+
+\item Otherwise, $\adversary^\prime$ simulates a query of $\mathcal{H}_{\text{com}}$ by setting $\mathbb{T}_{\texttt{com}}\left[\texttt{dat}_1\right] \leftarrow \texttt{com}_1$, sends $\texttt{com}_1$ to $\adversary$. 
+
+%\item Later, the assignment will be made $\mathbb{T}_{\texttt{sig}}[M,U_{\pi-1}, V_{\pi-1}] \leftarrow c_\pi$.
+
+\end{enumerate}
+ 
+\item After $\adversary$ responds with commitments $\underline{\texttt{com}} = \left\{\texttt{com}_j\right\}_{j \in [n], j \neq 1}$, $\adversary^\prime$ does some back-patching and then sends $\texttt{dat}_1$ to $\adversary$.
+\begin{enumerate}
+\item For each $j > 1$, $\adversary^\prime$ searches $\mathbb{T}_{\texttt{com}}$ for any $\texttt{dat}$ such that $\mathbb{T}_{\texttt{com}}\left[\texttt{dat}\right] = \texttt{com}_j$.
+
+\item If, for any $j$, more than one $\texttt{dat}$ is found, $\adversary^\prime$ halts simulation of $\mathcal{SO}$, outputs $\bot_2$, and terminates. 
+
+\item If, for any $j$, no such $\texttt{dat}$ is found, then $\adversary^\prime$ sets $\texttt{alert}_1 \leftarrow \texttt{true}$.
+
+\item \label{gather} Otherwise, exactly one $\texttt{dat} = \texttt{dat}_j$ is found in $\mathbb{T}_{\texttt{com}}$ for each $\texttt{com}_j$. If any $\texttt{dat}_j$ cannot be parsed as $(U_j, V_j, \left\{s_{j, \ell}\right\}_{\ell \neq \pi})$, $\adversary^\prime$ sets $\texttt{alert}_2 \leftarrow \texttt{true}$. %halts simulation of $\mathcal{SO}$ with $\bot_3$.
+
+\item Otherwise, exactly one $\texttt{dat}_j$ is found in $\mathbb{T}_{\texttt{com}}$ for each $\texttt{com}_j$ and can be parsed as $(U_j, V_j, \left\{s_{j,\ell}\right\})$. After parsing each $\texttt{dat}_j$, $\adversary^\prime$ does the following:
+\begin{enumerate}
+\item $\adversary^\prime$ computes $U = \sum_j U_j$, $V = \sum_j V_j$, and $s_\ell = \sum_j s_{j,\ell}$ for each $\ell \neq \pi$.
+
+
+\item $\adversary^\prime$ checks if $(M, P_\ell, U, V)$ appears in $\mathbb{T}_{\texttt{sig}}$. If so, $\adversary^\prime$ halts simulating $\mathcal{SO}$, outputs $\bot_3$, and terminates.  
+
+\item Otherwise, $\adversary^\prime$ increments $\texttt{ctr}_{\texttt{sig}}$, sets $c_{\pi+1} \leftarrow h_{\text{sig},\texttt{ctr}_{\texttt{sig}}}$, and stores $\mathbb{T}_{\texttt{sig}}[M, P_\ell, U,V] \leftarrow c_{\pi+1}$.
+
+\item For each $\ell = \pi+1, \pi+2, \ldots, \pi-2$, $\adversary^\prime$ computes $L_\ell = s_\ell G + c_\ell P_\ell$ and $R_\ell = s_\ell H_\ell + c_\ell J$ and checks if $(M, P_\ell, L_\ell, R_\ell)$ appears in $\mathbb{T}_{\texttt{sig}}$. If so, $\adversary^\prime$ halts simulating $\mathcal{SO}$, outputs $\bot_3$, and terminates. 
+
+\item Otherwise, $\adversary^\prime$ increments $\texttt{ctr}_{\texttt{sig}}$, sets $c_{\ell+1} \leftarrow h_{\text{sig},\texttt{ctr}_{\texttt{sig}}}$,  stores \[\mathbb{T}_{\texttt{sig}}[M, P_\ell, L_\ell, R_\ell] \leftarrow c_{\ell+1}\]and then moves to the next $\ell$.
+
+\item $\adversary^\prime$ checks that $\mathbb{T}_{\texttt{sig}}\left[M, P_{\pi-1}, L_{\pi-1}, R_{\pi-1}\right]$ is empty. If not, $\adversary^\prime$ halts simulating  $\mathcal{SO}$, outputs $\bot_3$, and terminates. 
+
+\item Otherwise, $\mathbb{T}_{\texttt{sig}}\left[M,s_{\pi-1}G + c_{\pi-1} P_{\pi-1}, s_{\pi-1}H_{\pi-1} + c_{\pi-1}J\right] \leftarrow c_\pi$. 
+
+\end{enumerate}
+
+\item $\adversary^\prime$ sends $\texttt{dat}_1$ to $\adversary$.
+
+\end{enumerate}
+
+\item After $\adversary$ responds with  $\underline{\texttt{dat}}^\prime = \left\{\texttt{dat}^\prime_j\right\}_{j \neq 1}$, $\adversary^\prime$ checks $\texttt{com}_j = \mathbb{T}_{\texttt{com}}[\texttt{dat}^\prime_j]$ for each $j$. If any do not match $\adversary^\prime$ sends $\bot_{\mathcal{SO}}$ to $\adversary$ indicating a successful simulation of a failed signing ceremony. 
+
+\item Otherwise, if $\texttt{alert}_1=\texttt{true}$ or $\texttt{alert}_2 = \texttt{true}$, $\adversary^\prime$  $\bot_4$ and terminates.
+
+\item Otherwise, $\adversary^\prime$ sends $s_{1, \pi}$ to $\adversary$, which is sufficient information for $\adversary$ to compute the rest of the signature.
+%some $\texttt{dat}_j$ distinct from the signing data Otherwise, $\adversary^\prime$ sends $s_{j^\prime, \pi}$ to $\adversary$.
+
+\end{enumerate}
+
+\end{description}
+
+
+
+
+\end{description}
+
+%Note that although $\adversary^\prime$ outputs $(\underline{i}, \texttt{out})$, we can still apply $\texttt{fork}^\cdot$ by interpreting the output as $(i_1, \texttt{out}^\prime)$ where $\texttt{out}^\prime := \underline{i}\setminus \left\{i_1\right\}$, $\underline{i} = (i_1, i_2, \ldots)$, and $\underline{i} \setminus \left\{i_1\right\} = (i_2, \ldots)$.
+
+If the output is one of the symbols in $\left\{\bot_1, \bot_2, \bot_3, \bot_4\right\}$, then $\adversary^\prime$ actually terminates: these are the failure symbols that indicate something strange is happening to the orders of oracle assignments while simulating $\mathcal{SO}$. This indicates failure of the signing oracle from a malformed query or some other bad ordering of events. We shall prove these only occur with negligible probability.
+
+Moreover, $\bot_{\mathcal{SO}}$ only appears if $\adversary$ queries $\mathcal{SO}$ with something beyond the scope of the unforgeability game defined in Definition \ref{game}, or sent commitments that did not open correctly; $\adversary^\prime$ does not terminate because these are successful simulations of a failed signing ceremony, not a failed simulation. 
+
+We investigate the acceptance probability of $\adversary^\prime$.
+
+\begin{lemma}\label{firstNonFail}
+Let $\mathcal{A}$ be a $(t,\epsilon,q,n)$-forger with $\mathcal{SO}$ and $\underline{\mathcal{H}}$ access, and let $\adversary^\prime$ be any reduction of $\mathcal{A}$ that simulates the oracle queries as described above, let $t^\prime > 0$, and let $c > 0$ be the amount of time required for $\adversary^\prime$ to select a new $\mathbb{Z}_\mathfrak{p}$ or $\group$ element at random. Then in time at most $t+t^\prime$ and with probability at most $\epsilon^\prime = \epsilon_1 + \epsilon_2 + \epsilon_3 + \epsilon_4$, $\adversary^\prime$ terminates without outputting any $\bot_i \in \left\{\bot_1, \bot_2, \bot_3, \bot_4, \bot_{\text{agg}}\right\}$ where
+\begin{align*}
+\epsilon_1 =& 1 - \prod_{k \in [q-1]} (1-k \mathfrak{p}^{-r-1}) &
+\epsilon_2 =& 1 - \prod_{k \in [q-1]} (1-k \mathfrak{p}^{-1}) \\
+\epsilon_3 =& 1 - \prod_{k \in [q-1]} (1-k \mathfrak{p}^{-4}) &
+\epsilon_4 =& 1 - \text{exp}(-\frac{-t^\prime(t^\prime-c)}{2(\mathfrak{p}-q)c^2}).
+\end{align*}
+\end{lemma}
+\begin{proof}
+
+The failure symbols partition the event that $\adversary^\prime$ outputs some $\bot$ and terminates, so the probability of any $\bot$ symbol appearing is exactly the sum of each individual one. That is to say, if $E$ is the event that $\adversary^\prime$ outputs some $\bot$ and terminates and $E_i$ is the event that $\adversary^\prime$ outputs  $\bot_i$ for some $ i \in \left\{1,2,3,4,\text{agg}\right\}$ and terminates, then we have $\epsilon_i = \mathbb{P}[E_i]$ and, by the law of total probability $\mathbb{P}[E] = \mathbb{P}[E \mid E_{\text{agg}}]\mathbb{P}[E_{\text{agg}}] + \sum_{i \in [4]} \mathbb{P}[E \mid E_i]\mathbb{P}[E_i]$.
+
+Moreover, each conditional probability here is obviously $1$ (the probability that $\adversary^\prime$ outputs some $\bot_i$ given the fact that $\adversary^\prime$ outputs $\bot_3$ is $1$, for example) so we have the simple sum. Hence, bounding the acceptance probability from below is equivalent to bounding each of the probabilities of each of these failure events from above. We immediately simplify the analysis: $\mathbb{P}[E_{\text{agg}}] = 0$ by construction. %Define for convenience $\epsilon_i := \mathbb{P}\left[E_i\right]$.
+\begin{description}
+\item [To bound $\epsilon_1$:] If $\adversary^\prime$, while simulating a query to $\mathcal{SO}$ for $\adversary$, selects $\texttt{dat}_1$ such that $\mathbb{T}_{\texttt{com}}[\texttt{dat}_1]$ is non-empty, then $\bot_1$ is output. Hence, this symbol occurs if and only if $\adversary^\prime$ selects random signing data $\texttt{dat}_1$ for which an image under $\mathcal{H}_{\text{com}}$ is already determined. $\adversary^\prime$ never selects the same random data twice by specification of the $\mathcal{SO}$ simulation, so this implies that $\adversary$ queried $\mathcal{H}_{\text{com}}$ with $\texttt{dat}_1$ at some point in the past and, moreover, $\adversary^\prime$ randomly discovered its pre-image. There are $\p^{r+1}$ choices of $(U_\ell, V_\ell, \left\{s_\ell\right\})$; this scenario is precisely the scenario of a usual birthday attack. Presuming that at most $q$ such choices are used in $\mathcal{H}_{\text{com}}$, the probability that $\adversary^\prime$ sees no collisions is exactly $\prod_{k \in [q-1]}(1 - k\mathfrak{p}^{-r-1})$. Hence we have
+\[\epsilon_1 \leq 1 - \prod_{k \in [q-1]}(1 - k\mathfrak{p}^{-r-1}).\]
+
+\item [To bound $\epsilon_2$:] The failure symbol $\bot_2$ occurs if and only if at least two $(U, V, \left\{s_\ell\right\})$ are found with table entries $\mathbb{T}_{\texttt{com}}[U,V,\left\{s_\ell\right\}] = \texttt{com}_j$ for the same $\texttt{com}_j$. This implies a collision of the simulated random oracle. We have
+\[\epsilon_2 \leq 1 - \prod_{k \in [q-1]} (1-k\mathfrak{p}^{-1}).\]
+
+\item [To bound $\epsilon_3$:] Let $E$ be the event that $\adversary^\prime$, in simulating a query made to $\mathcal{SO}$, checks $\mathbb{T}_{\texttt{sig}}$ and finding that some query of the form $(M, P_\ell, U_\ell, V_\ell)$ has already been made, outputting $\bot_3$. This is also a birthday attack: since $M$ is output from $\mathcal{H}_{\text{msg}}$, we have $\mathfrak{p}^{4}$ such possible choices, and we make up to $q$ queries, so the probability of seeing no collisions is exactly $\prod_{k \in [q-1]}(1 - k\mathfrak{p}^{-4})$.
+
+
+
+\item [To bound $\epsilon_4$:] The failure symbol $\bot_4$ is output only in the case that $\texttt{alert}_1 = \texttt{true}$ and the simulation has almost come to an end. $\adversary^\prime$ only gets to this point when $\adversary$ misbehaves and sends a commitment $\texttt{com}_j$ in the commit-and-reveal stage that has not yet been associated with any query of the form $\mathcal{H}_{\text{com}}$, and yet still produced opening data $\left\{\texttt{dat}_j\right\}_j$ that pass the reveal phase:  $\adversary$ guessed $\texttt{com}_j = \mathcal{H}_{\text{msg}}(\text{dat}_j)$ without querying $\mathcal{H}_{\text{msg}}$. This, too, is a birthday attack. The probability that an attacker requires more than $k$ attempts at this before seeing the first collision is bounded from above by $\text{exp}(\frac{-k(k-1)}{2(\mathfrak{p}-q)})$. Assuming each attempt takes constant time (say $c$ units of time per attempt), since $\adversary^\prime$ is granted $t^\prime > 0$ time in addition to the runtime of $\adversary$, the probability that $\adversary^\prime$ outputs $\bot_4$ is at most $1 - \text{exp}(-\frac{-t^\prime(t^\prime-c)}{2(\mathfrak{p}-q)c^2})$. 
+
+
+
+
+\end{description}
+
+
+\end{proof}
+
+
+Note that by rescaling time $(t^\prime, t) \mapsto (\frac{t^\prime}{c}, \frac{t}{c})$ we can rewrite $\epsilon_4 = 1 - e^{-t^\prime(t^\prime - 1)/(\alpha(\mathfrak{p} - q))}$ for some $\alpha > 0$.  Also note that each $\epsilon_i$ is negligible in $\mathfrak{p}$ so the sum of these are negligible in $\mathfrak{p}$. Since $\adversary^\prime$ is compatible with the hypotheses of Lemma \ref{genfork}, we immediately obtain the following.
+
+\begin{cor}
+The algorithm $\texttt{fork}^{\adversary^\prime}$ and  $\texttt{fork}^{\adversary^{\prime \prime}}$ have acceptance probabilities bounded from below:
+
+\begin{align*}
+\texttt{acc}_{\texttt{fork}^{\adversary^\prime}} \geq& \texttt{acc}_{\adversary^\prime} \left(\frac{\texttt{acc}_{\adversary^\prime}}{q} - \frac{1}{2^\eta}\right) \\
+\texttt{acc}_{\texttt{fork}^{\adversary^{\prime \prime}}} \geq& \texttt{acc}_{\texttt{fork}^{\adversary^\prime}} \left(\frac{\texttt{acc}_{\texttt{fork}^{\adversary^\prime}}}{q} - \frac{1}{2^\eta}\right)
+\end{align*}
+\end{cor} In the next section we describe $\texttt{fork}^{\adversary^\prime}$ and $\texttt{fork}^{\adversary^{\prime \prime}}$.
+%Since $\epsilon$ is non-negligible and $\epsilon_{\texttt{fail}}$ is negligible, Corollary \ref{genfork} implies that, $\texttt{fork}^{\adversary^{\prime \prime}}$ has a non-negligible acceptance probability.
+
+\subsection{Forking twice}\label{forkingTwice}
+
+In this section we apply the general forking lemma twice and obtain the punchline, a discrete logarithm solver. We fork $\adversary^\prime$ in two stages. We first construct $\texttt{fork}^{\adversary^\prime}$ to take as input some $\texttt{inp}_{\texttt{fork}^{\adversary^\prime}} = (X_h, \underline{h}_{\text{agg}})$,  selects some $\underline{h}_{\text{sig}}$ at random, and executes $\adversary^\prime$ with input $\texttt{inp}_{\adversary^\prime} = (X_h, \underline{h}_{\text{sig}})$. If $\adversary^\prime$ outputs any failure symbol $\bot$, then $\texttt{fork}^{\adversary^\prime}$ outputs $\bot_{\texttt{fork}^{\adversary^\prime}}$ and terminates.
+
+Otherwise, $\adversary^\prime$ outputs some $(i_{\text{sig}}, \texttt{out})$ where $\texttt{out} = (h_{\text{agg}, i_{\texttt{agg}}}, h_{\text{sig}, i_{\texttt{sig}}}, \underline{a}, \texttt{forg})$. A second $\underline{h}_{\text{sig}}^*$ is selected at random, the sequences $\underline{h}_{\text{sig}}$ and $\underline{h}_{\text{sig}}^*$ are glued together as usual to get a sequence $\underline{h}_{\text{sig}}^\prime$. $\adversary^\prime$ is run again except with input $(X_h, \underline{h}_{\text{sig}}^\prime)$ in pursuit of a second success.  If $\adversary^\prime$ outputs any failure symbol $\bot$, then $\texttt{fork}^{\adversary^\prime}$ outputs $\bot_{\texttt{fork}^{\adversary^\prime}}$ and terminates.
+
+Otherwise, $\adversary^{\prime}$ comes through with a second success, say $(i_{\text{sig}}^*, \texttt{out}^*)$. If $i_{\text{sig}} \neq i_{\text{sig}}^*$, $\texttt{fork}^{\adversary^\prime}$ outputs $\bot_{\texttt{fork}^{\adversary^\prime}}$ and terminates. Otherwise, $\texttt{fork}^{\adversary^\prime}$ outputs \[\texttt{out}_{\texttt{fork}^{\adversary^\prime}} = (i_{\text{sig}}, (i, \texttt{out}), (i^*, \texttt{out}^*)).\]
+
+\begin{description}
+
+\item [Algorithm $\texttt{fork}^{\adversary^\prime}$:] Takes as input $\texttt{inp}_{\texttt{fork}^{\adversary^\prime}} = (\texttt{inp}, \underline{h}_{\text{agg}}) = (X_h, \underline{h}_{\text{agg}})$. 
+\begin{enumerate}
+\item $\texttt{fork}^{\adversary^\prime}$ picks random coins for $\adversary^\prime$, selects $\underline{h}_{\text{sig}} \leftarrow (\left\{0,1\right\}^{\eta})^q$,  assembles  $\texttt{inp}_{\adversary^\prime} = (\texttt{inp}, \underline{h}_{\text{agg}})$.
+
+\item $\texttt{fork}^{\adversary^\prime}$ runs $\adversary^\prime$ with $\texttt{inp}_{\adversary^\prime}$.
+
+\item If $\adversary^\prime$ outputs $\bot_{\adversary^\prime}$, $\texttt{fork}^{\adversary^\prime}$ outputs $\bot_{\texttt{fork}^{\adversary^\prime}}$ and terminates.
+
+\item Otherwise, $\adversary^\prime$ outputs some $\texttt{out}_{\adversary^\prime} = (i_{\text{sig}}, \texttt{out})$ where \[\texttt{out} = (i_{\text{sig}}, \ell_{\text{sig}}, \pi_{\text{sig}}, i_{\text{agg}}, h_{\text{sig}, i_{\text{sig}}}, h_{\text{agg}, i_{\text{agg}}}, \underline{a}, \texttt{forg}).\]
+
+\item $\texttt{fork}^{\adversary^\prime}$ selects $\underline{h}_{\text{sig}}^{\prime} \leftarrow (\left\{0,1\right\}^\eta)^q$, sets the gluing index as $j = i_{\texttt{sig}}$, and glues oracle query response sequences together as usual \[\underline{h}_{\text{sig}}^{\prime \prime}= (h_{\text{sig},1}, h_{\text{sig},2}, \ldots, h_{\text{sig}, j - 1}, h^{\prime}_{\texttt{sig}, j}, h^{\prime}_{\texttt{sig}, j+1}, \ldots).\]
+
+\item $\texttt{fork}^{\adversary^\prime}$ runs $\adversary^\prime$ with $\texttt{inp}^{\prime}_{\adversary^\prime} = (\texttt{inp}, \underline{h}_{\text{sig}}^{\prime \prime})$.
+
+
+
+\item If $\adversary^\prime$ outputs $\bot$, then $\texttt{fork}^{\adversary^\prime}$ outputs $\bot$. 
+
+\item  Otherwise, $\adversary^\prime$ outputs some $\texttt{out}_{\adversary^\prime}^* = (i_{\text{sig}}^*, \texttt{out}^*)$ where \[\texttt{out}^* = (i_{\text{sig}}^*, \ell_{\text{sig}}^*, \pi_{\text{sig}}^*, i_{\text{agg}}^*, h_{\text{sig}, i_{\text{sig}}^*}^{\prime \prime}, h_{\text{agg}, i_{\text{agg}}^*}, \underline{a}^*, \texttt{forg}^*).\]
+
+
+\item If $i_{\text{sig}} \neq i_{\text{sig}}^*$, output $\bot_{\texttt{fork}^{\adversary^\prime}}$ and terminate. 
+
+\item Otherwise, output $(i_{\text{sig}}, \texttt{out}^{\prime})$ where $\texttt{out}^\prime = (\texttt{out}, \texttt{out}^*)$.
+\end{enumerate}
+
+\end{description}
+
+%We define $\texttt{fork}^{\adversary^\prime}$ this way to satisfy our description of the forking lemma, although we always parse a non-$\bot$ output of $\texttt{fork}^{\adversary^\prime}$, $(j, \texttt{out}^*)$, as $(\underline{i}, \texttt{out})$ where $\underline{i} = (i_{\texttt{agg}}, i_{\texttt{agg}}^\prime, i_{\texttt{sig}} ,\ell_{\texttt{sig}})$ and $\texttt{out} = ((\underline{a}, \texttt{forg}), (\underline{a}^\prime, \texttt{forg}^\prime))$. This way, we can fork again.
+
+The following lemma is obvious: aggregation coefficients for $P_\ell$ must be decided before the $\mathcal{H}_{\text{sig}}$ oracle is queried with $(M, P_\ell, L_\ell, R_\ell)$ except with negligible probability. Hence, the queries that determines $h_{\text{agg},i_{\text{agg}}}$ and $h_{\text{agg},i_{\text{agg}}^*}^*$ are made before the fork, so they must be the same queries.
+\begin{lemma}
+A successful output from $\texttt{fork}^{\adversary^\prime}$ has $i_{\text{agg}} = i^*_{\text{agg}}$ except with negligible probability.
+\end{lemma}
+\begin{proof}
+To guess the output of $\mathcal{H}_{\text{sig}}(M, P_\ell, L_\ell, R_\ell)$ before learning $P_\ell$ occurs with probability at most $(\p - q)^{-1}$. This is sufficient, but not necessary: it's also possible that $P_\ell$ is learned without making aggregation coefficient queries.
+
+Hence, except with some probability at most $(\p - q)^{-1}$, $P_\ell$ is learned before this query is made. Conditioning upon the event that $\adversary^\prime$ does learn $P_\ell$, the probability that $P_\ell$ is guessed without computing any aggregation coefficients is also at most $(\p -q )^{-1}$.
+
+The probability that this ordering does not hold is bounded from above by $(\p - q)^{-1} + (1 - (\p - q)^{-1})(\p - q)^{-1} = (2 - (\p - q)^{-1})(\p - q)^{-1})$. So the probability that this ordering does hold is at least $(1-(\p-q)^{-1})^2$.
+\end{proof}
+
+
+The acceptance probability of  $\texttt{fork}^{\adversary^\prime}$ is provided by the general forking lemma. Due to our choice of forking, the query to $\mathcal{H}_{\text{sig}}$ in the two resulting transcripts have the same input $(M, P_\ell, L_\ell, R_\ell)$ but different outputs. This is the condition that $c_\ell \neq c_\ell^{\prime}$ from the \textit{system of forgery-to-discrete-log equations and inequalities}. We wrap this algorithm with the following algorithm $\adversary^{\prime \prime}$ that rejects certain executions and reformats their outputs.
+
+\begin{description}
+\item [Algorithm $\adversary^{\prime \prime}$: ] 
+
+\begin{enumerate}
+\item Take as input some $\texttt{inp}_{\texttt{fork}^{\adversary^\prime}} = (X_h, \underline{h}_{\text{agg}})$. 
+
+\item Select some random coins $\rho = \rho_{\texttt{fork}^{\adversary^\prime}}$. 
+
+\item Execute $\texttt{fork}^{\adversary^\prime}$ with $\texttt{inp}_{\texttt{fork}^{\adversary^\prime}}$ and these random coins. 
+
+\item If the result is $\bot_{\texttt{fork}^{\adversary^\prime}}$, output $\bot_{\adversary^{\prime \prime}}$ and terminate. Otherwise, assemble together $\texttt{out}_{\texttt{fork}^{\adversary^\prime}} = (i_{\text{sig}}, \texttt{out}^{\prime})$ where $\texttt{out}^{\prime} = (\texttt{out}, \texttt{out}^*)$ and output $\texttt{out}_{\texttt{fork}^{\adversary^\prime}}$. 
+
+\item Find $\ell_{\text{sig}}, \pi_{\text{sig}} \in \texttt{out}$; find $\ell_{\text{sig}}^*, \pi^*_{\text{sig}} \in \texttt{out}^*$.
+
+\item If $\ell_{\text{sig}} \neq \ell_{\text{sig}}^*$ or $\pi_{\text{sig}} \neq \pi_{\text{sig}}^*$, output $\bot$ and terminate. Otherwise, assemble together $\texttt{out}_{\adversary^{\prime \prime}} = (i_{\text{agg}}, \texttt{out}^{\prime})$ and output $\texttt{out}_{\adversary^{\prime\prime}}$.
+\end{enumerate}
+\end{description}
+
+The proof of the non-negligibility of the acceptance probability of $\adversary^{\prime \prime}$ is very similar to a proof presented in \cite{liu2004linkable} for the non-threshold case of LSAG signatures. We omit this, noting merely that the threshold property of our scheme makes no difference in determining the acceptance probability. 
+
+Now we fork on $i_{\texttt{agg}}$. This way, all queries made before this point remain the same. Moreover, since the aggregation coefficients on the adversarially chosen keys are determined by random coins, not the hash query tape, and due to our structure of the $\mathcal{H}_{\texttt{agg}}$ simulations, it is always the case that these random coins are selected before the output for the honest key. Hence, if some algorithm is making decisions adaptively based on previous input, the random coins chosen for the aggregation coefficients on the adversarially selected keys are identical between the two branches with probability $1$.
+
+\begin{description}
+
+\item [Algorithm $\texttt{fork}^{\adversary^{\prime \prime}}$:] Takes as input some $\texttt{inp}_{\texttt{fork}^{\adversary^{\prime \prime}}} = X_h$. 
+\begin{enumerate}
+\item Selects some random coins $\rho = \rho_{\adversary^{\prime \prime}}$.
+
+\item $\texttt{fork}^{\adversary^{\prime \prime}}$  selects $\underline{h}_{\text{agg}} \leftarrow (\left\{0,1\right\}^{\eta})^q$ and sets $\texttt{inp}_{\adversary^{\prime\prime}} = \texttt{inp}_{\texttt{fork}^{\adversary^\prime}} = (X_h,  \underline{h}_{\text{agg}})$.
+
+\item $\texttt{fork}^{\adversary^{\prime \prime}}$ runs $\adversary^{\prime\prime}$ with $\texttt{inp}_{\adversary^{\prime\prime}}$.
+
+\item If $\adversary^{\prime\prime}$ outputs $\bot_{\adversary^{\prime\prime}}$, then  $\texttt{fork}^{\adversary^{\prime \prime}}$ outputs $\bot_{\texttt{fork}^{\adversary^{\prime \prime}}}$ and terminates. Otherwise, $\texttt{fork}^{\adversary^{\prime \prime}}$ receives some $(i_{\text{agg}}, \texttt{out}_{\adversary^{\prime \prime}})$.
+
+
+\item $\texttt{fork}^{\adversary^{\prime \prime}}$ selects $\underline{h}_{\text{agg}}^{\prime} \leftarrow (\left\{0,1\right\}^\eta)^q$, sets the gluing index $j = i_{\texttt{agg}}$, and glues oracle query responses together as usual \[\underline{h}_{\text{agg}}^{\prime \prime}= (h_{\text{agg},1}, h_{\text{agg},2}, \ldots, h_{\text{agg}, j - 1}, h^{\prime}_{\texttt{agg}, j}, h^{\prime}_{\texttt{agg}, j+1}, \ldots),\] and assembles $\texttt{inp}^{\prime}_{\adversary^{\prime \prime}} = (X_h, \underline{h}_{\text{agg}}^{\prime \prime})$
+
+\item $\texttt{fork}^{\adversary^{\prime \prime}}$ runs $\adversary^{\prime \prime}$ with $\texttt{inp}^{\prime}_{\texttt{fork}^{\adversary^{\prime \prime}}}$.
+
+
+
+\item If $\adversary^{\prime \prime}$ outputs $\bot$, then $\texttt{fork}^{\adversary^{\prime \prime}}$ outputs $\bot$. Otherwise, $\texttt{fork}^{\adversary^{\prime \prime}}$ receives some $(i_{\text{agg}}^*, \texttt{out}_{\adversary^{\prime \prime}}^*)$.
+
+
+\item If $i_{\text{agg}} \neq i_{\text{agg}}^*$, output $\bot_{\texttt{fork}^{\adversary^{\prime \prime}}}$ and terminate. 
+
+\item Otherwise, output $(i_{\texttt{agg}}, \texttt{out}_{\texttt{fork}^{\adversary^{\prime \prime}}})$ where $\texttt{out}_{\texttt{fork}^{\adversary^{\prime \prime}}} = (\texttt{out}_{\adversary^{\prime \prime}}, \texttt{out}_{\adversary^{\prime \prime}}^*)$
+\end{enumerate}
+
+\end{description}
+
+%The forking lemma implies that if $\adversary^\prime$ has acceptance probability of $\epsilon_1$, then $\texttt{fork}^{\adversary^\prime}$ has acceptance probability at least $\epsilon_1(\frac{\epsilon_1}{q} - \frac{1}{2^\eta})$ and $\texttt{fork}^{\adversary^{\prime \prime}}$ has acceptance probability at least \[\epsilon_1(\frac{\epsilon_1}{q} - \frac{1}{2^\eta})\left(\frac{\epsilon_1(\frac{\epsilon_1}{q} - \frac{1}{2^\eta})}{q} - \frac{1}{2^\eta}\right).\] 
+
+The acceptance probability of $\texttt{fork}^{\adversary^{\prime \prime}}$ is bounded from below by some non-negligible function, following the general forking lemma, bounded from below:
+\[\texttt{acc}_{\texttt{fork}^{\adversary^{\prime \prime}}}
+\geq  \texttt{acc}_{\adversary^{\prime\prime}} \left(\frac{\texttt{acc}_{\adversary^{\prime\prime}}}{q} - \frac{1}{2^\eta}\right).\]
+
+Lastly we construct our discrete log solver. Note that the following algorithm succeeds if and only if $\texttt{fork}^{\adversary^{\prime \prime}}$ does, so the probability of success is identical, establishing our main theorem.
+
+
+\begin{description}
+\item [Algorithm $\mathcal{B}$:] $\mathcal{B}$ has black-box access to $\texttt{fork}^{\adversary^{\prime \prime}}$. $\mathcal{B}$ takes as input an honest public key $X_h$ and is granted random oracle access, and outputs the discrete logarithm $x_h$.
+\begin{enumerate}
+\item $\mathcal{B}$ takes as input some $X_h$.
+
+\item $\mathcal{B}$ executes $\texttt{fork}^{\adversary^{\prime \prime}}$ with $\texttt{inp} = \left\{X_h\right\}$.
+
+\item If $\texttt{fork}^{\adversary^{\prime \prime}}$ outputs $\bot_{\texttt{fork}^{\adversary^{\prime \prime}}}$, $\mathcal{B}$ outputs $\bot_{\mathcal{B}}$ and terminates. Otherwise, $\mathcal{B}$ receives $(i_{\text{agg}}, \texttt{out}_{\texttt{fork}^{\adversary^{\prime \prime}}})$. 
+
+\item $\mathcal{B}$ goes through $\texttt{out}_{\texttt{fork}^{\adversary^{\prime \prime}}}$ to extract the four signatures, $\sigma^{(j)}$ (for $j \in [4]$), the signing query indices $i_{\text{sig}}^{(j)}$, the signing query responses $h_{\text{sig}, i_{\text{sig}}^{(j)}}^{(j)}$, the ring indices $\ell_{\text{sig}}^{(j)}$ and $\pi_{\text{sig}}^{(j)}$, the aggregation query indices $i_{\text{agg}}$ and the aggregation query responses $h_{\text{agg}, i_{\text{agg}}^{(j)}}^{(j)}$.
+
+\item $\mathcal{B}$ verifies the following system of equalities and inequalities
+
+\begin{align*}
+i_{\text{sig}}^{(1)} =& i_{\text{sig}}^{(2)} & \ell_{\text{sig}}^{(1)} =& \ell_{\text{sig}}^{(2)} &  \pi_{\text{sig}}^{(1)} =& \pi_{\text{sig}}^{(2)} \\ i_{\text{sig}}^{(3)} =& i_{\text{sig}}^{(4)} &  \ell_{\text{sig}}^{(3)} =& \ell_{\text{sig}}^{(4)} &  \pi_{\text{sig}}^{(3)} =& \pi_{\text{sig}}^{(4)} \\
+i_{\text{agg}}^{(i)} =&  i_{\text{agg}}^{(j)}\text{ for each }i, j & 
+h_{\text{agg}, i_{\text{agg}}}^{(1)} =& h_{\text{agg}, i_{\text{agg}}}^{(2)} &
+h_{\text{agg}, i_{\text{agg}}}^{(3)} =& h_{\text{agg}, i_{\text{agg}}}^{(4)}\\
+h_{\text{sig}, i_{\text{sig}}^{(1)}}^{(1)} \neq&  h_{\text{sig}, i_{\text{sig}}^{(1)}}^{(2)} & h_{\text{sig}, i_{\text{sig}}^{(1)}}^{(3)} \neq&  h_{\text{sig}, i_{\text{sig}}^{(1)}}^{(4)} & h_{\text{agg}, i_{\text{agg}}}^{(1)} \neq& h_{\text{agg}, i_{\text{agg}}}^{(3)}
+\end{align*} outputting $\bot_\mathcal{B}$ if any fail.
+
+\item From each $\texttt{forg}^{(j)}$, the random signature data $s_{\ell}^{(j)}$ can be extracted.
+
+\item $\mathcal{B}$ outputs \[\widehat{x}_h := (h_{\text{agg}, i_{\text{agg}}}^{(1)} - h_{\text{agg}, i_{\text{agg}}}^{(3)})^{-1}\left(\frac{s_\ell^{(2)} - s_\ell^{(1)}}{h_{\text{sig}, i_{\text{sig}}^{(2)}}^{(2)} -h_{\text{sig}, i_{\text{sig}}^{(1)}}^{(1)}} -  \frac{s_\ell^{(4)} - s_\ell^{(3)}}{h_{\text{sig}, i_{\text{sig}}^{(3)}}^{(3)} -h_{\text{sig}, i_{\text{sig}}^{(4)}}^{(4)}}\right). \]
+
+Of course, $\mathcal{B}$ only fails if $\texttt{fork}^{\adversary^{\prime \prime}}$ fails or if the system is not verified, but this is a sub-event of the failure of $\texttt{fork}^{\adversary^{\prime \prime}}$. So the probability that $\mathcal{B}$ is bounded above by the probability that $\texttt{fork}^{\adversary^{\prime \prime}}$ fails.
+
+%
+\end{enumerate}
+
+\end{description}
+
+
+
+
+
+
+
+
+
+
+ %Introduced in \cite{maxwell2015confidential}, a confidential transaction may be loosely regarded as a multisignature fashioned using the usual private signing key but also the secret opening information for some corresponding homomorphic commitments to transaction amounts. To accomplish this, each private one-time signing key $p$   comes paired with an amount $\alpha$ and mask $r$ (both from $\mathbb{Z}_\mathfrak{q}$), and each public one-time key $P$ comes with a Pedersen commitment $C$.  A sender with public key-commitment pair $(P,C)$ and private $(p, (\alpha, r))$ who desires to send amount $0 \leq \alpha^\prime \leq \alpha$ to another user does the following. 
+
+%The sender constructs two new Pedersen commitments by selecting two new random masks $r^{\prime}$, $r^{\prime \prime}$ and computing the commitments $C^\prime = \texttt{Com}(\alpha^{\prime}, r^{\prime})$ and $C^{\prime \prime} = \texttt{Com}(\alpha - \alpha^{\prime}, r^{\prime \prime})$. These commitments must be paired with one-time signing keys so that the receivers can subsequently construct new transactions, so one-time keys $P^{\prime}$ and $P^{\prime \prime}$ are selected; $P^{\prime}$ is addressed to the receiver of the transaction and $P^{\prime \prime}$ is addressed back to the sender for chagne. The signer constructs an MLSAG signature with a signing matrix of the form 
+%\[Q = \begin{pmatrix} \widetilde{P}_1 & \widetilde{P}_2 & \cdots & \widetilde{P}_R \\
+%\widetilde{C}_1 - C^{\prime} - C^{\prime \prime} & \widetilde{C}_2 - C^{\prime} - C^{\prime \prime} & \cdots & \widetilde{C}_R - C^{\prime} - C^{\prime \prime} \end{pmatrix}\] where each $(\widetilde{P}_\ell, \widetilde{C}_\ell)$ is chosen at random from the blockchain for $\ell \neq \pi$, and where $\widetilde{P}_{\pi} = P$ and $\widetilde{C}_{\pi} = C$.   if the receiver of $C^{\prime}$ learns the opening information for $C^{\prime}$ and the private key for $P^{\prime}$, they may subsequently construct new transactions. In Monero, these are accomplished via encryption with secrets generated by ECDH transfer as described herein.
+
+%This approach forces transactions to be \textit{balanced} by construction (the input amount and output amount must match in order for the signer to k  the discrete logarithm of the $(2,\ell^*)^{th}$ entry in $\widetilde{Q}$) and still functions as a ring signature for message authentication. The sender should also include in $M$ a \textit{range proof}, which verifies whether $\alpha^{\prime}$ is a reasonable amount, say $0 \leq \alpha^{\prime} < 2^\iota$ for some large $\iota$ (say $2^{64}$ as in Monero), so that integer-like arithmetic for these transactions are not spoiled by the modular arithmetic of the underlying (finite order) group. Applying the thresholdizing heuristic we present here yields MLSTAG Ring Confidential Transactions.
+
+
+\section{Properties other than  unforgeability}\label{otherProperties}
+
+We establish correctness and linkability and describe some security properties like signer ambiguity and its relation to key aggregation indistinguishability. Correctness and linkability take into account semi-honest adversaries, who carry out algorithms to specification (although may also take additional steps outside of specification). In this case, this is a group of ``curious but honest'' friends wishing to collaborate upon a signature.
+
+\begin{lemma}\label{correctness}
+Example \ref{implementation} is correct.
+\end{lemma}
+\begin{proof}
+
+In the event $S((\mathfrak{m}, \underline{P}, \pi, \underline{x}), (\mathfrak{m}^*, \sigma))$ where $\sigma = (c_1, \underline{s})$ and $\mathfrak{m}^* = (\mathfrak{m}, \underline{P}, J, \texttt{aux})$, the semi-honest signer computes $c_{\pi+1}$, $c_{\pi+2}$, $\ldots$, $c_r$, and $c_1$ with usual/honest queries made to $\mathcal{H}_{\text{sig}}$ with probability $1$. Moreover, the semi-honest verifier makes queries $c_2, \ldots, c_{\pi-1}, c_\pi$ by making usual/honest queries to $\mathcal{H}_{\text{sig}}$ with probabilty $1$. The semi-honest signer also, by specification, ensured the verification equations are satisfied with use of the secret key $p_\pi$. Hence, a semi-honest verifier given $\mathfrak{m}^*$ and $\sigma = (c_1, (s_1, s_2, \ldots, s_r))$ who computes the following
+\begin{align*}
+L_1^\prime :=& c_1 G + s_1 P_1 & R_1^\prime :=& c_1 H_1 + s_1 J & c_2^\prime :=& \mathcal{H}_{\text{sig}}(M, P_1, R_1, L_1) \\
+L_2^\prime :=& c_2^\prime G + s_2 P_2 & R_2^\prime :=& c_2^\prime H_2 + s_2 J & c_3^\prime :=& \mathcal{H}_{\text{sig}}(M, P_2, R_2, L_2) \\
+ & \vdots & & \vdots & & \vdots \\
+L_r^\prime :=& c_r^\prime G + s_r P_r & R_r^\prime :=& c_r^\prime H_r + s_r J & c_1^\prime :=& \mathcal{H}_{\text{sig}}(M, P_r, R_r, L_r)
+\end{align*} obtains $c_1^\prime = c_1$ with probability $1$.
+\end{proof}
+
+
+\begin{lemma}
+Example \ref{implementation} is linkable.
+\end{lemma}
+\begin{proof}
+In the event $S^\prime(\mathfrak{m}_1^*, \sigma_1, \mathfrak{m}^*_2, \sigma_2)$, the semi-honest adversary used the same key in each signature. That is to say, for the rings $\underline{P}_1$, $\underline{P}_2$, there is a common key; that is, for some indices $i_1$, $i_2$, $(\underline{P}_1)_{i_1} = (\underline{P}_2)_{i_2} = P_{\text{common}}$. In both signatures, the key image is $J = P_{\text{common}}\mathcal{H}_{\text{ki}}(P_{\text{common}})$, and so linking occurs with probability $1$.
+\end{proof}
+
+We modify the definition of anonymity with adversarially chosen ring members from \cite{bender2006ring} to take into account key aggregation; the stronger definition presented in \cite{bender2006ring} with \textit{full key exposure} is not possible to satisfy in the linkable transaction setting of CryptoNote-styled ring signatures we see in Monero.
+
+\begin{defn}[Threshold signer ambiguity with adversarially chosen ring members]
+Let $f(-)$ be a positive polynomial. Consider the following game:
+\begin{enumerate}
+\item A set of private-public key pairs $\left\{(x_i, X_i)\right\}_{i\in [f(\lambda)]}$ is selected by the challenger with $\texttt{KeyGen}$. Denote $SK = \left\{x_i\right\}$ and $PK = \left\{X_i\right\}$. 
+
+\item The public keys $PK$ are sent to $\adversary$, who is granted access to a signing oracle, $\mathcal{SO}$.
+
+\item $\adversary$ outputs a message $\mathfrak{m}$,  two non-empty aggregation multi-sets of public keys $\underline{X}^{(0)}$, $\underline{X}^{(1)} \subset PK$, and a ring $\underline{P}$ such that $P_{i_j} = \Phi(\underline{X}^{(j)})$ for $j = 0, 1$.
+
+\item The challenger selects a random bit $b$, computes $(\mathfrak{m}^*, \sigma) \leftarrow \texttt{Sign}(\mathfrak{m}, \underline{P}, \pi_b)$ where $\pi_b$ denotes the index of $P_{i_b}$ in $\underline{P}$, and sends $(\mathfrak{m}^*, \sigma)$ to $\adversary$.
+
+\item $\adversary$ outputs a bit $b^\prime$. 
+\end{enumerate} $\adversary$ wins the game if $b^\prime = b$ and the key images for $P_{i_0}$ and $P_{i_1}$ do not appear in the output of any query made to $\mathcal{SO}$ by $\adversary$.
+\end{defn} 
+
+The following lemma, which establishes key aggregation indistinguishability, is obvious in the case with the semi-honest adversary, since the distribution of $(c_1, \underline{s})$ in both signature schemes is determined by the hash function $\mathcal{H}_{\text{sig}}$ and the choice made by the signer for $\underline{s}$. Under the random oracle model, $c_1$ is uniformly distributed over $\mathbb{Z}_\mathfrak{p}$. In the case with the semi-honest adversary, each $s_i \in \underline{s}$ is also uniformly distributed over $\mathbb{Z}_\mathfrak{p}$ and, moreover, all of these are independent from each other. 
+
+\begin{lemma}
+Signatures produced by semi-honest adversaries using Example \ref{implementation} are statistically indistinguishable from LSAG signatures.
+\end{lemma}
+As a corollary, we immediately obtain that an adversary who can violate the signer ambiguity of Example \ref{implementation} must likewise be able to violate the signer ambiguity of LSAG signatures.
+\begin{cor}
+Example \ref{implementation} is signer ambiguous with adversarially chosen ring members.
+\end{cor}
+
+%Lastly, we consider the notion of privacy, where semi-honest signers do not reveal their signing keys to each other.
+
+%\begin{defn}[Privacy]
+%Consider the following game.
+%\begin{enumerate}
+%\item A private-public key pair $(x_h, X_h)$ is selected by the challenger with $\texttt{KeyGen}$. The key $X_h$ is sent to $\adversary$.
+%\item The adversary $\adversary$ outputs a message $\mathfrak{m}$, an aggregate key $X_{\text{sh}}$ such that $X_h$ is an aggregant, a ring $\underline{P}$, and a special index $\pi$ such that $P_\pi  = X_{\text{sh}}$.
+%\item The challenger and the adversary collaborate to execute $\texttt{Sign}$ semi-honestly with the key $X_{\text{sh}}$, where the challenger plays the signer with key $x_h$ and the adversary plays all other signers.
+%\item The adversary $\adversary$ outputs a scalar $x^*$, winning if $X_{\text{sh}} = x^* G$.
+%\end{enumerate}
+%\end{defn}
+
+%Note that in any signing transcript, $\adversary$ (who, say, acts as the $j^{th}$ signer in the coalition) receives from the challenger some $(U_j, V_j, \left\{s_{\ell,j}\right\}_{\ell  \neq \pi})$ and $s_{\pi,j} = u_j - c_\pi x_h$. Since the discrete logarithm problem is hard, $\adversary$ cannot easily compute the discrete logarithm $U_j = u_j G$, and without knowledge of $u_j$, $s_{\pi, j}$ is perfectly hiding of $-c_\pi x_h$, and so our scheme is private. A similar argument holds to demonstrate the weaker property that the discrete logarithm of the signing key $P_\pi$ is not revealed except with negligible probability.
+
+
+
+\end{document}
