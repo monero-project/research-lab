@@ -1,27 +1,24 @@
-\documentclass{iacrtrans}
+\documentclass{mrl}
 \usepackage{amsmath}
 \usepackage{enumerate}
 \usepackage{todonotes}
 \usepackage{comment}
-\usepackage[pagewise,mathlines]{lineno}
-%\linenumbers
 \theoremstyle{definition}
-%\newtheorem{theorem}{Theorem}
+\newtheorem{theorem}{Theorem}
 \numberwithin{theorem}{subsection}
-\numberwithin{lemma}{theorem}
 
-%\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{lemma}[theorem]{Lemma}
 \newtheorem{cor}[theorem]{Corollary}
 \newtheorem{defn}[theorem]{Definition}
 \newtheorem{disc}[theorem]{Remark}
 \newtheorem{ex}[theorem]{Example}
 \newcommand{\adversary}{\mathcal{A}}
 \newcommand{\scalarField}{\mathbb{Z}_{\mathfrak{p}}}
+\newcommand{\bbz}{\mathbb{Z}}
+\newcommand{\bbn}{\mathbb{N}}
 \newcommand{\group}{\mathbb{G}}
 \newcommand{\p}{\mathfrak{p}}
 \newcommand{\m}{\mathfrak{m}}
-\newcommand{\bbz}{\mathbb{Z}}
-\newcommand{\bbn}{\mathbb{N}}
 \newcommand{\reduxChain}{\adversary \leadsto \adversary^\prime \leadsto \texttt{fork}^{\adversary^\prime}  \leadsto \adversary^{\prime \prime} \leadsto \texttt{fork}^{\adversary^{\prime \prime}} \leadsto \mathcal{B}}
 \renewcommand{\thefootnote}{\arabic{footnote}}
 %\usepackage{algpseudocode}
@@ -33,19 +30,24 @@
 \usepackage{enumitem}
 \usepackage{amssymb}
 \usepackage{xypic}
+\usepackage{url}
 
 \title{Thring Signatures and their Applications to Spender-Ambiguous Digital Currencies}
-\author{Brandon Goodell \and Sarang Noether }
-\institute{Monero Research Lab \email[surae@getmonero.org, sarang@getmonero.org]{{surae,sarang}@getmonero.org}}
+\authors{Brandon Goodell\footnote{\texttt{surae.noether@protonmail.com}} and Sarang Noether\footnote{\texttt{sarang.noether@protonmail.com}}}
+\affiliations{Monero Research Lab}
 \date{\today}
 
-\keywords{ring signatures, confidential transactions, spender ambiguity, threshold multi-signatures, thring signatures, atomic swaps, public-key cryptography, implementation, applications}
+\type{RESEARCH BULLETIN}
+\ident{MRL-9999c}
+
+
+%\keywords{ring signatures, confidential transactions, spender ambiguity, threshold multi-signatures, thring signatures, atomic swaps, public-key cryptography, implementation, applications}
 
 
 \begin{document}
 
 
-\maketitle
+%\maketitle
 
 \begin{abstract}
 We present threshold ring multi-signatures (\textit{thring signatures}) for collaborative computation of ring signatures, discuss a game of existential forgery for thring signatures, and discuss the uses of thring signatures in digital currencies, including spender-ambiguous cross-chain atomic swaps for confidential amounts without a trusted set-up. We present an implementation of thring signatures inspired by the works of \cite{liu2004linkable}, \cite{qian2010non}, \cite{maxwell2015confidential}, \cite{backLSAG}, \cite{noether2016ring}, \cite{maxwell2018simple} we call linkable spontaneous threshold anonymous group (LSTAG) signatures, and we prove the implementation existentially unforgeable. 
@@ -178,7 +180,7 @@ Alice and Bob receive a message $\m$ containing some public signing keys $(T,P)$
 \begin{description}
 \item [Commit:] Alice selects $u_1 \overset{\$}{\leftarrow} \bbz_\p$ and Bob selects $u_2 \overset{\$}{\leftarrow} \bbz_\p$. Alice computes temporary pair of points $(L_{1, \pi}, R_{1,\pi}) = (u_1 G, u_1 H_\pi)$ and Bob computes temporary pair of points $(L_{2, \pi}, R_{2,\pi}) = (u_2 G, u_2 H_\pi)$. Alice selects random secret scalars $\underline{s}^{(1)} = \left\{s_{1, \ell}\right\}_{\ell \neq \pi}$ and Bob selects random secret scalars $\underline{s}^{(2)} = \left\{s_{2,\ell}\right\}_{\ell \neq \pi}$. Alice computes her partial key image $J_1 = b_1 \mathcal{H}_{\text{agg}}(B_1, (\underline{A}, \underline{B}))\mathcal{H}_{\text{ki}}(P)$ and Bob computes his partial key image $J_2 = b_2 \mathcal{H}_{\text{agg}}(B_2, (\underline{A}, \underline{B}))\mathcal{H}_{\text{ki}}(P)$. Alice computes the commitment $\texttt{com}_1 = \mathcal{H}_{\text{com}}(L_{1,\pi}, R_{1,\pi}, \underline{s}^{(1)})$ and Bob computes the commitment  $\texttt{com}_2 = \mathcal{H}_{\text{com}}(L_{2,\pi}, R_{2,\pi}, \underline{s}^{(2)})$. Alice sends Bob $(J_1, \texttt{com}_1)$ and Bob sends Alice $(J_2,\texttt{com}_2)$.
 
-\item [Reveal:] After receiving $(J_2, \texttt{com}_2)$, Alice sends $(L_{1,\pi}, R_{1,\pi}, \underline{s}^{(1)})$ to Bob; after receiving $(J_1, \texttt{com}_1)$, Bob sends $(L_{2,\pi}, R_{2,\pi}, \underline{s}^{(2)})$ to Alice. After receiving  $(L_{2,\pi}, R_{2,\pi}, \underline{s}^{(2)})$, Alice checks that $\texttt{com}_2 = \mathcal{H}_{\text{com}}(L_{2,\pi}, R_{2,\pi}, \underline{s}^{(2)})$. If not, Alice outputs $\bot$ and terminates. After receiving $(L_{1,\pi}, R_{1,\pi}, \underline{s}^{(1)})$, Bob checks that $\texttt{com}_1 = \mathcal{H}_{\text{com}}(L_{1,\pi}, R_{1,\pi}, \underline{s}^{(1)})$. If not, Bob outputs $\bot$ and terminates.
+\item [Reveal:] After receiving $(J_2, \texttt{com}_2)$, Alice sends $(L_{1,\pi}, R_{1,\pi}, \underline{s}^{(1)})$ to Bob; after receiving $(J_1, \texttt{com}_1)$, Bob sends $(L_{2,\pi}, R_{2,\pi}, \underline{s}^{(2)})$ to Alice. After receiving  $(L_{2,\pi}, R_{2,\pi}, \underline{s}^{(2)})$, Alice checks that the commitment opens as $\texttt{com}_2 = \mathcal{H}_{\text{com}}(L_{2,\pi}, R_{2,\pi}, \underline{s}^{(2)})$. If not, Alice outputs $\bot$ and terminates. After receiving $(L_{1,\pi}, R_{1,\pi}, \underline{s}^{(1)})$, Bob checks that $\texttt{com}_1 = \mathcal{H}_{\text{com}}(L_{1,\pi}, R_{1,\pi}, \underline{s}^{(1)})$. If not, Bob outputs $\bot$ and terminates.
 
 \item [Pre-compute signature:] Alice and Bob compute the total key image $J = J_1 + J_2 + \mathcal{H}_{\text{sess}}(a_{\text{sh}}T)$, assemble a modified message $\m^* = (\m, \underline{P}, J, (T^{\prime}, P^{\prime}))$, compute $M = \mathcal{H}(\m^*)$, compute the sums $L_\pi = L_{1,\pi} + L_{2,\pi}$, $R_\pi = R_{1,\pi} + R_{2,\pi}$, and $s_\ell = s_{1,\ell} + s_{2, \ell}$ for each $\ell \neq \pi$. Alice and Bob can then compute the sequential commitments $c_{\ell+1} := \mathcal{H}_{\text{sig}}(M,P_\ell, L_{\ell}, R_{\ell})$, proceeding through indices $\ell=\pi+1, \pi+2, \ldots, \pi-1$ with $L_\ell = s_\ell G + c_\ell P_\ell$ and $R_\ell = s_\ell H_\ell + c_\ell J$.   The partial signature $\widehat{\sigma} = (c_1, \left\{s_\ell\right\}_{\ell \in [r] \setminus \pi})$ can be stored until later.
 
@@ -602,7 +604,7 @@ The algorithm $\texttt{fork}^{\mathcal{P}}$ produces as output a distinguished f
 \end{description} %These immediately provide the following corollary.
 If $\mathcal{P}$ takes as input several sequences of oracle queries together, we can parse these as to be included in $\texttt{inp} \in \texttt{inp}_{\mathcal{P}}$. If $\texttt{inp}_{\mathcal{P}}$ has some other sequence $\underline{h}^*$ of oracle queries packed into it like this,  then $\texttt{fork}^{\mathcal{P}}$ can be forked again in a chain. In the next section, we describe each algorithm in the chain  of reductions comprising our proof strategy $\reduxChain$, proving their existence and the non-negligibility of their accepting probability as we go.
 
-\subsection{Reducing \texorpdfstring{$\adversary$}{the forger}}\label{reducingA}
+\subsection{Reducing $\mathcal{A}$}\label{reducingA}
 
 In this section, we begin our forking journey by constructing the first reduction $\adversary^\prime$ of $\adversary$ in the chain of reductions. We explain how $\adversary^\prime$ simulates each oracle, and we establish some lemmata regarding the accepting probability of $\adversary^\prime$.
 
@@ -742,7 +744,7 @@ Note that $\adversary^\prime$ responds with $\bot_{\text{agg}}$ if and only if $
 
 \item $\adversary^\prime$ selects a random set of signing data $\left\{s_{1,\ell}\right\}_{\ell \in [r]}$ (including the index $\ell = \pi$). 
 
-\item $\adversary^\prime$ computes $L_{1, \pi} = s_{1,\pi} G + c_{\pi} P_\pi$ and $R_{1, \pi} = s_{1,\pi} H_\pi + c_\pi J$, assembles $\texttt{dat}_1 := (L_{1,\pi}, R_{1,\pi}, \left\{s_{1,\ell}\right\}_{\ell \in [r], \ell \neq \pi})$, and selects a random $\texttt{com}_1 \overset{\$}{\leftarrow} \left\{0,1\right\}^\eta$. 
+\item $\adversary^\prime$ computes $L_{1, \pi} = s_{1,\pi} G + c_{\pi} P_\pi$ and $R_{1, \pi} = s_{1,\pi} H_\pi + c_\pi J$, assembles the signature data $\texttt{dat}_1 := (L_{1,\pi}, R_{1,\pi}, \left\{s_{1,\ell}\right\}_{\ell \in [r], \ell \neq \pi})$, and selects a random $\texttt{com}_1 \overset{\$}{\leftarrow} \left\{0,1\right\}^\eta$. 
 
 \item If $\mathbb{T}_{\texttt{com}}[\texttt{dat}_1]$ is defined, $\adversary^\prime$ halts simulating $\mathcal{SO}$, outputs $\bot_1$ to indicate that some $\texttt{dat}_1$ has already been used, and terminate. 
 
@@ -762,7 +764,7 @@ Note that $\adversary^\prime$ responds with $\bot_{\text{agg}}$ if and only if $
 
 \item \label{gather} Otherwise, exactly one $\texttt{dat} = \texttt{dat}_j$ is found in $\mathbb{T}_{\texttt{com}}$ for each $\texttt{com}_j$. If any $\texttt{dat}_j$ cannot be parsed as $(U_j, V_j, \left\{s_{j, \ell}\right\}_{\ell \neq \pi})$, $\adversary^\prime$ sets $\texttt{alert}_2 \leftarrow \texttt{true}$. %halts simulation of $\mathcal{SO}$ with $\bot_3$.
 
-\item Otherwise, exactly one $\texttt{dat}_j$ is found in $\mathbb{T}_{\texttt{com}}$ for each $\texttt{com}_j$ and can be parsed as $(U_j, V_j, \left\{s_{j,\ell}\right\})$. After parsing each $\texttt{dat}_j$, $\adversary^\prime$ does the following:
+\item Otherwise, exactly one $\texttt{dat}_j$ is found in $\mathbb{T}_{\texttt{com}}$ for each $\texttt{com}_j$ and can be parsed into the tuple $(U_j, V_j, \left\{s_{j,\ell}\right\})$. After parsing each $\texttt{dat}_j$, $\adversary^\prime$ does the following:
 \begin{enumerate}
 \item $\adversary^\prime$ computes $U = \sum_j U_j$, $V = \sum_j V_j$, and $s_\ell = \sum_j s_{j,\ell}$ for each $\ell \neq \pi$.
 
