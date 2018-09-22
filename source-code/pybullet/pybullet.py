@@ -240,12 +240,12 @@ def verify(proofs,N):
         y1 += (t-k)*weight_y
 
         for j in range(M):
-            BigAssMultiexp.append([V[j],Scalar(8)*z**(j+2)*weight_y])
-        BigAssMultiexp.append([T1,Scalar(8)*x*weight_y])
-        BigAssMultiexp.append([T2,Scalar(8)*x**2*weight_y])
+            BigAssMultiexp.append([V[j]*Scalar(8),z**(j+2)*weight_y])
+        BigAssMultiexp.append([T1*Scalar(8),x*weight_y])
+        BigAssMultiexp.append([T2*Scalar(8),x**2*weight_y])
 
-        BigAssMultiexp.append([A,Scalar(8)*weight_z])
-        BigAssMultiexp.append([S,Scalar(8)*x*weight_z])
+        BigAssMultiexp.append([A*Scalar(8),weight_z])
+        BigAssMultiexp.append([S*Scalar(8),x*weight_z])
 
         # inner product
         W = ScalarVector([])
@@ -281,8 +281,8 @@ def verify(proofs,N):
         z1 += mu*weight_z
 
         for i in range(len(L)):
-            BigAssMultiexp.append([L[i],Scalar(8)*(W[i]**2)*weight_z])
-            BigAssMultiexp.append([R[i],Scalar(8)*(W_inv[i]**2)*weight_z])
+            BigAssMultiexp.append([L[i]*Scalar(8),(W[i]**2)*weight_z])
+            BigAssMultiexp.append([R[i]*Scalar(8),(W_inv[i]**2)*weight_z])
         z3 += (t-a*b)*x_ip*weight_z
     
     # now check all proofs together
