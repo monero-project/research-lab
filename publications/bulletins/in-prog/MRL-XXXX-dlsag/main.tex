@@ -1,48 +1,48 @@
 \documentclass{mrl}
 
 \title{Dual linkable ring signatures}
-\authors{Sarang Noether\footnote{\texttt{sarang.noether@protonmail.com}}}
+\authors{Sarang Noether\footnote{\texttt{sarang.noether@protonmail.com}} and Brandon Goodell\footnote{\texttt{surae.noether@protonmail.com}}}
 \affiliations{Monero Research Lab}
 \date{\today}
 
 \type{RESEARCH BULLETIN}
 \ident{MRL-XXXX}
 
-
 \begin{document}
 
 \begin{abstract}
-This bulletin describes a modification to Monero's linkable ring signature scheme that permits dual-address output keys for any ring member. Key images are tied to both output one-time public keys within an originating transaction, preventing both keys in that transaction from being used as separate transaction inputs. This method has applications to non-interactive refund transactions. We discuss the security implications of the scheme relative to alternate implementations.
+This bulletin describes a modification to Monero's linkable ring signature scheme that permits dual-key outputs as ring members. Key images are tied to both output one-time public keys in a dual, preventing both keys in that transaction from being spent separately. This method has applications to non-interactive refund transactions. We discuss the security implications of the scheme.
 \end{abstract}
 
 \section{Introduction}
-The original CryptoNote protocol describes the use of a one-time linkable spontaneous anonymous group (LSAG) signature. A signer chooses a so-called ring of public transaction output keys, one of which is her own, and fashions a signature on the message of her choice. The scheme is such that any verifier can be assured that one of the keys in the ring is the true signer (that is, the signer knows the corresponding private key), and that this key was not used to sign any other message with any other ring. For space efficiency, early Monero transactions used a ring-independent one-time version of the LSAG signature scheme in \cite{liu} to direct funds using the ring as a sender anonymity set.
+The original CryptoNote protocol describes the use of a type of one-time linkable spontaneous anonymous group (LSAG) signature. A signer chooses a so-called ring of public output keys, one of which is her own, and fashions a signature on the message of her choice. The scheme is such that any verifier can be assured that one of the keys in the ring is the true signer (that is, the signer knows the corresponding private key), and that this key was not used to sign any other message with any other ring. For space efficiency, early Monero transactions used a ring-independent one-time version of the LSAG signature scheme in \cite{liu} to direct funds using the ring as a sender anonymity set.
 
-To handle confidential transactions, the variation of this scheme used currently in Monero, multilayered linkable spontaneous anonymous group (MLSAG) signatures, allows the signer to include vectors of keys that include Pedersen commitments to amounts \cite{shen}.
+To handle confidential transactions, Monero uses a variation of this scheme called multilayered linkable spontaneous anonymous group (MLSAG) signatures. These signatures allow the signer to include vectors of keys that include Pedersen commitments to amounts, as described in \cite{shen}.
 
-In both schemes, ring members (with the exception of amount commitments) are transaction output keys, which are generated in Monero transactions. A given transaction typically has multiple outputs, where the sender directs a portion of funds from a previous output to some address, and sends the change back to her own address so the transaction balances. In each case, the recipient can recover the output's private key and use it in a later ring signature.
+In both LSAG and MLSAG signatures, ring members (with the exception of amount commitments) are output public keys, which are generated in Monero transactions. A given transaction typically has multiple outputs, where the sender directs a portion of funds from a previous output to some address, and sends the change back to herself so the transaction balances. In each case, the recipient can recover the output's private key and use it in a later ring signature.
 
-In this research bulletin, we describe a modification to the construction of transaction outputs and to the construction of ring signatures. We first describe a change whereby a sender generates a dual-address output and a specified trigger block height that ``switches" the validity between the two one-time addresses. Further, we describe a modification to LSAG and MLSAG signatures, a dual linkable spontaneous anonymous group (DLSAG) signature scheme, that allows a sender to include one of these dual-address keys in a linkable ring signature. When a dual, which is comprised of two separate public keys, is the true spender, any verifier can link two ring signatures if they were computed by either of the keys in the dual. Additionally, it is possible to include both dual keys and non-dual (that is, single) output keys as ring members in a DLSAG signature, ensuring that signers have the largest possible set of potential ring members available to them.
+In this research bulletin, we describe a modification to the construction of transaction outputs and to the construction of ring signatures. We first describe a change whereby a sender generates a dual-key output and a specified trigger block height that ``switches" the validity between the two. Further, we describe a modification to LSAG and MLSAG signatures, a dual linkable spontaneous anonymous group (DLSAG) signature scheme, that allows a sender to include one of these dual-key outputs in a linkable ring signature. When a dual, which is comprised of two separate output public keys, is the true spender, any verifier can link two ring signatures if they were computed by either of the keys in the dual. Additionally, it is possible to include both dual-key outputs and non-dual (that is, single) outputs as ring members in a DLSAG signature, ensuring that signers have the largest possible set of potential ring members available to them.
 
-This signature scheme has applications to refund transactions in Monero, which themselves are important for certain second-layer solutions. To generate a refund transaction, a sender generates a dual-address output and specifies a trigger block height. The consensus protocol may dictate that prior to the trigger height, only one of the keys in the dual is valid as a spender; after the trigger height, only the other key in the dual is valid.
+This signature scheme has applications to refund transactions in Monero, which themselves are important for certain second-layer solutions. To generate such a refund transaction, a sender generates a dual-key output and specifies a trigger block height. The consensus protocol could dictate that prior to the trigger height, only one of the keys in the dual is valid as a spender; after the trigger height, only the other key in the dual is valid. This allows the sender to reclaim the funds if they are not spent by the recipient in time.
 
-An unpublished technical paper by Moreno-Sanchez and \texttt{donut} describes an alternative to this method that uses commitments to block trigger heights in order to hide the actual switching height. We discuss the benefits and drawbacks of each scheme later.
-
-A related version of this scheme was originally described to the author by Pedro Moreno-Sanchez of Purdue University at the 2018 IEEE Privacy \& Security on the Blockchain workshop at University College London, and was in collaboration with pseudonymous contributor \texttt{donut}.
+A related version of this scheme was originally described in personal communication with Pedro Moreno-Sanchez, and was in collaboration with pseudonymous coauthor \texttt{donut}. This related scheme considered the use of commitments to block trigger heights in order to hide the actual switching height.
 
 \section{Description}
-When sending funds in a Monero transaction, the sender uses the recipient's public user key $(A,B) = (aG,bG)$, along with a random nonce $r$, to generate a one-time transaction output public key defined as $P \equiv H_s(rA,t)G + B$, where $t$ is the output's index within the transaction. The recipient uses her private user key $(a,b)$ and the value $R \equiv rG$ to recover the output private key $p = H_s(aR,t) + b$. Here $H_s$ is a scalar-output hash function and $G$ a publicly-known curve group generator.
+Let $\mathbb{G}$ be an additive group of prime order $\ell$. Let $H_s: \{0,1\}^* \to \mathbb{Z}_\ell$ and $H_p: \{0,1\}^* \to \mathbb{G}$ be cryptographic hash functions. Let $G \in \mathbb{G}$ be a publicly-known group generator.
 
-To facilitate refund transactions, we assume that a sender has generated a modified output consisting of two one-time public keys. One such key is directed to the recipient, and the other may be directed back to the sender. These one-time keys are called a \textit{dual}, and are designated as such in the transaction structure for later identification. The dual has an associated trigger block height value, with the intent that prior to the trigger, only the first one-time key is valid and can be spent, and after the trigger, only the second is valid and can be spent.
+When sending funds in a Monero transaction, the sender uses the recipient's public user address $(A,B) := (aG,bG) \in \mathbb{G} \times \mathbb{G}$, along with a random nonce $r$, to generate a one-time output public key defined as $P := H_s(rA,t)G + B$, where $t$ is the output's index within the transaction. The recipient uses her private user key $(a,b)$ and the point $R := rG$ to recover the output private key $p := H_s(aR,t) + b$, which is used to spend the funds as part of a later ring signature.
 
-Despite the simplicity of generating separate outputs representing the spend authority of the same funds based on a given block height, it does not suffice to use a traditional LSAG or MLSAG ring signature that includes one of the public keys in a dual without modifying the key image computation. Because key images are computed for each output spent in a ring signature, it would be possible for both the pre-trigger and post-trigger keys to be used in separate signatures undetected. To combat this, we consider a modification to the LSAG scheme, a \textit{dual linkable spontaneous anonymous group} (DLSAG) signature scheme that associates a key image with both keys in a dual. We later discuss the multiple-input MLSAG equivalent to the construction.
+To facilitate refund transactions, we assume that a sender has generated a modified output consisting of two one-time public keys. One such key is directed to the recipient's address, while the other is typically directed back to the sender. These one-time keys are called a \textit{dual}, and are designated as such in the transaction structure for later identification. The dual also has an associated trigger block height value, with the intent that prior to the trigger, only the first one-time key is valid and can be used to spend the associated funds, and after the trigger, only the second is valid. This has the effect of permitting the recipient to claim funds up to a certain time, after which the sender can reclaim them.
+
+Despite the simplicity of generating separate outputs representing the spend authority of the same funds based on a given block height, it does not suffice to use a traditional LSAG or MLSAG ring signature that includes one of the public keys in a dual without modifying the key image computation. Because key images are computed for each output spent in a ring signature, it would be possible for both the pre-trigger and post-trigger keys to be used in separate signatures undetected. To combat this, we modify the LSAG scheme such that one-time output public keys come in pairs that share the same key image. We later discuss the MLSAG equivalent to the construction.
 
 \subsection{Signature generation}
-We show the steps of generating the DLSAG signature now, allowing for any of the ring members (including the real spender) to be either part of a dual or not. In the following notation, we assume the spender wishes to spend funds associated to a one-time key $P_\pi = p_\pi G$ with a ring size $n$, where $1 \leq \pi \leq n$ is a secret index. We also assume that any key $P_i$ that is part of a dual has a partner key $Q_i$. The roles of $P_i$ and $Q_i$ in a dual are arbitrary.
+We show the steps of generating the DLSAG signature in Table \ref{table:dlsag_gen}, allowing for any of the ring members (including the real spender) to be either part of a dual or not. In the following notation, we assume the spender wishes to spend funds associated to a one-time key $P_\pi = p_\pi G$ with a ring size $n$, where $1 \leq \pi \leq n$ is a secret index. We also assume that any key $P_i$ that is part of a dual has a partner key $Q_i$. The roles of $P_i$ and $Q_i$ in a dual are arbitrary.
 
+\begin{table}
 \begin{center}
 \begin{tabular}{lcl}
-Dual-address & & Single-address \\
+Dual-key & & Single-key \\
 \hline
 $m_\pi \equiv H_s(\textsf{txid},\textsf{index})$ \\
 $J \equiv m_\pi p_\pi Q_\pi$ & & $J \equiv p_\pi H_p(P_\pi)$ \\
@@ -59,20 +59,24 @@ $F_i \equiv m_iQ_i$ & & $F_i \equiv H_p(P_i)$ \\
 & $s_\pi \equiv u - c_\pi p_\pi$ \\
 & output $(c_1,\{s_i\}_{i=1}^n,J)$
 \end{tabular}
+\caption{DLSAG signature generation}
+\label{table:dlsag_gen}
 \end{center}
+\end{table}
 
-It is assumed that a representation (usually by index) of the output public keys used in the signature is also transmitted as part of such a transaction. Note that a DLSAG signature fully reduces to the LSAG case when all keys in the ring, including the true spender, are not part of a dual; that is, when the signature follows only the right-hand side of the above diagram.
+Note that a DLSAG signature fully reduces to the LSAG case when all keys in the ring, including the true spender, are not part of a dual; that is, when the signature follows only the right-hand side of the above diagram.
 
-The sender is free to sign with either type of key. However, she must consider a restriction on the allowed mixins. If a potential mixin key is part of a dual, she must examine the original transaction and determine whether that key is valid at the current block height. If it is not, then she must choose the partner key within the dual. She may wish to further avoid keys whose trigger is very close to the current block height in case her transaction is not included in a new block quickly enough. These restrictions ensure that adversarial verifiers of the signature cannot eliminate invalid mixins when trying to determine the true spender.
+The sender is free to sign with either type of key. However, she must consider a restriction on the allowed ring members. If a potential ring member is part of a dual, she must examine the original transaction and determine whether that key is valid at the current block height. If it is not, then she must choose the partner key within the dual. She may wish to further avoid keys whose trigger is very close to the current block height in case her transaction is not included in a new block quickly enough. These restrictions ensure that adversarial verifiers of the signature cannot easily eliminate invalid ring members when trying to determine the true spender.
 
-Also observe that partner keys $P$ and $Q$ in a dual share the same key image when generated in the same transaction, since $mpQ = mqP = mpqG$ by construction. The inclusion of the hash $m$, which encodes both the identifier of the originating transaction as well as the index of the output within that transaction, prevents one of the two recipients of a dual from burning the funds of the other.
+Also observe that partner keys $P$ and $Q$ in a dual share the same key image when generated in the same transaction, since $mpQ = mqP = mpqG$ by construction. The inclusion of the hash $m$, which encodes both the originating transaction as well as the index of the output within that transaction, prevents one of the two recipients of a dual from burning the funds of the other by generating another dual with the same key image that the evil recipient spends first.
 
 \subsection{Signature verification}
-Verification of a DLSAG proceeds similarly to that of an LSAG signature, and may be done by any party. When presented with a list of output public keys that are used in the ring signature, the verifier first ensures that for any keys that are part of a dual, the chosen key is valid at the current block height. If not, the verifier rejects the signature. The verifier also examines the key image $J$; if it appears as part of any previous valid LSAG or DLSAG signature, the signature is rejected. The verifier next completes the following steps.
+Verification of a DLSAG proceeds similarly to that of an LSAG signature, and may be done by any observer. When presented with a list of output public keys that are used in the ring signature, the verifier first ensures that for any keys that are part of a dual, the chosen key is valid at the transaction's block height. If not, the verifier rejects the signature. The verifier also examines the key image $J$; if it appears as part of any previous valid LSAG or DLSAG signature, the signature is rejected. The verifier next completes the steps in Table \ref{table:dlsag_ver}.
 
+\begin{table}
 \begin{center}
 \begin{tabular}{lcl}
-Dual-address & & Single-address \\
+Dual-key & & Single-key \\
 \hline
 & for each $1 \leq i < n$ \\
 $m_i \equiv H_s(\textsf{txid},\textsf{index})$ \\
@@ -84,107 +88,103 @@ $F_n \equiv m_n Q_n$ & & $F_n \equiv H_p(P_n)$ \\
 & $c_1^* \equiv H_s(\textsf{txdata},s_nG + c_nP_n,s_nF_n + c_nJ)$ \\
 & accept only if $c_1^* = c_1$
 \end{tabular}
+\caption{DLSAG signature verification}
+\label{table:dlsag_ver}
 \end{center}
+\end{table}
 
 \section{Application to refund transactions}
-A useful application of the DLSAG scheme is to refund transactions. Suppose that Alice wishes to send funds to Bob, but wants to ensure that they are returned to her after an agreed-upon amount of time if Bob does not spend them. To do so, Alice constructs a transaction where the funds destined for Bob are part of a dual: one key $P$ is directed to Bob, and the partner key $Q$ is directed to her. The two keys in the dual share a range proof. A block height $h$ is included in the transaction data, where $h$ is greater than the current block height of the network.
+A useful application of the DLSAG scheme is to refund transactions. Some constructions of payment channels, which permit off-chain transactions between two parties that are later settled, require the use of non-interactive refund transactions as well. Suppose that Alice wishes to send funds to Bob, but wants to ensure that they are returned to her after an agreed-upon amount of time if Bob does not spend them. To do so, Alice constructs a transaction where the funds destined for Bob are part of a dual: one key $P$ is directed to Bob, and the partner key $Q$ is directed to her. The two keys in the dual share a range proof. A block height $h$ is included in the transaction data, where $h$ is greater than the current block height of the network.
 
-If Bob wishes to claim the funds, he must spend them prior to block height $h$ in a transaction that uses the key $P$ in a DLSAG signature. Verifiers see that the transaction includes $P$ among its ring mixins, and that this output is still valid; there are likely other mixins that are part of a dual, and each of these has also been chosen to ensure validity. The key image is of the form $J = mpQ$, which has not been used before. The verifiers accept the transaction as valid.
+If Bob wishes to claim the funds, he must spend them prior to block height $h$ in a transaction that uses the key $P$ in a DLSAG signature. Verifiers see that the transaction includes $P$ among its ring members, and that this output is still valid. The key image is of the form $J = mpQ$, which has not been used before. The verifiers accept the transaction as valid.
 
 However, if Bob does not claim the funds prior to block height $h$, Alice may claim them by spending her key $Q$ using a DLSAG signature. Verifiers now see that the transaction includes $Q$, and that this key is now valid. The key image is $J = mqP$, which has not been used since Bob did not spend $P$. The verifiers accept this transaction as valid.
 
-Notice that if Bob spent $P$ prior to height $h$ but Alice becomes evil and wishes to spend $Q$ after height $h$ (which would constitute a double spend), the process will properly fail. Verifiers will compute Alice's key image $J = mqP = mpQ$ to be the same as Bob's, and will reject her transaction. This construction of a shared key image is essential, as otherwise verifiers would not reject Alice's evil transaction.
-
-The construction of payment channels, which permit off-chain transactions between two parties that are later settled, requires the use of refund transactions as well.
+Notice that if Bob spent $P$ prior to height $h$ but Alice becomes evil and wishes to spend $Q$ after height $h$ (which would constitute a double spend), the process will properly fail. Verifiers will compute Alice's key image $J = mqP = mpQ$ to be the same as Bob's, and will reject her transaction. This construction of a shared key image is essential, as otherwise verifiers would not reject Alice's evil transaction. On the other hand, if the chain on which Bob signed the transaction is later overtaken by a chain with greater cumulative difficulty that does not include Bob's transaction, Alice can always claim the funds later; we consider this possibility outside the scope of this work.
 
 \section{Multi-input extension}
-The DLSAG construction presented above applies only to the now defunct CryptoNote ring signature implementation. However, modern transactions require a more robust multi-key signature that can accommodate the amount commitments used in the Monero confidential transaction model. We therefore must ensure that there is an appropriate extension of the DLSAG construction.
+The DLSAG construction presented above applies only to the now defunct CryptoNote ring signature implementation. However, modern transactions require a more robust multi-key signature that can accommodate the amount commitments used in the Monero confidential transaction model. We therefore must ensure that there is an appropriate generalization of the DLSAG construction.
 
-In an MSLAG signature, each of the $m$ inputs has an associated ring containing $n$ public output keys (in addition to a separate amount commitment that we do not consider here). The sender chooses a secret index $1 \leq \pi \leq n$ such that she controls the public keys $P_{\pi,j} \equiv p_{\pi,j}G$ for $1 \leq j \leq m$. Signature generation proceeds according to the following steps.
+In a general MSLAG signature, each of the $k$ inputs has an associated ring containing $n$ public output keys (in addition to a separate amount commitment that we do not consider here). The sender chooses a secret index $1 \leq \pi \leq n$ such that she controls the public keys $P_{\pi,j} \equiv p_{\pi,j}G$ for $1 \leq j \leq k$. Signature generation proceeds according to the steps in Table \ref{table:general_gen}.
 
+\begin{table}
 \begin{center}
 \begin{tabular}{lcl}
-Dual-address & & Single-address \\
+Dual-key & & Single-key \\
 \hline
-& for each $1 \leq j \leq m$ \\
+& for each $1 \leq j \leq k$ \\
 $m_{\pi,j} \equiv H_s(\textsf{txid},\textsf{index})$ \\
 $J_j \equiv m_{\pi,j}p_{\pi,j}Q_{\pi,j}$ & & $J \equiv p_{\pi,j}H_p(P_{\pi,j})$ \\
 $F_{\pi,j} \equiv m_{\pi,j}Q_{\pi,j}$ & & $F_{\pi,j} \equiv H_p(P_{\pi,j})$ \\
 & choose random $u_j$ \\
 \hline
-& $c_{\pi+1} \equiv H_s(\textsf{txdata},\{u_jG,u_jF_{\pi,j}\}_{j=1}^m)$ \\
+& $c_{\pi+1} \equiv H_s(\textsf{txdata},\{u_jG,u_jF_{\pi,j}\}_{j=1}^k)$ \\
 \hline
-& for each $i \neq \pi, 1 \leq j \leq m$ \\
+& for each $i \neq \pi, 1 \leq j \leq k$ \\
 & choose random $s_{i,j}$ \\
 $m_{i,j} \equiv H_s(\textsf{txid},\textsf{index})$ \\
 $F_{i,j} \equiv m_{i,j}Q_{i,j}$ & & $F_{i,j} \equiv H_p(P_{i,j})$ \\
-& $c_{i+1} \equiv H_s(\textsf{txdata},\{s_{i,j}G + c_{i,j}P_{i,j},s_{i,j}F_{i,j}+ c_{i,j}J_j\}_{j=1}^m)$ \\
+& $c_{i+1} \equiv H_s(\textsf{txdata},\{s_{i,j}G + c_{i,j}P_{i,j},s_{i,j}F_{i,j}+ c_{i,j}J_j\}_{j=1}^k)$ \\
 \hline
-& for each $1 \leq j \leq m$ \\
+& for each $1 \leq j \leq k$ \\
 & $s_{\pi,j} \equiv u_j - c_\pi p_{\pi,j}$ \\
 \hline
-& output $(c_1,\{s_{i,j}\}_{i,j=1}^{n,m},\{J_j\}_{j=1}^m)$
+& output $(c_1,\{s_{i,j}\}_{i,j=1}^{n,k},\{J_j\}_{j=1}^k)$
 \end{tabular}
+\caption{Generalized DLSAG signature generation}
+\label{table:general_gen}
 \end{center}
+\end{table}
 
-As before, this reduces completely to an MLSAG signature if no ring members are part of a dual, and to the DLSAG construction shown above in the case $m=1$. Given a signature and description of the corresponding set of public one-time output keys, signature verification follows these steps.
+As before, this reduces completely to an MLSAG signature if no ring members are part of a dual. Further, it reduces entirely to the single-input DLSAG construction shown above in the case $k=1$. Given a signature and description of the corresponding set of public one-time output keys, signature verification follows the steps in Table \ref{table:general_ver}.
 
+\begin{table}
 \begin{center}
 \begin{tabular}{lcl}
-Dual-address & & Single-address \\
+Dual-key & & Single-key \\
 \hline
-& for each $1 \leq i < n, 1 \leq j \leq m$ \\
+& for each $1 \leq i < n, 1 \leq j \leq k$ \\
 $m_{i,j} \equiv H_s(\textsf{txid},\textsf{index})$ \\
 $F_{i,j} \equiv m_{i,j}Q_{i,j}$ & & $F_{i,j} \equiv H_p(P_{i,j})$ \\
-& $c_{i+i} \equiv H_s(\textsf{txdata},\{s_{i,j}G + c_{i,j}P_{i,j},s_{i,j}F_{i,j} + c_{i,j}J_j\}_{j=1}^m)$ \\
+& $c_{i+i} \equiv H_s(\textsf{txdata},\{s_{i,j}G + c_{i,j}P_{i,j},s_{i,j}F_{i,j} + c_{i,j}J_j\}_{j=1}^k)$ \\
 \hline
-& for each $1 \leq j \leq m$ \\
+& for each $1 \leq j \leq k$ \\
 $m_{n,j} \equiv H_s(\textsf{txid},\textsf{index})$ \\
 $F_{n,j} \equiv m_{n,j}Q_{n,j}$ & & $F_{n,j} \equiv H_p(P_{n,j})$ \\
-& $c_1^* \equiv H_s(\textsf{txdata},\{s_{n,j}G + c_{n,j}P_{n,j},s_{n,j}F_{n,j}+ c_{n,j}J_j\}_{j=1}^m)$ \\
+& $c_1^* \equiv H_s(\textsf{txdata},\{s_{n,j}G + c_{n,j}P_{n,j},s_{n,j}F_{n,j}+ c_{n,j}J_j\}_{j=1}^k)$ \\
 & accept only if $c_1^* = c_1$
 \end{tabular}
+\caption{Generalized DLSAG signature verification}
+\label{table:general_ver}
 \end{center}
+\end{table}
 
 \section{Security}
-The similarity between DLSAG signatures and the LSAG \cite{liu} and MLSAG \cite{shen} schemes leads to similar proofs of security. As in the cited cases, we want to show that our signatures are unforgeable, linkable, and signer-ambiguous. As the proofs are nearly identical those presented for the original signature schemes, we highlight only the notable differences.
+The similarity between DLSAG signatures and the LSAG (from \cite{liu}) and MLSAG (from \cite{shen}) schemes leads to similar proofs of security. As in the cited cases, we want to show that our signatures are unforgeable, linkable, and signer-ambiguous. As the proofs are nearly identical those presented for the original signature schemes, we highlight only the notable differences.
 
 \subsection{Unforgeability}
-The LSAG/MLSAG proofs of unforgeability use the number of calls to random oracles to establish bounds on the adversary's advantage in breaking the discrete logarithm problem in recovering the signer's private key. In DLSAG, it is not appropriate to model the general $F_i$ terms by a random oracle in the dual-address case; however, even given adversarial control of terms of this form, the original proof \cite{shen} still holds with only trivial modification and the scheme remains unforgeable, as an adversary that can forge a signature non-negligibly can recover the discrete logarithm corresponding to one of the signer's private keys $p_{\pi,j}$. The substantive change is to the bounds on the number of oracle queries.
+The LSAG/MLSAG proofs of unforgeability use the number of calls to random oracles to establish bounds on a defined adversary's advantage in breaking the discrete logarithm problem in recovering a signer's private key. These oracles represent the behavior of the hash-to-scalar function $H_s$, hash-to-point function $H_p$, and valid signing. We observe that for a dual key image of the form $J = mpqG$, the value $m$ is uniformly distributed under the random oracle model. For a uniformly distributed value $xG$, the distributions of $(pG,qG,J)$ and $(pG,qG,xG)$ are computationally indistinguishable under the decisional Diffie-Hellman assumption.
+
+The proof of unforgeability in \cite{shen} therefore holds with only minor modification, where we consider calls to the hash-to-point random oracle for dual keys replaced by calls to a decisional Diffie-Hellman oracle.
 
 \subsection{Linkability}
-If an adversary is able to create two signatures signed by key vectors sharing a common true signing key, there are two cases. If the common signing key is a single-address key, the proof continues identically to \cite{shen}. If the common signing key is part of a dual, then we observe that $$\log_G(s_iG + c_iP_i) = \log_{m_iQ_i}(s_iQ_i + c_iJ)$$ where $i$ is the index of the common signing key in one of the signatures; this leads to the same conclusion as in \cite{shen}.
+If an adversary is able to create two signatures signed by key vectors sharing a common true signing key, there are two cases. If the common signing key is not part of a dual, the proof continues identically to \cite{shen}. If the common signing key is part of a dual, then we observe that $$\log_G(s_iG + c_iP_i) = \log_{m_iQ_i}(s_iF_i + c_iJ)$$ where $i$ is the index of the common signing key in one of the signatures; this leads to the same conclusion as in \cite{shen}.
 
 \subsection{Signer ambiguity}
-We observe that the ambiguity proof \cite{shen} does not rely on the particular structure of the base point used in terms passed into the hash-to-scalar function $H_s$ to generate commitments. The proof is trivially modified to account for the $F_i$ terms presented here. 
+We observe that the ambiguity proof in \cite{shen} does not rely on the particular structure of the base point used in terms passed into the hash-to-scalar function $H_s$ to generate commitments. The proof is trivially modified to account for the $F_i$ terms presented here. 
 
 \subsection{Heuristic attacks}
-The DLSAG scheme provides a guarantee that, absent external information, any public key referenced in a signature is equiprobable as the true signer. However, an adversary may use other information to undermine this guarantee via heuristics.
+The DLSAG scheme provides a guarantee that, absent external information, any public key referenced in a signature is equiprobable as the true signer. However, an adversary may use such external information to undermine this guarantee via heuristics.
 \begin{itemize}
-\item \textit{Spend time}. If Alice initiates a refund transaction to Bob and Bob does not spend the funds before the trigger height, Alice may attempt to spend the funds shortly after this occurs. If an adversary sees a ring containing a dual whose trigger was recently reached, the adversary may conclude that the dual is the true spender. This heuristic should be considered in relation to the suspected spend patterns discussed elsewhere \cite{monerolink}.
-\item \textit{Availability of dual outputs}. Dual outputs are trivially distinguishable from single outputs. If the number of available dual outputs in the blockchain is small relative to single outputs, they will be chosen less frequently as mixins. An adversary may conclude that any ring containing dual outputs is more likely to have such an output as the true spender.
+\item \textit{Spend time}. If Alice initiates a refund transaction to Bob and Bob does not spend the funds before the trigger height, Alice may attempt to spend the funds shortly after this occurs. If an adversary sees a ring containing a dual whose trigger was recently reached (or perhaps is about to be reached), the adversary may conclude that the dual is the true spender. Moreover, one of the keys in a dual is valid for only a small amount of time, while its partner is available in perpetuity. Such heuristics should be considered in relation to the suspected spend patterns discussed elsewhere, as in \cite{monerolink,monerolink2}.
+\item \textit{Availability of dual outputs}. Dual outputs are trivially distinguishable from single outputs. If the number of available dual outputs in the blockchain is small relative to single outputs, they will be chosen less frequently as ring members. An adversary may conclude that any ring containing dual outputs is more likely to have such an output as the true spender.
 \end{itemize}
 
-\subsection{Address reuse}
-The current Monero transaction implementation mitigates against both double-spending and one-time address reuse. If a user's wallet sees multiple outputs paying to the same one-time address, it chooses the one with the largest amount; otherwise, it risks losing a larger amount since all such outputs have the same key image. This mitigation is not possible with the modified key image computation considered with dual-address outputs, which only prevents double-spend attacks. Alternate protocol-level rules involving one-time address reuse, or the inclusion of a second key image and more complex signature, are required to mitigate.
-
-\section{Alternate proposal}
-An alternate proposal originally suggested to the author made several recommendations that differ from the DLSAG signature scheme presented here. We discuss two such suggestions here because of their use as mitigations to adversarial heuristics.
-
-\subsection{Trigger block height commitments}
-The proposal recommended hiding the trigger block height of a dual-address output using a Pedersen commitment. To prove that the spender has the authority to spend funds at a particular time, the spender chooses a random masking block height bounded between the current block height and trigger height, uses this to form an additional commitment, generates a range proof to prove that the difference in the two commitments is a positive value, and also produces a ring signature to show that the spender can open the commitment of one of the height commitments correctly.
-
-An implementation of this recommendation may reduce the usefulness of the spend-time heuristic discussed above. However, it is not clear whether single-address outputs could be safely included as ring members using trigger block height commitments.
-
-\subsection{Uniform dual outputs}
-Another recommendation was that all new transaction outputs be required to be part of a dual. If Alice wishes to send funds to Bob but does not wish for the possibility of a refund, she would generate dual-address output keys and simply direct them both to Bob with a random trigger block height.
-
-This recommendation would increase the number of available dual-address outputs as mixins for other transactions, reducing the usefulness of the availability heuristic discussed above. However, it marginally increases the size and verification complexity of all transactions, rather than only refund transactions.
+\subsection{Key reuse}
+The current Monero transaction implementation mitigates against both double-spending and one-time key reuse. If a user's wallet sees multiple outputs paying to the same one-time key, it chooses the one with the largest amount; otherwise, it risks losing a larger amount since all such outputs have the same key image. This mitigation is not possible with the modified key image computation considered with dual-key outputs, which only prevents double-spend attacks. Alternate protocol-level rules involving one-time key reuse, or the inclusion of a second key image and more complex signature, may be required to mitigate.
 
 \section{Concluding remarks}
-The signature scheme presented here offers an interesting and novel approach to non-interactive refund transactions for use in Monero. However, implementation choices like block height commitments and requirements for outputs would have an effect on transaction complexity, size, and adversarial heuristics.
-
-Earlier proposals to address refund transactions, like the use of interactive multisignatures with more robust timelocks and output referencing, merit further investigation in addition to this proposal.
+The signature scheme presented here offers an interesting and novel approach to non-interactive refund transactions for use in Monero. However, implementation choices like block height commitments and requirements for outputs would have an effect on transaction complexity, size, and adversarial heuristics. It is not known whether a space-efficient key generation method could be used to describe dual-key outputs in a more efficient way. The cost in verification complexity is likely to be unavailable without novel signature schemes.
 
 \bibliographystyle{plain}
 \bibliography{main}
