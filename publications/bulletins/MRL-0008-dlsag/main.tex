@@ -6,7 +6,7 @@
 \date{\today}
 
 \type{RESEARCH BULLETIN}
-\ident{MRL-XXXX}
+\ident{MRL-0008}
 
 \begin{document}
 
@@ -81,7 +81,7 @@ Dual-key & & Single-key \\
 & for each $1 \leq i < n$ \\
 $m_i \equiv H_s(\textsf{txid},\textsf{index})$ \\
 $F_i \equiv m_i Q_i$ & & $F_i \equiv H_p(P_i)$ \\
-& $c_{i+i} \equiv H_s(\textsf{txdata},s_iG + c_iP_i,s_iF_i + c_iJ)$ \\
+& $c_{i+1} \equiv H_s(\textsf{txdata},s_iG + c_iP_i,s_iF_i + c_iJ)$ \\
 \hline
 $m_n \equiv H_s(\textsf{txid},\textsf{index})$ \\
 $F_n \equiv m_n Q_n$ & & $F_n \equiv H_p(P_n)$ \\
@@ -100,7 +100,7 @@ If Bob wishes to claim the funds, he must spend them prior to block height $h$ i
 
 However, if Bob does not claim the funds prior to block height $h$, Alice may claim them by spending her key $Q$ using a DLSAG signature. Verifiers now see that the transaction includes $Q$, and that this key is now valid. The key image is $J = mqP$, which has not been used since Bob did not spend $P$. The verifiers accept this transaction as valid.
 
-Notice that if Bob spent $P$ prior to height $h$ but Alice becomes evil and wishes to spend $Q$ after height $h$ (which would constitute a double spend), the process will properly fail. Verifiers will compute Alice's key image $J = mqP = mpQ$ to be the same as Bob's, and will reject her transaction. This construction of a shared key image is essential, as otherwise verifiers would not reject Alice's evil transaction. On the other hand, if the chain on which Bob signed the transaction is later overtaken by a chain with greater cumulative difficulty that does not include Bob's transaction, Alice can always claim the funds later; we consider this possibility outside the scope of this work.
+Notice that if Bob spent $P$ prior to height $h$ but Alice becomes evil and wishes to spend $Q$ after height $h$ (which would constitute a double spend), the process will properly fail. Verifiers will find Alice's key image $J = mqP = mpQ$ to be the same as Bob's, and will reject her transaction. This construction of a shared key image is essential, as otherwise verifiers would not reject Alice's evil transaction. On the other hand, if the chain on which Bob signed the transaction is later overtaken by a chain with greater cumulative difficulty that does not include Bob's transaction, Alice can always claim the funds later; we consider this possibility outside the scope of this work.
 
 \section{Multi-input extension}
 The DLSAG construction presented above applies only to the now defunct CryptoNote ring signature implementation. However, modern transactions require a more robust multi-key signature that can accommodate the amount commitments used in the Monero confidential transaction model. We therefore must ensure that there is an appropriate generalization of the DLSAG construction.
@@ -124,7 +124,7 @@ $F_{\pi,j} \equiv m_{\pi,j}Q_{\pi,j}$ & & $F_{\pi,j} \equiv H_p(P_{\pi,j})$ \\
 & choose random $s_{i,j}$ \\
 $m_{i,j} \equiv H_s(\textsf{txid},\textsf{index})$ \\
 $F_{i,j} \equiv m_{i,j}Q_{i,j}$ & & $F_{i,j} \equiv H_p(P_{i,j})$ \\
-& $c_{i+1} \equiv H_s(\textsf{txdata},\{s_{i,j}G + c_{i,j}P_{i,j},s_{i,j}F_{i,j}+ c_{i,j}J_j\}_{j=1}^k)$ \\
+& $c_{i+1} \equiv H_s(\textsf{txdata},\{s_{i,j}G + c_{i}P_{i,j},s_{i,j}F_{i,j}+ c_{i}J_j\}_{j=1}^k)$ \\
 \hline
 & for each $1 \leq j \leq k$ \\
 & $s_{\pi,j} \equiv u_j - c_\pi p_{\pi,j}$ \\
@@ -146,12 +146,12 @@ Dual-key & & Single-key \\
 & for each $1 \leq i < n, 1 \leq j \leq k$ \\
 $m_{i,j} \equiv H_s(\textsf{txid},\textsf{index})$ \\
 $F_{i,j} \equiv m_{i,j}Q_{i,j}$ & & $F_{i,j} \equiv H_p(P_{i,j})$ \\
-& $c_{i+i} \equiv H_s(\textsf{txdata},\{s_{i,j}G + c_{i,j}P_{i,j},s_{i,j}F_{i,j} + c_{i,j}J_j\}_{j=1}^k)$ \\
+& $c_{i+i} \equiv H_s(\textsf{txdata},\{s_{i,j}G + c_{i}P_{i,j},s_{i,j}F_{i,j} + c_{i}J_j\}_{j=1}^k)$ \\
 \hline
 & for each $1 \leq j \leq k$ \\
 $m_{n,j} \equiv H_s(\textsf{txid},\textsf{index})$ \\
 $F_{n,j} \equiv m_{n,j}Q_{n,j}$ & & $F_{n,j} \equiv H_p(P_{n,j})$ \\
-& $c_1^* \equiv H_s(\textsf{txdata},\{s_{n,j}G + c_{n,j}P_{n,j},s_{n,j}F_{n,j}+ c_{n,j}J_j\}_{j=1}^k)$ \\
+& $c_1^* \equiv H_s(\textsf{txdata},\{s_{n,j}G + c_{n}P_{n,j},s_{n,j}F_{n,j}+ c_{n}J_j\}_{j=1}^k)$ \\
 & accept only if $c_1^* = c_1$
 \end{tabular}
 \caption{Generalized DLSAG signature verification}
@@ -160,7 +160,7 @@ $F_{n,j} \equiv m_{n,j}Q_{n,j}$ & & $F_{n,j} \equiv H_p(P_{n,j})$ \\
 \end{table}
 
 \section{Security}
-The similarity between DLSAG signatures and the LSAG (from \cite{liu}) and MLSAG (from \cite{shen}) schemes leads to similar proofs of security. As in the cited cases, we want to show that our signatures are unforgeable, linkable, and signer-ambiguous. As the proofs are nearly identical those presented for the original signature schemes, we highlight only the notable differences.
+The similarity between DLSAG signatures and the LSAG (from \cite{liu}) and MLSAG (from \cite{shen}) schemes leads to similar proofs of security. As in the cited cases, we want to show that our signatures are unforgeable, linkable, and signer-ambiguous. As the proofs are nearly identical to those presented for the original signature schemes, we highlight only the notable differences.
 
 \subsection{Unforgeability}
 The LSAG/MLSAG proofs of unforgeability use the number of calls to random oracles to establish bounds on a defined adversary's advantage in breaking the discrete logarithm problem in recovering a signer's private key. These oracles represent the behavior of the hash-to-scalar function $H_s$, hash-to-point function $H_p$, and valid signing. We observe that for a dual key image of the form $J = mpqG$, the value $m$ is uniformly distributed under the random oracle model. For a uniformly distributed value $xG$, the distributions of $(pG,qG,J)$ and $(pG,qG,xG)$ are computationally indistinguishable under the decisional Diffie-Hellman assumption.
