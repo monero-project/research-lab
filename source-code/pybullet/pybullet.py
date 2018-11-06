@@ -101,6 +101,7 @@ def prove(data,N):
     mash(A)
     mash(S)
     y = cache
+    y_inv = y.invert()
     mash('')
     z = cache
 
@@ -157,7 +158,7 @@ def prove(data,N):
     R = PointVector([])
    
     # initial inner product inputs
-    data_ip = [Gi,PointVector([Hi[i]*(y.invert()**i) for i in range(len(Hi))]),H*x_ip,l,r,None,None]
+    data_ip = [Gi,PointVector([Hi[i]*(y_inv**i) for i in range(len(Hi))]),H*x_ip,l,r,None,None]
     while True:
         data_ip = inner_product(data_ip)
 
@@ -181,25 +182,14 @@ def verify(proofs,N):
     Gi = PointVector([hash_to_point('pybullet Gi ' + str(i)) for i in range(max_MN)])
     Hi = PointVector([hash_to_point('pybullet Hi ' + str(i)) for i in range(max_MN)])
 
-    # verify that all points are in the correct subgroup
-    for item in dumb25519.flatten(proofs):
-        if not isinstance(item,Point):
-            continue
-        if not item*Scalar(dumb25519.l) == Z:
-            raise ArithmeticError
-
     # set up weighted aggregates
     y0 = Scalar(0)
     y1 = Scalar(0)
-    Y2 = Z
-    Y3 = Z
-    Y4 = Z
-    Z0 = Z
     z1 = Scalar(0)
-    Z2 = Z
     z3 = Scalar(0)
     z4 = [Scalar(0)]*max_MN
     z5 = [Scalar(0)]*max_MN
+    BigAssMultiexp = []
 
     # run through each proof
     for proof in proofs:
@@ -210,88 +200,99 @@ def verify(proofs,N):
         # get size information
         M = 2**len(L)/N
 
-        # weighting factor for batching
-        w = random_scalar()
+        # weighting factors for batching
+        weight_y = random_scalar()
+        weight_z = random_scalar()
+        if weight_y == Scalar(0) or weight_z == Scalar(0):
+            raise ArithmeticError
 
         # reconstruct all challenges
         for v in V:
             mash(v)
         mash(A)
         mash(S)
+        if cache == Scalar(0):
+            raise ArithmeticError
         y = cache
+        y_inv = y.invert()
         mash('')
+        if cache == Scalar(0):
+            raise ArithmeticError
         z = cache
         mash(T1)
         mash(T2)
+        if cache == Scalar(0):
+            raise ArithmeticError
         x = cache
         mash(taux)
         mash(mu)
         mash(t)
+        if cache == Scalar(0):
+            raise ArithmeticError
         x_ip = cache
 
-        y0 += taux*w
+        y0 += taux*weight_y
         
         k = (z-z**2)*sum_scalar(y,M*N)
         for j in range(1,M+1):
             k -= (z**(j+2))*sum_scalar(Scalar(2),N)
 
-        y1 += (t-k)*w
+        y1 += (t-k)*weight_y
 
-        Temp = Z
         for j in range(M):
-            Temp += V[j]*(z**(j+2)*Scalar(8))
-        Y2 += Temp*w
-        Y3 += T1*(x*w*Scalar(8))
-        Y4 += T2*((x**2)*w*Scalar(8))
+            BigAssMultiexp.append([V[j]*Scalar(8),z**(j+2)*weight_y])
+        BigAssMultiexp.append([T1*Scalar(8),x*weight_y])
+        BigAssMultiexp.append([T2*Scalar(8),x**2*weight_y])
 
-        Z0 += (A*Scalar(8)+S*(x*Scalar(8)))*w
+        BigAssMultiexp.append([A*Scalar(8),weight_z])
+        BigAssMultiexp.append([S*Scalar(8),x*weight_z])
 
         # inner product
-        W = []
+        W = ScalarVector([])
         for i in range(len(L)):
             mash(L[i])
             mash(R[i])
+            if cache == Scalar(0):
+                raise ArithmeticError
             W.append(cache)
+        W_inv = W.invert()
 
         for i in range(M*N):
             index = i
             g = a
-            h = b*((y.invert())**i)
+            h = b*((y_inv)**i)
             for j in range(len(L)-1,-1,-1):
                 J = len(W)-j-1
                 base_power = 2**j
                 if index/base_power == 0:
-                    g *= W[J].invert()
+                    g *= W_inv[J]
                     h *= W[J]
                 else:
                     g *= W[J]
-                    h *= W[J].invert()
+                    h *= W_inv[J]
                     index -= base_power
 
             g += z
-            h -= (z*(y**i) + (z**(2+i/N))*(Scalar(2)**(i%N)))*((y.invert())**i)
+            h -= (z*(y**i) + (z**(2+i/N))*(Scalar(2)**(i%N)))*((y_inv)**i)
 
-            z4[i] += g*w
-            z5[i] += h*w
+            z4[i] += g*weight_z
+            z5[i] += h*weight_z
 
-        z1 += mu*w
+        z1 += mu*weight_z
 
-        Multiexp = []
         for i in range(len(L)):
-            Multiexp.append([L[i],Scalar(8)*(W[i]**2)])
-            Multiexp.append([R[i],Scalar(8)*(W[i].invert()**2)])
-        Z2 += dumb25519.multiexp(Multiexp)*w
-        z3 += (t-a*b)*x_ip*w
+            BigAssMultiexp.append([L[i]*Scalar(8),(W[i]**2)*weight_z])
+            BigAssMultiexp.append([R[i]*Scalar(8),(W_inv[i]**2)*weight_z])
+        z3 += (t-a*b)*x_ip*weight_z
     
     # now check all proofs together
-    if not G*y0 + H*y1 - Y2 - Y3 - Y4 == Z:
-        raise ArithmeticError('Bad y check!')
-
-    Multiexp = [[Z0,Scalar(1)],[G,-z1],[Z2,Scalar(1)],[H,z3]]
+    BigAssMultiexp.append([G,-y0-z1])
+    BigAssMultiexp.append([H,-y1+z3])
     for i in range(max_MN):
-        Multiexp.append([Gi[i],-z4[i]])
-        Multiexp.append([Hi[i],-z5[i]])
-    if not dumb25519.multiexp(Multiexp) == Z:
+        BigAssMultiexp.append([Gi[i],-z4[i]])
+        BigAssMultiexp.append([Hi[i],-z5[i]])
+
+    if not dumb25519.multiexp(BigAssMultiexp) == Z:
         raise ArithmeticError('Bad z check!')
 
     return True
