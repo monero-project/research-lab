@@ -1,0 +1,44 @@
+[2017-12-04 10:43:31] <suraeNoether> hey guys, sorry about this mroning... i had a doctor's appointment that was supposed to be *fast*
+[2017-12-04 10:43:33] <suraeNoether> i just got out :(
+[2017-12-04 10:43:47] <suraeNoether> i should have texted sarang to say something
+[2017-12-04 10:45:44] <suraeNoether> oh so
+[2017-12-04 10:45:51] <suraeNoether> i guess i'm not the only one who forgot about the meeting this morning. :P
+[2017-12-04 10:48:56] <hyc> lol
+[2017-12-04 10:49:14] <hyc> we don't really need designated times to BS in these channels
+[2017-12-04 10:55:32] <suraeNoether> fair
+[2017-12-04 10:55:48] <suraeNoether> speaking of BS, what the hell is going on with these kitty things
+[2017-12-04 10:55:57] <unknownids> -_-
+[2017-12-04 10:56:05] <unknownids> breaking ethereum apparently
+[2017-12-04 10:56:42] <moneromooo> Anyone knows the size of an ethereum tx, out of curiosity ?
+[2017-12-04 10:57:01] <moneromooo> (typical is fine, if such a thing exists)
+[2017-12-04 11:02:26] <dEBRUYNE> moneromooo: https://ethereum.stackexchange.com/questions/30175/what-is-the-size-bytes-of-a-simple-ethereum-transaction-versus-a-bitcoin-trans
+[2017-12-04 11:02:47] → p0nziph0ne joined (~p0nziph0n@unaffiliated/p0nziph0ne)
+[2017-12-04 11:05:07] <moneromooo> Thanks. That's pretty small...
+[2017-12-04 11:06:18] * [-mugatu-] → shillo
+[2017-12-04 11:11:10] ⇐ cialu quit (~cialu@151.61.198.45): Quit: Leaving
+[2017-12-04 11:11:13] <sarang> Wow that is small
+[2017-12-04 11:11:28] <sarang> And way more cats than we have
+[2017-12-04 11:14:27] → serhack joined (055a19fb@gateway/web/cgi-irc/kiwiirc.com/ip.5.90.25.251)
+[2017-12-04 11:17:33] <hyc> 17s block time, so they must get chain splits all the time
+[2017-12-04 11:17:44] <fluffypony> yes but they have uncle blocks
+[2017-12-04 11:17:52] <fluffypony> so if your block is orphaned you still get a block reward
+[2017-12-04 11:18:09] <fluffypony> which is why there are miners that purely mine orphans
+[2017-12-04 11:18:12] <hyc> ah
+[2017-12-04 11:21:54] <unknownids> some pools dont pay out for uncles afaik. i also remember something about them wanting to add zk-snarks would allow like 3 tx's in a block or something
+[2017-12-04 11:25:47] ⇐ cryptosoap quit (~cryptosoa@gateway/tor-sasl/cryptosoap): Remote host closed the connection
+[2017-12-04 11:26:01] <fluffypony> unknownids: then they're stealing the block
+[2017-12-04 11:26:04] <fluffypony> reward
+[2017-12-04 11:26:24] <unknownids> yeah
+[2017-12-04 11:26:25] → cryptosoap joined (~cryptosoa@gateway/tor-sasl/cryptosoap)
+[2017-12-04 11:32:17] ⇐ valentinbuza quit (~valentinb@unaffiliated/valentinbuza): Ping timeout: 248 seconds
+[2017-12-04 11:34:38] <rehrar> We can't be bested by cryptokitties. I vote we move all MRL resources to making Monero Hamsters a reality
+[2017-12-04 11:35:04] → valentinbuza joined (~valentinb@unaffiliated/valentinbuza)
+[2017-12-04 11:35:38] ⇐ p0nziph0ne quit (~p0nziph0n@unaffiliated/p0nziph0ne): Quit: Leaving
+[2017-12-04 11:46:55] → Guest67_ joined (~textual@60-241-4-244.static.tpgi.com.au)
+[2017-12-04 11:55:37] <suraeNoether> i had a hamster once. 
+[2017-12-04 11:55:40] <suraeNoether> *once*
+[2017-12-04 11:55:58] <suraeNoether> creature ate his whole... family, or whatever. we had like three, and he killed and ate the other two.
+[2017-12-04 11:56:09] <suraeNoether> ferrets, which are predators, are significantly less horrific than hamsters
+[2017-12-04 11:56:22] <suraeNoether> hamsters are horrible monsters
+[2017-12-04 12:03:19] <rehrar> Monero is a monster on its own
+[2017-12-04 12:03:41] <rehrar> we can account for Monero Hamsters killing each other on the blockchain

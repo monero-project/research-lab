@@ -1,0 +1,364 @@
+[2019-01-14 10:59:17] <sarang> But, let's begin
+[2019-01-14 10:59:31] <sarang> The agenda, as linked above: http://paste.debian.net/hidden/4ae0abc9/
+[2019-01-14 10:59:34] <sarang> 1. GREETINGS
+[2019-01-14 10:59:35] <sarang> hello all
+[2019-01-14 10:59:39] <ArticMine> hi
+[2019-01-14 10:59:49] <oneiric_> o/
+[2019-01-14 11:00:11] <sarang> We have much to talk about today
+[2019-01-14 11:00:30] <sarang> I'm going to move the Matrix item to 1.5. META
+[2019-01-14 11:00:31] <sgp_> hello!
+[2019-01-14 11:00:35] <suraeNoether> howdy
+[2019-01-14 11:00:41] <sarang> charuto asked if we could do a deeper Matrix integration of this room
+[2019-01-14 11:01:12] <suraeNoether> what does it entail?
+[2019-01-14 11:01:19] <suraeNoether> i'm neutral on bridges generally
+[2019-01-14 11:01:30] <sarang> Right now AFAIK, the room is a portal in matrix, and the desire is for a plumbed room
+[2019-01-14 11:01:39] <sarang> https://github.com/matrix-org/matrix-appservice-irc/wiki/Permissioning-in-Portal-vs-Plumbed-rooms
+[2019-01-14 11:02:31] <sarang> This would have the side effect of allowing Matrix-side ops to exercise control over Matrix users in the room, but not on the freenode side
+[2019-01-14 11:02:34] → chachasmooth_ joined (~chachasmo@unaffiliated/chachasmooth)
+[2019-01-14 11:02:40] <suraeNoether> i'm not really grokking the benefit
+[2019-01-14 11:02:50] <sarang> And be consistent with how other rooms (e.g. monero-community) are set up already on Matrix
+[2019-01-14 11:02:57] <sarang> charuto: are you present?
+[2019-01-14 11:02:59] <charuto> yeah, it would mostly not change anything IRC side, just here on this side, would allow for a more visible monero research lab matrix room and some matrix moderation options
+[2019-01-14 11:03:06] ⇐ chachasmooth quit (~chachasmo@unaffiliated/chachasmooth): Ping timeout: 252 seconds
+[2019-01-14 11:03:21] <sarang> charuto is already matrix-side op for other monero rooms
+[2019-01-14 11:03:32] <sarang> Provided we have another admin as well, I am not opposed to this
+[2019-01-14 11:03:44] <sarang> However, I'll request loose consensus from the room now before enabling
+[2019-01-14 11:03:45] → serhack joined (5ea6fc5a@gateway/web/cgi-irc/kiwiirc.com/ip.94.166.252.90)
+[2019-01-14 11:04:13] <serhack> Hi everyone
+[2019-01-14 11:04:18] <charuto> and yes, sarang is correct, it's mostly for matrix-side consistency, so matrix users can simply join #monero-research-lab:matrix.org
+[2019-01-14 11:04:24] <suraeNoether> okay, so i'm not really following why this is fine
+[2019-01-14 11:04:33] <suraeNoether> charuto, no offense intended, please, but
+[2019-01-14 11:04:44] <suraeNoether> if someone comes to the matrix room and thinks you are in charge... *shrug*
+[2019-01-14 11:04:53] <suraeNoether> i don't see a benefit to this
+[2019-01-14 11:05:03] <sarang> I originally had similar concerns, but that's possible right now with the portal room
+[2019-01-14 11:05:06] <suraeNoether> i see this as an opportunity for someone to act as a middle man to interact with me, and that makes me nervous
+[2019-01-14 11:05:29] <suraeNoether> sarang: we can't stop someone from starting a portal room but we don't have to give them permission to plumb
+[2019-01-14 11:05:54] <suraeNoether> i literally mean no offense, charuto, i am sure you are running the rooms responsibly but
+[2019-01-14 11:06:09] <suraeNoether> i'm open to changing my view
+[2019-01-14 11:06:18] <suraeNoether> if someone can explain the benefits other than consistency
+[2019-01-14 11:06:21] <charuto> i understand your concern, suraeNoether , but the alternative would be people not even getting to the room
+[2019-01-14 11:06:29] <suraeNoether> i thought there was already a room
+[2019-01-14 11:06:34] <suraeNoether> that is a portal
+[2019-01-14 11:06:35] <suraeNoether> so
+[2019-01-14 11:06:36] <sarang> If this makes it easier to use on the matrix side, and introduces no new problems that don't potentially already exist, I am fine with it
+[2019-01-14 11:06:37] <suraeNoether> how does that work then
+[2019-01-14 11:06:44] <charuto> the portal room will remain, im trying to add a plumbed room
+[2019-01-14 11:06:49] <charuto> cant remove portal rooms
+[2019-01-14 11:06:54] <suraeNoether> then how is the alternative people not getting in?
+[2019-01-14 11:07:12] <suraeNoether> maybe i'm confused about how matrix works
+[2019-01-14 11:07:20] <charuto> some people dont know how portal rooms work and only join publicly listed matrix native rooms
+[2019-01-14 11:07:45] <charuto> on other monero channels, portal rooms always have less matrix users than plumbed rooms
+[2019-01-14 11:08:10] <charuto> it's the difference of joining #monero:matrix.org or joining #freenode_#matrix.org
+[2019-01-14 11:08:29] <charuto> typo, #freenode_#monero:matrix.org
+[2019-01-14 11:08:52] <suraeNoether> uhm
+[2019-01-14 11:09:18] <sarang> Given that suraeNoether is an op in this room, we won't proceed at this time if he objects
+[2019-01-14 11:09:35] <suraeNoether> so i guess my question is now reverting to a rude one: are people who can't figure out how to go to freenode.net and typing /join #monero-research-lab going to be helpful contributors in this room
+[2019-01-14 11:09:38] <sarang> This issue will be tabled until after the meeting, so we can move on and respect attendees' time
+[2019-01-14 11:10:01] <suraeNoether> k
+[2019-01-14 11:10:03] <sarang> On to 2. UPGRADE ITEMS
+[2019-01-14 11:10:20] <sarang> The block size algorithm has been discussed at length here and in -dev
+[2019-01-14 11:10:29] <hyc> (I think that's a fair question surae)
+[2019-01-14 11:10:53] → billybillyonebal joined (4ba6e4a0@gateway/web/freenode/ip.75.166.228.160)
+[2019-01-14 11:10:54] <sarang> Loose consensus seems to be that the recommended approach, a dual median cap, is a reasonable stopgap that slows bloat, but it not a long-term solution
+[2019-01-14 11:11:02] <sarang> ArticMine: given your deep involvement in this, can you comment?
+[2019-01-14 11:11:23] ⇐ billybillyonebal quit (4ba6e4a0@gateway/web/freenode/ip.75.166.228.160): Client Quit
+[2019-01-14 11:11:30] <sarang> the proposal on the table is to cap the next block at min[ 1.4*median(100), 50*median(100000) ]
+[2019-01-14 11:11:39] <sarang> (others are welcome to comment as well)
+[2019-01-14 11:12:31] <suraeNoether> i'm happy to endorse this
+[2019-01-14 11:12:39] <suraeNoether> Isthmus may have thoughts on simulations, but he's always super busy
+[2019-01-14 11:13:11] <sarang> A lot of debate centered around this not being a long-term solution, and I agree
+[2019-01-14 11:13:22] <ArticMine> Yes I can comment on this.
+[2019-01-14 11:13:25] <sarang> What this does is stretch the time required by a lot
+[2019-01-14 11:13:35] <sarang> ty ArticMine
+[2019-01-14 11:15:17] <ArticMine> Fist both the original proposal that I made and smooth's latest proposal fail because they are using the entire block to scale the long term median
+[2019-01-14 11:15:52] <sarang> smooth's proposal being... ?
+[2019-01-14 11:16:46] <ArticMine> So either one has an exponential that scales based upon 50x my original proposal or the burst is lost
+[2019-01-14 11:17:16] <ArticMine> smooth's proposal is above in this thread I will try to find it
+[2019-01-14 11:17:59] <ArticMine> <smooth> A=median of last 100 blocks
+[2019-01-14 11:17:59] <ArticMine> <smooth> B=median of last 100000 blocks (arbitary number, might be changed)
+[2019-01-14 11:17:59] <ArticMine> <smooth> maximum block size is min(max(A,300KB)*1.4,max(B,15MB)*1.2) (again both numbers could be changed)
+[2019-01-14 11:17:59] <ArticMine> <smooth> existing method is max(A,300KB)*2
+[2019-01-14 11:18:02] <sarang> Since code freeze is presumably drawing near, what is your endorsement ArticMine for what to include in the next fork (Boron)?
+[2019-01-14 11:18:37] <ArticMine> Right now I am working on a solution that addresses both of the above issues
+[2019-01-14 11:19:23] <ArticMine> Basically I does not use the whole block to scale the long term median
+[2019-01-14 11:19:56] <ArticMine> but only that part of the block that would have been legal using the long term median
+[2019-01-14 11:20:10] <suraeNoether> ArticMine: is there a serious flaw in using min[ 1.4*median(100), 50*median(100000) ] ?
+[2019-01-14 11:20:10] <sarang> A benefit of the current approach is that it seems not too large of a fundamental change to include as a stopgap until more complex approaches can be studied more deeply
+[2019-01-14 11:20:23] <ArticMine> the 50x factor is applied at the end
+[2019-01-14 11:20:39] <suraeNoether> like... if we spend another week trying to come up with a better method, is that a good usage of time for the possible benefit of using a different method?
+[2019-01-14 11:20:47] <ArticMine> Also we leave the current block scaling formual alone
+[2019-01-14 11:21:37] <ArticMine> and instead restrict that effective median block weight to put a rolling cap on it using the long term median
+[2019-01-14 11:21:52] <suraeNoether> ArticMine: maybe i'm not following you... what do you mean by using the entire block to scale the long term median?
+[2019-01-14 11:22:10] <suraeNoether> and what do you mean "only that part of the block that would have been legal"?
+[2019-01-14 11:23:17] <ArticMine> Let us say that the long term median only allows 400000 bytes for a block
+[2019-01-14 11:23:42] <ArticMine> But the short term median allows for 500000 bytes
+[2019-01-14 11:24:13] → Dean_Guss joined (~dean@gateway/tor-sasl/deanguss)
+[2019-01-14 11:24:20] <ArticMine> The lock is legal under both proposals because of the 50x factor on the long term median
+[2019-01-14 11:24:26] <ArticMine> Block
+[2019-01-14 11:25:06] <ArticMine> Under both current proposals the whole 500000 bytes is used to scale the long term median
+[2019-01-14 11:25:29] ⇐ serhack quit (5ea6fc5a@gateway/web/cgi-irc/kiwiirc.com/ip.94.166.252.90): Remote host closed the connection
+[2019-01-14 11:25:30] <ArticMine> What I am saying is that we only use 400000 bytes in that example
+[2019-01-14 11:26:22] <ArticMine> This avoids the 50 factor in scaling the long term median that smooth was concerned about
+[2019-01-14 11:26:34] <suraeNoether> okay, i'm still a little confused, but let me ask a follow-uyp
+[2019-01-14 11:27:04] <suraeNoether> well its the same question i asked earlier: what is the problem with using min[ 1.4*median(100), 50*median(100000) ] ? I'm still not following.. :(
+[2019-01-14 11:27:30] <sarang> You still get exponential growth over time
+[2019-01-14 11:27:34] <sarang> it's just slowed way down
+[2019-01-14 11:27:58] <suraeNoether> okay, i understand that part
+[2019-01-14 11:28:03] <ArticMine> The problem is that we are incorporating the 50 facto in scaling the long term median
+[2019-01-14 11:28:16] <suraeNoether> ArticMine: can you get us a write-up of your suggestions some time in the next few days?
+[2019-01-14 11:28:24] <suraeNoether> something formal to look at? at least a formula or something
+[2019-01-14 11:28:27] <sarang> We will need to make a decision ASAP on what to do
+[2019-01-14 11:28:33] <ArticMine> That is the essence of smooth'ss concern
+[2019-01-14 11:28:34] <ArticMine> Yes
+[2019-01-14 11:28:50] <sarang> Right now, the only slow-growth proposal that at least has a formula and a simulated graph is the one suraeNoether mentioned above
+[2019-01-14 11:29:09] <sarang> so I will consider that the current "best option" for now until/unless we get the same detail before freeze
+[2019-01-14 11:29:30] <sarang> moneromooo: when should freeze be?
+[2019-01-14 11:29:38] <ArticMine> When is freeze
+[2019-01-14 11:30:22] <sarang> We'll move on and assume freeze is "as soon as possible, and perhaps sooner"
+[2019-01-14 11:30:29] <suraeNoether> my concern is this: the only way to prevent a literal exponential blowup is to put in some sort of hard cap
+[2019-01-14 11:30:55] <ArticMine> I has to be a rolling hard cap.
+[2019-01-14 11:31:29] <sarang> In the interest of time, on to payment IDs
+[2019-01-14 11:31:35] <ArticMine> Never a fixed hard cap
+[2019-01-14 11:31:39] <moneromooo> Unknown. Pony wanted to have a first build end of january.
+[2019-01-14 11:31:44] <sarang> sgp_: you looked into usage of payment IDs by popular services
+[2019-01-14 11:31:46] ⇐ cardboardoranges quit (~cardboard@c-24-60-138-210.hsd1.ma.comcast.net): Quit: cardboardoranges
+[2019-01-14 11:31:47] <sarang> ok ty moneromooo
+[2019-01-14 11:32:03] <sarang> I advocate no changes to block cap that haven't been simulated
+[2019-01-14 11:32:04] <sgp_> yes sarang, and it's about a 50-50 split between unencrypted and encrypted
+[2019-01-14 11:32:08] <moneromooo> If ArticMine need one more week to finish proving his idea, then I'm totally fine waiting for this.
+[2019-01-14 11:32:34] <ArticMine> That will work very well for me
+[2019-01-14 11:32:41] <sarang> Awesome, thanks ArticMine
+[2019-01-14 11:32:50] <sarang> sgp_ and others had proposed candidate timelines
+[2019-01-14 11:33:02] <sarang> and received some feedback from wallets
+[2019-01-14 11:33:13] <sarang> Can you explain your findings sgp_ ?
+[2019-01-14 11:33:25] <sgp_> Sure. Here is where we are at right now:
+[2019-01-14 11:33:28] <sgp_> https://usercontent.irccloud-cdn.com/file/k06P021t/image.png
+[2019-01-14 11:34:02] <sgp_> Though after speaking with Justin from X Wallet, they seem interested in meeting the April timeline to remove the payment ID field when sending
+[2019-01-14 11:34:34] <sarang> endogenic (who runs mymonero) expressed general concern about the rationale for removing encrypted IDs, particularly citing UX
+[2019-01-14 11:35:25] <sgp_> Cake Wallet says they will remove support once exchanges no longer use it
+[2019-01-14 11:35:29] <sarang> Based on these timelines, there is no consensus change until fall 2019 (Carbon fork)
+[2019-01-14 11:35:35] <suraeNoether> endogenic: can you elaborate on your concerns?
+[2019-01-14 11:35:47] <sarang> endogenic said he'd be unlikely to be available for this meeting
+[2019-01-14 11:35:55] <selsta> sgp_: No soft depreciation in the GUI?
+[2019-01-14 11:35:56] <dEBRUYNE> In my opinion, the most important goal should be to remove the long unencrypted payment IDs
+[2019-01-14 11:36:20] <sgp_> Let me explain the timeline a little bit more
+[2019-01-14 11:36:24] <dEBRUYNE> They are detrimental to UX. Also, I am personally kind of ambivalent on integrated addresses versus subaddresses
+[2019-01-14 11:36:26] <sarang> Those with -lounge history should look at those logs from earlier today to see his full remarks
+[2019-01-14 11:36:52] <sgp_> As sarang stated, no consensus changes until Oct 2019 (Carbon), when all payment IDs (encrypted and unencrypted) will be disallowed
+[2019-01-14 11:37:05] <dEBRUYNE> Subaddresses are obviously better, but I am not sure how feasible it would be to get all exchanges and services to implement them
+[2019-01-14 11:37:39] <sgp_> In April 2019, the official GUI will no longer support sending transactions with unencrypted payment IDs, and the official CLI will force users to use annoying flags to send
+[2019-01-14 11:38:19] <suraeNoether> hmmm, endogenic makes some interesting points about the memory requirements for subaddresses at exchanges
+[2019-01-14 11:38:41] <suraeNoether> namely: a big exchange will have to have huge hash tables
+[2019-01-14 11:38:46] <selsta> sgp_: The GUI PR I did is similar to the CLI, requires enabling in settings. Why did you mark it as no support?
+[2019-01-14 11:39:09] <endogenic> mooo points out it wont be crazy.. 8mb for a million entries?
+[2019-01-14 11:39:24] <endogenic> (i'm half here, half not. busybusy)
+[2019-01-14 11:39:37] <sgp_> selsta: I thought the plan was to remove entirely. I can make it look like the CLI if that's what we want
+[2019-01-14 11:40:04] <moneromooo> I looked, it's actually 32 bytes + 8 bytes, so 40 bytes payload. Plus the tree overhead.
+[2019-01-14 11:40:20] <dEBRUYNE> Removing them entirely in the next version is going to lead to loads of user issues
+[2019-01-14 11:40:29] <sarang> dEBRUYNE: them = what
+[2019-01-14 11:40:38] <dEBRUYNE> The option to use long payment IDs
+[2019-01-14 11:40:52] <dEBRUYNE> To add them to a transaction that is
+[2019-01-14 11:40:52] <selsta> sgp_: https://github.com/monero-project/monero-gui/pull/1866 Disabled by default, can be reenabled in the settings.
+[2019-01-14 11:42:32] <sgp_> Is this preferred? https://usercontent.irccloud-cdn.com/file/4g4NYw3q/image.png
+[2019-01-14 11:43:15] <selsta> IMO yes.
+[2019-01-14 11:43:25] <sarang> It at least provides consistency for our default products
+[2019-01-14 11:44:40] <sarang> If we let encrypted pIDs stick around, there remain distinguishability problems between those txns and those w/ subaddresses and no pID
+[2019-01-14 11:44:56] <sarang> these are mitigated somewhat by the use of a wallet-default encrypted value
+[2019-01-14 11:45:00] → crCr62U0 joined (~crCr62U0@gateway/tor-sasl/crcr62u0)
+[2019-01-14 11:45:03] <moneromooo> Those will get a 8 byte payment id (if only two outs).
+[2019-01-14 11:45:12] <sarang> subaddress txns?
+[2019-01-14 11:45:16] <moneromooo> Yes.
+[2019-01-14 11:45:18] <sarang> with a default enc value
+[2019-01-14 11:45:25] <sarang> excellent; I thought that wasn't the case
+[2019-01-14 11:46:11] <sarang> Meaning the two choices there are: (1) ban all pIDs at Carbon fork; or (2) allow encrypted with a wallet default for _only_ 2-out txns at Carbon fork
+[2019-01-14 11:46:21] <sarang> Are there other options that I'm missing here?
+[2019-01-14 11:46:41] <moneromooo> "Carbon" is confusing.
+[2019-01-14 11:46:52] <sgp_> Carbon is Oct 2019
+[2019-01-14 11:46:55] <sarang> fall fork; the element is carbon
+[2019-01-14 11:47:32] ⇐ thrmo quit (~thrmo@unaffiliated/thrmo): Remote host closed the connection
+[2019-01-14 11:47:36] <moneromooo> Wait. Carbon has 12 protons doesn't it ? Already there ?
+[2019-01-14 11:47:56] <sgp_> If exchanges and pools batch Monero transactions now with payment IDs, then they will need to change their behavior nevertheless
+[2019-01-14 11:48:47] <sgp_> actually wait, they can't do that. disregard
+[2019-01-14 11:49:10] <sarang> If we are specifying a wallet default encrypted ID for subaddress transactions as well, I am less concerned about what happens if encrypted is permitted
+[2019-01-14 11:49:21] <moneromooo> Ah, 14 protons *and* neutrons. Shame on me.
+[2019-01-14 11:49:23] <suraeNoether> since we cant' enforce payids to be encrypted/can't verify that the payid has been encrypted, this new chart says to me "we aren't doing antyhing about this until october":
+[2019-01-14 11:49:46] <sarang> What we're doing is encouraging exchanges to move off unencrypted
+[2019-01-14 11:49:51] <sarang> and requiring it in October
+[2019-01-14 11:49:53] <suraeNoether> *nod*
+[2019-01-14 11:50:07] <sgp_> I would much rather move totally to subaddresses to streamline this process. mandatory encrypted payment IDs seems really clunky to me
+[2019-01-14 11:50:11] <sarang> Deciding on the fate of encrypted is important, so they know what to code
+[2019-01-14 11:50:20] <sarang> it's not mandatory
+[2019-01-14 11:50:27] <suraeNoether> no sarang, it looks like in october we are even deprecating the encrypted payids
+[2019-01-14 11:50:33] <sarang> StupidWallet2.0 can always put 0
+[2019-01-14 11:50:33] <sgp_> even default seems clunky to me
+[2019-01-14 11:50:59] <sarang> suraeNoether: according to sgp_'s proposal yes, but we're discussing the consequences of what happens if encrypted is allowed to live
+[2019-01-14 11:51:02] <sgp_> no one should use payment IDs when sending funds to subaddresses
+[2019-01-14 11:51:05] <suraeNoether> ah
+[2019-01-14 11:51:18] <sarang> No, but they're important for distinguishability
+[2019-01-14 11:51:46] <moneromooo> You can tell subaddress vs non subaddresses btw: additional tx pubkeys.
+[2019-01-14 11:51:51] <sgp_> For Carbon, I'd much rather remove all payment IDs to solve the distinguishability issue
+[2019-01-14 11:51:52] <moneromooo> It's all a bit shitty isn't it.
+[2019-01-14 11:52:05] ⇐ crCr62U0 quit (~crCr62U0@gateway/tor-sasl/crcr62u0): Remote host closed the connection
+[2019-01-14 11:52:16] <sgp_> *mitigate to the same extent
+[2019-01-14 11:52:20] <suraeNoether> i agree with sgp. this makes me ask why we are even specifying the difference between encrypted vs. unencrypted, if the plan is to deprecate both by the october upgrade, and nothing about them is changing before october, and we can't enforce any shift away from unenc anyway
+[2019-01-14 11:52:23] <sarang> Yes moneromooo but it doesn't give away info in the case of, say, exchange true inputs
+[2019-01-14 11:52:24] <suraeNoether> moneromooo: lol
+[2019-01-14 11:52:40] → crCr62U0 joined (~crCr62U0@gateway/tor-sasl/crcr62u0)
+[2019-01-14 11:52:41] <suraeNoether> moneromooo: i knew a guy with a tattoo that said "life is a big shit sandwich and every day is another bite"
+[2019-01-14 11:52:52] <suraeNoether> seems like a similar sentiment
+[2019-01-14 11:53:27] <sarang> suraeNoether: ignoring the chart, the question at hand is what to do about encrypted: keep around, or get rid of it in fall 2019
+[2019-01-14 11:53:36] <sarang> sgp_ recommends nixing them in fall
+[2019-01-14 11:53:40] <sgp_> yes
+[2019-01-14 11:53:47] <sarang> endogenic and dEBRUYNE suggest keeping them around
+[2019-01-14 11:54:26] <sarang> If we keep encrypted around, the wallet needs to always include dummy values
+[2019-01-14 11:54:28] <dEBRUYNE> Suggest might be a bit excessive
+[2019-01-14 11:54:35] <sarang> ok
+[2019-01-14 11:54:40] <suraeNoether> sarang: if we keep encrypted around we may as well not make any changes
+[2019-01-14 11:54:43] <dEBRUYNE> I am just skeptical of the feasibility of forcing all exchanges to upgrade to subaddresses
+[2019-01-14 11:54:46] <suraeNoether> because there's no way to enforce that they are encrypted
+[2019-01-14 11:54:55] <moneromooo> I'll probably just start warning about them when used, like I did for 256 bit ones earlier.
+[2019-01-14 11:55:00] <suraeNoether> dEBRUYNE: it's more feasible than asking everyone nicely to only encrypt their payids
+[2019-01-14 11:55:11] <sgp_> I think that given the timeline, we should be abitious and encourage them to update
+[2019-01-14 11:55:34] <sarang> suraeNoether: no, but we are nixing long pIDs in fall
+[2019-01-14 11:55:38] <dEBRUYNE> I suppose it could work if some workgroup started contacting exchanges soon
+[2019-01-14 11:55:43] <sgp_> This is ~9 months away
+[2019-01-14 11:55:44] <dEBRUYNE> That provides them almost 10 months to implement stuff
+[2019-01-14 11:55:48] <sarang> so the wallets will always encrypt whatever value the exchange tells them
+[2019-01-14 11:56:08] <sarang> It is true that we cannot enforce legitimate encryption over random values etc
+[2019-01-14 11:57:18] <sarang> So for the upcoming spring (Boron) upgrade,  CLI/GUI _will_ permit sending with long pIDs with a flag and terrifying warnings of death
+[2019-01-14 11:57:31] <sarang> And we will have public notice that long pIDs will be consensus-denied in fall 2019
+[2019-01-14 11:57:52] <sarang> We _should_ produce a decision about encrypted at the same time, so services know what to expect and start developing for
+[2019-01-14 11:58:10] <sarang> But I am not seeing any firm agreement about the latter
+[2019-01-14 11:58:29] — moneromooo statring to be annoyed about this consensus thing.
+[2019-01-14 11:58:34] <sgp_> I argue that we should write a post including the aggressive timeline. Luckily, if there is an implementation disaster, we can always walk back with nearly no effort
+[2019-01-14 11:58:37] <suraeNoether> fact of the matter is, either we want people using subaddresses, or not, and we certainly dont' want to keep adding mroe and more address types. usual address + unenc payid, usual address + enc payid, integrated address, subaddresses... especially since subaddresses are (1) efficient for users and (2) cover all the use cases, and since (3) we can't enforce the difference between the first three, but we can
+[2019-01-14 11:58:37] <suraeNoether> enforce subaddresses, the way forward to me is totally clear
+[2019-01-14 11:59:01] <sarang> moneromooo: why
+[2019-01-14 11:59:06] <sarang> because of daemon parsing?
+[2019-01-14 11:59:13] <moneromooo> Because it's always coming back.
+[2019-01-14 11:59:15] <moneromooo> Yes.
+[2019-01-14 12:00:06] <sarang> Is it more than parsing for size?
+[2019-01-14 12:00:19] <moneromooo> I don't understand that question.
+[2019-01-14 12:00:32] <dEBRUYNE> It has to parse tx_extra afaik
+[2019-01-14 12:02:05] <sarang> We're already over time, and we still need to bring up another upgrade change: commitment amount/mask changes
+[2019-01-14 12:02:48] <sarang> Commitment masks will be generated deterministically and not included separately in the ECDH data, saving a bit of space
+[2019-01-14 12:03:16] <sarang> Amounts will be shrunk to 8 bytes and XORed with shared-secret-hash data
+[2019-01-14 12:03:31] <sarang> This is probably... less controversial than the other changes :/
+[2019-01-14 12:03:36] <sarang> Any questions/comments on it?
+[2019-01-14 12:03:50] <sarang> This was proposed by knaccc and talked about earlier here and in -dev
+[2019-01-14 12:03:57] <sarang> moneromooo has a branch for it
+[2019-01-14 12:04:22] <suraeNoether> yeah, sarang and i have considered it and we agree that this still provides the perfect hiding property of pedersen commitments, and commitments to amounts are as binding as they were before our proposed change
+[2019-01-14 12:04:41] <suraeNoether> it's a small space optimization. knaccc had the idea, right? or who came up with iut?
+[2019-01-14 12:04:49] <sarang> knaccc
+[2019-01-14 12:05:01] <sarang> it's simple and clever
+[2019-01-14 12:05:25] <oneiric_> clever in a good way?
+[2019-01-14 12:05:30] <sarang> yes
+[2019-01-14 12:05:47] <oneiric_> cool
+[2019-01-14 12:05:54] <dEBRUYNE> Just in general, do you feel it's the worth the (potential) risk? Imo the size savings are not that significant
+[2019-01-14 12:06:03] <sarang> Yes
+[2019-01-14 12:06:20] <sarang> It doesn't leak additional information that sender/receiver didn't already hold
+[2019-01-14 12:06:26] <knaccc> it's 56 bytes per output, but that's significant on a pruned transaction
+[2019-01-14 12:07:11] <sarang> OK, in the interest of time, very briefly on to 3. RESEARCH
+[2019-01-14 12:07:24] <sarang> There are now a few options on the table for refund addresses
+[2019-01-14 12:07:30] <sarang> knaccc proposed one that involves no consensus changes
+[2019-01-14 12:07:56] <sarang> another uses a non-interactive DLSAG approach but requires substantial overhaul to the plumbing with many subtleties, but could allow for payment channels etc.
+[2019-01-14 12:08:10] <sarang> and another was posted (link in the agenda)
+[2019-01-14 12:08:25] <sarang> just stuff to chew on, likely not before the upgrade IMO
+[2019-01-14 12:08:35] <sarang> since it requires a lot of wallet fun
+[2019-01-14 12:08:58] <sarang> moneromooo has been working on coinjoin-style fundamentals
+[2019-01-14 12:09:17] <sarang> I'll be writing up some bulletproofs mpc for that
+[2019-01-14 12:09:25] <moneromooo> thank you ^_^
+[2019-01-14 12:09:29] <sarang> I posted a few papers of interest in the agenda
+[2019-01-14 12:09:33] <suraeNoether> ( still on the previous topic, but just a quick comment dEBRUYNE: the savings aren't that significant, but afaict, the security is concretely very similar (if not identical). It's a no-loss decision, in my mind )
+[2019-01-14 12:09:48] <sarang> Since we're over time, any very quick updates from others? Then we'll review action items
+[2019-01-14 12:10:09] <suraeNoether> sarang, are your comments on the matching paper complete? was our  conversation last week all your thoughts or am i waiting on more notes from you?
+[2019-01-14 12:10:18] <dEBRUYNE> I am just warry of the change somehow being exploited later on
+[2019-01-14 12:10:19] <moneromooo> One question about refund addresses: only one of those proposals helps with payment channels ?
+[2019-01-14 12:10:22] <sarang> I am nearly complete, was derailed by an unrelated topic
+[2019-01-14 12:10:44] <dEBRUYNE> Does it necessarily matter we're over time btw? I don't mind continuing :p
+[2019-01-14 12:10:48] <sarang> for non-interactive use
+[2019-01-14 12:10:58] <suraeNoether> i started a "linear techniques in applied cryptography" document to keep my notes on Ruffing's scheme, Schnorr signatures, Bulletproofs, and Bootle's polynomial commitments all in one neat and tidy place. i may tweak it over the next year in little ways with the long term goal of writing a book
+[2019-01-14 12:11:10] <sarang> We don't have a concrete proposal for integrating knaccc's or Ilya's schemes into a payment channel system safely
+[2019-01-14 12:11:34] <suraeNoether> moneromooo: DLSAG is good for payment channels... cryptonote++ or ilya's paper... i believe that is non-channel based refund addresses
+[2019-01-14 12:11:51] <sarang> DLSAG ensures you can properly track spends
+[2019-01-14 12:12:11] <sarang> hence the tomfuckery with key images and signature style
+[2019-01-14 12:13:03] <sarang> So for the sake of sanity, here are the action items that are time-sensitive:
+[2019-01-14 12:13:27] <sarang> (a) block size cap algorithm: we need a method that has been simulated in time for freeze
+[2019-01-14 12:13:49] <sarang> (b) payment ID timeline: we need to know the fate of each address type to make a unified statement for services to use for planning
+[2019-01-14 12:14:19] <sarang> (c) any objections to the ECDH data change are at the "speak now" phase
+[2019-01-14 12:14:28] <sarang> Non-sensitive items:
+[2019-01-14 12:14:40] <sarang> (d) we can talk after the meeting about the Matrix room integration
+[2019-01-14 12:14:58] <sarang> (e) the MRL-0011 paper will be released to this group when I get my reviewing ass in gear again
+[2019-01-14 12:15:15] <sarang> (f) refund address options should be investigated more thoroughly to decide what route(s) to take
+[2019-01-14 12:15:47] <sarang> That's all I wanted to get through. We can open the floor now to continuation of anything and everything
+[2019-01-14 12:15:57] <sarang> Sorry for being a hardass on time today; wanted to make sure we hit everything
+[2019-01-14 12:15:59] <suraeNoether> in order to address (c), we should write up a formal technical note on (i) how amount commitments are currently computed, (ii) our proposal for the new computation and (iii) proofs of equal security in terms of hiding and binding properties\
+[2019-01-14 12:16:01] — sarang steps back
+[2019-01-14 12:16:19] <suraeNoether> and i can work with knaccc on that this week
+[2019-01-14 12:16:30] <knaccc> Not sure if MRL is the right place for this, bu re: the embedded Java-I2P router idea, I've almost finished it. Just need to test my scripts a bit more. Available here: https://github.com/knaccc/embedded-i2p-java-router-with-sam
+[2019-01-14 12:16:32] <sarang> OK, have you seen the branch moneromooo has already?
+[2019-01-14 12:16:41] <sarang> it's in code
+[2019-01-14 12:17:04] <moneromooo> 5052
+[2019-01-14 12:17:14] <suraeNoether> oh man
+[2019-01-14 12:17:16] <suraeNoether> i'll check that out
+[2019-01-14 12:17:21] <suraeNoether> thanks moneromooo
+[2019-01-14 12:17:33] <sarang> I know moneromooo and knaccc and I have looked it over
+[2019-01-14 12:18:26] <suraeNoether> yeah, and i recall writing up a proof of the idea and satisfying myself about it, but that was on paper
+[2019-01-14 12:18:30] <suraeNoether> which branch?
+[2019-01-14 12:18:36] <sarang> rctb
+[2019-01-14 12:18:45] <sarang> https://github.com/moneromooo-monero/bitmonero/tree/rctb
+[2019-01-14 12:20:01] <oneiric_> knaccc: cool work on the java-i2p embedded router
+[2019-01-14 12:20:16] <zlatinb> knaccc: let me know if you need any help with the java embedding
+[2019-01-14 12:20:33] <suraeNoether> found it right after i asked :P thanks sarang
+[2019-01-14 12:21:16] <knaccc> oneiric_ zlatinb thanks, any comments or suggestions welcome
+[2019-01-14 12:21:46] <moneromooo> Are you adding i2p/monero connectivity ?
+[2019-01-14 12:21:56] <oneiric_> do you know if there are any hardening flags available for jlink?
+[2019-01-14 12:22:28] <knaccc> not sure what you mean by hardening
+[2019-01-14 12:22:49] <oneiric_> aslr pie stuff like that
+[2019-01-14 12:23:18] <knaccc> i don't think those things apply to Java
+[2019-01-14 12:23:25] <oneiric_> no?
+[2019-01-14 12:23:32] <knaccc> that's kinda the point of Java
+[2019-01-14 12:23:53] <knaccc> buffer overflows etc are impossible
+[2019-01-14 12:23:58] <knaccc> even if you're brain dead
+[2019-01-14 12:24:00] <oneiric_> hrm, the jvm is still in c tho no?
+[2019-01-14 12:24:20] <zlatinb> C++
+[2019-01-14 12:24:22] <knaccc> oh the jvm itself is hardened over 2.5 decades by Sun/Oracle, in theory
+[2019-01-14 12:24:45] <knaccc> there are no user flags i'm aware of for hardening it further, but i'll check
+[2019-01-14 12:24:56] <zlatinb> jlink doesn’t really “link” anything in the sense of C/C++ linking
+[2019-01-14 12:25:07] <knaccc> correct
+[2019-01-14 12:25:15] <knaccc> it's static linking of java stuff
+[2019-01-14 12:25:17] <oneiric_> so, in java dev, there is no sense of hardening outside of writing good code?
+[2019-01-14 12:25:34] <zlatinb> not really
+[2019-01-14 12:26:07] <suraeNoether> OH GUYS I HAD AN ANNOUNCEMENT
+[2019-01-14 12:26:21] — knaccc drumroll
+[2019-01-14 12:26:33] <suraeNoether> as some of you know, Sarang and I have started a non-profit together called MAGIC - Multidisciplinary Academic Grants in Cryptocurrencies
+[2019-01-14 12:26:43] <suraeNoether> and we are opening up our scholarship program this month!
+[2019-01-14 12:26:56] <oneiric_> congrats!
+[2019-01-14 12:27:08] <suraeNoether> we are giving out 5 $1000 USD scholarships for this fall, and we are giving out 2 $3000 USD research grants in the upcoming spring
+[2019-01-14 12:27:28] <dEBRUYNE> moneromooo: I think that's the intention
+[2019-01-14 12:28:06] <knaccc> congrats surae
+[2019-01-14 12:28:29] <suraeNoether> so, by the end of this month, our application will be available on https://magicgrants.org for anyone registered at an accredited school in the US, South Africa, or the EU or EFTA nations or micronations within the EU or EU-eligible nations.
+[2019-01-14 12:28:45] <suraeNoether> all this is made possible by a single anonymous donor so far
+[2019-01-14 12:29:10] <suraeNoether> i know the market has screwed all of us essentially, but if anyone wants to give, there are donation links both through globee for crypto and stripe for fiat on that webpage
+[2019-01-14 12:30:11] <knaccc> very cool suraeNoether!
+[2019-01-14 12:30:29] <suraeNoether> thanks knaccc!
+[2019-01-14 12:30:50] <suraeNoether> hopefully by 2022 we can start building primary schools all over the world libraries and computer labs
+[2019-01-14 12:30:57] <suraeNoether> well, in the listed nations for now. :P
+[2019-01-14 12:31:18] <sarang> Side update: suraeNoether is fine with the Matrix plumbed room, as am I. Unless there are objections now (this was mentioned earlier to other room ops, with no reply) we'll go ahead and allow it
+[2019-01-14 12:31:44] <suraeNoether> ah yeah i removed my objection because i realized we can always undo the decision later. :P
+[2019-01-14 12:32:00] <suraeNoether> and i don't think charuto is a personel risk, although having a second mod would be keen
+[2019-01-14 12:32:05] <sarang> Block cap algo is in ArticMine's court for now, with the current proposed dual-median in the wings
+[2019-01-14 12:32:13] <sarang> Payment ID timeline is still annoyingly up in the air
+[2019-01-14 12:32:21] <sarang> If anything, we should figure that damn thing out
+[2019-01-14 12:35:02] <knaccc> moneromooo just in case it's not clear, I don't know a thing about the C side of things, e.g. how to add libsam3 to the Monero C code in order to talk to the embedded i2p router via the SAM protocol. But I am able to figure out how to produce an embedded JVM/I2P binary that can be bundled with zero installation and zero dependencies
+[2019-01-14 12:36:08] <moneromooo> OK.
+[2019-01-14 12:38:09] <suraeNoether> do we have an issue on github yet re: replacing pay_id with subaddresses?
+[2019-01-14 12:38:19] <suraeNoether> it'd be helpful to have some coherent arguments laid out in all the different directions
+[2019-01-14 12:39:14] <suraeNoether> also does anyone have thoughts on this: https://github.com/monero-project/research-lab/issues/46
+[2019-01-14 12:41:40] <sarang> That was brought up on reddit earlier, presumably by the same  person
+[2019-01-14 12:41:52] <moneromooo> When I see a post that has "it's going to be brushed off", I want to brush it off just because it said that. OTOH, a game theoretic analysis of this would be very nice, if possible.
+[2019-01-14 12:42:22] <sarang> Yeah, I said that person is free to do it or put it out there for someone else to do, either volunteer or for FFS donations
+[2019-01-14 12:42:28] <moneromooo> s/possible/not made up of mostly unknowable factors/
+[2019-01-14 12:42:39] → ErCiccione joined (~erciccion@213.152.180.5)
+[2019-01-14 12:43:12] <sarang> ArticMine has brought up his views on supply but AFAIK they are not really documented anywhere
+[2019-01-14 12:43:17] <sarang> and they should be

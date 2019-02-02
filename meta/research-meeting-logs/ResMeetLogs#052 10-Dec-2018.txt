@@ -1,0 +1,199 @@
+[2018-12-10 10:58:22] <sarang> OK, it's about time to begin our meeting
+[2018-12-10 10:59:58] <sarang> Greetings to everyone; who's here?
+[2018-12-10 11:00:03] <sgp_> hello
+[2018-12-10 11:00:11] <engelmensch_> hi
+[2018-12-10 11:00:47] → StateGrid joined (uid319325@gateway/web/irccloud.com/x-dqeqocrvconxnrim)
+[2018-12-10 11:02:54] <sarang> ping binaryFate endogenic gingeropolous hyc Isthmus moneromooo nioc parasew[m] rehrar smooth stoffu etc
+[2018-12-10 11:02:58] <endogenic> hello
+[2018-12-10 11:03:03] <sarang> suraeNoether will be away today
+[2018-12-10 11:03:12] <sarang> First off, updates on recent work
+[2018-12-10 11:03:38] <sarang> another tech note (MRL-0010) is merged to -site along with several others that now appear
+[2018-12-10 11:03:43] <sarang> https://getmonero.org/resources/research-lab/
+[2018-12-10 11:03:50] <sarang> soon lab.getmonero.org will direct there as well
+[2018-12-10 11:04:16] <sarang> MRL-0011 deals with graph matching and is being finalized
+[2018-12-10 11:04:45] <sarang> Along those lines, some interesting lit review
+[2018-12-10 11:05:11] <sarang> An older paper on quantum-resistant accumulators: https://eprint.iacr.org/2017/1154
+[2018-12-10 11:05:31] <sarang> One on highly expressive accumulator proofs: http://legacydirs.umiacs.umd.edu/~zhangyp/papers/accum.pdf
+[2018-12-10 11:06:04] <sarang> Publication of a paper we saw as a talk in London, about using nested merkle trees to avoid evil remote nodes: http://legacydirs.umiacs.umd.edu/~zhangyp/papers/accum.pdf
+[2018-12-10 11:06:17] <sarang> whoops, wrong paste: https://ieeexplore.ieee.org/abstract/document/8406557/
+[2018-12-10 11:06:40] <sarang> And the paper discussed this morning about cross-chain stats: https://arxiv.org/abs/1812.02808
+[2018-12-10 11:07:01] <hyc> cool stuff
+[2018-12-10 11:07:22] <sarang> Besides those, I'm reviewing additional non-published stuff, one of which is an alternate proposal for return addresses
+[2018-12-10 11:07:56] <sarang> sgp_ suggested doing a youtube series called Breaking Monero
+[2018-12-10 11:08:14] <sarang> each short episode would talk about a common method of monero analysis
+[2018-12-10 11:08:15] <engelmensch_> to help the DHS ;) ?
+[2018-12-10 11:08:20] <sarang> heh
+[2018-12-10 11:08:26] <sgp_> want me to paste the initial description ideas?
+[2018-12-10 11:08:31] <sarang> please do sgp_
+[2018-12-10 11:08:35] <sgp_> I didn't update yet with your feedback
+[2018-12-10 11:08:50] <sarang> that's fine
+[2018-12-10 11:09:00] <sgp_> https://www.irccloud.com/pastebin/XI0H2aU9/Breaking%20Monero%20Ideas
+[2018-12-10 11:09:11] <sarang> I think doing this will speak well to our transparency and get ahead of low-quality research
+[2018-12-10 11:09:48] <sgp_> I also think it will help Monero research be more approachable to those who do not idle here all day
+[2018-12-10 11:10:03] <sarang> Any thoughts after reading this? (Or on my previous statements about lit review and MRL papers?)
+[2018-12-10 11:10:14] <sarang> ^^
+[2018-12-10 11:10:20] <engelmensch_> is there a plan to add paper references to the episodes=
+[2018-12-10 11:10:21] <engelmensch_> ?
+[2018-12-10 11:10:31] <sarang> We could
+[2018-12-10 11:10:44] <sgp_> engelmensch_: good idea. would take preparation, but would be worth it
+[2018-12-10 11:10:58] <sarang> Eh, or just short episode notes on a corresponding reddit post
+[2018-12-10 11:11:16] <sarang> Episode 0: A Preprint is Not Peer Review
+[2018-12-10 11:11:54] <sarang> The thought was to start the series next week
+[2018-12-10 11:12:03] <sarang> 15 minute-ish episodes, perhaps
+[2018-12-10 11:12:09] <sarang> informal
+[2018-12-10 11:12:22] <sgp_> exactly. keep it pretty short to keep user attention
+[2018-12-10 11:12:52] <sarang> Anyway, be thinking about ideas and presentation. Consider them a shorter series similar to the Bulletproofs fireside chat that sgp_ and I did a while back
+[2018-12-10 11:12:56] <sgp_> initial timeline is announce next week, create most content in early Jan
+[2018-12-10 11:13:02] <sarang> ah ok, nvm then
+[2018-12-10 11:13:02] <engelmensch_> any plans for video visualisations? that might help a lot to grasp the problem. or else a whiteboard
+[2018-12-10 11:13:05] <sarang> I misunderstood
+[2018-12-10 11:13:19] <sgp_> first intro episode next week
+[2018-12-10 11:13:27] <sgp_> yes, will include visualizations
+[2018-12-10 11:13:48] <sarang> the finest stick figures that paint can offer!
+[2018-12-10 11:13:54] <engelmensch_> ;)
+[2018-12-10 11:13:58] <sgp_> pretty much
+[2018-12-10 11:14:09] <sarang> But IMO that's fine
+[2018-12-10 11:14:24] <sarang> Too much flash and people will accuse you of being up to something
+[2018-12-10 11:14:27] <hyc> that's quite a list of episodes. looks good
+[2018-12-10 11:14:40] <sarang> "Here you go, now shut up about chain analysis"
+[2018-12-10 11:15:05] <engelmensch_> not flash, but having too many references in you brain might break stuff, so a diagram is quite useful
+[2018-12-10 11:15:12] <sarang> agreed
+[2018-12-10 11:15:16] <sarang> On a funding note, FFS for suraeNoether and me have been posted for Q1 2019
+[2018-12-10 11:15:39] <sarang> and related to this, a rep from the Loki Foundation contacted me and said their group is interested in funding a researcher in fiat
+[2018-12-10 11:15:52] <sarang> they've offered 15000 USD for this
+[2018-12-10 11:16:31] <sarang> the escrow system is not set up for this, so any researcher who took them up on this would do so separately from FFS
+[2018-12-10 11:17:10] <sarang> I'd be interested to know people's thoughts on the idea of having a researcher partly paid by FFS and partly in fiat by this organization
+[2018-12-10 11:18:22] <sgp_> up to the individual I suppose
+[2018-12-10 11:18:50] <sarang> Their original hope was to help out someone new, which would be great if we could find such a person
+[2018-12-10 11:19:12] <sarang> but they said that given the market and current FFS needs, they'd be open to doing this for me and/or surae
+[2018-12-10 11:19:16] <notmike> If only such a person existed!
+[2018-12-10 11:19:26] <sarang> The latter would obviously be a big change
+[2018-12-10 11:20:40] <sarang> I'm personally open to the idea, provided the community can be assured that there are no extra strings attached to the fiat
+[2018-12-10 11:20:56] <sarang> and that research directions aren't being influenced
+[2018-12-10 11:21:35] <sarang> Anyway, those are my updates. Does anyone else have work of interest to share?
+[2018-12-10 11:21:47] <engelmensch_> in my opinion it looks the same as other funded researchers contributing to the comunity
+[2018-12-10 11:22:48] <sarang> Agreed, but community funding carries a certain onus
+[2018-12-10 11:22:51] <notmike> Any updates on konferenco?
+[2018-12-10 11:23:11] <engelmensch_> I try to write up a simulation based security proof for the ringct
+[2018-12-10 11:23:12] <sarang> suraeNoether has been planning, but I do not know of updates (and he is away for the morning)
+[2018-12-10 11:23:20] <sarang> engelmensch_: in what way?
+[2018-12-10 11:23:48] <notmike> What happened to the coral reef project?
+[2018-12-10 11:23:58] <engelmensch_> in a semi-honest model and then hope to GMW compile it to the malicious model
+[2018-12-10 11:24:44] <sarang> What aspect of ringct?
+[2018-12-10 11:25:43] <endogenic> notmike how is that remotely appropriate for this channel? does anyone else find notmike disruptive?
+[2018-12-10 11:25:52] <endogenic> trying to have a meeting here
+[2018-12-10 11:25:53] <engelmensch_> I want to show that the commitment do not leak any more information, as an attacker would find out anyway
+[2018-12-10 11:26:05] <notmike> excuse me endogenic can you take a step back and try to calm down, please
+[2018-12-10 11:26:11] <endogenic> no
+[2018-12-10 11:26:23] <notmike> I'm just curious as are many others about where the monero from the FFS is goin
+[2018-12-10 11:26:45] <notmike> If you haven't noticed this is something many are asking.
+[2018-12-10 11:26:50] <sarang> we can discuss that shortly if you don't mind
+[2018-12-10 11:26:52] <endogenic> go ask on reddit then. this is not your personal attention seeking venue
+[2018-12-10 11:27:08] <sarang> engelmensch_: the amount commitments?
+[2018-12-10 11:27:13] <notmike> Nor have I tried to make it that guy. You should really try to calm yourself. :/
+[2018-12-10 11:27:58] <engelmensch_> yes the amount commitments and the intermeidate stuff in the single, in my setting also the color commitments
+[2018-12-10 11:28:34] <sarang> well the commitment itself is a pedersen commitment, not much info gained there
+[2018-12-10 11:28:46] <sarang> is it something particular to the signature definition you're looking at?
+[2018-12-10 11:28:47] <engelmensch_> not sure if I can only reduce the security of my contruction to the current monero
+[2018-12-10 11:29:02] <engelmensch_> I use the MLSAG as a blackbox
+[2018-12-10 11:29:55] <sarang> Interesting
+[2018-12-10 11:30:04] <sarang> We'll be glad to help as needed
+[2018-12-10 11:30:12] <engelmensch_> but for my paper I'd like a formal proof that it's sound and secure. And the best way to do this was via a simulation based proof
+[2018-12-10 11:30:20] <sarang> notmike: non-research FFS requests are outside of MRL's scope
+[2018-12-10 11:30:36] <engelmensch_> at least, that was what a prof told me who is into it
+[2018-12-10 11:30:41] <sarang> OK
+[2018-12-10 11:30:56] <sarang> The existing analysis was essentially a 2-D version of the Liu proofs
+[2018-12-10 11:31:13] <engelmensch_> yes, I saw this for the MLSAG and just reference it
+[2018-12-10 11:31:19] <notmike> sarang: well, consider the Loki Foundation's offer. There should be a serious effort to draw in other researchers before any consideration is made of paying present researchers with that cash.
+[2018-12-10 11:31:49] <sarang> We don't want to spread community donations too thin
+[2018-12-10 11:32:09] <sgp_> at the moment even moneromooo's FFS has been open for a few days
+[2018-12-10 11:32:13] <sarang> If current researchers get fully funded, it makes more sense to investigate someone else
+[2018-12-10 11:32:34] <notmike> Its not clear that this would happen from bringing in other researchers, or that fully funding present researchers is the best use of the funds.
+[2018-12-10 11:32:56] <sarang> It's up to donors to decide what to do with their money
+[2018-12-10 11:33:03] <endogenic> notmike: i am calm. nice try though
+[2018-12-10 11:33:03] <engelmensch_> is there a preprint/draft of MRL-0011?
+[2018-12-10 11:33:19] <sarang> engelmensch_: privately, yes, but it's not in a state for public release yet
+[2018-12-10 11:33:31] <engelmensch_> ok
+[2018-12-10 11:33:39] <sarang> it needs only a few more days
+[2018-12-10 11:33:53] <sarang> then will be posted to github and -site
+[2018-12-10 11:34:29] <sarang> One issue with bringing in other researchers is that most folks with training in this field are employed already, or are grad students
+[2018-12-10 11:34:32] <engelmensch_> because we're writing a grant proposal to investigate cross-layer effects of privacy preserving p2p entworks and privacy preserving applications ontop of them
+[2018-12-10 11:34:49] <sarang> engelmensch_: this work is purely about graph analysis
+[2018-12-10 11:36:07] ⇐ spaced0ut quit (~spaced0ut@unaffiliated/spaced0ut): Ping timeout: 240 seconds
+[2018-12-10 11:36:49] <sarang> I'll be interested to see your simulation work on this engelmensch_
+[2018-12-10 11:37:01] <sarang> Any other news or work of interest to share?
+[2018-12-10 11:37:01] <engelmensch_> it might be related, as we did some work with DC nets on the p2p layer which also create some sort of anonymity set as the ringsig
+[2018-12-10 11:37:18] <sarang> hmm ok, let's talk after meeting about details
+[2018-12-10 11:37:29] <engelmensch_> sorry if I'm too verbose
+[2018-12-10 11:37:33] <sarang> no prob
+[2018-12-10 11:39:18] <sarang> Hmm well it seems the well of information has run dry a bit early today
+[2018-12-10 11:39:44] <sarang> I suppose we could discuss more about engelmensch_'s work given the timing
+[2018-12-10 11:41:18] <sarang> How do you see our analysis complementing the grant proposal?
+[2018-12-10 11:41:45] <engelmensch_> by graph analysis I suppose it's tx graph analysis?
+[2018-12-10 11:41:58] <sarang> Our work is an examination of formalizing ring sigs as graph structures, and examining the computational complexity of proposing spend histories
+[2018-12-10 11:42:26] <sarang> it also can tie into other heuristics, like the guess-newest output heuristic
+[2018-12-10 11:42:31] <engelmensch_> ok, and how does this hold, if you get auxiliary information from the p2p layer?
+[2018-12-10 11:43:11] <sarang> You can use heuristic information, like output age or presumably probabilities from p2p layer, to optimize your history selection
+[2018-12-10 11:43:28] <sarang> and for identified outputs, you can simply remove them from the graph altogether as you might expect
+[2018-12-10 11:43:43] <sarang> none of it is provable, of course, and the complexity is huge
+[2018-12-10 11:44:04] <engelmensch_> jup. my effort on provable stuff was only considering 1 tx
+[2018-12-10 11:44:28] <sarang> Ah ok, this is a more global analysis
+[2018-12-10 11:44:36] <sarang> but it could be examined for smaller sets
+[2018-12-10 11:45:46] <engelmensch_> the idea behind simulation based based sec proofs is that you create an ideal world, where there is e.g. a trusted third party and then you compare the views of different parties to the real ones. And if there is an algorithm which can create the view of an actor without access to it's secrets, it is considered secure
+[2018-12-10 11:46:14] <engelmensch_> I'm in the process of understanding how these proofs actually work from: https://eprint.iacr.org/2016/046.pdf
+[2018-12-10 11:50:24] <engelmensch_> maybe written down it makes more sense. I'm happy to have a working implementation of it in the meantime from postponing the theory work
+[2018-12-10 11:51:51] <sarang> Awesome
+[2018-12-10 11:52:09] <sarang> Well, looks like good work in progress on that analysis
+[2018-12-10 11:52:24] <sarang> We should have the first graph paper finished in a few days for review
+[2018-12-10 11:52:36] <sarang> There's definitely room to expand it to a second one as well
+[2018-12-10 11:52:50] <engelmensch_> I'm happy to review it
+[2018-12-10 11:53:43] <sarang> That'd be excellent
+[2018-12-10 11:53:56] <sarang> I'll post it here when it's a good state
+[2018-12-10 11:54:21] <sarang> Original plan was to include a broader scope, but we dialed it back a bit and are removing some stuff
+[2018-12-10 11:54:56] <sarang> surae also has some code relating to it
+[2018-12-10 11:55:39] <engelmensch_> cool
+[2018-12-10 11:55:59] <sgp_> Side note: I made this post yesterday regarding attackers collecting IP broadcast data by running nodes: https://medium.com/@JEhrenhofer/attacker-collection-of-ip-metadata-27032e736371
+[2018-12-10 11:55:59] <sgp_> m2049r got back to me with an estimate gingeropolous: 3183 Monero nodes, 64 of them with port 18089 open, 56 of those on the proper block height
+[2018-12-10 11:56:50] <sarang> Conclusions?
+[2018-12-10 11:57:14] → spaced0ut joined (~spaced0ut@unaffiliated/spaced0ut)
+[2018-12-10 11:58:23] <sgp_> Attackers can run x many nodes to connect to y clients directly, therefore learning more about the transaction broadcast process
+[2018-12-10 11:58:51] <sgp_> s/y clients/y other nodes
+[2018-12-10 11:59:30] <engelmensch_> yes. there are some modified clients which connect to all possible nodes and do not relay any pending TX to figure out the timings when they receive the tx
+[2018-12-10 11:59:43] <engelmensch_> this can be used to deduce the topology
+[2018-12-10 11:59:54] <engelmensch_> we plan on running such a node
+[2018-12-10 12:00:43] <engelmensch_> it is also useful to get metrics for 0-confirmation clients
+[2018-12-10 12:01:02] <sarang> sgp_ had some estimates posted to reddit/twitter based on this
+[2018-12-10 12:01:16] <engelmensch_> how long is a good time to wait before you can be sure that a TX will most likely be included in a block
+[2018-12-10 12:01:31] <m2049r> since each node reports who its connected to, the topology is clear. or what do you mean engelmensch_ ?
+[2018-12-10 12:02:41] <engelmensch_> no. when you collect the timings of when you get a tx from a node, you can infer the latency between nodes. If you do this with planetlab and have low latency to most peers and GPS timestamping, this gives you pretty good latency estimates
+[2018-12-10 12:03:55] <sarang> the IP information is a good indicator for the importance of i2p/tor routing
+[2018-12-10 12:03:56] ⇐ OpenSorceress quit (~opensorce@unaffiliated/screamingbanshee): Ping timeout: 244 seconds
+[2018-12-10 12:05:58] <sgp_> Yes. For my research, the next step is estimating the impact that server providers can have
+[2018-12-10 12:06:22] <sgp_> m2049r is there a way to do an org lookup on these IPs?
+[2018-12-10 12:07:00] <engelmensch_> you can use the location ISP database
+[2018-12-10 12:07:12] <engelmensch_> that gives you decent results
+[2018-12-10 12:07:58] <engelmensch_> http://lite.ip2location.com/
+[2018-12-10 12:08:15] → OpenSorceress joined (~opensorce@unaffiliated/screamingbanshee)
+[2018-12-10 12:08:21] <sgp_> Cool, didn't know about this specific service
+[2018-12-10 12:09:08] <engelmensch_> I played with it, when I was using zmap to scan 0.0.0.0/0 and knocked on some ports
+[2018-12-10 12:09:40] <engelmensch_> it's a nice way to visualise, but should also serve well to track clients
+[2018-12-10 12:11:23] <sarang> So engelmensch_ you are more interested in latency-based topology, as opposed to sgp_'s interest in ip data from nodes?
+[2018-12-10 12:11:30] <sarang> if I'm understanding the difference properly
+[2018-12-10 12:12:01] <sgp_> At the moment I've done no research with latency
+[2018-12-10 12:12:22] <sarang> right
+[2018-12-10 12:12:48] <engelmensch_> we are 2 PhD students, I'm more on the blockchain layer and my colleague is more network oriented, so he leads this direction
+[2018-12-10 12:13:00] <engelmensch_> but atm he wants to have a latency graph
+[2018-12-10 12:13:05] <sarang> engelmensch_: is your interest more about adversarial data, or about propagation statistics?
+[2018-12-10 12:14:55] <engelmensch_> when you have the propagation statistics, you can motivate a lot of research why latency is important. e.g. if you use a DS network to disseminate pending TX (to hide your position) it has to reach all nodes in an appropriate amout of time
+[2018-12-10 12:15:36] <engelmensch_> so there are a lot of really good privacy preserving networks, but they normally have n² messages and therefore are unusable
+[2018-12-10 12:17:51] <sgp_> fwiw I have a connection here at Minnesota to Professor Hopper, who does Tor latency and bandwidth research iirc. Could be a useful person to talk to
+[2018-12-10 12:18:45] <sgp_> https://www-users.cs.umn.edu/~hoppernj/
+[2018-12-10 12:19:06] ⇐ OpenSorceress quit (~opensorce@unaffiliated/screamingbanshee): Ping timeout: 250 seconds
+[2018-12-10 12:19:38] → midipoet joined (c19411b6@gateway/web/freenode/ip.193.148.17.182)
+[2018-12-10 12:19:55] <engelmensch_> I saw a lot of analysis from the guys in sardinia: http://blockchain.unica.it/
+[2018-12-10 12:21:32] <engelmensch_> It's getting late in Europe ;) I'll read up later
+[2018-12-10 12:21:43] <sarang> Thanks for joining engelmensch_
+[2018-12-10 12:22:04] <engelmensch_> thanks for all the input and discussion
+[2018-12-10 12:22:17] <m2049r> http://lite.ip2location.com/ looks pretty good - is there a catch?
+[2018-12-10 12:28:17] <sarang> I guess we never formally adjourned, but thanks to everyone for joining
+[2018-12-10 12:28:31] <sarang> Seems the order of the day is network analysis

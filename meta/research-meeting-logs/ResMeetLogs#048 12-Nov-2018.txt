@@ -1,0 +1,227 @@
+[2018-11-12 11:00:19] <suraeNoether> howdy everyone!
+[2018-11-12 11:00:27] <nioc> meow
+[2018-11-12 11:00:30] <OpenSorceress> :D
+[2018-11-12 11:00:54] <sarang> hiyo
+[2018-11-12 11:01:08] <TheFuzzStone[m]> Sup!
+[2018-11-12 11:01:20] <rehrar> hiyo
+[2018-11-12 11:01:28] <rehrar> .....to quote sarang
+[2018-11-12 11:01:42] <suraeNoether> so, let's flip the usual order of the meeting to allow for questions at the beginning
+[2018-11-12 11:01:43] <suraeNoether> i like that
+[2018-11-12 11:01:50] <suraeNoether> in fact, i'm going to call THAT the new "usual order"
+[2018-11-12 11:02:23] <suraeNoether> so, the agenda today is 1) questions, 2) sarang's research this week and last, 3) mine, and 4) any other project discussion that's remotely relevant to research
+[2018-11-12 11:02:45] <sarang> roger
+[2018-11-12 11:02:53] <suraeNoether> so, someone give me and sarang your top two questions :D
+[2018-11-12 11:03:35] <nioc> any updates on Konferemco preparations?
+[2018-11-12 11:03:44] <rehrar> I should have a logo and branding guidelines today
+[2018-11-12 11:04:21] <rehrar> in regards to MRL, where are we in the churn and privacy formalizations?
+[2018-11-12 11:04:31] <rehrar> although I assume this will be talked about with your report of the week suraeNoether
+[2018-11-12 11:04:35] → DuBmAnkey joined (b03b347e@gateway/web/freenode/ip.176.59.52.126)
+[2018-11-12 11:04:36] <suraeNoether> that is precisely the case
+[2018-11-12 11:04:47] <suraeNoether> i'm in the midst of getting hard numbers for a timing for a practical attack
+[2018-11-12 11:04:48] ⇐ arubi quit (~ese168@gateway/tor-sasl/ese168): Remote host closed the connection
+[2018-11-12 11:05:10] <suraeNoether> sarang and i have discovered an anonymity metric that could give us a guideline for "how rapidly we need to chagne our ring size with respect to blockchain size to maintain our current levels of anonymity."
+[2018-11-12 11:05:13] → arubi joined (~ese168@gateway/tor-sasl/ese168)
+[2018-11-12 11:05:24] <suraeNoether> this is a very useful metric, but it's dangerous to misinterpret it
+[2018-11-12 11:05:40] <sarang> Let us shift that to the later agendum
+[2018-11-12 11:05:44] <suraeNoether> so we're avoiding making formal proclamations about it, but we are going to use it as a rough guideline for future ring size increases
+[2018-11-12 11:05:54] <suraeNoether> agreed
+[2018-11-12 11:06:33] <suraeNoether> nioc our conference organizer has been checking out a few alternative venues, and we have already identified some vendors for things like catering
+[2018-11-12 11:06:57] <sarang> I have a question... how the hell do I build the dalek bulletproof rust implementation for timing testing??!?!?!?!
+[2018-11-12 11:07:03] <sarang> I know jack shiz about rust
+[2018-11-12 11:07:16] <suraeNoether> that's an excellent question that occurred to me yesterday afternoon!
+[2018-11-12 11:07:29] <sarang> they claim to be bonkers fast, even compared to libsecp256k1 (which seems nutso to me)
+[2018-11-12 11:07:32] <suraeNoether> they are claiming some mad speed gainz on top of your already mad speed gainz
+[2018-11-12 11:07:38] <sarang> They don't have batch verification yet tho
+[2018-11-12 11:07:42] <sarang> (it's on their issue list)
+[2018-11-12 11:07:45] <suraeNoether> jfc
+[2018-11-12 11:07:58] <sarang> So I want to run timing tests myself to see
+[2018-11-12 11:08:01] <suraeNoether> if that's the case, then... man that implementation is bonker fast like what-what
+[2018-11-12 11:08:10] <sarang> I don't think they're lying, but I'm also naturally skeptical
+[2018-11-12 11:08:28] <sarang> I don't find it terribly relevant since we're already pretty fast
+[2018-11-12 11:08:36] <suraeNoether> i suspect that bulletproofs are going to benefit from 40 years of optimizations in linear algebra and ECC very very quickly
+[2018-11-12 11:08:45] <sarang> and any changes specific to underlying curve architecture aren't useful for us ATM
+[2018-11-12 11:08:46] <rehrar> sarang: what if it's so fast it can reverse the blackchain continuum?
+[2018-11-12 11:08:49] <rehrar> somethign to look into
+[2018-11-12 11:08:58] <sarang> Ah yes, the chain shrinks over time
+[2018-11-12 11:09:02] <sarang> negachain
+[2018-11-12 11:09:02] <suraeNoether> the blackchain continuum hypothesis, by tom clancy
+[2018-11-12 11:09:14] <suraeNoether> or dan brown
+[2018-11-12 11:09:29] <sarang> Anyway, it won't build for me, but I'll verify timings once I get it figured out
+[2018-11-12 11:09:30] <rehrar> <sarang> Ah yes, the chain shrinks over time <-- it will give extra space to your computer when it goes negative
+[2018-11-12 11:10:12] → dmitry joined (b9801b66@gateway/web/freenode/ip.185.128.27.102)
+[2018-11-12 11:10:12] <sarang> However, they also have ideas for non-power-of-2 stuff, which was on the back burner for me
+[2018-11-12 11:10:22] <sarang> if it proves useful for them in a way that translates to us, great
+[2018-11-12 11:10:43] <suraeNoether> nioc i believe we already have enough funding availalbe to put a deposit down on a location, and I would like to do that before the end of 2018. email invitations to speakers will be start being setn out this week
+[2018-11-12 11:10:49] <sarang> nice
+[2018-11-12 11:11:09] <sarang> Also our other conference FFS (Stanford) was funded recently, so many thanks on that front
+[2018-11-12 11:11:19] ⇐ dmitry quit (b9801b66@gateway/web/freenode/ip.185.128.27.102): Client Quit
+[2018-11-12 11:11:27] <suraeNoether> in general: thank you to all contributors who make Monero Research Lab a funded thing
+[2018-11-12 11:11:32] <sarang> suraeNoether and I will learn next month if either of us will be speaking there
+[2018-11-12 11:11:46] <sarang> anyway, other questions for us?
+[2018-11-12 11:12:20] <rehrar> ne
+[2018-11-12 11:13:05] ⇐ kovri-slack quit (~kovri-sla@static.19.17.9.176.clients.your-server.de): Remote host closed the connection
+[2018-11-12 11:13:14] → kovri-slack joined (~kovri-sla@static.19.17.9.176.clients.your-server.de)
+[2018-11-12 11:13:19] <sarang> In the absence of further questions, we can talk recent research
+[2018-11-12 11:13:33] <sarang> This past week, I did two events in Chicago
+[2018-11-12 11:13:44] <sarang> one was a hands-on Monero development workshop
+[2018-11-12 11:13:51] <sarang> the other was a more general talk on privacy tech
+[2018-11-12 11:14:03] <sarang> both videos are on YouTube, linked from the Monero Moon posting
+[2018-11-12 11:14:20] <sarang> thanks to the Chicago Bitcoin and Open Blockchains group for hosting me
+[2018-11-12 11:14:56] <suraeNoether> Did you have a good time? think you'll do something like that again?
+[2018-11-12 11:15:05] <sarang> Yeah, I think it was very valuable
+[2018-11-12 11:15:19] <sarang> They had good turnout and excellent questions
+[2018-11-12 11:15:23] → Freeedom joined (b90f3f57@gateway/web/freenode/ip.185.15.63.87)
+[2018-11-12 11:15:26] <sarang> I really like the workshop idea especially
+[2018-11-12 11:15:40] <sarang> Aside from that work, I did a good amount of lit review to support suraeNoether's work (discussed shortly) on graph matchings, which was an extension of some earlier analysis we did on spent output analysis
+[2018-11-12 11:15:49] <suraeNoether> what was the demographic of the crowd like?
+[2018-11-12 11:16:07] ⇐ DuBmAnkey quit (b03b347e@gateway/web/freenode/ip.176.59.52.126): Ping timeout: 256 seconds
+[2018-11-12 11:16:10] <sarang> The workshop was smaller (due to scheduling shenanigans for some participants) but had folks interested in math/CS/development
+[2018-11-12 11:16:21] <sarang> The talk had a good mix of technical folks and well-wishers
+[2018-11-12 11:16:41] <sarang> It'd be cool to find a way to host an interactive online workshop
+[2018-11-12 11:17:00] <OpenSorceress> what would that entail?
+[2018-11-12 11:17:19] <sarang> Well, one set of tasks I had them do was use a simple Python ed25519 library to build some constructions
+[2018-11-12 11:17:24] <sarang> like Pedersen commitments and Schnorr sigs
+[2018-11-12 11:17:34] <rehrar> lol, love the name OpenSorceress. That's funny.
+[2018-11-12 11:17:36] <sarang> So being able to do video w/ slides for introductory work would be good
+[2018-11-12 11:17:48] <sarang> as well as interactive stuff to help the participants write code
+[2018-11-12 11:18:03] <sarang> Then we did some basic RPC stuff
+[2018-11-12 11:18:07] <OpenSorceress> like remote pairing?
+[2018-11-12 11:18:35] <sarang> OpenSorceress: some situation where the workshoppers could do in-browser code, perhaps, and then let me assist interactively if needed
+[2018-11-12 11:18:41] <sarang> I don't know if there is such a thing already
+[2018-11-12 11:18:44] <sarang> just spitballing here
+[2018-11-12 11:18:44] <suraeNoether> that is pretty awesome, sarang! i'm glad it's online.
+[2018-11-12 11:18:45] <OpenSorceress> there is
+[2018-11-12 11:18:54] <sarang> orly
+[2018-11-12 11:18:56] <OpenSorceress> yeppers
+[2018-11-12 11:19:16] <OpenSorceress> -> floobits pops to mind
+[2018-11-12 11:19:25] <sarang> Cool, let's discuss after meeting
+[2018-11-12 11:19:30] <OpenSorceress> :) ok
+[2018-11-12 11:19:50] <sarang> I've also been working to integrate stealth addresses into the RTRSRingStringRuffCT optimizations
+[2018-11-12 11:20:02] <sarang> and other minor tasks, etc
+[2018-11-12 11:20:05] ⇐ Freeedom quit (b90f3f57@gateway/web/freenode/ip.185.15.63.87): Ping timeout: 256 seconds
+[2018-11-12 11:20:10] — sarang is pretty much done noww
+[2018-11-12 11:21:01] <suraeNoether> allrighty
+[2018-11-12 11:21:06] <sarang> How about you suraeNoether? The graph matching, perhaps
+[2018-11-12 11:21:09] <suraeNoether> well, i've been doing the churn and graph theoretic stuff
+[2018-11-12 11:21:51] <suraeNoether> as I mentioned earlier, sarang and I have stumbled upon a class of anonymity metrics for graphs such as ours, and this will give us a quantitative basis for maintaining at least our current levels of anonymity as the blockchain gets larger
+[2018-11-12 11:22:06] <sarang> It's worth noting that this isn't even new analysis
+[2018-11-12 11:22:17] <sarang> But a really clever interpretation of older stuff that suraeNoether came up with
+[2018-11-12 11:22:22] <sarang> which is always great in math
+[2018-11-12 11:22:25] <suraeNoether> correct, in fact several of these were proposed right around the time Bitcoin was proposed, which amuses me
+[2018-11-12 11:22:36] <suraeNoether> 2007, 2008, 2009
+[2018-11-12 11:22:48] <rehrar> so are you saying that as the blockchain gets larger, anonymity decreases?
+[2018-11-12 11:22:59] <suraeNoether> well, consider the following situation
+[2018-11-12 11:23:10] <suraeNoether> let's say something ridiculous like "tomororw Monero goes back to ring size 1"
+[2018-11-12 11:23:14] <sarang> It's important to note that "anonymity" here means "anonymity according to a very specific metric formulation that may or may not correspond to a particular threat model"
+[2018-11-12 11:23:30] <suraeNoether> what happens? a bunch of blocks are added to the monero blockchain, all of which are totally linkable
+[2018-11-12 11:23:50] <suraeNoether> this is an edge case of the following idea:
+[2018-11-12 11:23:50] <notmike> Even I could link them!
+[2018-11-12 11:23:53] <suraeNoether> heh
+[2018-11-12 11:24:17] <suraeNoether> if we take our present system and add a bunch of non-anonymous stuff, we aren't improving our anonymity
+[2018-11-12 11:24:43] <suraeNoether> in fact, we are decreasing our anonymity, by essentially diluting our nice big fat blockchain filled with fat ring sigs with non-anonymous data
+[2018-11-12 11:25:19] <sarang> At their heart, these metrics use numbers of matchings to relate to some idea of anonymity
+[2018-11-12 11:25:34] <sarang> a graph matching is a possible global spend history, of which there will be many
+[2018-11-12 11:25:56] <sarang> Think of it as being a guess about true spends that's at least _consistent_, but of course not provable
+[2018-11-12 11:26:43] <sarang> My current view of this type of analysis is that, being only a heuristic that could be combined with things like output age, it provides the same types of plausible deniability that ring sigs have always offered
+[2018-11-12 11:26:47] <sarang> however
+[2018-11-12 11:27:02] <sarang> what suraeNoether was saying about it being useful to examine proposed changes is a good idea
+[2018-11-12 11:27:23] <sarang> So you can say "if we increase ring size to X given usage patterns Y, this metric implies that anonymity gets better"
+[2018-11-12 11:27:36] <sarang> it's not possible to say things like "anonymity gets Z% better" though
+[2018-11-12 11:27:39] <suraeNoether> so, to answer your question rehrar: the Edman anonymity level is *negatively* related to overall graph size and *positively* related to ring size. so we can say "okay, if our blockchain was *this* big, how big of a ring size would we need to have similar EAL to today?"
+[2018-11-12 11:28:05] <suraeNoether> the fact of the matter is, though, it very slowly changes with respect to graph size at these levels
+[2018-11-12 11:28:12] <rehrar> got it
+[2018-11-12 11:28:20] <suraeNoether> to maintain an EAL similar ot what we have today, the blockchain could be 10x larger
+[2018-11-12 11:28:38] <suraeNoether> and we might need a ring size of like 15 at that point, or something like that, to make it equal exactly
+[2018-11-12 11:29:04] <sarang> I have the same types of broad, non-mathematical questions about global anonymity that I do about rings in general
+[2018-11-12 11:29:33] <sarang> If there are 2^64 possible spend histories, is that good enough for our threat models? What if there were only 2^4? I don't know
+[2018-11-12 11:29:51] <suraeNoether> sarang actually we can sort of answer that question quantitatively
+[2018-11-12 11:30:31] <sarang> Well, for some threat models, "good enough" means "enough reasonable doubt to avoid someone getting in trouble for a spend history they weren't actually involved in"
+[2018-11-12 11:30:41] <sarang> and that depends on how your legal system works
+[2018-11-12 11:30:54] <sarang> What types were you considering?
+[2018-11-12 11:32:28] <suraeNoether> the question an attacker needs to answer is "out of all possible spend histories with a likelihood greater than some C of being the true spend history, what % of these is a specific edge traced?" for example, if in 95% of all plausible and likely histories, edge e sending monero from address X to address Y is included in the matching, we conclude that edge e is the true spender.
+[2018-11-12 11:32:37] → coupe joined (b9e67fef@gateway/web/freenode/ip.185.230.127.239)
+[2018-11-12 11:32:57] ← coupe left (b9e67fef@gateway/web/freenode/ip.185.230.127.239): 
+[2018-11-12 11:33:16] <suraeNoether> we may be able to quantify our security on an individual level that way, and see how it is sensitive to game parameters
+[2018-11-12 11:33:38] <suraeNoether> anyway, 100% of my MRL attention is on this paper right now
+[2018-11-12 11:33:58] <sarang> A lot of this (not just graph metrics) seems to be chasing after specific heuristics (some unknown) without a real fundamental idea of what guarantees we want to be able to offer
+[2018-11-12 11:34:58] <sarang> Subtly moving from "not provable spending" to "not heuristically-guessable spending" seems like a generally good idea, but it's like swiss cheese
+[2018-11-12 11:36:14] <suraeNoether> all of my work so far is highlighting, essentially, the urgency with which we need to replace ring signatures
+[2018-11-12 11:36:18] <sarang> true
+[2018-11-12 11:36:27] <suraeNoether> and the fundamental problem with using KYC exchanges
+[2018-11-12 11:36:39] <sarang> Well, those aren't going anywhere
+[2018-11-12 11:36:46] <sarang> and if anything, more people will move to them
+[2018-11-12 11:36:57] <hyc> as opposed to DEXs?
+[2018-11-12 11:37:09] <sarang> Do you know of any usable ones?
+[2018-11-12 11:37:20] <hyc> I assume Bisq works
+[2018-11-12 11:37:21] <gingeropolous> bisq .. ?
+[2018-11-12 11:37:22] <hyc> haven't used it
+[2018-11-12 11:37:25] <rehrar> question on replacing ring signatures...is there any sort of tech (eevn un battle tested) that exists at the moment?
+[2018-11-12 11:37:27] <sarang> nor have I
+[2018-11-12 11:37:33] <sarang> rehrar: no
+[2018-11-12 11:37:38] <suraeNoether> i hear bisq is good, but i haven't used it yet
+[2018-11-12 11:37:43] <suraeNoether> rehrar: yes and no
+[2018-11-12 11:37:44] <sarang> not without sacrificing trust
+[2018-11-12 11:37:50] <suraeNoether> or speed/efficiency
+[2018-11-12 11:37:58] <sarang> correct
+[2018-11-12 11:37:59] <suraeNoether> there are some trustless set-ups that are unreasonably slow
+[2018-11-12 11:38:03] <hyc> if we could do cross-chain atomic swaps with BTC that would eliminate a huge chunk of exchange usecases
+[2018-11-12 11:38:04] <suraeNoether> or big
+[2018-11-12 11:38:52] <sarang> IMO the goal of the graph matching analysis should be to at least get an order-of-magnitude estimate on Monero global spend histories
+[2018-11-12 11:39:11] <suraeNoether> hyc that is 100% correct, and we have all the theoretical framework for that except SPV at this point, but the recent nipopow paper and another recent paper may fix that too
+[2018-11-12 11:39:16] <sarang> I'm not convinced this provides an adversary with remarkably more actionable data than existing heuristics
+[2018-11-12 11:39:51] <OpenSorceress> how would you go about sussing that out?
+[2018-11-12 11:39:54] <sarang> And while it should push us toward better non-ring-sig solutions, I also don't want to FUD our users in the same way that all the other Monero tracking papers have
+[2018-11-12 11:39:58] <suraeNoether> it should provide literally the same amount of data, just one is a global approach and one is a txn-by-txn approach
+[2018-11-12 11:40:05] <sarang> OpenSorceress: run the analysis on at least a portion of the chain
+[2018-11-12 11:40:25] <sarang> suraeNoether: implementing nipopow is a huge undertaking
+[2018-11-12 11:40:36] <suraeNoether> yes
+[2018-11-12 11:41:44] <sarang> suraeNoether: what do you see as the goal of the analysis?
+[2018-11-12 11:43:12] <suraeNoether> provide actionable advice for the monero community on how to mitigate the worst known traceability chainalsysis attack. ultimately
+[2018-11-12 11:43:41] <sarang> in terms of ring size specifically?
+[2018-11-12 11:44:08] <sarang> given that the EAL is sensitive to it?
+[2018-11-12 11:44:27] <suraeNoether> not necessarily, although that is presently a facet of the analysis, yeah.
+[2018-11-12 11:45:07] → DuBmAnkey joined (4df364bb@gateway/web/freenode/ip.77.243.100.187)
+[2018-11-12 11:45:13] <suraeNoether> i mean, at this point, I think that further increases in ring size without order-of-magnitude increases... i'm not convinced of their efficacy, but i can't say either way at this point
+[2018-11-12 11:45:21] <sarang> What's the takeaway from all of this, for the folks in this meeting?
+[2018-11-12 11:45:43] → rex4539 joined (~rex4539@ppp-2-84-165-183.home.otenet.gr)
+[2018-11-12 11:46:33] <suraeNoether> research is ongoing into the matter
+[2018-11-12 11:46:49] <suraeNoether> progress is being made in terms of making actionable recommendations to the community
+[2018-11-12 11:47:02] <suraeNoether> but we aren't announcing them yet, until after more consideration
+[2018-11-12 11:47:05] <suraeNoether> i'm not sure what you mean
+[2018-11-12 11:47:15] <rehrar> good enough for me
+[2018-11-12 11:47:22] <sarang> Do you view this a fundamentally new form of analysis that provides adversaries with a lot of new damaging information?
+[2018-11-12 11:47:40] <sarang> (as opposed to, for example, the closed-set attack, which really gave marginal information)
+[2018-11-12 11:48:55] <suraeNoether> there is no practical way i can answer that question, sarang
+[2018-11-12 11:48:59] <sarang> ok
+[2018-11-12 11:49:12] <suraeNoether> i'm telling you it's the worst-known traceability attack
+[2018-11-12 11:49:17] <suraeNoether> i'm estimating how bad it is
+[2018-11-12 11:49:23] <suraeNoether> that's my job right now
+[2018-11-12 11:49:26] <sarang> ok
+[2018-11-12 11:49:44] <sarang> Anything else of note to share from your side regarding recent stuff?
+[2018-11-12 11:50:06] <suraeNoether> not with respeect to MRL, no
+[2018-11-12 11:50:09] <sarang> kk
+[2018-11-12 11:50:18] <suraeNoether> and i have an appointment i need to get to you guys, so.. peach out
+[2018-11-12 11:50:20] <suraeNoether> imagine whirled peas
+[2018-11-12 11:50:21] <suraeNoether> etc
+[2018-11-12 11:50:22] <sarang> np
+[2018-11-12 11:50:25] <suraeNoether> love you guys *smooches*
+[2018-11-12 11:50:31] <sarang> Anyone else wish to bring up something they've been working on?
+[2018-11-12 11:51:45] <sarang> crickets!
+[2018-11-12 11:51:47] <hyc> if you're bothered by blockchain sync speed, get your hands on Optane SSDs
+[2018-11-12 11:51:51] <sarang> yeah?
+[2018-11-12 11:51:57] <OpenSorceress> Optane SSDs?
+[2018-11-12 11:52:04] <endogenic> SSDs?
+[2018-11-12 11:52:11] <sarang> Ds?
+[2018-11-12 11:52:14] <endogenic> ??
+[2018-11-12 11:52:17] <OpenSorceress>  
+[2018-11-12 11:52:18] <sarang> I store the chain in RAM
+[2018-11-12 11:52:19] <hyc> yeah http://www.lmdb.tech/bench/optanessd
+[2018-11-12 11:52:21] <endogenic> LOL
+[2018-11-12 11:52:31] <sarang> I build a new ASIC for each block that gets added
+[2018-11-12 11:52:37] <hyc> Real Men store the blockchain in RAM :P
+[2018-11-12 11:53:30] <sarang> Well, I'll officially adjourn today's meeting; thanks to all for attending
+[2018-11-12 11:53:37] ⇐ grubles quit (~grubles@unaffiliated/grubles): Quit: Leaving
+[2018-11-12 11:53:37] <sarang> Next week, same bat-time, same bat-channel
+[2018-11-12 11:53:44] <hyc> ttyl
+[2018-11-12 11:53:44] * sarang set the topic to 
+[2018-11-12 11:53:46] <rehrar> bai
