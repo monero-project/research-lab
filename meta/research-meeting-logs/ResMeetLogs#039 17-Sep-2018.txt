@@ -1,0 +1,256 @@
+[2018-09-17 10:01:08] <suraeNoether> welcome to the #monero-research-lab meeting for 17 September 2018
+[2018-09-17 10:01:23] <sarang> Hullo
+[2018-09-17 10:01:29] <silur> hi
+[2018-09-17 10:01:35] <suraeNoether> we didn't meet last week because Sarang and I were meeting in person for some productivity turned up to 11, enabled partly by endogenic
+[2018-09-17 10:02:08] <sarang> When snarks
+[2018-09-17 10:02:16] <sarang> Or at least snark
+[2018-09-17 10:02:18] → caribou3 joined (~caribou@196.222.88.16)
+[2018-09-17 10:02:19] <suraeNoether> today's agenda is only 1) greetings is 2) a brief update on what folks have been working on and what they see coming up next
+[2018-09-17 10:02:56] <suraeNoether> we got 1) out of the way so efficiently, i'm just blown away, look at you guys, you are rock stars
+[2018-09-17 10:03:06] <dog\> lol
+[2018-09-17 10:03:15] <sarang> Shine on suraeNoether
+[2018-09-17 10:03:24] <silur> ^
+[2018-09-17 10:03:48] <suraeNoether> sarang has recently been doing some digging into view key solutions for additional functionality like balance-proving or proofs-of-reserve; is there anything you want to bring up publicly about those for now sarang?
+[2018-09-17 10:03:58] <suraeNoether> since you have like 3minutes
+[2018-09-17 10:04:42] <sarang> Just that the nature of our txn model means balance proofs open up knapsack style problems, are not efficient, and therefore I think not something of great priority
+[2018-09-17 10:05:01] <suraeNoether> yeah, and we can elaborate on that for folks who are interested as the week goes on
+[2018-09-17 10:05:08] <sarang> Sure
+[2018-09-17 10:05:09] <suraeNoether> or just later today :D
+[2018-09-17 10:05:11] ⇐ caribou3 quit (~caribou@196.222.88.16): Remote host closed the connection
+[2018-09-17 10:05:43] <suraeNoether> earlier this week, I discussed some stuff regarding finding provably spent subsets of output keys
+[2018-09-17 10:05:45] <sarang> Oh and they're likely always going to be interactive, which is a bad ux
+[2018-09-17 10:06:04] <suraeNoether> sarang and i worked some of this out in person
+[2018-09-17 10:06:37] <sarang> Aye
+[2018-09-17 10:06:50] <suraeNoether> essentially the take-away is this: 
+[2018-09-17 10:07:05] <suraeNoether> let's say some entity like the Monero Project wants to keep a blackball list of provably spent outputs
+[2018-09-17 10:07:12] <suraeNoether> to avoid mixing with future ring signatures
+[2018-09-17 10:07:23] <suraeNoether> let's say a user doesn't trust the Monero Project
+[2018-09-17 10:08:03] <suraeNoether> this user wants to verify all the computations used in computing that blackball list, to verify that the list is  a complete list of all provably spent outputs
+[2018-09-17 10:08:29] <suraeNoether> the user loses trust in the Monero project if any provably spent set is found that is not on the list, or if any set on the list is not actually provably spent
+[2018-09-17 10:08:56] <suraeNoether> how long does the user need to take to verify a small section of the list? let's say only for transactions created in a single day?
+[2018-09-17 10:09:44] <gingeropolous> tree fitty
+[2018-09-17 10:10:16] <suraeNoether> well, the answer to that is in the binomial coefficient: to completely verify a day's worth of transactions (between 10^3 and 10^4 presently), with a ring size of r=7, requires presently at least 1000-choose-7 checks. this is... around 2e17 things to check. even in constant time, that takes a loooong time to check
+[2018-09-17 10:10:56] <suraeNoether> it's maybe doable, but to verify even a month's of transactions is like 4e27, and there's a certain point where verifiers can no longer check the list for completeness
+[2018-09-17 10:11:12] <binaryFate> I disagree the user loses trust if a provably spent set is not on the list (assuming he uses his own method, not the public sources for determining blackball list). The opposite would be more devastating.
+[2018-09-17 10:11:19] <sarang> I agree
+[2018-09-17 10:11:37] <sarang> We just want the user to trust that nobody is being censored
+[2018-09-17 10:11:50] <sarang> And verifying the list will be easy
+[2018-09-17 10:11:50] <suraeNoether> binaryFate: that's fair, what i mean is if the Monero Project is acting like a curating party for this blackball list, they are acting as a trusted third party, so there is a risk to the user if that third party is acting dishonestly
+[2018-09-17 10:12:04] <sarang> Each item can also have its rings listed
+[2018-09-17 10:12:17] <sarang> So the user checks her own copy of the chain
+[2018-09-17 10:12:38] <binaryFate> I think it's fine as long as it's advertise as a "best effort" and not claiming to be exhaustive.
+[2018-09-17 10:13:13] <suraeNoether> right, checking small pieces of this list for provable spent-ness is easy: verifying that the list is *complete* can be made "essentially impossible" by picking larger rings; and using this sort of heuristic, we (sarang and I) determined anything above ring size 45-ish is wasteful in this regard
+[2018-09-17 10:13:17] <sarang> You're all in luck. My plane is delayed
+[2018-09-17 10:13:26] <gingeropolous> is there a way to distribute the computation BOINC style? decentralize all the things and all
+[2018-09-17 10:13:42] <sarang> The initial computation
+[2018-09-17 10:13:43] <sarang> Yes
+[2018-09-17 10:13:55] <binaryFate> I would be way more comfortable to give up completely on the idea to claim we're exhaustive.
+[2018-09-17 10:14:03] <sarang> Then everyone can check their peers work
+[2018-09-17 10:14:06] <suraeNoether> but the key take-away here is that checking our blackball list for ring sizes beyond 3 is impractical for our project. we kicked the idea around of a sidechain that rewards finding provably spent sets on the main chain and proving their spent-ness on the side-chain to earn a PoW reward :D
+[2018-09-17 10:14:08] <binaryFate> There might be more tricks we did not realize yet.
+[2018-09-17 10:14:34] <sarang> We can do a small ring complete subset analysis once
+[2018-09-17 10:14:39] <sarang> And hardcode it
+[2018-09-17 10:14:39] <suraeNoether> yep
+[2018-09-17 10:14:44] <sarang> Optional user verification
+[2018-09-17 10:14:44] <binaryFate> Better to go with "best effort given computational ressources used and state of our understanding; anyone welcome to improve it"
+[2018-09-17 10:14:49] <sarang> Yes
+[2018-09-17 10:15:00] <suraeNoether> binaryFate: for sure, for sure
+[2018-09-17 10:15:18] <sarang> We will have the complete list for those small rings
+[2018-09-17 10:15:21] <gingeropolous> also seems reasonable given our constant releases and forks and checkpoints
+[2018-09-17 10:15:36] <sarang> We don't need to run it further
+[2018-09-17 10:16:08] <sarang> But I'm writing up a quick thing on it
+[2018-09-17 10:16:38] <suraeNoether> right, point is now we have a reasonable expectation of when to stop increasing our curation of the blackball list: ring size 4 is pretty much impractical already, ring size 5 is going to be... a... loooong.... wait...
+[2018-09-17 10:17:37] <binaryFate> that's totally ok
+[2018-09-17 10:18:05] <suraeNoether> on other fronts, I've been looking into zk-snarks and starks as a sidechain on monero, with no transparent pool (the "transparent" pool would be monero's base layer, and this starky side-chain would be the optional "shielded" pool on top of it). i'm looking into trust-free accumulators; i think there's actually a "whole new protocol" sort of thing going on using certain accumulator constructions (see 
+[2018-09-17 10:18:05] <suraeNoether> https://link.springer.com/chapter/10.1007/978-3-642-31284-7_14 for example)
+[2018-09-17 10:18:16] <IsthmusCrypto> Can these calculations be parallelized/cluster-ified?
+[2018-09-17 10:18:25] <IsthmusCrypto> (the blackball)
+[2018-09-17 10:18:40] <suraeNoether> yes they can
+[2018-09-17 10:18:42] <gingeropolous> im curious - is this calculation / processing done on a given state? Or is it done while building the blockchain? i.e., you could imagine a Sync 2.0 where the monero blockchain takes even LONGER because while your synchronizing, your own computer is curating its own blackball
+[2018-09-17 10:18:45] <suraeNoether> very parallelizable
+[2018-09-17 10:18:48] <suraeNoether> but huuuuge search space
+[2018-09-17 10:19:16] <sarang> Worth noting that verification is fast for the user
+[2018-09-17 10:19:48] <sarang> gingeropolous: I don't think we'd need to do a live version during sync
+[2018-09-17 10:20:01] <sarang> Damn. Planes radar altimeter is busted :(
+[2018-09-17 10:20:04] <sarang> No bueno
+[2018-09-17 10:20:06] <suraeNoether> gingeropolous: there are ways to make it faster to blackball in a rolling computation like that, but even for a single day's worth of blocks per batch, you end up having a huge space to search (which is why i selected a day above)
+[2018-09-17 10:20:38] <gingeropolous> and if the blacksync indeed does work, you could just prune them from the blockchain and the network eventually reaches a blackballed consensus because those outputs just don't exist... hrmmmm
+[2018-09-17 10:21:18] <gingeropolous> but it doesn't matter because once we're at ringsize 21 we can all go on vacation
+[2018-09-17 10:21:57] <suraeNoether> yeah, and syncing from scratch doesn't really solve the problem, because even short periods of time end up with huge search spaces
+[2018-09-17 10:22:26] <suraeNoether> if i had a single transaction to the blockchain with a single output, i need to check every known subset to see which share ring members with the new transaction
+[2018-09-17 10:22:46] <IsthmusCrypto> >_<
+[2018-09-17 10:23:15] <sarang> But that also means an attacker would have to do that too
+[2018-09-17 10:23:23] <suraeNoether> yes, precisely
+[2018-09-17 10:23:32] <sarang> So it becomes nbd
+[2018-09-17 10:23:41] <sarang> Under a certain threat set
+[2018-09-17 10:24:06] <binaryFate> If ultimately we're facing an NP-complete/NP-hard problem, we could quantify it and demonstrate no attacker can go beyond rings N, no more than we can.
+[2018-09-17 10:24:41] <suraeNoether> for complete lists, that is correct; a ring size of, say, 45-ish gets us close to "you have to brute force more things than particles in the universe" territory
+[2018-09-17 10:24:44] <sarang> Yeah that's the reasonable approach idea
+[2018-09-17 10:24:57] <suraeNoether> but you still have heuristic linkability; all this is merely to discuss proven spent-ness
+[2018-09-17 10:25:11] <binaryFate> This is all theoretical fun anyway, in practice it's assumed all this has no bearings on post-ringct tx anyway
+[2018-09-17 10:25:31] <sarang> Given high ring sizes yes
+[2018-09-17 10:25:41] <binaryFate> suraeNoether Monero always has heuristic linkability anyway... we're only very good at plausible deniablity
+[2018-09-17 10:25:52] <suraeNoether> yeah, the likelihood this happens on accident is vanishingly small, so someone would have to be doing it on purpose for it to really be a problem
+[2018-09-17 10:25:56] <suraeNoether> binaryFate: absolutely correct
+[2018-09-17 10:25:59] <sarang> And this is a fairly easy way to improve safety
+[2018-09-17 10:26:08] <sarang> Therefore worth doing
+[2018-09-17 10:26:27] <suraeNoether> ok, so this week i am finally going to pick a journal for peer review for thring signatures
+[2018-09-17 10:26:29] <sarang> And even doing it on purpose requires collusion anyway
+[2018-09-17 10:26:39] <sarang> And then the attacker can just outputs they control anyway
+[2018-09-17 10:26:41] <IsthmusCrypto> That would be an interesting idea, if a hostile node just returns outputs off the blackball list whenever queried for decoys
+[2018-09-17 10:27:25] <suraeNoether> IsthmusCrypto: yeah but why would it do that instead of using its own outputs? :P
+[2018-09-17 10:27:33] <suraeNoether> sarang and i go back and forth on it
+[2018-09-17 10:27:47] <IsthmusCrypto> Depends if the node is lawful evil or chaotic evil
+[2018-09-17 10:27:56] <IsthmusCrypto> lawful might use own outputs. Chaotic might just ruin it for everybody.
+[2018-09-17 10:28:01] <needmoney90> It would get noticed immediately
+[2018-09-17 10:28:05] <needmoney90> Or fairly quickly
+[2018-09-17 10:28:10] <needmoney90> If they used known black balled outputs
+[2018-09-17 10:28:19] <needmoney90> Exclusively
+[2018-09-17 10:28:25] <IsthmusCrypto> Is somebody watching out for that, or should MAP set it up?
+[2018-09-17 10:28:32] <IsthmusCrypto> Oh
+[2018-09-17 10:28:36] <IsthmusCrypto> because they're all so old
+[2018-09-17 10:28:39] <IsthmusCrypto> yeah, that would be obvious
+[2018-09-17 10:28:40] <IsthmusCrypto> smh
+[2018-09-17 10:28:42] <IsthmusCrypto> sorry, continue
+[2018-09-17 10:29:04] <suraeNoether> anyway, i don't think provably spentness is really the issue
+[2018-09-17 10:30:04] <suraeNoether> i believe that if you take the bipartite graph model and weight edges by output key age at the time of the transaction used it, we would re-attain the monerolink heuristic linkability model; what's funny about that, though, is that even if you were to optimize that guy to look for "probably" not provably spent outputs, you would still have such a large space to search through, you'd never quite be sure if
+[2018-09-17 10:30:04] <suraeNoether> there wasn't a more likely solution right around the corner
+[2018-09-17 10:30:09] <suraeNoether> i want to quantify that
+[2018-09-17 10:30:38] <suraeNoether> because i think heuristic linkability is more a danger issue for monero
+[2018-09-17 10:30:47] <suraeNoether> thank accidentally using provably spent ring members
+[2018-09-17 10:31:02] <IsthmusCrypto> ^^ agree
+[2018-09-17 10:31:03] <suraeNoether> later this week, i'll be reviewing the general M/N multisig thing
+[2018-09-17 10:31:29] <suraeNoether> is there anything else that folks want MRL to work on, bring up, discuss, etc? There will be news about the Denver Monero Conference later this week, I think.
+[2018-09-17 10:32:01] <suraeNoether> IsthmusCrypto and silur you guys have been working on stuff
+[2018-09-17 10:32:04] <suraeNoether> would you care to discuss it?
+[2018-09-17 10:32:12] <IsthmusCrypto> I can give a quick update on some of the #noncesense-research-lab projects
+[2018-09-17 10:32:14] <IsthmusCrypto> 1) Working on ways to automate identification of selfish/stubborn mining, since I have been doing it by visual inspection so far. One example written up so far.
+[2018-09-17 10:32:18] <IsthmusCrypto> 2) Doing a small study of nodes doubled up on IP addresses. Checked peer lists and found duplicates. This is a subtle type of centralization - if 20% of our nodes/miners are showing up over a handful of ProtonVPN addresses, then another DoS on the VPN would have the side effect of knocking a disproportional number of machines off the network.	
+[2018-09-17 10:32:24] <IsthmusCrypto> 3)Vanity stealth addresses generation. If all of your personal outgoing transactions have the same prefix, then they will be indistinguishable from each other. This maximizes fungibility and eliminates headaches caused by how difficult it is to link your transactions on the blockchain. When you restore your wallet, use the same vanity code - the initial sync time decreases by orders of magnitude when your
+[2018-09-17 10:32:25] <IsthmusCrypto> wallet only needs to check outputs that obviously belong to it! /s
+[2018-09-17 10:32:30] <IsthmusCrypto> 4) Blockchain analysis to identify all MyMonero.com transactions that used high or paranoid mode. Partial writeup, but porting over to unsupervised ML methods to automatically pick out all the MyMonero txns from the main fungible cluster.
+[2018-09-17 10:32:40] <IsthmusCrypto> 5) A lot of work on MAP infrastructure by @n3ptune - both backend database work and some slick UI/visualization
+[2018-09-17 10:33:07] <IsthmusCrypto> And a misc pet project on timing how long it takes to sync the blockchain on different machines.
+[2018-09-17 10:33:11] <IsthmusCrypto> (end)
+[2018-09-17 10:33:26] <suraeNoether> #4 will be a paper that will be used as FUD; want to collab on an MRL bulletin and use our header and stuff so it's clear it's coming from MRL?
+[2018-09-17 10:33:27] <silur> quantum-vrf is on it's way I had major advances and even figured out that i can do it in a designated verifier setup. also I've sent you my slides on RTRS for HCPP prague, did you have time to review it?
+[2018-09-17 10:33:50] <suraeNoether> no, i have not, did you email it or mention it in chat?
+[2018-09-17 10:33:52] <silur> you = suraeNoether & sarang
+[2018-09-17 10:33:58] <silur> email it for both of you
+[2018-09-17 10:34:10] <silur> on your protonmail addr
+[2018-09-17 10:34:12] <needmoney90> IsthmusCrypto: for number 3, the vanity prefix can be deterministic with the private key as the seed, right?
+[2018-09-17 10:34:31] <suraeNoether> just found it; when is the talk?
+[2018-09-17 10:34:32] <needmoney90> So every new stealth address has a new prefix that can't be determined ahead of time without the private key
+[2018-09-17 10:34:38] <silur> october 3
+[2018-09-17 10:34:47] <suraeNoether> ok i will review it this week
+[2018-09-17 10:34:48] <needmoney90> That's actually super cool
+[2018-09-17 10:34:52] <silur> thanks
+[2018-09-17 10:35:14] <suraeNoether> for #3 that forbids sending to a subaddress
+[2018-09-17 10:35:23] <suraeNoether> since the subaddress recipient has to ask for a specific basepoint on the transaction key
+[2018-09-17 10:35:41] <suraeNoether> which sucks
+[2018-09-17 10:36:09] <suraeNoether> silur i am more interested in your quantum vrf to be honest :D hehe
+[2018-09-17 10:36:46] <IsthmusCrypto> @suraeNoether - yea RE #4 I’ll keep you in the loop. Don’t want to give FUD fodder, so I am really hoping that MyMonero will fix it soon....
+[2018-09-17 10:36:48] <silur> and I'd like your review on that I could send you the draft and we can eliminate my probably countless mistakes :)
+[2018-09-17 10:36:52] <IsthmusCrypto> #3 was just a joke, although it does reflect a real threat model (using a few digits to encode which output is the true spender, or maybe use a few digits to mark part of a hash of the private key to deterministically fingerprint transactions *from* the same account.
+[2018-09-17 10:37:22] <IsthmusCrypto> (would be malicious wallet software trying to communicate with no telemetry besides what is on the blockchain)
+[2018-09-17 10:37:41] <needmoney90> I think it could actually be used for fast sync
+[2018-09-17 10:37:46] <needmoney90> Without fungibility concerns
+[2018-09-17 10:37:49] <suraeNoether> endogenic ^ can't really do anything about the older choices, but we can patch that up moving forward
+[2018-09-17 10:38:01] <sarang> Hooray fixed plane. TTYL. Will be on after landing
+[2018-09-17 10:38:05] <suraeNoether> prefixing keys makes them distinguishable by prefix, so i'm not sure what the goal of the idea is :P
+[2018-09-17 10:38:19] <needmoney90> Surae, make the prefix deterministic
+[2018-09-17 10:38:42] <needmoney90> Increment private key by 1 every tx, hash it, truncate, and use that as the prefix
+[2018-09-17 10:38:59] <needmoney90> Without the private key you can't fingerprint the txes
+[2018-09-17 10:39:10] <binaryFate> I think you still get a different prefix for each output no?
+[2018-09-17 10:39:13] <needmoney90> That's a super naive method of course
+[2018-09-17 10:39:27] <needmoney90> You do binaryfate, but when scanning the chain you can look for the next prefix
+[2018-09-17 10:39:38] <needmoney90> Every time you find one, you increment and look for the next
+[2018-09-17 10:39:57] <binaryFate> I mean within the same transaction
+[2018-09-17 10:40:13] <binaryFate> And as you don't know the order, you can miss some
+[2018-09-17 10:40:19] <needmoney90> Ah, yes
+[2018-09-17 10:40:28] <needmoney90> If it's the same tx you can have a lookback
+[2018-09-17 10:40:32] <needmoney90> That's not a huge deal imo
+[2018-09-17 10:40:52] <binaryFate> true
+[2018-09-17 10:41:22] <needmoney90> Sorry for doing research stuff in the meeting, carry on guys. I'll bring this to the lounge.
+[2018-09-17 10:41:59] <suraeNoether> needmoney90: interesting... i need to thinka bout that. :P actually needmoney90 this is what the research meeting is for :D
+[2018-09-17 10:42:25] <binaryFate> I've been finally getting to work on an idea I had since a long time, I think I mentioned it here a couple of times.
+[2018-09-17 10:42:45] <suraeNoether> please go ahead!
+[2018-09-17 10:43:03] <silur> yea I missed that and interested :D
+[2018-09-17 10:43:36] <binaryFate> Broad idea is to study the age distribution of *actual* spendings of Monero users, with ultimately maybe proposing a better decoy output selection algorithm
+[2018-09-17 10:44:33] <sarang> Go on
+[2018-09-17 10:44:38] <needmoney90> If it's opt in, wouldn't the set of data we collect be skewed away from those who are super cautious about privacy?
+[2018-09-17 10:44:58] <binaryFate> Maybe best to explain the approach is a simplified example: imagine all rings are of size 2 (one real + one decoy). The "real" distribution is unknown, but the "decoy" one is known from what the wallet software is doing (restricted to certain block ranges where we are confident an overly large percentage of users are using the same version)
+[2018-09-17 10:45:29] <binaryFate> The result is a mixture, or (simplified) a weighted distribution. This is observable in the blockchain.
+[2018-09-17 10:45:54] <binaryFate> By using the observable bit, and the known part of the weighted distribution, I want to estimate the unknown one, aka the real spending habits
+[2018-09-17 10:46:42] <binaryFate> I'm writing an R package to do this, with an emphasis on graphically comparing what we should expect if users were spending "as we think" versus what we actually see from the blockchain
+[2018-09-17 10:47:00] <binaryFate> so whatever results I get be done again in the future with the same procedure
+[2018-09-17 10:47:51] <binaryFate> First results expecting soon (this week hopefully)
+[2018-09-17 10:48:31] <binaryFate> This will also allow to check the Miller et al. gamma distribution fitting btw, which afaik nobody really cross-checked (even though it will make it into the next hard fork)
+[2018-09-17 10:48:53] <binaryFate> (end)
+[2018-09-17 10:49:20] <gingeropolous> so is this asking which inputs are outliers of the distribution the wallet is using?
+[2018-09-17 10:50:42] <binaryFate> no, it's about the distributions, not the level of inputs. It's comparing "the situation we are modelling using [triangular/gamma] distribution" and "what we see in the blockchain"
+[2018-09-17 10:50:47] → sgp_ joined (~justi@50-202-180-242-static.hfc.comcastbusiness.net)
+[2018-09-17 10:51:08] <gingeropolous> gotcha
+[2018-09-17 10:51:23] <binaryFate> Think of it as cutting through the noise to estimate the real spending habits, but it only gives you the distribution of it, no info on a single input
+[2018-09-17 10:52:43] <binaryFate> We rank highly on plausible deniablity :) I'm trying to improve on the distribution/heuristic thing. There was very little studies to come up with first the triangular one then the gamma one.
+[2018-09-17 10:53:10] <binaryFate> Anyway, I'll probably have a draft report in week or two to circulate.
+[2018-09-17 10:53:51] <suraeNoether> this is a very interesting idea
+[2018-09-17 10:54:53] <suraeNoether> i'm a little confused; where are you getting your data? your own wallet?
+[2018-09-17 10:55:17] <IsthmusCrypto> It doesn't need a ground truth. It's just actual distribution minus decoy selection algorithm expectation, right?
+[2018-09-17 10:55:26] <endogenic> IsthmusCrypto: fix the ability to use different ring sizes? the new apps and new web wallet do not allow you to pick, for that reason. i didn't expect we'd still have the old mymonero.com wallet up til now and totally forgot we have the mixin select there
+[2018-09-17 10:55:36] <endogenic> just let me know next time :)
+[2018-09-17 10:55:47] <endogenic> got so many things going on :
+[2018-09-17 10:55:55] <binaryFate> IsthmusCrypto correct
+[2018-09-17 10:56:00] <endogenic> will start to settle down soon i hope
+[2018-09-17 10:56:16] <suraeNoether> IsthmusCrypto: ahhhhh i see, yeah, if i understand it correctly, that's a wonderful treasure trove of useful data. :P
+[2018-09-17 10:56:37] <suraeNoether> oh man
+[2018-09-17 10:56:41] <endogenic> anyway IsthmusCrypto can you really tell they are -MyMonero- transactions?
+[2018-09-17 10:56:42] <suraeNoether> binaryFate: good freaking idea!
+[2018-09-17 10:56:45] <endogenic> or just that they have a high ring size?
+[2018-09-17 10:57:00] <IsthmusCrypto> The MyMonero fingerprint is based on the ringsize AND the decoy selection algorithm
+[2018-09-17 10:57:04] <binaryFate> suraeNoether simplified example again (ring size 2): wallet is known to use unifom for decoy. Blockchain shows distribution X (and we know it's 0.5 wallet distrib + 0.5 user real spending). We can compare the two and infere a lot about real user spending
+[2018-09-17 10:57:13] <IsthmusCrypto> The first is a good signpost to find candidates, then the second is the actual give-away
+[2018-09-17 10:58:03] <binaryFate> I'm just getting interesting results as we speak, but prefer to clear things a bit before sending to anyone
+[2018-09-17 10:58:09] <endogenic> IsthmusCrypto: just want you to know i've been motivating for the decoy selection algo change for a long time,
+[2018-09-17 10:58:34] <endogenic> i'm discussing it internally again to get it done ...
+[2018-09-17 10:58:38] <endogenic> we hve work on it
+[2018-09-17 10:58:44] <endogenic> need to stabilize and deploy..
+[2018-09-17 10:59:21] <IsthmusCrypto> Cool @edogenic. I haven't worried about it too much or rushed the research because the impending fixed ring size will remove half of the heuristic.
+[2018-09-17 10:59:22] <suraeNoether> binaryFate: more generally: if we use a distribution F to pick ring members, the extent to which ring members on the blockchain vary from F is directly related to the true signers... really great approach
+[2018-09-17 10:59:46] <suraeNoether> anyway
+[2018-09-17 10:59:55] <suraeNoether> okay, anyone else have anything they want to chat about?
+[2018-09-17 10:59:58] <suraeNoether> it's been a few weeks
+[2018-09-17 11:00:23] <binaryFate> yep, and it's directly quantifiable by the ring sizes too
+[2018-09-17 11:01:38] <IsthmusCrypto> Last thought - can we start recording MRL meetings alongside the other dev diaries? It would be good for accessibility and showcasing some of the best people/conversations in our community
+[2018-09-17 11:01:46] <IsthmusCrypto> If somebody can show me where/how, I can take care of uploading them.
+[2018-09-17 11:02:08] <selsta> IsthmusCrypto: they used to get uploaded
+[2018-09-17 11:02:30] <selsta> or did they?
+[2018-09-17 11:03:30] ⇐ defterade quit (~defterade@145.130.110.177): Quit: ZNC 1.7.0 - https://znc.in
+[2018-09-17 11:03:46] → defterade joined (~defterade@145.130.110.177)
+[2018-09-17 11:04:03] <selsta> anyway I plan on creating a IRC bot that auto uploads the meetings
+[2018-09-17 11:06:18] <suraeNoether> IsthmusCrypto: i usually throw the logs up on my github, but i have been lazy lately; i'll set aside an hour later today to upload all the ones I have
+[2018-09-17 11:07:00] <suraeNoether> if anyone wants to put them anywhere else, feel free, maybe we could throw them up on the getmonero.org page or something like that. i'll look into a few options
+[2018-09-17 11:07:08] <IsthmusCrypto> 👍 I started thinking about this when the person showed up claiming that fixed ring sizes hadn't been publicly discussed
+[2018-09-17 11:07:23] <suraeNoether> if anyone wants to take initiative and upload meeting logs that are missing before i get to them, that'd be a great contribution to MRL
+[2018-09-17 11:07:39] <suraeNoether> only so many hours in a day :D
+[2018-09-17 11:07:53] <suraeNoether> either way, i'll try to organize what i see available later today. my github is a mess
+[2018-09-17 11:08:16] <IsthmusCrypto> Cool, I was thinking I could upload them here? (If that seems alright and somebody shows me how or wants to take initiative and do it themselves)
+[2018-09-17 11:08:16] — IsthmusCrypto https://getmonero.org/blog/tags/dev%20diaries.html
+[2018-09-17 11:10:18] <binaryFate> go for it
+[2018-09-17 11:10:44] <endogenic> good idea
+[2018-09-17 11:12:27] <IsthmusCrypto> Do I just PR it to here? https://github.com/monero-project/monero-site/tree/master/_posts
+[2018-09-17 11:12:37] <suraeNoether> i believe that is correct; moneromooo or luigi1111 ?
+[2018-09-17 11:12:56] <selsta> IsthmusCrypto: yes, but you have to convert the logs to markdown
+[2018-09-17 11:13:51] <suraeNoether> ok, I believe we are over an hour here, so we'll wrap this up
+[2018-09-17 11:13:56] <suraeNoether> any last notes/comments/concerns/questions?
+[2018-09-17 11:14:20] <suraeNoether> i'm expecting my cross-chain paper to be done by the end of the month, i think; it's actually a lot simpler than the multisig paper
+[2018-09-17 11:14:43] <silur> the cross-chain atomic swaps?
+[2018-09-17 11:14:59] <silur> not quite, I remember it had a much cooler name
+[2018-09-17 11:15:11] <silur> ring-confidential atomic swaps or something
+[2018-09-17 11:19:49] → wo0dy-- joined (uid308640@gateway/web/irccloud.com/x-rdjvmcymbrplscpm)
+[2018-09-17 11:19:50] ⇐ wo0dy-- quit (uid308640@gateway/web/irccloud.com/x-rdjvmcymbrplscpm): Changing host
+[2018-09-17 11:19:50] → wo0dy-- joined (uid308640@unaffiliated/tw2006)
+[2018-09-17 11:19:50] ⇐ wo0dy-- quit (uid308640@unaffiliated/tw2006): Changing host
+[2018-09-17 11:19:50] → wo0dy-- joined (uid308640@gateway/web/irccloud.com/x-rdjvmcymbrplscpm)
+[2018-09-17 11:20:20] <moneromooo> No, to https://repo.getmonero.org/
+[2018-09-17 11:22:20] <silur> oh didn't even know about that thx

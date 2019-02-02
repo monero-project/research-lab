@@ -1,0 +1,467 @@
+[2017-10-23 10:47:46] <surae> i wish i could set a soundtrack for this room instead of just a topic
+[2017-10-23 10:47:53] <surae> oh wait i can't set a topic, i'm not even a dev
+[2017-10-23 10:48:20] <surae> OH WAIT WE WERE GOING TO HAVE A RESEARCH MEETING THIS MORNING. Instead, silur and sarang and I made math jokes.
+[2017-10-23 10:48:43] <surae> So, uhm. let's say research meeting was delayed one hour today and starts in 12 minutes. :P
+[2017-10-23 10:49:25] <surae> sarang ping ~ hehe
+[2017-10-23 10:50:19] <endogenic> Lol dEBRUYNE
+[2017-10-23 10:50:52] <silur> oh sorry for messing with the...... order :D
+[2017-10-23 10:51:08] <surae> sorry, guys, i was distracted on 3 separate fronts this morning having sidechannel conversations
+[2017-10-23 10:51:24] <surae> i realize that sarang and i are kind of measured by our progress by having public conversations instead of sidechannel conversations
+[2017-10-23 10:51:27] <endogenic> Surae will you go to consensus next year?
+[2017-10-23 10:51:48] <endogenic> Surae dont worry about ppl’s measurements i say
+[2017-10-23 10:51:50] <surae> endogenic i will put it on my calendar. i don't see why not
+[2017-10-23 10:52:31] <surae> endogenic: eh, more heads are better than one, transparency is a good thing, etc etc. not just "what will people think of me?!" but also I have certain responsibilities I feel are super important. Communication is one of them.
+[2017-10-23 10:52:42] <endogenic> Yeah but you’re already good
+[2017-10-23 10:52:44] <endogenic> :)
+[2017-10-23 10:53:11] <surae> well, thank you
+[2017-10-23 10:53:18] <endogenic> No surae
+[2017-10-23 10:53:21] <endogenic> Thank YOU
+[2017-10-23 10:53:23] <surae> lol
+[2017-10-23 10:53:24] <endogenic> :P
+[2017-10-23 10:55:05] <surae> sarang op me
+[2017-10-23 10:57:11] <iDunk> Op yourself? You are the owner of this channel, no?
+[2017-10-23 10:59:56] <surae> apparently not.
+[2017-10-23 11:00:37] <endogenic> luigi1111 halp
+[2017-10-23 11:00:50] <surae> Okay everyone~
+[2017-10-23 11:00:56] <iDunk>  /msg chanserv op #monero-research-lab
+[2017-10-23 11:01:13] * luigi1111w set +o surae
+[2017-10-23 11:01:15] <iDunk> IIRC, you started this channel.
+[2017-10-23 11:02:01] <dnaleor> <silur> sucks that I missed you :( <= we had a monero meetup you know? On friday at the lobby...
+[2017-10-23 11:02:10] <dnaleor> too bad you missed it, maybe we'll meet next year ;)
+[2017-10-23 11:02:12] <surae> i was not authorized to op surae on this channel. :P hehe
+[2017-10-23 11:02:58] <surae> Okay, I think it might be wiser to reschedule this research meeting for later this week
+[2017-10-23 11:03:05] <luigi1111w> are you logged in
+[2017-10-23 11:03:24] → QuickBASIC joined (~QuickBASI@66-87-149-126.pools.spcsdns.net)
+[2017-10-23 11:03:41] <scoobybejesus>   /msg NickServ identify <password>
+[2017-10-23 11:04:06] * surae → suraeNoether
+[2017-10-23 11:04:55] <endogenic> Y resched?
+[2017-10-23 11:05:02] <suraeNoether> I am an idiot
+[2017-10-23 11:05:15] <endogenic> Dont say that
+[2017-10-23 11:05:18] <suraeNoether> because sarang isn't here and we are both cooking up some code right now
+[2017-10-23 11:05:19] <suraeNoether> haha
+[2017-10-23 11:05:23] <endogenic> Oh ok
+[2017-10-23 11:05:31] <suraeNoether> no, no, i've been unwittingly logged into a different account for god knows how long
+[2017-10-23 11:05:35] <suraeNoether> hence i'm an idiot
+[2017-10-23 11:05:46] <endogenic> Ah
+[2017-10-23 11:05:52] <endogenic> Ok say that
+[2017-10-23 11:06:32] <suraeNoether> okay, so Research UPDATE: Sarang and I are working on multisig code-vetting (which is fun) and a prototype implementation of spectre. we have gotten spectre almost working and I am cooking up a live-simulation of a blockchain generation so we can test it. 
+[2017-10-23 11:07:01] <suraeNoether> also I've been thinking about andytoshi's proposition regarding lock times and refund transactions
+[2017-10-23 11:07:46] <suraeNoether> I think we may be able to manipulate the multisig scheme into allowing a transaction to have two destination addresses with different locktimes, but we need to make them have the same key image, which is a fun little challenge
+[2017-10-23 11:08:06] <suraeNoether> So, we've been super productive... even just this morning... but apparently we aren't ready to have a meeting to discuss it yet. :P
+[2017-10-23 11:08:14] <endogenic> So much fun
+[2017-10-23 11:08:24] <suraeNoether> i'm going to push my spectre code to my github now... it's inelegant, and failing a unit test, but i can't tell where
+[2017-10-23 11:08:36] ⇐ QuickBASIC quit (~QuickBASI@66-87-149-126.pools.spcsdns.net): Quit: AtomicIRC: The nuclear option.
+[2017-10-23 11:08:40] <suraeNoether> so anyone who wants to mess can (sarang is currently working on a different more stripped down implementation)
+[2017-10-23 11:09:18] <moneromooo> The same key image for two different outputs ?
+[2017-10-23 11:09:56] → QuickBASIC joined (~QuickBASI@66-87-149-126.pools.spcsdns.net)
+[2017-10-23 11:09:57] <moneromooo> Does that mean the key image which the outputs will generate once spent ?
+[2017-10-23 11:10:01] ⇐ m8tion quit (~m8tion@81-65-53-254.rev.numericable.fr): Read error: Connection reset by peer
+[2017-10-23 11:12:18] ⇐ QuickBASIC quit (~QuickBASI@66-87-149-126.pools.spcsdns.net): Client Quit
+[2017-10-23 11:13:00] <suraeNoether> uhm... sort of... one output, but with two different one-time addresses with different locktimes. a signature generated using either of these two one-time addresses should use the same key image: essentially a 1-of-2 address, except each participant in the coalition has a different locktime on their ability to fashion a signature
+[2017-10-23 11:13:38] → QuickBASIC joined (~QuickBASI@199.253.243.21)
+[2017-10-23 11:15:16] <suraeNoether> so, can i just say
+[2017-10-23 11:15:22] <suraeNoether> after 9 years of teaching calculus and diffeq
+[2017-10-23 11:15:30] <suraeNoether> with my responsibilities revolving around running a classroom
+[2017-10-23 11:16:11] <suraeNoether> i feel like something as simple as *holding weekly public research meetings* is so far outside of my usual skillset that i'm laughably unprepared
+[2017-10-23 11:16:13] <suraeNoether> but then i remember
+[2017-10-23 11:16:28] <suraeNoether> all these times i would scramble into class late, underprepared, papers flying out of my bag
+[2017-10-23 11:16:43] <suraeNoether> and i think i just need to accept some fundamental truths about my ability to calendar
+[2017-10-23 11:17:16] <suraeNoether> https://github.com/b-g-goodell/research-lab/blob/master/source-code/Spectre/Spectre.py
+[2017-10-23 11:17:32] <suraeNoether> ^ Okay, everyone, that guy is failing unit test
+[2017-10-23 11:17:41] <suraeNoether> but it compiles and it produces outputs of the correct format
+[2017-10-23 11:17:59] <suraeNoether> so somewhere between this paper https://eprint.iacr.org/2016/1159.pdf
+[2017-10-23 11:18:04] <suraeNoether> and my code above
+[2017-10-23 11:18:12] <suraeNoether> there is a gap
+[2017-10-23 11:18:41] <moneromooo> We must close the spectre gap!
+[2017-10-23 11:18:46] <suraeNoether> it's extremely likely to simply be a logical error, like an if statement or a for loop that isn't stated correctly
+[2017-10-23 11:18:48] <suraeNoether> ooooh
+[2017-10-23 11:18:54] <suraeNoether> that sounds like a Tom Clancy book or something
+[2017-10-23 11:19:06] <moneromooo> I was thinking more Dr Strangelove.
+[2017-10-23 11:19:15] <suraeNoether> great. great. film
+[2017-10-23 11:19:18] * unknownidss → unknownids
+[2017-10-23 11:19:28] <suraeNoether> "Of course I like you, Dmitri! If I didn't like you, I wouldn't have called!"
+[2017-10-23 11:19:44] <moneromooo> I am capable to be as sorry as you are!
+[2017-10-23 11:20:15] <suraeNoether> as a teacher i would occasionally make music or movie recommendations to my students
+[2017-10-23 11:20:30] <suraeNoether> never got a single student to read catch22
+[2017-10-23 11:23:08] <suraeNoether> allright, so I'm going to put up a 1 XMR bounty to the first person to email surae.noether@protonmail.com a fixed, corrected version of that Spectre code from https://github.com/b-g-goodell/research-lab/edit/master/source-code/Spectre/Spectre.py that passes the prescribed unit test. This will be a simple contest.
+[2017-10-23 11:25:24] → Asshat360 joined (~AndChat57@cpe-98-151-16-60.hawaii.res.rr.com)
+[2017-10-23 11:25:54] <suraeNoether> heads up, sarang has a head start (but he's refactoring the code, so he's giving himself a bigger task)
+[2017-10-23 11:28:55] ⇐ AndChat-572649 quit (~AndChat57@172.56.44.211): Ping timeout: 258 seconds
+[2017-10-23 11:29:46] → WWW-XMRTalk-Org| joined (9700e78d@gateway/web/cgi-irc/kiwiirc.com/ip.151.0.231.141)
+[2017-10-23 11:30:08] ⇐ WWW-XMRTalk-Org| quit (9700e78d@gateway/web/cgi-irc/kiwiirc.com/ip.151.0.231.141): Client Quit
+[2017-10-23 11:30:59] <suraeNoether> OKAY So... Rescheduling research meeting for Thursday this week, 17:00 UTC.
+
+*****
+
+[2017-10-26 10:03:56] <defterade__> did the meeting get postponed again?
+[2017-10-26 10:22:32] <scoobybejesus> i do recall the monday 17:00 UTC meeting getting bumped to Thursday
+[2017-10-26 10:22:53] <defterade__> <suraeNoether> OKAY So... Rescheduling research meeting for Thursday this week, 17:00 UTC
+[2017-10-26 10:24:29] → ArticMine joined (~ArticMine@209.171.88.106)
+[2017-10-26 10:27:53] ⇐ serhack quit (1f9d41bb@gateway/web/cgi-irc/kiwiirc.com/ip.31.157.65.187): Quit: http://www.kiwiirc.com/ - A hand crafted IRC client
+[2017-10-26 10:29:29] <sarang> endogenic I can't speak for surae directly, but it's my understanding that the investigation into other "proof forms" is more to have a better understanding of the economics of each, and to ensure we have our bases covered if anything were to come up
+[2017-10-26 10:30:24] <sarang> For those curious, the funding requests that were mention are linked in this r/monero post: https://www.reddit.com/r/Monero/comments/78wtsv/funding_requests_for_researchers_sarang_and_surae/
+[2017-10-26 10:30:50] <sarang> I also posted my October monthly report separately, a few days in advance of the end of the month to allow for discussion before the release of funds: https://www.reddit.com/r/Monero/comments/78wvqr/october_monthly_report_from_your_pal_sarang/
+[2017-10-26 10:31:04] <sarang> Comments welcome, as always
+[2017-10-26 10:32:52] <sarang> We can informally do the research meeting now, if there's interest
+[2017-10-26 10:33:20] <sarang> The big thing right now, IMHO, is continuing the examination of SPECTRE's block DAG structure
+[2017-10-26 10:33:54] <sarang> Separately, I've also been learning about new advances in accumulators, aggregate sigs, and abstractions of the idea of proof of work that are down to logarithmic in blockchain verification
+[2017-10-26 10:34:07] <sarang> (called proofs of proof-of-work)
+[2017-10-26 10:34:25] <gingeropolous> from I gather, the primary benefit of spectre is increased robustness
+[2017-10-26 10:34:53] <sarang> Yes
+[2017-10-26 10:34:56] <hyc> spectre's main benefit is high transaction throughput
+[2017-10-26 10:35:10] <sarang> Yes, with robust security guarantees as that happens
+[2017-10-26 10:35:22] <sarang> At the potential cost, depending on graph topology, of larger block headers
+[2017-10-26 10:35:29] <sarang> This is something we're considering via simulation
+[2017-10-26 10:35:37] <gingeropolous> yah. and block headers eating a majority of the space
+[2017-10-26 10:35:39] <sarang> Since blocks that are honestly added must reference all current leaf nodes
+[2017-10-26 10:36:06] <sarang> Under normal circumstances that _should_ be quite low, but it's a possibility
+[2017-10-26 10:36:21] <sarang> The voting scheme is really intriguing
+[2017-10-26 10:36:30] <gingeropolous> well if you have 10 second blocks, you now have 12 block headers where before you had 1 for a 2 minute block... right?
+[2017-10-26 10:36:32] <sarang> Since blocks vote on all pairs based on topology
+[2017-10-26 10:36:48] <sarang> I don't recall the sample numbers gingeropolous
+[2017-10-26 10:36:50] <hyc> hmmm. I had missed that before. that means this still won't scale over long distance networks. like earth to mars.
+[2017-10-26 10:37:40] <sarang> We can have a separate space version of the coin
+[2017-10-26 10:37:43] <sarang> moonero
+[2017-10-26 10:37:49] <gingeropolous> yeah. i don't think it does anything for isolated leaves
+[2017-10-26 10:38:34] <sarang> It does reduce down nicely to a blockchain structure too under that topology
+[2017-10-26 10:39:04] <sarang> Another big issue with it is voting efficiency for a new block
+[2017-10-26 10:39:05] <hyc> it's probably sufficient for seprate ecosystems to have independent blockchains. as long as we can do atomic swap or something when needed.
+[2017-10-26 10:39:17] <sarang> There are claims of constant time, but we've only gotten it down to quadratic
+[2017-10-26 10:42:14] <suraeNoether> aaaaack
+[2017-10-26 10:42:22] <sarang> Welcome!
+[2017-10-26 10:42:31] <suraeNoether> hi
+[2017-10-26 10:42:35] <suraeNoether> how is everyone?
+[2017-10-26 10:42:36] → rodolfo joined (~rodolfo91@p20030065EA5CA86220ABD494D378C28C.dip0.t-ipconnect.de)
+[2017-10-26 10:42:55] <suraeNoether> punctuality is not my strong suit
+[2017-10-26 10:43:59] <suraeNoether> so, everyone: greetings! 
+[2017-10-26 10:44:11] <endogenic> sarang: what do you see being research priority after alternate proof scheme investigation? how do you rank the items (which are actually real) in fireice's 'disclosure'? https://www.reddit.com/r/Monero/comments/782pfu/skepticism_sunday/doql39u/
+[2017-10-26 10:44:40] <suraeNoether> i didn't see him post this, so let me catch up
+[2017-10-26 10:44:49] <suraeNoether> in response to your earlier questions
+[2017-10-26 10:44:52] <endogenic> oh hey surae
+[2017-10-26 10:45:31] <suraeNoether> in response to your earlier questions about proof forms: I don't like that our asic-resistance relies on specific computer architecture rather than provable security principles.
+[2017-10-26 10:46:08] <moneromooo> ASIC resistance has to rely of specific computer architecture, since an ASIC is a compuuter.
+[2017-10-26 10:46:30] <hyc> hmmm. you believe there's a mathematical principle we can exploit, that's infeasible on ASICs?
+[2017-10-26 10:46:33] <suraeNoether> no, what i mean by that is this
+[2017-10-26 10:46:40] <suraeNoether> hyc yes
+[2017-10-26 10:47:04] <suraeNoether> that's the exponential trade-off in space-time complexity problems: if you try to improve the speed of doing something, you exponentially worsen how much space is required to do it
+[2017-10-26 10:47:40] <suraeNoether> so even if you build a faster asic
+[2017-10-26 10:47:46] <endogenic> suraeNoether: would it be possible for an asic to spoof being a gpu or cpu?
+[2017-10-26 10:47:50] <sarang> I admit I'm a little irritated at the fireice posting endogenic linked to
+[2017-10-26 10:47:58] <endogenic> sarang: don't worry :)
+[2017-10-26 10:48:16] <sarang> I'm not worried, just smh
+[2017-10-26 10:48:49] <hyc> still think he's a provacateur
+[2017-10-26 10:48:55] <endogenic> unknown
+[2017-10-26 10:48:58] <suraeNoether> so moneromooo what i mean is this: the reason cryptonight is asic-resistant is because the L3 cache is the slowest part of the computer, and there's only so much you can cram into it
+[2017-10-26 10:49:12] <hyc> all that BS about how wonderful his mining software is. when e.g. he just copied Wolf's AMD GPU code.
+[2017-10-26 10:49:12] <suraeNoether> and that's just a computer architecture fact, even with asics
+[2017-10-26 10:49:23] <endogenic> hyc: what if his mining code has a vuln in it
+[2017-10-26 10:49:25] <endogenic> just teasing
+[2017-10-26 10:49:33] <endogenic> s/vuln/backdoor/
+[2017-10-26 10:49:38] <suraeNoether> i would prefer to come up with a proof-system that satisfies a trade-off like the one above
+[2017-10-26 10:50:00] <endogenic> suraeNoether: my point is, if the proof software can determine it's not an asic, isn't that able to be relied upon and treated w/the same quality of security principles?
+[2017-10-26 10:50:08] <hyc> surae I don't see how CryptoNight hasn't already exercised that principle
+[2017-10-26 10:50:10] <endogenic> just wanted to get that q out cause i gtg
+[2017-10-26 10:50:43] <hyc> L3 isn't the slowest component. DRAM is.
+[2017-10-26 10:50:57] <hyc> the larger the working set, the slower things go
+[2017-10-26 10:50:57] <suraeNoether> hyc well the fundamental hashing game that cryptonight implements doesn't require the tradeoff: find nonce with sufficiently small hash, etc
+[2017-10-26 10:51:17] <suraeNoether> that is true hyc
+[2017-10-26 10:51:24] <suraeNoether> we simply picked a hash function that exploits the slowness of computer architecture
+[2017-10-26 10:51:36] <suraeNoether> rather than picking *a whole game* that *can't be solved* without suffering that trade-off
+[2017-10-26 10:52:28] <suraeNoether> in the first case, someone might cleverly construct an asic that is sufficiently quick to be worth taping out. in the second case, properties of the underlying game keep that from being possible
+[2017-10-26 10:53:25] <suraeNoether> besides, i feel like we should be operating under the following principle: progress is inevitable, someone is going to push out asics or something close enough to asics, and it will happen eventually. maybe next year, maybe 2025...
+[2017-10-26 10:53:43] <suraeNoether> in the meantime, we should simply have fallback plans as various "hard" problems become easier as computer science progresses
+[2017-10-26 10:53:49] <suraeNoether> (that's my safe answer)
+[2017-10-26 10:54:17] <suraeNoether> (my paranoid answer is: why shouldn't we assume that some chinese company isn't trying to tape out asics right now?)
+[2017-10-26 10:54:18] <sarang> I think that's a good application of a somewhat unwritten rule of modern crypto
+[2017-10-26 10:54:28] <suraeNoether> *nod* same principle as concrete security
+[2017-10-26 10:54:30] <sarang> If it's not broke, assume it will be and have something else tested and ready
+[2017-10-26 10:54:34] <suraeNoether> re-evaluate every few years
+[2017-10-26 10:54:35] <suraeNoether> yeap
+[2017-10-26 10:55:05] <sarang> Such a plan may also deter ASIC development, but who knows
+[2017-10-26 10:55:10] <suraeNoether> *no*
+[2017-10-26 10:55:13] <sarang> I don't know the minds of ASIC devs
+[2017-10-26 10:55:17] <sarang> ?
+[2017-10-26 10:55:19] <suraeNoether> but critically, before putting all this energy into things like asic resistance
+[2017-10-26 10:55:34] <suraeNoether> i meant to nod *nod* lol
+[2017-10-26 10:55:39] <sarang> oh lol
+[2017-10-26 10:55:39] <sarang> ok
+[2017-10-26 10:55:47] <sarang> *yes*
+[2017-10-26 10:56:05] <suraeNoether> anyway, critically important before we actually put these anti-asic resistant plans into place is to determine if there will actually be improved security, improved decentralization, both, or neither from such a tactic
+[2017-10-26 10:56:06] <sarang> My aeroplane will be descending soon, rendering this IRC session complete
+[2017-10-26 10:56:23] <suraeNoether> i'm inclined to believe increased decentralization is the best
+[2017-10-26 10:56:37] <suraeNoether> but i want to consider the alternative argument before diving in head first.
+[2017-10-26 10:57:02] <sarang> If I had to guess, I'd wager the average Moneroan would prefer increased decentralization as well
+[2017-10-26 10:57:07] <sarang> as a matter of principle
+[2017-10-26 10:57:14] <suraeNoether> i feel like it's part of the social contract of cryptonote
+[2017-10-26 10:59:58] <suraeNoether> like, if the alternative to asics is proof-of-storage, commoditized mining, then i don't see any good reason every network admin in the world won't just point their whole databases at monero to mine with their empty space... which seems good, except the fact that suddenly IBM or microsoft or any large state actor with access to massive amounts of hard drive space (NSA facilities are notoriously
+[2017-10-26 10:59:58] <suraeNoether> massive) can just kick the monero network in the nuts with zero effort or cost
+[2017-10-26 11:00:36] <suraeNoether> the lack of cost is what bugs me about it
+[2017-10-26 11:01:24] <sarang> You mean lack of ongoing cost of storage?
+[2017-10-26 11:01:30] <sarang> Buy once, then you have it forever-ish?
+[2017-10-26 11:01:49] <sarang> As opposed to proof of work, where electricity cost scales over time
+[2017-10-26 11:03:45] <suraeNoether> if an assistant CTO at AWS got a bug up their ass, and we were doing proof-of-space-retrieval-and-erasure (posers), AWS could just hop onto the monero network with a few petabytes of available space, wreck the difficulty, sweep up most block rewards for a few hours, crash the market, then turn all his hardware back off without suffering any cost at all before his boss woke up the next morning.
+[2017-10-26 11:04:28] <suraeNoether> right now, doing something like that would blow so much electricity with such a weird volatile reward that AWS isn't interested in fuckery like that
+[2017-10-26 11:04:35] <pigeons> to be fair, the "social contract of cryptonote" was a scam from the beginning. maybe social contract of monero's use of cryptonote
+[2017-10-26 11:04:40] <suraeNoether> the sunk cost of equipment, the sunk cost of electricity, these are disincentives
+[2017-10-26 11:05:21] <suraeNoether> pigeons yeah, but even in the white paper there is clearly a value being communicated "we value egalitarian mining and we think asics are bad for the mining economy." and that definitely carried through to the monero community
+[2017-10-26 11:06:39] <suraeNoether> so anyway, that's what i've been thinking about. We're going to try this whole research meeting thing again next week.
+[2017-10-26 11:07:17] <suraeNoether> I want to apologize to everyone for doing this twice this week
+[2017-10-26 11:07:26] <suraeNoether> we're off to a rocky start in that regard, but we'll get a handle on it
+
+*****
+
+[2017-10-30 10:00:35] <suraeNoether> Welcome everyone, to our second official (third unofficial) research meeting. fluffypony dEBRUYNE luigi1111 knaccc 
+[2017-10-30 10:00:54] <suraeNoether> uhm... ArcticMine... uhm... who else should we ping? moneromooo
+[2017-10-30 10:00:59] <luigi1111w> official counts toward unofficial?
+[2017-10-30 10:01:01] <suraeNoether> endogenic
+[2017-10-30 10:01:25] <suraeNoether> is an official meeting also unofficial? is it a subset relation? anyway
+[2017-10-30 10:01:31] <suraeNoether> kenshi84 too
+[2017-10-30 10:01:58] <suraeNoether> ok so, I don't really have an agenda. I want me and sarang to share with the group what we've been doing these past few weeks, and if anyone else has been doing any interesting research, let's talk about it
+[2017-10-30 10:02:03] <suraeNoether> sarang, you wanna go first?
+[2017-10-30 10:02:07] <sarang> Sure
+[2017-10-30 10:02:21] <sarang> I've been working a lot of readings mainly on some interesting new stuff
+[2017-10-30 10:02:34] <sarang> Hash-based accumulators are becoming a thing
+[2017-10-30 10:02:56] <sarang> where you can use interesting pairing relations to prove membership or nonmembership in a set
+[2017-10-30 10:03:09] <sarang> the nifty part is that the manager of the set is untrusted
+[2017-10-30 10:03:12] <suraeNoether> you've mentioned those several times. are all hash-based accumulators based on pairings crypto?
+[2017-10-30 10:03:21] <suraeNoether> or are you using pairing differently
+[2017-10-30 10:03:32] <sarang> Oh, I mean the structure involves pairs of elements as opposed to single elements
+[2017-10-30 10:03:40] <suraeNoether> ah, ok
+[2017-10-30 10:03:48] <sarang> This is a newer structure that gives nice efficiencies
+[2017-10-30 10:04:02] <suraeNoether> so can we use a hash-based accumulator without a trusted set-up to do something *akin* to ring signatures?
+[2017-10-30 10:04:13] <sarang> That's my interest
+[2017-10-30 10:04:27] <sarang> The security models would have to be analyzed in that new context
+[2017-10-30 10:04:45] <silur> sarang does the order of these pairs have any effect on the security?
+[2017-10-30 10:04:49] <sarang> None
+[2017-10-30 10:04:55] <silur> okay
+[2017-10-30 10:05:00] <sarang> What it does
+[2017-10-30 10:05:14] <sarang> is give you a fast way of demonstrating membership or nonmembership
+[2017-10-30 10:05:29] <sarang> by using the pairings akin to an ordering
+[2017-10-30 10:05:42] <hyc> ... reminds me of bloom filters, fast set membership
+[2017-10-30 10:06:04] <suraeNoether> hyc i'm sorry i forgot to ping you
+[2017-10-30 10:06:11] <hyc> no prob
+[2017-10-30 10:06:15] <sarang> I've also been continuing investigations into aggregate signatures, something surae brought to my attention a while back
+[2017-10-30 10:06:27] <sarang> the idea being that you can compress a set of signatures down to a single one
+[2017-10-30 10:06:31] <suraeNoether> hyc bloom filters do fast set non-membership, not fast set membership, but both are based on hashes
+[2017-10-30 10:06:45] <sarang> Verification is still linear
+[2017-10-30 10:06:48] <sarang> but space is constant
+[2017-10-30 10:07:05] <sarang> There is of course a downside, which is that it requires a bilinear map between groups with particular properties
+[2017-10-30 10:07:23] <sarang> It's apparently still an open question whether it's possible to construct an aggregate that doesn't require full linear verification
+[2017-10-30 10:07:41] <suraeNoether> i didn't realize agg sigs used pairings
+[2017-10-30 10:08:04] <sarang> The ones I've seen use bilinear maps to allow for third-party verification
+[2017-10-30 10:08:10] <sarang> It's a clever and fairly simple setup
+[2017-10-30 10:08:12] <suraeNoether> i found a few new sorts of signatures we maybe could look into, i have a list
+[2017-10-30 10:08:23] <sarang> What gets into the weeds is the way the security models account for it all
+[2017-10-30 10:08:31] <sarang> And there are some caveats dealing with repeated messages
+[2017-10-30 10:08:55] <sarang> Of course, subaddys went out already
+[2017-10-30 10:09:07] <sarang> SPECTRE is something that's on the radar for surae and I
+[2017-10-30 10:09:11] <suraeNoether> andytoshi linked his slides about atomic swaps and at least one type of sig i'm not totally familiar with was mentioned, and I forget what it's called. Aggregator signatures? or something like that.
+[2017-10-30 10:09:33] <sarang> And I'm still working on new work on proofs of proof-of-work
+[2017-10-30 10:09:53] <sarang> that, if implemented ideally, could offer significant savings in blockchain space/analysis
+[2017-10-30 10:10:01] <sarang> Logarithmically
+[2017-10-30 10:10:12] <suraeNoether> the past several weeks, i've been putting several hours a day into multisig... current version I will link tomorrow. I have had to modify the scheme to take into account multiple outputs, which isn't a huge deal, but changed notation throughout the paper pretty significantly, so
+[2017-10-30 10:10:31] <sarang> It's an ever-moving target
+[2017-10-30 10:10:32] <suraeNoether> i will link the current version tomorrow after i give it yet another read-through
+[2017-10-30 10:10:43] <suraeNoether> yeah, ring multisignatures are delicate
+[2017-10-30 10:10:51] <suraeNoether> but i've also been looking into spectre, as sarang mentioned
+[2017-10-30 10:11:14] <suraeNoether> i have a current working implementation on my github... but it takes quadratic time N^2 to organize N blocks
+[2017-10-30 10:11:18] <suraeNoether> which is not scalable
+[2017-10-30 10:11:25] <sarang> You wanna mention that email?
+[2017-10-30 10:11:27] <suraeNoether> i contacted Sompolinsky, one of the authors
+[2017-10-30 10:11:28] <suraeNoether> yeah
+[2017-10-30 10:11:39] <suraeNoether> I asked about the constant-time implementation they claim, and he got back to me
+[2017-10-30 10:12:25] <suraeNoether> my intuition about how to make this constant time was correct.... the algorithm can determine the order of leaves without any input from parents, grandparents, or grand*parents of those leaves
+[2017-10-30 10:12:49] <suraeNoether> so working from the leaves backwards, and only organizing a constant number of blocks is sufficient to get computation time down to constant
+[2017-10-30 10:12:50] <sarang> But at a yet-to-be-analyzed cost
+[2017-10-30 10:12:52] <suraeNoether> which is sort of a cheat
+[2017-10-30 10:12:54] <suraeNoether> yes
+[2017-10-30 10:13:11] <suraeNoether> there is an attack where someone purposely chooses a block deep into the blockDAG
+[2017-10-30 10:13:30] <suraeNoether> this forces each node on the network to organize deeply into the blockDAG, which best case is a quadratic experience. pretty nasty.
+[2017-10-30 10:13:43] <suraeNoether> my first thought was our traditional split between full nodes and lightweight nodes
+[2017-10-30 10:13:46] <sarang> So it struck me as basically a DoS?
+[2017-10-30 10:14:08] <suraeNoether> uhm... kinda. it's DoS in the sense that ostensibly *honest* blocks can be used in the attack
+[2017-10-30 10:14:20] <suraeNoether> and it's not really an attack in a security sense, it's an attack that forces miners to blow CPU power
+[2017-10-30 10:14:27] <sarang> Right
+[2017-10-30 10:14:29] <sarang> That's what I mean
+[2017-10-30 10:15:07] <suraeNoether> so my first thought was full nodes that organize the top 2% of the blockDAG all the time, and lightweight nodes that only go back a certain # of generations from the leaves and avoid blocks too close to the genesis block
+[2017-10-30 10:15:46] <suraeNoether> both sorts of nodes can do their thing in constant time. the full nodes will have larger constants, the lightweights will have smaller constants
+[2017-10-30 10:16:22] <sarang> So this reminded me of the discussion from a while back about ignoring blocks that are old enough
+[2017-10-30 10:16:26] <sarang> and the pros and cons of doing so...
+[2017-10-30 10:16:41] <suraeNoether> well we already reject blocks if their timestamps are outliers
+[2017-10-30 10:17:14] <sarang> So you think maybe the attack is irrelevant due to the time constraint?
+[2017-10-30 10:17:15] <suraeNoether> the timestamp isn't really the problem, it's where the block is placed in the tree. and we can't really reject blocks that are too deep into the blockDAG, because I don't see a good way for two different miners to agree what "too deep" means
+[2017-10-30 10:17:52] <suraeNoether> i think doing a full/light sort of split as above will avoid the attack for the most part, but it will tweak incentives
+[2017-10-30 10:19:20] <suraeNoether> but it's ... tricky
+[2017-10-30 10:19:23] <suraeNoether> anyway
+[2017-10-30 10:19:28] <suraeNoether> that's what i've been doing
+[2017-10-30 10:20:28] <suraeNoether> oh, on multisig, I mentioned this earlier this week, but i'm getting quite confident we'll be done with it pretty soon. code review is moving forward bit by bit (heh)
+[2017-10-30 10:20:37] ⇐ dnaleor quit (~dnaleor@78-23-74-78.access.telenet.be): Quit: Leaving
+[2017-10-30 10:21:35] → thrmo_ joined (~thrmo@unaffiliated/thrmo)
+[2017-10-30 10:21:35] <suraeNoether> is anyone else working on any interesting projects? i know that we've had discussions in here recently about PRNG and such, and I'm curious about what people are working on
+[2017-10-30 10:21:48] <sarang> Oooh yes, PRNG
+[2017-10-30 10:21:53] ⇐ thrmo quit (~thrmo@unaffiliated/thrmo): Quit: Waiting for .007
+[2017-10-30 10:22:09] <sarang> I have no further updates, since I'm not sure if the devs took any definitive action it
+[2017-10-30 10:22:18] <sarang> There was also an observation about the use of keccak vs. SHA-3
+[2017-10-30 10:22:19] <silur> I'm working on a quantum-hard shuffle that can be used to construct PRNG-s
+[2017-10-30 10:22:46] <suraeNoether> silur: freaking awesome. by "working on" do you mean... writing a paper? working on code?
+[2017-10-30 10:22:59] <silur> writing a paper
+[2017-10-30 10:23:02] <suraeNoether> and what makes a shuffle "hard"? trying to un-shuffle?
+[2017-10-30 10:23:23] <sarang> Determining the end state w/o going through all steps?
+[2017-10-30 10:23:25] <silur> trying to reveal the previous state of the elements of the set
+[2017-10-30 10:23:37] <silur> or "peeking under the cards"
+[2017-10-30 10:23:42] <sarang> Nice, so it's a one-way function
+[2017-10-30 10:23:47] <suraeNoether> yup
+[2017-10-30 10:23:52] <suraeNoether> very cool
+[2017-10-30 10:24:12] <suraeNoether> are you a student, a professor, a hobbyist, silur?
+[2017-10-30 10:24:22] <suraeNoether> i still haven't read that shuffle paper you sent me :(
+[2017-10-30 10:24:40] <silur> I'll be a prof from next september on crypto
+[2017-10-30 10:25:03] <sarang> Congrats!
+[2017-10-30 10:25:05] <suraeNoether> congratulations! 
+[2017-10-30 10:25:13] <silur> I'm at the edge of leaving ethereum foundation currently
+[2017-10-30 10:25:32] <silur> thanks :)
+[2017-10-30 10:25:42] <sarang> Any other interesting projects?
+[2017-10-30 10:25:49] <sarang> Or suggestions on directions to go?
+[2017-10-30 10:26:09] <unknownids> congrats!
+[2017-10-30 10:26:33] <suraeNoether> i'm also reading up on succinct posets, which are ... a new datastructure. btw for anyone curious, every DAG induces a poset and every poset is a DAG
+[2017-10-30 10:26:41] <suraeNoether> data structure*
+[2017-10-30 10:27:14] <sarang> Yeah, that poset paper looks quite interesting
+[2017-10-30 10:27:20] <suraeNoether> they are significantly more compact than representing a DAG using upper triangular matrices, and they allow for constant time to determine whether one item precedes another
+[2017-10-30 10:27:29] <sarang> I find the tradeoffs between storage and time to be always fascinating
+[2017-10-30 10:27:46] <suraeNoether> so using those instead of the data structures i was coidng is going to lead to about a 75% reduction in computation time (but that's still quadratic...)
+[2017-10-30 10:27:57] <silur> wow
+[2017-10-30 10:28:13] <suraeNoether> https://arxiv.org/pdf/1204.1957.pdf
+[2017-10-30 10:29:09] <suraeNoether> and lastly, one more thing i'm kind of casually thinking about is andytoshi's idea for outputs where "addresses change." my best idea so far is to have each output be addressed to a *set* of destination addresses, each with their own timelock, but all sharing a key image (somehow)(
+[2017-10-30 10:29:48] <suraeNoether> really the challenge is to come up with a representation of a single key image for a single output but with multiple destination addresses each with their own timelock
+[2017-10-30 10:30:14] <suraeNoether> or rather: this would be one possible solution to the atomic swap refund transaction problem andytoshi brought up the other day.
+[2017-10-30 10:31:07] <suraeNoether> and that's all i have been working on 
+[2017-10-30 10:31:32] <suraeNoether> other than silur, is anyone working on anything fun?
+[2017-10-30 10:31:42] <suraeNoether> or not fun as the case may be
+[2017-10-30 10:32:12] <sarang> http://nick.mtvnimages.com/nick/promos-thumbs/videos/spongebob-squarepants/spongebob-squarepants-fun-song-16x9.jpg?maxdimension=&quality=0.60
+[2017-10-30 10:35:13] <suraeNoether> okay
+[2017-10-30 10:35:21] <moneromooo> About PRNG: I ported the Bitcoin PRNG to monero, it's on github if anyone is curious.
+[2017-10-30 10:35:40] <moneromooo> I added a contentious patch, so that one will either go, or be modified.
+[2017-10-30 10:35:57] <suraeNoether> is the PRNG the contentious part or?
+[2017-10-30 10:36:08] <moneromooo> I added seeding from /dev/random at startup.
+[2017-10-30 10:36:11] <sarang> Can you link moneromooo ?
+[2017-10-30 10:36:17] <suraeNoether> oh i see heh
+[2017-10-30 10:36:28] <suraeNoether> i don't know enough about the various pros and cons of that approach to have an opinion
+[2017-10-30 10:36:28] <moneromooo> smooth thinks it should only be done if getrandom is not used, so I'll probably do this.
+[2017-10-30 10:36:56] <suraeNoether> on an administrative level, sarang: any word on the weekend course for talented high school students thing? i'm going to contact folks at the local universities around me this week to feel out the possibilities for a 2018 1-week summer workshop for undergraduates.
+[2017-10-30 10:37:04] <moneromooo> https://github.com/monero-project/monero/pull/2731
+[2017-10-30 10:37:11] <suraeNoether> thanks moneromooo 
+[2017-10-30 10:37:22] <sarang> Ah yes, thanks for the reminder surae
+[2017-10-30 10:37:37] <sarang> So there has been interest expressed in two school programs
+[2017-10-30 10:37:45] <suraeNoether> if you want we can collab on the proposal for the springtime one
+[2017-10-30 10:37:53] <sarang> One would be a longer-term effort to work with North Carolina STEM students
+[2017-10-30 10:38:12] <sarang> A shorter but logistically-simpler one is with Duke University for a spring weekend course for gifted high schoolers
+[2017-10-30 10:38:20] <sarang> That's a bit tougher due to the extremely short course time
+[2017-10-30 10:39:56] <suraeNoether> yeah, i like the idea of spending a week or three with undergrads to teach them about crypto and maybe fork bitcoin or monero and mess with the code or something....  but i'm not so sure how much we can even do over one weekend with high school students 
+[2017-10-30 10:40:19] <sarang> So maybe it's better to nix the weekend course idea and try for the longer course?
+[2017-10-30 10:40:27] <sarang> I don't have a good sense of the logistics required for that
+[2017-10-30 10:40:31] <sarang> But I'm investigating still
+[2017-10-30 10:41:07] <sarang> Another option is to do a Duke summer program that's 3 weeks long
+[2017-10-30 10:41:11] <suraeNoether> sarang let's try to set aside a few hours this week to figure out logistics of this. i would love for the monero community to fund up some education programs. that's good PR for everyone, and starts a pipeline of education into the cryptocurrency world... but i don't want to burden the monero community unnecessarily (for one thing) and if we can get a university to devote some money to this too, it
+[2017-10-30 10:41:11] <suraeNoether> adds legitimacy
+[2017-10-30 10:41:26] <sarang> The Duke summer one wouldn't require any funding from the community
+[2017-10-30 10:41:31] <sarang> since students are paying to go to it
+[2017-10-30 10:41:33] <suraeNoether> ok, so we have the Duke TIPP thing as a possibility there to reduce the burden on the community
+[2017-10-30 10:41:49] <sarang> Yep, and because they already have a supply of gifted students identified
+[2017-10-30 10:41:57] <suraeNoether> and maybe the first summer we should do something like that rather than taking point ourselves on organizing the program
+[2017-10-30 10:42:04] <sarang> Let's talk about that option
+[2017-10-30 10:42:09] <suraeNoether> cool
+[2017-10-30 10:42:16] <sarang> I've proposed new summer courses before. It's more involved than the weekend ones, but not bad at all
+[2017-10-30 10:42:28] <sarang> We both meet the instructor qualifications
+[2017-10-30 10:42:42] <suraeNoether> can you put out feelers in that direction and then we can talk about the responses you receive later this week?
+[2017-10-30 10:42:50] <sarang> Can do
+[2017-10-30 10:43:00] <suraeNoether> cool
+[2017-10-30 10:43:02] <sarang> I need to find the timeline for new course proposals for the summer. We may have missed it already
+[2017-10-30 10:43:12] <suraeNoether> oh, that would suck
+[2017-10-30 10:43:17] <sarang> Yeah, I'll check
+[2017-10-30 10:43:26] <sarang> They're always hunting for new STEM courses though
+[2017-10-30 10:43:30] <sarang> So they might make an exception
+[2017-10-30 10:43:34] <sarang> especially for me :D
+[2017-10-30 10:43:52] <suraeNoether> ok, maybe make a call or shoot an email today then, keep me updated
+[2017-10-30 10:44:09] <suraeNoether> okay, anyone else have anything they want to discuss?
+[2017-10-30 10:45:55] <sarang> Just emailed the bosses
+[2017-10-30 10:46:24] <suraeNoether> cool
+[2017-10-30 10:46:30] <suraeNoether> Okay, well if no one has anything else for now
+[2017-10-30 10:46:30] <knaccc> I was kinda wondering if you could give a brief explanation of whether bileanear pairings might be good for the future, for people like me who have no idea what it means
+[2017-10-30 10:46:37] <suraeNoether> aha
+[2017-10-30 10:46:43] <sarang> Surae, wanna take this?
+[2017-10-30 10:46:50] <suraeNoether> actually not at all
+[2017-10-30 10:46:54] <knaccc> hehe
+[2017-10-30 10:46:55] <suraeNoether> ha
+[2017-10-30 10:46:56] <suraeNoether> okay i will
+[2017-10-30 10:46:57] <sarang> lol
+[2017-10-30 10:47:59] <suraeNoether> ok knaccc so... bilinear crypto is essentially a way of taking an easy group and gluing it with  hard group into a pair. And you do operations on the pair of curve points instead of an individual curve point. tthis is on it's own, useless
+[2017-10-30 10:48:03] <silur> surae you just opened a world before me saying that posets are isomorphic to DAGs how I didn't notice this <3
+[2017-10-30 10:48:19] <suraeNoether> silur my dissertation is aaaaaal about po-groups
+[2017-10-30 10:48:29] <suraeNoether> if, however, you have a "bilinear pairing"
+[2017-10-30 10:48:37] <suraeNoether> you can move stuff from one of these two groups to the other
+[2017-10-30 10:48:48] <knaccc> so bilinear pairingss still use e.g. curve25519/ed25519?
+[2017-10-30 10:48:55] <sarang> One useful case is aggregate signatures that use exponentiation
+[2017-10-30 10:49:01] <suraeNoether> afaik there are not many curves compatible with bilinear pairing
+[2017-10-30 10:49:11] <sarang> The transfer between groups is what allows for verification
+[2017-10-30 10:49:15] <suraeNoether> hence CSW's weird meltdown on twitter
+[2017-10-30 10:49:25] <knaccc> ah so it'd be a diffferent curve that would have to be used then?
+[2017-10-30 10:49:27] <sarang> Yeah, it's an idealization right now
+[2017-10-30 10:49:40] <suraeNoether> so, a really dumb way to describe it is: if i need to know something about (A,B+C), I can hit it with the bilinear pairing e and treat that like (A+C,B)
+[2017-10-30 10:49:55] <suraeNoether> or rather
+[2017-10-30 10:49:56] <knaccc> and what's an easy group vs hard group?
+[2017-10-30 10:50:05] <suraeNoether> oh, like Zq versus X25519
+[2017-10-30 10:50:11] <knaccc> oh i see
+[2017-10-30 10:50:20] <suraeNoether> with bilinear pairings, the DDH problem is trivial to solve
+[2017-10-30 10:50:23] <sarang> You can also look at hardness as meaning hardness assumptions of problems
+[2017-10-30 10:50:24] <sarang> yeah
+[2017-10-30 10:50:29] <suraeNoether> *nod*
+[2017-10-30 10:50:41] <sarang> So the security definitions get really picky, for good reason
+[2017-10-30 10:50:50] <knaccc> are you aware of any performance implications of bilinear pairings
+[2017-10-30 10:51:32] <suraeNoether> yeah so, a linear function is one that behaves like this: f(a*X + b*Y) = a*f(X) + b*f(Y).  a *bilinear* function has two inputs instead of one, (a*X+b*Y, c*Z + d*W), and it behaves linearly in each coordinate
+[2017-10-30 10:51:35] <suraeNoether> knaccc i am not
+[2017-10-30 10:51:44] <sarang> It would depend on the groups and the mapping
+[2017-10-30 10:52:01] <sarang> I think the current implementation limitations mean there hasn't been solid analysis on that yet
+[2017-10-30 10:52:09] <suraeNoether> did everyone see Craig Wright embarassing himself about this stuff, btw? on reddit and twitter
+[2017-10-30 10:52:12] <sarang> Also depends on our use case
+[2017-10-30 10:52:25] <sarang> Signature aggregation is just one application that sparked our interest
+[2017-10-30 10:52:27] <sarang> No!
+[2017-10-30 10:52:30] <sarang> Link plz surae
+[2017-10-30 10:52:35] <knaccc> can you define signature aggregation?
+[2017-10-30 10:52:35] <suraeNoether> oh haha
+[2017-10-30 10:52:57] <suraeNoether> https://www.reddit.com/r/Bitcoin/comments/79bnox/vitalik_and_uandytoshi_calling_out_csw_for_his/?utm_term=7fd17439-49d1-4d0f-90c7-a42272b3f896&utm_medium=search&utm_source=reddit&utm_name=frontpage&utm_content=1
+[2017-10-30 10:53:26] <suraeNoether> CSW claims he invented bitcoin and he used the secp256k1 curve because it's compatible with bilinear pairings
+[2017-10-30 10:53:43] <silur> ahahhaha :D
+[2017-10-30 10:53:51] <suraeNoether> and while that is kind of technically true, you need to store 10^70 or more bits, you know, a number comparable to the number of particles in the universe
+[2017-10-30 10:54:07] <suraeNoether> very entertaining read
+[2017-10-30 10:54:37] <suraeNoether> knaccc sig aggregation is a way of taking one or more signatures and combining them into a single signature, aggregating them
+[2017-10-30 10:54:58] <knaccc> for the purposes of saving space, verification time, both?
+[2017-10-30 10:55:31] <sarang> knaccc you save space
+[2017-10-30 10:55:34] <sarang> it's constant in the # of sigs
+[2017-10-30 10:55:38] <sarang> verification is currently linear
+[2017-10-30 10:55:53] <sarang> there are implications for things like certificate chains etc.
+[2017-10-30 10:56:21] <knaccc> ah that leads me to my last quick question: i think someone mentioned that it was 'provable' that verification time had to be always linear
+[2017-10-30 10:56:42] <suraeNoether> well, ruffing proved that a ring sig scheme is linear in verification time
+[2017-10-30 10:56:54] <sarang> Agg. sigs are not ring sigs
+[2017-10-30 10:56:58] <knaccc> ah ok that was my question. it's ring signature specific then
+[2017-10-30 10:57:01] <sarang> They can be completely independent sigs
+[2017-10-30 10:57:01] <knaccc> aha
+[2017-10-30 10:57:01] <silur> do we have the updated ruffCT paper?
+[2017-10-30 10:57:04] <knaccc> i see
+[2017-10-30 10:57:05] <sarang> and in fact the messages have to be distinct
+[2017-10-30 10:57:15] <knaccc> cool thanks sarang suraeNoether
+[2017-10-30 10:57:22] <silur> I started on overview on that but sarang and surae told me it's outdated
+[2017-10-30 10:58:01] <suraeNoether> silur i can email you the copy i received from ruffing, but the bootle paper isn't private and ruffing's scheme is "Bootle + regular old multisig"
+[2017-10-30 10:58:13] <suraeNoether> https://eprint.iacr.org/2015/643
+[2017-10-30 10:59:32] <suraeNoether> silur the ruffCT scheme basically does this: for each output used in the signature, build a row of a matrix, entries are ring members. for each column of your resulting matrix, you should have a commitment to an amount, and the signature is essentially proving with an NIZK proof that you can open one of the commitments to zero
+[2017-10-30 10:59:41] <suraeNoether> the idea is that you know the actual keys in one of those columns
+[2017-10-30 11:00:45] <suraeNoether> but the code on the github is functional and up to date, and if you compare it to the bootle paper i'm pretty sure you'll be able to figure it out without me needing to ask ruffing for more permission to share his paper that says "DO NOT SHARE" on the top lol
+[2017-10-30 11:01:02] <silur> okay thanks
+[2017-10-30 11:02:22] <suraeNoether> okay, everyone, I think I'm going to call this meeting (seems like knaccc ran out of questions)
+[2017-10-30 11:02:30] <knaccc> hehe
+[2017-10-30 11:02:48] <suraeNoether> anyone who puts a pull request onto my github with the logs will win my respect and admiration.
+[2017-10-30 11:03:18] <suraeNoether> in the meantime: keep your private keys private, everyone!
+[2017-10-30 11:03:28] <sarang> hunter2
+[2017-10-30 11:03:31] <dEBRUYNE> suraeNoether: Perhaps better to PR them to the website?
+[2017-10-30 11:03:37] <suraeNoether> heh
+[2017-10-30 11:03:48] <dEBRUYNE> The monero website that is, then they end up here -> https://getmonero.org/blog/
+[2017-10-30 11:04:24] <suraeNoether> dEBRUYNE: i didn't know that. can you link me the repo?
+[2017-10-30 11:04:24] <sarang> </meeting>

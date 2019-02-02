@@ -1,0 +1,173 @@
+[2018-10-29 09:59:46] <sarang> Greetings to everyone, and welcome to our meeting, which will likely go pretty quickly
+[2018-10-29 10:00:03] <sarang> Pipe in if you're here!
+[2018-10-29 10:00:13] ⇐ cardboardoranges quit (~cardboard@65.112.8.201): Quit: cardboardoranges
+[2018-10-29 10:00:25] ⇐ rottensalty07 quit (~rottensal@unaffiliated/rottensalty07): Quit: Leaving
+[2018-10-29 10:01:00] <sarang> To start with, let's review happenings over the last week or so
+[2018-10-29 10:01:04] <sarang> suraeNoether: care to begin?
+[2018-10-29 10:01:32] <hyc> pipe
+[2018-10-29 10:01:47] <sarang> |
+[2018-10-29 10:02:09] <suraeNoether> Gosh sure
+[2018-10-29 10:02:13] <lurkinandlearnin> I'm tuning in
+[2018-10-29 10:02:23] <suraeNoether> This past week, I've been working on my graph-theoretic security paper
+[2018-10-29 10:02:26] — IsthmusCrypto pipes
+[2018-10-29 10:02:42] <suraeNoether> calling it a security paper now because i'm pretty sure that my main contribution is formalizing a couple of security games, using graph theory
+[2018-10-29 10:02:51] ⇐ hrumag quit (~hrumag@185.128.27.102): Ping timeout: 252 seconds
+[2018-10-29 10:03:14] <sarang> I like the idea of using known graph theory to establish bounds on identifying possible spend histories
+[2018-10-29 10:03:38] <hyc> absolutely. what else is it besides a graph problem
+[2018-10-29 10:03:38] <sarang> those bounds, coupled with a goal for an "acceptable" number of alternate histories, is a neat approach to practical fungibility
+[2018-10-29 10:03:45] <sarang> for sure
+[2018-10-29 10:04:05] <suraeNoether> other than that, I've been chatting with folks about preparing for Monero Konferenco, and having meetings on my non-profit MAGIC (PM me if interested). i also spent some time last week working on a constant sized ring signature scheme, and i'm like, 50/50 on whether or  not i found a problem with it. :P
+[2018-10-29 10:04:34] <sarang> To what extent can we extract churn practices from this?
+[2018-10-29 10:04:45] <sarang> I consider that to be an important open question
+[2018-10-29 10:05:02] <msvb-lab> Hello.
+[2018-10-29 10:05:26] <suraeNoether> it's the first step in a long process; all i've confirmed using this message is that at least one churn for paranoid users is probably wise. i'm honestly not sure if there *is* a good answer to that question, sarang, and i'm not sure if htere's a good way to formalize *the lack of an answer*
+[2018-10-29 10:05:32] <suraeNoether> hello msvb-lab 
+[2018-10-29 10:05:33] <hyc> what's the goal? EABE attack establishes that 1 churn minimum is always required
+[2018-10-29 10:05:40] <suraeNoether> s/message/method
+[2018-10-29 10:05:53] <sarang> I would like us to be able to give semi-quantifiable results to avoid unnecessary churn
+[2018-10-29 10:06:01] <sarang> and churn that might harm fungibility if done badly
+[2018-10-29 10:06:09] <sarang> (and would also bloat the chain)
+[2018-10-29 10:06:15] <suraeNoether> hyc well, first and primary goal is to have a document to point at when folks start talking about ring intersection attacks in the future. secondary goal is to lay the groundwork for future security work. third goal is to have a nice publication come out of MRL, imo
+[2018-10-29 10:06:34] <hyc> ^ great
+[2018-10-29 10:06:44] → hahsun joined (~cloudissh@153.ip-51-75-64.eu)
+[2018-10-29 10:07:10] <sarang> It'll be a nice extended complement to our previous tech note on spends
+[2018-10-29 10:07:13] <hyc> btw, I have done a bad churn recently. did a sweep with multiple outputs, then received another exchange withdrawal.
+[2018-10-29 10:07:16] <suraeNoether> if we can get some quantifiable results on churn or ring size, that's great, but my hidden secret opinion is that: any choice we make in that regard is more or less arbitrary and informed by magic numbers being selected for convenience, not necessarily real security, and this is a fundamental problem with ring signatures
+[2018-10-29 10:07:18] <hyc> then did another sweep.
+[2018-10-29 10:07:40] <hyc> but the multiple outputs from the previous sweep are all obviously from the same block...
+[2018-10-29 10:07:41] <sarang> Right, and having something to back up that negative answer will be just as useful
+[2018-10-29 10:08:13] <sarang> So yeah, I look forward to the continuation of this work
+[2018-10-29 10:08:22] <sarang> I'll be reading over the current stuff today or tomorrow suraeNoether
+[2018-10-29 10:08:28] <suraeNoether> it's ... research. jerks and starts, i don't know everything yet or hte paper would already be written :D
+[2018-10-29 10:09:00] <sarang> Questions on this? Going once...
+[2018-10-29 10:09:17] <lurkinandlearnin> Sorry to divert the conversation but quick question: Are ring signatures not constant sized now? What difference would this make?
+[2018-10-29 10:09:24] <sarang> They are not constant
+[2018-10-29 10:09:33] <sarang> They grow linearly with the # of inputs/fakes
+[2018-10-29 10:09:55] <sarang> All existing constant methods suffer huge drawbacks, usually in terms of trust
+[2018-10-29 10:10:17] <sarang> Going twice...
+[2018-10-29 10:10:31] <sarang> OK, suraeNoether, another topic of your interest?
+[2018-10-29 10:11:45] <suraeNoether> lurkinandlearnin: ring sigs are linearly sized now, we are looking at a logarithmic scheme. the smaller our signatures are, making some qualifying assumptions about verificaiton times, the lower the cost for  a node to join our network
+[2018-10-29 10:12:02] <suraeNoether> uhm i'm just going ot pass it onto sarang for now and if anyone wants to chat about other topics later today, i'll be here all day
+[2018-10-29 10:12:12] <sarang> OK!
+[2018-10-29 10:12:26] <sarang> We've been examining output selection since our recent switch to a gamma distribution
+[2018-10-29 10:12:46] <lurkinandlearnin> Thanks for the answers. I'll be sure to read up on this.
+[2018-10-29 10:12:48] <sarang> Previously, there was a heuristic about assuming the newest ring member was the spender (but it can't be proven)
+[2018-10-29 10:13:00] <sarang> So we moved to a distribution that mirrors expected spend patterns
+[2018-10-29 10:13:34] <sarang> However, we choose blocks and then txns within those blocks, and the appearance of more empty blocks due to Bulletproofs, and in general the distribution of txns per block, means the selection has bias
+[2018-10-29 10:13:57] <sarang> You can read about this on reddit, or on the many high-quality outlets that report on reddit posts
+[2018-10-29 10:14:09] <sarang> Long term, we need a better strategy for handling coinbase outputs
+[2018-10-29 10:14:23] <sarang> Short term, we're tweaking the algorithm to select from a small group of blocks to mitigate against this
+[2018-10-29 10:14:26] <suraeNoether> "on the many high-quality outlets that report on reddit posts" <--- lulz
+[2018-10-29 10:14:37] <sarang> I predict it will cut the number of coinbase per ring in half from what we see now
+[2018-10-29 10:14:48] <sarang> This is part of the 0.4 release
+[2018-10-29 10:14:51] <sarang> and is not consensus
+[2018-10-29 10:15:05] <suraeNoether> i think there's a strong argument to be made that coinbase-only is used in coinbase transactions, but i'm concerned about provably spent sets amongst coinbase transactions becoming an issue
+[2018-10-29 10:15:17] <sarang> It's subtle
+[2018-10-29 10:15:38] <sarang> and public pools that broadcast mined outputs and payout txns make it trickier
+[2018-10-29 10:15:45] <sarang> There is not a silver bullet to this
+[2018-10-29 10:16:12] <sarang> But we have a mitigating fix in the wings, and are certainly open to more data that can help inform the decision of how best to handle this
+[2018-10-29 10:16:44] <lurkinandlearnin> Is just not selecting from empty blocks not an option?
+[2018-10-29 10:16:48] <sarang> It would be great if pools didn't broadcast payouts like this, and if we also had data on hand for coinbase spend patterns
+[2018-10-29 10:16:57] <sarang> lurkinandlearnin: then you could never spend coinbase
+[2018-10-29 10:17:09] <sarang> they'd be instantly identified
+[2018-10-29 10:17:12] <lurkinandlearnin> aha
+[2018-10-29 10:17:41] → hrumag joined (~hrumag@194.99.105.77)
+[2018-10-29 10:17:47] <sarang> So while what we have now is not the final answer to this, our current selection algo is arguably a big improvement over previous iterations
+[2018-10-29 10:17:50] <sarang> and is getting better
+[2018-10-29 10:17:59] <sarang> Having bigger rings is also a built-in mitigation
+[2018-10-29 10:18:27] <sarang> Now you are all equipped to handle the flood of posts we'll be getting on this
+[2018-10-29 10:18:53] <lurkinandlearnin> The work Justin did on showing that blackballing is no longer necessary thanks to bigger rings was very cool
+[2018-10-29 10:19:09] <sarang> you mean "spent output analysis" =p
+[2018-10-29 10:19:20] <sarang> blackballing sounds dangerous and non-deterministic, which it isn't
+[2018-10-29 10:19:39] <sarang> the MRL-0007 tech note has a nice table about this
+[2018-10-29 10:19:44] <lurkinandlearnin> I had no idea where the term came from haha
+[2018-10-29 10:19:47] <sarang> motto: modern transactions are fine
+[2018-10-29 10:20:00] <sarang> counterpoint: but about all those papers that were published
+[2018-10-29 10:20:05] <sarang> response: modern transactions are fine
+[2018-10-29 10:20:28] <lurkinandlearnin> They keep quoting the same old papers
+[2018-10-29 10:20:29] <sarang> Moving on from this, work continues on the StringCT optimizations from our Bulletproofs plumbing
+[2018-10-29 10:20:41] <IsthmusCrypto> Ooh wait one last question on that
+[2018-10-29 10:20:44] <IsthmusCrypto> Speaking of "modern transactions are fine" does anybody know about code for generating Plot 5 in Malte Möser?
+[2018-10-29 10:20:44] <sarang> sure
+[2018-10-29 10:20:53] <IsthmusCrypto> https://usercontent.irccloud-cdn.com/file/EH9Lwt8u/Screen%20Shot%202018-10-29%20at%2010.11.42.png
+[2018-10-29 10:21:14] <IsthmusCrypto> It seems like the best antiFUD would be extending this plot to present time
+[2018-10-29 10:21:31] <sarang> They didn't release their code (unfortunately far too common) AFAIK
+[2018-10-29 10:21:43] <sarang> You could get it from a modification to the spent-output tool
+[2018-10-29 10:22:05] <sarang> but the MRL-0007 table basically covers it
+[2018-10-29 10:22:34] <IsthmusCrypto> Cool, it'd be nice anti-FUD to use an extended Moser paper to keep people from stressing about Moser :- )
+[2018-10-29 10:22:34] <sarang> Using single-chain analysis, there are exactly 5 post-ct outputs that are known spent using our methods
+[2018-10-29 10:22:42] <sarang> and those were from a research paper that generated them on purpose for testing
+[2018-10-29 10:22:55] <IsthmusCrypto> Awesome, is MRL-007 in the repo? I'll check it out and let meeting conversation move along 👍
+[2018-10-29 10:23:10] <sarang> It's on my repo, will PR it to the main site once I make a gitlab account and set that up
+[2018-10-29 10:23:27] <sarang> https://github.com/SarangNoether/research-lab/tree/master/publications/bulletins/MRL-0007-spent
+[2018-10-29 10:23:55] <sarang> So yeah, StringCT optimizations show promise and we'll continue looking into them as we get more data on optimal ring sizes
+[2018-10-29 10:24:33] <sarang> Its signature scheme is being updated at suraeNoether's suggestion to harden against key cancellation
+[2018-10-29 10:24:39] ⇐ chachasmooth quit (~chachasmo@unaffiliated/chachasmooth): Ping timeout: 250 seconds
+[2018-10-29 10:24:57] <sarang> No definite plans on changing CT schemes yet, mind you, just preliminary stuff in the wings
+[2018-10-29 10:25:46] <lurkinandlearnin> Diversion #2: I'd be interested to know what you guys think about the traceability arising from visible fees. And if it is a threat, what is the best way to mitigate it?
+[2018-10-29 10:25:47] <sarang> Any questions on RingCT schemes, output selection, or spent-output analysis?
+[2018-10-29 10:25:53] <notmike> y
+[2018-10-29 10:25:55] <sarang> lurkinandlearnin: restricting fee amounts
+[2018-10-29 10:26:01] <sarang> it's been suggested
+[2018-10-29 10:26:07] <sarang> as it could be a fingerprinting method in theory
+[2018-10-29 10:26:16] <suraeNoether> sarang: "Using single-chain analysis, there are exactly 5 post-ct outputs that are known spent using our methods" <-- there exists a better method, but we have not deemed it important enough to code up rigorously enough to catch any larger sets, fwiw
+[2018-10-29 10:26:22] <sarang> yes
+[2018-10-29 10:26:38] <suraeNoether> lurkinandlearnin: visible fees are technically a concern, technically
+[2018-10-29 10:26:44] <sarang> statistically it's very unlikely to get set union problems with our large rings
+[2018-10-29 10:27:01] <suraeNoether> we have these dynamic fees, and so if you sign a transaction well before it's broadcast, the fee computed will be linkable back to the height when it was signed
+[2018-10-29 10:27:06] <sarang> notmike: you had a question also?
+[2018-10-29 10:27:08] <moneromooo> The fee is based on weight and the time at which it is made. Harly much of a fingerprinting thing.
+[2018-10-29 10:27:21] <moneromooo> Admittedly, there's also the size of the txpool at the time though.
+[2018-10-29 10:27:23] <suraeNoether> this gives a route for linkability to identify cold signers
+[2018-10-29 10:27:25] <moneromooo> (one bit)
+[2018-10-29 10:27:33] <sarang> moneromooo: yeah, not necessarily very useful, but still one of those things that isn't mandated
+[2018-10-29 10:27:44] <sarang> I'm not particularly concerned about it
+[2018-10-29 10:27:55] → chachasmooth joined (~chachasmo@unaffiliated/chachasmooth)
+[2018-10-29 10:28:02] <moneromooo> And both weight and time of tx are already essentially public.
+[2018-10-29 10:28:19] <suraeNoether> but overall encrypting fees has a whole bunch of engineering headaches associated with it that are not worth the security risk that the unencrypted fees represent, imo
+[2018-10-29 10:28:54] <suraeNoether> basically the worst thing that can happen is someone identifies that a transaction was signed on an airgapped computer and a significant delay in broadcasting occurred
+[2018-10-29 10:29:01] <sarang> suraeNoether: there's encrypting fees, and then there's mandating set options
+[2018-10-29 10:29:08] <suraeNoether> i shouldn't say worst, because there's always something worse
+[2018-10-29 10:29:21] <suraeNoether> yeah, i personally would prefer 3 fee values, low medium and high
+[2018-10-29 10:29:27] <suraeNoether> but transparent
+[2018-10-29 10:29:31] <suraeNoether> or just low and high
+[2018-10-29 10:29:40] <lurkinandlearnin> Yes set transparent values seems sensible
+[2018-10-29 10:30:23] <moneromooo> With the gamma selection, you can already tell, because there's a fairly hard right wall.
+[2018-10-29 10:30:39] <IsthmusCrypto> "this gives a route for linkability to identify cold signers" < decoy ages does this
+[2018-10-29 10:30:46] <IsthmusCrypto> Oh, yea, exactly @moneromooo
+[2018-10-29 10:31:05] <IsthmusCrypto> Agree with @suraeNoether - fixed & plaintext
+[2018-10-29 10:31:58] <lurkinandlearnin> So the risks of transaparent fees are strictly timing/delay based and not related to what service/wallet was used to make a transaction?
+[2018-10-29 10:32:19] <sarang> Well a wallet can choose whatever it wants
+[2018-10-29 10:32:40] <sarang> if Sarangwallet always chooses a bonkers fee value...
+[2018-10-29 10:32:42] <lurkinandlearnin> I.e are all big services using the same method of dynamic fees?
+[2018-10-29 10:33:19] <moneromooo> I don't think it's selectable now unless you do some surgery on the wallet.
+[2018-10-29 10:33:51] <moneromooo> Not 100% sure though. Do check if you want to know for sure.
+[2018-10-29 10:34:21] <hyc> right, anyone can always tweak their own copy of wallet code and do whatever
+[2018-10-29 10:34:37] <IsthmusCrypto> I think the lowest-hanging privacy detriments will be wallet software and exchanges that use fixed or non-standard fee calculations
+[2018-10-29 10:34:53] <lurkinandlearnin> But for example if a service were compromised and was forced to use some unique fee structure, this would be a subtle way of making users traceable?
+[2018-10-29 10:35:04] <IsthmusCrypto> @lurkinandlearnin Yes. Compromized or just lazy
+[2018-10-29 10:35:23] <IsthmusCrypto> Hah, in addition to KYC we should start talking about MYC (mark your customer)
+[2018-10-29 10:35:24] <sarang> Making it consensus could mitigate
+[2018-10-29 10:35:34] <sarang> as has been discussed before
+[2018-10-29 10:36:38] <sarang> To ensure time is respected, were there questions or comments on other topics discussed so far? We can certainly fee talk afterward
+[2018-10-29 10:36:49] <suraeNoether> IsthmusCrypto: actually... yeah
+[2018-10-29 10:37:54] <IsthmusCrypto> I'll hold other fee thoughts until after the meeting
+[2018-10-29 10:38:20] <sarang> I will be stepping out in about 5 minutes for an unrelated meeting
+[2018-10-29 10:38:27] <sarang> but that's all I have to discuss personally
+[2018-10-29 10:38:42] <lurkinandlearnin> Output selection also is not consensus of course, right?
+[2018-10-29 10:38:47] <sarang> correct
+[2018-10-29 10:39:09] → cardboardoranges joined (~cardboard@65.112.8.201)
+[2018-10-29 10:39:11] <suraeNoether> does anyone have any topics they want us to chat about today?
+[2018-10-29 10:39:23] <lurkinandlearnin> Maybe another potential for the newly invented MYC threat haha
+[2018-10-29 10:39:50] <sarang> You can't enforce it in any good way
+[2018-10-29 10:40:26] <lurkinandlearnin> Yes it seems clear that would be much harder than doing it for fees
+[2018-10-29 10:40:57] <sarang> But if you don't trust whomever is doing your transactions with your keys, you're hosed in many ways
+[2018-10-29 10:41:06] <sarang> it's all about the threat model
+[2018-10-29 10:41:11] ⇐ cardboardoranges quit (~cardboard@65.112.8.201): Client Quit
+[2018-10-29 10:41:33] → cardboardoranges joined (~cardboard@65.112.8.201)
+[2018-10-29 10:41:36] <moneromooo> It (if a service were compromised and was forced to use some unique fee structure) would be stupid, as you don't get more info than getting a view of the service's output txes.
+[2018-10-29 10:41:55] <moneromooo> Unless someone can show something more :)
+[2018-10-29 10:42:42] <sarang> I must unfortunately take off for an hour now
+[2018-10-29 10:43:05] <suraeNoether> ok, let's call this meeting good
+[2018-10-29 10:43:07] <suraeNoether> good job, sarang
+[2018-10-29 10:43:29] <suraeNoether> but we can just continue talking at our leisure. :P </meeting>

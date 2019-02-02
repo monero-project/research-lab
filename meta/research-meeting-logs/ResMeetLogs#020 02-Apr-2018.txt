@@ -1,0 +1,238 @@
+[2018-04-02 10:02:03] <suraeNoether> meeting time!
+[2018-04-02 10:02:08] <antw081> i think he is attributing research to his imaginary R&D research group
+[2018-04-02 10:02:09] <sarang> If he's claiming they're doing the "improved" CT then I am not concerned at all
+[2018-04-02 10:02:15] <sarang> because that's junk
+[2018-04-02 10:02:29] <antw081> FFS he is known to basically hate Monero
+[2018-04-02 10:02:48] <suraeNoether> allrighty, 1) Greetings everyone, 2) what MRL has been up to, 3) what we plan on getting up to. i know it's a really loose agenda, but hey
+[2018-04-02 10:02:49] <antw081> FFS = FYI
+[2018-04-02 10:02:50] <sarang> monero loves him too
+[2018-04-02 10:03:06] → ArticMine joined (~ArticMine@207.194.38.218)
+[2018-04-02 10:03:16] <suraeNoether> so, hi!
+[2018-04-02 10:03:18] <suraeNoether> who's all here?
+[2018-04-02 10:03:22] <rehrar> Cat of the week, sarang?
+[2018-04-02 10:03:27] <ArticMine> hi
+[2018-04-02 10:03:34] <rehrar> also, I'm here.
+[2018-04-02 10:03:35] ⇐ kicoo quit (~kico@unaffiliated/kico): Ping timeout: 240 seconds
+[2018-04-02 10:03:35] <sarang> He's hiding out in the clothes dryer now
+[2018-04-02 10:03:43] <sarang> and I'd have to get a photo and scrub the metadata first
+[2018-04-02 10:03:43] <oneiric_>  hiyo :)
+[2018-04-02 10:03:53] — scoobybejesus is lurking
+[2018-04-02 10:04:17] <koe> hi :)
+[2018-04-02 10:04:21] <hyc> 12 monekys more like
+[2018-04-02 10:04:29] <hyc> 12 monkeys was a pretty good film tho
+[2018-04-02 10:04:46] <suraeNoether> allrighty: sarang, what have you been up to?
+[2018-04-02 10:05:43] <suraeNoether> https://imgur.com/a/gpv13
+[2018-04-02 10:06:24] <sarang> A lot of paper reading to stay up to date and learn, released my monthly report on r/Monero and FFS, checking up on moneromooo's recent addition of batch verification to his BP code and tests
+[2018-04-02 10:06:52] <sarang> Trying to stay afloat with Son of Monerolink
+[2018-04-02 10:07:09] <sarang> Seems to be a lot of putting out small fires that idiots start
+[2018-04-02 10:07:38] <hyc> Matthew Green all proud of himself about that
+[2018-04-02 10:07:53] <sarang> My gods the press coverage has been abysmal
+[2018-04-02 10:08:01] <sarang> and much of it by people who should absolutely know better
+[2018-04-02 10:08:13] <sarang> Schneier basically said HEY LOOK A THING I SAW ONLINE
+[2018-04-02 10:08:20] <koe> negativity sells on a bust
+[2018-04-02 10:08:34] <ArticMine> but only for a while
+[2018-04-02 10:09:05] ⇐ kico__ quit (~kico@unaffiliated/kico): Ping timeout: 240 seconds
+[2018-04-02 10:09:34] <suraeNoether> This past week I've been working on reviews to the multisig paper. andytoshi has provided me some comments and I'm making some changes consequently
+[2018-04-02 10:10:20] <koe> what is your timeline for release?
+[2018-04-02 10:10:43] <sarang> What sorts of changes? I'm curious
+[2018-04-02 10:10:56] <suraeNoether> the paper in its current form is already on github koe, changes will be uploaded by the end of the week I think
+[2018-04-02 10:11:45] <suraeNoether> the main large-scale complaint is that I specify stuff that could be chalked up to secure side-channels, and there is some back-and-forth discussion about using fresh multisig keys versus salting and hashing your current user keys
+[2018-04-02 10:12:07] <koe> oh I dont see it in MRL, is there another spot?
+[2018-04-02 10:12:25] <sarang> True, there were plenty of discussions during the development about the nature of secure communication between coalition members
+[2018-04-02 10:12:34] <sarang> I'll be curious to see what updates you make from it
+[2018-04-02 10:12:39] <suraeNoether> sechttps://github.com/b-g-goodell/research-lab/tree/in-prep/publications/bulletins/MRL-0007-multisig
+[2018-04-02 10:12:44] <suraeNoether> whoops
+[2018-04-02 10:12:45] <suraeNoether> https://github.com/b-g-goodell/research-lab/tree/in-prep/publications/bulletins/MRL-0007-multisig
+[2018-04-02 10:12:57] <koe> cool thanks :)
+[2018-04-02 10:13:02] <sarang> Tell us about fresh keys vs salting
+[2018-04-02 10:13:26] <suraeNoether> if the hash function is good, no one could tell the difference between using fresh keys or using hashed ol keys, and the reason to not re-use old addresses is to prevent exclusion attacks where two coalitions collude to remove control of some common coalition members... but if the old keys have been hashed with new salts, that isn't a danger with a good hash function. so ...
+[2018-04-02 10:13:56] <sarang> right...
+[2018-04-02 10:13:58] <suraeNoether> for convenience to users, i think it's okay to re-use keys this way, but to describe the scheme for the paper and make it more clear, readable, compact, etc, I think i agree with andytoshi that the salted-then-hashed keys can be at least moved to the end
+[2018-04-02 10:14:21] <suraeNoether> as a "if users really want to do it this way, they can do it" sort of thing as opposed to built into the scheme
+[2018-04-02 10:14:32] <suraeNoether> it will make it easier to prove secure too
+[2018-04-02 10:15:07] <suraeNoether> andytoshi had a variety of other very helpful comments. i'm most concerned about my unforgeability proof at this point, and revisions are still happening. 
+[2018-04-02 10:15:52] <sarang> roger
+[2018-04-02 10:16:06] <suraeNoether> in addition to all that, i invented what i think is a novel signature scheme in the elliptic curve setting. depending on construction, the security can fall onto the existence of one-way 2nd pre-image resistant group isomorphisms, instead of the discrete log hardness assumption
+[2018-04-02 10:16:44] <hyc> going for QC-resistance?
+[2018-04-02 10:16:45] <suraeNoether> current draft descritpion is here; an implementation requires, i think, a really freaking large group, though
+[2018-04-02 10:16:52] <suraeNoether> hyc no, just had a dream one night. :P
+[2018-04-02 10:17:03] <suraeNoether> https://www.sharelatex.com/project/5ab98a71234cc910159f828b
+[2018-04-02 10:17:27] <sarang> Did you make updates to it since you first showed me?
+[2018-04-02 10:18:07] <suraeNoether> it's been undergoing pretty much constant revision, i don't recommend anyone read it yet. you have the basic idea from the first read-through and until stuff is more formal, it's just me messing around
+[2018-04-02 10:18:18] <suraeNoether> it'd be nice to be able to pick some folks brains *in person* at a whiteboard, though
+[2018-04-02 10:18:29] <sarang> always is
+[2018-04-02 10:19:01] <rehrar> suraeNoether: will you bill for your sleeping time since you seem to work then also?
+[2018-04-02 10:19:25] <suraeNoether> i know andytoshi isn't a formal contributor to MRL, but we enjoy his assistance an awful lot around here...
+[2018-04-02 10:19:44] <suraeNoether> and since this is a research meeting, andytoshi, would you feel comfortable going over your BP work again for those who missed it earlier?
+[2018-04-02 10:20:01] <suraeNoether> rehrar: i don't bill by the hour, which is why i can't put work down ever
+[2018-04-02 10:20:03] <hyc> any chance andytoshi will co-author any papers with you?
+[2018-04-02 10:20:49] <suraeNoether> hyc maybe if i write something worth publishing. :P oh! my last paper from grad school has been thrown up on arxiv and is seeking publication. not technically an MRL accomplishment, but my co-author let me know he put it on arxiv and submitted it
+[2018-04-02 10:20:53] → KnifeOfPi_ joined (uid257314@gateway/web/irccloud.com/x-jmondggsklmjopqm)
+[2018-04-02 10:20:58] — hyc needs to head to boarding gate
+[2018-04-02 10:21:16] — sarang should publish more
+[2018-04-02 10:21:58] <suraeNoether> nuts, i wanted to chat with hyc about random-code POW
+[2018-04-02 10:22:49] * luigi1113 → luigi1111w
+[2018-04-02 10:23:54] <sarang> Any other updates?
+[2018-04-02 10:24:47] <suraeNoether> Not from me, not about MRL or research. If anyone has any other research projects they have been working on/would like to discuss, fire away...
+[2018-04-02 10:24:49] → Inge- joined (~inge@ti0051a400-2305.bb.online.no)
+[2018-04-02 10:24:53] <suraeNoether> or any questions, etc
+[2018-04-02 10:24:59] <sarang> suraeNoether had mentioned an upcoming conference very relevant to our interests
+[2018-04-02 10:25:23] <antw081> do you actually get informed if someone references your work in white paper?
+[2018-04-02 10:25:45] <sarang> Depends on how they're released
+[2018-04-02 10:25:54] <antw081> ok
+[2018-04-02 10:25:55] <sarang> Google Scholar can pull citations from a lot of formats, for exampl
+[2018-04-02 10:25:58] <suraeNoether> antw081 google scholar tracks citations of whitepapers and you can set up alerts.
+[2018-04-02 10:26:10] <sarang> but for informal non-cached stuff, not necessarily
+[2018-04-02 10:26:18] <suraeNoether> Ah, yeah, so there's this conference in London in 2 weeks. I would normally just buy tickets and go and then start an FFS for reimbursement (if possible) but tickets are A LOT more than they were when I did the same thing for Switzerland.
+[2018-04-02 10:26:35] <suraeNoether> and I don't want to just impulsively go to conferences last minute
+[2018-04-02 10:26:36] <sarang> you should send meeeee
+[2018-04-02 10:26:46] <sarang> It is a lot though for a one-day
+[2018-04-02 10:26:50] <sarang> suraeNoether: link?
+[2018-04-02 10:27:02] <sarang> looks like good talks relevant to cryptocurrency privacy
+[2018-04-02 10:27:03] <suraeNoether> yes, and the first MAGIC board meeting is in a day or two after that conference
+[2018-04-02 10:27:10] <sarang> and that's kind of our specialty and junk
+[2018-04-02 10:27:14] <suraeNoether> http://ieee-sb2018.cs.ucl.ac.uk/#schedule
+[2018-04-02 10:27:41] <sarang> I was totally unaware of this event until earlier today
+[2018-04-02 10:27:50] <suraeNoether> so i'm okay with not going to it, but *i'm totally willing to hop on a plane and jet lag myself later this month* if that is what this community wants from me. i'm your humble servant, as it were. :P
+[2018-04-02 10:28:41] <suraeNoether> *on that note* I would like to start an MRL calendar or something like that, where we throw up big research conferences in bitcoin, blockchain, cryptocurrencies, and infosec, and our travel plans
+[2018-04-02 10:29:02] <suraeNoether> any time *anyone* sees a conference or an event i htink it'd be cool if folks started to just passively populate this calendar
+[2018-04-02 10:29:17] <sarang> Just use Github issues?
+[2018-04-02 10:29:21] <antw081> FFS it, it will get funded
+[2018-04-02 10:29:30] <sarang> I think it'd be excellent to go
+[2018-04-02 10:29:38] <suraeNoether> antw081 and if it doesn't, we just simply won't go. :P
+[2018-04-02 10:29:41] <sarang> I haven't done an international conference for MRL  =p
+[2018-04-02 10:29:58] <suraeNoether> sarang: start an FFS for both of us, whydon'tya
+[2018-04-02 10:30:00] <sarang> Wish it were a longer event though, we could talk about this stuff forever
+[2018-04-02 10:30:11] <sarang> sure thing
+[2018-04-02 10:30:19] <antw081> FP, FFS a speaking tour, it was funded in no time.
+[2018-04-02 10:30:28] <sarang> I find it funny to see Monero talks and not know about the contents in advance 0_0
+[2018-04-02 10:30:49] <suraeNoether> besides, i would like to be able to chat with some of the organizers in person, since i want to organize a conference for next year
+[2018-04-02 10:31:15] <sarang> suraeNoether: we can chat after meeting about the FFS detais
+[2018-04-02 10:31:19] <sarang> see what the community thinks
+[2018-04-02 10:31:20] <suraeNoether> okay, let's see here... we've covered research, travel, a bit of MAGIC...
+[2018-04-02 10:31:56] <suraeNoether> later today i'm writing up my FFS end-of-month summary...
+[2018-04-02 10:31:59] <sgp_[m]> What's the approx expense?
+[2018-04-02 10:32:15] <rehrar> sgp_[m]: will sponsor you
+[2018-04-02 10:32:18] <suraeNoether> sgp_[m]: tickets alone for me are 2400USD. doesn't include loding
+[2018-04-02 10:32:22] <sarang> Airfare for me would be ~1500-1700 USD
+[2018-04-02 10:32:25] <suraeNoether> lodging*
+[2018-04-02 10:32:48] <sarang> This one is not cheap, that's for sure
+[2018-04-02 10:33:23] <suraeNoether> Okay, the last thing I wanted to chat about 
+[2018-04-02 10:33:27] <suraeNoether> is *next year of MRL*
+[2018-04-02 10:33:52] <suraeNoether> for those of you who recall correctly, I began in June of last year,
+[2018-04-02 10:33:55] <suraeNoether> aaaand
+[2018-04-02 10:35:03] <suraeNoether> well, I want to know how folks like the direction we are going, see if anyone thinks we should be taking different directions, perhaps see how community members feel about our resources
+[2018-04-02 10:35:51] <rehrar> oh shoot, it's time for another Revuo already.
+[2018-04-02 10:35:52] <ArticMine> My take is that MRL is on the right track
+[2018-04-02 10:36:07] <rehrar> I think MRL is doing good stuff. Happy with you guys.
+[2018-04-02 10:36:26] <suraeNoether> I wouldn't mind hiring an additional researcher or two. but I don't want to overly burden the community, though, and
+[2018-04-02 10:36:34] <suraeNoether> it reminds me of a story, I have no idea who told it to me
+[2018-04-02 10:36:56] <suraeNoether> but you tell two guys to go dig a ditch and everything is fine. you later hire a third guy to help and tell him he's in charge of the first two and all work totally stops
+[2018-04-02 10:37:18] <suraeNoether> or send a third guy over and have one of the first two guys be in charge, same thing happens
+[2018-04-02 10:37:59] <suraeNoether> I'm not sure how sarang feels bout hiring additional folks, if he feels like we could use a person for specific things or not, etc
+[2018-04-02 10:38:02] <antw081> we can do grants maybe? to do research on Monero related topics
+[2018-04-02 10:38:16] <sarang> When I started shortly after suraeNoether, our goals seemed pretty broad: figure out what we're doing right, correct what we're doing wrong, and figure out what comes next. The way we're funded always makes me feel guilty about providing good deliverables, but I think the community realizes that's not necessarily the point
+[2018-04-02 10:38:22] <rehrar> that's an interesting idea antw081. More on a contract basis for specific stuff.
+[2018-04-02 10:38:23] <ArticMine> but this begs the question do we want to dig a second ditch
+[2018-04-02 10:38:38] <suraeNoether> antw081: that's sort of hard to fund on a per-project basis. 
+[2018-04-02 10:38:40] <suraeNoether> ArticMine: +1 heh
+[2018-04-02 10:38:46] <suraeNoether> so, the thing is
+[2018-04-02 10:38:56] <antw081> it can be general fund
+[2018-04-02 10:39:01] <antw081> like HackerOne
+[2018-04-02 10:39:08] <rehrar> question, would a third researcher have unique things to do, or just be another set of eyes on the current stuff?
+[2018-04-02 10:39:14] <antw081> or Bug Bounty FFS
+[2018-04-02 10:39:22] <sarang> That also begs the question: what would that mean for my role? Or suraeNoether ?
+[2018-04-02 10:39:23] <sgp_[m]> I think grants make the most sense for additional research. Get some people to focus more formally on specific research
+[2018-04-02 10:39:33] <sarang> Should we move to a per-project funding too/
+[2018-04-02 10:39:54] <rehrar> I don't think so sarang
+[2018-04-02 10:39:57] <antw081> ok i gut to ask
+[2018-04-02 10:40:04] <rehrar> I think having two general researchers that do what they feel needs to be done is beneficial
+[2018-04-02 10:40:09] <antw081> is there like a group of cryptographers called the: Is there an organisation called Chainmasons?
+[2018-04-02 10:40:19] <sarang> ?
+[2018-04-02 10:40:24] <koe> lol
+[2018-04-02 10:40:34] <antw081> sorry: Chainmasons
+[2018-04-02 10:40:37] <antw081> what is that
+[2018-04-02 10:40:49] <sarang> rehrar: I ask because I want to ensure suraeNoether and I are providing value to the community
+[2018-04-02 10:41:10] <oneiric_> sarang + suraeNoether = 33rd degree Chainmasons
+[2018-04-02 10:41:16] <antw081> his guy claims to have formed a group of researchers - referred to as Chainmasons
+[2018-04-02 10:41:17] <rehrar> In my personal opinion, you the four full time hired people, you two, mooo, and anonimal are good four cornerstones for teh community
+[2018-04-02 10:41:22] <antw081> his = this
+[2018-04-02 10:41:27] <koe> it seems like if the MRL didn't exist, Monero would feel a lot more precarious and purposeless
+[2018-04-02 10:41:29] <antw081> https://bitcointalk.org/index.php?topic=3118418.msg32233166#msg32233166
+[2018-04-02 10:41:32] <sarang> I view part (certainly not all) of my value as staying afloat of new developments that we don't necessarily have specific projects for
+[2018-04-02 10:41:42] <rehrar> yes, this is important
+[2018-04-02 10:41:43] <koe> like, shouldn't there obviously be research into privacy for a privacy focused crypto?
+[2018-04-02 10:41:53] <rehrar> Monero does not necessarily equal ring sigs, ringct, and stealth addresses
+[2018-04-02 10:41:58] <sarang> koe: A lot of good research happens academically too
+[2018-04-02 10:42:02] <sarang> not affiliated with anyone
+[2018-04-02 10:42:09] <sarang> We often use that work (e.g. BPs)
+[2018-04-02 10:42:24] <sgp_[m]> I think at the moment you all are more responding to other research, changes, and looking into thoughts people have. There's definitely value there, but there's also value in allowing people to be focused on certain projects.
+[2018-04-02 10:42:27] <koe> yeah, but the MRL cares about making that stuff apply to Monero
+[2018-04-02 10:42:29] <rehrar> I may not speak for the community though, since I'm a privacy idealist, and this stuff you guys do gets me excited :D
+[2018-04-02 10:42:32] <sarang> sgp_[m]: definitely
+[2018-04-02 10:42:44] → sneurlax joined (~r@67.215.228.50)
+[2018-04-02 10:42:49] ← sneurlax left (~r@67.215.228.50): 
+[2018-04-02 10:42:50] <suraeNoether> so, the reason i bring all this up is this
+[2018-04-02 10:42:55] <rehrar> if I had one comment though it would be this:
+[2018-04-02 10:42:56] → sneurlax joined (~r@67.215.228.50)
+[2018-04-02 10:43:07] <sarang> When I came on, there were some specific projects in that realm, like sublinear ring sigs, but more kept getting added to our plates
+[2018-04-02 10:43:47] <sgp_[m]> sarang is the intent for MAGIC to provide research grants? Eg: support one group taking a deep dive into the effectiveness of churning
+[2018-04-02 10:44:04] <rehrar> I think time should be split fairly evenly between new research, and improving the privacy and security of the stuff we already have implemented. As an example, and as I have stated before, I think designated research into optimal ring sizes, fixed ring size vs non, and other stuff of that nature should be a higher priority than it currently is.
+[2018-04-02 10:44:12] <sarang> MAGIC is definitely intended to provide research grants as part of its mission
+[2018-04-02 10:44:29] <sarang> rehrar: agreed, but it sucks that these things are often not so neatly delineated
+[2018-04-02 10:44:37] <rehrar> I understand.
+[2018-04-02 10:45:07] <suraeNoether> if i was hired at a university and got a big grant, or if i was hired at a big company and had resources, i would write a budget, hire folks, get a proper lab going where representatives from the lab regularly travel to represent the lab and disseminate results, etc etc. very very different approach from getting hired at a small start-up
+[2018-04-02 10:45:28] <suraeNoether> and i feel like sarnag and I have spent the first year treating MRL sort of like the start-up approach
+[2018-04-02 10:45:32] <suraeNoether> but maybe there is a middle way
+[2018-04-02 10:45:36] <sarang> that's a good analogy
+[2018-04-02 10:45:45] <sarang> The specific goals were much smaller back then
+[2018-04-02 10:46:00] <suraeNoether> rehrar: MAGIC can give research grants, but not to open-source software projects (non-profits in america cannot touch OSS)
+[2018-04-02 10:46:04] <sarang> Now we have more irons in the fire
+[2018-04-02 10:46:08] <ArticMine> One thing to keep in mined is that this is a very fluid situation
+[2018-04-02 10:46:15] <sarang> ArticMine: how so
+[2018-04-02 10:46:27] <ArticMine> A significant change in XMR/USD
+[2018-04-02 10:46:30] <suraeNoether> yeah, if the market bottoms out further over the next six months, buttholes will get progressively tighter
+[2018-04-02 10:46:36] <sarang> true
+[2018-04-02 10:46:48] <suraeNoether> or vice versa, we'll go full goatse at 12,000 USD/XMR
+[2018-04-02 10:46:54] <antw081> true
+[2018-04-02 10:46:56] <ArticMine> ... and there is also the flipside
+[2018-04-02 10:47:02] — suraeNoether shivers
+[2018-04-02 10:47:31] <sgp_[m]> As an non-researcher, I think the "best" way forward is to balance both. I think the project will demand that it becomes more formalized
+[2018-04-02 10:47:33] <rehrar> this is an important thing to consider. The FFS, while working so far, has shown some signs of beginning to sit down to catch its breath
+[2018-04-02 10:47:55] <suraeNoether> rehrar Yeah, pockets aren't infinitely deep
+[2018-04-02 10:48:02] <sarang> So we'd have to consider the carrying capacity of the funding network
+[2018-04-02 10:48:13] <rehrar> this applies to all sorts of people who want to put out more 'FFS propoasls'
+[2018-04-02 10:48:26] <rehrar> I think as a community we need to gauge what proposals are really worth funding
+[2018-04-02 10:48:28] <suraeNoether> at the very least, we have 2 months to sort of figure out *whether* or *how much* our directions shall shift for the second half of 2018. not a super urgent conversation, and 2 months is an eternity in cryptocurrencies
+[2018-04-02 10:48:34] <sgp_[m]> There should be a need for people to do what you both do right now
+[2018-04-02 10:48:42] <sarang> I constantly worry that my FFS will be the last to get fully funded :/
+[2018-04-02 10:48:46] <sgp_[m]> But I expect future grant-based research to be more specific
+[2018-04-02 10:48:57] <rehrar> ye, no job security is indeed one of the downsides of changing the world :P
+[2018-04-02 10:49:13] <suraeNoether> sarang: same, i'm actually regularly worried fluffypony is going to text me a big unhappy horse pic
+[2018-04-02 10:49:43] <suraeNoether> so we'll table this discussion for now
+[2018-04-02 10:49:45] <nyeaa> If I may offer the perspective of an outsider: It is often quite hard to even grasp where to start research, maybe having a list of problems that need to be solved could give more people the opportunity to contribute. We could then just reward people when they solve a problem, based on how hard the problem is. this way anyone can give it a shot without entering a paid commitment, but with the certainty that they will be
+[2018-04-02 10:49:45] <nyeaa> paid for their work if they are successful
+[2018-04-02 10:49:51] <suraeNoether> oh, hi heh
+[2018-04-02 10:50:28] <sarang> This line of reasoning isn't new at all. There are camps that value more "open-ended" research because it often contributes in novel ways, and camps that really want to push specific projects that may or may not have return due to their specificity
+[2018-04-02 10:50:50] <suraeNoether> nyeaa merely formalizing our problems and characterizing whatever constitutes a solution is a monumental task in itself. :\
+[2018-04-02 10:50:53] <rehrar> m2049r[m] is facing a similar issue with his FFS proposal
+[2018-04-02 10:51:32] <sarang> suraeNoether: many of our open questions on things like churn, optimal ring size, fixed vs variable, are partly due to a lack of formalization of attack vectors IMHO
+[2018-04-02 10:51:58] <sarang> our attack surface is much different than other projects
+[2018-04-02 10:52:09] <sarang> thanks to ring sigs and key images
+[2018-04-02 10:52:31] <rehrar> can't just fall back on all the work done on bitcoin...again
+[2018-04-02 10:52:47] <sarang> Maybe this also speaks to the need for suraeNoether and I to devote less time to new broad ideas and more to existing fiddly problems
+[2018-04-02 10:52:48] <rehrar> with a fraction of the third party interest
+[2018-04-02 10:52:56] <suraeNoether> fwiw i am willing to throw some xmr at m2049r[m] but that's aside the point.
+[2018-04-02 10:53:17] <rehrar> he really is quite amazing, isn't he? Did alone what nobody did.
+[2018-04-02 10:53:22] <rehrar> popped out of nowhere :D
+[2018-04-02 10:53:29] <Inge-> I feel a lot mor comfortable using XMR with monerujo than I do using bitcoin.
+[2018-04-02 10:53:53] <rehrar> clock is ticking, our time is limited boiz
+[2018-04-02 10:53:54] <suraeNoether> allrighty, let's conclude with this
+[2018-04-02 10:54:01] <rehrar> (in regards to FFS)
+[2018-04-02 10:54:17] <suraeNoether> Anyone who is willing to take out Issues on the MRL github for upcoming conferences will be rewarded with admiration
+[2018-04-02 10:54:41] <suraeNoether> end of the week we should have another iteration of the multisig paper to read
+[2018-04-02 10:54:43] <rehrar> admiration. A new coin...or...?
+[2018-04-02 10:54:49] <endogenic> nobody
+[2018-04-02 10:55:08] <suraeNoether> i got a document camera for making whiteboard videos, too, forgot to mention that
+[2018-04-02 10:55:13] <endogenic> monero: nobodycoin
+[2018-04-02 10:55:51] <suraeNoether> okay </meeting>

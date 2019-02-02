@@ -1,0 +1,144 @@
+[2017-10-16 10:04:01] <surae> So, everyone, I guess: welcome to our first office hours!
+[2017-10-16 10:04:26] <surae> Basically: we are the noethers, AMAA
+[2017-10-16 10:04:44] ⇐ Keniyal quit (~Keniyal@unaffiliated/keniyal): Remote host closed the connection
+[2017-10-16 10:05:51] <sarang> I'll kick things off with an easy question. Brother surae, do you think Monero is good or bad?
+[2017-10-16 10:06:16] <surae> I think every tool humanity has developed is ethically neutral. It is what we do with Monero that is good or bad. :P
+[2017-10-16 10:07:02] <surae> which actually brings me to 
+[2017-10-16 10:07:31] <surae> https://blog.jaibot.com/the-copenhagen-interpretation-of-ethics/
+[2017-10-16 10:09:16] <surae> you know what i really want out of life, sarang?
+[2017-10-16 10:09:50] <surae> a way of providing a compact proof that a given signature passes verification, without actually verifying the signature
+[2017-10-16 10:11:26] <sarang> That seems related to the issue of signature aggregation!
+[2017-10-16 10:11:47] <sarang> Of which "can I remove some intermediate signatures and be guaranteed they happened" is an open question AFAIK
+[2017-10-16 10:13:01] * sarang set the topic to Welcome to office hours! Ask away.
+[2017-10-16 10:14:07] ⇐ nathane quit (~nathane@unaffiliated/nathane): Ping timeout: 252 seconds
+[2017-10-16 10:14:17] <endogenic> What are the criteria to determine whether a usage of monero is good or bad?
+[2017-10-16 10:16:34] <sarang> Oh man, that was a joke question
+[2017-10-16 10:16:46] <sarang> I say it's beyond the scope of our work
+[2017-10-16 10:17:22] <endogenic> :P
+[2017-10-16 10:18:22] <endogenic> What are the prerequisites for learning algebraic geometry?
+[2017-10-16 10:19:30] <surae> oh
+[2017-10-16 10:20:40] <surae> first step is to learn abstract algebra. a very good introductory text is this one, it's the first one i learned from as an undergrad. https://www.amazon.com/Abstract-Algebra-John-Beachy/dp/1577664434/ref=sr_1_10?ie=UTF8&qid=1508174411&sr=8-10&keywords=abstract+algebra
+[2017-10-16 10:20:50] <sarang> that's an excellent text
+[2017-10-16 10:20:58] <surae> algebraic geometry is "essentially" the study of multivariate polynomials f(x,y,z) etc
+[2017-10-16 10:21:04] → nathane joined (~nathane@unaffiliated/nathane)
+[2017-10-16 10:21:13] <endogenic> Good ol’ Beachy. Thanks
+[2017-10-16 10:21:32] <sarang> The thing I found challenging was the blending of a lot of different subdisciplines
+[2017-10-16 10:21:38] <sarang> Topology, geometry, abstract algebra...
+[2017-10-16 10:22:25] <surae> sarang, i was chatting with that common colleague of ours with the awesome tattoos about that euclidean domain crypto paper
+[2017-10-16 10:22:33] <sarang> orly
+[2017-10-16 10:22:35] <surae> yeah
+[2017-10-16 10:23:09] <sarang> His thoughts?
+[2017-10-16 10:23:17] <surae> he provided several examples of "prime valued injective functions" and came close to proving a theorem "If R is a noetherian domain and not a field, then R and Irr(R) have the same cardinality."
+[2017-10-16 10:23:26] <surae> turns out prime-valued injective is actually a rather low bar to clear
+[2017-10-16 10:24:48] <surae> and all euclidean domains are noetherian, so that whole paper is saying "pick one of these many functions." thing is? I'm not sure how much these have been studied
+[2017-10-16 10:25:48] <surae> this conversation has led to at least three theorems on the topic (honestly, our colleague wrote and proved them)... unless I can find references or something, i think this is the first time these functions have been formally studied at all, and i'm 100% confident they haven't been studied in crypto before
+[2017-10-16 10:26:13] ⇐ nathane quit (~nathane@unaffiliated/nathane): Ping timeout: 252 seconds
+[2017-10-16 10:26:45] <sarang> nice!
+[2017-10-16 10:28:23] <surae> so maybe we'll write a paper together and i will thank the Monero Research Lab
+[2017-10-16 10:29:06] <surae> by the way, for anyone paying attention: Noetherian is a property of algebraic objects, named after Emma Noether, which is how I first selected my handle's surname (and everyone else at MRL followed suite)
+[2017-10-16 10:30:04] <sarang> *nod
+[2017-10-16 10:31:24] → nathane joined (~nathane@unaffiliated/nathane)
+[2017-10-16 10:32:49] <endogenic> Are questions about noether’s theorem outside of open hours’ scope? I think so. Will have to find Sarang on his free time
+[2017-10-16 10:32:59] <endogenic> Ttyl
+[2017-10-16 10:34:43] <sarang> Ha! That sounds fine
+[2017-10-16 10:35:29] → \x joined (~user@unaffiliated/-x00/x-1893888)
+[2017-10-16 10:36:40] ⇐ nathane quit (~nathane@unaffiliated/nathane): Ping timeout: 252 seconds
+[2017-10-16 10:38:02] <surae> what's funny is noether's theorem is in variational calculus, which is not an area i'm super familiar with. she made contributions to physics, algebra, calculus, she was a madwoman
+[2017-10-16 10:39:37] <moneromooo> Emmy.
+[2017-10-16 10:40:37] <surae> yep, my mistake
+[2017-10-16 10:41:24] ← \x left (~user@unaffiliated/-x00/x-1893888): 
+[2017-10-16 10:42:24] <surae> on another note, if anyone is curious, here is one of the original papers proving that bitcoin's security against P% attacks sees P drop as bitcoin throughput (txns/sec) increases
+[2017-10-16 10:43:08] <surae> which is one of the reasons big blocks leads to worse security
+[2017-10-16 10:45:00] → nathane joined (~nathane@unaffiliated/nathane)
+[2017-10-16 10:45:03] <surae> oh man
+[2017-10-16 10:45:06] <surae> spectre is really interesting
+[2017-10-16 10:46:50] <sarang> agreed
+[2017-10-16 10:49:36] <surae> our block times are 2 minutes now? or 4?
+[2017-10-16 10:49:45] <moneromooo> 2
+[2017-10-16 10:50:19] <surae> thanks. what's our network propagation time, on average? like 20 ms?
+[2017-10-16 10:51:07] <moneromooo> I don't know.
+[2017-10-16 10:51:20] <sarang> I've read ~1 second in some public-facing stuff
+[2017-10-16 10:51:25] <moneromooo> Probably higher.
+[2017-10-16 10:51:27] <sarang> But I didn't see any reasoning for that number
+[2017-10-16 10:51:38] <surae> i'll look at 1 second and 20 ms and compare
+[2017-10-16 10:52:00] ⇐ m8tion quit (~m8tion@81-65-53-254.rev.numericable.fr): Read error: Connection reset by peer
+[2017-10-16 10:52:58] <moneromooo> Assuming 18e6 meters max, light speed gives you ~60ms at least.
+[2017-10-16 10:53:05] <surae> heh
+[2017-10-16 10:53:15] <surae> tha'ts a brilliant back of the napkin calculuation there
+[2017-10-16 10:53:38] <surae> hehe, 80% light speed brings us up to around 72 ms
+[2017-10-16 10:54:19] <moneromooo> You can play around with the sync_info command, which gives you your peers' height. So the time between the first to change, and the last to change.
+[2017-10-16 10:54:55] <moneromooo> The max of that would be a low bound.
+[2017-10-16 10:55:55] <sarang> I'm gonna take off in a few minutes. Swim some laps
+[2017-10-16 10:55:56] <surae> ok, so asymptotically, block creation occurring every 2 minutes and with a probability of re-org of 2^-6, and an attacker with p% of the network... in the spectre set-up, block confirmation takes around 500/(1-2*p) seconds or about 4.1666/(1-2*p) blocks of confirmation, which boils down to a little less than 10 minutes confirmation time
+[2017-10-16 10:56:22] <surae> divided by 1-2*p
+[2017-10-16 10:56:39] <surae> so if p=0.25, say a 25% attack on the network, that would take around 20 minutes of confirmation time
+[2017-10-16 10:57:19] <surae> the primary difference between the current nakamoto concensus and the spectre concensus is that the spectre is provably secure for all values of p up to (but not including) 50%
+[2017-10-16 10:57:26] <sarang> right
+[2017-10-16 10:59:07] <surae> "that would take around 20 minutes of confirmation time" <---> "to secure the network against a 25% attack up to a probability of 2^-6, it would take around 20 minutes of confirmation time."
+[2017-10-16 11:02:22] <surae> if we want 99.9% protection against a 45% attack and we have worst case 100 ms of propagation time with 4-minute block arrival time, we can simply wait 73 blocks for confirmation
+[2017-10-16 11:02:28] <surae> i like asymptotic formulas
+[2017-10-16 11:03:22] <surae> these values are really quite resistant to tampering with their inputs. very interesting.
+[2017-10-16 11:03:37] <surae> confirmation time is most dependent on the attacker's share p%
+[2017-10-16 11:04:04] <surae> and next most dependent on our tolerable probability of a successful p% re-org attack, epsilon
+[2017-10-16 11:04:26] <surae> the throughput can mess with things if block arrival rates are massive or if block propagation time is massive
+[2017-10-16 11:04:52] <surae> but since we aren't looking at tweaking the arrival rates at all and block propagation time is not controllable, that isn't a big deal
+[2017-10-16 11:08:34] <surae> the spectre model allows clients to be flexible in the case of network delays, also: if the network has been slow, the local client can adjust its estimate of block propagation time, adjusting the number of blocks it waits before confirmation
+[2017-10-16 11:13:18] ⇐ mochaccinuh quit (~mochaccin@132.81-167-1.customer.lyse.net): Quit: Leaving
+[2017-10-16 11:25:36] <surae> this spectre paper, man
+[2017-10-16 11:25:40] <surae> https://eprint.iacr.org/2016/1159.pdf
+[2017-10-16 11:27:48] <surae> this makes me want to instantiate block headers not as scalars from a hash but elements from a computable harr group. then the voting procedure is as "simple" as integration
+[2017-10-16 11:29:12] <sarang> Does affect block chaining?
+[2017-10-16 11:31:04] <surae> i don't know. naive idea, brand new, who knows yet? :P
+[2017-10-16 11:31:37] ⇐ luigi1111 quit (sid85934@gateway/web/irccloud.com/x-dfhtphrtufewtpev): Read error: Network is unreachable
+[2017-10-16 11:32:36] → luigi1111 joined (sid85934@gateway/web/irccloud.com/x-mrmxhidliaqsugkb)
+[2017-10-16 11:33:00] * luigi1111 → Guest51092
+[2017-10-16 11:33:58] <surae> oh MAN, this freaking protocol is so cool
+[2017-10-16 11:34:37] <surae> this protocol greatly weakens the probability of accpetance for a block referring to no recent blocks 
+[2017-10-16 11:34:40] <surae> like, greatly greatly
+[2017-10-16 11:34:52] <surae> selfish mining attacks are essentially worthless under this protocol
+[2017-10-16 11:41:40] <surae> hmm, my numbers are conflicting with theirs
+[2017-10-16 11:42:00] <surae> oh oh
+[2017-10-16 11:42:06] <surae> they are using 10 blocks per second as an example
+[2017-10-16 11:42:09] <surae> holy shit that's fast
+[2017-10-16 11:42:39] <surae> they can secure the network against a 25% attack at 10 blocks per second by approximately doubling the network latency
+[2017-10-16 11:42:43] ⇐ Guest51092 quit (sid85934@gateway/web/irccloud.com/x-mrmxhidliaqsugkb): Changing host
+[2017-10-16 11:42:43] → Guest51092 joined (sid85934@unaffiliated/luigi1111)
+[2017-10-16 11:42:43] * ChanServ set +o Guest51092
+[2017-10-16 11:42:43] ⇐ Guest51092 quit (sid85934@unaffiliated/luigi1111): Changing host
+[2017-10-16 11:42:43] → Guest51092 joined (sid85934@gateway/web/irccloud.com/x-mrmxhidliaqsugkb)
+[2017-10-16 11:42:43] * hobana.freenode.net set +o Guest51092
+[2017-10-16 11:42:43] * Guest51092 → luigi1111
+[2017-10-16 11:42:50] <surae> in temrs of conf time
+[2017-10-16 11:42:52] <surae> so for example
+[2017-10-16 11:44:02] <surae> in a network with a godawful 5 second delay from one end to the other, with 10 blocks being produced per second (IMAGINE THE ORPHAN RATE with bitcoin with those numbers)... a 25% attack can be succesffully warded off 99% of the time by waiting 10 seconds for confirmation. at 10 blocks per second, that's 100 blocks, which seems like a lot, but
+[2017-10-16 11:44:19] <surae> for 99.99% security, can wait a mere 14 seconds~
+[2017-10-16 11:44:25] <surae> that's freaking nuts
+[2017-10-16 11:45:19] <surae> oh it looks like the time above + network delay. so in this example above, with 99.99% security, 10 blocks/second, 25% attack, 5 second network delay, the merchant only needs to wait 19 seconds
+[2017-10-16 11:45:35] <surae> 14 seconds from the protocol plus 5 seconds for the propagation delay
+[2017-10-16 11:46:29] <surae> ugh, and *waiting time goes down* as block creation rate goes up!~
+[2017-10-16 11:46:32] <surae> like, exponentially
+[2017-10-16 11:46:41] <surae> and since you fix your security probability to start with
+[2017-10-16 11:47:50] <surae> The analysis on which Alg. 3 relies makes several
+[2017-10-16 11:47:50] <surae> worst-case assumptions in order to bound the probability of a successful attack, e.g., that the
+[2017-10-16 11:47:50] <surae> attacker can broadcast blocks to and receive blocks from all nodes without any delay (see
+[2017-10-16 11:47:50] <surae> Appendix E, mainly Lemmas 14 and 20). Accordingly, the analysis is not tight, and in reality
+[2017-10-16 11:47:50] <surae> attacks are in fact less likely to succeed. In Fig. 9, we depict the comparison between the
+[2017-10-16 11:47:50] <surae> analytical bound and two different empirical simulations. In these simulations we explicitly
+[2017-10-16 11:47:50] <surae> generate blocks for the attacker and simulate the optimal double-spending attack. We repeat the
+[2017-10-16 11:47:50] <surae> experiment 10,000 times for each point in the graph, and measure the empirical success rate.
+[2017-10-16 11:47:50] <surae> The simulations assume two types of attackers: a worst-case attacker that is able to transmit
+[2017-10-16 11:47:50] <surae> and receive blocks with no delays, and a more realistic attacker that is connected to other nodes
+[2017-10-16 11:47:50] <surae> with typical delays. We compared the fraction of successful attacks under these setups to the
+[2017-10-16 11:47:50] <surae> analytical risk calculated by SPECTRE’s policy (Alg. 7).
+[2017-10-16 11:49:41] <surae> on a log scale, the probability of a successful attack exponentially crashes to -infinity as the wait time *increases.* and since waiting time goes down as block creation rate goes up, this implies there is an optimal point for block creation time and confirmation waiting periods using SPECTRE. Which is cool also because it gives us a reason to pick specific numbers like block creation rate, rather than
+[2017-10-16 11:49:41] <surae> simply going with what seems reasonable
+[2017-10-16 11:51:10] <surae> 5 second block propagation time, 10 blocks/second block creation rate, 45% attacker, 25-second confirmation waiting time -----> probability lower than 10^-40 that a double spend attack succeeds
+[2017-10-16 11:51:15] <surae> this is.. just absolutely... insane.
+[2017-10-16 11:55:19] → Reasonable joined (~root@213.55.115.115)
+[2017-10-16 11:57:56] <surae> hmm, i'm not sure *why* but it looks to me like they allow more blocks to be accepted for PoW, but they scale the block reward according to how close the difficulty target is with the hash of the block header + nonce 
+[2017-10-16 11:58:33] <surae> so if you have half as many leading zeros, you'll get up to half the reward, if you have up to a third of the leading zeros you get 1/3 of the reward, and antyhing worse than that isn't rewarded at all
+[2017-10-16 11:59:19] → defterade joined (~defterade@ip565ee97d.direct-adsl.nl)
+[2017-10-16 12:00:28] <sgp_[m]> I think it's good for Monero to choose an appropriate block time that balances all these factors, rather than only basing the block time on intuition (current 2 min blocks). I can't follow all that you're saying, but I'm interested
+[2017-10-16 12:08:17] ⇐ Reasonable quit (~root@213.55.115.115): Ping timeout: 248 seconds
+[2017-10-16 12:09:16] <surae> sgp_[m] agreed
+[2017-10-16 12:11:19] * sarang set the topic to If you like it, then you should have put a ring signature on it

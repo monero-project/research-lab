@@ -1,0 +1,346 @@
+[2018-09-24 10:00:15] <oneiric_> thanks for the ping :)
+[2018-09-24 10:00:15] <scoobybejesus> 👍
+[2018-09-24 10:00:37] <binaryFate> hi
+[2018-09-24 10:01:10] <dEBRUYNE> hi
+[2018-09-24 10:01:18] <vtnerd> hi
+[2018-09-24 10:01:57] ⇐ cardboardoranges quit (~cardboard@65.112.8.206): Quit: cardboardoranges
+[2018-09-24 10:02:15] → rehrar joined (~Diego@c-174-56-54-122.hsd1.nm.comcast.net)
+[2018-09-24 10:02:17] <MoroccanMalinois> hi
+[2018-09-24 10:02:36] <rehrar> heyo
+[2018-09-24 10:02:47] <suraeNoether> allrighty
+[2018-09-24 10:02:52] <suraeNoether> Now that greetings are out of the way
+[2018-09-24 10:03:11] <suraeNoether> as usual, we are basically just going over what we've done last week and what we want to go over this week, and to open up the table for questions and suggestions
+[2018-09-24 10:03:20] <suraeNoether> but today i want to reverse the usual order
+[2018-09-24 10:03:36] <nioc> hmmm
+[2018-09-24 10:03:42] <suraeNoether> i want people who have questions or suggestions to be able to speak up at the beginning
+[2018-09-24 10:03:54] <suraeNoether> so they don't have to sit around hearing about groups etc before they are allowed to give us their thoughts
+[2018-09-24 10:04:01] <suraeNoether> nioc i knew i forgot at least one person :D sorry
+[2018-09-24 10:04:29] <nioc> np my comment was about the order
+[2018-09-24 10:05:21] <suraeNoether> so. *crosses legs* who has some thoughts for the MRL guys?
+[2018-09-24 10:05:34] <sarang> Anyone? Bueller?
+[2018-09-24 10:05:50] → vegasbaby joined (~vegasbaby@2001:420:20b0:2250:18e7:a79c:a477:a37e)
+[2018-09-24 10:05:54] <oneiric_> are cancellable signatures possible with monero?
+[2018-09-24 10:06:06] <nioc> I see that the BPs were just tweaked,  are we all set now?
+[2018-09-24 10:06:13] <silur> you mean (un)denyable signatures?
+[2018-09-24 10:06:30] <silur> *(un)deniable
+[2018-09-24 10:06:57] <oneiric_> I mean, one is part of a multisig, but before the multisig is fully signed, can one cancel their part of the multisig?
+[2018-09-24 10:07:00] <sarang> nioc: a verification tweak, for a belt-and-suspenders approach to curve points
+[2018-09-24 10:08:26] <suraeNoether> oneiric_: i don't think cancellability in the way you describe it is particularly necessary... 
+[2018-09-24 10:08:29] <suraeNoether> if you bail on a multisig signing?
+[2018-09-24 10:09:09] <suraeNoether> no information is leaked; there may be a record of your communication between the other signers, though, and that's really the more dangerous part of things, from the point of view of IRL opsec
+[2018-09-24 10:09:11] <oneiric_> ok, how else would you bail out after initially signing?
+[2018-09-24 10:09:27] <suraeNoether> and there isn't anything in the protocol that prevents you performing the multisig signing ceremony in a "bad" way, if htat makes sense
+[2018-09-24 10:09:29] <suraeNoether> you just stop
+[2018-09-24 10:10:11] <suraeNoether> if you mean "i want to retract a signature that has already been computed," I don't think that... is... practical...
+[2018-09-24 10:10:40] <oneiric_> adds too many moving parts?
+[2018-09-24 10:11:04] <suraeNoether> uh, well, if it's already computed and can later be revoked
+[2018-09-24 10:11:06] <endogenic> maybe a type of tx which has two stages of confirmation.. during first stage, it could be canceled with another tx by same signer?
+[2018-09-24 10:11:18] — endogenic hides
+[2018-09-24 10:11:43] <suraeNoether> if it's already computed and later can be revoked, does this mean you need a revocation signature in a later block that refers to the original signature? etc. i'm not sure exaclty how all of it would work
+[2018-09-24 10:11:48] <suraeNoether> and i'm not sure what the use case would be
+[2018-09-24 10:12:08] <suraeNoether> generally we want our transactions to be signed and done, for finality and liveness reasons
+[2018-09-24 10:12:42] <suraeNoether> retracting a transaction that you've already executed... I imagine that's maybe something that *could* be done on a lightning like system between honest parties without issue
+[2018-09-24 10:12:52] <suraeNoether> i can't think about how to implement it on the base layer without a lot of problems
+[2018-09-24 10:13:12] <oneiric_> revocation would happen before tx is fully signed, use-case is for an automatic funding of an FFS wallet
+[2018-09-24 10:13:38] <sarang> there was a similar suggestion for a 2-of-3 with a trusted mediator
+[2018-09-24 10:13:40] <suraeNoether> ah; in that case, if you don't want to make the transaction, just *don't finish signing it.*
+[2018-09-24 10:14:27] <suraeNoether> if you already pre-signed it and haven't broadcasted it, then don't broadcast it and delete it
+[2018-09-24 10:14:34] <suraeNoether> if it's already broadcast? don't... don't do that?
+[2018-09-24 10:15:08] <oneiric_> ok that makes sense. my thinking on this might not be the clearest. was thinking of people signing multisig to show support, but if something changes their mind before the tx is complete, being able to revoke their part of the signature
+[2018-09-24 10:15:25] <endogenic> people could show support by posting proof of funds
+[2018-09-24 10:16:22] <suraeNoether> ah, yeah, that's not necessary; their pre-signatures or partial signatures can't be used to construct a complete signature, so you show your initial support by participating in the first round of interaction, and you revoke your support, so to speak, by not participating in the second round of interaction
+[2018-09-24 10:16:58] <oneiric_> oooo, that's way smoother, thanks suraeNoether :)
+[2018-09-24 10:17:21] <suraeNoether> i can think of another case, though, that could be helpful, and i'm going to state it so we start percolating on the idea in the back of our heads
+[2018-09-24 10:18:11] <silur> this might actually introduce some problems on blockchains
+[2018-09-24 10:18:27] <suraeNoether> let's say you relay a new transaction that can't be mined for 1440 blocks, and has a locktime of 2880 blocks, so that the soonest it can be mined is tomorrow and the soonest it can be spent is the day after... should someone be able to broadcast a revocation of that transaction in the next 1440 blocks so that miners don't include it? the answer, I think, is yes, this is possible, but I also think that there
+[2018-09-24 10:18:27] <suraeNoether> isn't a good way to *enforce it.*
+[2018-09-24 10:18:38] <suraeNoether> so it'd be, at best, asking miners politely to not mine the transaction
+[2018-09-24 10:19:05] <suraeNoether> there could be some workarounds maybe, but we'll think about it and move onto other topics
+[2018-09-24 10:19:30] <suraeNoether> nioc had a question on the BP tweaks, but sarang you didn't mention if we anticipate more tweaks or not
+[2018-09-24 10:19:36] <suraeNoether> you just said what they were
+[2018-09-24 10:19:44] <sarang> I don't anticipate others
+[2018-09-24 10:19:56] <suraeNoether> cool
+[2018-09-24 10:20:01] <suraeNoether> anyone else have any other questions?
+[2018-09-24 10:20:35] <endogenic> does it make sense to do questions also after updates given?
+[2018-09-24 10:20:45] <sarang> sure
+[2018-09-24 10:22:20] <suraeNoether> cool. Last week I worked more on my Fulmo Network (lightning in esperanto) paper, and I anticipate making it available for public perusal later this week or early next week... I read through Sarang's DLSAG paper, which is important to the Fulmo paper, and I'm going through donut and Pedro Moreno-Sanchez' similar paper (in prep, but we got an early copy earlier this year)
+[2018-09-24 10:22:35] <suraeNoether> I'm intending on reading hte M/N multisig thing; I haven't gotten to Silur's slides for HPCC yet
+[2018-09-24 10:22:40] <suraeNoether> (I'm so sorry)
+[2018-09-24 10:22:57] <silur> np, I had help from sarang
+[2018-09-24 10:23:15] <suraeNoether> I also have had some lovely conversations with Dr. Shuhong Gao at Clemson University regarding the possibility of some informal collaborations between MRL and Clemson in the future, which would be fun and great
+[2018-09-24 10:23:29] <sarang> nice
+[2018-09-24 10:23:45] <endogenic> coolio
+[2018-09-24 10:24:01] <oneiric_> right on
+[2018-09-24 10:24:07] <suraeNoether> I also am waiting on a few more quotes from  venues for the Monero Konferenco, named by rehrar (I kind of like Monero in the Mountains, or Ring Signatures on the Rockies, but tbqh, Monero Konferenco has a Mortal Kombat feel to it, and I kinda love it)
+[2018-09-24 10:24:48] <suraeNoether> The remainder of this week? More DLSAG, more fulmo, more research into accumulators... OH OH OH
+[2018-09-24 10:25:02] <suraeNoether> I also have a question for the community, but I'll wait until Sarang has gone and anyone else who wants to contribute
+[2018-09-24 10:25:09] <oneiric_> dun dun dun dada dun.. Monero Kooooonferenco!!
+[2018-09-24 10:25:14] → cardboardoranges joined (~cardboard@65.112.8.206)
+[2018-09-24 10:25:19] <sarang> Sure
+[2018-09-24 10:25:34] <endogenic> can we pls work in some lotr references like Council of Elrond?
+[2018-09-24 10:25:40] <suraeNoether> NO
+[2018-09-24 10:25:41] <sarang> Wrote up a draft of a tech note on generalizing our knowledge about provably spent outputs
+[2018-09-24 10:26:07] <sarang> mainly because it covers several other ways we test for this, and shows why it's a hard problem (for us and adversaries)
+[2018-09-24 10:26:21] — suraeNoether is contributing some knowledge of matching weighted bipartite graphs on this later, as well, hopefully this week
+[2018-09-24 10:26:24] <sarang> Tweaking the DLSAG stuff based on suraeNoether's comments (and his desire to work the foundations into his work)
+[2018-09-24 10:26:50] <sarang> There was a late tweak to BPs to handle some ways we were doing a scalar conversion that were subtly incorrect
+[2018-09-24 10:27:16] <spaced0ut> oneiric_, always dressed and ready for Mortal Kombat
+[2018-09-24 10:27:29] <sarang> Also: I was asked to present on attack surfaces and privacy research at a Kyiv hackathon... wondering the group's thoughts on me taking like 5-6 days to do this
+[2018-09-24 10:27:50] <sarang> I like the hackathon approach to getting the word out
+[2018-09-24 10:28:18] <oneiric_> that sounds like a very cool thing
+[2018-09-24 10:28:46] <sarang> Yeah, it's a big time investment but fortunately I work remotely anyway, amirite?
+[2018-09-24 10:28:50] <suraeNoether> will you be needing financial support for it, or would those organizers be compensating you?
+[2018-09-24 10:29:08] <nioc> https://forum.getmonero.org/7/open-tasks/90857/sarang-re-present-at-kyiv-hackathon
+[2018-09-24 10:29:12] <sarang> They're compensating flight and some hotel. With local transportation, M&IE, and hotel, it'd run about 9 XMR community funding
+[2018-09-24 10:29:14] <nioc> cheap
+[2018-09-24 10:29:15] <suraeNoether> oh hehe
+[2018-09-24 10:29:33] <sarang> Would be nice to reach out to that part of the world, getting technical folks thinking about and hacking on Monero
+[2018-09-24 10:29:39] <sarang> Anyway, open to comments
+[2018-09-24 10:29:47] <sarang> it'd be in a couple of weeks
+[2018-09-24 10:29:51] <endogenic> do you know anyone there?
+[2018-09-24 10:30:03] <sarang> I believe msvb is also speaking there about hardware
+[2018-09-24 10:30:31] <sarang> This group actually approached us at our defcon village
+[2018-09-24 10:30:53] <silur> oh this reminds me, david chaum will be present at HCPP
+[2018-09-24 10:31:01] <silur> **shittin' brix**
+[2018-09-24 10:31:29] <oneiric_> seriously?! so excite!
+[2018-09-24 10:31:53] <suraeNoether> Sarang and I were curious about whether the community would want to fund us for the Berlin conference, but I'm having a hard time finding the website. i'll bring it up next week
+[2018-09-24 10:32:06] <sarang> I don't think I'll be doing Berlin
+[2018-09-24 10:32:08] <sarang> I'm all traveled out
+[2018-09-24 10:32:17] <suraeNoether> Does anyone else have any projects they want to discuss?
+[2018-09-24 10:32:18] <sarang> and the timing is not great
+[2018-09-24 10:32:29] <sarang> I'm working on some other minor stuff about curvepoint checking
+[2018-09-24 10:32:40] <sarang> small optimization stuff
+[2018-09-24 10:33:08] <endogenic> dang, i wanna go surae
+[2018-09-24 10:33:14] <silur> I got into a spaghetti of proofs on my quantumVRF not much advance there
+[2018-09-24 10:33:15] <endogenic> i'll keep an eye out
+[2018-09-24 10:33:58] <suraeNoether> Another bit of work; sgp and I are contributing to a friend's educational outreach project. the idea is to provide a privacy breakdown of all the different privacy coins out there, at a level that someone with some computer science and/or math experience can understand, but without requiring a Masters or PhD to get
+[2018-09-24 10:34:24] <suraeNoether> I'm not sure exactly how public that is, but I plan on putting a few hours into some writing on that later this week, especially in the Monero sections
+[2018-09-24 10:34:42] <endogenic> nice
+[2018-09-24 10:34:45] <sarang> oh interesting
+[2018-09-24 10:35:08] <sarang> Well I take it there's no big opposition to speaking to Kyiv
+[2018-09-24 10:35:09] <vegasbaby> It would be great to see an honest and even approach to comparing the major privacy currencies
+[2018-09-24 10:35:35] <suraeNoether> oh, sarang, I'm sorry, I didn't mean to switch topics; I got the sense that no one in the room objected
+[2018-09-24 10:35:43] <suraeNoether> but I'll stfu for a moment
+[2018-09-24 10:36:26] <sarang> Heh no, I think people were done commenting
+[2018-09-24 10:36:36] <endogenic> it's a risk..
+[2018-09-24 10:36:40] <sarang> ?
+[2018-09-24 10:36:48] <endogenic> but i dont think anyone objects to the benefits
+[2018-09-24 10:37:49] <sarang> Risk in what way
+[2018-09-24 10:38:21] <rehrar> you could be hit on
+[2018-09-24 10:38:28] <sarang> Oof
+[2018-09-24 10:38:34] <sarang> A risk worth taking I'm sure
+[2018-09-24 10:38:36] <endogenic> well, suppose you traveled with a partner…i think it's reasonable to say you'd be safer
+[2018-09-24 10:39:00] <sarang> That isn't the case tho
+[2018-09-24 10:39:10] <suraeNoether> you can always be *safer* by staying home
+[2018-09-24 10:39:13] <suraeNoether> anyway
+[2018-09-24 10:39:24] <oneiric_> is Kiev that dangerous?
+[2018-09-24 10:40:03] <suraeNoether> my understanding is that kyiv has very low levels of violent crime except when alcohol is involved. :P
+[2018-09-24 10:40:41] <binaryFate> I was there, in general it's ok. But there has been a case of a CEO of a crypto company kidnapped for a ransom
+[2018-09-24 10:40:57] <sarang> Well I'm not overly concerned
+[2018-09-24 10:41:00] <sarang> From what I've heard
+[2018-09-24 10:41:24] <sarang> I'm a lowly mathematologist
+[2018-09-24 10:41:27] <rehrar> sarang you need to let me know about the cards so I can get you necessary files before you go
+[2018-09-24 10:41:34] <sarang> Just a mere scientician
+[2018-09-24 10:41:37] <IsthmusCrypto> << opens FFS page to fund a bodyguard for @sarang in Kiev >>
+[2018-09-24 10:41:47] <IsthmusCrypto> @suraeNoether - that document sounds great, and I'm looking forward to reading it. I love to see cross-project collaborations like these. Building bridges and knowledge sharing makes everybody stronger.
+[2018-09-24 10:42:01] <sarang> Should I request the FFS get opened for that event travel?
+[2018-09-24 10:42:08] <suraeNoether> i belive you should, sarang
+[2018-09-24 10:42:08] <sarang> It's quite new but the event is soon
+[2018-09-24 10:42:25] <crCr62U0> Are there any longterm research tasks that can be done by independent individual except find some vulnerabilities & exploit them?
+[2018-09-24 10:42:31] <sarang> Hark! Requesting eventually FFS migration
+[2018-09-24 10:42:38] <sarang> Yes
+[2018-09-24 10:43:08] <endogenic> what if sarang were held for ffs ransom? :P
+[2018-09-24 10:43:09] <rehrar> sarang: checking with Devin no about migration. He's doing a lot of good work. QR codes will be implemented, an API, and more
+[2018-09-24 10:43:17] <endogenic> i know i would donate
+[2018-09-24 10:43:46] <endogenic> crCr62U0: yes absolutely
+[2018-09-24 10:44:52] <vegasbaby> wait what
+[2018-09-24 10:44:58] <vegasbaby> Donations for FFS rework?!?
+[2018-09-24 10:45:09] <vegasbaby> Plz let me give my money :D
+[2018-09-24 10:45:19] <suraeNoether> okay, last topic I want to discuss is... a little out of the blue, and Sarang and I want some input from the community regarding a Conflicts of Interest Policy for MRL, or some sort of ethics policy....
+[2018-09-24 10:45:29] <suraeNoether>  We really bend over backwards to state in our papers that our research is paid for in Monero, for the same reason that doctors funded by pharma companies *are ethically obligated* to disclose those conflicts of interest.
+[2018-09-24 10:45:37] <suraeNoether> However, as everyone is aware, there is an epidemic of unethically plausible reporting.
+[2018-09-24 10:45:43] <suraeNoether> We see very often  that Coin X is being described in Magazine Y, and they interview researchers P, Q, and R, some of whom are paid in Coin X, and this conflict is not described in the article.
+[2018-09-24 10:46:29] <crCr62U0> I'm asking about longterm in order to have time to learn something; It's difficulty to be successful in shortterm tasks due to lack of experience and mind abilities.
+[2018-09-24 10:46:54] <suraeNoether> we suspect that putting out such a policy, even though it is totally nonbinding, since we are a headless entity with no authorities... we think that putting out such a policy would goad other coins to do something similar, to put out their own ethics policies
+[2018-09-24 10:46:55] <crCr62U0> *to be competitive(successful) among others
+[2018-09-24 10:47:44] <suraeNoether> crCr62U0: your question about research tasks that the community can contribute to... let's get back to that in a moment. we are overflowing with problems to solve and infrastructure in the coding department that would make our research lives easier
+[2018-09-24 10:47:50] <endogenic> crCr62U0: yes, to contribute you need to know a little about monero first, then you'll find some problems there. one of them is replacing ringsigs with something better than zksnarks
+[2018-09-24 10:48:01] <endogenic> suraeNoether: sounds good to me
+[2018-09-24 10:48:10] <suraeNoether> so if you need something to do, we can definitely point you in a direction none of us currently have time for :D
+[2018-09-24 10:48:10] <binaryFate> suraeNoether it's a great idea. Regardless of what other coins are doing, making the ethic already there in Monero/MRL more visible and clear to the outside world is a net positive.
+[2018-09-24 10:48:29] <suraeNoether> i agree, binaryFate 
+[2018-09-24 10:48:34] <sarang> As to research, it's problematic
+[2018-09-24 10:48:47] <sarang> There's a big learning curve to do big bluesky work
+[2018-09-24 10:48:50] → ErCiccione joined (~erciccion@213.152.161.149)
+[2018-09-24 10:48:59] <sarang> but there are smaller projects that someone doesn't have to be a broad expert to complete
+[2018-09-24 10:49:02] <sarang> or at least participate in
+[2018-09-24 10:49:32] <sarang> e.g. I'd love to abstract more of our cryptographic functions properly so we can move to more standard and tested libraries
+[2018-09-24 10:49:59] <suraeNoether> can we talk about the never-ending list of to-do in a moment? it's a big list
+[2018-09-24 10:50:02] <sarang> sure
+[2018-09-24 10:50:09] <suraeNoether> okay, so my question to the community is
+[2018-09-24 10:50:17] <IsthmusCrypto> @suraeNoether I hadn't thought about the disclosure before, and I think you have a good point. And while the headless entity cannot enforce it, it does protect the headless entity.
+[2018-09-24 10:50:17] <IsthmusCrypto>  In the unlikely case that some Monero dev or researcher presents unethically without full disclosure, we can point to that as a violation of community policy. Meaning that the person was communicating in a sketchy way, and not the community acting in a sketchy way.
+[2018-09-24 10:50:39] <sarang> It also helps guide other projects to the same idea, I hope
+[2018-09-24 10:50:49] <sarang> and is a statement about our intent to do honest work
+[2018-09-24 10:51:03] <suraeNoether> so my question to the community is simple: what do we want to see in our ethics policy?
+[2018-09-24 10:51:35] <sarang> I think the biggest thing is disclosure of funding specifically tailored around research/dev for Monero
+[2018-09-24 10:52:08] <sarang> e.g. "Sarang Noether receives Monero community funding, paid in XMR, to do full-time R&D for the Monero Research Lab, a workgroup of the Monero Project"
+[2018-09-24 10:52:17] <suraeNoether> i think MRL researchers should not go off and start their own coins while working at MRL, even if they do so fairly
+[2018-09-24 10:52:27] <sarang> ehhhhh
+[2018-09-24 10:52:32] <sarang> should it be that broad?
+[2018-09-24 10:52:37] <sarang> What are our ultimate goals for it?
+[2018-09-24 10:52:42] <silur> woopsie
+[2018-09-24 10:52:52] <endogenic> that seems a little over reaching to me
+[2018-09-24 10:53:00] <endogenic> i think at the last it has to require disclosure of material facts
+[2018-09-24 10:53:03] <endogenic> at the least
+[2018-09-24 10:53:05] <suraeNoether> maybe not, but my goal in that regard is: i don't want someone claiming they work for/at MRL while they are shilling/pumping their own project
+[2018-09-24 10:53:08] <sarang> I would care to know if a Monero researcher does have their own coin
+[2018-09-24 10:53:20] <suraeNoether> okay, if we stick with disclosure, i'm cool with that, too
+[2018-09-24 10:53:25] <suraeNoether> maybe
+[2018-09-24 10:53:25] <silur> oh yea that policy was actually active in ethereum foundation too
+[2018-09-24 10:53:28] <sarang> I think it's all about keeping people informed
+[2018-09-24 10:53:28] <suraeNoether> i don't know
+[2018-09-24 10:53:32] <sarang> silur: linky?
+[2018-09-24 10:53:44] <endogenic> if facts are visible then the community can handle things on their own
+[2018-09-24 10:53:45] <silur> to the policy mail? :D
+[2018-09-24 10:54:04] <sarang> I like that people don't need to question our motives for doing this. And I think the policy should continue to reassure people of this
+[2018-09-24 10:54:11] <sarang> silur: yeah, or whatever the policy is
+[2018-09-24 10:54:18] <sarang> I know nothing about it
+[2018-09-24 10:54:23] <silur> I don't know whether ming (that time she was our CEO) published it anywhere
+[2018-09-24 10:54:27] <sarang> Do we know what other projects are doing?
+[2018-09-24 10:54:31] <sarang> Maybe that's a start before drafting our own
+[2018-09-24 10:54:36] <silur> we just received collectively a mail about that
+[2018-09-24 10:54:36] <sarang> See what's out there, if anything
+[2018-09-24 10:54:45] <sarang> Take what we like from it, avoid what we don't
+[2018-09-24 10:54:59] <sarang> I don't want fall into the "not invented here" trap. Let's build on it
+[2018-09-24 10:55:01] <IsthmusCrypto> This is very thought provoking conversation. I don't think a hard ban is quite appropriate - and I don't mind if one of the MRL researchers makes small contributions to other currencies as long as it's not interfering with completion of MRL duties. (see building bridges comment from earlier). But there should be some constraints/transparency.
+[2018-09-24 10:55:18] <silur> I'll look it up sarang
+[2018-09-24 10:55:24] ⇐ cardboardoranges quit (~cardboard@65.112.8.206): Quit: cardboardoranges
+[2018-09-24 10:55:29] <sarang> Well, and researchers _do_ collaborate
+[2018-09-24 10:55:40] <sarang> We don't want to discourage that
+[2018-09-24 10:55:57] <sarang> We should encourage it, with disclosure
+[2018-09-24 10:56:02] <IsthmusCrypto> And I do like the ideas in the brief example statement from @sarang regarding conflict of interest disclosure. I think that "supported by funding from the Monero community" is more important than "paid in Monero"
+[2018-09-24 10:56:19] <sarang> IsthmusCrypto: agreed
+[2018-09-24 10:56:26] <sarang> generally
+[2018-09-24 10:56:27] <silur> totally agreed
+[2018-09-24 10:56:42] <suraeNoether> agreed on that too
+[2018-09-24 10:57:41] <sarang> I don't even care about constraints. If the community doesn't like what the disclosure implies about someone's conflicts, that's up to them to decide
+[2018-09-24 10:58:05] <sarang> But give people open information so they can decide for themselves how to interpret someone's motives or actions, eh?
+[2018-09-24 10:58:38] <rehrar> My recommendation to you both would be to draft a document and present it to the community rather than trying to do something by community design
+[2018-09-24 10:58:49] <sarang> Yeah, based on what we know from elsewhere
+[2018-09-24 10:58:51] <rehrar> And if there are high quality suggestions to be added, they will filter to the top
+[2018-09-24 10:59:02] <sarang> We're surely not the first open-source project to consider this
+[2018-09-24 10:59:12] <rehrar> use your best judgement and include what you think should be there. The community can fill in gaps after it is proposed
+[2018-09-24 10:59:33] <sarang> righto
+[2018-09-24 10:59:35] <silur> basically EF did it in a way that it was okay to do advising and help in other coins under your own name but only that
+[2018-09-24 10:59:44] <rehrar> in the end, MRL is its own workgroup, and is free to set its own internal rules
+[2018-09-24 10:59:48] <silur> so the whitepaper shouldht have _MRL member_
+[2018-09-24 10:59:54] <silur> it worked quite well
+[2018-09-24 10:59:54] <suraeNoether> rehrar: I've been working on the draft for a few days, and I wanted to seek input to see if a high signal-to-noise ratio on a specific topic floated during the discussion before the document is really ready to show off to people
+[2018-09-24 10:59:55] <endogenic> "MRL is its own workgroup" <<<
+[2018-09-24 10:59:56] <sarang> Well, that's another question entirely
+[2018-09-24 11:00:13] <sarang> there's no legal status to MRL... anyone can claim to be "part of it"
+[2018-09-24 11:00:20] <silur> sounds quite contradicting from me for I violated that policy ^^"
+[2018-09-24 11:00:21] <rehrar> I had spoken with sarang a bit about formalizing the MRL a little bit, just so random people can't nab the name "MRL Researcher" and use it on stuff when they don't contribute
+[2018-09-24 11:00:26] <endogenic> i don't think so sarang
+[2018-09-24 11:00:40] <sarang> endogenic: they can, it's only based on reputation really
+[2018-09-24 11:00:42] <sarang> and participation
+[2018-09-24 11:00:51] <sarang> and that reputation is basically all internal to the project
+[2018-09-24 11:00:51] <endogenic> i mean no legal status
+[2018-09-24 11:00:54] <rehrar> this arm of Monero is honestly the one that would be under the most scrutiny apart from the coding, so I think it's quite important
+[2018-09-24 11:01:24] <IsthmusCrypto> (that reminds me, I will be uploading meeting notes once I get a break from a current metaphorical tsunami at work)
+[2018-09-24 11:02:02] <endogenic> historically, the community has either hired Noethers directly or the Noethers have published something for monero that the rest of the Noethers agree on .. is that incorrect anywhere?
+[2018-09-24 11:02:28] <endogenic> i would have to speak to an attorney or two about legal status, copyright, etc
+[2018-09-24 11:02:44] <suraeNoether> endogenic: no, I had almost zero interaction with shen regarding ringct. :P MRL is even more headless than your description
+[2018-09-24 11:02:49] <sarang> At the very least, we have no formal guidelines for putting "Monero Research Lab" as a title/tagline
+[2018-09-24 11:03:00] <endogenic> yeah but who published his paper on MRL
+[2018-09-24 11:03:06] <suraeNoether> i dunno, fluffypony?
+[2018-09-24 11:03:06] <sarang> It just really hasn't been tested by anyone
+[2018-09-24 11:03:08] <sarang> (yet)
+[2018-09-24 11:03:15] <rehrar> I would like to make a proposal to do a weak formalization of MRL. Basically acknowledging sarang and suraeNoether as the leaders of the workgroup, whether or not they are paid by the FFS.
+[2018-09-24 11:03:17] <sarang> I assume core team put it up
+[2018-09-24 11:03:18] <endogenic> exactly.. so it's in the first category
+[2018-09-24 11:03:32] <fluffypony> anyone can be part of MRL
+[2018-09-24 11:03:44] <fluffypony> it's self-assembling
+[2018-09-24 11:03:53] <suraeNoether> rehrar: I feel like we're treading into governance territory, and if we are doing that, i would like a title like "Paladin Exemplar" or "Necrophage Elitus"
+[2018-09-24 11:04:00] <sarang> I understand what rehrar is getting at though
+[2018-09-24 11:04:03] <sarang> We're very public-facing
+[2018-09-24 11:04:07] <suraeNoether> yes, for sure
+[2018-09-24 11:04:25] <sarang> I'd like "Man About Town" for my title
+[2018-09-24 11:04:54] <sarang> Right now it's based on your reputation w/in the community. But people outside the community don't track that
+[2018-09-24 11:04:55] <suraeNoether> okay, let's put the ethics document on the side burner, we'll get back to it next week; in the meantime, if anyone doesn't object, i'm going to just go tattoo my pgp keys on my forehead and that'll be MRL's authentication
+[2018-09-24 11:04:55] <rehrar> my proposed formalization doesn't put anything on membership (anyone can join and contribute) but does put a bit of a hierarchy in terms of "these people are putting out random stuff, suraeNoether sarang, is this MRL work?"
+[2018-09-24 11:04:57] <sarang> nor should they
+[2018-09-24 11:05:14] <suraeNoether> rehrar: understood
+[2018-09-24 11:05:16] <rehrar> exactly sarang
+[2018-09-24 11:05:22] <fluffypony> "putting out MRL work" == merged into the research-lab repo
+[2018-09-24 11:05:27] <rehrar> doing something like this is saying the community has vetted and found these two, so you don't have to vet
+[2018-09-24 11:05:29] <fluffypony> and those merges are controlled
+[2018-09-24 11:05:35] <fluffypony> the same way anyone can work on Monero's source code
+[2018-09-24 11:05:49] <sarang> True, but is the concern more about claiming representation from others rehrar?
+[2018-09-24 11:05:53] <fluffypony> doesn't mean we'll merge something that introduces a backdoro
+[2018-09-24 11:05:55] <fluffypony> *backdoor
+[2018-09-24 11:06:00] <rehrar> fluffypony: or will we...?
+[2018-09-24 11:06:18] ⇐ defterade quit (~defterade@145.130.110.177): Quit: ZNC 1.7.0 - https://znc.in
+[2018-09-24 11:06:36] → defterade joined (~defterade@145.130.110.177)
+[2018-09-24 11:06:38] <binaryFate> backdoro is esperanto for backdoor
+[2018-09-24 11:06:41] <fluffypony> lol
+[2018-09-24 11:06:44] <rehrar> sarang: unsure yet. Admittedly the concern is vaguely defined, so no action should be taken as of now until the "threats" are better defined
+[2018-09-24 11:06:59] <suraeNoether> we'll start with the ethics policy document
+[2018-09-24 11:07:22] <silur> I'll dig up our EF version and forward to suraeNoether and sarang
+[2018-09-24 11:07:30] <sarang> ty silur
+[2018-09-24 11:08:02] <suraeNoether> one simple method is for Sarang and I to publish an accumulator of PGP keys that we consider "valid" MRL keys; when you ssee a document signed wiht a key, you check if it's in the public accumulator. If it is, great, you know we approved it. If not, you know someone is tryign to push out an MRL paper early (or just lying about their own credentials)
+[2018-09-24 11:08:09] ⇐ thrmo quit (~thrmo@gateway/tor-sasl/thrmo): Quit: Waiting for .007
+[2018-09-24 11:08:25] <suraeNoether> but we can think about it more between now and next week
+[2018-09-24 11:08:36] <suraeNoether> i like the idea of a simple ethics/conflict of interest policy
+[2018-09-24 11:08:53] <sarang> We really should sign those
+[2018-09-24 11:09:06] <IsthmusCrypto> I'd be happy to put on my UncagedPotential hat and review any drafts of the policies.
+[2018-09-24 11:09:08] <fluffypony> git already supports GPG signing
+[2018-09-24 11:09:10] <sarang> or at least post to github with signed commits
+[2018-09-24 11:09:15] <sarang> fluffypony: lol, read my mind
+[2018-09-24 11:09:19] <fluffypony> I don't think you need to over complicate it beyond that
+[2018-09-24 11:09:25] <sarang> good point
+[2018-09-24 11:09:37] <suraeNoether> yeah, i agree
+[2018-09-24 11:09:40] <binaryFate> was there any such attempt of claiming MRL relations for unethical or random reasons? Or is this all abstract discussion?
+[2018-09-24 11:10:45] <suraeNoether> binaryFate: when sarang and i met endo in person at the beginning fo this month, we discussed the general phenomena i described regarding too-plausible reporting that doesn't display conflicts of interest. nothing about *monero* right now is drifting us in that direction, it was just an idea we had about the overall cryptocurrency space.
+[2018-09-24 11:11:12] <sarang> I think binaryFate means the MRL formalization comments
+[2018-09-24 11:11:33] <suraeNoether> right, all of this is coming from that one discussion; the answer is no, there have not been any attempts to impersonate me or sarang yet, afaik
+[2018-09-24 11:12:34] <sarang> Shall we address the idea of to-do?
+[2018-09-24 11:12:37] <sarang> it was brought up earlier
+[2018-09-24 11:12:52] <silur> yea I was waiting for that :D
+[2018-09-24 11:13:31] <sarang> (we are over time, if anyone needs to go)
+[2018-09-24 11:15:32] → rex4539 joined (~rex4539@ppp-2-84-161-255.home.otenet.gr)
+[2018-09-24 11:17:16] <suraeNoether> here is our current "road map" with some things ticked off. It could be slightly out of date. https://github.com/monero-project/research-lab/issues/29
+[2018-09-24 11:17:29] <suraeNoether> in general, I would really really like a transaction tree visualization tool
+[2018-09-24 11:17:41] <suraeNoether> or something that scrapes statistics from teh monero blockchain in genreal
+[2018-09-24 11:18:04] <suraeNoether> From the cryptographic point of view, we are interested in replacing ring signatures with something that has decently large anonymity sets, no trusted set-ups (say ZK-STARKs)...
+[2018-09-24 11:18:14] <suraeNoether> but the replacement must be sufficiently efficient in both space and verification time that total time-to-download-and-verify the blockchain (an up-front cost for new members to join the network) is manageable over the next several years, and preferably should also have greater security claims than computational unforgeability. 
+[2018-09-24 11:18:22] <sarang> More pointedly, I have been thinking lately about the state of our current primitives and their implementations
+[2018-09-24 11:18:39] <sarang> IMO we should be offloading to tested libraries far more
+[2018-09-24 11:18:55] <suraeNoether> i agree with that statement, and anywhere that we aren't, should be filled with unit tests.
+[2018-09-24 11:19:24] <suraeNoether> From a stochastic processes point of view, consensus models lack a rigorous description as "adversarial" or game-theoretic, such that participants have some control over the distribution of the outcomes, financial interests, and payoffs, etc.  If you are a statistics sort of person, that could be fun. 
+[2018-09-24 11:20:01] <suraeNoether> One interesting thing that is almost a computer-science exercise and could land anyone "on the map," so to speak, would be to place the Zerocash Sapling ZK-SNARKs inside the bulletproofs of Bunz, Bootle, Boneh, et al. 
+[2018-09-24 11:20:10] <suraeNoether> Anyone who can manage to do that will essentially see money thrown at them to work on these projects forever, and will see their work implemented live on multi-billion dollar currencies within a year.
+[2018-09-24 11:20:43] <endogenic> we should put this in a doc on a repo or somethin
+[2018-09-24 11:20:52] <suraeNoether> From an applied algebra point of view, we are more-and-more interested in RLWE settings and their post-quantum resistance properties, and personally, I've recently been reading about using Euclidean rings to construct untrusted accumulators.
+[2018-09-24 11:21:03] <silur> yaaaay
+[2018-09-24 11:21:11] <suraeNoether> oh, i need to publish the Q4 roadmap by the end of this month, endo, and i'll be including this stuff in there
+[2018-09-24 11:21:22] <silur> I was actually just wondering whether my RLWE fanatism will be extingiused here
+[2018-09-24 11:21:28] <silur> with the roadmap
+[2018-09-24 11:21:29] <suraeNoether> i copy-pasted some of the list above from my communications with Clemson recently. :P
+[2018-09-24 11:21:39] <sarang> These should be open issues on github probably
+[2018-09-24 11:22:00] <suraeNoether> the roadmap is an open issue
+[2018-09-24 11:22:06] <suraeNoether> and it consolidates all this into a list
+[2018-09-24 11:22:15] <silur> suraeNoether: around may we had a brief discussion about how bulletproofs could be even more efficient with RLWE
+[2018-09-24 11:22:28] <silur> we should really see that to the end
+[2018-09-24 11:22:34] <suraeNoether> silur: https://eprint.iacr.org/2018/637 for some RLWE fully homomorphic stuff :P
+[2018-09-24 11:22:57] <suraeNoether> i don't recall that discussion, and i haven't thought *at all* about how LWE or RLWE could be used in bulletproofs
+[2018-09-24 11:23:42] <silur> these cipher expansions are supa-dupa small O.o
+[2018-09-24 11:23:45] <silur> thanks for tha paper
+[2018-09-24 11:24:58] <suraeNoether> okay, i think this was a pretty good meeting. Anyone have objections to beginning the closing ceremony of our research meeting?
+[2018-09-24 11:25:11] <silur> also will you have some time to share your leads on this RLWE untrusted accumulator stuff? I don't really see the connection now
+[2018-09-24 11:25:36] <IsthmusCrypto> I have a Q or two about the notes at the GitHub, but that can happen post-meeting
+[2018-09-24 11:25:56] <suraeNoether> no, no, the untrusted accumulator is with euclidean rings (like polynomial rings) https://kodu.ut.ee/~lipmaa/papers/lip12b/cl-accum.pdf
+[2018-09-24 11:26:06] <suraeNoether> the FHE encryption uses RLWE
+[2018-09-24 11:26:07] → cardboardoranges joined (~cardboard@65.112.8.201)
+[2018-09-24 11:26:29] <suraeNoether> IsthmusCrypto: eh, the closing ceremony is "people gradually losing interest and walking away from their computers" so fire away buddy

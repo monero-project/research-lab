@@ -1,0 +1,126 @@
+[2018-06-25 09:59:52] <suraeNoether> let's get this partay starteeeeed
+[2018-06-25 10:00:54] <suraeNoether> Agenda today: 1. Greetings. 2. Brief MRL update. 3. Show and tell! 4. Who's going to defcon?
+[2018-06-25 10:01:00] <suraeNoether> hi everyone
+[2018-06-25 10:01:30] <oneiric_> hullo
+[2018-06-25 10:02:13] <suraeNoether> Okay, 2. I have finally posted all our meetings logs here: https://github.com/b-g-goodell/research-lab/tree/master/meta/research-meeting-logs
+[2018-06-25 10:02:29] <suraeNoether> I didn't want to fork the whole meta repo just to keep track of our research meeting logs, so I just started a folder
+[2018-06-25 10:02:43] <isthmuscrypto> Greetings!
+[2018-06-25 10:03:14] <suraeNoether> if anyone objects or wants to make PRs to monero-project's meta repo to track our logs, I'm fine with that, too, but this is easiest for me to deal with.
+[2018-06-25 10:03:17] <needmoney90> Morning all
+[2018-06-25 10:03:27] <sgp_[m]> Hello
+[2018-06-25 10:03:28] <suraeNoether> morning isthmuscrypto  and needmoney90 
+[2018-06-25 10:04:00] <suraeNoether> Another update, Sarang will be back next week I believe
+[2018-06-25 10:04:24] <suraeNoether> Other than that, Sarang and I will be at defcon, and we are excited to meet up with folks
+[2018-06-25 10:04:24] <sgp_[m]> They're more accessible if they are posted as a blog post on getmonero. Probably some value there
+[2018-06-25 10:05:00] <suraeNoether> sgp_[m]: would I make a PR to the monero-site repo then?
+[2018-06-25 10:05:31] <binaryFate> hello
+[2018-06-25 10:05:38] <sgp_[m]> There are some open PRs now for the community meetings. Best to use those as a template
+[2018-06-25 10:06:08] <suraeNoether> so the answer is yes, and to use those as a template? I haven't done any blog posts through the repo before, so I'm not sure exactly what the procedure is. :P
+[2018-06-25 10:06:24] <selsta> they require markdown change
+[2018-06-25 10:06:41] <suraeNoether> I'll look around and take care of it later today
+[2018-06-25 10:06:42] <sgp_[m]> Basically yes. It's not very difficult
+[2018-06-25 10:07:00] <suraeNoether> cool, then easy thing to check off my list later
+[2018-06-25 10:07:36] <suraeNoether> So, 3. Show and tell. Silur is here, isthmuscrypto is here, and both of them are working on rather interesting projects I'd like to hear about.
+[2018-06-25 10:08:20] <silur> I'm struggling with testing my RTRS lib, and now got into VDFs, verifiable delay functions and trying to generalize them for lattices
+[2018-06-25 10:08:36] <suraeNoether> i didn't catch isthmuscrypto's original description of his generalized adversarial networks, when he mentioned it for the first time a few weeks ago
+[2018-06-25 10:08:45] <silur> and of course as usual lattices are more interesting than testing but I need to have RTRS done for HCPP :/
+[2018-06-25 10:08:45] <suraeNoether> oooh VDFs are super super interesting to me
+[2018-06-25 10:09:11] <isthmuscrypto> Hi @suraeNoether https://github.com/Mitchellpkt/BlockchainAnalysisGAN
+[2018-06-25 10:09:31] <silur> I have a general VRF construction for DH and EC, PoC ready (I can share the notebook) and a blockchain is already adapting it, working on the lattice VRF now
+[2018-06-25 10:09:32] <isthmuscrypto> I'm tied up in a meeting for the next 50 minutes and sneaking the MRL meeting on the side, so I'll be intermittent in responding.
+[2018-06-25 10:09:40] <suraeNoether> ah silur, that's a conference I would have loved to attend if I had heard of it a few months earlier.
+[2018-06-25 10:09:41] <silur> so my next step is to make the same for VDFs
+[2018-06-25 10:09:55] <suraeNoether> that's awesome, silur!
+[2018-06-25 10:09:57] <silur> I'm sure we can figure something out
+[2018-06-25 10:10:04] <silur> about HCPP
+[2018-06-25 10:10:15] <suraeNoether> oh, no, i literally can't attend, but maybe next year. 
+[2018-06-25 10:10:50] <suraeNoether> oh that brings up something: I was thinking maybe we could start taking issues out on the monero-project/research-lab repo for conferences that the community might want us to attend
+[2018-06-25 10:11:13] <suraeNoether> a lot of them I'm willing to go to out of pocket because they are great experiences, but keeping track of the wide world of conference calendars can be challenging
+[2018-06-25 10:11:34] <isthmuscrypto> " track of the wide world of conference calendars can be challenging" < sounds like we need a decentralized solution xD
+[2018-06-25 10:11:49] <silur> MARKET GAP! :D
+[2018-06-25 10:11:55] <suraeNoether> tokenize it!
+[2018-06-25 10:11:56] <silur> ICO it
+[2018-06-25 10:12:17] <oneiric_> lol
+[2018-06-25 10:12:27] <rehrar> hi
+[2018-06-25 10:12:53] <suraeNoether> is it unreasonable to ask: if folks hear about a technical conference, literally anywhere in the world, at which MRL should have a presence, open up an issue about it on the monero-project/research-lab repo?
+[2018-06-25 10:12:54] <suraeNoether> hi rehrar 
+[2018-06-25 10:13:13] <silur> so brings me back to a interesting bottleneck I can't overcome for weeks for all my current work
+[2018-06-25 10:13:24] <silur> VDF, IVC, VRF, Bulletproofs....
+[2018-06-25 10:13:26] <silur> ACs
+[2018-06-25 10:13:41] <silur> I don't have any experience for arithmetization of boolean circuits
+[2018-06-25 10:13:47] <silur> anyone willing to help out on that?
+[2018-06-25 10:14:28] <silur> maybe not a meeting subject, let's go on with the agenda and get back on it later :D
+[2018-06-25 10:14:47] <suraeNoether> well funny thing about that silur
+[2018-06-25 10:15:00] <suraeNoether> boolean circuits are arithmetic circuits already, just not contrariwise
+[2018-06-25 10:15:08] <suraeNoether> which is one of my favorite -wise suffixed words
+[2018-06-25 10:15:34] <silur> well in Gf(2)
+[2018-06-25 10:16:06] <silur> but most protocols need a galois field with a large prime base so I thought bulletproofs won't work ever on Gf(2)
+[2018-06-25 10:16:31] <suraeNoether> ah that's what you meant
+[2018-06-25 10:17:21] <silur> anyway I'm stuck now with QSP-s and a little less-efficient snark stuff to experiment with BPs
+[2018-06-25 10:18:16] <suraeNoether> well, we'll chat about it later
+[2018-06-25 10:18:29] <silur> yea sorry for holdin' the meeting :D
+[2018-06-25 10:19:14] <suraeNoether> does anyone else have any interesting work they want to talk about? My work this past week has been into zero knowledge proofs and extractability requirements and schnorr signatures. primary reference of the week is this one (pdf link https://link.springer.com/content/pdf/10.1007/3-540-48071-4_28.pdf)
+[2018-06-25 10:20:09] <suraeNoether> primarily, I'm thinking it's possible we don't need to worry about the KOSK setting with only minor adjustments to our current scheme, and if that's the case, all the musig key computation and all the commit-and-reveal nonsense just goes away
+[2018-06-25 10:20:18] <suraeNoether> in which case the whole paper will *AGAIN* collapse to something smaller
+[2018-06-25 10:20:42] <suraeNoether> but I need some sanity checks from folks with more knowledge in the field of complexity theory
+[2018-06-25 10:21:48] <suraeNoether> Other than that, I recently finished advising the ZCash Foundation in giving out 250kUSD in grants, I'm working on encrypted memo fields in Monero transactions, and I've been writing up my backlog statements of work. I've already broken 160 hours this month, but I like this job a whole lot so I'm not really taking weekends until I start feeling burnt out.
+[2018-06-25 10:22:29] <silur> usual cryptographer's calendar :D
+[2018-06-25 10:24:22] <suraeNoether> oh, earlier this week I made some commits to my PoissonGraph simulations (see here https://github.com/b-g-goodell/research-lab/tree/simple/source-code/Poisson-Graphs/new) which are *inches* away from successfully producing human-readable transcripts describing cryptocurrency network simulations.
+[2018-06-25 10:24:39] <suraeNoether> The sim suite is for testing difficulty algorithms, consensus algorithms, and dynamical properties of the network. 
+[2018-06-25 10:25:29] <suraeNoether> a friend who just got a job at the university of Exeter (inspiration for Hogwarts) is interested in writing a population ecology-inspired paper demonstrating how ethereum can effectively prey upon bitcoin's hashrate by rewarding bitcoin block-withholding attacks using ethereum smart contracts.
+[2018-06-25 10:25:42] <silur> wow this is awesome
+[2018-06-25 10:25:46] <isthmuscrypto> o_0
+[2018-06-25 10:26:32] <suraeNoether> https://arxiv.org/abs/1805.08832
+[2018-06-25 10:26:39] <suraeNoether> this paper is sort of the foundation of that idea
+[2018-06-25 10:26:43] <suraeNoether> well
+[2018-06-25 10:26:45] <suraeNoether> one part of the foundation
+[2018-06-25 10:27:23] <oneiric_> +1000 on the sim network research suraeNoether!
+[2018-06-25 10:27:50] <silur> oh yea I saw a paper based on this .... "vulnerability"?
+[2018-06-25 10:27:52] <silur> https://eprint.iacr.org/2018/581
+[2018-06-25 10:28:26] <suraeNoether> yes, exactly
+[2018-06-25 10:28:35] <suraeNoether> that's another part of the foundation, but i haven't been able to find the reference recently, thank you
+[2018-06-25 10:28:40] <suraeNoether> i forgot that was mccrory
+[2018-06-25 10:28:44] <suraeNoether> also a nice guy
+[2018-06-25 10:28:58] <suraeNoether> hmm, published june 6
+[2018-06-25 10:29:10] <suraeNoether> i must have seen him talk about this 
+[2018-06-25 10:29:29] <suraeNoether> Allright, next meeting agenda point: who's going to defcon?
+[2018-06-25 10:29:36] <rehrar> I am
+[2018-06-25 10:29:43] <rehrar> and all of you should also
+[2018-06-25 10:29:50] <suraeNoether> yay, i think most of the board of directors of MAGIC will be there, if not all of us
+[2018-06-25 10:30:00] <suraeNoether> we should all go out for a dinner
+[2018-06-25 10:30:07] <silur> but... it's in the... USA :'(
+[2018-06-25 10:30:34] <suraeNoether> ugh, no kidding
+[2018-06-25 10:31:17] <rehrar> 'murica
+[2018-06-25 10:31:19] <suraeNoether> who wants to start a sea-cooled, solar-powered mining farm with me on the pacific coast of Costa Rica?
+[2018-06-25 10:31:34] <oneiric_> yes please
+[2018-06-25 10:31:40] <oneiric_> :)
+[2018-06-25 10:31:49] <suraeNoether> who wants to fund it?
+[2018-06-25 10:32:05] <oneiric_> Elon Musk
+[2018-06-25 10:32:12] <suraeNoether> good ole' elon
+[2018-06-25 10:32:43] ⇐ ArticMine quit (~ArticMine@184.70.226.34): Ping timeout: 268 seconds
+[2018-06-25 10:33:34] <suraeNoether> okay
+[2018-06-25 10:33:37] <silur> i'm still thinking about defcon, also I have another blockchain security conf in vegas in october that I'm invited as a speaker but still couldn't get my head over getting into US
+[2018-06-25 10:33:54] <silur> last year I think 2 ppl got arrested at defcon?
+[2018-06-25 10:34:07] <silur> the wannacry and the election machine guy
+[2018-06-25 10:34:19] <sgp_[m]> ooh what conference?
+[2018-06-25 10:34:26] <rehrar> just surround them so po po can't get to them
+[2018-06-25 10:34:33] <rehrar> civil disobedience of whatever
+[2018-06-25 10:34:48] <suraeNoether> if you are invited as a speaker, the conference should be able to write you a letter requesting a temporary visa for your visit, but i'm not sure if hungary is on the list of countries that need temporary visas even for a conference visit. i would assume so, because we have shut our borders to friggin canada
+[2018-06-25 10:35:18] <silur> it's more complicated than that, I'm stateless
+[2018-06-25 10:35:24] <suraeNoether> !
+[2018-06-25 10:35:27] <suraeNoether> good freaking luck
+[2018-06-25 10:35:43] <silur> https://www.hoshocon.com/
+[2018-06-25 10:36:08] <rehrar> does being stateless suck?
+[2018-06-25 10:36:37] <rehrar> it sucks that you wouldn't be able to get into USA :/
+[2018-06-25 10:36:41] <suraeNoether> being stateless is a desirable state for a hash-based signature scheme.
+[2018-06-25 10:36:42] <rehrar> they should see about holding Defcon in Canada
+[2018-06-25 10:37:24] <sgp_[m]> Ugh Tues-Thurs
+[2018-06-25 10:37:29] <suraeNoether> should we hold the monero conference in another country?
+[2018-06-25 10:37:49] <silur> HCPP last year had a "secret" monero meeting, I met a dev guy there
+[2018-06-25 10:38:18] <silur> he was giving away SO MANY stickers
+[2018-06-25 10:38:40] <silur> so I guess HCPP is ideal :P
+[2018-06-25 10:38:59] <suraeNoether> Okay, so anyway
+[2018-06-25 10:39:02] <suraeNoether> :D
+[2018-06-25 10:39:13] <oneiric_> hold monero conf in Liberland: http://www.liberland.org/
+[2018-06-25 10:39:18] <suraeNoether> Let's call this meeting what it is: done
+[2018-06-25 10:39:24] <suraeNoether> </meeting>

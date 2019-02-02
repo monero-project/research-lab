@@ -1,0 +1,297 @@
+[2017-11-13 09:27:47] * sarang set the topic to Research meeting now. Stupid time change
+[2017-11-13 09:28:03] <suraeNoether> silur it's not peer-reviewed, but here you go: http://www.cs.cmu.edu/~dga/crypto/cuckoo/analysis.pdf
+[2017-11-13 09:28:11] <silur> thanks
+[2017-11-13 09:28:23] <sarang> BTW we should keep a vCal on github that has all the meeting times
+[2017-11-13 09:28:30] <sarang> easy to import into calendar tools
+[2017-11-13 09:29:04] <andytoshi> sarang: the difference between the linear and log versions of the proof is that the linear version has a couple vectors that the verifier has to dot-product and the log version replaces this by a compact argument
+[2017-11-13 09:29:22] <andytoshi> hmm actually i think they're equal in the amount of work, both can be reduced to a single multiexp. the log one has a little bit more setup
+[2017-11-13 09:29:25] <andytoshi> so never mind
+[2017-11-13 09:29:41] <suraeNoether> okay, agenda: 1) Greetings, 2) announcements and proposed administrative stuff, 3) research questions and discussion.
+[2017-11-13 09:29:46] <sarang> Well, the vector dot products were scalar ops, IIRC
+[2017-11-13 09:30:09] ⇐ QuickBASIC quit (~QuickBASI@184.90.130.155): Ping timeout: 248 seconds
+[2017-11-13 09:30:12] <sarang> and the linear version used fixed basepoints
+[2017-11-13 09:30:31] <sarang> log version recursive step switches up the points each step
+[2017-11-13 09:30:32] <sarang> right?
+[2017-11-13 09:31:03] <suraeNoether> Hi everyone! fluffypony, knaccc, luigi1111, anonimal, binaryFate, dEBRUYNE, endogenic, gingeropolous, hyc, JollyMort[m], moneromooo, nioc, smooth, stoffu, vtnerd... anyone else I'm forgetting to ping?
+[2017-11-13 09:31:21] <hyc> hola
+[2017-11-13 09:33:17] → Hermann35Blanda joined (~Hermann35@static.237.72.4.46.clients.your-server.de)
+[2017-11-13 09:33:18] ⇐ Hermann35Blanda quit (~Hermann35@static.237.72.4.46.clients.your-server.de): Excess Flood
+[2017-11-13 09:34:03] <suraeNoether> 2) I want someone to volunteer to put up meeting logs on either the monero-project github or my personal github (which would end up on monero-project after a few weeks) as well as maybe throwing up a vCal as sarang suggested. Anyone want to make this their "thing"? :P 
+[2017-11-13 09:34:32] <suraeNoether> I can download my logs and upload all the past meetings tomorrow morning after I get home
+[2017-11-13 09:35:05] <hyc> I won't volunteer because I usually have a conflicting meeting in this time slot
+[2017-11-13 09:35:09] <suraeNoether> but I want someone to make it their thing to improve reliability. It's easy for me to de-prioritize stuff like that in favor of other stuff
+[2017-11-13 09:35:36] <suraeNoether> hyc that's fine, we could just try to all remind each other instead of it being one person's responsibility
+[2017-11-13 09:36:01] <suraeNoether> any other announcements/administrivia?
+[2017-11-13 09:36:36] <suraeNoether> oh, I'm going to add a point to the agenda: 4) educational outreach
+[2017-11-13 09:36:40] <sarang> yes
+[2017-11-13 09:36:42] <suraeNoether> enough is moving on that front for us to need to discuss it
+[2017-11-13 09:36:42] <sarang> goog idea
+[2017-11-13 09:37:04] <suraeNoether> bab execution?
+[2017-11-13 09:37:10] <andytoshi> sarang: (sorry to interrupt the meeting) the dot product is a scalar op but you still need to do a multiexp to compute a vector pedersen commitment corresponding to each vector, to check that the commitments are correct
+[2017-11-13 09:37:34] <suraeNoether> np andytoshi 
+[2017-11-13 09:37:34] <sarang> yup, true
+[2017-11-13 09:37:45] <suraeNoether> these aren't super formal. if you can't tell
+[2017-11-13 09:37:49] <sarang> We can chat more afterward about it if you want
+[2017-11-13 09:37:55] <suraeNoether> office hours are probably a better term for it. :P
+[2017-11-13 09:38:06] <suraeNoether> okay, 3) Projects. Sarang is clearly on bulletproofs...
+[2017-11-13 09:38:19] <sarang> Yeah, gonna code up linear and log versions
+[2017-11-13 09:38:33] <silur> sorry I missed this bulletproof stuff
+[2017-11-13 09:38:33] <sarang> we have andytoshi present, which is very helpful
+[2017-11-13 09:38:41] <silur> a quick overview on that line?
+[2017-11-13 09:38:54] <sarang> Proposal in a recent paper about efficient and small range proofs
+[2017-11-13 09:39:14] <suraeNoether> nice. i put spectre down 2 weeks ago so i can work on the multisig paper and code vetting. thigns are looking good. I'm pretty confident I will be ready to send it off somewhere (the void) by the end of the month
+[2017-11-13 09:39:15] <silur> sounds nice
+[2017-11-13 09:39:16] <sarang> Our current proofs are linear in size with the number of bits in the range
+[2017-11-13 09:39:19] ⇐ anonimal quit (~anonimal@gateway/tor-sasl/anonimal): Remote host closed the connection
+[2017-11-13 09:39:36] <sarang> Bulletproofs have a linear version but the main contribution is a logarithmic version
+[2017-11-13 09:39:51] <sarang> We're gonna more carefully examine the verification complexity, which would likely be a deciding factor
+[2017-11-13 09:40:08] <suraeNoether> why do they bother with the linear version? simply because they can? (anything worth proving is worth proving twice?)
+[2017-11-13 09:40:25] → Keniyal joined (~Keniyal@unaffiliated/keniyal)
+[2017-11-13 09:40:35] <sarang> The logarithmic version uses a more complex argument, but you can basically drop it in to replace the linear part
+[2017-11-13 09:40:35] <andytoshi> suraeNoether: the log version is a very clean modification of the linear version, which is simpler to understand
+[2017-11-13 09:40:38] <sarang> it's a good buildup
+[2017-11-13 09:40:50] → anonimal joined (~anonimal@gateway/tor-sasl/anonimal)
+[2017-11-13 09:40:58] <andytoshi> to go from linear to log it's literally "in the final step replace these two vectors with a log-sized proof that their dot product is this"
+[2017-11-13 09:41:08] <suraeNoether> oh, nice~!
+[2017-11-13 09:41:17] <suraeNoether> that's elegant
+[2017-11-13 09:41:27] <sarang> It's a cool idea
+[2017-11-13 09:41:30] <hyc> in the final step, *magic*
+[2017-11-13 09:41:31] <andytoshi> and this also lets them do a MPC for multiparty rangeproofs where everyone passes around full vectors then a coordinator aggregates into one log-sized proof, which results in constant number of rounds (3 or 4? unsure) vs log-many
+[2017-11-13 09:41:59] <sarang> Yeah andytoshi y'all did an excellent job with very solid applications for aggregation
+[2017-11-13 09:42:19] <andytoshi> thanks. the real magic was the stanford people, esp benedikt
+[2017-11-13 09:42:27] <hyc> So MPC gets us multisig too?
+[2017-11-13 09:42:40] <sarang> I'm super interested to see the efficiency comparisons when we finish them
+[2017-11-13 09:42:45] <andytoshi> hyc: it gets aggregation of outputs which have different owners
+[2017-11-13 09:42:53] <andytoshi> i'm not sure about multisig, that isn't covered
+[2017-11-13 09:43:02] <hyc> ok
+[2017-11-13 09:43:17] <andytoshi> good call, i should investigate this anyway for mimblewimble
+[2017-11-13 09:43:23] <sarang> Yeah, I keep forgetting that it's also logarithmic in # of outputs
+[2017-11-13 09:43:54] <suraeNoether> it's very helpful to have you here, andytoshi. I've been thinking about whether or not the bulletproof approach could apply *as a ring signature* by storing the signing keys in polynomial coefficients somehow. do you have any thoughts in that regard?
+[2017-11-13 09:44:22] <andytoshi> suraeNoether: no clue, i've thought about it a bit and i don't see any obvious way to do it
+[2017-11-13 09:44:34] → Julian35Renner joined (~Julian35R@static.237.72.4.46.clients.your-server.de)
+[2017-11-13 09:44:35] ⇐ Julian35Renner quit (~Julian35R@static.237.72.4.46.clients.your-server.de): Excess Flood
+[2017-11-13 09:45:00] <suraeNoether> ok. on another note, hyc as far as MPC for multisig goes....
+[2017-11-13 09:45:44] <suraeNoether> currently the coordinating signer fashions the range proof without input from threshold members... after all, the range proof isn't really part of "getting permission from our multisig coalition members to send this transaction."
+[2017-11-13 09:45:50] <silur> there is a method by peikert
+[2017-11-13 09:46:19] <hyc> oh good point surae
+[2017-11-13 09:46:27] <silur> I remember when I constructed the encrypted storage EIP for ethereum
+[2017-11-13 09:46:36] <suraeNoether> i don't see a super good reason to distribute the range proof for the use cases we see in cryptocurrency right now
+[2017-11-13 09:46:43] <silur> there is a "compression" algo by peikert for something like this
+[2017-11-13 09:46:55] <andytoshi> if you have a coordinating signer that knows the opening of the commitments (which is what it sounds like if it can make a rangeproof) then you can keep doing that with bulletproofs
+[2017-11-13 09:47:04] <suraeNoether> silur if you find a link i'd be curious
+[2017-11-13 09:47:05] <andytoshi> suraeNoether: in MW the rangeproof keys are used for authentication, that's all
+[2017-11-13 09:47:13] <andytoshi> but monero doesn't care about that
+[2017-11-13 09:47:36] <suraeNoether> yeah, i'm very ignorant about MW, so I'll change my wording above to "use cases we see in Monero right now" as opposed to cryptocurrency in general
+[2017-11-13 09:48:11] <suraeNoether> so, anyone else working on any research projects? After I'm done with multisig this month, I plan on going back to spectre and attempting some simulations on random networks
+[2017-11-13 09:48:26] <suraeNoether> but that's low priority now that multisig is sooo close.
+[2017-11-13 09:48:32] <suraeNoether> (the multisig paper, obv)
+[2017-11-13 09:49:19] <sarang> I'm splitting time between proofs and outreach
+[2017-11-13 09:49:26] <sarang> (which is #4 on agenda)
+[2017-11-13 09:49:46] <suraeNoether> ok. knaccc, silur, anyone else?
+[2017-11-13 09:50:25] <suraeNoether> well, let's talk about educational outreach then
+[2017-11-13 09:50:29] <silur> still working on my quantum-shuffle
+[2017-11-13 09:50:36] <silur> and possible usecase on PRNG
+[2017-11-13 09:50:40] <suraeNoether> nice
+[2017-11-13 09:50:45] <suraeNoether> i'm very interested in that
+[2017-11-13 09:51:02] <silur> would love to have you as a reviewer :D
+[2017-11-13 09:51:37] <suraeNoether> *on another note, btw, before education...* our H_p has been pointed out to me as .... non-standard a few times. can anyone give me any documentation *at all* on it? i think we chatted about this early this week, but since i've been mainly working offline, I haven't been able to participate too much
+[2017-11-13 09:51:45] <knaccc> sarang msged me some EC operation counts for bulletproofs
+[2017-11-13 09:51:53] <suraeNoether> silur sure,just make sure you find at least three other reviewers too haha
+[2017-11-13 09:51:57] <knaccc> i'll be looking at attempting a comparison
+[2017-11-13 09:52:09] <knaccc> which should be fairly easy, and would not require coding
+[2017-11-13 09:52:14] → Nolan20Dicki joined (~Nolan20Di@static.237.72.4.46.clients.your-server.de)
+[2017-11-13 09:52:14] ⇐ Nolan20Dicki quit (~Nolan20Di@static.237.72.4.46.clients.your-server.de): Excess Flood
+[2017-11-13 09:52:21] <suraeNoether> sarang, do you still need that done? i think you mentioned you had completed a timing analysis earlier?
+[2017-11-13 09:52:40] <sarang> We know basic operation counts
+[2017-11-13 09:53:14] <knaccc> actually we can pretty much state the answer now
+[2017-11-13 09:53:25] <suraeNoether> oh ok, neat
+[2017-11-13 09:53:26] <knaccc> so it's 5*64 scalarmultbase ops
+[2017-11-13 09:53:40] <knaccc> which is the heaviest part by far, assuming 64 bit range proofs
+[2017-11-13 09:53:44] <knaccc> for bulletproofs this is
+[2017-11-13 09:53:54] <knaccc> i.e. 320 scalarmultbases
+[2017-11-13 09:54:09] <knaccc> vs 128 doublescalarmultbases for existing range proofs
+[2017-11-13 09:54:39] <knaccc> so we need to look up some performance stats to get that comparison
+[2017-11-13 09:54:43] <andytoshi> for verification you can do much better than that
+[2017-11-13 09:54:46] <andytoshi> you can do it in 128
+[2017-11-13 09:54:53] <knaccc> ooh nice
+[2017-11-13 09:55:01] <hyc> and relative cost of doublescalarmultbase vs single?
+[2017-11-13 09:55:01] <knaccc> that's perfact then, bulletproofs win!
+[2017-11-13 09:55:07] <sarang> Yeah I messaged some stuff for the log version knaccc
+[2017-11-13 09:55:07] <suraeNoether> allrighty then... did we ever "make a decision" on sandy2x knaccc?
+[2017-11-13 09:55:10] <andytoshi> oh, maybe 132 or something
+[2017-11-13 09:55:28] <andytoshi> idk per numbers for ed25519. you probably want a multiscalarmultbase
+[2017-11-13 09:55:47] <knaccc> suraeNoether sandy2x is only applicable if we move to curve25519, which we would only do if we had variable base scalarmults, which we don't
+[2017-11-13 09:56:10] <suraeNoether> oh, i think i had something written down someplace incorrectly, then
+[2017-11-13 09:56:13] <knaccc> i'm sure sandy2x can be modified to work on ed25519 though
+[2017-11-13 09:56:19] <suraeNoether> oh, but
+[2017-11-13 09:56:29] <knaccc> i'm looking up those performance stats hyc did now
+[2017-11-13 09:56:36] <suraeNoether> the reason we were looking into sandy2x was to see if the variable base scalarmults from RuffCT could be made faster, right?
+[2017-11-13 09:56:37] <andytoshi> anyway you have 64 G bases, 64 H bases, 6 L bases, 6 R bases, plus the standard bases and you can precompute scalars for every one of them and do one multiexp with 141 bases
+[2017-11-13 09:56:48] <knaccc> suraeNoether yes
+[2017-11-13 09:56:50] <andytoshi> that's the inner product anyway. i haven't worked out the rangeproof, it'll add another small constant
+[2017-11-13 09:56:54] <suraeNoether> nice andytoshi 
+[2017-11-13 09:57:32] <knaccc> ed25519 monero 10k timings
+[2017-11-13 09:57:34] <knaccc> ge_double_scalarmult_base_vartime  2.282629
+[2017-11-13 09:57:36] <knaccc> ge_scalarmult  2.462409
+[2017-11-13 09:57:38] <knaccc> ge_scalarmult_base  1.498808
+[2017-11-13 09:57:45] <knaccc> all in seconds
+[2017-11-13 09:57:50] <silur> noice
+[2017-11-13 09:58:16] <suraeNoether> hyc knaccc so i guess what i'm asking is: have we gotten enough information about speeds in sandy2x to figure out whether we can actually use RuffCT in the near future? or has this officially been shelved for a few hard forks?
+[2017-11-13 09:59:10] <hyc> knaccc, any thoughts?
+[2017-11-13 09:59:12] <knaccc> so 132 scalarmults for bulletproofs has the compute cost of 142 doublescalarmultbases that existing Monero range proofs use
+[2017-11-13 09:59:20] <knaccc> so it's comparable
+[2017-11-13 10:00:01] <sarang> mhmm that's in line with the counts I found as well
+[2017-11-13 10:00:22] <knaccc> suraeNoether ruffct I think I remember as having similar compute costs to existing MLSAGs if we switch from ed25519 to curve25519
+[2017-11-13 10:00:43] <sarang> What should be the next step for bulletproofs then, so as not to duplicate effort?
+[2017-11-13 10:00:57] <knaccc> because ruffct was 2x as heavy, but curve25519 is 0.5x the cost for variable base scalarmults
+[2017-11-13 10:01:15] <knaccc> i.e. ruffcy doesn't help with compute costs, only with storage costs
+[2017-11-13 10:01:41] <knaccc> and would involve a lot of extra complexity to have curve25519 and ed25519 coexisting
+[2017-11-13 10:01:42] <andytoshi> knaccc: sorry, it's 141 not 132. and that's just for the inner product, i think there are a couple more for the full rangeproof
+[2017-11-13 10:02:33] <andytoshi> but the existing rangeproofs have basically no room to do multiexp (or even double-exp), so we expect it to be faster anyway
+[2017-11-13 10:02:44] <andytoshi> on secp we've gotten far enough in the analysis to say "build it and benchmark" because they're pretty damn close
+[2017-11-13 10:02:49] <knaccc> andytoshi ah thanks, ok then so bulletproofs are 19% more compute intensive to verify than Monero range proofs
+[2017-11-13 10:03:00] <suraeNoether> ouch
+[2017-11-13 10:03:06] <andytoshi> if you use a separate scalarmultbase for every one
+[2017-11-13 10:03:27] <suraeNoether> 19% is huge with an exponential space-time tradeoff....
+[2017-11-13 10:03:27] <knaccc> andytoshi i'm not familiar with the terms multiexp / double-exp
+[2017-11-13 10:03:55] <andytoshi> "exp" means "scalarmultbase
+[2017-11-13 10:03:57] <andytoshi> "
+[2017-11-13 10:04:50] <knaccc> ok, i see, as in exponent when written in alternate notation
+[2017-11-13 10:04:53] <andytoshi> "yeah
+[2017-11-13 10:04:59] <knaccc> and multiexp is what?
+[2017-11-13 10:05:13] <andytoshi> knaccc: if you are doing a*G + b*H + c*I + d*J you can compute that way faster than computing the individual terms and adding. in libsecp we explored three algorithms, bos-coster, strauss and pippinger and found that strauss was fastest for small numbers of points while pippinger was fastest for large numbers. see https://github.com/bitcoin-core/secp256k1/pull/486
+[2017-11-13 10:05:28] <sarang> andytoshi: what's the general scaling on that?
+[2017-11-13 10:05:32] <andytoshi> N/log(N)
+[2017-11-13 10:05:42] <sarang> OK nice
+[2017-11-13 10:05:45] <suraeNoether> andytoshi i didn't know that... it makes sense, though... i need to look into that
+[2017-11-13 10:05:54] <sarang> We do that what, 2n times in the inner product?
+[2017-11-13 10:06:00] <suraeNoether> if that's the case, ruffct might could be sped up
+[2017-11-13 10:06:01] <sarang> Er, 2log(n) times
+[2017-11-13 10:06:05] <andytoshi> suraeNoether: https://github.com/bitcoin-core/secp256k1/pull/486
+[2017-11-13 10:06:14] <knaccc> andytoshi ah interesting, are you familiar with the way that ed25519 makes multiexps faster than if curve25519 is used?
+[2017-11-13 10:06:24] <andytoshi> sarang: you can precomute the scalars and do it just once. the paper does it 2log(n) times but this isn't necessary
+[2017-11-13 10:06:29] <knaccc> i'm wondering if there is something special about in that regard
+[2017-11-13 10:06:41] <andytoshi> knaccc: no, i think ed25519 has some specific speedups but the algos i know are curve-agnostic
+[2017-11-13 10:06:41] <knaccc> sepcial about secp256k1 in that regard
+[2017-11-13 10:06:57] <suraeNoether> andytoshi thanks for the link
+[2017-11-13 10:07:09] <andytoshi> we do use our endomorphism to get a small speedup but otherwise everything we've done is curve-agnostic
+[2017-11-13 10:07:14] <knaccc> because we know having investivated that multiexp is 2x faster (with 2 bases) on ed25519 than on curve25519, which is why Monero uses ed25519
+[2017-11-13 10:07:41] <knaccc> it's helped by the twisted edwards curve for some reason
+[2017-11-13 10:07:57] <andytoshi> yes, we don't get 2x for two points, we get something like a 30% speed improvement... but for thousands of points we were getting like a 7x improvement with some older code
+[2017-11-13 10:08:58] <suraeNoether> knaccc: so verification time for sandy2x + curve25519 + ruffct's 2x-sized keys = (approximately) current implementation + ed25519 + our currently sized keys (per ring member, fo course)?
+[2017-11-13 10:09:01] <knaccc> wow ok thanks. Did you have to write your own optimizations to achieve that, using the published approaches you mentioned? or were libraries available for all that stuff for your curve?
+[2017-11-13 10:09:28] <andytoshi> knaccc: we wrote our own code, the fastest library for our curve is ours :)
+[2017-11-13 10:09:30] <knaccc> suraeNoether c8rrect
+[2017-11-13 10:09:48] <knaccc> andytoshi whoa kudos!
+[2017-11-13 10:10:07] <andytoshi> knaccc: but you can check out bos-coster, it requires a heap implementation but it's easy to understand and implement, and djb has python code you can basically translate into C
+[2017-11-13 10:10:41] <knaccc> lol you're too smart for planet earth. you have a warped sense of "easy" :)
+[2017-11-13 10:10:41] <andytoshi> i did this as a first try, which gave impressive numbers, but not as good as strauss for small # of bases and not as good as pippenger for large # of bases, so we dropped it. i forget the exact numbers now
+[2017-11-13 10:10:57] <suraeNoether> ok, i had no idea about these multiexp tricks andytoshi is describing... we might could make ruffct doable using those tricks, but i need to read the paper again. (I'm beginning to think a proper name would be Bootle CT, but does Bootle really need *more* things named after him? lol)
+[2017-11-13 10:11:15] <suraeNoether> knaccc the solutions are all trivial once you know them. :P heh
+[2017-11-13 10:11:39] <knaccc> heh ok
+[2017-11-13 10:11:51] <suraeNoether> okay, NOW that we've gotten some technicals a little more out of the way... sarang, you want to describe the bangalore thing?
+[2017-11-13 10:12:00] <sarang> OK so maybe a good step forward is some comparative testing with code for bulletproofs, which can include proposed speed improvements as part of the test code?
+[2017-11-13 10:12:26] <sarang> (just to finish this discussion)
+[2017-11-13 10:12:49] <suraeNoether> (yeah, i don't want to rush us through it...)
+[2017-11-13 10:13:16] <suraeNoether> i agree with you sarang
+[2017-11-13 10:13:33] <sarang> So about outreach, if we wanna talk that
+[2017-11-13 10:13:58] <sarang> I got an offer for one of us to do a two-week cryptocurrency course in Bangalore next May
+[2017-11-13 10:13:58] <suraeNoether> and while we are doing that, we should keep an eye on Bootle's short accountable ring sigs (ruffct, RTRS CT, whatever you want to call it) to see if we can use multiexp
+[2017-11-13 10:13:59] <suraeNoether> yes
+[2017-11-13 10:14:01] <suraeNoether> outreach
+[2017-11-13 10:14:05] <suraeNoether> *one* of us?
+[2017-11-13 10:14:23] <sarang> Still need to discuss getting a second person too
+[2017-11-13 10:14:32] <sarang> For sure the expenses are all paid for one instructor
+[2017-11-13 10:14:56] <sarang> Unsure about a second one, depending on how they hire in India vs. elsewhere
+[2017-11-13 10:15:01] <knaccc> suraeNoether maybe i've misunderstood, but i didn't think andytoshi was saying that the optimizations would apply unless you had fixed bases
+[2017-11-13 10:15:12] <knaccc> and RuffCT does not have fixed bases
+[2017-11-13 10:15:19] <knaccc> it's all variable base scalarmults
+[2017-11-13 10:15:52] <suraeNoether> my impression was that the speed-up came from computing the sum in toto all at once instead of computing each term individually and summing them one at a time
+[2017-11-13 10:16:24] <suraeNoether> andytoshi, want to clarify? :P
+[2017-11-13 10:17:26] <knaccc> andytoshi i.e. when you said "a*G + b*H + c*I + d*J", were you implying that G,H,I,J were fixed bases that were amenable to precomputation?
+[2017-11-13 10:17:43] <andytoshi> ah, no
+[2017-11-13 10:17:47] <suraeNoether> or is it enough to simply have those stored locally?
+[2017-11-13 10:17:54] <andytoshi> it's enough to have them stored locally
+[2017-11-13 10:17:59] <sarang> cool
+[2017-11-13 10:18:04] <knaccc> oh whoa, that's awesome, thanks andytoshi
+[2017-11-13 10:18:14] <andytoshi> strauss does some precomputation on the fly, so if they _are_ fixed bases you can cache this and get even more speedup
+[2017-11-13 10:18:26] <andytoshi> but you don't need it (and neither pippinger nor bos-coster have any precomp)
+[2017-11-13 10:18:30] <sarang> OK good, so we should certainly test this w/ bulletproofs simultaneously
+[2017-11-13 10:18:51] <sarang> Anyway suraeNoether, any more questions/comments about the outreach thing?
+[2017-11-13 10:19:03] <knaccc> andytoshi oh wait, when you said "stored locally", you meant precomputed and stored locally?
+[2017-11-13 10:19:13] <knaccc> i.e. GHIJ all still need to be precomputed? which is costly?
+[2017-11-13 10:19:16] <andytoshi> no
+[2017-11-13 10:19:27] <knaccc> what does stored locally mean then
+[2017-11-13 10:19:37] <andytoshi> idk, i was just copying the phrase from suraeNoether
+[2017-11-13 10:19:40] <andytoshi> i meant literally nothing by it
+[2017-11-13 10:19:47] <sarang> "You know what the points are"?
+[2017-11-13 10:19:55] <andytoshi> yeah, i guess
+[2017-11-13 10:19:59] <sarang> I get it
+[2017-11-13 10:20:11] <knaccc> lol well if you don't know what the points are, how can you do anything at all? i'm so confused :)
+[2017-11-13 10:20:16] <sarang> knaccc the answer would be "doesn't matter, but if it's possible to also precompute, cool"
+[2017-11-13 10:20:22] <sarang> that's all
+[2017-11-13 10:20:23] <knaccc> ok cool
+[2017-11-13 10:20:28] <knaccc> that's great news then
+[2017-11-13 10:20:36] <andytoshi> i don't know :P. anyway we use these for aggregate signatures where the bases are public keys that we definitely can't precompute, and our numbers come from this
+[2017-11-13 10:20:53] <suraeNoether> all i meant was
+[2017-11-13 10:21:11] <suraeNoether> well
+[2017-11-13 10:21:18] <suraeNoether> i'm going to shut my mouth for a bit
+[2017-11-13 10:21:30] <suraeNoether> because i haven't read the bootle paper recently and i don't want to mis-speak
+[2017-11-13 10:21:50] <suraeNoether> sarang for india? no more questions for now.... 
+[2017-11-13 10:22:06] <suraeNoether> my e-mail to a local university has not yet received a reply, either, but I sent it on a Thursday evening... if I don't receive a contact by middle of this week, i'm going to try to contact some of the other, more prestigious schools around me...
+[2017-11-13 10:22:06] <sarang> Is there interest in getting two people there to teach?
+[2017-11-13 10:22:10] <sarang> vs just one?
+[2017-11-13 10:22:16] <suraeNoether> uhm
+[2017-11-13 10:22:22] <suraeNoether> i wouldn't mind it, i think it would be fun
+[2017-11-13 10:22:22] <sarang> If it's just one, there are no expenses for the community or other supporters
+[2017-11-13 10:22:36] <suraeNoether> like, i know this is a weird thing to say but
+[2017-11-13 10:22:37] <sarang> With two people, I don't know if they'd cover the second person
+[2017-11-13 10:22:47] <suraeNoether> "wanna go to india and teach for 2 weeks?" "eh, i could take it or leave it. " hehe
+[2017-11-13 10:22:58] <suraeNoether> i think it'd be fun
+[2017-11-13 10:23:13] <suraeNoether> if it's politically costly or something in order to establish funding, i don't really have a dog in that fight
+[2017-11-13 10:23:18] <sarang> Yes, and there are parts of the country (like India) where gifted students don't have great opportunities for this
+[2017-11-13 10:23:26] <sarang> So we'd be doing the STEM world a big favor
+[2017-11-13 10:23:41] <suraeNoether> maybe. india has more honors students than america has students
+[2017-11-13 10:23:58] <sarang> Yes but in the U.S. it's easy to find challenging opportunities if you're gifted
+[2017-11-13 10:24:04] <sarang> in India it is not
+[2017-11-13 10:24:41] <sarang> and being labeled an "honors student" in your own school doesn't mean squat comparatively
+[2017-11-13 10:24:49] <suraeNoether> ehrm
+[2017-11-13 10:24:59] <suraeNoether> anyway, i see what you are saying
+[2017-11-13 10:25:09] <suraeNoether> but also
+[2017-11-13 10:25:14] <suraeNoether> on a non-teaching note
+[2017-11-13 10:25:30] <sarang> My point is that doing this anywhere in the world is a good idea, but I think serving a place like India is a great idea
+[2017-11-13 10:26:33] <suraeNoether> I was chatting with a friend who brought up the following idea, which I have been kicking around in my head for a few days.  Monero should take some charge in producing friendly, educational, currency-agnostic infographics and educational documents for people with varying levels of tech education
+[2017-11-13 10:26:34] <suraeNoether> sure
+[2017-11-13 10:27:00] <sarang> On cryptocurrency in general?
+[2017-11-13 10:27:06] <sarang> Because CCs work in a lot of different ways
+[2017-11-13 10:27:16] <suraeNoether> yep! thing is...
+[2017-11-13 10:28:02] <suraeNoether> there's an analogy to compare against cars. every cryptocurrency (that isn't a shitcoin) seems to be doing something differently with very differetn design philosophies
+[2017-11-13 10:28:14] <suraeNoether> but that's like
+[2017-11-13 10:29:01] <suraeNoether> as if in 1860 the internal combustion engine was invented, attracted oodles of capital, and then *every manufacturing company in the world* created their own weird design of internal combustion
+[2017-11-13 10:29:04] <sarang> We have some really nice Monero topic videos
+[2017-11-13 10:29:07] <suraeNoether> it's... kind of insane
+[2017-11-13 10:29:08] <suraeNoether> we do
+[2017-11-13 10:29:08] <sarang> Things like those?
+[2017-11-13 10:29:15] <suraeNoether> uhm
+[2017-11-13 10:29:21] <suraeNoether> the sorts of things I was thinking about
+[2017-11-13 10:30:06] <suraeNoether> range from educational infographics and youtube videos that are short and designed for a 13 year old with a limited attention span... all the way up to a computer science student who is just learning about these things for the first time but has some stuff under their belt...
+[2017-11-13 10:30:18] <suraeNoether> all the way up to educational infographics for politicians and policy makers who are ignorant about tech in general
+[2017-11-13 10:30:24] <sarang> How general though?
+[2017-11-13 10:30:46] <suraeNoether> well, the short videos for younger people (or grand mothers) would be quite general
+[2017-11-13 10:30:47] ⇐ Keniyal quit (~Keniyal@unaffiliated/keniyal): Quit: Ok.
+[2017-11-13 10:30:51] <sarang> You can lead a horse to crypto primitives, but can't make him put them together in every currency's way
+[2017-11-13 10:31:06] <suraeNoether> hey, look, a saying that people should learn
+[2017-11-13 10:31:15] <suraeNoether> well, actually that idiom is kinda terrible
+[2017-11-13 10:31:19] <suraeNoether> but that's the point
+[2017-11-13 10:31:55] <suraeNoether> but anyway
+[2017-11-13 10:32:32] <suraeNoether> the problem with the idea is that it's so general and not well-specified
+[2017-11-13 10:32:40] <suraeNoether> there needs to be a scope defined ahead of time
+[2017-11-13 10:32:52] <sarang> Yes, I think scope is the biggest hurdle
+[2017-11-13 10:33:08] <suraeNoether> but i like the idea of MRL kind of... providing non-tribalistic, educational descriptions of the cc space, for internet users that aren't necessarily computer scientists
+[2017-11-13 10:33:10] <sarang> Because it gets really complex really fast
+[2017-11-13 10:33:33] <suraeNoether> *nod*
+[2017-11-13 10:33:39] <suraeNoether> anyway, that's all I have for discussion today
+[2017-11-13 10:33:45] <suraeNoether> I'm a little impressed we actually took over an hour!
+[2017-11-13 10:33:57] <suraeNoether> Does anyone have anything else they want to chat about?
+[2017-11-13 10:35:40] <suraeNoether> okay, well
+[2017-11-13 10:35:42] <suraeNoether> </meeting>
