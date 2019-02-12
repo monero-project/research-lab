@@ -1,252 +1,252 @@
-[2019-02-11 11:51:57]*	sarang has changed the topic to: Research meeting NOW: https://github.com/monero-project/meta/issues/305
-[2019-02-11 11:01:59]<sarang>	OK, let's begin shortly
-[2019-02-11 11:12:59]<sarang>	1. GREETINGS
-[2019-02-11 11:18:59]<sarang>	What a day; hello
-[2019-02-11 11:27:59]<Xeagu>	Hey everyone
-[2019-02-11 11:30:59]<oneiric_>	hallo
-[2019-02-11 11:37:59]<suraeNoether>	howdy
-[2019-02-11 11:37:59]<ArticMine>	hello
-[2019-02-11 12:14:00]<sarang>	I have not been able to follow the last couple of days' updates (was involved in an accident) but much has happened
-[2019-02-11 12:20:00]<sarang>	Leading us to 2. NETWORK UPGRADE
-[2019-02-11 12:44:00]<sarang>	A surprise announcement in -dev yesterday means the upgrade is set for earlier than had been expected
-[2019-02-11 12:02:01]<sarang>	There is not currently a good central resource for what exactly is changing
-[2019-02-11 12:09:01]<sarang>	Anyone with knowledge is welcome to summarize here
-[2019-02-11 12:27:01]<sarang>	We should all be on the same page when asked
-[2019-02-11 12:31:01]<moneromooo>	new PoW, new block weight algorithm, more notifications, payment id changes, ability to spend unmixable outs (broke at v10) and smaller ringct sigs.
-[2019-02-11 12:45:01]<moneromooo>	s/v10/v8/
+[2019-02-11 11:57:51]*	sarang has changed the topic to: Research meeting NOW: https://github.com/monero-project/meta/issues/305
+[2019-02-11 11:59:01]<sarang>	OK, let's begin shortly
+[2019-02-11 11:59:12]<sarang>	1. GREETINGS
+[2019-02-11 11:59:18]<sarang>	What a day; hello
+[2019-02-11 11:59:27]<Xeagu>	Hey everyone
+[2019-02-11 11:59:30]<oneiric_>	hallo
+[2019-02-11 11:59:37]<suraeNoether>	howdy
+[2019-02-11 11:59:37]<ArticMine>	hello
+[2019-02-11 12:00:14]<sarang>	I have not been able to follow the last couple of days' updates (was involved in an accident) but much has happened
+[2019-02-11 12:00:20]<sarang>	Leading us to 2. NETWORK UPGRADE
+[2019-02-11 12:00:44]<sarang>	A surprise announcement in -dev yesterday means the upgrade is set for earlier than had been expected
+[2019-02-11 12:01:02]<sarang>	There is not currently a good central resource for what exactly is changing
+[2019-02-11 12:01:09]<sarang>	Anyone with knowledge is welcome to summarize here
+[2019-02-11 12:01:27]<sarang>	We should all be on the same page when asked
+[2019-02-11 12:01:31]<moneromooo>	new PoW, new block weight algorithm, more notifications, payment id changes, ability to spend unmixable outs (broke at v10) and smaller ringct sigs.
+[2019-02-11 12:01:45]<moneromooo>	s/v10/v8/
 [2019-02-11 12:02:02]<sarang>	Smaller sigs != changes to output structure?
-[2019-02-11 12:08:02]<Xeagu>	What is the new block weigh algo?
-[2019-02-11 12:14:02]<Xeagu>	*weight
-[2019-02-11 12:34:02]<moneromooo>	Yesh... it's knaccc's changes for deterministic mask and less amount bits.
-[2019-02-11 12:44:02]<sarang>	ty
-[2019-02-11 12:00:03]<moneromooo>	The new block weight algorithm is the one from ArticMine that has been discussed here for a while.
-[2019-02-11 12:09:03]<sarang>	PR 5124 still?
-[2019-02-11 12:13:03]<ArticMine>	Yes
-[2019-02-11 12:16:03]<oneiric_>	why is everything moving up, and not just pow changes?
-[2019-02-11 12:21:03]<moneromooo>	Yes.
-[2019-02-11 12:30:03]<moneromooo>	Because people did not want two forks.
-[2019-02-11 12:48:03]<Xeagu>	Okay so future to-do is explaining that block weight algo in simple terms for the Masses
-[2019-02-11 12:05:04]<sarang>	"It helps us accommodate short-term behavior while protecting against bloat"
-[2019-02-11 12:26:04]<Xeagu>	I understand the why but not the how.
-[2019-02-11 12:33:04]<sarang>	The how is in the PR and the Python code
-[2019-02-11 12:44:04]<sarang>	You can only explain algorithm so much before you get to "look at the algorithm"
-[2019-02-11 12:53:04]<moneromooo>	By allowing short term spikes but keeping a longer term median to push things down.
-[2019-02-11 12:13:05]<Xeagu>	We need explainable, English terms on how the algorithm works. I believe such goals are possible.
-[2019-02-11 12:15:05]<oneiric_>	is there an option to push back the non-critical changes to a feature "fork" in summer/fall?
-[2019-02-11 12:17:05]<sarang>	I'd be glad to put the Python toy code onto GitHub
-[2019-02-11 12:28:05]<moneromooo>	Yes.
-[2019-02-11 12:31:05]<sarang>	oneiric_: there are non-consensus changes that will have to be deployed later
-[2019-02-11 12:38:05]<sarang>	moneromooo: is there a timeline estimate for when those will go in?
-[2019-02-11 12:39:05]<Xeagu>	I'll read the Python code and try to understand / explain it
-[2019-02-11 12:43:05]<oneiric_>	thinking about concentrating community review resources around pow and consensus changes
-[2019-02-11 12:46:05]<sarang>	e.g. output selection, BP speedups
-[2019-02-11 12:55:05]<moneromooo>	No, but fluffypony said he'd be fine doing it shortly after the fork.
-[2019-02-11 12:09:06]<sarang>	At least there's no fire to get it done ASAP
-[2019-02-11 12:16:06]<moneromooo>	sarang's python code's also in 5124 as a test.
-[2019-02-11 12:29:06]<endogenic>	oneiric_: it'd be helpful for wallets like mymonero as well .. i'd love if we were able to be told in a more concentrated manner what we have to remain compatible with.. it's hard to keep on top of all the changes and logs sometimes
-[2019-02-11 12:33:06]<sarang>	and separately in this paste, which I'll put on github: http://paste.debian.net/hidden/c101e46d/
-[2019-02-11 12:46:06]<endogenic>	mymonero's the only wallet that actually reimplements Monero rather than uses wallet2 directly afaik though
-[2019-02-11 12:00:07]<moneromooo>	endogenic: all the consensus changes are included in the magic-beans-0.13 branch.
-[2019-02-11 12:13:07]<endogenic>	that's a lot of code to review though..
-[2019-02-11 12:26:07]<endogenic>	and it's not clear what's a blocker / compat issue
-[2019-02-11 12:29:07]<moneromooo>	I'll list the commits you have to care about:
-[2019-02-11 12:29:07]<endogenic>	just from a review
-[2019-02-11 12:35:08]<Xeagu>	I'd also like to understand the payment id changes
-[2019-02-11 12:06:09]<sarang>	1. Avoid encrypted payment IDs. 2. Really avoid unencrypted payment IDs
-[2019-02-11 12:13:09]<moneromooo>	5818191fd2a47246b26cdc1f67a9a500d26ea2ac 81cb665926bce82c3e89977c33c6d4230a427362 dddebcf92437c93e94f65ea9594c1fb797e4f4b8 3472e6d196a2bf86289a86035d916c84e11136ea
-[2019-02-11 12:24:09]<moneromooo>	That should be pretty minimal.
-[2019-02-11 12:27:09]<moneromooo>	endogenic: ^
-[2019-02-11 12:40:09]<endogenic>	thanks mooo - lifesaver as usual
-[2019-02-11 12:00:10]<sarang>	sgp_ is working up a formal announcement
-[2019-02-11 12:02:10]<Xeagu>	sarang: so this is part of phasing out payment ids?
-[2019-02-11 12:08:10]<sarang>	but an earlier draft of it was incorrect
+[2019-02-11 12:02:08]<Xeagu>	What is the new block weigh algo?
+[2019-02-11 12:02:14]<Xeagu>	*weight
+[2019-02-11 12:02:34]<moneromooo>	Yesh... it's knaccc's changes for deterministic mask and less amount bits.
+[2019-02-11 12:02:44]<sarang>	ty
+[2019-02-11 12:03:00]<moneromooo>	The new block weight algorithm is the one from ArticMine that has been discussed here for a while.
+[2019-02-11 12:03:09]<sarang>	PR 5124 still?
+[2019-02-11 12:03:13]<ArticMine>	Yes
+[2019-02-11 12:03:16]<oneiric_>	why is everything moving up, and not just pow changes?
+[2019-02-11 12:03:21]<moneromooo>	Yes.
+[2019-02-11 12:03:30]<moneromooo>	Because people did not want two forks.
+[2019-02-11 12:03:48]<Xeagu>	Okay so future to-do is explaining that block weight algo in simple terms for the Masses
+[2019-02-11 12:04:05]<sarang>	"It helps us accommodate short-term behavior while protecting against bloat"
+[2019-02-11 12:04:26]<Xeagu>	I understand the why but not the how.
+[2019-02-11 12:04:33]<sarang>	The how is in the PR and the Python code
+[2019-02-11 12:04:44]<sarang>	You can only explain algorithm so much before you get to "look at the algorithm"
+[2019-02-11 12:04:53]<moneromooo>	By allowing short term spikes but keeping a longer term median to push things down.
+[2019-02-11 12:05:13]<Xeagu>	We need explainable, English terms on how the algorithm works. I believe such goals are possible.
+[2019-02-11 12:05:15]<oneiric_>	is there an option to push back the non-critical changes to a feature "fork" in summer/fall?
+[2019-02-11 12:05:17]<sarang>	I'd be glad to put the Python toy code onto GitHub
+[2019-02-11 12:05:28]<moneromooo>	Yes.
+[2019-02-11 12:05:31]<sarang>	oneiric_: there are non-consensus changes that will have to be deployed later
+[2019-02-11 12:05:38]<sarang>	moneromooo: is there a timeline estimate for when those will go in?
+[2019-02-11 12:05:39]<Xeagu>	I'll read the Python code and try to understand / explain it
+[2019-02-11 12:05:43]<oneiric_>	thinking about concentrating community review resources around pow and consensus changes
+[2019-02-11 12:05:46]<sarang>	e.g. output selection, BP speedups
+[2019-02-11 12:05:55]<moneromooo>	No, but fluffypony said he'd be fine doing it shortly after the fork.
+[2019-02-11 12:06:09]<sarang>	At least there's no fire to get it done ASAP
+[2019-02-11 12:06:16]<moneromooo>	sarang's python code's also in 5124 as a test.
+[2019-02-11 12:06:29]<endogenic>	oneiric_: it'd be helpful for wallets like mymonero as well .. i'd love if we were able to be told in a more concentrated manner what we have to remain compatible with.. it's hard to keep on top of all the changes and logs sometimes
+[2019-02-11 12:06:33]<sarang>	and separately in this paste, which I'll put on github: http://paste.debian.net/hidden/c101e46d/
+[2019-02-11 12:06:46]<endogenic>	mymonero's the only wallet that actually reimplements Monero rather than uses wallet2 directly afaik though
+[2019-02-11 12:07:00]<moneromooo>	endogenic: all the consensus changes are included in the magic-beans-0.13 branch.
+[2019-02-11 12:07:13]<endogenic>	that's a lot of code to review though..
+[2019-02-11 12:07:26]<endogenic>	and it's not clear what's a blocker / compat issue
+[2019-02-11 12:07:29]<moneromooo>	I'll list the commits you have to care about:
+[2019-02-11 12:07:29]<endogenic>	just from a review
+[2019-02-11 12:08:35]<Xeagu>	I'd also like to understand the payment id changes
+[2019-02-11 12:09:06]<sarang>	1. Avoid encrypted payment IDs. 2. Really avoid unencrypted payment IDs
+[2019-02-11 12:09:13]<moneromooo>	5818191fd2a47246b26cdc1f67a9a500d26ea2ac 81cb665926bce82c3e89977c33c6d4230a427362 dddebcf92437c93e94f65ea9594c1fb797e4f4b8 3472e6d196a2bf86289a86035d916c84e11136ea
+[2019-02-11 12:09:24]<moneromooo>	That should be pretty minimal.
+[2019-02-11 12:09:27]<moneromooo>	endogenic: ^
+[2019-02-11 12:09:40]<endogenic>	thanks mooo - lifesaver as usual
+[2019-02-11 12:10:00]<sarang>	sgp_ is working up a formal announcement
+[2019-02-11 12:10:02]<Xeagu>	sarang: so this is part of phasing out payment ids?
+[2019-02-11 12:10:08]<sarang>	but an earlier draft of it was incorrect
 [2019-02-11 12:10:10]<sarang>	Xeagu: sure
-[2019-02-11 12:12:10]<endogenic>	it could be good for the growth of the ecosystem to have a central place to post these sorts of things
-[2019-02-11 12:13:10]<suraeNoether>	xeagu: presently we allow any sort of payid, either encrypted or unencrypted, or people can use subaddresses instead. for reasons including elegance and "we want our transactions to be indistinguishable from each other" we are pushing to get rid of both encrypted and unencrypted payids, since subaddresses technically can hit all the same use cases
-[2019-02-11 12:24:10]<suraeNoether>	endogenic: i agree
-[2019-02-11 12:02:11]<Xeagu>	suraeNoether: golden. Thank you
-[2019-02-11 12:40:11]<sarang>	So if anyone asks, this decision was made after some private discussion between Core Team and select devs
-[2019-02-11 12:41:11]<moneromooo>	About payment ids, the changes *in this coming fork* are: make it annoying to specify a long payment id, and auto include a short one if none is used.
-[2019-02-11 12:01:12]<Xeagu>	Ability to spend unmixable outputs? What does this mean?
-[2019-02-11 12:06:12]<sarang>	I presume we can/should point affected parties to -dev for more details
-[2019-02-11 12:21:12]<sarang>	I believe this only affects certain pre-CT outputs
-[2019-02-11 12:29:12]<sarang>	(i.e. denominated outputs)
-[2019-02-11 12:43:12]<ArticMine>	This was broken recently?
-[2019-02-11 12:44:12]<moneromooo>	It means that if you have an unspent pre-rct output of amount A, and the chain has fewer than 11 outputs of this amount, you could not spend it (bug). This is now fixed.
-[2019-02-11 12:58:12]<Xeagu>	Got it. This makes sense.
-[2019-02-11 12:04:13]<moneromooo>	It was broken when the ring size was fixed at 11. I did not leave a special case for these.
-[2019-02-11 12:19:13]<sarang>	Xeagu: most users would have been unaffected by this, and now nobody will be affected by it
-[2019-02-11 12:20:13]<ArticMine>	That makes sense
-[2019-02-11 12:36:13]<sarang>	Any other questions for moneromooo/ArticMine regarding the accelerated upgrade?
-[2019-02-11 12:37:13]<endogenic>	mooo, as well, not having these things in the monero-project repo can be very confusing for many
-[2019-02-11 12:55:13]<Xeagu>	Cool. And finally smaller ringct sigs. This is intuitive.
-[2019-02-11 12:59:13]<moneromooo>	endogenic: I don't understand, can you rephrase ?
-[2019-02-11 12:01:14]<suraeNoether>	i have questions about the block size thing but i'm either going to wait till later today or take it to PM with AM (hahhah)
-[2019-02-11 12:16:14]<endogenic>	moneromooo: as they're in your fork
-[2019-02-11 12:26:14]<sarang>	suraeNoether: can you give the gist of your question at least?
-[2019-02-11 12:27:14]<moneromooo>	Those patches are also all in master.
-[2019-02-11 12:31:14]<sarang>	Unless it isn't relevant to the group
-[2019-02-11 12:32:14]<endogenic>	oh
-[2019-02-11 12:38:14]<moneromooo>	er, no
-[2019-02-11 12:43:14]<moneromooo>	Sorry. Either in master or in PRs :)
-[2019-02-11 12:52:14]<endogenic>	hmmm
-[2019-02-11 12:59:14]<sarang>	The formal writeup should include the PR numbers
-[2019-02-11 12:08:15]<moneromooo>	I think only ArticMine's changes are yet to be merged.
-[2019-02-11 12:09:15]<sarang>	Or moneromooo will end up repeating himself many times
-[2019-02-11 12:10:15]<sarang>	!
-[2019-02-11 12:13:15]<sarang>	oh ok
-[2019-02-11 12:17:15]<moneromooo>	Too late sarang :D
-[2019-02-11 12:26:15]<sarang>	^
-[2019-02-11 12:40:15]<sarang>	OK, last call for network upgrade questions
-[2019-02-11 12:46:15]<learninandlurkin>	I have question: is there any hope of having the blocksize algorithm incentivize shrinking blocksize over time when the blocks are consistently not full, before the fork?
-[2019-02-11 12:55:15]<moneromooo>	No.
-[2019-02-11 12:56:15]<sarang>	no
-[2019-02-11 12:10:16]<moneromooo>	It was considered.
-[2019-02-11 12:13:16]<sarang>	it's an interesting idea, but not tested
-[2019-02-11 12:31:16]<learninandlurkin>	Fair enough. I think that would be a useful iteration on the algo for the next fork. Not critical to stopping bloat attacks I guess.
-[2019-02-11 12:31:16]<sarang>	learninandlurkin: continue lurking until the next fork, and learnin :D
-[2019-02-11 12:42:16]<suraeNoether>	sarang: i want a good example of a dynamical situation in which the AM method of blocksize adjustment has some desirable property over the simple two-median method
-[2019-02-11 12:47:16]<sarang>	I personally like the idea, depending on the consequences of it
-[2019-02-11 12:09:17]<sarang>	Ah ok, yeah probably a good question for ArticMine after meeting
+[2019-02-11 12:10:12]<endogenic>	it could be good for the growth of the ecosystem to have a central place to post these sorts of things
+[2019-02-11 12:10:13]<suraeNoether>	xeagu: presently we allow any sort of payid, either encrypted or unencrypted, or people can use subaddresses instead. for reasons including elegance and "we want our transactions to be indistinguishable from each other" we are pushing to get rid of both encrypted and unencrypted payids, since subaddresses technically can hit all the same use cases
+[2019-02-11 12:10:24]<suraeNoether>	endogenic: i agree
+[2019-02-11 12:11:02]<Xeagu>	suraeNoether: golden. Thank you
+[2019-02-11 12:11:40]<sarang>	So if anyone asks, this decision was made after some private discussion between Core Team and select devs
+[2019-02-11 12:11:41]<moneromooo>	About payment ids, the changes *in this coming fork* are: make it annoying to specify a long payment id, and auto include a short one if none is used.
+[2019-02-11 12:12:01]<Xeagu>	Ability to spend unmixable outputs? What does this mean?
+[2019-02-11 12:12:06]<sarang>	I presume we can/should point affected parties to -dev for more details
+[2019-02-11 12:12:21]<sarang>	I believe this only affects certain pre-CT outputs
+[2019-02-11 12:12:29]<sarang>	(i.e. denominated outputs)
+[2019-02-11 12:12:43]<ArticMine>	This was broken recently?
+[2019-02-11 12:12:44]<moneromooo>	It means that if you have an unspent pre-rct output of amount A, and the chain has fewer than 11 outputs of this amount, you could not spend it (bug). This is now fixed.
+[2019-02-11 12:12:58]<Xeagu>	Got it. This makes sense.
+[2019-02-11 12:13:04]<moneromooo>	It was broken when the ring size was fixed at 11. I did not leave a special case for these.
+[2019-02-11 12:13:19]<sarang>	Xeagu: most users would have been unaffected by this, and now nobody will be affected by it
+[2019-02-11 12:13:20]<ArticMine>	That makes sense
+[2019-02-11 12:13:36]<sarang>	Any other questions for moneromooo/ArticMine regarding the accelerated upgrade?
+[2019-02-11 12:13:37]<endogenic>	mooo, as well, not having these things in the monero-project repo can be very confusing for many
+[2019-02-11 12:13:55]<Xeagu>	Cool. And finally smaller ringct sigs. This is intuitive.
+[2019-02-11 12:13:59]<moneromooo>	endogenic: I don't understand, can you rephrase ?
+[2019-02-11 12:14:01]<suraeNoether>	i have questions about the block size thing but i'm either going to wait till later today or take it to PM with AM (hahhah)
+[2019-02-11 12:14:16]<endogenic>	moneromooo: as they're in your fork
+[2019-02-11 12:14:26]<sarang>	suraeNoether: can you give the gist of your question at least?
+[2019-02-11 12:14:27]<moneromooo>	Those patches are also all in master.
+[2019-02-11 12:14:31]<sarang>	Unless it isn't relevant to the group
+[2019-02-11 12:14:32]<endogenic>	oh
+[2019-02-11 12:14:38]<moneromooo>	er, no
+[2019-02-11 12:14:43]<moneromooo>	Sorry. Either in master or in PRs :)
+[2019-02-11 12:14:52]<endogenic>	hmmm
+[2019-02-11 12:14:59]<sarang>	The formal writeup should include the PR numbers
+[2019-02-11 12:15:08]<moneromooo>	I think only ArticMine's changes are yet to be merged.
+[2019-02-11 12:15:09]<sarang>	Or moneromooo will end up repeating himself many times
+[2019-02-11 12:15:10]<sarang>	!
+[2019-02-11 12:15:13]<sarang>	oh ok
+[2019-02-11 12:15:17]<moneromooo>	Too late sarang :D
+[2019-02-11 12:15:26]<sarang>	^
+[2019-02-11 12:15:40]<sarang>	OK, last call for network upgrade questions
+[2019-02-11 12:15:46]<learninandlurkin>	I have question: is there any hope of having the blocksize algorithm incentivize shrinking blocksize over time when the blocks are consistently not full, before the fork?
+[2019-02-11 12:15:55]<moneromooo>	No.
+[2019-02-11 12:15:56]<sarang>	no
+[2019-02-11 12:16:10]<moneromooo>	It was considered.
+[2019-02-11 12:16:13]<sarang>	it's an interesting idea, but not tested
+[2019-02-11 12:16:31]<learninandlurkin>	Fair enough. I think that would be a useful iteration on the algo for the next fork. Not critical to stopping bloat attacks I guess.
+[2019-02-11 12:16:31]<sarang>	learninandlurkin: continue lurking until the next fork, and learnin :D
+[2019-02-11 12:16:42]<suraeNoether>	sarang: i want a good example of a dynamical situation in which the AM method of blocksize adjustment has some desirable property over the simple two-median method
+[2019-02-11 12:16:47]<sarang>	I personally like the idea, depending on the consequences of it
+[2019-02-11 12:17:09]<sarang>	Ah ok, yeah probably a good question for ArticMine after meeting
 [2019-02-11 12:17:17]<sarang>	(I will be interested to hear the answer)
-[2019-02-11 12:27:17]<suraeNoether>	i like the idea of the incentivzation approach learninandlurkin mentions
-[2019-02-11 12:45:17]<learninandlurkin>	sarang: eventually I will actually drop a nice contribution, if all goes to plan... (forever lurking and learning though)
-[2019-02-11 12:45:17]<sarang>	Until then, 3. OTHER WORK
-[2019-02-11 12:21:18]<smooth>	suraeNoether: what is this "simple two-median method"? I would describe articmine's method as precisely a simple two-median method
-[2019-02-11 12:24:18]<sarang>	This week, I have been working on output selection, some timing information for a forthcoming paper on signatures, Breaking Monero recording, and learning from the recent Zcash disclosure
-[2019-02-11 12:10:19]<sarang>	An interesting result is that, using an empirical chain distribution, a slight tweak to the output selection to use the window approach better can fix the coinbase-per-ring problem
-[2019-02-11 12:47:19]<sarang>	Right now, we use a small window of blocks to pick outputs, but we don't use the entire window necessarily
-[2019-02-11 12:02:20]<sarang>	If we used the entire window, it smooths the selection process much more
-[2019-02-11 12:07:20]<suraeNoether>	smooth: let's carry hold on that conversation until after the meeting. block size conversations are a black hole and we want to get to other things
-[2019-02-11 12:52:20]<sarang>	For this week, I will continue with output selection experiments and try to finish up the Bulletproofs MPC that keeps getting delayed
-[2019-02-11 12:00:21]<sarang>	Any questions from me, before suraeNoether shares?
-[2019-02-11 12:12:21]<suraeNoether>	sarang why use a windowing method instead of a precise selection method like the one I presented last week? simpler to implement given our current code?
-[2019-02-11 12:18:21]<moneromooo>	There's no rush whatsoever about that BP MPC fwiw
-[2019-02-11 12:20:21]<Xeagu>	I was at TabConf with Rehrar and Midipoet. More marketing than MRL but an important element of information distribution I think.
-[2019-02-11 12:29:21]<sarang>	I'm not saying that I favor the full-window method as optimal
-[2019-02-11 12:35:21]<sarang>	Only that it's a very simple change
-[2019-02-11 12:42:21]<sarang>	it's one of several numerical experiments
-[2019-02-11 12:49:21]<suraeNoether>	gotcha
-[2019-02-11 12:01:22]<sarang>	So if the timeline were rushed, I'd support it as a temporary fix
-[2019-02-11 12:13:22]<sarang>	But yesterday's announcement removes that fire
-[2019-02-11 12:24:22]<sarang>	I'll be posting all the sims to github
-[2019-02-11 12:33:22]<Xeagu>	Would planning the Monero Konference be MRL relevant?
-[2019-02-11 12:41:22]<sarang>	Probably at the end, sure
-[2019-02-11 12:43:22]<sarang>	or after
-[2019-02-11 12:50:22]<sarang>	suraeNoether: do you wish to share now?
-[2019-02-11 12:58:22]<suraeNoether>	allright, my work this past week has been 1) simulations for matching 2) computations for output selection, and 3) some proofs for a semisecret project that has an impending deadline, after which I believe it will no longer be secret.
-[2019-02-11 12:04:23]<suraeNoether>	xeagu yeah that's a good meeting ender actually
-[2019-02-11 12:31:23]<sarang>	suraeNoether's security proofs are related to the timing data I'm working on; it's for a paper in collaboration with other researchers that will be submitted shortly for a conference
-[2019-02-11 12:40:23]*	rottensox (~rottensox@unaffiliated/rottensox) has joined
-[2019-02-11 12:54:23]<suraeNoether>	next week, sarang and endogenic and I are meeting in nashville for another monero workshop/face-to-face worktime
-[2019-02-11 12:05:24]<sarang>	The secrecy has nothing to do with vulnerabilities or flaws, only professional courtesy for the submission process
-[2019-02-11 12:11:24]<endogenic>	they will be doing a talk at the Nashville Blockchain Meetup as well on 2/20 for anyone interested
-[2019-02-11 12:20:24]<sarang>	Will the talks be recorded endogenic ?
-[2019-02-11 12:21:24]<endogenic>	at WeWork around.. i think. 5-6pm
-[2019-02-11 12:49:24]<suraeNoether>	ah yeah i forgot about that
-[2019-02-11 12:55:24]<suraeNoether>	i'm excited for that
-[2019-02-11 12:04:25]*	dgoddard (~Denis@2601:186:280:4c0:eade:27ff:fe14:1fb7) has joined
-[2019-02-11 12:22:25]<endogenic>	i've been trying to find out.. i think so. if not, we can get a camera
-[2019-02-11 12:32:25]<sarang>	Cool. Would be fun to stream/post if it works out
-[2019-02-11 12:32:25]<suraeNoether>	between now and then i have several doctor's appointments, some personal business to attend to, and immediately after that trip, i have a surgical procedure, so my presence online is going to be 50/50 over the next few days, unfortunately; my goal is to finish my matching sims before the trip to nashville, and i *have* to finish proofs by then
-[2019-02-11 12:34:25]<sarang>	If not, oh well
-[2019-02-11 12:40:25]<learninandlurkin>	If it in collaboration with another group, this means it will not be published as/with the other MRL papers?
-[2019-02-11 12:50:25]<sarang>	We can certainly link to the preprint if we want
-[2019-02-11 12:01:26]<suraeNoether>	learninandlurkin: this one, similar to the thring signature paper, is intended for peer review publicatin
-[2019-02-11 12:03:26]<Xeagu>	I might be able to make it to the 2/20 Nashville meetup
-[2019-02-11 12:03:26]<sarang>	and the preprint is always publicly freely available
-[2019-02-11 12:07:26]<suraeNoether>	oh i should pick a journal and submit that this week, too
-[2019-02-11 12:37:26]<sarang>	In general, we should probably submit more of our future MRL stuff to the IACR preprint archive for broader distribution
-[2019-02-11 12:52:26]<sarang>	Any other questions for suraeNoether ?
-[2019-02-11 12:03:27]<suraeNoether>	sarang agreed
-[2019-02-11 12:08:27]<learninandlurkin>	Makes sense but I think there should be links to those papers on the page with all the MRL stuff, if possible
-[2019-02-11 12:14:27]<sarang>	Yup, for sure
-[2019-02-11 12:18:27]<learninandlurkin>	awesome
-[2019-02-11 12:31:27]<suraeNoether>	oh, and i have a bunch of monero konferenco stuff happening this week like signing a contract for our venue and starting to nail down plane tickets for speakers.
-[2019-02-11 12:33:27]<sarang>	The thing sig preprint was separately published on MRL site with our fancy logo, just for fun
-[2019-02-11 12:50:27]<sarang>	Keep in mind that we generally cannot repost final journal copies of any papers
-[2019-02-11 12:53:27]<sarang>	only preprints
-[2019-02-11 12:04:28]<sarang>	However, we'll try to do open release with journals if it's reasonable cost
-[2019-02-11 12:21:28]<hyc>	journals = racket ...
-[2019-02-11 12:25:28]<sarang>	ikr
-[2019-02-11 12:26:28]<learninandlurkin>	arXiv not an option?
-[2019-02-11 12:32:28]<sarang>	Yes, but only for preprints
-[2019-02-11 12:33:28]<learninandlurkin>	what hyc said ++++
-[2019-02-11 12:34:28]<sarang>	arxiv ~ IACR
-[2019-02-11 12:49:28]<sarang>	More journals are moving to open access, at least for a fee
-[2019-02-11 12:52:28]<Xeagu>	I'm working on a speaker proposal submission for the Konferenco
-[2019-02-11 12:00:29]<sarang>	Excellent
-[2019-02-11 12:08:29]<sarang>	Anyone who wishes to apply to speak should do so!
-[2019-02-11 12:15:29]<sarang>	https://monerokon.com/
-[2019-02-11 12:22:29]<suraeNoether>	yep!
-[2019-02-11 12:33:29]<sarang>	Any other recent research to share from anyone?
-[2019-02-11 12:50:29]<oneiric_>	cant help reading that url in cutesie anime voice
-[2019-02-11 12:55:29]<sarang>	heh
-[2019-02-11 12:06:30]<sarang>	suraeNoether also got conference.money and konferenco.xyz
-[2019-02-11 12:08:30]<oneiric_>	*monero kun* wmw
-[2019-02-11 12:32:30]<sarang>	I'm shocked that conference.money was available
-[2019-02-11 12:03:31]<sarang>	OK, looks like no other big research to cover. So, let's first go over action items for the week, and then open up to questions about earlier/other topics
-[2019-02-11 12:08:31]<learninandlurkin>	Seperate from research: with you guys getting hit by bikes and having surgery, please take time to relax/recover. Y'all need it.
-[2019-02-11 12:21:31]<endogenic>	^
-[2019-02-11 12:24:31]<sarang>	Yeah, getting hit on my bike was... unpleasant
-[2019-02-11 12:36:31]<sarang>	Dealing with insurers is... also unpleasant
-[2019-02-11 12:37:31]<endogenic>	are you ok, btw?
-[2019-02-11 12:57:31]<sarang>	Fortunately, I'm recovering very well. Nothing fractured, just a hurt-like-hell situation for a while
-[2019-02-11 12:15:32]<sarang>	moneromooo: ArticMine: anything needed from MRL for the upcoming surprise fork?
+[2019-02-11 12:17:27]<suraeNoether>	i like the idea of the incentivzation approach learninandlurkin mentions
+[2019-02-11 12:17:45]<learninandlurkin>	sarang: eventually I will actually drop a nice contribution, if all goes to plan... (forever lurking and learning though)
+[2019-02-11 12:17:45]<sarang>	Until then, 3. OTHER WORK
+[2019-02-11 12:18:21]<smooth>	suraeNoether: what is this "simple two-median method"? I would describe articmine's method as precisely a simple two-median method
+[2019-02-11 12:18:24]<sarang>	This week, I have been working on output selection, some timing information for a forthcoming paper on signatures, Breaking Monero recording, and learning from the recent Zcash disclosure
+[2019-02-11 12:19:10]<sarang>	An interesting result is that, using an empirical chain distribution, a slight tweak to the output selection to use the window approach better can fix the coinbase-per-ring problem
+[2019-02-11 12:19:47]<sarang>	Right now, we use a small window of blocks to pick outputs, but we don't use the entire window necessarily
+[2019-02-11 12:20:02]<sarang>	If we used the entire window, it smooths the selection process much more
+[2019-02-11 12:20:07]<suraeNoether>	smooth: let's carry hold on that conversation until after the meeting. block size conversations are a black hole and we want to get to other things
+[2019-02-11 12:20:52]<sarang>	For this week, I will continue with output selection experiments and try to finish up the Bulletproofs MPC that keeps getting delayed
+[2019-02-11 12:21:00]<sarang>	Any questions from me, before suraeNoether shares?
+[2019-02-11 12:21:12]<suraeNoether>	sarang why use a windowing method instead of a precise selection method like the one I presented last week? simpler to implement given our current code?
+[2019-02-11 12:21:18]<moneromooo>	There's no rush whatsoever about that BP MPC fwiw
+[2019-02-11 12:21:20]<Xeagu>	I was at TabConf with Rehrar and Midipoet. More marketing than MRL but an important element of information distribution I think.
+[2019-02-11 12:21:29]<sarang>	I'm not saying that I favor the full-window method as optimal
+[2019-02-11 12:21:35]<sarang>	Only that it's a very simple change
+[2019-02-11 12:21:42]<sarang>	it's one of several numerical experiments
+[2019-02-11 12:21:49]<suraeNoether>	gotcha
+[2019-02-11 12:22:01]<sarang>	So if the timeline were rushed, I'd support it as a temporary fix
+[2019-02-11 12:22:13]<sarang>	But yesterday's announcement removes that fire
+[2019-02-11 12:22:24]<sarang>	I'll be posting all the sims to github
+[2019-02-11 12:22:33]<Xeagu>	Would planning the Monero Konference be MRL relevant?
+[2019-02-11 12:22:41]<sarang>	Probably at the end, sure
+[2019-02-11 12:22:43]<sarang>	or after
+[2019-02-11 12:22:50]<sarang>	suraeNoether: do you wish to share now?
+[2019-02-11 12:22:58]<suraeNoether>	allright, my work this past week has been 1) simulations for matching 2) computations for output selection, and 3) some proofs for a semisecret project that has an impending deadline, after which I believe it will no longer be secret.
+[2019-02-11 12:23:04]<suraeNoether>	xeagu yeah that's a good meeting ender actually
+[2019-02-11 12:23:31]<sarang>	suraeNoether's security proofs are related to the timing data I'm working on; it's for a paper in collaboration with other researchers that will be submitted shortly for a conference
+[2019-02-11 12:23:40]*	rottensox (~rottensox@unaffiliated/rottensox) has joined
+[2019-02-11 12:23:54]<suraeNoether>	next week, sarang and endogenic and I are meeting in nashville for another monero workshop/face-to-face worktime
+[2019-02-11 12:24:05]<sarang>	The secrecy has nothing to do with vulnerabilities or flaws, only professional courtesy for the submission process
+[2019-02-11 12:24:11]<endogenic>	they will be doing a talk at the Nashville Blockchain Meetup as well on 2/20 for anyone interested
+[2019-02-11 12:24:20]<sarang>	Will the talks be recorded endogenic ?
+[2019-02-11 12:24:21]<endogenic>	at WeWork around.. i think. 5-6pm
+[2019-02-11 12:24:49]<suraeNoether>	ah yeah i forgot about that
+[2019-02-11 12:24:55]<suraeNoether>	i'm excited for that
+[2019-02-11 12:25:04]*	dgoddard (~Denis@2601:186:280:4c0:eade:27ff:fe14:1fb7) has joined
+[2019-02-11 12:25:22]<endogenic>	i've been trying to find out.. i think so. if not, we can get a camera
+[2019-02-11 12:25:32]<sarang>	Cool. Would be fun to stream/post if it works out
+[2019-02-11 12:25:32]<suraeNoether>	between now and then i have several doctor's appointments, some personal business to attend to, and immediately after that trip, i have a surgical procedure, so my presence online is going to be 50/50 over the next few days, unfortunately; my goal is to finish my matching sims before the trip to nashville, and i *have* to finish proofs by then
+[2019-02-11 12:25:34]<sarang>	If not, oh well
+[2019-02-11 12:25:40]<learninandlurkin>	If it in collaboration with another group, this means it will not be published as/with the other MRL papers?
+[2019-02-11 12:25:50]<sarang>	We can certainly link to the preprint if we want
+[2019-02-11 12:26:01]<suraeNoether>	learninandlurkin: this one, similar to the thring signature paper, is intended for peer review publicatin
+[2019-02-11 12:26:03]<Xeagu>	I might be able to make it to the 2/20 Nashville meetup
+[2019-02-11 12:26:03]<sarang>	and the preprint is always publicly freely available
+[2019-02-11 12:26:07]<suraeNoether>	oh i should pick a journal and submit that this week, too
+[2019-02-11 12:26:37]<sarang>	In general, we should probably submit more of our future MRL stuff to the IACR preprint archive for broader distribution
+[2019-02-11 12:26:52]<sarang>	Any other questions for suraeNoether ?
+[2019-02-11 12:27:03]<suraeNoether>	sarang agreed
+[2019-02-11 12:27:08]<learninandlurkin>	Makes sense but I think there should be links to those papers on the page with all the MRL stuff, if possible
+[2019-02-11 12:27:14]<sarang>	Yup, for sure
+[2019-02-11 12:27:18]<learninandlurkin>	awesome
+[2019-02-11 12:27:31]<suraeNoether>	oh, and i have a bunch of monero konferenco stuff happening this week like signing a contract for our venue and starting to nail down plane tickets for speakers.
+[2019-02-11 12:27:33]<sarang>	The thing sig preprint was separately published on MRL site with our fancy logo, just for fun
+[2019-02-11 12:27:50]<sarang>	Keep in mind that we generally cannot repost final journal copies of any papers
+[2019-02-11 12:27:53]<sarang>	only preprints
+[2019-02-11 12:28:04]<sarang>	However, we'll try to do open release with journals if it's reasonable cost
+[2019-02-11 12:28:21]<hyc>	journals = racket ...
+[2019-02-11 12:28:25]<sarang>	ikr
+[2019-02-11 12:28:26]<learninandlurkin>	arXiv not an option?
+[2019-02-11 12:28:32]<sarang>	Yes, but only for preprints
+[2019-02-11 12:28:33]<learninandlurkin>	what hyc said ++++
+[2019-02-11 12:28:34]<sarang>	arxiv ~ IACR
+[2019-02-11 12:28:49]<sarang>	More journals are moving to open access, at least for a fee
+[2019-02-11 12:28:52]<Xeagu>	I'm working on a speaker proposal submission for the Konferenco
+[2019-02-11 12:29:00]<sarang>	Excellent
+[2019-02-11 12:29:08]<sarang>	Anyone who wishes to apply to speak should do so!
+[2019-02-11 12:29:15]<sarang>	https://monerokon.com/
+[2019-02-11 12:29:22]<suraeNoether>	yep!
+[2019-02-11 12:29:33]<sarang>	Any other recent research to share from anyone?
+[2019-02-11 12:29:50]<oneiric_>	cant help reading that url in cutesie anime voice
+[2019-02-11 12:29:55]<sarang>	heh
+[2019-02-11 12:30:06]<sarang>	suraeNoether also got conference.money and konferenco.xyz
+[2019-02-11 12:30:08]<oneiric_>	*monero kun* wmw
+[2019-02-11 12:30:32]<sarang>	I'm shocked that conference.money was available
+[2019-02-11 12:31:03]<sarang>	OK, looks like no other big research to cover. So, let's first go over action items for the week, and then open up to questions about earlier/other topics
+[2019-02-11 12:31:08]<learninandlurkin>	Seperate from research: with you guys getting hit by bikes and having surgery, please take time to relax/recover. Y'all need it.
+[2019-02-11 12:31:21]<endogenic>	^
+[2019-02-11 12:31:24]<sarang>	Yeah, getting hit on my bike was... unpleasant
+[2019-02-11 12:31:36]<sarang>	Dealing with insurers is... also unpleasant
+[2019-02-11 12:31:37]<endogenic>	are you ok, btw?
+[2019-02-11 12:31:57]<sarang>	Fortunately, I'm recovering very well. Nothing fractured, just a hurt-like-hell situation for a while
+[2019-02-11 12:32:15]<sarang>	moneromooo: ArticMine: anything needed from MRL for the upcoming surprise fork?
 [2019-02-11 12:32:32]<Xeagu>	Lost all your private keys in a tragic biking accident
-[2019-02-11 12:39:32]<sarang>	YES
-[2019-02-11 12:40:32]<sarang>	I mean, NO
-[2019-02-11 12:49:32]<suraeNoether>	xeagu that's what happens when you use brain wallets and then get your head knocked around
-[2019-02-11 12:57:32]<suraeNoether>	lose your privkeys
-[2019-02-11 12:59:32]<suraeNoether>	fosho
-[2019-02-11 12:25:33]<sarang>	My action items for the week are to finalize and post the sim code for (a) block size analysis, and (b) output selection
-[2019-02-11 12:26:33]<moneromooo>	I don't think so, unless you want to review the patches.
-[2019-02-11 12:42:33]<moneromooo>	Or suggest new unit tests.
-[2019-02-11 12:42:33]<sarang>	as well as the stuff for this collaboration paper (will post when the preprint is up)
-[2019-02-11 12:47:33]<sarang>	moneromooo: got it
-[2019-02-11 12:51:33]<sarang>	suraeNoether: your action items?
-[2019-02-11 12:01:34]<sarang>	(I know "action items" sounds super corporate, but I find them useful)
-[2019-02-11 12:14:34]<suraeNoether>	i need to finish these proofs for this deadline
-[2019-02-11 12:17:34]<suraeNoether>	that's my top priority
-[2019-02-11 12:30:34]<sarang>	The proofs are also interesting for our current signatures, it seems
-[2019-02-11 12:06:35]<suraeNoether>	i have a few other action items, but if i get those proofs done before heading to nashville, i'll be satisfied
-[2019-02-11 12:24:35]<sarang>	OK, I think that wraps those up nicely. Any questions relating to meeting topics, before we formally adjourn?
-[2019-02-11 12:32:35]<oneiric_>	does MRL have contacts in academia/industry that are PoW experts?
-[2019-02-11 12:34:35]<sarang>	(formally adjourn just means "end the paste of logs")
-[2019-02-11 12:44:35]<sarang>	Ooh, good question
-[2019-02-11 12:58:35]<sarang>	I don't know many hardware architecture experts, personally
-[2019-02-11 12:00:37]<sarang>	The ones I know of are otherwise employed
-[2019-02-11 12:40:37]<oneiric_>	would any be open to a bounty/audit-style engagement?
-[2019-02-11 12:50:37]<sarang>	Hmm interesting idea
-[2019-02-11 12:54:37]<oneiric_>	even if not full-time?
-[2019-02-11 12:57:37]<sarang>	What would be the timeline?
-[2019-02-11 12:07:38]<sarang>	I can bring it up in other channels and see if anyone bites
-[2019-02-11 12:21:38]<oneiric_>	for this fork, too late. thinking going forward though
-[2019-02-11 12:31:38]<sarang>	right
-[2019-02-11 12:40:38]<sarang>	I like the idea
-[2019-02-11 12:53:38]<sarang>	If the person is trusted enough not to blab to manufacturers...
-[2019-02-11 12:12:39]<sarang>	Any other questions on earlier meeting subjects?
-[2019-02-11 12:23:39]<oneiric_>	maybe, proposed pow 1-2 month before impl, with minor tweaks disclosed for review 1-2 week before impl
-[2019-02-11 12:41:39]<sarang>	That sounds reasonable
-[2019-02-11 12:44:39]<oneiric_>	alright, thanks sarang
-[2019-02-11 12:11:40]<sarang>	Most questions on the upcoming upgrade are probably best suited for -dev, FWIW
-[2019-02-11 12:19:40]<sarang>	I know nothing more than has been talked about here/there
-[2019-02-11 12:29:40]<learninandlurkin>	I did ask earlier but if there's no time it's fine: I'd just like to hear MRL's opinions on multi-algorithm PoWs
-[2019-02-11 12:57:40]<sarang>	I do not support such a scheme in the forms that I've seen so far
-[2019-02-11 12:02:41]<strofenig>	what prevents asic building on both pow algos?
-[2019-02-11 12:16:41]<sarang>	It changes the incentives, economics, and structure of attacks, often in subtle and tricky ways
-[2019-02-11 12:26:41]<sarang>	A great resource is the multi-month Zcash thread on their research into this
-[2019-02-11 12:38:41]<sarang>	Conclusion: not sufficiently studied or safe to deploy on their network
-[2019-02-11 12:49:41]<sarang>	I believe this is the relevant thread, which is a good read: https://github.com/zcash/zcash/issues/3672
-[2019-02-11 12:52:41]<learninandlurkin>	I only ask because there's some shilling of the idea and I know very little of it
-[2019-02-11 12:55:41]<sgp_>	I love that discussion
-[2019-02-11 12:55:41]<learninandlurkin>	oh cool
-[2019-02-11 12:07:42]<learninandlurkin>	I'll dive into that then
-[2019-02-11 12:07:42]<sarang>	I recommend anyone read it before proposing such a scheme
-[2019-02-11 12:38:42]<sarang>	For that topic, I like the Mencken quote: "For every complex problem there is an answer that is clear, simple, and wrong"
-[2019-02-11 12:48:43]<sarang>	OK, last call for questions before we adjourn
-[2019-02-11 12:01:44]<moneromooo>	Can you speed up BPs some more ?
-[2019-02-11 12:05:44]<sarang>	Sigh, FINE
-[2019-02-11 12:11:44]<moneromooo>	Thank you!
-[2019-02-11 12:29:44]<sarang>	Thanks to everyone for attending. Logs for this meeting will be posted to the GitHub agenda issue
-[2019-02-11 12:45:44]<sarang>	Feel free to continue discussion, but we are now adjourned
+[2019-02-11 12:32:39]<sarang>	YES
+[2019-02-11 12:32:40]<sarang>	I mean, NO
+[2019-02-11 12:32:49]<suraeNoether>	xeagu that's what happens when you use brain wallets and then get your head knocked around
+[2019-02-11 12:32:57]<suraeNoether>	lose your privkeys
+[2019-02-11 12:32:59]<suraeNoether>	fosho
+[2019-02-11 12:33:25]<sarang>	My action items for the week are to finalize and post the sim code for (a) block size analysis, and (b) output selection
+[2019-02-11 12:33:26]<moneromooo>	I don't think so, unless you want to review the patches.
+[2019-02-11 12:33:42]<moneromooo>	Or suggest new unit tests.
+[2019-02-11 12:33:42]<sarang>	as well as the stuff for this collaboration paper (will post when the preprint is up)
+[2019-02-11 12:33:47]<sarang>	moneromooo: got it
+[2019-02-11 12:33:51]<sarang>	suraeNoether: your action items?
+[2019-02-11 12:34:01]<sarang>	(I know "action items" sounds super corporate, but I find them useful)
+[2019-02-11 12:34:14]<suraeNoether>	i need to finish these proofs for this deadline
+[2019-02-11 12:34:17]<suraeNoether>	that's my top priority
+[2019-02-11 12:34:30]<sarang>	The proofs are also interesting for our current signatures, it seems
+[2019-02-11 12:35:06]<suraeNoether>	i have a few other action items, but if i get those proofs done before heading to nashville, i'll be satisfied
+[2019-02-11 12:35:24]<sarang>	OK, I think that wraps those up nicely. Any questions relating to meeting topics, before we formally adjourn?
+[2019-02-11 12:35:32]<oneiric_>	does MRL have contacts in academia/industry that are PoW experts?
+[2019-02-11 12:35:34]<sarang>	(formally adjourn just means "end the paste of logs")
+[2019-02-11 12:35:44]<sarang>	Ooh, good question
+[2019-02-11 12:35:58]<sarang>	I don't know many hardware architecture experts, personally
+[2019-02-11 12:37:00]<sarang>	The ones I know of are otherwise employed
+[2019-02-11 12:37:40]<oneiric_>	would any be open to a bounty/audit-style engagement?
+[2019-02-11 12:37:50]<sarang>	Hmm interesting idea
+[2019-02-11 12:37:54]<oneiric_>	even if not full-time?
+[2019-02-11 12:37:57]<sarang>	What would be the timeline?
+[2019-02-11 12:38:07]<sarang>	I can bring it up in other channels and see if anyone bites
+[2019-02-11 12:38:21]<oneiric_>	for this fork, too late. thinking going forward though
+[2019-02-11 12:38:31]<sarang>	right
+[2019-02-11 12:38:40]<sarang>	I like the idea
+[2019-02-11 12:38:53]<sarang>	If the person is trusted enough not to blab to manufacturers...
+[2019-02-11 12:39:12]<sarang>	Any other questions on earlier meeting subjects?
+[2019-02-11 12:39:23]<oneiric_>	maybe, proposed pow 1-2 month before impl, with minor tweaks disclosed for review 1-2 week before impl
+[2019-02-11 12:39:41]<sarang>	That sounds reasonable
+[2019-02-11 12:39:44]<oneiric_>	alright, thanks sarang
+[2019-02-11 12:40:11]<sarang>	Most questions on the upcoming upgrade are probably best suited for -dev, FWIW
+[2019-02-11 12:40:19]<sarang>	I know nothing more than has been talked about here/there
+[2019-02-11 12:40:29]<learninandlurkin>	I did ask earlier but if there's no time it's fine: I'd just like to hear MRL's opinions on multi-algorithm PoWs
+[2019-02-11 12:40:57]<sarang>	I do not support such a scheme in the forms that I've seen so far
+[2019-02-11 12:41:02]<strofenig>	what prevents asic building on both pow algos?
+[2019-02-11 12:41:16]<sarang>	It changes the incentives, economics, and structure of attacks, often in subtle and tricky ways
+[2019-02-11 12:41:26]<sarang>	A great resource is the multi-month Zcash thread on their research into this
+[2019-02-11 12:41:38]<sarang>	Conclusion: not sufficiently studied or safe to deploy on their network
+[2019-02-11 12:41:49]<sarang>	I believe this is the relevant thread, which is a good read: https://github.com/zcash/zcash/issues/3672
+[2019-02-11 12:41:52]<learninandlurkin>	I only ask because there's some shilling of the idea and I know very little of it
+[2019-02-11 12:41:55]<sgp_>	I love that discussion
+[2019-02-11 12:41:55]<learninandlurkin>	oh cool
+[2019-02-11 12:42:07]<learninandlurkin>	I'll dive into that then
+[2019-02-11 12:42:07]<sarang>	I recommend anyone read it before proposing such a scheme
+[2019-02-11 12:42:38]<sarang>	For that topic, I like the Mencken quote: "For every complex problem there is an answer that is clear, simple, and wrong"
+[2019-02-11 12:43:48]<sarang>	OK, last call for questions before we adjourn
+[2019-02-11 12:44:01]<moneromooo>	Can you speed up BPs some more ?
+[2019-02-11 12:44:05]<sarang>	Sigh, FINE
+[2019-02-11 12:44:11]<moneromooo>	Thank you!
+[2019-02-11 12:44:29]<sarang>	Thanks to everyone for attending. Logs for this meeting will be posted to the GitHub agenda issue
+[2019-02-11 12:44:45]<sarang>	Feel free to continue discussion, but we are now adjourned
