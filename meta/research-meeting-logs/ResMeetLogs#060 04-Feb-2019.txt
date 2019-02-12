@@ -1,0 +1,357 @@
+[2019-02-04 16:56:32] * sarang has changed the topic to: Research meeting NOW. Agenda: https://github.com/monero-project/meta/issues/304
+[2019-02-04 16:58:24] <sarang> We'll begin shortly. Please see the agenda linked above (and in topic)
+[2019-02-04 16:58:42] <Xeagu> Wow I just made it in time
+[2019-02-04 16:58:45] <Xeagu> Awesome
+[2019-02-04 16:58:56] * chron0 (~chron0@unaffiliated/chron0) has joined
+[2019-02-04 16:59:15] <sarang> OK, let's begin
+[2019-02-04 16:59:21] <sarang> 1. GREETINGS
+[2019-02-04 16:59:25] <sarang> hello everyone
+[2019-02-04 16:59:25] <ArticMine> Hi
+[2019-02-04 16:59:26] <sgp_> hello!
+[2019-02-04 16:59:30] <Xeagu> Hey!
+[2019-02-04 16:59:35] <chron0> oi
+[2019-02-04 16:59:52] <sarang> a special ping to moneromooo as well, since he has a PR that I wish to discuss
+[2019-02-04 17:00:19] <sarang> Since it approaches, let's discuss 2. NETWORK UPGRADE REVIEW
+[2019-02-04 17:00:19] <xmrmatterbridge> <serhack> Hi!
+[2019-02-04 17:00:40] <sgp_> we know the topic is important since it's in ALL CAPS
+[2019-02-04 17:00:51] <suraeNoether> hi guys!
+[2019-02-04 17:00:53] * thrmo (~thrmo@unaffiliated/thrmo) has joined
+[2019-02-04 17:00:54] * Mochi101 (~Mochi101@unaffiliated/mochi101) has joined
+[2019-02-04 17:00:57] <sarang> As linked in the agenda, the current plan for payment IDs has been subject to much discussion, so please read through the notes at that link
+[2019-02-04 17:01:16] <sarang> I don't want to discuss opinions on that at this meeting, only to remind of what the timeline has been
+[2019-02-04 17:01:26] <needmoney90> Hey!
+[2019-02-04 17:01:32] <sarang> Of more pressing interest is the block size algorithm
+[2019-02-04 17:01:47] <Mochi101> You guys going to introduce more tools for sub-addresses too?
+[2019-02-04 17:01:49] * [-mugatu-] is now known as IRS
+[2019-02-04 17:02:02] <Mochi101> Like being able to query last sub-address generated?
+[2019-02-04 17:02:04] <sarang> You may recall that we were looking at a few different options for block size scaling, to allow for growth while protecting from cheap spam
+[2019-02-04 17:02:09] <suraeNoether> for the audience: The current pull request for changing the dynamic block size adjustment method is proposed by ArticMine (see PR 5124 here: https://github.com/monero-project/monero/pull/5124/files ) and it occurs to me that we are intricately in the weeds of fees, incentives, and block sizes right now.
+[2019-02-04 17:02:12] <sarang> Mochi101: probably better for #monero-dev
+[2019-02-04 17:02:17] <Mochi101> ah ok
+[2019-02-04 17:02:57] <suraeNoether> I have concerns about this proposal for a few reasons.
+[2019-02-04 17:03:01] <sarang> The reason I bring this up is because we have essentially two methods on the table: a simple dual-median approach, and the one linked in the PR which uses a long-term median weighting
+[2019-02-04 17:03:09] * thrmo has quit (Client Quit)
+[2019-02-04 17:03:11] <sarang> The PR contains moneromooo's implementation of the latter
+[2019-02-04 17:03:28] * thrmo (~thrmo@unaffiliated/thrmo) has joined
+[2019-02-04 17:03:34] <ArticMine> Actually There were 3 option for block weight scaling
+[2019-02-04 17:03:54] <ArticMine> That were formalized
+[2019-02-04 17:04:11] <ArticMine> 1) The double median
+[2019-02-04 17:04:37] <ArticMine> 2) The double median with smooths change
+[2019-02-04 17:05:02] <sarang> Please remind the room of the change for (2)
+[2019-02-04 17:05:17] <suraeNoether> ^ thanks sarang :P
+[2019-02-04 17:05:34] <ArticMine> 3) My last proposal that moneromooo implemented in PR 5124
+[2019-02-04 17:06:21] <suraeNoether> i far prefer the dual median approach than PR 5124
+[2019-02-04 17:06:37] <ArticMine> In the first option the full blockweight including the burst portion was used to scale the long term median
+[2019-02-04 17:07:53] <ArticMine> This allowed the burst to work with scaling but had the problem of using the entire burst to scale the long term median
+[2019-02-04 17:07:56] * dgoddard (~Denis@2601:186:280:4c0:eade:27ff:fe14:1fb7) has joined
+[2019-02-04 17:08:18] <suraeNoether> PR 5124 concerns me for a couple of reasons. firstly, demonstrating the long-term stability of it... proving that stability... is difficult, and finding parameters that seem to be good is an exercise in hand-tuning. additionally, it's not clear what we gain from using the more complicated method in the short term. if we are pushing more complicated code, it should be because we have a clear advantage from
+[2019-02-04 17:08:18] <suraeNoether> using it, some clear efficiency or security gain
+[2019-02-04 17:08:25] <sarang> Given an unbounded adversary, all proposals allow chain bloat of O(10-100 GB) over, say, a weeklong sustained max-bloat attack
+[2019-02-04 17:08:33] <sarang> With resulting block sizes 15-30 MB
+[2019-02-04 17:09:07] <suraeNoether> how much does it cost to do that in all the proposals?
+[2019-02-04 17:09:29] <ArticMine> 2) smooth's modification was to not use the 50x burst in scaling the long term median
+[2019-02-04 17:09:48] <suraeNoether> if all proposals have the same total consequence for the blockchain and the same approximate cost for the attacker, there is zero reason to use something complicated instead of something simple.
+[2019-02-04 17:09:49] <sarang> O($1-10 M) depending on whether you assume the miners are purely breaking even or not
+[2019-02-04 17:10:08] <sarang> Under ArticMine's 4x-rational-miner assumption, they scale 4x from that
+[2019-02-04 17:10:24] <ArticMine> This had the serious problem of killing the burst over time.
+[2019-02-04 17:10:39] <moneromooo> If all proposals have the same total consequence for the blockchain and the same approximate cost for the attacker, then you use "normal use" behaviour to select which one is the best.
+[2019-02-04 17:11:00] <moneromooo> It's not enough to resist attacks, it must also be useful for normal use.
+[2019-02-04 17:11:41] <ArticMine> My final proposal addressed the problem in both 1) and 2) b only using the portion of the block weight that would have been allowed under the long term median to scale the long term median
+[2019-02-04 17:12:10] * Mochi101 (~Mochi101@unaffiliated/mochi101) has left ("Leaving")
+[2019-02-04 17:12:36] <sarang> ArticMine: does moneromooo's code accurately reflect your proposal?
+[2019-02-04 17:12:41] <sarang> And does my Python code?
+[2019-02-04 17:12:54] <sarang> I want to make absolutely sure we are all operating on the same assumptions for bloat and cost possibilities
+[2019-02-04 17:12:59] <sarang> Otherwise we are debating unknowns
+[2019-02-04 17:13:12] <suraeNoether> ^
+[2019-02-04 17:13:49] <moneromooo> The python code I saw from... sarang I assume, can't recall now :) and my code agreed on the results when pushing blocks with the max allowed weight.
+[2019-02-04 17:14:03] <moneromooo> Also agreed with some python code I made.
+[2019-02-04 17:14:06] <sarang> For example, a recent change in minimum fee computation to include the long-term weight (and not short-term median) switches from applying the 4x penalty to using the min fee, for example
+[2019-02-04 17:14:11] <ArticMine> sarang Your python code uses the penalty rather than 4x the penalty
+[2019-02-04 17:14:14] <sarang> and that spiked the total cost
+[2019-02-04 17:14:16] <suraeNoether> i am so wildly uncomfortable with this conversation, tbh
+[2019-02-04 17:14:43] <ArticMine> But it was switched to 4x penalty
+[2019-02-04 17:14:49] * mistergold has quit (Read error: Connection reset by peer)
+[2019-02-04 17:15:04] <sarang> Let's assume we are all talking about this paste: http://paste.debian.net/hidden/292e473f/
+[2019-02-04 17:15:11] <sarang> Note line 56 please
+[2019-02-04 17:15:25] <Xeagu> Whatever is implemented should have a clear way to explain to the rest of the ecosystem.
+[2019-02-04 17:15:31] <sarang> It used the short-term median in the min fee computation, but was changed in line 57 to the lt-weight
+[2019-02-04 17:15:49] <sarang> This spikes the total cost by order of magnitude, so clearly it means the min fee is applying, rather than the 4x penalty
+[2019-02-04 17:16:04] <sarang> We should ensure that we are clear of this
+[2019-02-04 17:16:07] <sarang> *clear on this
+[2019-02-04 17:16:37] <sarang> So my current questions are: ArticMine is this your intention? moneromooo is the current paste (not the commented-out line) what is in the PR?
+[2019-02-04 17:16:50] <moneromooo> AFAIK, yes.
+[2019-02-04 17:17:03] <ArticMine> The past reflect the rational miner so yes
+[2019-02-04 17:17:08] <ArticMine> paste
+[2019-02-04 17:17:23] <moneromooo> I do not agre with the rational miner comment though :P
+[2019-02-04 17:17:39] <sarang> ArticMine: what about the difference between lines 56 and 57?
+[2019-02-04 17:17:42] <moneromooo> A rational miner would also accept smaller fees, unless I can be convinced otherwise.
+[2019-02-04 17:17:48] <sarang> That has a _massive_ effect on the cost assumption
+[2019-02-04 17:17:57] <ArticMine> The difference is between 4x penalty and 1x
+[2019-02-04 17:18:04] <sarang> No
+[2019-02-04 17:18:22] <sarang> The difference between 56 and 57 is in how the min fee is scaling
+[2019-02-04 17:18:30] <sarang> the penalty applies in the next line
+[2019-02-04 17:18:46] <suraeNoether> there has not been an effort to formalize the design goals of our blocksize adjustment algorithm, so even if we have a new proposal, all we do is say "hmm, how fast can the blockchain grow? hmm how much does that cost?"
+[2019-02-04 17:18:51] <suraeNoether>  we may as well be picking random functions and seeing if they do what we want them to do, if we aren't going to start with design principles or urgent needs first and move forward from there.
+[2019-02-04 17:19:17] <suraeNoether> With that in mind, our primary urgent need is to prevent a bloatocalypse before the next fork. Keeping next block size at something like R*Median(N) is still rational, we just need to boost N and decrease R to make it so that 6 months can't give us more than a certain growth over the trendline, selecting N to dictate how long the attacker needs to blow fees.
+[2019-02-04 17:19:31] <oneiric_> what is the practical urgency of implementing one of the suggested modifications to blocksize adjustment?
+[2019-02-04 17:19:33] <suraeNoether>  in the meantime, I am willing to make a formal bet that the only reason we could possibly need a 50x boost in block size in the next 180 days is a bloat attack. i see no good reason to take the short-term xmas day factor into account for this immediate next hard fork, for a lot of design reasons
+[2019-02-04 17:19:41] <ArticMine> No it is not
+[2019-02-04 17:19:52] <suraeNoether> ArticMine: ??
+[2019-02-04 17:20:00] * moneromooo agrees with that last suraeNoether point about x50.
+[2019-02-04 17:20:13] <ArticMine> The urgency here is questionable at most
+[2019-02-04 17:20:19] <suraeNoether> ArticMine: i absolutely disagree
+[2019-02-04 17:20:43] <oneiric_> so postponing for 1-2 forks is not the worst-case scenario?
+[2019-02-04 17:20:58] <suraeNoether> i don't want to be chicken little here
+[2019-02-04 17:21:01] <suraeNoether> the sky is falling yada yada
+[2019-02-04 17:21:21] <suraeNoether> but guys, for essentially the cost of an apartment building, someone could take the monero blockchain and make it bigger than ethereum's
+[2019-02-04 17:21:32] <suraeNoether> i find this to be an intolerably insecure property of our block size adjustment algorithm
+[2019-02-04 17:21:47] <suraeNoether> it's a whim for the winklevii
+[2019-02-04 17:21:49] <ArticMine> If we rush into this without taking into consideration the implication on Monero ability to scale we can destroy a critical component of Monero's social covenant
+[2019-02-04 17:21:59] * cardboardoranges has quit (Quit: cardboardoranges)
+[2019-02-04 17:22:01] <ArticMine> Or cripple it
+[2019-02-04 17:22:02] <suraeNoether> ArticMine: our social contract is to ensure that our currency remains functional
+[2019-02-04 17:22:07] <suraeNoether> a 160GB blockchain is not functional
+[2019-02-04 17:22:18] <ArticMine> It has been functional for 4 years
+[2019-02-04 17:22:29] <moneromooo> The fees were just dropped to ~nothing recently though.
+[2019-02-04 17:22:31] <oneiric_> is there any indication that 160GB is near?
+[2019-02-04 17:22:36] <suraeNoether> "the attack hasn't happened yet" != "the attack will not happen or is not incentivized to happen"
+[2019-02-04 17:22:51] <xmrmatterbridge> <serhack> ArticMine: Yes, but that does not mean that could work for the next years.
+[2019-02-04 17:22:52] <moneromooo> Actually I take that back. It was still the same penalty.
+[2019-02-04 17:23:13] <suraeNoether> since any change we make in this fork can be undone in the next fork, your argument about long term scaling and the social contract doesn't hold up
+[2019-02-04 17:23:17] <ArticMine> This is a theoretical attack that is more expensive than a 51% attack
+[2019-02-04 17:23:24] <Xeagu> Do we have simulations of upper bound organic growth in x time? Say Monero gets added to Open Bazaar or something - what is the realistic transaction growth we might expect?
+[2019-02-04 17:23:32] <suraeNoether> it's about as expensive as a 51% attack, with the difference that it requires no hardware
+[2019-02-04 17:24:10] <suraeNoether> xeagu no, we have no data on adoption rate into new markets, although we could ballpark some estimates of what we think are reasonable, we are still just hand-tuning our approach
+[2019-02-04 17:24:17] <ArticMine> a 515 attack include the cost of hardware
+[2019-02-04 17:24:23] <ArticMine> 51%
+[2019-02-04 17:24:51] <suraeNoether> ArticMine: in order to pull off a 51% attack, i need i) the money and ii) some miners willing to take my bribe at the cost of the value of their xmr
+[2019-02-04 17:25:01] <suraeNoether> in order to do a bloat attack, i just need a bunch of xmr outputs
+[2019-02-04 17:25:16] <ArticMine> You have to pay for both
+[2019-02-04 17:25:25] <suraeNoether> so the cost may be equivalent in terms of USD, but the social friction to one attack is much lower compared to the other
+[2019-02-04 17:25:40] <Xeagu> One is permissionless
+[2019-02-04 17:25:50] <ArticMine> So it the other
+[2019-02-04 17:25:56] <ArticMine> is
+[2019-02-04 17:25:59] <suraeNoether> ArticMine: nah, you need to go find miners to work with
+[2019-02-04 17:26:17] <ArticMine> Rent the hard ware
+[2019-02-04 17:26:31] <suraeNoether> even if you have to spin up AWS, that means you have to go through amazon
+[2019-02-04 17:26:34] <suraeNoether> that isn't permissionless
+[2019-02-04 17:26:35] <suraeNoether> anyway
+[2019-02-04 17:26:38] <ArticMine> or buy it
+[2019-02-04 17:26:38] <suraeNoether> we are going down a rabbit hole
+[2019-02-04 17:26:43] <sarang> OK, so
+[2019-02-04 17:26:59] <suraeNoether> I'm advocating that we merely modify our growth rate and sample size and then spend the next 6 months making a non-rushed decision
+[2019-02-04 17:27:02] <sarang> What is on the table right now is a proposed PR, which you may or may not think is too complex
+[2019-02-04 17:27:14] <sarang> I want to know that PR 5124 matches the linked paste
+[2019-02-04 17:27:22] <sarang> and that the cost computation in the paste is accurate
+[2019-02-04 17:27:33] <ArticMine> My point is we have created artificial urgency and as a consequence could destroy a critical component of Monero
+[2019-02-04 17:27:33] <sarang> then we _at least_ know what the cost and bloat effects of 5124 are
+[2019-02-04 17:27:56] <suraeNoether> articmine: tweaking R and N can not destroy a critical component of monero
+[2019-02-04 17:28:21] <suraeNoether> but implementing a complicated blocksize adjustment algorithm with 18 parantheses that is hard to intuit or reason about? that could.
+[2019-02-04 17:28:52] <ArticMine> That is the trouble with the artificial urgency
+[2019-02-04 17:29:53] <suraeNoether> okay, i said my piece
+[2019-02-04 17:30:14] <moneromooo> Having ArticMine's change in does not prevent it being changed later if something more appropriate is found. Which may be the case if suraeNoether does the study he advocated earlier.
+[2019-02-04 17:30:25] <sarang> I am currently advocating for nothing, since I have received no satisfactory guidance about whether 5124 matches the numbers we have been basing assumptions on
+[2019-02-04 17:30:53] <ArticMine> I am in the process of evaluating just that
+[2019-02-04 17:30:54] <moneromooo> It matches the numbers for max sized blocks.
+[2019-02-04 17:31:09] <moneromooo> I did not try non-max size blocks though. I will try that.
+[2019-02-04 17:31:27] <sarang> ty ArticMine. In particular: please try switching between lines 56 and 57 and note the cost change
+[2019-02-04 17:31:32] <sarang> and ensure we are comfortable with that
+[2019-02-04 17:31:47] <ArticMine> In hour paste
+[2019-02-04 17:31:51] <ArticMine> your
+[2019-02-04 17:32:03] <sarang> moneromooo: right, the question is fee and cost, not blocksize, between those lines' changes
+[2019-02-04 17:32:15] <Xeagu> If we implement ArticMine's change, can we also come up with a ELI5 explanation of what is going on?
+[2019-02-04 17:32:17] <sarang> ArticMine: yes, 56-57 in my paste, linked again here: http://paste.debian.net/hidden/292e473f/
+[2019-02-04 17:32:23] <sarang> Xeagu: yes
+[2019-02-04 17:32:25] <moneromooo> Oh OK. I did not do anything with fee with my code.
+[2019-02-04 17:32:38] <sarang> moneromooo: you had specifically requested the line 57 change
+[2019-02-04 17:32:40] <sarang> IIRC
+[2019-02-04 17:32:41] <moneromooo> s/do/test, log, etc/
+[2019-02-04 17:33:05] <moneromooo> Yes, the change is what ArticMine suggested a while back to make the attack more expensive.
+[2019-02-04 17:33:15] <moneromooo> (and I do not agree it does make it more expensive fwiw)
+[2019-02-04 17:33:40] <moneromooo> That change is what the second commit in 5124 does.
+[2019-02-04 17:33:47] <ArticMine> Yes 57 addresses maintenance cost of keeping the locks bloated
+[2019-02-04 17:34:16] <ArticMine> Which is what I recommended
+[2019-02-04 17:34:40] <sarang> OK, so in your opinion ArticMine, running that paste in its current form will provide the cost to an attacker, assuming rational miners
+[2019-02-04 17:34:41] <sarang> ?
+[2019-02-04 17:34:48] <ArticMine> Yes
+[2019-02-04 17:34:52] <sarang> thank you
+[2019-02-04 17:35:00] <sarang> note to moneromooo ^
+[2019-02-04 17:35:12] <moneromooo> who still does not think it works
+[2019-02-04 17:35:37] <sarang> At least we agree on the final bloat and blocksize :/
+[2019-02-04 17:35:47] <sarang> (using the "attacker with infinite money and rage" model)
+[2019-02-04 17:36:25] <ArticMine> This all comes back to suraeNoether point what are our design parameters?
+[2019-02-04 17:36:36] <sarang> We have not formally defined them
+[2019-02-04 17:36:38] <suraeNoether> after the meeting i'm going to host an impromptu brain session on that i think articmine
+[2019-02-04 17:36:49] <Xeagu> Fwiw none of these measures seem to prevent slower bloat with min fee txs flooding the mempool and eventually getting confirmed over time
+[2019-02-04 17:36:53] <ArticMine> Yes
+[2019-02-04 17:37:02] <suraeNoether> i have some formal ideas
+[2019-02-04 17:37:10] <sarang> OK, so let's move on for now perhaps. Right now we have the current scheme, and the PR, and a dual-median idea that's not in a PR
+[2019-02-04 17:37:18] <sarang> After meeting, more discussion
+[2019-02-04 17:37:32] <sarang> Output selection is also being worked on, with no final changes yet
+[2019-02-04 17:37:48] <sarang> The idea being to weight block selection for ring decoys by the number of outputs, consistent with our gamma spend distribution
+[2019-02-04 17:37:53] <suraeNoether> isthmus and i had some discussion on output selection
+[2019-02-04 17:37:58] <ArticMine> If we are trying to minimize the risk of bloat without any other considerations then we end up destroying the adaptive blocksize
+[2019-02-04 17:38:06] <sarang> ArticMine: let's discuss after meeting
+[2019-02-04 17:38:14] <ArticMine> Sure
+[2019-02-04 17:38:17] <sarang> Please go ahead with output selection suraeNoether
+[2019-02-04 17:38:23] <suraeNoether> one thing isthmus pointed out is the classic problem with multi-input transactions
+[2019-02-04 17:38:55] <suraeNoether> for example, if I produce a ring signature with ring  {A, B, C} and a ring signature with ring {D, E, F}  in the same transaction, and A and D both have the same age, then it's "obvious" who the true spender is
+[2019-02-04 17:39:04] <suraeNoether> or rather, allows for heuristic'in
+[2019-02-04 17:39:25] <sarang> monerocoinjoin helps to break this, fwiw
+[2019-02-04 17:39:28] <suraeNoether> and after more and more discussion, i'm finally coming around on the idea of binning inputs
+[2019-02-04 17:39:31] <suraeNoether> sarang ^ yes
+[2019-02-04 17:39:36] <sarang> s/helps/could help someday
+[2019-02-04 17:40:07] <sarang> The major issue at hand _that was recently introduced_ is biased coinbase selection (and biased selection in general)
+[2019-02-04 17:40:10] <Xeagu> Input age heuristic for multi ring transactions is an interesting consideration
+[2019-02-04 17:40:20] <Inge-> 18:25 < ArticMine> is
+[2019-02-04 17:40:42] <sarang> IMO we should iteratively first focus on removing some of the selection bias, and then later move to address other multi-in heuristics
+[2019-02-04 17:40:58] <Xeagu> Got it
+[2019-02-04 17:41:21] <sarang> Is there opposition to a move to a weighted selection that accounts for this bias?
+[2019-02-04 17:41:21] <Xeagu> What is the biased coinbase selection problem?
+[2019-02-04 17:41:45] <sarang> If you select a block and then an output within it, you are likely to have bad distributions that aren't representative of the whole chain, due to variance in block sizes
+[2019-02-04 17:41:47] <moneromooo> The fewer outputs in a block, the more likely they are to be chosen as fake outs.
+[2019-02-04 17:41:56] <sarang> If you weight based on # of outputs, you can remove this
+[2019-02-04 17:42:10] <sarang> doing it efficiently is the tricky part, due to the gamma requirement
+[2019-02-04 17:42:31] <sarang> I only bring it up here to see if there is opposition to moving to such an approach, and then later continuing to iterate if needed
+[2019-02-04 17:42:55] <Xeagu> It's almost like you need extra decoy outputs as padding in each block so there is not much variance in total outputs between blocks
+[2019-02-04 17:42:57] <suraeNoether> i can spend about 30 minutes today writing up some pseudocode if that helps with the distribution stuff...
+[2019-02-04 17:42:58] <sgp_> I think it's a good stopgap
+[2019-02-04 17:43:16] <suraeNoether> xeagu no, extra decoy outputs have their own security problems
+[2019-02-04 17:43:18] <moneromooo> No. Do not spam the chain.
+[2019-02-04 17:43:21] <suraeNoether> ^
+[2019-02-04 17:43:28] <sarang> Xeagu: we really don't
+[2019-02-04 17:43:37] <sarang> weighting accounts for variance
+[2019-02-04 17:43:38] <Xeagu> Noted
+[2019-02-04 17:43:38] <sarang> that's the point
+[2019-02-04 17:43:52] <sarang> suraeNoether: please write up your pseudocode ASAP, and I will as well
+[2019-02-04 17:44:03] <sarang> this is not consensus, but the upgrade is a good time to do it if possible
+[2019-02-04 17:44:14] <suraeNoether> yeah, essentially, for the stats nerds in the audience
+[2019-02-04 17:44:27] <moneromooo> If someone tells me how to calculate the gamma CDF (or something that's close enough), I can do that code. It's the only thing I'm missing.
+[2019-02-04 17:45:07] <sarang> moneromooo: this assumes you're recalculating the product (this block's gamma factor)*(this block's weight) for each block, every time a new block arrives?
+[2019-02-04 17:45:13] <sarang> that was the inefficiency I wanted to address
+[2019-02-04 17:45:28] <moneromooo> Every time someone wants to make a tx. Which is hopefully less often.
+[2019-02-04 17:45:37] <moneromooo> OK. Good to have if you can, sure.
+[2019-02-04 17:45:37] <sarang> OK, but it's for the entire chain?
+[2019-02-04 17:45:40] <moneromooo> Yes.
+[2019-02-04 17:45:44] <sarang> got it
+[2019-02-04 17:45:56] <sarang> there was talk about a cutoff point, but that renders old outputs detectable
+[2019-02-04 17:45:57] <moneromooo> Well, technically the whole chain since rct started.
+[2019-02-04 17:46:01] <sarang> heh sure
+[2019-02-04 17:46:08] <suraeNoether> we are transitioning from "drawing randomly from an ideal distribution ignoring the current blockchain state (in terms of density of txns per block)" to "drawing randomly from a partially empirical distribution based both on an ideal distribution and the observation of the current blockchain state.
+[2019-02-04 17:46:09] <sarang> so in fact that does allow a cutoff of sorts...
+[2019-02-04 17:46:34] <sarang> Cool, we shall prioritize that to get it in before freeze
+[2019-02-04 17:46:41] <sarang> Let's move to 3. OTHER WORK
+[2019-02-04 17:46:53] <sarang> I continue to work on a few things listed in the agenda
+[2019-02-04 17:47:01] <moneromooo> I'll use some interpolation as smooth suggested, so you'll have to calc gamma for 1/100 points or whatever in practice.
+[2019-02-04 17:47:03] <sarang> in addition to the upgrade items
+[2019-02-04 17:47:18] <suraeNoether> but i do want to go back to the multi-input thing this week, because i think it's a critical security concern that we have merely gotten used to because we've known about it for awhile and didn't have a solution for...  but we have more pressing stuff to take care of immediately
+[2019-02-04 17:47:25] <sarang> Yes we do
+[2019-02-04 17:47:57] <sarang> an interesting point is Dandelion, which I've been looking into more deeply
+[2019-02-04 17:48:09] <oneiric_> ^
+[2019-02-04 17:48:11] <sarang> there was talk among btc devs about possible DoS avenues in the stem phase of routing
+[2019-02-04 17:48:13] <suraeNoether> the more i read about dandelion++ the more i like it, but hte more i wish they stuck with a single +
+[2019-02-04 17:48:20] <sarang> having to do with the mempool
+[2019-02-04 17:48:31] <sarang> These may not apply to us, but I'm reading up on their concerns
+[2019-02-04 17:48:52] <sarang> They also had issues relating to unconfirmed txs relying on each other that we don't care about
+[2019-02-04 17:49:13] <sarang> Any specific questions for me regarding my agenda-listed items?
+[2019-02-04 17:49:19] <sarang> My first priorities are upgrade items, of course
+[2019-02-04 17:51:03] <Xeagu> Not mentioned is mining algo. Is that planning on being changed next fork?
+[2019-02-04 17:51:16] <sarang> yes
+[2019-02-04 17:51:17] <moneromooo> Yes.
+[2019-02-04 17:51:20] <sarang> details tbd
+[2019-02-04 17:51:29] <Xeagu> Got it
+[2019-02-04 17:51:31] <oneiric_> are the candidates known atm?
+[2019-02-04 17:51:35] <sarang> I also consider that outside the scope of this room, for the most part
+[2019-02-04 17:51:46] <sarang> I hear CN-R with tbd tweak(s)
+[2019-02-04 17:51:57] <oneiric_> thanks sarang
+[2019-02-04 17:52:31] <sarang> OK, suraeNoether ?
+[2019-02-04 17:52:33] <sarang> your updates?
+[2019-02-04 17:53:19] * cardboardoranges (~cardboard@65.112.8.10) has joined
+[2019-02-04 17:53:20] <suraeNoether> Well, I finally realized how to formally hypothesize about the EAE attack in the bipartite graph setting for MRL11, which has allowed me to start writing up simulations
+[2019-02-04 17:53:27] <sarang> neat!
+[2019-02-04 17:54:01] <suraeNoether> basically: i'm assuming blocks arrive one at a time linearly for the sake of simplicity, i assume transaction density in each block is poisson distributed, and i assume each transaction is M-in, N-out according to some distribution I haven't selected yet (but will probably be empirical from our blockchain)
+[2019-02-04 17:54:18] <suraeNoether> I do this for a number of blocks T, to simulate a fake blockchain that exists before the game begins
+[2019-02-04 17:54:32] <suraeNoether> then, in addition to the random block density I just described, a single user is going to churn K times
+[2019-02-04 17:54:47] <sarang> What timing distribution?
+[2019-02-04 17:55:03] <suraeNoether> the wallet distribution
+[2019-02-04 17:55:15] <sarang> define plz
+[2019-02-04 17:55:24] <sarang> I mean, how often do they churn?
+[2019-02-04 17:55:38] <suraeNoether> oh, i'm going to explore that as a parameter with K=1 to K=15 or so
+[2019-02-04 17:55:45] <sarang> roger
+[2019-02-04 17:55:55] <suraeNoether> then i'm going to run the matching algorithm and see the probability that the person "gets caught" meaning their transactions are labeled/matched
+[2019-02-04 17:56:08] <sarang> sweet
+[2019-02-04 17:56:19] <suraeNoether> we already have ideas on timing, so we can figure out how this scales to a big parallel process, and we can generate a confusion table
+[2019-02-04 17:56:45] <moneromooo> Is this the same thing as a confusion matrix ?
+[2019-02-04 17:57:00] <suraeNoether> yeash
+[2019-02-04 17:57:04] <suraeNoether> yes*
+[2019-02-04 17:57:12] * Cryptonic (~cryptonic@49.151.16.156) has joined
+[2019-02-04 17:57:31] <suraeNoether> so the idea is to ask the question 'under certain user behavior, which is what we recommend for churn, what sort of security can someone practically expect?'
+[2019-02-04 17:57:40] <suraeNoether> concretely
+[2019-02-04 17:58:03] <sarang> Awesome, please keep us updated on the sim results. This will be very useful to those needing to churn safely
+[2019-02-04 17:58:14] <suraeNoether> i also have an alternative model where only coinbase outputs are added to the system but they get sent with wait-times equal to the wallet distribution also
+[2019-02-04 17:58:36] <suraeNoether> will do
+[2019-02-04 17:58:36] <Xeagu> You testing if there is a limit to churning that begins to weaken security?
+[2019-02-04 17:58:57] <suraeNoether> xeagu trying to formalize "how much should you churn for the following security level"
+[2019-02-04 17:59:04] <Xeagu> Got it
+[2019-02-04 17:59:05] <suraeNoether> it'd be interesting to see if churning too much gives it away
+[2019-02-04 17:59:12] <suraeNoether> which is an old hypothesis of mine :D
+[2019-02-04 17:59:17] <sarang> Anything else you're working on?
+[2019-02-04 17:59:38] <suraeNoether> the blocksize dynamic adaptability problem, of course, and my December + January end of month report
+[2019-02-04 17:59:46] <sarang> Neat
+[2019-02-04 17:59:55] <suraeNoether> i like giving plenty of time for comments. *cough*
+[2019-02-04 17:59:57] <sarang> Before we review action items, any specific directed questions, or other work to share?
+[2019-02-04 18:00:12] <suraeNoether> oh i read a paper
+[2019-02-04 18:00:15] <suraeNoether> oh oh
+[2019-02-04 18:00:18] <needmoney90> Have you considered the alternative funding avenue discussed in Palo alto?
+[2019-02-04 18:00:26] <suraeNoether> https://eprint.iacr.org/2018/379
+[2019-02-04 18:00:35] * cardboardoranges has quit (Quit: cardboardoranges)
+[2019-02-04 18:00:41] <sarang> our old friend Liu
+[2019-02-04 18:00:53] * tazman (~g0d@37.139.3.113) has joined
+[2019-02-04 18:00:56] <sarang> needmoney90: remind the room of this funding avenue
+[2019-02-04 18:01:13] <needmoney90> Patreon or a similar system
+[2019-02-04 18:01:17] <suraeNoether> oh yes
+[2019-02-04 18:01:22] <needmoney90> With the unfunded part going to the MFS
+[2019-02-04 18:01:38] <needmoney90> Gives more assurance of future funding
+[2019-02-04 18:01:39] <sarang> It would increase the funding timeline
+[2019-02-04 18:01:45] <suraeNoether> needmoney90 brought up the idea of doing a patreon for MRL so that researchers can get a little bit of reliability in getting paid in USD
+[2019-02-04 18:02:04] * Cryptonic has quit (Ping timeout: 250 seconds)
+[2019-02-04 18:02:06] <sarang> Keep in mind we can now also request immediate MFS payout if this is clearly stated
+[2019-02-04 18:02:11] <suraeNoether> i honestl haven't thought about it much, but the centralization risk of going through patreon is a concern... even though it's mitigated by the MFS
+[2019-02-04 18:02:25] <sarang> suraeNoether: nobody has to use patreon
+[2019-02-04 18:02:30] <sarang> they can donate via mfs
+[2019-02-04 18:02:34] * Febo (Febo@89-212-17-205.static.t-2.net) has joined
+[2019-02-04 18:02:47] <needmoney90> Yup, this prevents the whole 'Will we get funded' thing, where you know you have a baseline level of contribution even if the MFS falls through
+[2019-02-04 18:02:59] <moneromooo> What is MFS ?
+[2019-02-04 18:03:02] <sarang> Nice. I'm not opposed to it as another option
+[2019-02-04 18:03:06] <sarang> apparently the renaming for NewFFS
+[2019-02-04 18:03:13] <needmoney90> Monero funding system
+[2019-02-04 18:03:17] <needmoney90> It's no longer on a forum
+[2019-02-04 18:03:19] <sgp_> I thought it was the CCS
+[2019-02-04 18:03:26] <sarang> -_____-
+[2019-02-04 18:03:30] <needmoney90> No one told me :(
+[2019-02-04 18:03:31] <Xeagu> For F*** Sake I liked FFS
+[2019-02-04 18:03:36] <sarang> Anyway
+[2019-02-04 18:03:42] <oneiric_> lol
+[2019-02-04 18:03:45] <sarang> To keep things tight, 5. ACTION ITEMS
+[2019-02-04 18:04:03] <sarang> Deciding on block size algorithm, if any, should be a priority
+[2019-02-04 18:04:07] <sarang> otherwise nothing will happen
+[2019-02-04 18:04:23] <sarang> After meeting will be a chance to discuss formal requirements for this
+[2019-02-04 18:04:25] <sarang> Next
+[2019-02-04 18:04:44] <sarang> suraeNoether and I have different ideas on weighted output selection that need to be tested and shared for possible inclusion in the upgrade
+[2019-02-04 18:04:56] <sarang> suraeNoether will be working on churn sims
+[2019-02-04 18:05:22] <sarang> I will be trying my darndest to get back to the bulletproofs MPC, and understanding DoS risks in Dandelion routing
+[2019-02-04 18:05:31] <sarang> Any last comments before we officially adjourn?
+[2019-02-04 18:05:39] * tazman is now known as godzila
+[2019-02-04 18:05:40] <oneiric_> what are the chances of something like the btc key-reuse in monero?
+[2019-02-04 18:05:50] <sarang> what does this mean
+[2019-02-04 18:06:15] <oneiric_> there was that paper recently about computing btc addresses iirc
+[2019-02-04 18:06:19] <moneromooo> About weighted output selection: if I have the code for calculating gamma before any fancy opt is found, I can add the code already. Then add the fancy opts on top.
+[2019-02-04 18:06:26] <sarang> ty moneromooo
+[2019-02-04 18:06:30] <sarang> oneiric_: linkylinky
+[2019-02-04 18:06:59] <sarang> We can at least get a series approximation for later interpolation
+[2019-02-04 18:07:01] <oneiric_> https://eprint.iacr.org/2019/023.pdf
+[2019-02-04 18:07:12] <sarang> any bias in that approximation will be a wash
+[2019-02-04 18:07:29] <sarang> Ah yes. Don't use silly RNGs
+[2019-02-04 18:07:31] <moneromooo> I'm fine with a way to compute an approximation.
+[2019-02-04 18:08:05] <oneiric_> right, but is monero vulnerable to that style of attack?
+[2019-02-04 18:08:06] <sarang> Thanks, everyone. Meeting adjourned

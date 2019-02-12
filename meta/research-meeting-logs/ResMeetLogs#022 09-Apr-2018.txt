@@ -1,0 +1,143 @@
+[2018-04-09 16:59:08] <sarang> Let's start our abbreviated meeting presently
+[2018-04-09 16:59:34] <suraeNoether> hey everyone
+[2018-04-09 16:59:41] <suraeNoether> i'm surae
+[2018-04-09 16:59:44] <suraeNoether> this is sarang
+[2018-04-09 16:59:44] <sarang> attention all aircraft, research meeting now
+[2018-04-09 16:59:49] <suraeNoether> we do maths sometimes, and math other times
+[2018-04-09 17:00:07] <keatonofthedrake> :D
+[2018-04-09 17:00:14] <sarang> When you travel to Europe, you have to surrender the "s" at immigration
+[2018-04-09 17:00:24] <rehrar> yay
+[2018-04-09 17:00:24] <sarang> before leaving
+[2018-04-09 17:00:27] ⇐ kicoo quit (~kico@unaffiliated/kico): Quit: bbl
+[2018-04-09 17:01:02] <suraeNoether> Okay, I've been working on a churn model, as I mentioned before, and the idea is reducing to this: if there is a proportion $p$ of poison outputs and everyone uses ring size $R$ then the probability that the first poison output appears at height H in the transaction tree is easily computable: for P(H=1) = 1-(1-p)^R and for h > 1, we have P(H=h) = (1-p)^(f(h))*(1-(1-p)^(R^h)) where f(h) = R^(h-1) + R^(h-2) +
+[2018-04-09 17:01:02] <suraeNoether> ... + R... reduces to f(h) = ((1-R^h)/(1-R)) - 1. So we want to pick a probability alpha describing type I error and we want to churn for some height H so that P(H=1)+...+P(H=h) > 1-alpha
+[2018-04-09 17:01:37] <suraeNoether> this ensures that at least 100*(1-alpha)% of the time, some poison output appears before your churned output
+[2018-04-09 17:02:02] <sarang> Now, does height delay work into this model?
+[2018-04-09 17:02:12] <suraeNoether> not used at all
+[2018-04-09 17:02:16] <sarang> In case I want to delay or space my churns
+[2018-04-09 17:02:51] <sarang> Is this because you assume uniform fraction of poisoned outputs over time?
+[2018-04-09 17:03:13] <suraeNoether> that will probably help protect against temporal association, but the model of transaction i'm using doesn't take age of ring signatures into account at all
+[2018-04-09 17:03:17] <suraeNoether> right
+[2018-04-09 17:04:20] <suraeNoether> but essentially, if you can churn deeply enough so that other poison outputs are more likely to be implicated than the one you are really spending, i suppose that's the best you can really hope for lacking a more rigorous analysis
+[2018-04-09 17:04:26] <scoobybejesus> not sure i've seen you folks define "poison outputs," though i suspect one could make a pretty approximate guess as to the definition
+[2018-04-09 17:04:41] <sarang> Outputs controlled by Eve, who can identify them as such
+[2018-04-09 17:04:52] <smooth> stating it adversarilly is probably more useful than uniform. assume there might be some poison outputs in whatever time period you as the target are concerned with (since you don't know there aren't)
+[2018-04-09 17:04:55] <scoobybejesus> ty
+[2018-04-09 17:05:11] <suraeNoether> so, to give an idea, even with a ring size of 5, you can churn 8 or 9 times and an attacker with between 1-in-a-million and 1-in-a-thousand poison outputs and the attacker will see a fake poison output before the real one
+[2018-04-09 17:05:34] <smooth> seeing fake one before real one say 50% of the time is probably good enough
+[2018-04-09 17:05:46] <suraeNoether> at least it provides us an actionable suggestion
+[2018-04-09 17:05:50] <sarang> right
+[2018-04-09 17:06:04] <suraeNoether> the good news is that churn doesn't appear useless except against extremely powerful attackers
+[2018-04-09 17:06:14] <sarang> defined as?
+[2018-04-09 17:06:21] <suraeNoether> high proportion of poison outputs
+[2018-04-09 17:06:25] <sarang> defined as?
+[2018-04-09 17:06:35] <smooth> all except yours :)
+[2018-04-09 17:06:40] <sarang> lol
+[2018-04-09 17:07:03] <smooth> even works against zcash
+[2018-04-09 17:07:16] <smooth> those powerful attackers are a real pita
+[2018-04-09 17:07:29] <suraeNoether> if an attacker has poisoned 1-in-a-thousand outputs in a large subset of the blockchain, i would call that attacker powerful
+[2018-04-09 17:07:47] <smooth> really? that's only like 2 per day right?
+[2018-04-09 17:07:59] <smooth> well now at least, with low usage
+[2018-04-09 17:08:20] <suraeNoether> maybe the word powerful is misleading people. let's say "determined."
+[2018-04-09 17:08:44] <sgp_[m]> Yeah, 1 in 1000 is relatively easy to get...
+[2018-04-09 17:08:58] <suraeNoether> yeah, but 75% isn't hard to get either, for short periods of time
+[2018-04-09 17:08:58] <smooth> 2 per day could be more like 'what the hell, ill give it a try and see what i figure out'
+[2018-04-09 17:10:11] <sarang> I'll be really interested to read the writeup with the deets!
+[2018-04-09 17:10:20] <sarang> Other comments, in the interest of staying abbreviated today?
+[2018-04-09 17:10:48] <suraeNoether> write-up by the end of the week
+[2018-04-09 17:10:56] <sarang> sexcellent
+[2018-04-09 17:11:41] <suraeNoether> oh, also, the first board meeting of MAGIC is being held at the end of this month, April 27 in denver. the board members (minus one) are all going to be there: me, sarang, my wife, rehrar, and sgp. if anyone happens to be in the area, feel free to lmk and we can all go out to lunch or whatever
+[2018-04-09 17:11:56] <sarang> looking forward to it
+[2018-04-09 17:11:58] <koe> btw, I finished rewriting that monero report. would anyone mind reviewing it? https://github.com/UkoeHB/Monero-RCT-report
+[2018-04-09 17:12:01] <rehrar> creepy
+[2018-04-09 17:12:17] <suraeNoether> koe great, i will try to read through it this week
+[2018-04-09 17:12:30] <koe> cool thanks suraeNoether :)
+[2018-04-09 17:12:37] <rehrar> multisig paper?
+[2018-04-09 17:12:41] <sarang> koe: many changes?
+[2018-04-09 17:12:44] <koe> yes
+[2018-04-09 17:12:52] <sarang> OK, will run a diff to see
+[2018-04-09 17:13:01] <rehrar> (status, I mean)
+[2018-04-09 17:13:03] <suraeNoether> rehrar: making edits and waiting on comments from two folks. "in progress"
+[2018-04-09 17:13:09] <rehrar> kthx
+[2018-04-09 17:13:24] <koe> there were some theoretical errors, i reworked the notation scheme, added subaddresses and a summary chapter, and generally revamped everything to communicate better
+[2018-04-09 17:13:35] <sarang> nice!
+[2018-04-09 17:13:39] <koe> er summary section not chapter
+[2018-04-09 17:13:58] <sarang> Funding is open for IEEE workshop later this month: https://forum.getmonero.org/8/funding-required/90165/noether-brothers-ieee-workshop
+[2018-04-09 17:14:28] <rehrar> sarang were you planning on funding for Defcon?
+[2018-04-09 17:14:46] <koe> and about 30-40 footnotes trying to explain eveyrthing to laymen
+[2018-04-09 17:14:58] <sarang> rehrar: I wasn't sure what the overall funding plan for DEF CON was
+[2018-04-09 17:15:12] <sarang> it seemed a bit up-in-the-air
+[2018-04-09 17:15:22] <rehrar> should be discussed sooner rather than later
+[2018-04-09 17:15:34] <sarang> agreed, but in the context of everyone
+[2018-04-09 17:15:39] <rehrar> ye
+[2018-04-09 17:15:52] <sarang> Plan is (ideally) for me to give a talk at the village on our crypto/math
+[2018-04-09 17:16:03] <sarang> and touch on new developments and ideas
+[2018-04-09 17:16:04] <rehrar> suraeNoether: coming?
+[2018-04-09 17:16:10] <sgp_[m]> koe this looks great
+[2018-04-09 17:16:31] <koe> also, I should have a plan ready for the FMEA meeting that I mentioned last week, within a day or two (fingers crossed)
+[2018-04-09 17:16:57] <sarang> cool
+[2018-04-09 17:17:03] <sarang> koe: I'm curious, what's your background?
+[2018-04-09 17:17:11] <koe> thanks sgp_[m] :) if you have any comments let me know, I want it to be as perfect as possible
+[2018-04-09 17:17:15] <suraeNoether> rehrar yeah, i'm opening a window to get tickets so i don't forget
+[2018-04-09 17:17:25] <rehrar> noice!
+[2018-04-09 17:17:29] <koe> mechanical engineering
+[2018-04-09 17:18:13] <sarang> a solid discipline
+[2018-04-09 17:18:49] <sarang> Any other items to discuss? We touched on churn, koe's updates to the kurtmagnus paper
+[2018-04-09 17:18:57] <rehrar> wathoo been doing?
+[2018-04-09 17:19:02] <rehrar> *watchoo
+[2018-04-09 17:20:01] <sarang> a lot of reading on zero-knowledge schemes and arithmetic circuits to familiarize myself with recent progress
+[2018-04-09 17:20:01] <rehrar> sarang, I mean :P
+[2018-04-09 17:20:18] <rehrar> thank you, no more questions, your honor
+[2018-04-09 17:20:19] <sarang> getting back into some tests for multiexp optimizations
+[2018-04-09 17:20:24] <sarang> in prep for the BP finalization
+[2018-04-09 17:20:41] <sarang> it would be nice to have those operations optimized for the next network upgrade when we deploy BPs
+[2018-04-09 17:21:20] <sarang> suraeNoether: if you want another set of eyes on churn (or other help with it) let me know
+[2018-04-09 17:21:21] <nioc> more than nice
+[2018-04-09 17:21:36] <sarang> nioc: but it's worth noting that those aren't consensus related
+[2018-04-09 17:21:49] <nioc> yes
+[2018-04-09 17:22:19] <sarang> and even with the two optimizations I worked with mooo on, we're much faster than we used to be
+[2018-04-09 17:22:30] <nioc> still most people only upgrade wen they have to  :)
+[2018-04-09 17:22:41] <sarang> we now use either bos-coster or straus
+[2018-04-09 17:23:13] <sarang> these operations are also really only relevant if you bring a new node up and need to process the whole chain going forward
+[2018-04-09 17:23:39] <sarang> the nice part is they're general and not BP specific
+[2018-04-09 17:23:57] ⇐ cryptojanitor quit (uid278088@gateway/web/irccloud.com/x-wudlfabdwirvdsnl): Quit: Connection closed for inactivity
+[2018-04-09 17:24:12] <moneromooo> Aggregated verification is relevant for keeping up with new blocks too.
+[2018-04-09 17:24:33] <sarang> moneromooo: true, but less of a bottleneck
+[2018-04-09 17:24:57] * koe → UkoeHB
+[2018-04-09 17:25:01] → cryptojanitor joined (uid278088@gateway/web/irccloud.com/x-spzlcnodpgczmsvc)
+[2018-04-09 17:25:23] <sarang> also thanks to moneromooo for doing the codebase integrations for the optimizations so far
+[2018-04-09 17:25:59] <suraeNoether> sarang for sure i will real soon
+[2018-04-09 17:29:23] <suraeNoether> so this is really interesting
+[2018-04-09 17:31:08] <suraeNoether> so, the PMF for these distributions is highly unimodal and very ... spikey. low variance, heavy tails. it's like there's a step function at a critical depth in a tree. before the step, poison outputs are rare, and after the step, poison outputs are super common. very very helpful property
+[2018-04-09 17:32:26] <sarang> absolutely
+[2018-04-09 17:32:39] <sarang> gradual changes make it difficult to establish cutoffs
+[2018-04-09 17:32:46] * UkoeHB → UkoeHB_
+[2018-04-09 17:33:06] <suraeNoether> ok so here's some sample numbers
+[2018-04-09 17:34:03] <sarang> yes plz
+[2018-04-09 17:34:22] * sarang set the topic to We need everyone to continue performing admirably
+[2018-04-09 17:34:27] ⇐ thrmo quit (~thrmo@unaffiliated/thrmo): Quit: Waiting for .007
+[2018-04-09 17:36:21] * UkoeHB_ → UkoeHB
+[2018-04-09 17:43:09] <suraeNoether> ring size 15, attacker proportion 10%, it is all but certain a poison output appears either in the first ring signature or in the layer of second ring signatures; in this scenario, churning twice or three times is all that's necessary for the attacker to see some decoy poison output first before the true spender
+[2018-04-09 17:43:36] <sarang> UkoeHB: usual terminology is "cyclic group", not "cyclical"
+[2018-04-09 17:44:32] <gingeropolous> what fixed ringsize do u think we can pull off once BP is in?
+[2018-04-09 17:44:48] <suraeNoether> ring size 5 and poison proportion 0.0001, it is all but certain an attacker will see a poison output before layer 6, so churning 6 or 7 times is all that's necessary
+[2018-04-09 17:44:53] <sarang> Do you mean, in order to maintain the same tx size as right now?
+[2018-04-09 17:45:21] <gingeropolous> i mean, will be optimal. optimal verification speed, size, privacy
+[2018-04-09 17:45:46] <sarang> Well, there's a subgroup of users for whom "optimal" means "tiny in size"
+[2018-04-09 17:45:56] <suraeNoether> right
+[2018-04-09 17:45:58] <suraeNoether> so, gingeropolous 
+[2018-04-09 17:46:21] <UkoeHB> are you referring to a level of churn that puts a churner at max 'anonymity set'? ie the whole pool of txo
+[2018-04-09 17:46:24] <gingeropolous> i mean, cause we're kicking the tires on a fixed ringsize right?
+[2018-04-09 17:46:51] <suraeNoether> if blockstream mathemagics their way into BP sublinear ring signatures like the RTRS sigs, or some sort of hash tree or something ... then we can get pretty big rings for the same current size, verification speed, etc
+[2018-04-09 17:47:20] <suraeNoether> UkoeHB: the maximum anonymity set is trivial: keep churning forever and don't stop
+[2018-04-09 17:48:54] <suraeNoether> who knows if that'll happen any time soon, though
+[2018-04-09 17:49:09] <gingeropolous> ok, so in the absence of mathemagic , is there a proposal for a fixed ringsize for v8 fork?
+[2018-04-09 17:49:20] <suraeNoether> there are more clever statistical tricks that could be used to link monero transactions, though, this is simply an eyeball metric
+[2018-04-09 17:49:25] <UkoeHB> maybe: 'makes a churner indistinguishable from most unrelated people'?
+[2018-04-09 17:49:42] <suraeNoether> gingeropolous: to fix ring size? i always advocate it. a formal proposal? not really, not yet
+[2018-04-09 17:50:30] <suraeNoether> UkoeHB: well, i don't necessarily think that's a good description either. i said what I meant: if you churn this amount, the attacker is more likely to see a decoy poison output appear in the transaction history before the true spender. whether that translates into indistinguishability from an innocent spender is a very different animal...
+[2018-04-09 17:50:57] <suraeNoether> and not only that, the statistical test i came up with the other day didn't take into account *how many* of some outputs even had poison outputs in their history.. this influences the test quite a bit
+[2018-04-09 17:51:37] <suraeNoether> but coming up with a really powerful statistical test would require strong assumptions on properties of transaction history trees, and i'm not sure that any assumptions are time-invariant (economic conditions influence a lot about how money moves)
+[2018-04-09 17:51:50] <UkoeHB> hmm ok, so preliminary work before discussing implications
+[2018-04-09 17:52:32] <suraeNoether> so "for now" this is "good enough" and these "air quotes" are somewhere between irony and not really believing what i say. :P i know of a handful of folks who are working on de-anonymization techniques for anonymity sets up to sizes like 50-100, so whatever sort of unlinkability we are buying here is strongly provisional on the analytic capability of the attacker
+[2018-04-09 17:52:35] <suraeNoether> yeah

@@ -1,0 +1,127 @@
+[2017-10-09 17:00:35] <surae> Okay, everyone, welcome to our first MRL Research meeting!
+[2017-10-09 17:01:02] <endogenic> yay!
+[2017-10-09 17:01:30] <surae> Agenda, I guess, will be 1) Greetings, 2) Announcements, 3) Round table discussion of projects, 4) anything else that anyone else can think of
+[2017-10-09 17:01:52] <surae> So, greetings!
+[2017-10-09 17:01:56] <hyc> hello
+[2017-10-09 17:02:46] <surae> As far as announcements go, I'll start with the usual: Next week at this time, we'll have office hours, where people can come in and just ask whatever questions they like. Monday 17:00 UTC. Then we'll be alternating Mondays
+[2017-10-09 17:02:55] <surae> between research meetings and "office hours"
+[2017-10-09 17:04:01] <surae> i can't think of any other announcements...
+[2017-10-09 17:04:05] <surae> sarang? anything?
+[2017-10-09 17:05:09] <surae> Okay, moving along I guess
+[2017-10-09 17:05:23] <surae> For project discussion...
+[2017-10-09 17:07:04] <surae> Personally, I've been working on multisig. Sarang and I had some basic security definitions nailed down when he came out to visit. Unfortunately, a paper that mustn't be ignored came out by Boneh and co-authors...
+[2017-10-09 17:07:51] <surae> https://eprint.iacr.org/2017/956.pdf
+[2017-10-09 17:08:18] <surae> That paper presents a new scheme that is not directly relevant to us (although it may be in the future) but importantly it defines several security models
+[2017-10-09 17:08:30] <endogenic> How lucky it came out at the same time...?
+[2017-10-09 17:08:37] <endogenic> ;)
+[2017-10-09 17:08:51] <surae> one of the security definitions Sarang and I came up with is actually a stronger definition than the one in that paper
+[2017-10-09 17:09:03] <endogenic> Of course
+[2017-10-09 17:09:18] <surae> so, it seems as if we are on the right track, if someone like Boneh is thinking about similar problems
+[2017-10-09 17:10:08] <surae> There are some implementation issues in my description also; the current draft is here: https://www.sharelatex.com/project/5980a44556789660b0600edb
+[2017-10-09 17:10:12] <hyc> sounds like their paper is applicable both to multisig and the ever-popular trusted setup
+[2017-10-09 17:11:15] <sarang> Sorry here
+[2017-10-09 17:11:19] <surae> hyc tbh i haven't gotten deep into their homomorphic-specific stuff, so i have very little idea. i'm very interested in their security definitions, though
+[2017-10-09 17:11:23] <surae> welcome~
+[2017-10-09 17:11:31] <endogenic> Should we mention ppl like mooo at the beginning of mtgs?
+[2017-10-09 17:11:37] <surae> oh good idea
+[2017-10-09 17:11:39] <endogenic> Per multisig
+[2017-10-09 17:11:56] <surae> moneromooo knaccc luigi1111 fluffypony anonimal dEBRUYNE
+[2017-10-09 17:12:16] <sarang> So yes multisig is coming along well
+[2017-10-09 17:12:22] <sarang> Subaddress paper is done
+[2017-10-09 17:12:36] <sarang> That was posted as a final draft to the channel for comment
+[2017-10-09 17:12:52] <sarang> And is ready to go to Reddit etc
+[2017-10-09 17:12:56] <surae> yes, Subaddress paper will now be MRL-0006, will be pushed to my github in a bit here and then i'll issue a pull request to the monero-project
+[2017-10-09 17:13:06] <surae> send us a link real quick sarang
+[2017-10-09 17:13:13] <surae> i'd be happy to have folks read over it one more time
+[2017-10-09 17:13:55] <surae> is anyone else doing anything research-y? learn something new? anyone working on a project?
+[2017-10-09 17:14:06] <sarang> https://github.com/b-g-goodell/research-lab/blob/master/publications/bulletins/in-prog/MRL-9999-subaddy/MRL-9999-subaddresses.pdf
+[2017-10-09 17:14:27] <sarang> I am updating myself on some aggregator constructions
+[2017-10-09 17:15:15] <sarang> And based on the Green tweet, I'd like us to do an analysis of our use of PRNGs
+[2017-10-09 17:15:16] <hyc> I have nothing crypto-related to offer. been benchmarking DB engines lately. (LMDB still fastest.)
+[2017-10-09 17:15:36] <surae> i'd be very interested in hearing from xpto also, since he's working on some LN stuff, and anonimal, since he's dealing with RSA I guess for kovri? knaccc is probably catching up in his RL from spending weeks programming RuffCT/StringCT/RTRS RIngCT
+[2017-10-09 17:15:52] <surae> hyc can you link me a primer for LMDB? i know precisely zero
+[2017-10-09 17:16:25] <hyc> https://symas.com/lmdb/technical/#pubs
+[2017-10-09 17:16:30] <surae> nice thanks
+[2017-10-09 17:16:42] <endogenic> i've been curious if there's a simpler implementation of i2p possible
+[2017-10-09 17:16:59] <endogenic> and i'm just wondering (blindly) about revocable view keys
+[2017-10-09 17:17:28] <surae> i am excited to start thinking about those more deeply. multisig is... 
+[2017-10-09 17:17:32] <hyc> ah, the notion of time-limited/expiring view keys sounds like a good idea
+[2017-10-09 17:17:47] <moneromooo> Sorry, I was out.
+[2017-10-09 17:17:47] <surae> yes
+[2017-10-09 17:18:03] <surae> no problem mooo, i didn't ping anyone before we started (my bad, first time here yuk yuk)
+[2017-10-09 17:18:58] <endogenic> hyc: i've heard some downsides to proposals of time-expiring view keys
+[2017-10-09 17:19:17] <surae> multisig is more delicate than i thought. thing is, i'm pretty sure that our current implementation is safe enough to roll with (pending sarang's agreement, maybe). problems abound, though
+[2017-10-09 17:19:28] <endogenic> nm90 had some concrete ideas on it
+[2017-10-09 17:21:13] <endogenic> problems?
+[2017-10-09 17:21:16] <surae> the problems aren't huge. it's like "well, if an adversary uses a side channel attack and listens in on this computation here, the adversary may be able to determine whether a certain key is a shared key or not, so these here should be communicated with encryption" and so on and so forth. since the security of keys in that way is far less important than being unable to go backwards and determine the
+[2017-10-09 17:21:16] <surae> participating private keys, stuff like this isn't a huge deal
+[2017-10-09 17:21:25] <surae> little... details. that keep building up.
+[2017-10-09 17:22:45] <surae> so, i'm going to take a day or two off of it and work on other things, to reset my brain. it's been a few days of just multisig. Pending sarang's agreement on the multisig code being "safe enough," multisig can be put to work before the MRL-0007 paper is put out, though. Two reasons for this
+[2017-10-09 17:22:45] <sarang> A lot of it is about assuming things about communication of coalition members
+[2017-10-09 17:24:19] <surae> First, even if multisig satisfies weaker security definitions than i would like, we can always push changes to it later. Second, I'm already proposing a slightly different implementation in the paper than we are currently going to see in the code. I'm considering writing an appendix to this paper that compares the current code by moneromooo with my suggested implementation, and attempts to close the gap
+[2017-10-09 17:24:19] <surae> between them.
+[2017-10-09 17:25:35] <surae> so, anyway, i'll probably take two days off and think about blockchains or specter or difficulty or something
+[2017-10-09 17:25:44] <sarang> Now what about this PRNG bizniss?
+[2017-10-09 17:26:14] <moneromooo> Monero's PRNG is not homebrew, AFAIK it's the canonical construction from the Keccak authors.
+[2017-10-09 17:27:04] <surae> ?
+[2017-10-09 17:27:34] <surae> Our PRNG should follow whatever the best practice is. I'm not convinced NIST or ISO are the ones who describe the best practices. maybe we should have our own standard for that
+[2017-10-09 17:27:58] <sarang> I'd like to understand it a bit better
+[2017-10-09 17:28:09] <sarang> Especially since the issue was raised last year and kinda died away
+[2017-10-09 17:28:39] <surae> either way, identifying where the PRNG as-is currently influences stuff that actually hits the blockchain seems to be a no-brainer sort of thing to do anyway
+[2017-10-09 17:28:57] <hyc> https://www.deepdyve.com/lp/institute-of-electrical-and-electronics-engineers/software-only-extremely-compact-keccak-based-secure-prng-on-arm-cortex-QsZRJs71MZ
+[2017-10-09 17:29:31] <surae> I also want to vet this spectre paper. I'm suspicious of outlandish claims.
+[2017-10-09 17:29:34] <surae> Thanks hyc
+[2017-10-09 17:29:57] <hyc> also https://keccak.team/files/SpongePRNG.pdf
+[2017-10-09 17:30:11] <hyc> afaics it's already heavily studied
+[2017-10-09 17:30:43] <surae> that's interesting. i'd be very interested to have a conversation with Green
+[2017-10-09 17:31:03] <surae> maybe i'll shoot him an e-mail
+[2017-10-09 17:31:43] <surae> i also want to meet an economist
+[2017-10-09 17:32:23] <endogenic> ArticMine might be able to help you there surae
+[2017-10-09 17:32:27] <surae> for ASIC and POW discussions. i need to learn about the game theoretic dynamics behind commoditizing hardware, decentralization, renting, etc
+[2017-10-09 17:32:29] <surae> nice
+[2017-10-09 17:33:11] <surae> Okay, so in the next two weeks: progress on multisig expected, i want to vet the spectre paper, sarang is learning about accumulators lacking a trusted set-up,  hyc will presumably continue playing with DB engines
+[2017-10-09 17:33:24] <hyc> ;)
+[2017-10-09 17:33:32] <endogenic> surae will take a short vacation
+[2017-10-09 17:33:34] <surae> Oh
+[2017-10-09 17:33:34] <endogenic> ... right??
+[2017-10-09 17:33:36] <sarang> Aye
+[2017-10-09 17:33:45] <surae> actually, yes, i need sleep and it just snowed for the first time
+[2017-10-09 17:33:55] <surae>  i need a weekend
+[2017-10-09 17:34:00] <surae> hard to separate work and life
+[2017-10-09 17:34:02] <sarang> Other issues of interest?
+[2017-10-09 17:34:07] <surae> oh, and since we are having this public discussion right now
+[2017-10-09 17:35:01] <surae> RTRS RingCT: we've concluded that pretty much any improvement in signature verification time will lead to exponentially bigger rings for the same blockchain size. 
+[2017-10-09 17:35:31] <surae> on the flip side: any increase in verification time will lead to exponentially smaller rings
+[2017-10-09 17:35:43] <surae> this is a property of any logarithmically sized ring sig scheme
+[2017-10-09 17:36:10] <hyc> "lead to bigger" -> "enables using bigger" ?
+[2017-10-09 17:36:25] <surae> yeah, for the same blockchain size
+[2017-10-09 17:36:29] <hyc> ok
+[2017-10-09 17:37:02] <surae> since RTRS RIngCT is log-sized and has comparable verification time compared to MLSAG, it's not feasible to implement them unless we can make them faster to verify than MLSAG. If they are as fast or slower, they aren't worth switching to
+[2017-10-09 17:37:19] <surae> and i believe vtnerd benchmarked sandy2x and it was freaking fast
+[2017-10-09 17:37:55] <hyc> faster than MLSAG?
+[2017-10-09 17:38:11] <surae> well, sandy2x is just an EC arithmetic implementation
+[2017-10-09 17:38:21] <surae> so boht MSLAG and RTRS RingCT would be faster
+[2017-10-09 17:38:24] <hyc> ok
+[2017-10-09 17:38:48] <surae> i believe he got around a 15% improvement in EC arithmetic time, which would lead to around 15% faster verifciation time
+[2017-10-09 17:38:56] <surae> which would allow us to have a fixed min ring size of 10!
+[2017-10-09 17:39:02] <surae> not 10 factorial
+[2017-10-09 17:39:04] <surae> but 10
+[2017-10-09 17:39:27] <surae> we could possibly even get away with a ring size closer to 32 or something like that
+[2017-10-09 17:40:03] <hyc> so RTRS RingCT is still viable, not dead. good to know
+[2017-10-09 17:40:03] <surae> now, knaccc had me contact some folks who did some GPU otpimization for EC
+[2017-10-09 17:40:20] <surae> and their code also speeds up CPUs because it's so optimized
+[2017-10-09 17:40:26] <surae> for Curve25519
+[2017-10-09 17:40:44] ⇐ floam412 quit (~floam412@gateway/vpn/privateinternetaccess/floam412): Ping timeout: 258 seconds
+[2017-10-09 17:40:58] <surae> they are eager to help us try to impement it, though, their emails show a lot of enthusiasm, and I didn't even ask for assistance or anything
+[2017-10-09 17:41:18] <surae> so, i'm going to pursue that further in the next two weeks also
+[2017-10-09 17:41:31] <hyc> excellent
+[2017-10-09 17:41:33] <surae> i kind of wanted all that "on the record" so to speak
+[2017-10-09 17:41:51] <surae> I can't think of anything else for now. 
+[2017-10-09 17:41:55] <surae> sarang, anything?
+[2017-10-09 17:42:12] <sarang> Negatory
+[2017-10-09 17:42:21] <surae> allrighty, well
+[2017-10-09 17:42:21] <sarang> Keep up the good fight?
+[2017-10-09 17:42:26] <surae> yep
+[2017-10-09 17:42:39] <sarang> We can talk PRNG after
+[2017-10-09 17:42:43] <surae> and if anyone reads any papers on forward-secure key exchange that may be helpful for revocable view keys, send them along!
+[2017-10-09 17:42:56] <surae> yep, we can call this meeting *over*

@@ -1,0 +1,462 @@
+[2018-10-08 17:00:24] <sarang> Let's begin!
+[2018-10-08 17:00:33] <suraeNoether> fluffypony knaccc luigi1111 luigiafk sarang andytoshi anonimal ArticMine binaryFate dEBRUYNE endogenic ErCiccione ferretinjapan gingeropolous gmaxwell hyc iDunk IsthmusCrypto john_alan jwinterm kenshi84 kerber_ medusa_ moneromooo MoroccanMalinois naughtyfox needmoney90 oneiric_ OhGodAGirl philkode pigeons rehrar rrol[m] sgp_ smooth sneurlax stoffu unknownids vtnerd waxwing
+[2018-10-08 17:00:47] <suraeNoether> meeting time! woo! i'll get banned from freenode eventually by calling everyone's name
+[2018-10-08 17:00:52] <rehrar> just in time
+[2018-10-08 17:00:56] <suraeNoether> So, greetings everyone
+[2018-10-08 17:00:59] <rehrar> got back from the dentist
+[2018-10-08 17:01:03] <suraeNoether> gross
+[2018-10-08 17:01:05] <kovri-slack> <oneiric> hallo
+[2018-10-08 17:01:08] <suraeNoether> did you bring snakes and butter
+[2018-10-08 17:01:08] <sgp_> hello
+[2018-10-08 17:01:27] <rehrar> wat?
+[2018-10-08 17:01:27] <laXity> Im just lurking
+[2018-10-08 17:01:38] <suraeNoether> rehrar: adventure time reference, nothing to see here
+[2018-10-08 17:02:10] <suraeNoether> okay, so today I want sarang and myself to discuss what we're working on presently, and then i want to chat about the topics i mentioned before: 1) research, 2) conferences, 3) collaboration, 4) funding
+[2018-10-08 17:02:36] <sarang> righto
+[2018-10-08 17:02:40] <suraeNoether> 5) privacy/efficiency tradeoffs
+[2018-10-08 17:02:47] <suraeNoether> before we begin, though
+[2018-10-08 17:03:01] <suraeNoether> I like the idea that we employed last time where people can be free to ask questions before we begin
+[2018-10-08 17:03:07] <suraeNoether> (i mean in general, you are free to ask questions)
+[2018-10-08 17:03:16] <suraeNoether> but, before we start: who has questions in general for MRL?
+[2018-10-08 17:04:08] <rehrar> When Monero scale?
+[2018-10-08 17:04:20] <gingeropolous> when GUI?
+[2018-10-08 17:04:25] <suraeNoether> how much does a piconero weigh
+[2018-10-08 17:04:27] <sarang> when 0.13
+[2018-10-08 17:04:33] <suraeNoether> oooh that's a better question
+[2018-10-08 17:04:40] <sarang> But anyway
+[2018-10-08 17:04:48] <sarang> Shall I talk research?
+[2018-10-08 17:05:08] <rehrar> yes
+[2018-10-08 17:05:19] <suraeNoether> yep, fire away sarang
+[2018-10-08 17:05:35] <sarang> Well, suraeNoether and I were sent a couple of draft papers from some researchers regarding spent outputs and blackballing
+[2018-10-08 17:06:01] <sarang> There's some formalization of the set theory that we already developed
+[2018-10-08 17:06:16] <sarang> and some parts of the results that are presented in a way that is FUD-inducing
+[2018-10-08 17:06:29] <sarang> "XX% of outputs are traceable!!!!1!"
+[2018-10-08 17:06:39] <suraeNoether> of course, 99% of those were announced in monerolink. :P
+[2018-10-08 17:06:51] <sarang> So we worked through those, offered to work with the researchers, no word back from them except "we will look into it"
+[2018-10-08 17:07:02] <suraeNoether> or 100*(1-p) for some reasonably small p, i believe they managed to find an additional, ... I think about a single day's worth of transactions in total, from teh whole blockchain, iirc
+[2018-10-08 17:07:04] <sarang> I'm working to get some updated blackball stats on our own to compare
+[2018-10-08 17:07:16] <sarang> they have an O(N^2) method for identifying more outputs, but this is negligible as always
+[2018-10-08 17:07:51] <sarang> At the very least, we'll have up to date data to refute if they publish their work as-is
+[2018-10-08 17:08:26] <sarang> Aside from that, suraeNoether and I have been continuing work on sublinear ring sigs for feasibility
+[2018-10-08 17:08:38] <suraeNoether> they reinvented several wheels that we've worked on in the past 3 months here at MRL, which is actually a good thing, because it lends credence to our results to have some independent and similar results pop up
+[2018-10-08 17:08:38] <rehrar> like RuffCT type stuff?
+[2018-10-08 17:08:43] <sarang> yiss
+[2018-10-08 17:09:03] <sarang> I have a shitty version of their clustering algo on my repo
+[2018-10-08 17:09:08] <suraeNoether> well, RuPol. RuffCT was the first one we had presented to us (also by Ruffing et al, but with a different "et al")
+[2018-10-08 17:09:24] <suraeNoether> the clustering algorithm has to do with this blackball paper, not sublinear ring sigs
+[2018-10-08 17:09:28] <sarang> yes
+[2018-10-08 17:09:54] <sarang> As sgp_ has mentioned before, forks and pools will be the BB things to focus on anyway
+[2018-10-08 17:10:05] <rehrar> so is the new sublinear stuff looking more promising than the Ruff Stuff?
+[2018-10-08 17:10:14] <sarang> unfortunately those are not verifiable by the user
+[2018-10-08 17:10:18] <sarang> rehrar: unclear
+[2018-10-08 17:10:23] <sarang> it's clever but very complex
+[2018-10-08 17:10:27] <suraeNoether> that's what we are trying to figure out: it appears to be more efficient, asymptotically, but until we have a working implementation, it's hard to tell
+[2018-10-08 17:10:28] <rehrar> like me
+[2018-10-08 17:10:31] <suraeNoether> yes
+[2018-10-08 17:10:35] <sarang> heh
+[2018-10-08 17:10:53] <sarang> There is a lot of math left out of the paper, so it's a thing we're working on in parallel to other things that come up
+[2018-10-08 17:11:07] <rehrar> cool. Sounds lit.
+[2018-10-08 17:11:14] <rehrar> #litmaths
+[2018-10-08 17:11:21] <suraeNoether> last week I split our MRL research roadmap into a sequence of separate github issues (#30 and higher I believe) https://github.com/monero-project/research-lab/issues
+[2018-10-08 17:11:31] <suraeNoether> nope, #31 and higher
+[2018-10-08 17:12:20] — IsthmusCrypto has 20 seconds between events 
+[2018-10-08 17:12:20] <suraeNoether> and I've spent a bit of time on my lightning-for-monero paper, but not nearly enough, as this RuPol thing is a nasty rabbit hole
+[2018-10-08 17:12:21] <rehrar> is MRL going to transition to gitlab also?
+[2018-10-08 17:12:22] <IsthmusCrypto> I'm at the SF Blockchain Week Epicenter today & tomorrow on behalf of #noncesense-research-lab -- ping me if you're around and want to meet up for coffee/drink/chat. I'll be back with a million new ideas soon.
+[2018-10-08 17:12:31] — IsthmusCrypto runs back off into crowd. Ciao
+[2018-10-08 17:12:53] <sarang> rehrar: I have no big preference
+[2018-10-08 17:12:55] <suraeNoether> rehrar: i have no control over the research-lab git, actually. :P
+[2018-10-08 17:13:09] <suraeNoether> so if all workgroups migrate, we'll presumably migrate too? *shrug*
+[2018-10-08 17:13:38] <rehrar> also personal repos, but that can be after the meeting
+[2018-10-08 17:13:43] <sgp_> yeah sarang and I have been talking about blackball, and it's my opinion that we need the public pool data working with the blackball tool to test for chain reactions before we proceed further
+[2018-10-08 17:13:59] <equim[m]> I have a question. Would the blackball cause such kind of attack? Mallory knows an output belongs to Alice and wants to trace when it is spent. He makes N transactions with each of them exactly N ring members, and each of them contains Alice's target output as decoy. If the blackball get in effects, then the next time the target output apears, it must be Alice's real output.
+[2018-10-08 17:14:10] <sarang> One conclusion sgp_ and I share is that understanding the statistics can help guide best practices going forward
+[2018-10-08 17:14:29] <sgp_> if pool transactions are mostly unimportant, then we probably only need to use the blackball tool as an indicator of netowkr health. no one would use it typically
+[2018-10-08 17:14:30] <sarang> equim[m]: the on-chain set theory stuff is for provably spent outs
+[2018-10-08 17:14:39] <sarang> it's not possible to "get caught" with that
+[2018-10-08 17:14:55] <sarang> Mallory couldn't make those signatures anyway
+[2018-10-08 17:15:15] <sgp_> if pool transactions ARE important, we need to bump ringsize, avoid coinbase decoys by default in wallet clients, or have everyone use a blackball list
+[2018-10-08 17:15:40] <sgp_> you can see our recommendations hinge on the importance of pool data
+[2018-10-08 17:15:49] <sarang> option 1 is expensive, option 2 is possible (but could fingerprint), and option 3 is not verifiable
+[2018-10-08 17:15:56] <sgp_> (or at least mine do, I don't mean to speak for sarang)
+[2018-10-08 17:16:08] <suraeNoether> equim[m]: short answer is no, long answer requires more explanation, but primarily: the probability that allice *happens* to select all used up ring members is very low unless someone was flooding the network with transactions, and at that point, the attack is costly
+[2018-10-08 17:16:12] <sarang> My opinion is that we need the data for this
+[2018-10-08 17:16:19] <sarang> and moving toward getting that data is the first step
+[2018-10-08 17:16:48] <suraeNoether> i think the blackball thing is a big red herring waste of time, and i've said this beforfe
+[2018-10-08 17:17:00] <sarang> it is for set theory stuff
+[2018-10-08 17:17:11] <sarang> for pools it is unclear until we have data to show one way or another
+[2018-10-08 17:17:37] <suraeNoether> i think i've sketched out my argument about how, even in the next 10 years, it's unlikely to impact even a single ring signature, so i'm still highly skeptical
+[2018-10-08 17:17:47] <sarang> Hence getting pool chain rxn data
+[2018-10-08 17:17:53] <sarang> then we can lay it to rest one way or the other
+[2018-10-08 17:17:58] <suraeNoether> if the back of the napkin is that pessimistic, i think spending even an hour collecting data is wasting time, but i've said that before too
+[2018-10-08 17:18:11] <suraeNoether> i disagree: this shit will never be laid to rest until people just admit that it has no practical impact
+[2018-10-08 17:18:11] <nioc> AIUI mooo thinks it's bad to include pool txs in the BB list
+[2018-10-08 17:18:23] <suraeNoether> the EAE attack and ring sizes in general are far more fearsome
+[2018-10-08 17:18:28] <suraeNoether> and far more worthy places for us to spend our limited time
+[2018-10-08 17:18:38] <suraeNoether> nioc: do you recall moneromooo's justificaiton for that?
+[2018-10-08 17:18:38] <sarang> Not saying we should add them. Saying that we should see what effect they have so we can decide if/how to move forward
+[2018-10-08 17:18:49] <suraeNoether> sgp_: i heard a rumor that you had started including heuristically linked outputs in the blackball list, or outputs that aren't necessarily *provably* spent. is that true?
+[2018-10-08 17:18:56] <nioc> sarang:  yes
+[2018-10-08 17:19:42] <moneromooo> I don't really like this. (1) they're not proven spent, (2) it means it strips away non pool miners' ring signaturity when they spend.
+[2018-10-08 17:20:54] <suraeNoether> sarang: would you mind opening an issue up on the research-lab git on this topic so we can have a public discussion about it that is referrable later without combing through meeting logs?
+[2018-10-08 17:21:24] <sarang> I'll defer to sgp_ since this is really his baby. I'm just an interested party who would like to know the results of the analysis
+[2018-10-08 17:21:40] <sgp_> moneromooo we can talk about the implications, but the effectiveness of these pool ring signatures is already 0
+[2018-10-08 17:21:56] <suraeNoether> sgp_ any word on my previous question?
+[2018-10-08 17:22:11] <suraeNoether> re: blackball list and non-provably spent outputs?
+[2018-10-08 17:22:19] <sgp_> suraeNoether sneurlax's tool looks at coinbase outputs and the sent transactions to see which outptus could have been spent in the transaction
+[2018-10-08 17:22:40] <sarang> the current codebase's bb tool will not do heuristics on its own
+[2018-10-08 17:22:46] <sgp_> I believe it's a heuristic using data the pool provides, and it takes this data with the assumption it's correct
+[2018-10-08 17:23:05] <suraeNoether> so... *yes* the tool blackballs outputs that are not provably spent?
+[2018-10-08 17:23:07] <sgp_> so if a pool mis-reported, the tool would report different results
+[2018-10-08 17:23:20] <sarang> sgp_: he's asking if your hosted list contains any non-proven
+[2018-10-08 17:23:24] <sgp_> the current tool that ships with Monero now does not
+[2018-10-08 17:23:41] <suraeNoether> i strongly recommend against any blackballing for any outputs that are not provably spent
+[2018-10-08 17:23:44] <sgp_> right now, the site has 3 list categories
+[2018-10-08 17:23:48] <equim[m]> So if everyone is using blackball, then one can easily make others mark a target output as spent (N transactions with N ring size) that is actually not spent?
+[2018-10-08 17:23:59] <suraeNoether> it is critical that the blackball list be independently verifiable
+[2018-10-08 17:24:15] <sgp_> one for all chain data with chain splits, another with only rct data with chain splits, and a third separate category for pool data
+[2018-10-08 17:24:17] <sarang> equim[m]: you cannot generate signatures that blackball another person's output
+[2018-10-08 17:24:21] <equim[m]> Yes that's my point
+[2018-10-08 17:24:30] <suraeNoether> equim[m] I'm not understanding your question
+[2018-10-08 17:24:37] <suraeNoether> would you mind clarifying?
+[2018-10-08 17:24:47] <sgp_> a user could verify the first two by running XMR, XMO, XMV nodes locally
+[2018-10-08 17:25:14] <equim[m]> Okay, I think I need to read up more first.
+[2018-10-08 17:25:42] <sarang> equim[m]: if you generate N identical rings of N outputs with valid sigs, it means you controlled all N of them
+[2018-10-08 17:25:44] <sgp_> fwiw I don't recommend a user should use a blackball list. I think we should use the findings of the blackball list to pursue other options to mitigate the data that would need to potentially be stored there
+[2018-10-08 17:25:55] <moneromooo> equim[m]: you cannot make N rings with N outputs, one of which being not yours.
+[2018-10-08 17:26:10] <equim[m]> Oh I got it, just missed that.
+[2018-10-08 17:26:26] <equim[m]> rings need to be identical
+[2018-10-08 17:26:28] <sgp_> sneurlax's tool essentially creates a list of outputs that the pool controls at any one given time, then sees if it can attribute these outputs to specific ring signatures
+[2018-10-08 17:27:12] ⇐ MSavoritias quit (~anon@2a02:587:9836:7100:a497:5d20:da1b:f1a9): Ping timeout: 252 seconds
+[2018-10-08 17:27:25] <sgp_> I still think we need to table this discussion until we can test for possible chain reactions with pool data, which means updating the output format for sneurlax's tool
+[2018-10-08 17:27:44] → MarcusBeasley joined (~marcuskos@f103081.upc-f.chello.nl)
+[2018-10-08 17:27:46] <sarang> Yes, I think a useful action item is to get this data, run rxns, and compare to our base data to see what the effects might be
+[2018-10-08 17:28:03] <sarang> just like it's useful to have data on previous forks to better understand what, if any, risk is present
+[2018-10-08 17:28:05] <sgp_> yeah, and if the impact is small, we forget about it. if it's large, we need to discuss options
+[2018-10-08 17:28:14] <sarang> Yep, use the data to inform best practices
+[2018-10-08 17:28:36] <sarang> So
+[2018-10-08 17:28:49] <sarang> suraeNoether: any research to report in addition to what's been discussed?
+[2018-10-08 17:29:18] ⇐ ErCiccione quit (~erciccion@213.152.161.170): Ping timeout: 264 seconds
+[2018-10-08 17:30:33] <suraeNoether> sorry, had to get the door
+[2018-10-08 17:31:06] <suraeNoether> So, other than a modest amount of progress on my lightning paper, and workign with Sarang on this sublinear RuPol scheme, I have done a lot more administrative stuff this week
+[2018-10-08 17:31:33] → Ph4r05 joined (~Ph4r05@ip-78-102-41-252.net.upcbroadband.cz)
+[2018-10-08 17:32:13] <suraeNoether> so i want to move onto a bit of that adminstrative crap regarding conferences
+[2018-10-08 17:32:23] <suraeNoether> actually
+[2018-10-08 17:32:29] <suraeNoether> collaboration is a bit more research themed
+[2018-10-08 17:32:39] <suraeNoether> so, there is some good news and bad news on the collaboration/grant front
+[2018-10-08 17:33:01] <suraeNoether> the short summary is this: after speaking with three separate univeristy research foundations on Friday
+[2018-10-08 17:33:16] <suraeNoether> there simply is not a structure in place for universities to accept research funding from a crowdfunded animal like our own
+[2018-10-08 17:33:22] <suraeNoether> this is both good news and bad news
+[2018-10-08 17:33:43] <suraeNoether> the bad news is it'll be six months at least, if not longer, before we can start interacting wtih universities in a way that requires funding
+[2018-10-08 17:34:05] <suraeNoether> the good news is that all three of those universities are extremely eager to start working these things into their foundation's policies
+[2018-10-08 17:34:33] <suraeNoether> so, for example, the researcher Gao at Clemson: even if we wanted to, we couldn't really offer any money (beyond bug bounties, etc) for their collaboration
+[2018-10-08 17:34:49] <endogenic> is it really a good idea for MRL to be in the grant giving business? is there anything the FFS system could not accomplish for such candidates?
+[2018-10-08 17:35:09] <rehrar> endogenic: being actually funded for one
+[2018-10-08 17:35:13] <rehrar> ba dum tsh
+[2018-10-08 17:35:24] <suraeNoether> this relieves a possible burden on the community; in the meantime, CURF (clemosn university research foundation) is going to start working (partly with me at MAGIC) doing research on how to start making this a thing, because everyone at these universities agree this is not going away any time soon
+[2018-10-08 17:35:25] <sarang> I thought the Clemson group might be interested in non-funded collaboration
+[2018-10-08 17:35:33] <sarang> thereby removing the burden from the community
+[2018-10-08 17:35:33] <suraeNoether> and that's the best news, is that they are
+[2018-10-08 17:35:35] <sarang> and the PITA of funding
+[2018-10-08 17:35:55] <endogenic> rehrar: why does everyone keep saying that
+[2018-10-08 17:36:25] <suraeNoether> endogenic: the best jokes require explanation
+[2018-10-08 17:36:38] <rehrar> cuz funding is taking a while for other stuff. It's just cuz people are funded out after funding mooo, sarang, and suraeNoether
+[2018-10-08 17:36:43] <suraeNoether> of course, providing some incentives for that research like travel funding,e tc, these things can be accomplished through the FFS, endogenic... kinda! but not really... because every single university requires a cut of all such funding, and they refuse to accept such funding from a crowdfunded anon crowd style animal
+[2018-10-08 17:37:00] <rehrar> admittedly, those are our greatest assets, but they require good amounts of Momos, so the other ones are struggling a bti atm
+[2018-10-08 17:37:03] <rehrar> *bit
+[2018-10-08 17:37:05] <sarang> yep
+[2018-10-08 17:37:15] <sarang> I think the correct avenue is non-funded collab
+[2018-10-08 17:37:21] <suraeNoether> so the short answer is that right now, it doesn't matter if it's in MRL's best interest to be a source of funding, because we literally can't do it
+[2018-10-08 17:37:23] <sarang> We already have university groups publishing on Monero
+[2018-10-08 17:37:28] <suraeNoether> yep
+[2018-10-08 17:37:32] <rehrar> I'm going to make it my personal mission to make Momos a thing for Monero in the same way bucks and paper is for dollars
+[2018-10-08 17:37:55] <suraeNoether> all about the momos
+[2018-10-08 17:38:32] <endogenic> i think.. it does matter.. because if it's not in mrl's interest then we don't have to become nonprofit administrators with the ffs funding we have.
+[2018-10-08 17:38:36] <suraeNoether> so, that actually puts a nail in a coffin that i very much wanted to either be nailed shut or aired out in the daylight, i was uncomfortable with whatever was inside banging on a loose lid
+[2018-10-08 17:38:38] <suraeNoether> so to speak
+[2018-10-08 17:38:41] <endogenic> "every single university requires a cut of all such funding, and they refuse to accept such funding from a crowdfunded anon crowd style animal" hmm
+[2018-10-08 17:38:59] <endogenic> how about from individuals?
+[2018-10-08 17:39:06] <suraeNoether> that's a different animal
+[2018-10-08 17:39:08] <endogenic> we just have individuals who are willing to deanonymize themselves say who they are
+[2018-10-08 17:39:15] <suraeNoether> well
+[2018-10-08 17:39:20] <endogenic> you can even feature 'em
+[2018-10-08 17:39:23] <suraeNoether> another option is, for example, OSTIF
+[2018-10-08 17:40:18] <suraeNoether> but for now, adding this layer of grief I think is not worth it, even if there are interested parties who could throw their weight toward our project; MRL has other goals and priorities and we don't want to spread ourselves too thin... and the answers I got from the foundations I spoke with are good enough reasons to abandon the idea for at least a few semesters
+[2018-10-08 17:40:29] <sarang> Keep in mind that whoever is giving the grant is paying a lot extra for administration
+[2018-10-08 17:40:29] ⇐ cardboardoranges quit (~cardboard@dhcp-128-103-224-67.harvard.edu): Read error: Connection reset by peer
+[2018-10-08 17:40:38] <suraeNoether> 50% in fact
+[2018-10-08 17:40:42] <sarang> yes
+[2018-10-08 17:40:48] <suraeNoether> well, between 33% and 50% depending on the university
+[2018-10-08 17:40:48] <sarang> researchers don't see a dime of that
+[2018-10-08 17:40:51] — endogenic spits 
+[2018-10-08 17:40:51] <suraeNoether> yep
+[2018-10-08 17:40:54] <suraeNoether> heh
+[2018-10-08 17:41:08] <suraeNoether> so, that's going on a longer-term back burner
+[2018-10-08 17:41:19] <suraeNoether> another thing I wanted to talk about is the Monero Konferenco
+[2018-10-08 17:41:31] <sarang> So I agree with the sentiment that FFS shouldn't fund university grants, but we should be receptive to helping good researchers apply for funding, and also keep collaborating for free with groups we know are interested
+[2018-10-08 17:41:46] <suraeNoether> especially researchers who have contributed to the project already
+[2018-10-08 17:42:09] <endogenic> sarang: if ffs proposals for grants had more trouble getting funded than those which didnt have admin fees attached then i think that could create a market to lower admin fees
+[2018-10-08 17:43:20] <suraeNoether> endogenic: my experience, to be frank, is that almost any university will climb over their own grandmother, so to speak, for more funding, so you may not be wrong. however, these institutions are oftentimes very... slow... to... make... decisions... regarding new technology especially
+[2018-10-08 17:43:40] → cardboardoranges joined (~cardboard@c-24-60-138-210.hsd1.ma.comcast.net)
+[2018-10-08 17:43:45] <suraeNoether> but anyway, unless folks have questions, let's move along to conference talk
+[2018-10-08 17:43:53] <suraeNoether> re: the Monero Konferenco, I finally have all the quotes for costs that I need to post the funding request, and I want everyone's advice on how to proceed
+[2018-10-08 17:44:01] <rehrar> MoneroKon!
+[2018-10-08 17:45:34] <suraeNoether> long story short I've boiled down our possibilities to at least two, if not three possible locations, all that are roughly within the same range of price and amenities. However, one of those locations is the University of Colorado in Denver, which has some... interesting requirements... for the events held there. And there is a possiblity that they have to turn us down if we are not a "society" like SIAM or
+[2018-10-08 17:45:34] <suraeNoether> AMS (for the same reason that grants can't be accepted)
+[2018-10-08 17:46:08] ⇐ spaced0ut quit (~spaced0ut@unaffiliated/spaced0ut): Quit: Leaving
+[2018-10-08 17:46:19] → spaced0ut joined (~spaced0ut@unaffiliated/spaced0ut)
+[2018-10-08 17:46:19] <suraeNoether> all that needs to happen there is one professor decide to "sponsor" the event, but then there are issues with a public university endorsing our little conference, and whether that is even allowed
+[2018-10-08 17:46:53] <rehrar> so...probably best not to do it there then? Or is that the best of the bunch price-wise?
+[2018-10-08 17:47:06] <suraeNoether> so, depending on my communications with them this week, it may simply not be possible to do it there. I've already gotten proposals from the Colorado Convention Center and the University of Denver, both of which have some sub-optimal properties
+[2018-10-08 17:47:39] <suraeNoether> it's not only the best of the bunch price-wise, I think, but also: you can take the lightrail from the airport to the location, which is embedded in the 16th street mall, which is a bit of a tourist location. lots of restaurants and hotels, etc
+[2018-10-08 17:47:50] <suraeNoether> and there are bike share stations all around, etc
+[2018-10-08 17:48:29] <endogenic> rehrar thinking about your previous mention of people being funded-out .. tbh we have a lot more funding sources than those who are aware of the ffs system but they cant donate monero because they dont have any. we need to open the funding platform to those who visit then drop off
+[2018-10-08 17:48:43] <suraeNoether> this meeting is not about the FFS
+[2018-10-08 17:48:52] <suraeNoether> and I would really like to move on
+[2018-10-08 17:49:02] ⇐ cardboardoranges quit (~cardboard@c-24-60-138-210.hsd1.ma.comcast.net): Ping timeout: 272 seconds
+[2018-10-08 17:49:05] → cardboardorang-1 joined (~cardboard@linux-usnorth.cryptostorm.net)
+[2018-10-08 17:49:11] <suraeNoether> we are coming up on an hour already. :P
+[2018-10-08 17:49:17] <suraeNoether> but i guess the meeting really IS about FFS
+[2018-10-08 17:49:18] <endogenic> it's my fault
+[2018-10-08 17:49:26] <rehrar> so maybe THEY might not be able to market our event
+[2018-10-08 17:49:30] <rehrar> but can WE do it?
+[2018-10-08 17:49:56] <rehrar> is there a cryptocurrency club in that university?
+[2018-10-08 17:50:09] <suraeNoether> oh, marketing is totally aside; the issue is that by sponsoring the event (which they require for the event to be held on their campus) is an implicit endorsement BUT THAT'S A REALLY GOOD QUESTION REHRAR!
+[2018-10-08 17:50:17] <sgp_> +1 rehrar
+[2018-10-08 17:50:24] <suraeNoether> i know that three professors there are currently chatting with each other about this to decide how to approach the topic
+[2018-10-08 17:50:39] <suraeNoether> they haven't contacted me directly yet, though, and I will email the chair of their department back
+[2018-10-08 17:51:05] <suraeNoether> however, locations aside: we have numbers for funding requests, and I want folks' advice on moving forward for this
+[2018-10-08 17:51:22] <rehrar> My honest opinion is, if this can be hammered out relatively quickly, then let's try for there. If not, then we should find another place. The truth is so much depends on the venue that it's super hard, if not impossible in some areas, to plan further without knowing the venue
+[2018-10-08 17:52:11] <suraeNoether> I feel like having more than one funding round would be wise, where we can cash out as we go. this could prevent something like asking for the single big chunk all at once and then failign to fund the entire thing, even though we could still throw a kcikass event for 80% of funding, or even 60%, as long as we plan around it
+[2018-10-08 17:52:48] <suraeNoether> has that sort of thing been done through the Monero FFS yet?
+[2018-10-08 17:53:28] <suraeNoether> also, if we can get a sponsorship, say from Cake Wallet or Tari or something like that, over-funding could be returned to the community through the general fund or whatever
+[2018-10-08 17:53:54] → ErCiccione joined (~erciccion@213.152.161.15)
+[2018-10-08 17:53:59] <sarang> what is the amount of the "big chunk"
+[2018-10-08 17:54:02] <rehrar> I 100% support those terms
+[2018-10-08 17:54:15] <rehrar> The idea that you ask for 100% of what is needed, and then ask for sponsors after.
+[2018-10-08 17:54:28] <rehrar> And specify in the FFS that any extra funding will be kept for next year's conference
+[2018-10-08 17:54:33] <rehrar> there is no guarantee of sponsors
+[2018-10-08 17:56:02] ⇐ sgp_ quit (~justi@2607:ea00:107:1c07:885a:5542:a8de:9e82): Quit: Leaving.
+[2018-10-08 17:56:53] <gingeropolous> this may or may not have been thought of or talked about above, but if MRL can't do university stuff because its a total PITA etc, one resource that could be created is a research facilitator
+[2018-10-08 17:56:59] <rehrar> that's just my opinion though
+[2018-10-08 17:57:04] <suraeNoether> my initial numbers were 54,150 USD to 72,900 USD, but i was assuming wedding-level costs of a venue. with our newest numbers, the cost will be closer to 52k USD to 59k USD
+[2018-10-08 17:57:15] <gingeropolous> i.e., if there's a researcher at a university who wants to do monero research, we can provide grant templates or boilerplate crap or letters of support
+[2018-10-08 17:57:40] <rehrar> I'm not sure how wise several funding rounds is though
+[2018-10-08 17:57:45] <gingeropolous> for the university researchers grant application etc
+[2018-10-08 17:57:48] <suraeNoether> gingeropolous: that's a very interesting idea that we can start looking at over the next few months
+[2018-10-08 17:58:04] <rehrar> depending on how quickly it moves through the system and gets funded each time, it might be too long to get stuff done
+[2018-10-08 17:58:11] <sarang> I still think we need to do a better job of reaching out to groups that have already done Monero research
+[2018-10-08 17:58:13] <gingeropolous> yeah, it shouldn't hit any beaurocratic nightmare hurdles
+[2018-10-08 17:58:20] <suraeNoether> rehrar: that's a fair point
+[2018-10-08 17:58:36] <rehrar> I think make an FFS for 65k
+[2018-10-08 17:58:37] <gingeropolous> bureaucratic
+[2018-10-08 17:58:45] <rehrar> roughly 10% of wiggle room there for price movements
+[2018-10-08 17:59:18] <suraeNoether> okay, and we can make it clear that excess funding will be used for next year's conference
+[2018-10-08 17:59:30] <suraeNoether> now, for transparency reasons
+[2018-10-08 17:59:50] <suraeNoether> I'll be throwing this conference, contacting speakers, hiring the conference coordinator, etc
+[2018-10-08 17:59:59] <suraeNoether> the coordinator will be taking care of most of the grunt work
+[2018-10-08 18:00:40] <rehrar> I'm down to help in whatever capacity (management, coordination, or otherwise) that you need me for
+[2018-10-08 18:00:44] <rehrar> as well as design, obviously
+[2018-10-08 18:01:31] <suraeNoether> in order to avoid liability, I've started an LLC called colorado crypto conferences LLC, so that I can distribute funds to organizers, venues, etc, without it coming out of my personal bank accounts, etc
+[2018-10-08 18:01:43] <suraeNoether> thanks for volunteering for this rehrar!
+[2018-10-08 18:02:06] <suraeNoether> we'll definitely take you up on that. I wouldn't mind having t-shirts or shwag bags
+[2018-10-08 18:02:58] <suraeNoether> so, does anyone object to me opening an FFS for 65kUSD for this? I can post 100% of all bookkeeping information for CCCLLC for transparency
+[2018-10-08 18:03:10] <suraeNoether> and comply with any other wishes the community has for transparency
+[2018-10-08 18:03:25] <rehrar> start there, and get feedback. I think it should be more than fine. :)
+[2018-10-08 18:03:25] <kovri-slack> <oneiric> sounds like a great idea, +1
+[2018-10-08 18:03:31] <suraeNoether> fantastic
+[2018-10-08 18:03:49] <sarang> How much does the coordinator get paid?
+[2018-10-08 18:03:53] <sarang> (due to the conflict of interest there)
+[2018-10-08 18:04:31] <suraeNoether> 9000 USD. Approximately 100 man-hours of work. Justification: Typical per-hour fees for event organization at a firm are between 125-250 USD per hour. The project organizer is low-balling herself for this cost specifically because she is related to me. Around 10 of these hours she anticipates can be spent seeking out sponsors for the conference to mitigate our costs, as well.
+[2018-10-08 18:05:08] <suraeNoether> she just finished organizing a conference for Johnson and Johnson and she received over 20 for the same amount of time and work she expects for this.
+[2018-10-08 18:05:20] <rehrar> I think all that is needed for this justification is quotes from a couple other people of the same job
+[2018-10-08 18:05:29] <endogenic> ^ that doesnt work
+[2018-10-08 18:05:42] <rehrar> no?
+[2018-10-08 18:05:43] <endogenic> at least not without showing their work will turn out just as well
+[2018-10-08 18:05:45] <endogenic> yup
+[2018-10-08 18:06:14] <endogenic> i say leave it to the community to ask
+[2018-10-08 18:06:20] <rehrar> ok
+[2018-10-08 18:06:21] <suraeNoether> it's not a complete look, but it's fairly standard to find 3-4 quotes from several parties as an investigation into "fair market value" and then select from there
+[2018-10-08 18:06:30] <endogenic> of course
+[2018-10-08 18:07:00] <endogenic> not sure why youre on the hook to justify it though if youve done your research and are doing something for the community
+[2018-10-08 18:07:04] <endogenic> it's an easy thing to find a quote for
+[2018-10-08 18:07:11] <sarang> I'll have a couple of quick unrelated blackball stats when we're finished up here
+[2018-10-08 18:07:31] <sarang> endogenic: I think it's ethically important because he's related to the organizer he currently plans to hire
+[2018-10-08 18:07:43] <endogenic> how does showing quotes ameliorate that? :P
+[2018-10-08 18:07:51] <suraeNoether> endogenic: it's a good faith thing
+[2018-10-08 18:07:56] <sarang> yeah
+[2018-10-08 18:08:10] <endogenic> you're not recommending her rate imo
+[2018-10-08 18:09:00] <suraeNoether> i'm not, she selected her rate
+[2018-10-08 18:09:04] <rehrar> this is true, endogenic.
+[2018-10-08 18:09:19] <rehrar> And if another coordinator wants to come in, prove their past work, and undercut, nothing is stopping them.
+[2018-10-08 18:09:42] <rehrar> but onus on them
+[2018-10-08 18:09:43] <suraeNoether> the fact is: it's a very easy thing to temper any appearance of impropriety, and so we should
+[2018-10-08 18:09:51] <sarang> suraeNoether: what does the total estimate assume about entry fees?
+[2018-10-08 18:10:47] <suraeNoether> I assumed nothing about fees.
+[2018-10-08 18:10:57] <suraeNoether> here is the section I was going to include on that.
+[2018-10-08 18:10:58] <sarang> Cool, so it assumes people show up fo free?
+[2018-10-08 18:11:00] <suraeNoether> *Registration fees.* Charging attendees is optional here and we should discuss the benefits (free and open access to Monero conferences is something we value?) and the costs (random crazy people and ICO shillsters will almost certainly walk in off the street!). It's worth pointing out that the event will *not* pay for itself unless we charge more than 1000 USD per ticket and we have full attendance.
+[2018-10-08 18:11:34] <suraeNoether> currently looking at 50-70 attendees, so charging, say, 40 bucks for entry would only partially mitigate our total costs
+[2018-10-08 18:12:02] <sarang> Does the LLC's tax burden come into play with any of this?
+[2018-10-08 18:12:24] <rehrar> We can discuss what it would look like to charge a small amount to partially mitigate costs, and give tickets for free to anyone who asks nicely.:D
+[2018-10-08 18:13:08] <suraeNoether> sarang: if the LLC makes any profit, it passes through to me and i pay personal taxes on it; my goal is to save a bit of cash for next year's conference, extract taxes from that part set aside, and then ensure that the remainder is spent on expenses for this year, so that i personally never feel any burden or liability from this.
+[2018-10-08 18:13:16] <nioc> you will get more than 50-70 attendees and there should be some cost for them
+[2018-10-08 18:13:29] <sarang> OK, so charging entry fees doesn't mess with that
+[2018-10-08 18:13:33] <suraeNoether> nioc not if i only sell 70 tickets :)
+[2018-10-08 18:13:36] <suraeNoether> sarang correct
+[2018-10-08 18:13:39] <sarang> got it
+[2018-10-08 18:13:57] <suraeNoether> all my venue costs look at around 600-650 a day, but are based on no more than 150 people
+[2018-10-08 18:14:05] <sarang> how many days?
+[2018-10-08 18:14:09] <rehrar> are we only planning for 50-70 because that's the sizes of the veue
+[2018-10-08 18:14:14] <suraeNoether> 1.5
+[2018-10-08 18:14:29] <rehrar> *venue
+[2018-10-08 18:15:00] <sarang> Will there be a story about the afterparty on mashable?
+[2018-10-08 18:15:49] <suraeNoether> 50-70 for measuring interest the first year, and to keep the topics and audience in the technical, rather than ICO/business end...  also because it's easier to scale a small event up than throw a big event htat no one shows up to... not to mention, fluffypony has discussed with me throwing a monero conference preceding the magical crypto friends conference he is planning in NY, and I *imagine* that's going to
+[2018-10-08 18:15:49] <suraeNoether> be a larger scale event.
+[2018-10-08 18:16:12] <suraeNoether> most of these universities have so much room for events like these we can scale up relatively easily without paying *too much* more
+[2018-10-08 18:16:23] <rehrar> interesting
+[2018-10-08 18:16:35] <rehrar> if we get flooded with people, we can see about just purchasing a bit more space? :D
+[2018-10-08 18:16:47] <rehrar> anyways, let's do what you've planned. See how it goes.
+[2018-10-08 18:16:55] <suraeNoether> especially at a university, yes
+[2018-10-08 18:17:08] <suraeNoether> but we would need several months lead time on estimates of crowd sizes
+[2018-10-08 18:17:47] <suraeNoether> okay, rehrar's opinion is good enough for me
+[2018-10-08 18:17:49] <suraeNoether> :D
+[2018-10-08 18:18:20] <suraeNoether> okay, any last questions before I pivot to a controversial opinion I'm strongly interested in peddling on everyone here?
+[2018-10-08 18:18:32] <sarang> Sure, but let's speedy things up
+[2018-10-08 18:18:35] <sarang> we're way over
+[2018-10-08 18:19:15] <rehrar> no questions, give opinion
+[2018-10-08 18:19:32] <suraeNoether> okay, the main thing is this: we have a responsibility to our users. they use our currency in some cases to protect their own livelihoods from tyrannical etc etc
+[2018-10-08 18:19:42] <sarang> yes
+[2018-10-08 18:19:45] <suraeNoether> in some cases, monero is a matter of life and death
+[2018-10-08 18:20:02] <suraeNoether> due to this, I believe we need to start shifting our attitude about development at Monero away from efficiency and towards security
+[2018-10-08 18:20:23] <suraeNoether> and due to this, I believe we should move to a fixed but large ring size, like 45.
+[2018-10-08 18:20:39] <sarang> Do we have data to back up such a choice?
+[2018-10-08 18:21:04] <sarang> I believe our job is to provide users the best efficiency for what we see as reasonable and necessary security/privacy
+[2018-10-08 18:21:22] <suraeNoether> if it turns out that, in 6 months time, a more efficient scheme comes along, then we would see a drop in our sizes and verification times, similar to our bulletproof thing, which is a PR win for us, and in the meantime, we would be taking the cautious route.
+[2018-10-08 18:21:26] <suraeNoether> short answer to that sarang is: kinda
+[2018-10-08 18:21:32] <sarang> If users who need us can't join the network reasonably, we've failed them
+[2018-10-08 18:21:48] <suraeNoether> yes, if we go too large, network security is compromised by new nodes choosing other coins
+[2018-10-08 18:21:57] <sarang> "The chain is now 400 GB" is a bad statement to give them
+[2018-10-08 18:22:27] <sarang> I think this hearkens back to the need for a better understanding of threat models
+[2018-10-08 18:22:30] <suraeNoether> so we are stuck between a rock (loose security with efficiency and speed, lots of network security but weaker untraceability claims) vs. a hard place (tight secuirty for a coin that no one uses properly, a la pre-sapling zcash)
+[2018-10-08 18:23:28] <sarang> If ring size is made less relevant by a better understanding of, e.g. churn and controlled spends under certain threat models, that's good data
+[2018-10-08 18:23:40] <suraeNoether> yeah, but what about users who don't churn?
+[2018-10-08 18:23:52] <sarang> That's the need for understanding our threat models better
+[2018-10-08 18:24:23] <rehrar> churning is an active choice to protect yourself
+[2018-10-08 18:24:25] → kico joined (~kico@unaffiliated/kico)
+[2018-10-08 18:24:33] <gingeropolous> i like the idea of shifting focus towards security.... but that seems to go hand-in-hand with efficiency.
+[2018-10-08 18:24:36] <rehrar> every step you make a user take for themselves, you will see significant drop off in people who do it
+[2018-10-08 18:25:01] <gingeropolous> then again, monero (the entity) didn't give two shits about efficiency when it went to RingCT
+[2018-10-08 18:25:16] <sarang> What I mean is that if we can establish that a large ring increase has measurable benefits for users under reasonable threat models, that's a conversation worth having
+[2018-10-08 18:25:18] → pichi_ joined (~pichi@mtrlpq4362w-lp130-03-70-53-155-220.dsl.bell.ca)
+[2018-10-08 18:25:33] <suraeNoether> actually gingeropolous that is one of hte best points: we added these huge slow range proofs without hesitation, and then we had a big PR win for making them more efficient.
+[2018-10-08 18:25:44] <suraeNoether> we should just assume the following threat model: anyone we transact with is transacting with an AML/KYC exchange, who can be assumed to have godlike, state-level computational power because a government serving them a warrant leads to that
+[2018-10-08 18:25:53] <sarang> There was a big benefit to CT... can we point to such a benefit with a large increase?
+[2018-10-08 18:25:57] <suraeNoether> now, if you are pinned, EAE style, between two adversaries, ain't no ring size that will help
+[2018-10-08 18:26:35] <suraeNoether> so the only reasonable threat model we can really work with is EBABE where you may not be transacting directly with AML/KYC but people on either side of you are
+[2018-10-08 18:26:38] <rehrar> I think the assumption of EABE for current standard use is not unfounded
+[2018-10-08 18:26:44] <suraeNoether> ^ bingo
+[2018-10-08 18:26:52] → MSavoritias joined (~anon@80.107.128.192)
+[2018-10-08 18:26:55] <rehrar> and I think a threat model of EABE is probably the one to operate under
+[2018-10-08 18:27:02] <rehrar> BUT
+[2018-10-08 18:27:12] <rehrar> since we cannot see Monero's stuff
+[2018-10-08 18:27:19] <rehrar> we should analyze how people use altcoins
+[2018-10-08 18:27:23] <rehrar> like Litecoin or Dash
+[2018-10-08 18:27:28] <rehrar> see if it tends to go EABE
+[2018-10-08 18:27:33] <nioc> wownero just forked and their static ringsize is now 22.  Don't know if they will have any stats that would be of interest to "us"
+[2018-10-08 18:27:34] <rehrar> and extrapolate from that to Monero
+[2018-10-08 18:27:38] <kovri-slack> <oneiric> what do EAE and EABE stand for?
+[2018-10-08 18:27:39] <sarang> That use could be waaaay different
+[2018-10-08 18:27:56] <rehrar> sarang: we do the same for sending patterns and selecting ring members though
+[2018-10-08 18:28:02] <sarang> Eve-Alice-Eve and Eve-Alice-Bob-Eve
+[2018-10-08 18:28:02] <suraeNoether> oneiric_: EAE is "eve-alice-eve" where eve is an evil exchange and you are alice. other non-E letters are other users who may or may not be malicious
+[2018-10-08 18:28:04] → CamTheGeek_ joined (~CamTheGee@camthegeek.net)
+[2018-10-08 18:28:16] <sarang> rehrar: we have some Monero data for that too
+[2018-10-08 18:28:23] <rehrar> ok
+[2018-10-08 18:28:23] <sarang> based on deduced spends
+[2018-10-08 18:28:39] <kovri-slack> <oneiric> ok, thanks sarang and suraeNoether
+[2018-10-08 18:28:43] <sarang> but something like exchange interaction might be way different for a private coin
+[2018-10-08 18:28:54] ⇐ kico quit (~kico@unaffiliated/kico): Ping timeout: 252 seconds
+[2018-10-08 18:29:08] <suraeNoether> so sarang keeps asking "can we point to a benefit" and the answer is "we can point to a point at which ring size increases are no longer helpful, which is around 45, and we can point to some weak results on, say, how many transaction histories exist." for example, I just found a theorem that proves that there must be twice as many transaction histories as their are output keys, but finding all of them is
+[2018-10-08 18:29:08] <suraeNoether> progressively harder and harder as ring sizes increase
+[2018-10-08 18:29:38] <sarang> OK, let's formalize this, determine how exchange interactions affect it (to the extent that we can), and then go from there
+[2018-10-08 18:29:51] <rehrar> ^
+[2018-10-08 18:29:55] <sarang> The question of formalization and hard numbers always comes up when this gets discussed
+[2018-10-08 18:29:57] <rehrar> see the mathz
+[2018-10-08 18:29:59] <sarang> but it hasn't happened yet
+[2018-10-08 18:30:09] <suraeNoether> okay; i'm not trying to convince people today, i just want our community to start thinking about the formalization components of this and longer-term thinking for the safety of our users
+[2018-10-08 18:30:23] <sarang> This has been on our radar for a long time
+[2018-10-08 18:30:35] <sarang> Until we have the math for it, I think it's a very hard sell
+[2018-10-08 18:30:38] <rehrar> perhaps one of you community paid MRL researchers should get this formalization done ;)
+[2018-10-08 18:30:41] <sarang> ikr
+[2018-10-08 18:30:52] <suraeNoether> that's one of my in-prep papers
+[2018-10-08 18:30:56] <sarang> suraeNoether: it was my understanding that you already had informal versions of this
+[2018-10-08 18:31:02] <suraeNoether> ^
+[2018-10-08 18:31:03] <sarang> I think it should be a priority
+[2018-10-08 18:31:18] <suraeNoether> yeah, that's where my priorities are shifting, but that also includes looking at the sublinear papers
+[2018-10-08 18:31:29] <suraeNoether> because if they are sufficiently efficient (heh) we don't actually even have an argument, y'know?
+[2018-10-08 18:31:30] <sarang> Yeah, they go hand-in-hand
+[2018-10-08 18:31:40] <rehrar> the sublinear papers are for increasing efficiency of larger ringsizes though, correct?
+[2018-10-08 18:31:47] ⇐ CamTheGeek_ quit (~CamTheGee@camthegeek.net): Client Quit
+[2018-10-08 18:31:49] <sarang> But I consider this more important than, say, lightning and cross-chain stuff
+[2018-10-08 18:31:57] <sarang> rehrar: size efficiency, yes
+[2018-10-08 18:32:03] <rehrar> I understand they go together, but I think priority should be on establishing usage patterns to establish a threat model
+[2018-10-08 18:32:11] <sarang> agreed
+[2018-10-08 18:32:18] <rehrar> I believe Monero has been operating for a dangerously long time without a specified threat model
+[2018-10-08 18:32:37] <sarang> Well, and our ring increases have to some extent been based on "bigger is better"
+[2018-10-08 18:32:50] <sarang> we're long past the point of chain reaction style threats
+[2018-10-08 18:32:54] → CamTheGeek_ joined (~CamTheGee@camthegeek.net)
+[2018-10-08 18:32:55] <rehrar> and so, while efficiencies to ring sizes are good, I think the establishment of the threat model is imperative to all future research in this area
+[2018-10-08 18:33:09] <sarang> (exactly 5 post-CT outputs are blackball-worthy from on-chain analysis)
+[2018-10-08 18:33:31] <rehrar> as a community member, I would propose that both sarang and suraeNoether work together on hammering out this formalization before further work proceeds
+[2018-10-08 18:33:48] <rehrar> this will further legitimize Monero in the privacy/security industry.
+[2018-10-08 18:34:01] <gingeropolous> i mean we could just go to 45, and then let optimization take its natural course
+[2018-10-08 18:34:08] <rehrar> At the moment, I can see the criticisms from other people that see the lack of a defined threat model as proof that we are flying by the seat of our pants
+[2018-10-08 18:34:22] <gingeropolous> ala RingCT
+[2018-10-08 18:34:24] <suraeNoether> my primary concern is that repeated analyses of a system that uses small anonymity set sizes (sub-millions) can be very powerful in reducing effective anonymity set sizes, regardless of the threat model
+[2018-10-08 18:34:27] <sarang> We could also require users to use a different burner laptop from a different IP for every transaction, but that doesn't mean it's necessarily helpful
+[2018-10-08 18:34:29] <rehrar> gingeropolous: doesn't solve the problem of threat modeling and formalization. and Monero is better than that
+[2018-10-08 18:34:52] <suraeNoether> and the "sub-millions" thing is essentially a non-starter for obvious reasons
+[2018-10-08 18:35:03] <gingeropolous> "who needs action when you've got words"
+[2018-10-08 18:35:08] <suraeNoether> heh
+[2018-10-08 18:35:19] <rehrar> who needs either when you have math
+[2018-10-08 18:35:28] <rehrar> which guides the action and discussion
+[2018-10-08 18:35:30] <sarang> A good start will be formalizing the ring size informal stuff, hammering out churn wait times as a heuristic killer, and going from there, perhaps?
+[2018-10-08 18:35:38] <rehrar> right now we have not the math
+[2018-10-08 18:35:57] <rehrar> yes ^
+[2018-10-08 18:36:11] <rehrar> for me, as a recommendation from a community member, this is priority number 1
+[2018-10-08 18:36:14] <rehrar> can't speak for others obviously
+[2018-10-08 18:36:46] ⇐ CamTheGeek_ quit (~CamTheGee@camthegeek.net): Client Quit
+[2018-10-08 18:36:50] <sarang> I think it answers "how can we use Monero safely right now" so we can move to "how can we make Monero better for tomorrow"
+[2018-10-08 18:36:52] <suraeNoether> okay, I'm going to formalize a single-hop (EABE) and double-hop (EBABE) pair of threat models, write up my formal definition of fungibility, demonstrate it implies anonymity, show that neither zcash nor monero satisfy my definition of fungibility, demonstrate a churn model that brings us closer to fungibility, and i'll share that document with the community. that will be my top priority this week
+[2018-10-08 18:37:19] <rehrar> thank you suraeNoether
+[2018-10-08 18:37:22] <sarang> baller
+[2018-10-08 18:37:31] <rehrar> from a research perspective
+[2018-10-08 18:37:33] <suraeNoether> also, can we change the term "blackball" to "marked notes?" :P
+[2018-10-08 18:37:34] <sarang> This doesn't even need to be journal-worthy
+[2018-10-08 18:37:36] <rehrar> to me, this is even bigger than BPs
+[2018-10-08 18:37:42] <rehrar> and will be the biggest thign to come out of MRL this year
+[2018-10-08 18:37:47] <sarang> but we need a base for our recommendations
+[2018-10-08 18:37:48] <kovri-slack> <oneiric> serious win
+[2018-10-08 18:38:12] → kico joined (~kico@unaffiliated/kico)
+[2018-10-08 18:39:01] <sarang> Let's collaborate as much as is useful, suraeNoether
+[2018-10-08 18:39:08] <scoobybejesus> i'm sure the formalization will pretty much write itself...  /s
+[2018-10-08 18:39:09] <suraeNoether> allright, before we end the meeting: any final questions, comments, concerns? I need to write my summary of my september work and post it, so I apologize to the community for my delay (again)
+[2018-10-08 18:39:25] <sarang> I ran some new blackball stats to compare to our author friends
+[2018-10-08 18:39:34] <rehrar> nope. Great meeting. Gotta split. Bai.
+[2018-10-08 18:39:45] <sarang> Finding their results are comparable to ours
+[2018-10-08 18:40:01] <sarang> Importantly, our analysis methods show exactly 5 post-CT outputs are bad
+[2018-10-08 18:40:16] <sarang> whereas about 68% of pre-CT outputs are bad
+[2018-10-08 18:40:32] <suraeNoether> good to know :D
+[2018-10-08 18:40:36] <sarang> this accounts only for on-chain stuff (no forks, pools, etc)
+[2018-10-08 18:40:58] <sarang> I'm going to add this to our tech note to shut people up about "OMG OUTPUTS ARE TRACED"
+[2018-10-08 18:41:09] <gingeropolous> yeah 5 of them!
+[2018-10-08 18:41:11] → CamTheGeek_ joined (~CamTheGee@camthegeek.net)
+[2018-10-08 18:41:11] <sarang> modern transactions are not vulnerable to this crap
+[2018-10-08 18:41:16] <gingeropolous> and like all of pre-ct
+[2018-10-08 18:41:22] <suraeNoether> on a totally different note, i'm in a weird funding trap because I was an idiot earlier this year, and I don't have funding for december. sarang and I were going to request funding for Jan-March simultaneously: do you guys think I should ask for Dec-March or should I request december separately, or what? I tried to get back on the quarter system earlier this year and then idiotically got back off it again. :\
+[2018-10-08 18:41:41] ⇐ CamTheGeek_ quit (~CamTheGee@camthegeek.net): Client Quit
+[2018-10-08 18:41:46] <rehrar> just do four months
+[2018-10-08 18:41:55] <rehrar> now I really gotta split
+[2018-10-08 18:41:58] <sarang> bai
+[2018-10-08 18:42:44] <suraeNoether> ok <3 rehrar 

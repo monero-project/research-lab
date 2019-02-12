@@ -1,0 +1,333 @@
+[2017-12-11 16:57:42] * sarang set the topic to Chatty chatty time happening now
+[2017-12-11 16:59:37] <endogenic> meeting adjourned
+[2017-12-11 16:59:40] <suraeNoether> lol
+[2017-12-11 16:59:41] ⇐ [-mugatu-] quit (~shillosop@unaffiliated/shillosopher): Read error: Connection reset by peer
+[2017-12-11 16:59:54] <suraeNoether> Welcome everyone to the Nth MRL research meeting
+[2017-12-11 17:00:22] <sarang> hullo
+[2017-12-11 17:00:24] <suraeNoether> agenda: 1) hellos, 2) sarang's work recently, 3) my work recently, 4) a grander discussion of "what's next after the multisig paper"
+[2017-12-11 17:00:44] <suraeNoether> oh, and actually insert between 3) and 4) above: any other interesting research anyone else is doing
+[2017-12-11 17:00:50] → andrewdo joined (~andrew@cpe-45-48-53-231.socal.res.rr.com)
+[2017-12-11 17:01:28] <ArticMine> hi
+[2017-12-11 17:01:30] <suraeNoether> i know that we have at least two (i think) computer science folks in here working on things.
+[2017-12-11 17:01:33] <suraeNoether> howdy everyone~
+[2017-12-11 17:02:04] → shillo joined (~shillosop@unaffiliated/shillosopher)
+[2017-12-11 17:02:15] <suraeNoether> ok, well... sarang, you want to catch us up to speed on your past few weeks?
+[2017-12-11 17:02:20] <sarang> Sure
+[2017-12-11 17:02:43] <sarang> Updates to the BP code (both single- and multi-output) were completed for compatibility with our existing commitment formats
+[2017-12-11 17:02:51] <sarang> initial unit testing looks good
+[2017-12-11 17:03:07] <sarang> The single output case has been tossed over to testnet
+[2017-12-11 17:03:19] <sarang> A blog post was made to getmonero.org to explain our two-stage process
+[2017-12-11 17:03:30] <sarang> First single-output (SO), then multi-output (MO)
+[2017-12-11 17:03:40] <sarang> Doing SO first will let us sidestep the fee question for now
+[2017-12-11 17:03:43] — suraeNoether just got a phone call from the "tax crime investigation department of the IRS." Everyone be aware: the IRS contacts you by mail not phone!
+[2017-12-11 17:03:55] <sarang> while still gaining a lot in terms of space and verification efficiency
+[2017-12-11 17:04:13] <sarang> Now, there are still opportunities to speed up verification
+[2017-12-11 17:04:25] <suraeNoether> that's great news to hear
+[2017-12-11 17:04:29] <sarang> I want to get us a better multiexponent method
+[2017-12-11 17:04:47] <sarang> andytoshi has been working up some code for his curve of choice with his collaborators
+[2017-12-11 17:05:03] <sarang> I did some rough testing that didn't perform as well as expected, but that can be worked on going forward
+[2017-12-11 17:05:03] <suraeNoether> if we can get it even faster, we can play a nice game optimizing a balance between RTRS RingCT sizes and transaction throughput
+[2017-12-11 17:05:25] <sarang> Nice thing is that any verification optimization is a drop-in function replacement
+[2017-12-11 17:05:47] <sarang> The savings will be more relevant when we move to MO
+[2017-12-11 17:05:56] <sarang> since that increases the number of fixed curvepoints we use in the algorithm
+[2017-12-11 17:06:16] <sarang> I also know there's good discussion happening about the best timetable for both SO and MO
+[2017-12-11 17:06:28] <sarang> whether or not doing SO in March is too fast, or just right, etc.
+[2017-12-11 17:06:51] <suraeNoether> what is your opinion on that, and what are the arguments for/against going slower/faster?
+[2017-12-11 17:07:16] <sarang> Well, it's a new method, and there are arguments against using the absolute newest stuff
+[2017-12-11 17:07:26] <sarang> But it's also very good
+[2017-12-11 17:07:48] <sarang> I think having it in testnet makes sense
+[2017-12-11 17:08:05] <suraeNoether> do we have an opinion on putting up a bounty for exploits before moving it to mainnet?
+[2017-12-11 17:08:18] <sarang> and it does address major concerns that our public has about bloat and feez
+[2017-12-11 17:08:33] <suraeNoether> i was just looking at our average fees on monero.how
+[2017-12-11 17:08:52] <sarang> I think there'd be a bit of a PR hit if we kept it out of March (though that is _not_ an endorsement against proper testing)
+[2017-12-11 17:09:46] <sarang> My preference is to continue beating the bejeezuz out of it in testnet and determine where that takes us
+[2017-12-11 17:09:52] ⇐ andrewdo quit (~andrew@cpe-45-48-53-231.socal.res.rr.com): Ping timeout: 248 seconds
+[2017-12-11 17:09:53] <suraeNoether> yeah, PR is not relevant to security. thing is, unless price increases by an order of magnitude (we should be so lucky), I feel like fees still aren't a big deal. they are quite low in monero compared to bitcoin, in best, worst, and average case
+[2017-12-11 17:09:58] <sarang> Hoping to hit March, but not making the testing dependent on that timeline
+[2017-12-11 17:09:58] <suraeNoether> but thats measured in fiat
+[2017-12-11 17:10:18] <endogenic> in that case, is a bounty a good idea?
+[2017-12-11 17:10:27] <endogenic> seems it might incentivize some testing
+[2017-12-11 17:10:58] <suraeNoether> i like the idea of bounty-ing bulletproofs
+[2017-12-11 17:11:31] <sarang> As do I
+[2017-12-11 17:11:57] <endogenic> may i bring up something related?
+[2017-12-11 17:12:02] <endogenic> but not to bulletproofs specifically
+[2017-12-11 17:12:11] <sarang> For better or worse, BPs have been hyped, and anything that gets them tested is a Good Thing
+[2017-12-11 17:12:12] <suraeNoether> we can simply dump 2^N bulletproofs into a file and challenge the community: if you can open even one without knowing our secret masks, we'll give you such and such amount of XMR
+[2017-12-11 17:12:22] <sarang> Well, that's not the only thing we care about
+[2017-12-11 17:12:26] <suraeNoether> endogenic yes, let's append that to the "other stuff people are working on"
+[2017-12-11 17:12:37] <suraeNoether> yeah, also the computational waste
+[2017-12-11 17:12:42] <sarang> e.g. choosing "random" values in a clever way, or generating edge cases
+[2017-12-11 17:12:56] <suraeNoether> oh i see
+[2017-12-11 17:12:56] <sarang> Or gaining partial info about amounts w/o exact values
+[2017-12-11 17:13:00] <sarang> endogenic: fire away
+[2017-12-11 17:13:30] <endogenic> ok, similarly, i've been wondering how much traditional pentesting etc has been done on Monero… i've heard some fuzzing has been done, but i'm wondering as well if a more organized effort will be valuable
+[2017-12-11 17:13:31] <endogenic> i think it would be
+[2017-12-11 17:13:46] <sarang> Well, we already have a bounty program, no?
+[2017-12-11 17:13:51] <sarang> A general one?
+[2017-12-11 17:14:00] → p0nziph0ne joined (~p0nziph0n@gateway/vpn/privateinternetaccess/p0nziph0ne)
+[2017-12-11 17:14:02] <sarang> And there was a recent large FFS for bounty
+[2017-12-11 17:14:08] <suraeNoether> do we have a set of formal security games for bulletproofs defined for the properties we are concerned about breaking on mainnet? i know that something like a spam attack isn't easily model-able that way, but there are other properties from my understanding.
+[2017-12-11 17:14:22] <endogenic> i've been curious about that too ^
+[2017-12-11 17:15:27] <suraeNoether> endogenic: can you elaborate?
+[2017-12-11 17:15:35] <endogenic> er sorry, on which?
+[2017-12-11 17:15:46] <suraeNoether> i feel like since monero is a cryptocurrency there is a large financial incentive for penetration
+[2017-12-11 17:15:54] <sarang> suraeNoether: the paper establishes security definitions
+[2017-12-11 17:16:05] <sarang> proved for MO, for which SO is a degenerate case
+[2017-12-11 17:16:09] <endogenic> suraeNoether: yeah but there might also be disincentives to let us know about it :P
+[2017-12-11 17:17:20] <suraeNoether> endogenic: true...
+[2017-12-11 17:17:52] <suraeNoether> well in regards to the BP, does anyone have any strong opinions on this or are we just going back and forth on speed of implementation?
+[2017-12-11 17:18:32] <suraeNoether> and by speed i mean how quickly we are moving to mainnet not verification time
+[2017-12-11 17:19:01] <suraeNoether> ok, sarang, anything else for you?
+[2017-12-11 17:19:05] <suraeNoether> from*
+[2017-12-11 17:19:16] <ArticMine> My only questions relate to pricing vs cost when there is a cost that does not scale the same way as size
+[2017-12-11 17:19:17] <sarang> I'm assisting suraeNoether with finalizing his paper
+[2017-12-11 17:19:30] <sarang> And doing background work on recent zk-snark developments
+[2017-12-11 17:19:40] <sarang> More to discuss in our "future work" segment
+[2017-12-11 17:19:43] <suraeNoether> ArticMine: can you elaborate?
+[2017-12-11 17:19:49] <suraeNoether> sarang: yeah no kiding
+[2017-12-11 17:20:01] <ArticMine> This would relate to the scaling of verification time
+[2017-12-11 17:20:12] <sarang> ArticMine: yes, the discussions on fee/penalty structure have been around this
+[2017-12-11 17:20:57] <sarang> Fortunately they only really apply to MO-BPs, and not SO-BPs
+[2017-12-11 17:21:04] <ArticMine> I know this may be premature at this time
+[2017-12-11 17:21:12] <sarang> No, it's good to discuss ASAP
+[2017-12-11 17:21:23] <sarang> But in parallel to SO deployment
+[2017-12-11 17:22:18] <suraeNoether> i think our fee structure needs to be evaluated so that it's properties hold more or less invariant over the longrun. if it's possible that our blockchain changes over the next few years so much that miners are getting massive fees for verifying super cheap bulletproofs, or vice versa, we should change the way we compute the fees (even if we think current fee amounts are fair... which, personally, i
+[2017-12-11 17:22:18] <suraeNoether> don't see too much of a problem with current *amounts*)
+[2017-12-11 17:22:45] <suraeNoether> on the other hand
+[2017-12-11 17:22:53] <ArticMine> It comes down to the cost of verification vs size
+[2017-12-11 17:23:08] <sarang> yes
+[2017-12-11 17:23:30] <suraeNoether> yep. however... what has been banging around in my head is to take all the improved cost of verification and dump it into larger ring signatures
+[2017-12-11 17:23:34] <suraeNoether> using RTRS RingCT
+[2017-12-11 17:23:39] <sarang> We want to encourage the use of MO-BPs (as opposed to multiple SO) while avoiding scaling differences
+[2017-12-11 17:23:50] <suraeNoether> hmm
+[2017-12-11 17:24:13] <ArticMine> But size alone will do that
+[2017-12-11 17:24:42] <suraeNoether> i need to read up on BPs. now that sarang is working on the multisig paper, i have time to learn about them.
+[2017-12-11 17:25:14] <sarang> The bottom line is that size scales as O(log2(M)) and verification scales as O(M)
+[2017-12-11 17:25:14] ⇐ thrmo quit (~thrmo@unaffiliated/thrmo): Read error: Connection reset by peer
+[2017-12-11 17:25:18] <sarang> for M outputs
+[2017-12-11 17:26:04] <ArticMine> At what point does verification become an issue
+[2017-12-11 17:26:12] <sarang> Miners should prefer MOs (or protocol should enforce them vs multiple SOs)
+[2017-12-11 17:26:15] <suraeNoether> is our fee structure based on size as opposed to verification time?
+[2017-12-11 17:26:23] <sarang> yes
+[2017-12-11 17:26:24] <suraeNoether> i think it is
+[2017-12-11 17:26:25] <suraeNoether> yeah
+[2017-12-11 17:26:26] <suraeNoether> hmm
+[2017-12-11 17:26:42] <ArticMine> Our fee structure is currently only based upon size
+[2017-12-11 17:26:45] <sarang> ArticMine: verifying multiple SOs already scales as O(M)
+[2017-12-11 17:26:49] <suraeNoether> what if we merely take a joint model where we take A*size + B*verification time for appropriately chosen constants A and B?
+[2017-12-11 17:26:57] <suraeNoether> as our fee
+[2017-12-11 17:26:58] <ArticMine> So id the blocksize penalty
+[2017-12-11 17:27:02] <sarang> It's actually a little less for an MO
+[2017-12-11 17:27:37] ⇐ arubi quit (~ese168@gateway/tor-sasl/ese168): Remote host closed the connection
+[2017-12-11 17:27:53] <suraeNoether> pick A to determine how much the miner should be compensated for storing the BP, pick B to determine how much the miner should be compensated for burning verification time on something other than hashrate
+[2017-12-11 17:28:02] <ArticMine> I have to give this a lot of thought
+[2017-12-11 17:28:12] <suraeNoether> yeah, this is not a simple one-and-done discussion.
+[2017-12-11 17:28:30] <ArticMine> because it also impact the question of exchange
+[2017-12-11 17:28:32] → arubi joined (~ese168@gateway/tor-sasl/ese168)
+[2017-12-11 17:28:40] <suraeNoether> what do you mean by that?
+[2017-12-11 17:28:43] <sarang> And a solid general approach to it would help address future developments that affect size vs computation time
+[2017-12-11 17:28:58] → thrmo joined (~thrmo@unaffiliated/thrmo)
+[2017-12-11 17:29:06] <ArticMine> Purchasing power of Monero should scale with the number to outputs
+[2017-12-11 17:29:07] <luigi1111w> <suraeNoether> yep. however... what has been banging around in my head is to take all the improved cost of verification and dump it into larger ring signatures <= I disagree. Of course there's no perfect answer, but cpu cost is currently quite on the high side IMO, and I'd like to see it lower overall.
+[2017-12-11 17:30:33] <ArticMine> So we may have to scale the output part of the fee with the total number of outputs in the block as opposed to the blocksize
+[2017-12-11 17:31:14] <ArticMine> Essentially two fee components one size based and one output based
+[2017-12-11 17:32:12] <suraeNoether> ArticMine: i will need to think about that. i think computing expected verification time of a transaction should be very simple, and is a more direct measurement of how much the miner is burning on that transaction
+[2017-12-11 17:32:29] <sarang> Yes let's continue to think about and discuss this going forward
+[2017-12-11 17:32:38] <sarang> suraeNoether this ends my report
+[2017-12-11 17:32:54] <ArticMine> Yes it is an other "effective penalty"
+[2017-12-11 17:33:00] <hyc> that's the obvious way forward - if you are accounting for both storage space and CPU cost, you need the two factors present in the fee
+[2017-12-11 17:33:48] <suraeNoether> so, actually, i want to address luigi's point
+[2017-12-11 17:33:59] <suraeNoether> because we are tugging at two ends of the rope, cpu efficiency versus privacy
+[2017-12-11 17:35:08] ⇐ chachasmooth quit (~chachasmo@unaffiliated/chachasmooth): Ping timeout: 255 seconds
+[2017-12-11 17:35:38] <suraeNoether> i think if monero users want to enjoy privacy over the long run, we need either zk-stark whole-blockchain-like signatures, or we need very large ring sizes. and in both cases, we can't have authenticating data like signatures scale linearly in size, or we are sunk in the water.
+[2017-12-11 17:36:04] <suraeNoether> i've been using the attitude that each gain in speed or performance can be matched with a bigger RTRS RingCT so that users don't necessarily notice any performance change, their privacy merely increases
+[2017-12-11 17:36:49] <suraeNoether> on the other hand, we can make things faster while keeping monero's privacy where it's at
+[2017-12-11 17:36:57] → chachasmooth joined (~chachasmo@unaffiliated/chachasmooth)
+[2017-12-11 17:37:01] <suraeNoether> the goal is hopefully to meet in the middle somehow
+[2017-12-11 17:37:39] <suraeNoether> underneath the entire BP discussion is which direction we are going to take Monero over the next few months or years
+[2017-12-11 17:38:12] <suraeNoether> which was why I wanted to bring up point 4) before, about "the future."
+[2017-12-11 17:38:13] → serhack joined (5d44a7e7@gateway/web/cgi-irc/kiwiirc.com/ip.93.68.167.231)
+[2017-12-11 17:38:29] <hyc> along the lines of that question - if CPUs get faster over time, that should mean we can increase ringsize in the future
+[2017-12-11 17:38:56] <endogenic> imo better to prioritize privacy
+[2017-12-11 17:38:56] <luigi1111w> or keep up with increased use
+[2017-12-11 17:39:15] <hyc> since we're talking about linear increases in verification cost, is there a tradeoff in traceability?
+[2017-12-11 17:39:16] <ArticMine> Yes but we also have to keep in mind blocksize **
+[2017-12-11 17:39:24] <suraeNoether> what's that one economic principle? make something more efficient and people just use more of them instead of the overall system using fewer things. Jevon's paradox?
+[2017-12-11 17:40:10] <hyc> e.g. if CPUs get 2x faster, does it become 2x easier to analyze the blockchain?
+[2017-12-11 17:40:10] <sarang> https://en.wikipedia.org/wiki/Snackwell_effect ?
+[2017-12-11 17:40:28] <luigi1111w> hyc I don't think so
+[2017-12-11 17:40:48] <ArticMine> It is starting to look like verification time rather than size becomes the dominant cost parameter
+[2017-12-11 17:40:52] <moneromooo> If CPUs get faster, we have more users and larger blocks.
+[2017-12-11 17:40:55] <suraeNoether> (by the way, for point (3): the past weeks I've been working on multisig and that's essentially all. After handing it off to sarang I am now extremely excited to read about BPs and the new zk-starks, which could simply make this whole discussion moot anyhow.)
+[2017-12-11 17:40:56] <luigi1111w> that would be some entity data crunching. They'd just add as many cpus as needed
+[2017-12-11 17:41:28] <luigi1111w> I guess technically it'd be cheaper too, but the cost is likely not high enough to matter one way or the other
+[2017-12-11 17:41:33] <ArticMine> Yes but the cost of verification scales exponentially relative to size
+[2017-12-11 17:41:39] <suraeNoether> ArticMine: the verification time does appear to have become the most important feature of new cryptoschemes, to me
+[2017-12-11 17:42:34] <ArticMine> It could become dominant eventually because of the different scaling rates
+[2017-12-11 17:42:44] <suraeNoether> hyc: if it's exponentially difficult (in # of blocks say O(2^i)) to analyze the monero blockchain, and you double your blocks/s of analysis, you still have an exponential amount of time for analysis O(2^(i-1))
+[2017-12-11 17:43:41] <hyc> Ok so that implies we wouldn't need to increase ringsize very often in the future
+[2017-12-11 17:44:10] <ArticMine> However we must keep in mind that not all users will move to large MO proofs
+[2017-12-11 17:44:26] <luigi1111w> why wouldn't they?
+[2017-12-11 17:44:41] <sarang> If the vast majority of txns are still 2 outputs, that wouldn't change
+[2017-12-11 17:44:46] <moneromooo> Mymonero users ? :)
+[2017-12-11 17:44:54] <ArticMine> It is only advantageous to very large payers
+[2017-12-11 17:45:12] <luigi1111w> moneromooo I think endogenic is working on copying the c++ wallet code, so it'd likely include that
+[2017-12-11 17:45:17] <luigi1111w> otherwise I'll add it to JS probably
+[2017-12-11 17:45:21] <moneromooo> Great.
+[2017-12-11 17:45:45] <endogenic> we may even be able to transpile that C++ back to JS for the new web wallet, but the rest will run on the C++ yes
+[2017-12-11 17:45:50] <luigi1111w> well I'll add it to JS anyway, for my own stuff, but probably mymonero.com too if needed
+[2017-12-11 17:45:50] <suraeNoether> so, in terms of "The Future:" sarang and I want to write up the Monero Standards, which we are excited about, and in those standards we simply want 1) to describe what the monero codebase currently does, 2) why those choices seem to have been made (if monero) or kept (if cryptonote reference), and 3) an outline of possible future algorithms for use in place of each piece. This whole discussion about
+[2017-12-11 17:45:50] <suraeNoether> verification time, etc, goes back to a question of which algorithms we might in "possible future algorithms," and our motivations/design philosophies for doing so.
+[2017-12-11 17:46:49] <serhack> suraeNoether: Monero standards will be helpful for me in order to write the ebook.
+[2017-12-11 17:47:33] <suraeNoether> serhack: the Monero Standards are going to be extremely helpful to the community for a long time afterwards. they are going to be extremely un-sexy to the community
+[2017-12-11 17:47:46] <suraeNoether> "Now unveiling... Monero Standards! Where we tell you what we are already doing!"
+[2017-12-11 17:47:55] <hyc> lol
+[2017-12-11 17:47:59] <suraeNoether> "Turns out we never had a manual all along!"
+[2017-12-11 17:48:05] <serhack> thanks suraeNoether
+[2017-12-11 17:48:23] <suraeNoether> but i suspect htey will be referenced over and over and over and over and over
+[2017-12-11 17:49:30] <suraeNoether> so, this is obviously an ongoing discussion. anyway. I also had an idea for educational outreach
+[2017-12-11 17:49:51] <suraeNoether> aaaand I'm not sure if I want to talk about it yet. just like the last idea fell through, I am glad I never mentioned a specific university.
+[2017-12-11 17:50:12] <suraeNoether> buuuut I think the community will like the idea, and I'll be hopefully announcing something about it in the middle of next month
+[2017-12-11 17:50:19] ⇐ serhack quit (5d44a7e7@gateway/web/cgi-irc/kiwiirc.com/ip.93.68.167.231): Quit: Ping timeout (120 seconds)
+[2017-12-11 17:50:26] <suraeNoether> on another note, this POW contest idea
+[2017-12-11 17:51:03] <suraeNoether> if it were used for message authentication or anything like that, cryptonight would be wildly dangerous as a home-brewed hash function
+[2017-12-11 17:51:12] ⇐ chachasmooth quit (~chachasmo@unaffiliated/chachasmooth): Ping timeout: 240 seconds
+[2017-12-11 17:51:15] <hyc> why so?
+[2017-12-11 17:51:28] → serhack joined (5d44a7e7@gateway/web/cgi-irc/kiwiirc.com/ip.93.68.167.231)
+[2017-12-11 17:51:35] <sarang> In terms of public scrutiny?
+[2017-12-11 17:51:42] → chachasmooth joined (~chachasmo@unaffiliated/chachasmooth)
+[2017-12-11 17:52:45] <suraeNoether> unlike other hash functions, it sort of rolls a die, picks a random hash function from a certain list based on that die, hashes its random data. then it swaps some bits around, i believe there is an AES stage, and then repeat. does this for a number of rounds
+[2017-12-11 17:53:05] <suraeNoether> until the L3 cache is totally filled up with this randomness
+[2017-12-11 17:53:08] <suraeNoether> I believe
+[2017-12-11 17:53:50] <hyc> pretty much, yeah
+[2017-12-11 17:54:01] <hyc> ok so it'd be crap for signatures
+[2017-12-11 17:54:06] <suraeNoether> point is: in 2013, if you were a 19 year old sitting around smoking pot trying to come up with a way to invent an asic resistant hash function, and all you knew about computers was that L3 functions are slow and that these handful of hash functions are considered good, this is *EXACTLY* the hash function you would come up with.
+[2017-12-11 17:54:23] <suraeNoether> s/L3 functions/L3 cache (oy)
+[2017-12-11 17:54:58] <suraeNoether> so the POW alternative thing is something that has been niggling at my mind for awhile
+[2017-12-11 17:55:15] <suraeNoether> and i'm thinking i'm willing to match the Monero community up to a certain amount in XMR for a nice, big, public contest on the matter
+[2017-12-11 17:55:22] <luigi1111w> the dice is at the end btw
+[2017-12-11 17:55:27] <hyc> L3 isn't that slow, and it's faster than main RAM. this was a pretty good approach to prevent trivial optimization (fitting into L2 or faster)
+[2017-12-11 17:55:34] <luigi1111w> https://github.com/monero-project/monero/blob/master/src/crypto/slow-hash.c#L488
+[2017-12-11 17:55:34] <suraeNoether> luigi1111w: ah, thanks, i thought i had the order mixed up
+[2017-12-11 17:55:43] ⇐ valentinbuza quit (~valentinb@unaffiliated/valentinbuza): Ping timeout: 248 seconds
+[2017-12-11 17:55:50] <suraeNoether> hyc yes, you are correct
+[2017-12-11 17:56:01] <sarang> It'd be important to determine what you'd want out of a new PoW suraeNoether
+[2017-12-11 17:56:11] <suraeNoether> right
+[2017-12-11 17:56:18] <suraeNoether> we need a rubric for judging the submissions
+[2017-12-11 17:56:28] <suraeNoether> we need a panel of judges that are more or less impartial
+[2017-12-11 17:56:30] <hyc> you want another asymmetric function, like PKI. slow to prove, fast to verify.
+[2017-12-11 17:56:35] <suraeNoether> yep
+[2017-12-11 17:57:21] <suraeNoether> if it's ASIC-able, it should be commoditized already for improved egalitarian mining and for improved environmental impact
+[2017-12-11 17:57:58] <suraeNoether> i'm not sold that Nakamoto hash-based PoW is "the best" idea, although I know that whatever "the best" process is, it should end up being a poisson process
+[2017-12-11 17:58:15] <suraeNoether> i want provable security for every attacker % up to and including 50%
+[2017-12-11 17:58:25] <suraeNoether> etc etc
+[2017-12-11 17:58:33] <suraeNoether> i'm wondering if anyone else would be willing to match some XMR
+[2017-12-11 17:58:35] <sarang> Well hash-based has the advantage of being extremely fast to verify
+[2017-12-11 17:58:48] <sarang> and well understood if you use an accepted hash function
+[2017-12-11 17:58:52] <suraeNoether> because a prize could get really hefty really fast if some folks promise matching. 
+[2017-12-11 17:59:05] <suraeNoether> yep sarang there are an enormous number of advantages with hash functions
+[2017-12-11 17:59:32] <suraeNoether> by the way, my idea i talked about yesterday on using discrete log + nakamoto PoW... I later in the day proved that it was a bad idea
+[2017-12-11 17:59:40] <suraeNoether> i have a nice little theorem "Do not implement this scheme."
+[2017-12-11 17:59:45] <suraeNoether> provably true
+[2017-12-11 18:00:01] <hyc> lol
+[2017-12-11 18:00:27] <luigi1111w> fast to verify is important
+[2017-12-11 18:00:31] <luigi1111w> slow to prove is pretty meh
+[2017-12-11 18:00:37] <hyc> cryptographic hashes are designed to be fast. and they don't have the desired asymmetry
+[2017-12-11 18:00:41] <luigi1111w> resistant to excessive speedup, sure
+[2017-12-11 18:01:03] <hyc> slow to prove is an essential component of the original PoW definition
+[2017-12-11 18:01:13] <hyc> applied to anti-spam email service
+[2017-12-11 18:01:13] <luigi1111w> that is provided by difficulty though
+[2017-12-11 18:01:43] <suraeNoether> it's sufficient to replace "slow to prove" with "exponential space-time tradeoff in proving time." This way, if someone can manage a speedup, they are paying the cost with necessary storage space.
+[2017-12-11 18:01:56] <suraeNoether> so either way you have to sink cost into hardware to participate
+[2017-12-11 18:02:55] <hyc> I would assume one of the goals is to be reasonable on existing deployed CPUs
+[2017-12-11 18:02:59] <hyc> whether in PCs or smartphones
+[2017-12-11 18:03:04] <suraeNoether> so, what are people's feelings on hosting such a contest? I think I would have a 3-6 month submission deadline or something along those lines. At least 3 months so that a student can spend a full semester working on the problem with their adviser, if they want.
+[2017-12-11 18:03:41] <suraeNoether> hyc ^ this assumes we do POW on a CPU as opposed to proof-of-storage-and-retrieval on a hard drive... and i don't want to restrict the contest submissions to PoW only.
+[2017-12-11 18:05:45] <endogenic> i'd be concerned to confirm strategy for handling technicalities with running the contest… deciding a singular winner… what happens if there is no winner…
+[2017-12-11 18:06:01] <endogenic> i know you already mentioned it surae
+[2017-12-11 18:06:24] <sarang> It'd be a highly nontrivial thing to do
+[2017-12-11 18:06:49] <sarang> You need lots of external testing
+[2017-12-11 18:06:57] <sarang> that's why the NIST contests take so freaking long
+[2017-12-11 18:07:00] <moneromooo> I really don't like the idea of creating an expectation we'll change to whatever this unearths.
+[2017-12-11 18:07:11] <iDunk> ^^
+[2017-12-11 18:07:14] <luigi1111w> I don't think that is expected
+[2017-12-11 18:07:18] <luigi1111w> or if it is, cancel that
+[2017-12-11 18:07:22] <luigi1111w> (expectation)
+[2017-12-11 18:07:23] <sarang> the incentive to test NIST standards is the understanding of widespread adoption
+[2017-12-11 18:07:43] <suraeNoether> moneromooo: we can say the default entry is the cryptonight algorithm submitted by the general fund.
+[2017-12-11 18:07:48] <suraeNoether> everyone is competing against htat
+[2017-12-11 18:08:22] <luigi1111w> I would be curious to see the parameters I guess
+[2017-12-11 18:08:32] <suraeNoether> to get into the second round of judging, if we have multiple rounds, requires outrunning the bear: cryptonight. to get into the third round of judging requires outrunning each other.
+[2017-12-11 18:09:01] <hyc> and is ASIC-resistance part of the criteria?
+[2017-12-11 18:09:10] <sarang> I'd think so
+[2017-12-11 18:09:12] <suraeNoether> i'm okay with ASICs if they are already commoditized (somehow)
+[2017-12-11 18:09:34] <suraeNoether> if they are asic-able and someone can come in and blow a million bucks to own the entire monero asic market, that's a losing proposal
+[2017-12-11 18:09:42] <endogenic> but that requires ppl to buy new hardware just to compete in mining, no?
+[2017-12-11 18:09:46] <hyc> that seems like a bad idea to me. it means everyone who wants to participate on a level playing field has to buy new hardware.
+[2017-12-11 18:09:48] <endogenic> seems to change the asic resistence idea
+[2017-12-11 18:09:56] <hyc> it leaves out the vast percentage of the world that has a smartphone in their pocket
+[2017-12-11 18:10:09] <luigi1111w> if you can blow a million bucks to own the market, something is very wrong
+[2017-12-11 18:10:25] <luigi1111w> why can't I come in and also blow a million to take half (and so on)
+[2017-12-11 18:10:46] <ArticMine> There a patent risks with ASICs - ASIC boost in Bitcoin comes to mind
+[2017-12-11 18:10:58] <moneromooo> I really like how people have started mining on CPUs for new reasons. This is only possible because mining on a CPU is feasible. Those are gimmicks, granted.
+[2017-12-11 18:11:15] <endogenic> but they might become much more widespread soon
+[2017-12-11 18:11:21] <endogenic> people are enabling web miners etc
+[2017-12-11 18:11:40] → valentinbuza joined (~valentinb@unaffiliated/valentinbuza)
+[2017-12-11 18:11:50] <ArticMine> Coinhive opened a can of worms
+[2017-12-11 18:12:07] <endogenic> ArticMine: passive mining in an app was mostly a matter of convenience then
+[2017-12-11 18:12:13] <endogenic> bc ppl can still bundle a mining lib and run it in the bg
+[2017-12-11 18:12:19] <endogenic> if they want to go to the effort
+[2017-12-11 18:12:32] <ArticMine> The trouble is who controls the mining
+[2017-12-11 18:12:47] <suraeNoether> hmm. interesting. the whole goal of ASIC resistance is egalitarian mining, in my mind. i don't really care so much about the asic resistance as the egalitarian mining.
+[2017-12-11 18:12:53] <suraeNoether> so let me rephrase the above
+[2017-12-11 18:12:57] <ArticMine> The user or the app developer
+[2017-12-11 18:13:24] <endogenic> ArticMine: who controls the target of the reward, or who controls the algo, or who controls the % of cpu used..? not sure which you mean, or if all three, etc
+[2017-12-11 18:13:46] <ArticMine> All three
+[2017-12-11 18:14:17] <ArticMine> In a typical mobile device it is not the end user, and that is a problem
+[2017-12-11 18:14:55] <suraeNoether> ok, so it sounds to me like people are willing to entertain the idea if the kinks of the governing contest judging body are ironed out, and as long as a rubric is publicly agreed upon. we are quibbling about details on the rubric right now, and that tells me people are receptive to the overall idea.
+[2017-12-11 18:15:38] <hyc> well... if it ain't broke don't fix it. what's broken?
+[2017-12-11 18:15:46] <iDunk> "So there is a chance" :D
+[2017-12-11 18:15:49] <moneromooo> That argument is invalid.
+[2017-12-11 18:15:58] <suraeNoether> lol iDunk 
+[2017-12-11 18:16:09] <suraeNoether> hyc: if it ain't broke, no one will come up with a better idea
+[2017-12-11 18:16:15] <suraeNoether> and the money goes back to the general fund
+[2017-12-11 18:16:24] → mrfrasha joined (~mrfrasha@66-188-250-34.dhcp.eucl.wi.charter.com)
+[2017-12-11 18:16:53] — iDunk feels a disconnect between the academics and the community
+[2017-12-11 18:17:07] — luigi1111w feels a disturbance 
+[2017-12-11 18:17:13] → dxdr joined (~dxdr@cm-81-9-164-97.telecable.es)
+[2017-12-11 18:17:14] <luigi1111w> in the schwarz
+[2017-12-11 18:17:16] <suraeNoether> well
+[2017-12-11 18:17:23] <luigi1111w> schwartz
+[2017-12-11 18:17:24] <luigi1111w> idk
+[2017-12-11 18:17:30] <suraeNoether> if i offer to match some amount of XMR, and the thing doesn't get funded... the contest doesn't go through, you know?
+[2017-12-11 18:17:58] <endogenic> yeah but we'd hate to see money spent mistakenly
+[2017-12-11 18:18:14] <endogenic> guess ppl are just saying we need to be cautious
+[2017-12-11 18:18:43] <ArticMine> What are the advantages?
+[2017-12-11 18:18:56] <serhack> fund what?
+[2017-12-11 18:19:10] <endogenic> lol serhack just woke up
+[2017-12-11 18:19:14] <suraeNoether> serhack see above, i was talking about a PoW replacement contest
+[2017-12-11 18:19:19] <luigi1111w> the only thing missing from the current pow that I personally care about is verification speed
+[2017-12-11 18:19:21] <luigi1111w> it's slow
+[2017-12-11 18:19:27] <serhack> +1 suraeNoether
+[2017-12-11 18:19:31] <serhack> hello endogenic
+[2017-12-11 18:20:40] <suraeNoether> ArticMine: 1) coming up with a possibly more egalitarian POW, 2) coming up with a possibly faster verification POW, 3) avoiding an eerily-designed hash function that is essentially unique in its structure
+[2017-12-11 18:22:40] <luigi1111w> and what does #1 mean? :)
+[2017-12-11 18:23:14] <suraeNoether> honestly? i don't know yet. measuring egalitarian-ness... doesn't that go back to like ancient greece?
+[2017-12-11 18:23:29] <suraeNoether> heh
+[2017-12-11 18:23:34] <endogenic> but people are not equal
+[2017-12-11 18:23:38] <endogenic> (i looked it up)
+[2017-12-11 18:23:49] <endogenic> surae has better math ability than i
+[2017-12-11 18:24:12] <luigi1111w> impossible
+[2017-12-11 18:25:07] <hyc> I don't see #3 being detrimental in current cryptonight. it's using a bunch of heavily vetted hash algos in combination
+[2017-12-11 18:25:09] <luigi1111w> ok #2 definitely
+[2017-12-11 18:25:13] <luigi1111w> #3 I agree with hyc
+[2017-12-11 18:25:23] <suraeNoether> I'm not terribly concerned about 3) because if cryptonote was designed by scammers, and if cryptonight was designed maliciously, it would be difficult to discern this and it would provide the original miners with a disproportionate hash rate compared to users with similar computers. i'm a little less concerned about 2). But overall? I'm just not convinced that cryptonight is a particularly
+[2017-12-11 18:25:23] <suraeNoether> well-thought-out way to bring ASIC resistance/egalitarian mining into the hash computation world.
+[2017-12-11 18:25:23] ⇐ serhack quit (5d44a7e7@gateway/web/cgi-irc/kiwiirc.com/ip.93.68.167.231): Remote host closed the connection
+[2017-12-11 18:25:41] <suraeNoether> add: "and its not like the original cryptonote founders are a huge % of the mining network"
+[2017-12-11 18:25:48] <suraeNoether> hit enter a little too soon
+[2017-12-11 18:25:57] <suraeNoether> and i'm a little *more* concerned about 2). good heavens
+[2017-12-11 18:26:49] <suraeNoether> seems like the community is more luke warm on the idea than i had hoped. that's cool. i'll shelve it for a few months
+[2017-12-11 18:27:26] <suraeNoether> okay, does anyone have any other topics to bring up? 
+[2017-12-11 18:28:50] ⇐ mrfrasha quit (~mrfrasha@66-188-250-34.dhcp.eucl.wi.charter.com): Quit: mrfrasha
+[2017-12-11 18:30:58] <suraeNoether> Okay, well, meeting adjourned I suppose. luigi, out of curiosity: could you do me a favor? can you come up with some numbers on per-output transaction verification times (total, including ring signatures and range proofs) and PoW verification times that you consider "worst case," we never want to go slower? it would help me figure out whether we can optimize BP + RTRS RingCT to get both large ring

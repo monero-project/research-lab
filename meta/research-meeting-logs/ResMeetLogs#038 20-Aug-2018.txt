@@ -1,0 +1,175 @@
+[2018-08-20 16:59:30] <sarang> lets begin
+[2018-08-20 16:59:55] <suraeNoether> fluffypony: knaccc luigi1111 sarang ajs[m] andytoshi anonimal ArticMine binaryFate chachasmooth dEBRUYNE endogenic gingeropolous hyc iDunk isthmuscrypto john_alan jwinterm knaccc kerber m2049r[m] moneromooo MoroccanMalinois needmoney90 nioc philkode pigeons rehrar[m] rrol[m] scoobybejesus sgp_1 sgp_[m] smooth sneurlax stout stoffu UkoeHB unknownids vtnerd waxwing 
+[2018-08-20 17:00:08] <suraeNoether> let's hang out for 2 minutes and we'll start
+[2018-08-20 17:00:19] <sarang> careful, mass mentions can get you autobanned
+[2018-08-20 17:01:01] <sgp_1> hello
+[2018-08-20 17:01:08] <iDunk> hi
+[2018-08-20 17:01:29] <suraeNoether> sarang i've been doing it for a year. *shrug* you mean from freenode? or from this channel?
+[2018-08-20 17:01:48] <sarang> freenode IIRC
+[2018-08-20 17:01:51] <sarang> due to all the recent spam
+[2018-08-20 17:02:00] <scoobybejesus> hi
+[2018-08-20 17:03:00] <suraeNoether> hi everyone
+[2018-08-20 17:03:03] <sneurlax> Hey, I have the code to provide mining-pool-reused outputs in the format moneromooo requested up at github.com/sneurlax/xmreuse. I don't know if or how there's a way to add to the blackball database from GET/HTTP calls but that's what I was asked for. I need to update the outputs, I think, and add more pools over the next few days, but it's pretty straightforward...
+[2018-08-20 17:03:31] <sneurlax> The repo is private at the moment if I recall correctly. Drop github names to invite or I'll make it public whenever y'all say to
+[2018-08-20 17:03:45] <MoroccanMalinois> hi
+[2018-08-20 17:03:53] <suraeNoether> Welcome to the first post-defcon MRL research meeting. Agenda today is simple. 1) Greetings (done!) 2) Does anyone have any items they want to add to the agenda? 3) Let's catch up on what everyone is doing. 
+[2018-08-20 17:04:29] <sneurlax> Sorry to dump and I have to have an afk meeting now but I'll catch up on what I missed after.
+[2018-08-20 17:04:36] <suraeNoether> sneurlax: great, thanks!
+[2018-08-20 17:05:27] <sgp_1> sneurlax I would like to be invited if possible. I'm added to xmreuse-firebase but not xmreuse
+[2018-08-20 17:07:09] <suraeNoether> okay, as far as stuff *i* am doing/want to do: depending on contact from one person, we'll be putting multisig up on IACR. in the meantime we can publish it as MRL-7 or whatever we like as a technical note, or as an author version or something like that...
+[2018-08-20 17:07:20] <suraeNoether> but that depends on whether the journal we decide upon is greedy and has a concurrent publication policy
+[2018-08-20 17:07:24] <sneurlax> Absolutely. Anyone that wants to can be, or just let me know to flip it public. Later tho
+[2018-08-20 17:07:25] <endogenic> weww
+[2018-08-20 17:07:44] — endogenic opens a barolo 
+[2018-08-20 17:08:14] <suraeNoether> my first priority is to publish the multisig paper as a peer reviewed document. send, as an MRL bulletin. why? MRL (from my point of view) isnt' interested in drifting toward the publiccation world yet. :P and getting more peer reviewed articles published under the MRL *name* is more important than publishing our own articles without review
+[2018-08-20 17:08:30] <suraeNoether> my second priority this week is sarang's DLSAG paper and some research on side channel stuff
+[2018-08-20 17:09:11] <sarang> I'll look forward to the DLSAG review; we can push it as an MRL once internally reviewed
+[2018-08-20 17:09:19] <suraeNoether> my tertiary priorities this week are: discussions about an MRL research assistantship program, and work on the MAGIC non-profit stuff.
+[2018-08-20 17:09:29] <suraeNoether> i already read it once and i saw no troubles with it, but this time i'm looking at it more closely
+[2018-08-20 17:09:37] <sarang> What side channel stuff are you researching?
+[2018-08-20 17:09:41] <sarang> that's a broad area
+[2018-08-20 17:09:53] <sgp_1> ooh, let me know if I can help with the assistant research program
+[2018-08-20 17:10:07] <suraeNoether> the whole *waves hand* broad side of the area on *waves hands more* this side of the area
+[2018-08-20 17:10:13] <stout> that assistant research program sounds intriguing by name
+[2018-08-20 17:10:21] <suraeNoether> so, the MRL research assistantship program... *sigh* so like, look
+[2018-08-20 17:10:35] <suraeNoether> we, as a crowd-sourced open source project, have a fundamental problem with funding things in crypto
+[2018-08-20 17:10:46] <suraeNoether> and that is: if anyone wants to do anything organizational in nature, they eat the taxes
+[2018-08-20 17:11:15] <suraeNoether> if i want to host a job search for MRL, for example, well.. we aren't a company, someone needs to hold the cash, and spend it, for making websites and putting up job postings, etc
+[2018-08-20 17:11:32] <suraeNoether> if it's an individual, it's all individual income, capital gains and losses... it's insane to try to do it that way legally
+[2018-08-20 17:11:43] <sarang> Not really, just annoying
+[2018-08-20 17:11:55] <sarang> that's how we operate
+[2018-08-20 17:12:09] <suraeNoether> well, the hiring example isn't a good example, but hosting a conference *is* a good example
+[2018-08-20 17:12:13] <sarang> yes
+[2018-08-20 17:12:22] <suraeNoether> that's tens of thousands of dollars worth of liability, possibly hundreds depending on size
+[2018-08-20 17:13:26] <suraeNoether> in general, though, there are lots and lots of little things that all add up to "SOMEONE SHOULD START A FREAKING COMPANY HERE JUST TO DIRECT FUNDING THROUGH." and that ... is... i'm a math phd, i'm not a business dude. it's not appealing to me
+[2018-08-20 17:13:46] <suraeNoether> so something like a research assistantship program is an idea that i've been kicking around with sarang and fluffypony
+[2018-08-20 17:13:48] <suraeNoether> and some others
+[2018-08-20 17:14:21] <suraeNoether> where we invite graduate students from across the country to apply. the core team and MRL go through applications and short list us down to 3-5 candidates. then each of those candidates starts their own FFS
+[2018-08-20 17:14:46] <suraeNoether> and either the FFS sends funding directly to the students, or sends it directly to their university, leaving all the liability on the student and/or the school
+[2018-08-20 17:15:05] <stout> doesn't sound like a solution for the conference problem, but I like the step nonetheless
+[2018-08-20 17:15:12] <suraeNoether> this way, grad students who were in the same position sarang and i were in when we first srtarted at MRL can apply, get some funding, and become monero fanatics who will volunteer their time and blood forever. :P
+[2018-08-20 17:15:18] <suraeNoether> no, not a solution to the conference problem
+[2018-08-20 17:15:23] <sarang> For the conference, outside groups have come forward and expressed interest in managing/funding
+[2018-08-20 17:15:59] <suraeNoether> yeah, i think fluffypony is attempting some solutions to that in a roundabout way
+[2018-08-20 17:16:33] <suraeNoether> but, again, we're kicking ideas around
+[2018-08-20 17:16:36] <sarang> yep
+[2018-08-20 17:16:54] <stout> Any way we can help, specifically in the research assistant thing?
+[2018-08-20 17:17:07] <sarang> I also have it on good authority that a research assistant FFS would have no trouble being funded
+[2018-08-20 17:17:17] <suraeNoether> well, one thing we could use is a secure survey/application system.
+[2018-08-20 17:17:21] <sarang> stout: I think good resources for job postings would be helpful too
+[2018-08-20 17:17:31] <suraeNoether> google forms is criticized as being ... google, obviously
+[2018-08-20 17:17:32] <sarang> Cast a wide net for quality applicants
+[2018-08-20 17:17:38] <suraeNoether> surveymonky allegedly leaks IP addresses, etc
+[2018-08-20 17:17:58] <suraeNoether> my understanding is that thunderosa on reddit has made secure survey software for monero before, so that'd be interseting to look into
+[2018-08-20 17:18:13] <endogenic> use blockchain
+[2018-08-20 17:18:21] <sgp_1> When using Google you give the info to Google, but only form info is shared with the owner
+[2018-08-20 17:18:42] <suraeNoether> as far as advertising and finding sources for job postings, that part is easy. we can literally just send out an advertising email to every single computer science and math department in the US and europe. no problem. that's not hard, and there are lists for things like that.
+[2018-08-20 17:18:55] <sarang> "to every single department" o_0
+[2018-08-20 17:19:00] <suraeNoether> why not?
+[2018-08-20 17:19:05] <sarang> it sounds tough
+[2018-08-20 17:19:07] <suraeNoether> there are list-servs for it
+[2018-08-20 17:19:12] <sarang> hmm
+[2018-08-20 17:19:18] <suraeNoether> clemson got spammed constantly by such advertisements
+[2018-08-20 17:19:31] <suraeNoether> except it wasn't really spam
+[2018-08-20 17:19:36] <suraeNoether> it was legit grant and scholarship application stuff
+[2018-08-20 17:19:50] <suraeNoether> besides: i don't want to spend time narrowing down which schools to advertise to, for a bunch of reasons
+[2018-08-20 17:20:19] <sarang> https://www.youtube.com/watch?v=yDbvVFffWV4
+[2018-08-20 17:20:32] <sarang> righto
+[2018-08-20 17:21:07] <suraeNoether> yeah, that's ... surprisingly how clemson was. so many students were like "GOSH DUDE I NEED LIKE 3 MORE SEMESTERS TO GRADUATE, LEAVE ME ALONE!"
+[2018-08-20 17:21:12] <suraeNoether> but it was all industry jobs. :P
+[2018-08-20 17:21:45] <suraeNoether> anyway
+[2018-08-20 17:22:11] <suraeNoether> the thing is about google forms
+[2018-08-20 17:22:22] <suraeNoether> 90% of grad students already have to use google and their products
+[2018-08-20 17:22:43] <sgp_1> Yeah, I think Google Forms is totally fine
+[2018-08-20 17:22:52] <suraeNoether> i don't want to discourage people who are very privacy-centric from applying by using google forms, but i also know that most of our applicants really won't care too much
+[2018-08-20 17:22:54] <sarang> I use it for anonymous student feedback all the time
+[2018-08-20 17:23:11] <stout> Not a fan.
+[2018-08-20 17:23:26] <sarang> OK, they can email the info to us as an alternative
+[2018-08-20 17:23:32] <sarang> ?
+[2018-08-20 17:23:36] <sgp_1> good
+[2018-08-20 17:24:06] <suraeNoether> they can always drop an encrypted blob into the google form, tbh, but then we have to decrypt it in a virtual box or something, things get annoying fast. :P
+[2018-08-20 17:24:24] <sarang> let's not complicate things too much
+[2018-08-20 17:24:28] <sarang> if we can help it
+[2018-08-20 17:24:43] <stout> Yeah, I feel google forms or not is just a minor point right now.
+[2018-08-20 17:24:59] <stout> Might be wrong, of course.
+[2018-08-20 17:25:05] <sarang> anyway, any other big info along these lines to share?
+[2018-08-20 17:26:22] <suraeNoether> wait, just to be clear: does that mean we have a weak consensus for this first round of applicants that google forms should be good enough, but if folks want to apply in a more private way they should try to arrange to do so with our protonmails or something like that? is everyone chill with that, even if you aren't a google fan?
+[2018-08-20 17:26:55] <sarang> It really comes down to how you end up storing data, IMHO. If you put the PM data into a Google sheet, the applicants gain nothing
+[2018-08-20 17:27:10] <suraeNoether> true. that.
+[2018-08-20 17:27:18] <suraeNoether> the most vocal statement so far about this is stout saying "not a fan" so i'm guessing everyone's pretty chill with this approach in general for now
+[2018-08-20 17:27:37] <suraeNoether> we'll leave the discussion open about this for a week or so, then we'll start designing the application i guess
+[2018-08-20 17:27:42] <suraeNoether> i got nothing else on the MRL RAP 
+[2018-08-20 17:27:44] <sarang> roger
+[2018-08-20 17:27:48] <stout> Offering an alternative to google always finds my vote, and protonmail is great. I don't object.
+[2018-08-20 17:28:19] <sarang> I was asked to be on the OSTIF advisory council, so that's a bit of news
+[2018-08-20 17:28:29] <sarang> gave a local talk on privacy
+[2018-08-20 17:28:33] <sarang> some lit review
+[2018-08-20 17:28:40] <sarang> BP follow-up
+[2018-08-20 17:28:43] <suraeNoether> wow
+[2018-08-20 17:28:44] <sarang> polynomial stuffs
+[2018-08-20 17:28:57] <suraeNoether> def do the advisory council
+[2018-08-20 17:29:34] <sarang> Yeah we had a video meeting last night
+[2018-08-20 17:29:45] <sarang> It helps them prioritize and set their goals openly
+[2018-08-20 17:29:53] <sarang> they're doing good work
+[2018-08-20 17:30:03] <suraeNoether> is OSTIF a non-profit?
+[2018-08-20 17:30:16] <suraeNoether> IT IS
+[2018-08-20 17:30:16] <suraeNoether> dude
+[2018-08-20 17:30:29] <sarang> yes
+[2018-08-20 17:30:37] <suraeNoether> as a board member of MAGIC i strongly encourage you to network :D
+[2018-08-20 17:30:51] <sarang> One of the duckduckgo leads is on the board, among others
+[2018-08-20 17:30:53] <sarang> a good group
+[2018-08-20 17:32:14] <stout> Are you going to take the offer?
+[2018-08-20 17:32:28] <stout> And congrats, of course :)
+[2018-08-20 17:32:50] <sarang> It's an informal group, but yeah
+[2018-08-20 17:33:11] <suraeNoether> cool. anyone have any other topics to talk about?
+[2018-08-20 17:33:11] <sarang> It's good to get our name out there as positive contributors to the bigger community
+[2018-08-20 17:33:17] <suraeNoether> yes
+[2018-08-20 17:33:28] <sarang> One topic that came up
+[2018-08-20 17:33:29] <sarang> over def con
+[2018-08-20 17:33:44] <sarang> was the idea of "outgoing view key" functionality
+[2018-08-20 17:34:22] <suraeNoether> ohhh yeah, still thinking about that, but my last attempt did not work the way i wanted it to. did you have ideas?
+[2018-08-20 17:34:47] <sarang> I am still thinking about ways to do it with the new language afforded by the RuPol scheme
+[2018-08-20 17:34:54] <sarang> I don't have any solid answers yet
+[2018-08-20 17:36:21] <sarang> I think it's important to consider this and other topics that may become more relevant as Monero increases in adoption
+[2018-08-20 17:36:32] <sarang> things like exchange blacklisting, outgoing view, etc.
+[2018-08-20 17:37:15] <sarang> I also considered accumulator-based schemes off-chain for the view functionality, but you need to still prove that an output was generated correctly
+[2018-08-20 17:38:42] <sarang> Not that a "me too" attitude matters, but it's clear that Zcash is introducing this to encourage exchange adoption
+[2018-08-20 17:39:51] <sarang> I need to read up on their Sapling circuit to better understand their approach (I admit to knowing zero about it)
+[2018-08-20 17:40:24] — sarang ponders a zero-knowledge joke
+[2018-08-20 17:41:38] <sarang> That's all the news I have atm
+[2018-08-20 17:41:47] <sarang> any thoughts on this would be appreciated
+[2018-08-20 17:43:26] <stout> I remember some voices on reddit saying that all private keys should be kept private at all times, especially including the view key.
+[2018-08-20 17:43:40] <stout> I don't necessarily agree with this, just some input.
+[2018-08-20 17:43:55] <sarang> Yeah and that might be the primary opposition to the idea
+[2018-08-20 17:44:07] <sarang> The broader question about the nature of our optional transparency
+[2018-08-20 17:44:18] → rupert joined (be6be49d@gateway/web/freenode/ip.190.107.228.157)
+[2018-08-20 17:44:33] <sarang> Of course, higher ring sizes counter the effects of known spends
+[2018-08-20 17:44:42] <sarang> and those are easier now that we're saving space
+[2018-08-20 17:46:01] <stout> And another counterargument is that if you are forced to give up some privacy, at least have it granular.
+[2018-08-20 17:46:28] <stout> Else whoever is trying to get info will just straight up force you to give up all private keys.
+[2018-08-20 17:46:36] <sarang> One original motivation was the idea that an exchange might require account balance information for some clients
+[2018-08-20 17:46:41] <sarang> as a condition of use
+[2018-08-20 17:47:00] <sarang> a la bitlicense
+[2018-08-20 17:47:58] <sarang> I personally am fine with users having the choice of transparency, provided this doesn't harm other users
+[2018-08-20 17:48:15] <sarang> and provided they can do so with understanding of the consequences
+[2018-08-20 17:48:47] <stout> I think it's a discussion worth having in a broader scope.
+[2018-08-20 17:48:54] <sarang> absolutely
+[2018-08-20 17:49:13] <sarang> and it motivates specific discussions based on particular implementation ideas
+[2018-08-20 17:50:23] <sarang> Anyone else care to share their recent work?
+[2018-08-20 17:51:38] <sgp_1> Not much. I've been working on the blackball tool for the past few days and adding to the fixed ringsize Github issue
+[2018-08-20 17:52:40] <sgp_1> I just applied to speak at the NDSU conference next month, so hopefully I am selected
+[2018-08-20 17:52:52] <sarang> Nice!
+[2018-08-20 17:53:17] <sarang> Ring sigs?
+[2018-08-20 17:53:57] <sgp_1> more general privacy tech
+[2018-08-20 17:54:05] <sarang> how so?
+[2018-08-20 17:54:38] <sgp_1> What privacy technologies are available, what are their use-cases, etc
+[2018-08-20 17:55:45] <sarang> Nice, broad zero-knowledge systems vs. mixers vs. our approach?
+[2018-08-20 17:56:14] ⇐ el00ruobuob_[m] quit (~el00ruobu@AMarseille-657-1-35-252.w86-219.abo.wanadoo.fr): Ping timeout: 276 seconds
+[2018-08-20 17:56:51] <sgp_1> I don't want to talk too much more about mixers since that's told news, but things like tumblebit, CT, ring sig, zkSNARK, etc
+[2018-08-20 17:57:09] <sarang> Cool, I'd be interested to know what specifically you'll discuss related to snarks
+[2018-08-20 17:57:33] <sgp_1> zkSNARKs make sense for "private blockchains" (I hear your complaints) since they are already running in a trusted environment
+[2018-08-20 17:58:11] <sarang> are you gonna discuss how they operate specifically? scaling w/ circuit size etc?
+[2018-08-20 17:58:25] <sgp_1> No, this is a more business-focused audience
+[2018-08-20 17:58:46] <sarang> got it
+[2018-08-20 17:59:15] → el00ruobuob_[m] joined (~el00ruobu@LPuteaux-656-1-225-236.w193-252.abo.wanadoo.fr)
+[2018-08-20 17:59:26] <sarang> I'd say we can adjourn the meeting, but sgp_1 what are your views on "private blockchains" as they relate to trusted participation?
