@@ -1,272 +1,272 @@
-[2019-01-07 11:02:31] <suraeNoether> okay everyone
-[2019-01-07 11:02:54] <suraeNoether> time for our Monday research meeting
-[2019-01-07 11:03:10] <suraeNoether> before we get going, let's open up the meeting to questions! i like questions
-[2019-01-07 11:04:35] <moneromooo> I want to know whether knaccc's propose change to the ecdh mask is good/safe, so I can code it early enough for the fork.
-[2019-01-07 11:05:44] <suraeNoether> is knaccc around? i'm still unclear enough on the details of *what exactly* is being proposed. in terms of security, picking a mask from the same set as the value to be hidden is fine to do, but the devil is in the details
-[2019-01-07 11:05:52] <sarang> Right, so the idea was to make the ECDH amount mask deterministic from the shared secret
-[2019-01-07 11:06:13] <suraeNoether> i thought it was to select the mask from a smaller set so we can describe it with fewer bytes
-[2019-01-07 11:06:17] <sarang> e.g. mask = H('mask',z,i) for example
-[2019-01-07 11:06:32] <sarang> There was a separate idea to shrink the size of the encrypted amount data type
-[2019-01-07 11:06:45] <sarang> making the mask deterministic means you shave 32 bytes off each output
-[2019-01-07 11:07:24] <suraeNoether> ah, i see. and the question is "will this be good enough entropy because z itself is hashed?"
-[2019-01-07 11:08:01] <sarang> The only thing to consider, I think, is that outputs with the same index and shared secret share a mask
-[2019-01-07 11:08:14] <suraeNoether> if we are concerned with loss of entropy, we can use HMACs. they don't lose entropy after iteratively hashing in the same way... oh
-[2019-01-07 11:08:31] ⇐ midipoet quit (8fef72ab@gateway/web/freenode/ip.143.239.114.171): Quit: Page closed
-[2019-01-07 11:09:00] <suraeNoether> what if we add an additional nonce that indicates the index among the outputs, assuming the output keys are lexicographically ordered?
-[2019-01-07 11:09:16] <sarang> From an MLSAG perspective, we care only that the mask is uniformly distributed and known only to the sender/recipient
-[2019-01-07 11:09:34] <sarang> that's what the proposal includes
-[2019-01-07 11:09:35] <suraeNoether> ie H(m,z,i,j) where j = j^th output
-[2019-01-07 11:09:38] <suraeNoether> oh
-[2019-01-07 11:09:55] <suraeNoether> i'm clearly catching up on this. :P i didn't know this was written up, can I get a link?
-[2019-01-07 11:10:14] <sarang> I don't believe that was written up AFAIK
-[2019-01-07 11:10:20] <suraeNoether> oh, then i feel a little less bad
-[2019-01-07 11:10:38] <suraeNoether> wait quick question
-[2019-01-07 11:10:58] <suraeNoether> H('mask',z,i,j)... z is the amount being masked here?
-[2019-01-07 11:11:01] → lurkinandlearnin joined (~lurkinand@2a02:c7d:b7d8:4100:d9c8:a4f9:27de:1a20)
-[2019-01-07 11:11:17] <sarang> No, z is the shared secret; z=arG in the standard address case
-[2019-01-07 11:11:35] <sarang> The encrypted amount is still included elsewhere in the ecdh data
-[2019-01-07 11:12:49] <suraeNoether> yeah, looks fine to me. my only concern is that an adversary gets some partial control over z
-[2019-01-07 11:13:02] <sarang> How?
-[2019-01-07 11:13:02] <suraeNoether> but that's taken care of by CDH
-[2019-01-07 11:13:09] <suraeNoether> sender picks r
-[2019-01-07 11:13:11] <suraeNoether> recipient picks a
-[2019-01-07 11:13:15] <suraeNoether> they both have a little control
-[2019-01-07 11:13:21] <sarang> Well previously we used a random mask and used z to encrypt that
-[2019-01-07 11:13:21] ⇐ rex4539 quit (~rex4539@ppp-2-87-224-2.home.otenet.gr): Quit: rex4539
-[2019-01-07 11:13:30] <sarang> So anyone who got z could compute the mask anyway
-[2019-01-07 11:13:41] <sarang> The difference here is that the mask is now completely deterministic
-[2019-01-07 11:14:07] <oneiric_> is there a "known-best" algorithm, or set of algorithms, for generating a bounded random distribution?
-[2019-01-07 11:14:31] <suraeNoether> oneiric_: you mean a uniform distribution on a bouned set or...?
-[2019-01-07 11:14:39] <suraeNoether> that's true, sarang, but ...
-[2019-01-07 11:14:56] <sarang> ...
-[2019-01-07 11:15:10] <suraeNoether> there's a difference here, and i need to figure out how to express it. one moment.
-[2019-01-07 11:15:59] <sarang> The way I see it, the difference is only that the mask is now deterministic but still limited to the view of sender/recipient
-[2019-01-07 11:16:11] <sarang> It's reused if the same shared secret is used elsewhere with identical index
-[2019-01-07 11:16:29] <oneiric_> suraeNoether: mean like, obfs4 generates random padding for dpi resistance. they bin based on common tor packet sizes. would like to know if there are particular mutations should perform on sampled, binned sizes to get a good random distribution
-[2019-01-07 11:16:36] <suraeNoether> okay, so the difference here is that *partial adversarial control over this z* is being combined with using z as input for a one-way function that is allegedly masking some secret information.
-[2019-01-07 11:16:48] <suraeNoether> the sender presumably wants to protect their own amount
-[2019-01-07 11:17:01] <suraeNoether> the recipient could just reveal their own private view key if they want to be a jerk
-[2019-01-07 11:17:08] <suraeNoether> so control over view key a isn't a big deal
-[2019-01-07 11:17:11] <sarang> Our use of hash functions is about as uniform as you can expect (slight bias with H_s)
-[2019-01-07 11:17:58] <sarang> Again, keep in mind that anyone who can compute the shared secret (e.g. view key) can _already_ decrypt the mask now
-[2019-01-07 11:18:08] <suraeNoether> right, the only fix i can think of would be computing H('mask', HMAC(z), i, j), which would sort of ensure that the security reduces to *revealing z,* following the strength of hmacs
-[2019-01-07 11:18:09] <sarang> and thereby reconstruct the amount commitment
-[2019-01-07 11:18:23] <suraeNoether> and i'm not sure what would be "fixed"
-[2019-01-07 11:18:50] <suraeNoether> other than, in general, i like avoiding using any adversarially controlled data as input for protecting a secret
-[2019-01-07 11:19:31] <sarang> Pro: shave off 32 bytes per output; commitments themselves are not deterministic
-[2019-01-07 11:19:45] <sarang> whoops, that was for the con list
-[2019-01-07 11:19:50] — knaccc just arrived and is reading through the backlog
-[2019-01-07 11:20:24] <sarang> Only downsides I see in practice relate to reuse of shared secrets
-[2019-01-07 11:20:53] <suraeNoether> well, if it's two separate transction,, the sender should select two distinct random keys
-[2019-01-07 11:21:20] <sarang> Sure, but they don't have to
-[2019-01-07 11:21:27] <suraeNoether> but what if a sender maliciously selects the same random transaction keys on purpose? what happens? the mask is the same for two different transactions.
-[2019-01-07 11:21:28] <suraeNoether> right
-[2019-01-07 11:21:41] <suraeNoether> but the sender already knows the amounts
-[2019-01-07 11:21:49] <sarang> In any case, it only leaks information that the two parties had already
-[2019-01-07 11:21:52] <knaccc> if you use the same r or s with the same recipient twice, i don't think that's a security breach
-[2019-01-07 11:22:15] <knaccc> it's a linkability breach though
-[2019-01-07 11:22:27] <sarang> But it was already
-[2019-01-07 11:22:33] <knaccc> yes
-[2019-01-07 11:22:39] <suraeNoether> knaccc: if i'm an observer and i know two transactions use the same mask, i can figure out which transaction is larger and i can compute the *difference in amounts* between those two transactions
-[2019-01-07 11:23:12] <suraeNoether> so i suppose this could be a way for a sender to surreptitiously leak transaction amounts to exterior parties without ever revealing anything to them directly
-[2019-01-07 11:23:22] <sarang> suraeNoether: that was already possible
-[2019-01-07 11:23:23] <knaccc> suraeNoether yes i agree
-[2019-01-07 11:23:40] <knaccc> right yes, they could always set the same mask twice
-[2019-01-07 11:23:55] <knaccc> now there is only one random variable to not screw up :)
-[2019-01-07 11:23:56] <suraeNoether> on the other hand, the problem can be avoided by computing the mask as H('mask', z, i, P_output) where P_output is the output key being masked.
-[2019-01-07 11:24:06] <sarang> Not even that... the encrypted amounts already use the shared secret
-[2019-01-07 11:24:41] <suraeNoether> why not H('mask', z, i, P)?
-[2019-01-07 11:24:48] — suraeNoether why not zoidberg
-[2019-01-07 11:24:49] <knaccc> sarang lol yes good point
-[2019-01-07 11:25:01] <sarang> In fact, encrypted amounts should also use P
-[2019-01-07 11:26:49] <suraeNoether> okay, so including P seems to be a good way to avoid the lex ordering above too
-[2019-01-07 11:27:23] <knaccc> holw on, what's z? the shared secret?
-[2019-01-07 11:27:24] <suraeNoether> heck, you could include as much crap in that hash as possible, like the signing ring and everything public
-[2019-01-07 11:27:28] <sarang> Oh heh, including P really does nothing
-[2019-01-07 11:27:33] <suraeNoether> knaccc: yeah, rA = aR
-[2019-01-07 11:27:38] <sarang> it's determined from z entirely
-[2019-01-07 11:27:39] <sarang> d'oh
-[2019-01-07 11:27:44] <suraeNoether> oh hehe
-[2019-01-07 11:27:55] <sarang> Reusing this to the same full address will gain you nothing
-[2019-01-07 11:28:17] <sarang> So: the motto is basically not to reuse shared secrets, or you're already being bad to yourself
-[2019-01-07 11:28:33] <suraeNoether> and you may be being bad to your recipients
-[2019-01-07 11:28:33] <knaccc> suraeNoether do you really mean Hs(aR||i)?
-[2019-01-07 11:28:49] <suraeNoether> knaccc: yes
-[2019-01-07 11:28:55] <suraeNoether> i think
-[2019-01-07 11:28:57] <knaccc> cool just checking
-[2019-01-07 11:29:03] <suraeNoether> *thumbs up*
-[2019-01-07 11:29:11] <knaccc> cos it's only the per-output shared secret that is ever used anywhere
-[2019-01-07 11:30:06] <suraeNoether> okay, moneromooo sarang
-[2019-01-07 11:30:19] <suraeNoether> oh wait
-[2019-01-07 11:30:25] <sarang> ...
-[2019-01-07 11:30:59] <suraeNoether> okay i agree, re-using transaction keys r is the root of all evil.
-[2019-01-07 11:31:24] <suraeNoether> but we need some way to order these keys for multiple outputs at least
-[2019-01-07 11:31:35] <moneromooo> So since money is the root of all evil... you make money by reusing transaction keys ?
-[2019-01-07 11:31:54] <knaccc> suraeNoether the ||i in the per-output shared secret does that, right?
-[2019-01-07 11:31:56] <suraeNoether> heh
-[2019-01-07 11:32:06] <sarang> yes
-[2019-01-07 11:32:10] <suraeNoether> yes
-[2019-01-07 11:33:09] <suraeNoether> yeah, that's a good way to deterministically derive masks
-[2019-01-07 11:33:13] <suraeNoether> i like it
-[2019-01-07 11:33:25] <suraeNoether> okay, moving along: do we have any further questions?
-[2019-01-07 11:33:40] <sarang> There was the question of a reduced amount ecdh size
-[2019-01-07 11:33:52] <moneromooo> I'd like to get that written out with details ^_^
-[2019-01-07 11:34:00] <oneiric_> just the one about random distributions...
-[2019-01-07 11:34:10] <moneromooo> The final "this is good, safe and vetted" version if you will.
-[2019-01-07 11:34:25] <suraeNoether> oneiric_: i need a little bit more detail on your question
-[2019-01-07 11:34:33] <moneromooo> I thought the amount size one was already vetted ?
-[2019-01-07 11:34:34] <knaccc> very non-urgent, but there is the refund scheme. https://paste.fedoraproject.org/paste/lpM4dWKuV7KKCeAPn~P4Fw/raw
-[2019-01-07 11:34:51] <suraeNoether> knaccc: yeah i started reading that right before the meeting
-[2019-01-07 11:35:34] <sarang> Regarding the 64-bit amounts, I know it was discussed earlier but thought it best to bring up in meeting for a final thumbs-up
-[2019-01-07 11:36:16] <oneiric_> suraeNoether: what more information do you need?
-[2019-01-07 11:36:48] <suraeNoether> oneiric_: " they bin based on common tor packet sizes. would like to know if there are particular mutations should perform on sampled, binned sizes to get a good random distribution" <--- do you mean you have a histogram and you need to pick a random number from that histogram as if it were a probability distribuiton? i'm not sure what you mean yet.
-[2019-01-07 11:37:58] <oneiric_> picking from a histogram sounds pretty close to what i want to do, or close to what obfs4 does
-[2019-01-07 11:38:06] <suraeNoether> sarang: let's collaborate on an ascii one-sheet for moneromooo on both amounts and masks for moneromooo
-[2019-01-07 11:38:13] <suraeNoether> oneiric_: oh then the answer is: hells yes
-[2019-01-07 11:38:33] <suraeNoether> i'm not sure if this is sufficiently on-topic for the room
-[2019-01-07 11:39:01] <oneiric_> ok, will keep looking elsewhere. thanks suraeNoether
-[2019-01-07 11:39:26] <sarang> Can we confirm people's thoughts on reducing ecdh amount size?
-[2019-01-07 11:39:28] <suraeNoether> oneiric_: nah, i got you in PM
-[2019-01-07 11:39:44] <sarang> Right now encrypted_amount = amount + H(z)
-[2019-01-07 11:39:46] <oneiric_> :)
-[2019-01-07 11:39:51] <sarang> all are 32 bytes as usual
-[2019-01-07 11:40:16] <sarang> the proposal was to reduce amount to 8 bytes, take the bottom 8 bytes of H(z) and XOR
-[2019-01-07 11:40:25] <sarang> thereby keeping that data type down to 8 bytes
-[2019-01-07 11:40:32] <knaccc> moo has reimplemented that as encrypted_amount = keccak("amount" || shared secret)
-[2019-01-07 11:40:36] <knaccc> mooo*
-[2019-01-07 11:40:40] <sarang> Sure, that's even better
-[2019-01-07 11:40:59] <sarang> Er, wait
-[2019-01-07 11:41:11] <sarang> that's the final encrypted amount sent to the recipient?
-[2019-01-07 11:41:12] <knaccc> oops i left out tons. i meant encrypted_amount = 8 byte amount XOR 8 bytes of keccak("amount" || shared secret)
-[2019-01-07 11:41:17] <sarang> aha
-[2019-01-07 11:41:18] <sarang> yes
-[2019-01-07 11:43:31] <sarang> I seem to remember suraeNoether had much to say about this earlier when it was first brought up?
-[2019-01-07 11:44:01] <knaccc> i think surae might have been thinking about what would happen if there was an auth tag or something to check brute force attempts against
-[2019-01-07 11:44:26] <suraeNoether> nope, i never should have brought auth into the discussion becuase it was aside the main point
-[2019-01-07 11:44:43] <sarang> Is output index also considered in this hash construction?
-[2019-01-07 11:44:58] <suraeNoether> so the main thing my concern was
-[2019-01-07 11:45:09] <knaccc> yes the entire thing is encrypted_amount = 8 byte amount XOR 8 bytes of keccak("amount" || Hs(8aR||i))
-[2019-01-07 11:45:20] <suraeNoether> hiding an N-bit number with an N-bit number, mod 2^N
-[2019-01-07 11:46:15] <suraeNoether> why 8aR? aR is guaranteed to be on the curve if A and R are both on the curve...
-[2019-01-07 11:46:36] <sarang> Recipient can't guarantee anything about R
-[2019-01-07 11:46:41] <knaccc> yes, but instead of checking if R is in the subgroup of G, we just mul8 so no check is required
-[2019-01-07 11:46:57] <knaccc> everywhere you see people talking about aR, they really mean 8aR
-[2019-01-07 11:47:27] <knaccc> that's something people don't discover usually until they read the code
-[2019-01-07 11:47:34] <knaccc> because it's always ommitted for brevity
-[2019-01-07 11:47:37] <suraeNoether> oh fantastic, that's fine
-[2019-01-07 11:47:44] <suraeNoether> i usually only think about it when computing hash-to-piont
-[2019-01-07 11:47:46] <suraeNoether> point*
-[2019-01-07 11:47:49] <suraeNoether> that's bad of me
-[2019-01-07 11:47:54] <moneromooo> When people tell me aR, I compute aR...
-[2019-01-07 11:48:00] — moneromooo grumbles
-[2019-01-07 11:48:15] <sarang> Hence writing up details on this as requested
-[2019-01-07 11:48:38] <knaccc> moneromooo well in the ecdh case, you were using a shared secret that was based on 8aR
-[2019-01-07 11:48:39] <suraeNoether> so, short answer on whether it's safe to just use 8 bytes of keccak to mask an 8 byte number
-[2019-01-07 11:48:50] <suraeNoether> is yeah, it should be fine
-[2019-01-07 11:49:00] <knaccc> partaay!
-[2019-01-07 11:49:16] <suraeNoether> although rather than only xor'ing the first 8 bytes
-[2019-01-07 11:49:32] <suraeNoether> you could break keccak(stuff) into 8 byte blocks and xor all of them
-[2019-01-07 11:49:36] <knaccc> lol
-[2019-01-07 11:49:39] <sarang> ?
-[2019-01-07 11:49:51] <sarang> there's nothing to be gained from that
-[2019-01-07 11:49:55] <moneromooo> Can I take this as a vote of non confidence in keccak ? :P
-[2019-01-07 11:49:57] <suraeNoether> 8 byte amount XOR first 8 bytes of keccak XOR next 8 bytes of keccak XOR ...
-[2019-01-07 11:50:07] <suraeNoether> no, it's simply using all the entropy from the output of keccak
-[2019-01-07 11:50:08] <knaccc> it's pretty standard practice when you have a csprng to just xor the stream against the plaintext
-[2019-01-07 11:50:17] <sarang> yes
-[2019-01-07 11:50:18] <suraeNoether> yeah, it is
-[2019-01-07 11:50:27] <knaccc> and you don't need more than 64 bits of entropy to encrypt 64 bits
-[2019-01-07 11:50:40] <sarang> moneromooo: sure, replace keccak with the identity function for simplicity
-[2019-01-07 11:51:30] <moneromooo> There is a pointless keccak you mean ?
-[2019-01-07 11:51:45] <knaccc> i don't know what sarang means either
-[2019-01-07 11:51:52] <suraeNoether> i'm just mentioning it's an option. if the first 8 bytes are indistinguishable from uniform, then great, but reducing the output of keccak to the first 8 bytes does a lot to hurt 2nd pre-image resistance.
-[2019-01-07 11:52:23] <moneromooo> Hmm. OK. There's a few places where that's done. Like the payment id stuff.
-[2019-01-07 11:52:39] <moneromooo> I think some subaddress stuff too.
-[2019-01-07 11:52:44] <knaccc> right, so the question is whether the first 8 bytes of keccak are indistinguishable from uniform, which I think it is
-[2019-01-07 11:52:49] <knaccc> otherwise it'd be a terrible hash
-[2019-01-07 11:53:24] <sarang> I was only joking :/
-[2019-01-07 11:53:40] <knaccc> hehe
-[2019-01-07 11:53:53] <sarang> Yes, a subset of the hash output is uniform
-[2019-01-07 11:53:58] <suraeNoether> i need to think about exactly how much 2nd pre-image resistance is even important here, though
-[2019-01-07 11:54:44] <sarang> Keep in mind that the recipient does a commitment reconstruction too
-[2019-01-07 11:55:13] <sarang> So any mismatch between encrypted amounts (which the sender can always just make up) and the commitment will be detected
-[2019-01-07 11:55:25] <sarang> We should always assume that the sender is lying about the amount
-[2019-01-07 11:55:26] <suraeNoether> even if we find two R, R' such that keccak("amount" || Hs(8aR||i)) is identical, we send two transactions to whoever controls the view key a, and the encrypted amount has the same xor mask... but so what? even if you took those two encrypted amounts and xor'd them together, you would cancel the mask, but then you just have two xor'd amounts... i don't know.
-[2019-01-07 11:56:07] <suraeNoether> anyway, we can avoid the problem of 2nd pre-image resistance by XOR'ing all the blocks
-[2019-01-07 11:56:17] <suraeNoether> i'm just not convinced it's important here
-[2019-01-07 11:56:40] <knaccc> i think keccak is immune
-[2019-01-07 11:57:42] <suraeNoether> keccak is pre-image resistant. truncations of keccak are not necessarily. easy example, the *first bit* of keccak is *not* second pre-image resistant
-[2019-01-07 11:57:51] <moneromooo> So something like this ? https://paste.debian.net/hidden/38907823/
-[2019-01-07 11:57:59] <moneromooo> (not tested yet)
-[2019-01-07 11:58:30] <knaccc> if the first bit was not 2ndpreimageresistant, then it would not be a decent hash
-[2019-01-07 11:58:35] <suraeNoether> moneromooo: that looks to do what i think it should do, yeah... but that's assuming sarang and others agree with me
-[2019-01-07 11:58:57] <moneromooo> Well, it can't hurt, even if it's pointless.
-[2019-01-07 11:59:28] <suraeNoether> knaccc: technically it's pre-image resistant *asymptotically.* but in the concrete sense of security, i can break 2nd pre-image resistance for the first bit in an astonishingly short period of time
-[2019-01-07 11:59:28] <knaccc> it only helps if the randomness in the hash is not evenly distributed
-[2019-01-07 11:59:50] <suraeNoether> moneromooo: yeah, the cost is a few milliseconds when signing. *shrug*
-[2019-01-07 12:00:13] ⇐ sproj quit (~sproj@89.101.110.114): Remote host closed the connection
-[2019-01-07 12:00:24] → xmranon joined (~xmranon@47.40.175.142)
-[2019-01-07 12:00:32] <knaccc> suraeNoether maybe you'll have to spell out how you'd do that, but i don't think that's possible if the first bit is uniformly distributed
-[2019-01-07 12:01:01] <suraeNoether> knaccc: okay check it out
-[2019-01-07 12:01:03] <suraeNoether> pick a random number x
-[2019-01-07 12:01:07] <suraeNoether> compute keccak(x)
-[2019-01-07 12:01:10] <suraeNoether> select the first bit
-[2019-01-07 12:01:41] <suraeNoether> i have a 50% chance that your bit matches the first bit of keccak(0), and a 50% chance it matches keccak(1), and a 50% chance it matches keccak(2), and so on
-[2019-01-07 12:01:50] <knaccc> yes
-[2019-01-07 12:01:59] <suraeNoether> finding a 2nd pre-image for your bit is as rapid as finding a heads up fair coin
-[2019-01-07 12:02:15] <sarang> this seems... pedantic
-[2019-01-07 12:02:35] <knaccc> maybe i need to re-read the definition of 2nd pre-image resistance and why it matters in this scenario
-[2019-01-07 12:02:56] <sarang> for the level we're working with (2^64) it should not
-[2019-01-07 12:02:59] <suraeNoether> it is. i'm just saying truncating a secure hash function according to whatever security property we are talking about... in general.... doesn't result in a secure hash function.
-[2019-01-07 12:03:19] <suraeNoether> ^ it is *pedantic*
-[2019-01-07 12:04:15] <suraeNoether> knaccc the answer you are looking for perhaps is this: i have to try, in expectation, as many pre-images as there are possible outputs, before finding a 2nd pre-image
-[2019-01-07 12:04:15] ⇐ xmranon quit (~xmranon@47.40.175.142): Remote host closed the connection
-[2019-01-07 12:04:43] <suraeNoether> so asymptotically with a security parameter that gives you the ridiculous 1-bit case, it's still technically a secure hash function, i guess
-[2019-01-07 12:04:47] <suraeNoether> it's just not practically one
-[2019-01-07 12:04:47] <suraeNoether> anyway
-[2019-01-07 12:05:06] <suraeNoether> sarang: how about you tell us about your work for the past week or so, and then i'll give my update, and anyone else doing any other work can chime in
-[2019-01-07 12:05:11] <suraeNoether> and we'll wrap it up
-[2019-01-07 12:07:44] <knaccc> suraeNoether ah sorry i know what you mean by 2nd pre-image resistance now, for some reason i was confused on terms. so yes, there is certainly a 2nd pre-image resistance issue at 64 bits
-[2019-01-07 12:07:54] <knaccc> but not in a way that actually matters
-[2019-01-07 12:08:37] → midipoet joined (6d4df2d0@gateway/web/freenode/ip.109.77.242.208)
-[2019-01-07 12:08:52] <sarang> This past week has basically been a sandstorm of proposals to consider and review
-[2019-01-07 12:08:56] <sarang> Payment IDs
-[2019-01-07 12:09:00] <sarang> Refund addresses
-[2019-01-07 12:09:06] <sarang> Block size and penalty structure
-[2019-01-07 12:09:12] <sarang> and so on
-[2019-01-07 12:09:23] <sarang> as well as the release of the second episode of Breaking Monero
-[2019-01-07 12:09:43] <knaccc> oh yes i loved one of your metaphors in that vid
-[2019-01-07 12:09:46] <suraeNoether> knaccc: right, finding a 2nd pre-image at 64 bits itself takes a long time. it's not cryptographically long periods of time short of 80 bits... but i can't really think of what such a pre-image would gain an attacker, either, so like I said i'm not sure how much it's necessary
-[2019-01-07 12:09:49] <knaccc> can't remember what it was now
-[2019-01-07 12:10:02] <sarang> Was it burning the envelope as a heuristic?
-[2019-01-07 12:10:20] <knaccc> it was eating the envelope and walking away
-[2019-01-07 12:10:24] <sarang> heh
-[2019-01-07 12:10:25] <knaccc> i lolled like crazy on that
-[2019-01-07 12:11:07] <sarang> The current loose consensus seems to be that a two-median approach to block size cap is reasonable but not ideal
-[2019-01-07 12:11:21] → cardboardoranges joined (~cardboard@65.112.8.13)
-[2019-01-07 12:11:24] <sarang> as it will at least slow the bloat
-[2019-01-07 12:11:41] → rex4539 joined (~rex4539@ppp-2-84-172-26.home.otenet.gr)
-[2019-01-07 12:12:08] <sarang> For payment IDs there is less consensus about the timeline
-[2019-01-07 12:12:47] <suraeNoether> my work this past week included: 1) some coding simulations for the matching paper, 2) working on the monero konferenco website, which should be up and running before jan 15, which is when i'm going to put out a formal call for papers (although i've already heard back from a few folks). 3) refund proposal by charuto (I think it was charuto?) and 4) block size stuff. i was going to participate in breaking
-[2019-01-07 12:12:47] <suraeNoether> monero this week but I got caught up on the block size stuff, unfortunately... it appears to me like the problem with the blocksize debate boils down to this: we don't necessarily know what we want from our own dynamic blocksize adjustment methods
-[2019-01-07 12:13:41] <suraeNoether> we know some loose ideas about what we want, like adapting for rapid short-term growth that handles, for example, the holiday season, and we want block sizes to stay small unless it's needed
-[2019-01-07 12:14:09] <suraeNoether> but the details of what behavior is considered malicious and which should be adapted for ... these aren't totally clear to me. so i've been thinking about those things, too.
-[2019-01-07 12:14:25] <suraeNoether> oh, and 5) fees. i've been thinking about fee strucutre. but that ties in with 4).
-[2019-01-07 12:15:03] <suraeNoether> i just have not had time to get into the payment ID discussion :(
-[2019-01-07 12:15:25] → xmranon joined (~xmranon@47.40.175.142)
-[2019-01-07 12:15:36] <knaccc> timelines are really about politics more than tech
-[2019-01-07 12:15:43] <sarang> yes
-[2019-01-07 12:16:06] <sarang> and the timelines for applications and users of pIDs
-[2019-01-07 12:16:30] <suraeNoether> sarang: since pay_id isn't necessarily a security issue, but they are so freaking annoying, where do you stand on timeline for deprecation?
-[2019-01-07 12:17:05] <sarang> Well, they can be a problem if not enforced
-[2019-01-07 12:17:25] <sarang> Most complete option is full deprecation of unenc/enc, which I support doing all at once
-[2019-01-07 12:17:35] <sarang> probably fall 2019
-[2019-01-07 12:17:53] <sarang> at the very least, remove unenc and enforce enc (to the extent possible) with wallet default
-[2019-01-07 12:19:19] <suraeNoether> okay, guys, i want to continue some of these discussions for sure, but let's call it for the official meeting time
-[2019-01-07 12:19:28] <suraeNoether> sarang, thank you
-[2019-01-07 12:19:28] <sgp_> Should I re-write my post to say all payment IDs are disallowed in the Fall 2019 upgrade?
-[2019-01-07 12:19:50] <sarang> sgp_: you were interested in learning who uses unenc, right?
-[2019-01-07 12:20:00] <sarang> To get a better sense of who needs to switch over and for what uses
-[2019-01-07 12:20:10] <moneromooo> Shapeshift does.
-[2019-01-07 12:20:16] <knaccc> thanks guys
-[2019-01-07 12:20:33] <oneiric_> thanks all for the meeting
+[2019-01-07 17:02:31] <suraeNoether> okay everyone
+[2019-01-07 17:02:54] <suraeNoether> time for our Monday research meeting
+[2019-01-07 17:03:10] <suraeNoether> before we get going, let's open up the meeting to questions! i like questions
+[2019-01-07 17:04:35] <moneromooo> I want to know whether knaccc's propose change to the ecdh mask is good/safe, so I can code it early enough for the fork.
+[2019-01-07 17:05:44] <suraeNoether> is knaccc around? i'm still unclear enough on the details of *what exactly* is being proposed. in terms of security, picking a mask from the same set as the value to be hidden is fine to do, but the devil is in the details
+[2019-01-07 17:05:52] <sarang> Right, so the idea was to make the ECDH amount mask deterministic from the shared secret
+[2019-01-07 17:06:13] <suraeNoether> i thought it was to select the mask from a smaller set so we can describe it with fewer bytes
+[2019-01-07 17:06:17] <sarang> e.g. mask = H('mask',z,i) for example
+[2019-01-07 17:06:32] <sarang> There was a separate idea to shrink the size of the encrypted amount data type
+[2019-01-07 17:06:45] <sarang> making the mask deterministic means you shave 32 bytes off each output
+[2019-01-07 17:07:24] <suraeNoether> ah, i see. and the question is "will this be good enough entropy because z itself is hashed?"
+[2019-01-07 17:08:01] <sarang> The only thing to consider, I think, is that outputs with the same index and shared secret share a mask
+[2019-01-07 17:08:14] <suraeNoether> if we are concerned with loss of entropy, we can use HMACs. they don't lose entropy after iteratively hashing in the same way... oh
+[2019-01-07 17:08:31] ⇐ midipoet quit (8fef72ab@gateway/web/freenode/ip.143.239.114.171): Quit: Page closed
+[2019-01-07 17:09:00] <suraeNoether> what if we add an additional nonce that indicates the index among the outputs, assuming the output keys are lexicographically ordered?
+[2019-01-07 17:09:16] <sarang> From an MLSAG perspective, we care only that the mask is uniformly distributed and known only to the sender/recipient
+[2019-01-07 17:09:34] <sarang> that's what the proposal includes
+[2019-01-07 17:09:35] <suraeNoether> ie H(m,z,i,j) where j = j^th output
+[2019-01-07 17:09:38] <suraeNoether> oh
+[2019-01-07 17:09:55] <suraeNoether> i'm clearly catching up on this. :P i didn't know this was written up, can I get a link?
+[2019-01-07 17:10:14] <sarang> I don't believe that was written up AFAIK
+[2019-01-07 17:10:20] <suraeNoether> oh, then i feel a little less bad
+[2019-01-07 17:10:38] <suraeNoether> wait quick question
+[2019-01-07 17:10:58] <suraeNoether> H('mask',z,i,j)... z is the amount being masked here?
+[2019-01-07 17:11:01] → lurkinandlearnin joined (~lurkinand@2a02:c7d:b7d8:4100:d9c8:a4f9:27de:1a20)
+[2019-01-07 17:11:17] <sarang> No, z is the shared secret; z=arG in the standard address case
+[2019-01-07 17:11:35] <sarang> The encrypted amount is still included elsewhere in the ecdh data
+[2019-01-07 17:12:49] <suraeNoether> yeah, looks fine to me. my only concern is that an adversary gets some partial control over z
+[2019-01-07 17:13:02] <sarang> How?
+[2019-01-07 17:13:02] <suraeNoether> but that's taken care of by CDH
+[2019-01-07 17:13:09] <suraeNoether> sender picks r
+[2019-01-07 17:13:11] <suraeNoether> recipient picks a
+[2019-01-07 17:13:15] <suraeNoether> they both have a little control
+[2019-01-07 17:13:21] <sarang> Well previously we used a random mask and used z to encrypt that
+[2019-01-07 17:13:21] ⇐ rex4539 quit (~rex4539@ppp-2-87-224-2.home.otenet.gr): Quit: rex4539
+[2019-01-07 17:13:30] <sarang> So anyone who got z could compute the mask anyway
+[2019-01-07 17:13:41] <sarang> The difference here is that the mask is now completely deterministic
+[2019-01-07 17:14:07] <oneiric_> is there a "known-best" algorithm, or set of algorithms, for generating a bounded random distribution?
+[2019-01-07 17:14:31] <suraeNoether> oneiric_: you mean a uniform distribution on a bouned set or...?
+[2019-01-07 17:14:39] <suraeNoether> that's true, sarang, but ...
+[2019-01-07 17:14:56] <sarang> ...
+[2019-01-07 17:15:10] <suraeNoether> there's a difference here, and i need to figure out how to express it. one moment.
+[2019-01-07 17:15:59] <sarang> The way I see it, the difference is only that the mask is now deterministic but still limited to the view of sender/recipient
+[2019-01-07 17:16:11] <sarang> It's reused if the same shared secret is used elsewhere with identical index
+[2019-01-07 17:16:29] <oneiric_> suraeNoether: mean like, obfs4 generates random padding for dpi resistance. they bin based on common tor packet sizes. would like to know if there are particular mutations should perform on sampled, binned sizes to get a good random distribution
+[2019-01-07 17:16:36] <suraeNoether> okay, so the difference here is that *partial adversarial control over this z* is being combined with using z as input for a one-way function that is allegedly masking some secret information.
+[2019-01-07 17:16:48] <suraeNoether> the sender presumably wants to protect their own amount
+[2019-01-07 17:17:01] <suraeNoether> the recipient could just reveal their own private view key if they want to be a jerk
+[2019-01-07 17:17:08] <suraeNoether> so control over view key a isn't a big deal
+[2019-01-07 17:17:11] <sarang> Our use of hash functions is about as uniform as you can expect (slight bias with H_s)
+[2019-01-07 17:17:58] <sarang> Again, keep in mind that anyone who can compute the shared secret (e.g. view key) can _already_ decrypt the mask now
+[2019-01-07 17:18:08] <suraeNoether> right, the only fix i can think of would be computing H('mask', HMAC(z), i, j), which would sort of ensure that the security reduces to *revealing z,* following the strength of hmacs
+[2019-01-07 17:18:09] <sarang> and thereby reconstruct the amount commitment
+[2019-01-07 17:18:23] <suraeNoether> and i'm not sure what would be "fixed"
+[2019-01-07 17:18:50] <suraeNoether> other than, in general, i like avoiding using any adversarially controlled data as input for protecting a secret
+[2019-01-07 17:19:31] <sarang> Pro: shave off 32 bytes per output; commitments themselves are not deterministic
+[2019-01-07 17:19:45] <sarang> whoops, that was for the con list
+[2019-01-07 17:19:50] — knaccc just arrived and is reading through the backlog
+[2019-01-07 17:20:24] <sarang> Only downsides I see in practice relate to reuse of shared secrets
+[2019-01-07 17:20:53] <suraeNoether> well, if it's two separate transction,, the sender should select two distinct random keys
+[2019-01-07 17:21:20] <sarang> Sure, but they don't have to
+[2019-01-07 17:21:27] <suraeNoether> but what if a sender maliciously selects the same random transaction keys on purpose? what happens? the mask is the same for two different transactions.
+[2019-01-07 17:21:28] <suraeNoether> right
+[2019-01-07 17:21:41] <suraeNoether> but the sender already knows the amounts
+[2019-01-07 17:21:49] <sarang> In any case, it only leaks information that the two parties had already
+[2019-01-07 17:21:52] <knaccc> if you use the same r or s with the same recipient twice, i don't think that's a security breach
+[2019-01-07 17:22:15] <knaccc> it's a linkability breach though
+[2019-01-07 17:22:27] <sarang> But it was already
+[2019-01-07 17:22:33] <knaccc> yes
+[2019-01-07 17:22:39] <suraeNoether> knaccc: if i'm an observer and i know two transactions use the same mask, i can figure out which transaction is larger and i can compute the *difference in amounts* between those two transactions
+[2019-01-07 17:23:12] <suraeNoether> so i suppose this could be a way for a sender to surreptitiously leak transaction amounts to exterior parties without ever revealing anything to them directly
+[2019-01-07 17:23:22] <sarang> suraeNoether: that was already possible
+[2019-01-07 17:23:23] <knaccc> suraeNoether yes i agree
+[2019-01-07 17:23:40] <knaccc> right yes, they could always set the same mask twice
+[2019-01-07 17:23:55] <knaccc> now there is only one random variable to not screw up :)
+[2019-01-07 17:23:56] <suraeNoether> on the other hand, the problem can be avoided by computing the mask as H('mask', z, i, P_output) where P_output is the output key being masked.
+[2019-01-07 17:24:06] <sarang> Not even that... the encrypted amounts already use the shared secret
+[2019-01-07 17:24:41] <suraeNoether> why not H('mask', z, i, P)?
+[2019-01-07 17:24:48] — suraeNoether why not zoidberg
+[2019-01-07 17:24:49] <knaccc> sarang lol yes good point
+[2019-01-07 17:25:01] <sarang> In fact, encrypted amounts should also use P
+[2019-01-07 17:26:49] <suraeNoether> okay, so including P seems to be a good way to avoid the lex ordering above too
+[2019-01-07 17:27:23] <knaccc> holw on, what's z? the shared secret?
+[2019-01-07 17:27:24] <suraeNoether> heck, you could include as much crap in that hash as possible, like the signing ring and everything public
+[2019-01-07 17:27:28] <sarang> Oh heh, including P really does nothing
+[2019-01-07 17:27:33] <suraeNoether> knaccc: yeah, rA = aR
+[2019-01-07 17:27:38] <sarang> it's determined from z entirely
+[2019-01-07 17:27:39] <sarang> d'oh
+[2019-01-07 17:27:44] <suraeNoether> oh hehe
+[2019-01-07 17:27:55] <sarang> Reusing this to the same full address will gain you nothing
+[2019-01-07 17:28:17] <sarang> So: the motto is basically not to reuse shared secrets, or you're already being bad to yourself
+[2019-01-07 17:28:33] <suraeNoether> and you may be being bad to your recipients
+[2019-01-07 17:28:33] <knaccc> suraeNoether do you really mean Hs(aR||i)?
+[2019-01-07 17:28:49] <suraeNoether> knaccc: yes
+[2019-01-07 17:28:55] <suraeNoether> i think
+[2019-01-07 17:28:57] <knaccc> cool just checking
+[2019-01-07 17:29:03] <suraeNoether> *thumbs up*
+[2019-01-07 17:29:11] <knaccc> cos it's only the per-output shared secret that is ever used anywhere
+[2019-01-07 17:30:06] <suraeNoether> okay, moneromooo sarang
+[2019-01-07 17:30:19] <suraeNoether> oh wait
+[2019-01-07 17:30:25] <sarang> ...
+[2019-01-07 17:30:59] <suraeNoether> okay i agree, re-using transaction keys r is the root of all evil.
+[2019-01-07 17:31:24] <suraeNoether> but we need some way to order these keys for multiple outputs at least
+[2019-01-07 17:31:35] <moneromooo> So since money is the root of all evil... you make money by reusing transaction keys ?
+[2019-01-07 17:31:54] <knaccc> suraeNoether the ||i in the per-output shared secret does that, right?
+[2019-01-07 17:31:56] <suraeNoether> heh
+[2019-01-07 17:32:06] <sarang> yes
+[2019-01-07 17:32:10] <suraeNoether> yes
+[2019-01-07 17:33:09] <suraeNoether> yeah, that's a good way to deterministically derive masks
+[2019-01-07 17:33:13] <suraeNoether> i like it
+[2019-01-07 17:33:25] <suraeNoether> okay, moving along: do we have any further questions?
+[2019-01-07 17:33:40] <sarang> There was the question of a reduced amount ecdh size
+[2019-01-07 17:33:52] <moneromooo> I'd like to get that written out with details ^_^
+[2019-01-07 17:34:00] <oneiric_> just the one about random distributions...
+[2019-01-07 17:34:10] <moneromooo> The final "this is good, safe and vetted" version if you will.
+[2019-01-07 17:34:25] <suraeNoether> oneiric_: i need a little bit more detail on your question
+[2019-01-07 17:34:33] <moneromooo> I thought the amount size one was already vetted ?
+[2019-01-07 17:34:34] <knaccc> very non-urgent, but there is the refund scheme. https://paste.fedoraproject.org/paste/lpM4dWKuV7KKCeAPn~P4Fw/raw
+[2019-01-07 17:34:51] <suraeNoether> knaccc: yeah i started reading that right before the meeting
+[2019-01-07 17:35:34] <sarang> Regarding the 64-bit amounts, I know it was discussed earlier but thought it best to bring up in meeting for a final thumbs-up
+[2019-01-07 17:36:16] <oneiric_> suraeNoether: what more information do you need?
+[2019-01-07 17:36:48] <suraeNoether> oneiric_: " they bin based on common tor packet sizes. would like to know if there are particular mutations should perform on sampled, binned sizes to get a good random distribution" <--- do you mean you have a histogram and you need to pick a random number from that histogram as if it were a probability distribuiton? i'm not sure what you mean yet.
+[2019-01-07 17:37:58] <oneiric_> picking from a histogram sounds pretty close to what i want to do, or close to what obfs4 does
+[2019-01-07 17:38:06] <suraeNoether> sarang: let's collaborate on an ascii one-sheet for moneromooo on both amounts and masks for moneromooo
+[2019-01-07 17:38:13] <suraeNoether> oneiric_: oh then the answer is: hells yes
+[2019-01-07 17:38:33] <suraeNoether> i'm not sure if this is sufficiently on-topic for the room
+[2019-01-07 17:39:01] <oneiric_> ok, will keep looking elsewhere. thanks suraeNoether
+[2019-01-07 17:39:26] <sarang> Can we confirm people's thoughts on reducing ecdh amount size?
+[2019-01-07 17:39:28] <suraeNoether> oneiric_: nah, i got you in PM
+[2019-01-07 17:39:44] <sarang> Right now encrypted_amount = amount + H(z)
+[2019-01-07 17:39:46] <oneiric_> :)
+[2019-01-07 17:39:51] <sarang> all are 32 bytes as usual
+[2019-01-07 17:40:16] <sarang> the proposal was to reduce amount to 8 bytes, take the bottom 8 bytes of H(z) and XOR
+[2019-01-07 17:40:25] <sarang> thereby keeping that data type down to 8 bytes
+[2019-01-07 17:40:32] <knaccc> moo has reimplemented that as encrypted_amount = keccak("amount" || shared secret)
+[2019-01-07 17:40:36] <knaccc> mooo*
+[2019-01-07 17:40:40] <sarang> Sure, that's even better
+[2019-01-07 17:40:59] <sarang> Er, wait
+[2019-01-07 17:41:11] <sarang> that's the final encrypted amount sent to the recipient?
+[2019-01-07 17:41:12] <knaccc> oops i left out tons. i meant encrypted_amount = 8 byte amount XOR 8 bytes of keccak("amount" || shared secret)
+[2019-01-07 17:41:17] <sarang> aha
+[2019-01-07 17:41:18] <sarang> yes
+[2019-01-07 17:43:31] <sarang> I seem to remember suraeNoether had much to say about this earlier when it was first brought up?
+[2019-01-07 17:44:01] <knaccc> i think surae might have been thinking about what would happen if there was an auth tag or something to check brute force attempts against
+[2019-01-07 17:44:26] <suraeNoether> nope, i never should have brought auth into the discussion becuase it was aside the main point
+[2019-01-07 17:44:43] <sarang> Is output index also considered in this hash construction?
+[2019-01-07 17:44:58] <suraeNoether> so the main thing my concern was
+[2019-01-07 17:45:09] <knaccc> yes the entire thing is encrypted_amount = 8 byte amount XOR 8 bytes of keccak("amount" || Hs(8aR||i))
+[2019-01-07 17:45:20] <suraeNoether> hiding an N-bit number with an N-bit number, mod 2^N
+[2019-01-07 17:46:15] <suraeNoether> why 8aR? aR is guaranteed to be on the curve if A and R are both on the curve...
+[2019-01-07 17:46:36] <sarang> Recipient can't guarantee anything about R
+[2019-01-07 17:46:41] <knaccc> yes, but instead of checking if R is in the subgroup of G, we just mul8 so no check is required
+[2019-01-07 17:46:57] <knaccc> everywhere you see people talking about aR, they really mean 8aR
+[2019-01-07 17:47:27] <knaccc> that's something people don't discover usually until they read the code
+[2019-01-07 17:47:34] <knaccc> because it's always ommitted for brevity
+[2019-01-07 17:47:37] <suraeNoether> oh fantastic, that's fine
+[2019-01-07 17:47:44] <suraeNoether> i usually only think about it when computing hash-to-piont
+[2019-01-07 17:47:46] <suraeNoether> point*
+[2019-01-07 17:47:49] <suraeNoether> that's bad of me
+[2019-01-07 17:47:54] <moneromooo> When people tell me aR, I compute aR...
+[2019-01-07 17:48:00] — moneromooo grumbles
+[2019-01-07 17:48:15] <sarang> Hence writing up details on this as requested
+[2019-01-07 17:48:38] <knaccc> moneromooo well in the ecdh case, you were using a shared secret that was based on 8aR
+[2019-01-07 17:48:39] <suraeNoether> so, short answer on whether it's safe to just use 8 bytes of keccak to mask an 8 byte number
+[2019-01-07 17:48:50] <suraeNoether> is yeah, it should be fine
+[2019-01-07 17:49:00] <knaccc> partaay!
+[2019-01-07 17:49:16] <suraeNoether> although rather than only xor'ing the first 8 bytes
+[2019-01-07 17:49:32] <suraeNoether> you could break keccak(stuff) into 8 byte blocks and xor all of them
+[2019-01-07 17:49:36] <knaccc> lol
+[2019-01-07 17:49:39] <sarang> ?
+[2019-01-07 17:49:51] <sarang> there's nothing to be gained from that
+[2019-01-07 17:49:55] <moneromooo> Can I take this as a vote of non confidence in keccak ? :P
+[2019-01-07 17:49:57] <suraeNoether> 8 byte amount XOR first 8 bytes of keccak XOR next 8 bytes of keccak XOR ...
+[2019-01-07 17:50:07] <suraeNoether> no, it's simply using all the entropy from the output of keccak
+[2019-01-07 17:50:08] <knaccc> it's pretty standard practice when you have a csprng to just xor the stream against the plaintext
+[2019-01-07 17:50:17] <sarang> yes
+[2019-01-07 17:50:18] <suraeNoether> yeah, it is
+[2019-01-07 17:50:27] <knaccc> and you don't need more than 64 bits of entropy to encrypt 64 bits
+[2019-01-07 17:50:40] <sarang> moneromooo: sure, replace keccak with the identity function for simplicity
+[2019-01-07 17:51:30] <moneromooo> There is a pointless keccak you mean ?
+[2019-01-07 17:51:45] <knaccc> i don't know what sarang means either
+[2019-01-07 17:51:52] <suraeNoether> i'm just mentioning it's an option. if the first 8 bytes are indistinguishable from uniform, then great, but reducing the output of keccak to the first 8 bytes does a lot to hurt 2nd pre-image resistance.
+[2019-01-07 17:52:23] <moneromooo> Hmm. OK. There's a few places where that's done. Like the payment id stuff.
+[2019-01-07 17:52:39] <moneromooo> I think some subaddress stuff too.
+[2019-01-07 17:52:44] <knaccc> right, so the question is whether the first 8 bytes of keccak are indistinguishable from uniform, which I think it is
+[2019-01-07 17:52:49] <knaccc> otherwise it'd be a terrible hash
+[2019-01-07 17:53:24] <sarang> I was only joking :/
+[2019-01-07 17:53:40] <knaccc> hehe
+[2019-01-07 17:53:53] <sarang> Yes, a subset of the hash output is uniform
+[2019-01-07 17:53:58] <suraeNoether> i need to think about exactly how much 2nd pre-image resistance is even important here, though
+[2019-01-07 17:54:44] <sarang> Keep in mind that the recipient does a commitment reconstruction too
+[2019-01-07 17:55:13] <sarang> So any mismatch between encrypted amounts (which the sender can always just make up) and the commitment will be detected
+[2019-01-07 17:55:25] <sarang> We should always assume that the sender is lying about the amount
+[2019-01-07 17:55:26] <suraeNoether> even if we find two R, R' such that keccak("amount" || Hs(8aR||i)) is identical, we send two transactions to whoever controls the view key a, and the encrypted amount has the same xor mask... but so what? even if you took those two encrypted amounts and xor'd them together, you would cancel the mask, but then you just have two xor'd amounts... i don't know.
+[2019-01-07 17:56:07] <suraeNoether> anyway, we can avoid the problem of 2nd pre-image resistance by XOR'ing all the blocks
+[2019-01-07 17:56:17] <suraeNoether> i'm just not convinced it's important here
+[2019-01-07 17:56:40] <knaccc> i think keccak is immune
+[2019-01-07 17:57:42] <suraeNoether> keccak is pre-image resistant. truncations of keccak are not necessarily. easy example, the *first bit* of keccak is *not* second pre-image resistant
+[2019-01-07 17:57:51] <moneromooo> So something like this ? https://paste.debian.net/hidden/38907823/
+[2019-01-07 17:57:59] <moneromooo> (not tested yet)
+[2019-01-07 17:58:30] <knaccc> if the first bit was not 2ndpreimageresistant, then it would not be a decent hash
+[2019-01-07 17:58:35] <suraeNoether> moneromooo: that looks to do what i think it should do, yeah... but that's assuming sarang and others agree with me
+[2019-01-07 17:58:57] <moneromooo> Well, it can't hurt, even if it's pointless.
+[2019-01-07 17:59:28] <suraeNoether> knaccc: technically it's pre-image resistant *asymptotically.* but in the concrete sense of security, i can break 2nd pre-image resistance for the first bit in an astonishingly short period of time
+[2019-01-07 17:59:28] <knaccc> it only helps if the randomness in the hash is not evenly distributed
+[2019-01-07 17:59:50] <suraeNoether> moneromooo: yeah, the cost is a few milliseconds when signing. *shrug*
+[2019-01-07 18:00:13] ⇐ sproj quit (~sproj@89.101.110.114): Remote host closed the connection
+[2019-01-07 18:00:24] → xmranon joined (~xmranon@47.40.175.142)
+[2019-01-07 18:00:32] <knaccc> suraeNoether maybe you'll have to spell out how you'd do that, but i don't think that's possible if the first bit is uniformly distributed
+[2019-01-07 18:01:01] <suraeNoether> knaccc: okay check it out
+[2019-01-07 18:01:03] <suraeNoether> pick a random number x
+[2019-01-07 18:01:07] <suraeNoether> compute keccak(x)
+[2019-01-07 18:01:10] <suraeNoether> select the first bit
+[2019-01-07 18:01:41] <suraeNoether> i have a 50% chance that your bit matches the first bit of keccak(0), and a 50% chance it matches keccak(1), and a 50% chance it matches keccak(2), and so on
+[2019-01-07 18:01:50] <knaccc> yes
+[2019-01-07 18:01:59] <suraeNoether> finding a 2nd pre-image for your bit is as rapid as finding a heads up fair coin
+[2019-01-07 18:02:15] <sarang> this seems... pedantic
+[2019-01-07 18:02:35] <knaccc> maybe i need to re-read the definition of 2nd pre-image resistance and why it matters in this scenario
+[2019-01-07 18:02:56] <sarang> for the level we're working with (2^64) it should not
+[2019-01-07 18:02:59] <suraeNoether> it is. i'm just saying truncating a secure hash function according to whatever security property we are talking about... in general.... doesn't result in a secure hash function.
+[2019-01-07 18:03:19] <suraeNoether> ^ it is *pedantic*
+[2019-01-07 18:04:15] <suraeNoether> knaccc the answer you are looking for perhaps is this: i have to try, in expectation, as many pre-images as there are possible outputs, before finding a 2nd pre-image
+[2019-01-07 18:04:15] ⇐ xmranon quit (~xmranon@47.40.175.142): Remote host closed the connection
+[2019-01-07 18:04:43] <suraeNoether> so asymptotically with a security parameter that gives you the ridiculous 1-bit case, it's still technically a secure hash function, i guess
+[2019-01-07 18:04:47] <suraeNoether> it's just not practically one
+[2019-01-07 18:04:47] <suraeNoether> anyway
+[2019-01-07 18:05:06] <suraeNoether> sarang: how about you tell us about your work for the past week or so, and then i'll give my update, and anyone else doing any other work can chime in
+[2019-01-07 18:05:11] <suraeNoether> and we'll wrap it up
+[2019-01-07 18:07:44] <knaccc> suraeNoether ah sorry i know what you mean by 2nd pre-image resistance now, for some reason i was confused on terms. so yes, there is certainly a 2nd pre-image resistance issue at 64 bits
+[2019-01-07 18:07:54] <knaccc> but not in a way that actually matters
+[2019-01-07 18:08:37] → midipoet joined (6d4df2d0@gateway/web/freenode/ip.109.77.242.208)
+[2019-01-07 18:08:52] <sarang> This past week has basically been a sandstorm of proposals to consider and review
+[2019-01-07 18:08:56] <sarang> Payment IDs
+[2019-01-07 18:09:00] <sarang> Refund addresses
+[2019-01-07 18:09:06] <sarang> Block size and penalty structure
+[2019-01-07 18:09:12] <sarang> and so on
+[2019-01-07 18:09:23] <sarang> as well as the release of the second episode of Breaking Monero
+[2019-01-07 18:09:43] <knaccc> oh yes i loved one of your metaphors in that vid
+[2019-01-07 18:09:46] <suraeNoether> knaccc: right, finding a 2nd pre-image at 64 bits itself takes a long time. it's not cryptographically long periods of time short of 80 bits... but i can't really think of what such a pre-image would gain an attacker, either, so like I said i'm not sure how much it's necessary
+[2019-01-07 18:09:49] <knaccc> can't remember what it was now
+[2019-01-07 18:10:02] <sarang> Was it burning the envelope as a heuristic?
+[2019-01-07 18:10:20] <knaccc> it was eating the envelope and walking away
+[2019-01-07 18:10:24] <sarang> heh
+[2019-01-07 18:10:25] <knaccc> i lolled like crazy on that
+[2019-01-07 18:11:07] <sarang> The current loose consensus seems to be that a two-median approach to block size cap is reasonable but not ideal
+[2019-01-07 18:11:21] → cardboardoranges joined (~cardboard@65.112.8.13)
+[2019-01-07 18:11:24] <sarang> as it will at least slow the bloat
+[2019-01-07 18:11:41] → rex4539 joined (~rex4539@ppp-2-84-172-26.home.otenet.gr)
+[2019-01-07 18:12:08] <sarang> For payment IDs there is less consensus about the timeline
+[2019-01-07 18:12:47] <suraeNoether> my work this past week included: 1) some coding simulations for the matching paper, 2) working on the monero konferenco website, which should be up and running before jan 15, which is when i'm going to put out a formal call for papers (although i've already heard back from a few folks). 3) refund proposal by charuto (I think it was charuto?) and 4) block size stuff. i was going to participate in breaking
+[2019-01-07 18:12:47] <suraeNoether> monero this week but I got caught up on the block size stuff, unfortunately... it appears to me like the problem with the blocksize debate boils down to this: we don't necessarily know what we want from our own dynamic blocksize adjustment methods
+[2019-01-07 18:13:41] <suraeNoether> we know some loose ideas about what we want, like adapting for rapid short-term growth that handles, for example, the holiday season, and we want block sizes to stay small unless it's needed
+[2019-01-07 18:14:09] <suraeNoether> but the details of what behavior is considered malicious and which should be adapted for ... these aren't totally clear to me. so i've been thinking about those things, too.
+[2019-01-07 18:14:25] <suraeNoether> oh, and 5) fees. i've been thinking about fee strucutre. but that ties in with 4).
+[2019-01-07 18:15:03] <suraeNoether> i just have not had time to get into the payment ID discussion :(
+[2019-01-07 18:15:25] → xmranon joined (~xmranon@47.40.175.142)
+[2019-01-07 18:15:36] <knaccc> timelines are really about politics more than tech
+[2019-01-07 18:15:43] <sarang> yes
+[2019-01-07 18:16:06] <sarang> and the timelines for applications and users of pIDs
+[2019-01-07 18:16:30] <suraeNoether> sarang: since pay_id isn't necessarily a security issue, but they are so freaking annoying, where do you stand on timeline for deprecation?
+[2019-01-07 18:17:05] <sarang> Well, they can be a problem if not enforced
+[2019-01-07 18:17:25] <sarang> Most complete option is full deprecation of unenc/enc, which I support doing all at once
+[2019-01-07 18:17:35] <sarang> probably fall 2019
+[2019-01-07 18:17:53] <sarang> at the very least, remove unenc and enforce enc (to the extent possible) with wallet default
+[2019-01-07 18:19:19] <suraeNoether> okay, guys, i want to continue some of these discussions for sure, but let's call it for the official meeting time
+[2019-01-07 18:19:28] <suraeNoether> sarang, thank you
+[2019-01-07 18:19:28] <sgp_> Should I re-write my post to say all payment IDs are disallowed in the Fall 2019 upgrade?
+[2019-01-07 18:19:50] <sarang> sgp_: you were interested in learning who uses unenc, right?
+[2019-01-07 18:20:00] <sarang> To get a better sense of who needs to switch over and for what uses
+[2019-01-07 18:20:10] <moneromooo> Shapeshift does.
+[2019-01-07 18:20:16] <knaccc> thanks guys
+[2019-01-07 18:20:33] <oneiric_> thanks all for the meeting

@@ -1,182 +1,182 @@
-[2018-04-30 09:59:58] <sarang> dingdingding
-[2018-04-30 10:00:00] <sarang> it's time
-[2018-04-30 10:00:07] ⇐ thrmo quit (~thrmo@unaffiliated/thrmo): Quit: Waiting for .007
-[2018-04-30 10:00:15] <rehrar> h'lo
-[2018-04-30 10:00:39] <suraeNoether> Hi everyone~
-[2018-04-30 10:00:46] <suraeNoether> Welcome to our research meeting
-[2018-04-30 10:00:54] <UkoeHB> g day
-[2018-04-30 10:00:54] <suraeNoether> One week ago today, Sarang and I were in London
-[2018-04-30 10:00:59] <midipoet> hello
-[2018-04-30 10:01:04] <suraeNoether> thanks to this generous community
-[2018-04-30 10:01:05] <sarang> It seems as if it were only a week ago
-[2018-04-30 10:01:11] <suraeNoether> heh
-[2018-04-30 10:01:11] <sarang> It was highly productive
-[2018-04-30 10:01:18] <sgp_[m]> Hello
-[2018-04-30 10:01:29] <sarang> We got to meet some London meetup organizers before the event, which was great
-[2018-04-30 10:01:55] <suraeNoether> yes, this is where we spoke with Pedro Moren-Sanchez, who together with his student (who goes by donut in here) invented refund adresses for Monero
-[2018-04-30 10:02:23] <sarang> I'm analyzing some preliminary material from them
-[2018-04-30 10:02:35] <sarang> There's some question about the applicability of hiding block heights
-[2018-04-30 10:02:51] <sarang> and whether this provides sufficiently better information obscurity to make it worthwhile
-[2018-04-30 10:02:54] <sgp_[m]> Great sarang! Glad you could make that work
-[2018-04-30 10:03:01] <suraeNoether> Since then, other than recovering from jetlag, I've been working non-stop on the multisig paper, which has come a long way... but I've run into a roadblock on the proof of unforgeability, involving the key image, the signing oracle, and access to a discrete logarithm oracle
-[2018-04-30 10:03:03] <sarang> it involves a change to the ring signatures and key images
-[2018-04-30 10:03:36] <suraeNoether> in addition to that, I brought rehrar, sgp_[m], and sarang out to Denver to meet with me and my wife about MAGIC, Multidisciplinary Academic Grants in Cryptocurrencies
-[2018-04-30 10:04:04] <midipoet> whats MAGIC?
-[2018-04-30 10:04:23] <midipoet> or rather, can you elaborate..
-[2018-04-30 10:04:24] <suraeNoether> MAGIC is (or will be) a 501(c)3 non-profit based in Colorado, USA
-[2018-04-30 10:04:33] <sarang> a Colorado nonprofit organization dedicated to empowering the next generation of people in this space
-[2018-04-30 10:04:50] <midipoet> nice
-[2018-04-30 10:04:54] <suraeNoether> our goal is to promote education and scientific research, as well as community and educational outreach, in privacy infrastructure for the public good
-[2018-04-30 10:05:07] <midipoet> that is actually pretty awesome
-[2018-04-30 10:05:30] <suraeNoether> the basic idea will be to take some of the capital flowing into cryptocurrencies and close the loop back toward education. provide scholarships, provide research grants to researchers and infrastructure grants to schools, and to host conferences on privacy enhancing technologies
-[2018-04-30 10:05:46] <sarang> It will help boost education (which is great for many reasons) and also can help to promote privacy in the eyes of the public
-[2018-04-30 10:05:58] <sarang> I'm not one for focusing solely on PR, but it could help
-[2018-04-30 10:06:07] <suraeNoether> *nod*
-[2018-04-30 10:06:16] <sarang> Kudos to suraeNoether for all the planning on this
-[2018-04-30 10:06:20] <sarang> it's a ton of work
-[2018-04-30 10:06:43] <suraeNoether> well, so is math, and this is a way for me to procrastinate on one by being productive in another, and vice versa. :P
-[2018-04-30 10:06:46] <midipoet> i think if you can redirect some of the capital flows alone towards solid scientific research you are doing a great service already
-[2018-04-30 10:06:54] <midipoet> there is a lof of greed in crypto
-[2018-04-30 10:06:55] <suraeNoether> thanks midipoet 
-[2018-04-30 10:07:08] <sarang> Our goal is focus first on education, and then on research
-[2018-04-30 10:07:27] <sarang> The research side overlaps a bit with some other groups (which is totally fine and beneficial)
-[2018-04-30 10:07:35] <rehrar> MAGIC focuses on ecological conservation and saving the whales
-[2018-04-30 10:07:40] <midipoet> lol
-[2018-04-30 10:07:43] <sarang> hehe
-[2018-04-30 10:07:47] <rehrar> oh wait, I think I dreamed that (no joke) after our meeting
-[2018-04-30 10:08:20] <suraeNoether> our first year we don't expect to get enough money to provide a substantial amount towards research, which is pretty expensive. the first year we are going to focus on scholarships, hosting a conference, and hopefully building a computer lab or a library for some impoverished primary schools
-[2018-04-30 10:08:22] <sarang> Hopefully the 501(c)(3) process goes smoothly. It's very... federal
-[2018-04-30 10:08:35] <suraeNoether> I'll have more info on that later this week
-[2018-04-30 10:08:43] <suraeNoether> tomorrow, it's lawyer meetin' time
-[2018-04-30 10:08:48] <sarang> excellent
-[2018-04-30 10:08:56] <midipoet> nice
-[2018-04-30 10:09:05] <sarang> It's worth noting that donors are free to remain anonymous, in the spirit of Monero
-[2018-04-30 10:09:27] <sarang> but the 501 status will allow donations to be tax-deductible in the U.S. if donors reveal themselves
-[2018-04-30 10:09:33] <midipoet> creating goodwill around crypto is needed. a lot of people have a very strange view of it, especially since the whole ICO thing
-[2018-04-30 10:09:41] <sarang> midipoet: definitely
-[2018-04-30 10:09:54] <sarang> The only other group I know of trying a similar-ish thing is the Zcash Foundation
-[2018-04-30 10:10:04] <sarang> We'll certainly apply for one of their grants if possible
-[2018-04-30 10:10:17] <sarang> This work transcends silly interproject politics
-[2018-04-30 10:10:22] <midipoet> i could tell you a sad story about what computer science kids thought crypto is about in nigeria
-[2018-04-30 10:10:33] <madLyfe> yay!
-[2018-04-30 10:10:33] <sarang> crypto = ca$hmoney
-[2018-04-30 10:10:34] <madLyfe> https://i.imgur.com/J2Vyl27.png
-[2018-04-30 10:10:42] <midipoet> pretty much sarang
-[2018-04-30 10:10:45] <suraeNoether> So, from sarang's research we've been looking at refund addresses. from mine, I'm struggling with signing oracles, key images, and discrete logarithms in our unforgeability proofs of multisig (ahem). from educational outreach, we have several folks from the monero research lab and the monero community participating. We even got dinner with Zooko to get ideas on including more independent folks, and I'm
-[2018-04-30 10:10:45] <suraeNoether> reaching out to two possible additional board members later today
-[2018-04-30 10:10:46] <hyc> ... silly politics is based on technological assessment tho
-[2018-04-30 10:11:05] <madLyfe> wrong channel. sorry.
-[2018-04-30 10:11:14] <sarang> hyc: I totally see that side of it
-[2018-04-30 10:11:29] <sarang> But for the purposes of this organization it's all silly
-[2018-04-30 10:11:39] <sarang> I should have clarified
-[2018-04-30 10:11:49] ⇐ Keniyal quit (~Keniyal@unaffiliated/keniyal): Remote host closed the connection
-[2018-04-30 10:11:57] <sarang> We'll take donations where we can find them if it means helping more students and communities
-[2018-04-30 10:13:12] <suraeNoether> on another note, a representative from the ZCash foundation asked if we know of anyone in the Monero community who would be willing to serve on the ZCash Foundation board of directors. Because ZCash Foundation, despite the name, is independent of ZCashCo, is a non-profit focused on internet payment and privacy infrastructure also, even if one disagrees with the zcash design philosophy (which is totally fair)
-[2018-04-30 10:13:12] <suraeNoether> you could still contribute to the privacy community as a whole
-[2018-04-30 10:13:55] <suraeNoether> hyc maybe you should do it :D
-[2018-04-30 10:14:26] <suraeNoether> of course, no one from Monero *needs* to go and attempt that, but I think it's nice that they reached out
-[2018-04-30 10:14:35] <midipoet> would you not lose some street cred sitting on that board?
-[2018-04-30 10:14:36] <rehrar> I second hyc
-[2018-04-30 10:14:45] <rehrar> he has the good looks and charisma necessary
-[2018-04-30 10:14:51] <suraeNoether> midipoet: almost certainly. 
-[2018-04-30 10:14:56] <suraeNoether> rehrar: and the fiddlin' talent
-[2018-04-30 10:14:57] <sarang> midipoet: maybe, but that's up to the individual
-[2018-04-30 10:15:01] <rehrar> midipoet: street cred is for shmuks
-[2018-04-30 10:15:07] <suraeNoether> rehrar: ^ +1
-[2018-04-30 10:15:09] <midipoet> schmuks in Zcash suits
-[2018-04-30 10:15:33] <sarang> It's worth noting their organization documents include language specifically mentioning supporting the Zcash network
-[2018-04-30 10:15:37] <sarang> FWIW
-[2018-04-30 10:15:40] <rehrar> I don't agree with many things of the Zcash implementation, but they're pushing the privacy scene forward
-[2018-04-30 10:15:54] <rehrar> in a similar way that we are as well with our work
-[2018-04-30 10:16:01] <sarang> I choose to believe that better research and public perception of privacy will help us all
-[2018-04-30 10:16:16] <rehrar> right, even if this whole cryptocurrency experiment fails, the world can learn
-[2018-04-30 10:16:20] <midipoet> yeah, i agree as well. just sceptical
-[2018-04-30 10:16:30] <sarang> and they're literally making free money available for research and other helpful projects
-[2018-04-30 10:16:47] <suraeNoether> personally, i think that in 20 years or so, we'll look at the different currency teams in the same way we look at IBM vs. microsoft. it's not weird for IBM guys to get lunch with microsoft guys, or for them to do business together, and probably any market forces that improve one will lead to improving the other.
-[2018-04-30 10:16:49] <suraeNoether> i mean
-[2018-04-30 10:17:24] <suraeNoether> there's a positive covariance in market performance across most of the big cryptocurrencies, so high tides lift all the boats, so to speak
-[2018-04-30 10:17:54] <sarang> It's like commercial airlines... the management types see each other as the devil, but the pilots all help each other out since they're out to get people there safely
-[2018-04-30 10:17:58] <sarang> maybe
-[2018-04-30 10:18:05] <suraeNoether> lol maybe
-[2018-04-30 10:18:15] <rehrar> that said: https://www.youtube.com/watch?v=A51Bl3jkF0c
-[2018-04-30 10:18:16] <sneurlax> to continue that analogy, it's like Google using Java for Android, which was made (or maybe its IP is just now owned) by Oracle
-[2018-04-30 10:18:26] <rehrar> ^ continues to be one of my favorite videos (10 seconds long)
-[2018-04-30 10:18:28] <suraeNoether> sneurlax: sure lol
-[2018-04-30 10:19:00] <sarang> anyway
-[2018-04-30 10:19:06] <midipoet> aha
-[2018-04-30 10:19:22] <suraeNoether> ok, so that covers the basic research from the last week, and our educational outreach, and the various political-ish connections MRL has made with other projects
-[2018-04-30 10:19:37] <sarang> My monthly report details a few other things we've been doing: https://www.reddit.com/r/Monero/comments/8fzfzx/april_monthly_report_from_sarang_noether/
-[2018-04-30 10:20:03] <suraeNoether> has anyone done anything else they want to chat about? interesting simulations? I know silur has expressed some interest in getting more involved at MRL, but he is suffering under the delusion that one of us is in charge
-[2018-04-30 10:20:04] <sarang> The audit has begun for the two larger groups
-[2018-04-30 10:20:10] <suraeNoether> oh! audit! yeah!
-[2018-04-30 10:20:24] <sarang> Nothing to report there, just reviewers getting their hands dirty
-[2018-04-30 10:20:29] <sarang> but it's good news
-[2018-04-30 10:20:38] <suraeNoether> good, good, it's before May so that's pretty good
-[2018-04-30 10:20:59] <sneurlax> uh, yeah, what's your favorite programming language with which to verify claims/reports? Python?
-[2018-04-30 10:21:03] <midipoet> i want to signpost the research i am doing. some of you will have heard it a million times, but formal requests for interviews with devs/cryptographers will be coming very soon. so warning!
-[2018-04-30 10:21:10] <sarang> sneurlax: I dig Python for tools
-[2018-04-30 10:21:27] <sarang> We also need to have fee structure discussions sooner rather than later
-[2018-04-30 10:21:38] <sarang> and decide precisely how that will change with the BP deployment
-[2018-04-30 10:21:51] <rehrar> oh shoot, that's a big conversation that we don't want to leave for the last minute
-[2018-04-30 10:21:56] <sarang> yes
-[2018-04-30 10:21:57] ⇐ ArticMine quit (~ArticMine@184.70.226.34): Ping timeout: 264 seconds
-[2018-04-30 10:22:02] <sarang> We keep almost having the conversation
-[2018-04-30 10:22:18] <sarang> Fees are probably the most publicly-visible part of the BP thing
-[2018-04-30 10:22:46] <rehrar> as well, would there be work for an undergrad mathematician (well versed in statistics)? I know of one that would probably want to get involved over the summer. Would be at the disposal of our MRL PhDs
-[2018-04-30 10:23:10] <sarang> One thing I would like is a clean Python library giving data structure access to transaction trees
-[2018-04-30 10:23:14] <suraeNoether> sarang let's talk about fees later today or tomorrow?
-[2018-04-30 10:23:23] <suraeNoether> rehrar: what sarang said: visualization of transaction histories
-[2018-04-30 10:23:30] <sarang> i.e. this transaction has these inputs in its ring, and those trace back to other rings, etc.
-[2018-04-30 10:23:33] <sarang> not even visualizations
-[2018-04-30 10:23:39] <sarang> just a library giving clean data structures
-[2018-04-30 10:23:45] <sarang> we can do all sorts of things with that
-[2018-04-30 10:23:51] <sneurlax> sarang: suraeNoether: that is the basis of my tool
-[2018-04-30 10:24:00] <suraeNoether> yeah, fair enough, i'm more interested in various statistical properties of those things
-[2018-04-30 10:24:03] <sarang> Yeah I wanted to ask about details with that
-[2018-04-30 10:24:11] <suraeNoether> sneurlax: want to talk about it, since it came up?
-[2018-04-30 10:24:15] <sneurlax> I can port that to Python. the more information/specs you can proivide, the less questions I'll have later
-[2018-04-30 10:24:27] <sarang> Sure, let's chat after the meeting sneurlax
-[2018-04-30 10:24:37] <sneurlax> perfect
-[2018-04-30 10:25:00] <sarang> Even if it's not Python, having something easy to implement will be great
-[2018-04-30 10:25:08] <suraeNoether> yeah, i mean from my point of view
-[2018-04-30 10:25:29] <nioc> always check with ArticMine when it comes to fees
-[2018-04-30 10:25:38] <suraeNoether> i'm interested in things like the distribution of sizes of transaction trees, how often outputs are re-used within the same, tree, stuff like that
-[2018-04-30 10:25:43] <sarang> Yes, it's a discussion for many people
-[2018-04-30 10:25:46] <suraeNoether> nioc: yeah, he has something written up already
-[2018-04-30 10:25:48] <sarang> but one that needs to be had
-[2018-04-30 10:25:48] <suraeNoether> iirc
-[2018-04-30 10:26:11] <sarang> Any other interesting work lately?
-[2018-04-30 10:26:30] <sarang> (BTW we should arrange some time in -dev meeting for fee talks)
-[2018-04-30 10:27:02] <nioc> should be a dev meeting this coming Sun
-[2018-04-30 10:27:12] <nioc> rehrar: ^^^ ??
-[2018-04-30 10:27:17] → p0nziph0ne joined (p0nziph0ne@gateway/vpn/privateinternetaccess/p0nziph0ne)
-[2018-04-30 10:27:36] <rehrar> yes nioc
-[2018-04-30 10:28:10] <sgp_[m]> Was this discussed? https://github.com/moneroexamples/key_images_comparison
-[2018-04-30 10:28:31] <suraeNoether> it has not been
-[2018-04-30 10:28:57] <suraeNoether> wow!
-[2018-04-30 10:29:08] <suraeNoether> much smaller numbers than I was expecting
-[2018-04-30 10:29:19] <suraeNoether> you know, endogenic earlier asked about the plausibility of long-term blackballing
-[2018-04-30 10:29:57] <suraeNoether> and I responded with a silly analogy, comparing the monero blockchain to a pile of radioactive material: outputs have half-lives of their anonymity as bad actors perform more and more blockchain forensics, they expose more and more old outputs...
-[2018-04-30 10:30:14] <sgp_[m]> Thoughts on the proportion used, and the proportion that used the tool? I actually felt that 10% of reused key images using a special tool to pair outputs was unusually high
-[2018-04-30 10:30:39] <hyc> lol pretty sure Zcash team has me blacklisted
-[2018-04-30 10:30:45] <suraeNoether> i meant the % that have at least one re-used key
-[2018-04-30 10:31:00] <suraeNoether> hyc it's what you get for being such a lovely violinist
-[2018-04-30 10:31:09] <hyc> harhar
-[2018-04-30 10:31:31] <sneurlax> @sgp_:matrix.org would you mind linking your previous work on key image reuse impacts at ... what was it, % reuse?
-[2018-04-30 10:32:09] <suraeNoether> if we make it clear which outputs are provably spent, then what we are doing is relying on economic activity frontloading this radioactive decay process, hoping that a big mass of anonymous outputs stand between us and the back end, as blockchain forensics unravel the blockchain from the genesis block moving forward. so the only way this sort of thing is sustainable is if we have economic activity outpacing
-[2018-04-30 10:32:09] <suraeNoether> forensics efforts
-[2018-04-30 10:33:20] <midipoet> thats quite interesting
-[2018-04-30 10:33:23] <sneurlax> I just ask because I liked the work, sqp
-[2018-04-30 10:33:51] <suraeNoether> it highlights that ring sigs, or at least "small anon set" methods, need to be replaced
-[2018-04-30 10:34:13] <sneurlax> that big mass probably has a lot of dead ends that'll confound that unravelling. who knows how many keys have been lost.
-[2018-04-30 10:34:38] <sgp_[m]> sneurlax here's the Google Sheet (logout of Google): https://docs.google.com/spreadsheets/d/1iLa_yklutjHqn_DrOlO_eTb00l4YDAezijX2J5r6P14/edit?usp=sharing
-[2018-04-30 10:34:49] <midipoet> or there is some critical mass of privacy enaction that provides protection...
-[2018-04-30 10:35:08] <sneurlax> there are definitely outputs which will never be reused because their owners forgot about them, lost their keys, etc.
-[2018-04-30 10:35:20] <sneurlax> thank you!
-[2018-04-30 10:36:07] <suraeNoether> okay, does anyone else have any questions, concerns? i need to bother andytoshi about key images and this discrete log problem I'm having before I'm more comfortable with where our multisig scheme is at
-[2018-04-30 10:36:21] <hyc> so those outputs will always be ambiguous, never proven spent
-[2018-04-30 10:36:49] <UkoeHB> they could be proven unspent
-[2018-04-30 10:36:54] <suraeNoether> hyc unless all outputs that refer to it can be proven to be linked to another output
-[2018-04-30 10:36:55] <suraeNoether> right
-[2018-04-30 10:38:00] <hyc> ok
-[2018-04-30 10:38:08] <sarang> OK, meeting is officially adjourned, but feel free to stick around for further discussion
+[2018-04-30 16:59:58] <sarang> dingdingding
+[2018-04-30 17:00:00] <sarang> it's time
+[2018-04-30 17:00:07] ⇐ thrmo quit (~thrmo@unaffiliated/thrmo): Quit: Waiting for .007
+[2018-04-30 17:00:15] <rehrar> h'lo
+[2018-04-30 17:00:39] <suraeNoether> Hi everyone~
+[2018-04-30 17:00:46] <suraeNoether> Welcome to our research meeting
+[2018-04-30 17:00:54] <UkoeHB> g day
+[2018-04-30 17:00:54] <suraeNoether> One week ago today, Sarang and I were in London
+[2018-04-30 17:00:59] <midipoet> hello
+[2018-04-30 17:01:04] <suraeNoether> thanks to this generous community
+[2018-04-30 17:01:05] <sarang> It seems as if it were only a week ago
+[2018-04-30 17:01:11] <suraeNoether> heh
+[2018-04-30 17:01:11] <sarang> It was highly productive
+[2018-04-30 17:01:18] <sgp_[m]> Hello
+[2018-04-30 17:01:29] <sarang> We got to meet some London meetup organizers before the event, which was great
+[2018-04-30 17:01:55] <suraeNoether> yes, this is where we spoke with Pedro Moren-Sanchez, who together with his student (who goes by donut in here) invented refund adresses for Monero
+[2018-04-30 17:02:23] <sarang> I'm analyzing some preliminary material from them
+[2018-04-30 17:02:35] <sarang> There's some question about the applicability of hiding block heights
+[2018-04-30 17:02:51] <sarang> and whether this provides sufficiently better information obscurity to make it worthwhile
+[2018-04-30 17:02:54] <sgp_[m]> Great sarang! Glad you could make that work
+[2018-04-30 17:03:01] <suraeNoether> Since then, other than recovering from jetlag, I've been working non-stop on the multisig paper, which has come a long way... but I've run into a roadblock on the proof of unforgeability, involving the key image, the signing oracle, and access to a discrete logarithm oracle
+[2018-04-30 17:03:03] <sarang> it involves a change to the ring signatures and key images
+[2018-04-30 17:03:36] <suraeNoether> in addition to that, I brought rehrar, sgp_[m], and sarang out to Denver to meet with me and my wife about MAGIC, Multidisciplinary Academic Grants in Cryptocurrencies
+[2018-04-30 17:04:04] <midipoet> whats MAGIC?
+[2018-04-30 17:04:23] <midipoet> or rather, can you elaborate..
+[2018-04-30 17:04:24] <suraeNoether> MAGIC is (or will be) a 501(c)3 non-profit based in Colorado, USA
+[2018-04-30 17:04:33] <sarang> a Colorado nonprofit organization dedicated to empowering the next generation of people in this space
+[2018-04-30 17:04:50] <midipoet> nice
+[2018-04-30 17:04:54] <suraeNoether> our goal is to promote education and scientific research, as well as community and educational outreach, in privacy infrastructure for the public good
+[2018-04-30 17:05:07] <midipoet> that is actually pretty awesome
+[2018-04-30 17:05:30] <suraeNoether> the basic idea will be to take some of the capital flowing into cryptocurrencies and close the loop back toward education. provide scholarships, provide research grants to researchers and infrastructure grants to schools, and to host conferences on privacy enhancing technologies
+[2018-04-30 17:05:46] <sarang> It will help boost education (which is great for many reasons) and also can help to promote privacy in the eyes of the public
+[2018-04-30 17:05:58] <sarang> I'm not one for focusing solely on PR, but it could help
+[2018-04-30 17:06:07] <suraeNoether> *nod*
+[2018-04-30 17:06:16] <sarang> Kudos to suraeNoether for all the planning on this
+[2018-04-30 17:06:20] <sarang> it's a ton of work
+[2018-04-30 17:06:43] <suraeNoether> well, so is math, and this is a way for me to procrastinate on one by being productive in another, and vice versa. :P
+[2018-04-30 17:06:46] <midipoet> i think if you can redirect some of the capital flows alone towards solid scientific research you are doing a great service already
+[2018-04-30 17:06:54] <midipoet> there is a lof of greed in crypto
+[2018-04-30 17:06:55] <suraeNoether> thanks midipoet 
+[2018-04-30 17:07:08] <sarang> Our goal is focus first on education, and then on research
+[2018-04-30 17:07:27] <sarang> The research side overlaps a bit with some other groups (which is totally fine and beneficial)
+[2018-04-30 17:07:35] <rehrar> MAGIC focuses on ecological conservation and saving the whales
+[2018-04-30 17:07:40] <midipoet> lol
+[2018-04-30 17:07:43] <sarang> hehe
+[2018-04-30 17:07:47] <rehrar> oh wait, I think I dreamed that (no joke) after our meeting
+[2018-04-30 17:08:20] <suraeNoether> our first year we don't expect to get enough money to provide a substantial amount towards research, which is pretty expensive. the first year we are going to focus on scholarships, hosting a conference, and hopefully building a computer lab or a library for some impoverished primary schools
+[2018-04-30 17:08:22] <sarang> Hopefully the 501(c)(3) process goes smoothly. It's very... federal
+[2018-04-30 17:08:35] <suraeNoether> I'll have more info on that later this week
+[2018-04-30 17:08:43] <suraeNoether> tomorrow, it's lawyer meetin' time
+[2018-04-30 17:08:48] <sarang> excellent
+[2018-04-30 17:08:56] <midipoet> nice
+[2018-04-30 17:09:05] <sarang> It's worth noting that donors are free to remain anonymous, in the spirit of Monero
+[2018-04-30 17:09:27] <sarang> but the 501 status will allow donations to be tax-deductible in the U.S. if donors reveal themselves
+[2018-04-30 17:09:33] <midipoet> creating goodwill around crypto is needed. a lot of people have a very strange view of it, especially since the whole ICO thing
+[2018-04-30 17:09:41] <sarang> midipoet: definitely
+[2018-04-30 17:09:54] <sarang> The only other group I know of trying a similar-ish thing is the Zcash Foundation
+[2018-04-30 17:10:04] <sarang> We'll certainly apply for one of their grants if possible
+[2018-04-30 17:10:17] <sarang> This work transcends silly interproject politics
+[2018-04-30 17:10:22] <midipoet> i could tell you a sad story about what computer science kids thought crypto is about in nigeria
+[2018-04-30 17:10:33] <madLyfe> yay!
+[2018-04-30 17:10:33] <sarang> crypto = ca$hmoney
+[2018-04-30 17:10:34] <madLyfe> https://i.imgur.com/J2Vyl27.png
+[2018-04-30 17:10:42] <midipoet> pretty much sarang
+[2018-04-30 17:10:45] <suraeNoether> So, from sarang's research we've been looking at refund addresses. from mine, I'm struggling with signing oracles, key images, and discrete logarithms in our unforgeability proofs of multisig (ahem). from educational outreach, we have several folks from the monero research lab and the monero community participating. We even got dinner with Zooko to get ideas on including more independent folks, and I'm
+[2018-04-30 17:10:45] <suraeNoether> reaching out to two possible additional board members later today
+[2018-04-30 17:10:46] <hyc> ... silly politics is based on technological assessment tho
+[2018-04-30 17:11:05] <madLyfe> wrong channel. sorry.
+[2018-04-30 17:11:14] <sarang> hyc: I totally see that side of it
+[2018-04-30 17:11:29] <sarang> But for the purposes of this organization it's all silly
+[2018-04-30 17:11:39] <sarang> I should have clarified
+[2018-04-30 17:11:49] ⇐ Keniyal quit (~Keniyal@unaffiliated/keniyal): Remote host closed the connection
+[2018-04-30 17:11:57] <sarang> We'll take donations where we can find them if it means helping more students and communities
+[2018-04-30 17:13:12] <suraeNoether> on another note, a representative from the ZCash foundation asked if we know of anyone in the Monero community who would be willing to serve on the ZCash Foundation board of directors. Because ZCash Foundation, despite the name, is independent of ZCashCo, is a non-profit focused on internet payment and privacy infrastructure also, even if one disagrees with the zcash design philosophy (which is totally fair)
+[2018-04-30 17:13:12] <suraeNoether> you could still contribute to the privacy community as a whole
+[2018-04-30 17:13:55] <suraeNoether> hyc maybe you should do it :D
+[2018-04-30 17:14:26] <suraeNoether> of course, no one from Monero *needs* to go and attempt that, but I think it's nice that they reached out
+[2018-04-30 17:14:35] <midipoet> would you not lose some street cred sitting on that board?
+[2018-04-30 17:14:36] <rehrar> I second hyc
+[2018-04-30 17:14:45] <rehrar> he has the good looks and charisma necessary
+[2018-04-30 17:14:51] <suraeNoether> midipoet: almost certainly. 
+[2018-04-30 17:14:56] <suraeNoether> rehrar: and the fiddlin' talent
+[2018-04-30 17:14:57] <sarang> midipoet: maybe, but that's up to the individual
+[2018-04-30 17:15:01] <rehrar> midipoet: street cred is for shmuks
+[2018-04-30 17:15:07] <suraeNoether> rehrar: ^ +1
+[2018-04-30 17:15:09] <midipoet> schmuks in Zcash suits
+[2018-04-30 17:15:33] <sarang> It's worth noting their organization documents include language specifically mentioning supporting the Zcash network
+[2018-04-30 17:15:37] <sarang> FWIW
+[2018-04-30 17:15:40] <rehrar> I don't agree with many things of the Zcash implementation, but they're pushing the privacy scene forward
+[2018-04-30 17:15:54] <rehrar> in a similar way that we are as well with our work
+[2018-04-30 17:16:01] <sarang> I choose to believe that better research and public perception of privacy will help us all
+[2018-04-30 17:16:16] <rehrar> right, even if this whole cryptocurrency experiment fails, the world can learn
+[2018-04-30 17:16:20] <midipoet> yeah, i agree as well. just sceptical
+[2018-04-30 17:16:30] <sarang> and they're literally making free money available for research and other helpful projects
+[2018-04-30 17:16:47] <suraeNoether> personally, i think that in 20 years or so, we'll look at the different currency teams in the same way we look at IBM vs. microsoft. it's not weird for IBM guys to get lunch with microsoft guys, or for them to do business together, and probably any market forces that improve one will lead to improving the other.
+[2018-04-30 17:16:49] <suraeNoether> i mean
+[2018-04-30 17:17:24] <suraeNoether> there's a positive covariance in market performance across most of the big cryptocurrencies, so high tides lift all the boats, so to speak
+[2018-04-30 17:17:54] <sarang> It's like commercial airlines... the management types see each other as the devil, but the pilots all help each other out since they're out to get people there safely
+[2018-04-30 17:17:58] <sarang> maybe
+[2018-04-30 17:18:05] <suraeNoether> lol maybe
+[2018-04-30 17:18:15] <rehrar> that said: https://www.youtube.com/watch?v=A51Bl3jkF0c
+[2018-04-30 17:18:16] <sneurlax> to continue that analogy, it's like Google using Java for Android, which was made (or maybe its IP is just now owned) by Oracle
+[2018-04-30 17:18:26] <rehrar> ^ continues to be one of my favorite videos (10 seconds long)
+[2018-04-30 17:18:28] <suraeNoether> sneurlax: sure lol
+[2018-04-30 17:19:00] <sarang> anyway
+[2018-04-30 17:19:06] <midipoet> aha
+[2018-04-30 17:19:22] <suraeNoether> ok, so that covers the basic research from the last week, and our educational outreach, and the various political-ish connections MRL has made with other projects
+[2018-04-30 17:19:37] <sarang> My monthly report details a few other things we've been doing: https://www.reddit.com/r/Monero/comments/8fzfzx/april_monthly_report_from_sarang_noether/
+[2018-04-30 17:20:03] <suraeNoether> has anyone done anything else they want to chat about? interesting simulations? I know silur has expressed some interest in getting more involved at MRL, but he is suffering under the delusion that one of us is in charge
+[2018-04-30 17:20:04] <sarang> The audit has begun for the two larger groups
+[2018-04-30 17:20:10] <suraeNoether> oh! audit! yeah!
+[2018-04-30 17:20:24] <sarang> Nothing to report there, just reviewers getting their hands dirty
+[2018-04-30 17:20:29] <sarang> but it's good news
+[2018-04-30 17:20:38] <suraeNoether> good, good, it's before May so that's pretty good
+[2018-04-30 17:20:59] <sneurlax> uh, yeah, what's your favorite programming language with which to verify claims/reports? Python?
+[2018-04-30 17:21:03] <midipoet> i want to signpost the research i am doing. some of you will have heard it a million times, but formal requests for interviews with devs/cryptographers will be coming very soon. so warning!
+[2018-04-30 17:21:10] <sarang> sneurlax: I dig Python for tools
+[2018-04-30 17:21:27] <sarang> We also need to have fee structure discussions sooner rather than later
+[2018-04-30 17:21:38] <sarang> and decide precisely how that will change with the BP deployment
+[2018-04-30 17:21:51] <rehrar> oh shoot, that's a big conversation that we don't want to leave for the last minute
+[2018-04-30 17:21:56] <sarang> yes
+[2018-04-30 17:21:57] ⇐ ArticMine quit (~ArticMine@184.70.226.34): Ping timeout: 264 seconds
+[2018-04-30 17:22:02] <sarang> We keep almost having the conversation
+[2018-04-30 17:22:18] <sarang> Fees are probably the most publicly-visible part of the BP thing
+[2018-04-30 17:22:46] <rehrar> as well, would there be work for an undergrad mathematician (well versed in statistics)? I know of one that would probably want to get involved over the summer. Would be at the disposal of our MRL PhDs
+[2018-04-30 17:23:10] <sarang> One thing I would like is a clean Python library giving data structure access to transaction trees
+[2018-04-30 17:23:14] <suraeNoether> sarang let's talk about fees later today or tomorrow?
+[2018-04-30 17:23:23] <suraeNoether> rehrar: what sarang said: visualization of transaction histories
+[2018-04-30 17:23:30] <sarang> i.e. this transaction has these inputs in its ring, and those trace back to other rings, etc.
+[2018-04-30 17:23:33] <sarang> not even visualizations
+[2018-04-30 17:23:39] <sarang> just a library giving clean data structures
+[2018-04-30 17:23:45] <sarang> we can do all sorts of things with that
+[2018-04-30 17:23:51] <sneurlax> sarang: suraeNoether: that is the basis of my tool
+[2018-04-30 17:24:00] <suraeNoether> yeah, fair enough, i'm more interested in various statistical properties of those things
+[2018-04-30 17:24:03] <sarang> Yeah I wanted to ask about details with that
+[2018-04-30 17:24:11] <suraeNoether> sneurlax: want to talk about it, since it came up?
+[2018-04-30 17:24:15] <sneurlax> I can port that to Python. the more information/specs you can proivide, the less questions I'll have later
+[2018-04-30 17:24:27] <sarang> Sure, let's chat after the meeting sneurlax
+[2018-04-30 17:24:37] <sneurlax> perfect
+[2018-04-30 17:25:00] <sarang> Even if it's not Python, having something easy to implement will be great
+[2018-04-30 17:25:08] <suraeNoether> yeah, i mean from my point of view
+[2018-04-30 17:25:29] <nioc> always check with ArticMine when it comes to fees
+[2018-04-30 17:25:38] <suraeNoether> i'm interested in things like the distribution of sizes of transaction trees, how often outputs are re-used within the same, tree, stuff like that
+[2018-04-30 17:25:43] <sarang> Yes, it's a discussion for many people
+[2018-04-30 17:25:46] <suraeNoether> nioc: yeah, he has something written up already
+[2018-04-30 17:25:48] <sarang> but one that needs to be had
+[2018-04-30 17:25:48] <suraeNoether> iirc
+[2018-04-30 17:26:11] <sarang> Any other interesting work lately?
+[2018-04-30 17:26:30] <sarang> (BTW we should arrange some time in -dev meeting for fee talks)
+[2018-04-30 17:27:02] <nioc> should be a dev meeting this coming Sun
+[2018-04-30 17:27:12] <nioc> rehrar: ^^^ ??
+[2018-04-30 17:27:17] → p0nziph0ne joined (p0nziph0ne@gateway/vpn/privateinternetaccess/p0nziph0ne)
+[2018-04-30 17:27:36] <rehrar> yes nioc
+[2018-04-30 17:28:10] <sgp_[m]> Was this discussed? https://github.com/moneroexamples/key_images_comparison
+[2018-04-30 17:28:31] <suraeNoether> it has not been
+[2018-04-30 17:28:57] <suraeNoether> wow!
+[2018-04-30 17:29:08] <suraeNoether> much smaller numbers than I was expecting
+[2018-04-30 17:29:19] <suraeNoether> you know, endogenic earlier asked about the plausibility of long-term blackballing
+[2018-04-30 17:29:57] <suraeNoether> and I responded with a silly analogy, comparing the monero blockchain to a pile of radioactive material: outputs have half-lives of their anonymity as bad actors perform more and more blockchain forensics, they expose more and more old outputs...
+[2018-04-30 17:30:14] <sgp_[m]> Thoughts on the proportion used, and the proportion that used the tool? I actually felt that 10% of reused key images using a special tool to pair outputs was unusually high
+[2018-04-30 17:30:39] <hyc> lol pretty sure Zcash team has me blacklisted
+[2018-04-30 17:30:45] <suraeNoether> i meant the % that have at least one re-used key
+[2018-04-30 17:31:00] <suraeNoether> hyc it's what you get for being such a lovely violinist
+[2018-04-30 17:31:09] <hyc> harhar
+[2018-04-30 17:31:31] <sneurlax> @sgp_:matrix.org would you mind linking your previous work on key image reuse impacts at ... what was it, % reuse?
+[2018-04-30 17:32:09] <suraeNoether> if we make it clear which outputs are provably spent, then what we are doing is relying on economic activity frontloading this radioactive decay process, hoping that a big mass of anonymous outputs stand between us and the back end, as blockchain forensics unravel the blockchain from the genesis block moving forward. so the only way this sort of thing is sustainable is if we have economic activity outpacing
+[2018-04-30 17:32:09] <suraeNoether> forensics efforts
+[2018-04-30 17:33:20] <midipoet> thats quite interesting
+[2018-04-30 17:33:23] <sneurlax> I just ask because I liked the work, sqp
+[2018-04-30 17:33:51] <suraeNoether> it highlights that ring sigs, or at least "small anon set" methods, need to be replaced
+[2018-04-30 17:34:13] <sneurlax> that big mass probably has a lot of dead ends that'll confound that unravelling. who knows how many keys have been lost.
+[2018-04-30 17:34:38] <sgp_[m]> sneurlax here's the Google Sheet (logout of Google): https://docs.google.com/spreadsheets/d/1iLa_yklutjHqn_DrOlO_eTb00l4YDAezijX2J5r6P14/edit?usp=sharing
+[2018-04-30 17:34:49] <midipoet> or there is some critical mass of privacy enaction that provides protection...
+[2018-04-30 17:35:08] <sneurlax> there are definitely outputs which will never be reused because their owners forgot about them, lost their keys, etc.
+[2018-04-30 17:35:20] <sneurlax> thank you!
+[2018-04-30 17:36:07] <suraeNoether> okay, does anyone else have any questions, concerns? i need to bother andytoshi about key images and this discrete log problem I'm having before I'm more comfortable with where our multisig scheme is at
+[2018-04-30 17:36:21] <hyc> so those outputs will always be ambiguous, never proven spent
+[2018-04-30 17:36:49] <UkoeHB> they could be proven unspent
+[2018-04-30 17:36:54] <suraeNoether> hyc unless all outputs that refer to it can be proven to be linked to another output
+[2018-04-30 17:36:55] <suraeNoether> right
+[2018-04-30 17:38:00] <hyc> ok
+[2018-04-30 17:38:08] <sarang> OK, meeting is officially adjourned, but feel free to stick around for further discussion

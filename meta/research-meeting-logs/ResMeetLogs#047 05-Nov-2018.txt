@@ -1,123 +1,123 @@
-[2018-11-05 10:59:34] <sarang> Right right, let's begin our meeting now
-[2018-11-05 10:59:39] <sarang> First, GREETINGS to/from all
-[2018-11-05 10:59:41] <sarang> hello
-[2018-11-05 11:00:27] <sgp_> hello
-[2018-11-05 11:01:43] <sarang> ping binaryFate dEBRUYNE endogenic hyc IsthmusCrypto gmaxwell gingeropolous moneromooo parasew[m] rehrar rrol[m] stoffu smooth UkoeHB etc
-[2018-11-05 11:01:50] <sarang> small crowd today
-[2018-11-05 11:01:58] <parasew[m]> hi
-[2018-11-05 11:01:58] <sarang> Even so, RESEARCH UPDATE time
-[2018-11-05 11:02:19] → MSavoritias joined (~anon@2a02:587:980a:9700:906a:830a:123a:1a01)
-[2018-11-05 11:02:21] <sarang> I've done some rearranging with the Lab's public-facing presentation
-[2018-11-05 11:02:36] <sarang> We'll be routing the old lab.getmonero.org to the new getmonero.org MRL landing page
-[2018-11-05 11:02:51] <sgp_> nice
-[2018-11-05 11:02:52] <rehrar> I'm here
-[2018-11-05 11:02:52] <sarang> This allows for translations of things like abstracts, and lets us PR new papers
-[2018-11-05 11:03:16] <sarang> Once this gets merged over on monero-site (hint hint nudge nudge), the three newest MRL publications will appear there
-[2018-11-05 11:03:30] <sarang> English translations only for those papers' abstracts, for the moment
-[2018-11-05 11:04:15] <sarang> Anyway, PR is open there: https://repo.getmonero.org/monero-project/monero-site/merge_requests/950
-[2018-11-05 11:04:35] <sarang> Some format changes too; review if you like
-[2018-11-05 11:05:06] <sarang> I've tossed a basic noninteractive musig implementation over to the sublinear prototyping code for testing purposes
-[2018-11-05 11:05:17] <sarang> The usual lit review
-[2018-11-05 11:05:30] <sarang> And a lot of investigations on output selection since the upgrade
-[2018-11-05 11:05:58] <sarang> Any questions/comments on these items?
-[2018-11-05 11:06:23] <sgp_> do you think it would be useful to have another bulletproof-type video talking about the recent selection changes and possible options going forward? It could be much shorter, perhaps 20-30 minutes
-[2018-11-05 11:06:49] <sarang> I don't consider there to be consensus on the best way to iterate on that
-[2018-11-05 11:07:10] <sarang> so it's not clear what user benefit there would be, except "it's better than before, and we're working on it"
-[2018-11-05 11:07:11] <sarang> :/
-[2018-11-05 11:07:31] ⇐ MSavoritias quit (~anon@2a02:587:980a:9700:906a:830a:123a:1a01): Quit: Konversation terminated!
-[2018-11-05 11:07:32] <sgp_> it could be useful just to get the info out there. depends on user feedback I suppose
-[2018-11-05 11:07:45] <sgp_> most people probably don't care
-[2018-11-05 11:07:49] <sarang> We certainly could, but I also don't want to cause unnecessary FUD
-[2018-11-05 11:08:22] <sarang> My standard line has become "output selection is one layer we use to keep transactions safe; it's been iterated many times over the project's history, and continues to be"
-[2018-11-05 11:08:56] <sgp_> all right, we can move on then
-[2018-11-05 11:09:00] <sarang> as with many heuristics, a suboptimal selection algorithm is not a spend proof
-[2018-11-05 11:09:09] <sarang> ring signatures continue to do exactly what it says on the box
-[2018-11-05 11:09:56] <sarang> I'm running a workshop in Chicago later this week, offering hands-on coding with some basic crypto constructions in Python, practicing RPC calls and explorer APIs, and maybe writing some C++ unit tests
-[2018-11-05 11:10:37] <sgp_> I'm really interested to hear how these technical workshops go
-[2018-11-05 11:10:51] <parasew[m]> very nice, sarang.
-[2018-11-05 11:10:52] <sarang> Folks will get a chance to implement Schnorr sigs and some commitment code
-[2018-11-05 11:10:58] → tk___ joined (uid311166@gateway/web/irccloud.com/x-eopwkhxvpnqnbnds)
-[2018-11-05 11:11:16] ← tk___ left (uid311166@gateway/web/irccloud.com/x-eopwkhxvpnqnbnds): 
-[2018-11-05 11:12:12] <sarang> Otherwise, I continue to move forward on ring sig code/tests, some graph analysis that moves our spent-output work forward to examine complexity, etc
-[2018-11-05 11:12:36] <sarang> Does anyone else have topics of interest to discuss or ask about? Or doing some work that's of interest to the group?
-[2018-11-05 11:13:05] <suraeNoether> hey everyone, sorry for my delay
-[2018-11-05 11:13:08] <sarang> np
-[2018-11-05 11:13:13] <sarang> I just finished my brief updates
-[2018-11-05 11:13:19] <sarang> This is a good place to jump in
-[2018-11-05 11:14:20] <suraeNoether> well, this weekend I spent time on matching and churn and benchmarking the known traceability attacks on monero, and how to translate similar attacks on zcash into this framework
-[2018-11-05 11:14:24] <suraeNoether> worked on the paper for that a bit
-[2018-11-05 11:14:31] <suraeNoether> chatted with rehrar on the phone regarding the monero konferenco
-[2018-11-05 11:14:46] <suraeNoether> i'm starting to reach out to speakers for formal invitations
-[2018-11-05 11:15:17] <suraeNoether> aaaand yeah, slow weekend, i've been ill :(
-[2018-11-05 11:15:52] <suraeNoether> i'll hopefully be pushing a bipartite graph-theoretic benchmarking tool some time this week
-[2018-11-05 11:16:08] <suraeNoether> hopefully first draft of this benchmark paper will be available by end of november
-[2018-11-05 11:16:12] <sarang> This graph matching work is quite excellent
-[2018-11-05 11:16:34] <sarang> It links the complexity of determining possible spends with computational problems in graph theory
-[2018-11-05 11:17:12] <suraeNoether> yeah, we're getting very good information on the raw computational effort and time an adversary would have to spend to "unravel" monero
-[2018-11-05 11:17:13] <sarang> Can you elaborate on the tool?
-[2018-11-05 11:18:08] <suraeNoether> sur
-[2018-11-05 11:18:10] <suraeNoether> sure*
-[2018-11-05 11:18:30] <suraeNoether> the tool is essentially going to compute maximal matchings on randomly generated graphs of specified properties (like number of nodes, connectivity, etc) with the intent of estimating, ballpark, the constants associated with big-oh timing
-[2018-11-05 11:18:44] <suraeNoether> for those of you unfamiliar: https://en.wikipedia.org/wiki/Big_O_notation
-[2018-11-05 11:19:59] <sarang> Which algorithm(s) in particular?
-[2018-11-05 11:20:35] → msvb-mob joined (~michael@x4d042b04.dyn.telefonica.de)
-[2018-11-05 11:21:07] <suraeNoether> https://en.wikipedia.org/wiki/Hopcroft%E2%80%93Karp_algorithm
-[2018-11-05 11:21:29] <sarang> great
-[2018-11-05 11:21:53] <suraeNoether> so, essentially, finding an optimal matching under some null model is the same as finding a maximal matching of a related graph, which is the same as finding augmenting paths for existing matching, and all that boils down to...
-[2018-11-05 11:21:56] <suraeNoether> breadth-first searches
-[2018-11-05 11:22:04] <rehrar> you guys are the bees knees
-[2018-11-05 11:22:14] <suraeNoether> so the idea is this
-[2018-11-05 11:22:16] <sarang> Oh, a quick housekeeping note (lest I forget) that suraeNoether and I have an open funding request for an upcoming Stanford academic conference... and there are other open requests in need of support too: https://forum.getmonero.org/8/funding-required
-[2018-11-05 11:22:36] — sarang backs off again
-[2018-11-05 11:23:43] <suraeNoether> if we can estimate a ballpark constant k such that it takes, worst-case, k*r*n^1.5 units of time to find a maximal matching on an r-regular bipartite graph with 2n nodes in it, using a dumb computer with a dumb algorithm that isn't parallelized, we can begin estimating what a large-scale perfect matching disclosure attack would do to Monero. (see here:
-[2018-11-05 11:23:44] <suraeNoether> https://link.springer.com/chapter/10.1007/978-3-540-70630-4_2 )
-[2018-11-05 11:24:12] <suraeNoether> this literally quantifies the urgency with which we need to replace ring signatures
-[2018-11-05 11:24:21] <suraeNoether> i have some expectations of the results, but we'll see how it all unrolls
-[2018-11-05 11:24:41] <suraeNoether> *and for those who are interested* that paper above is not one-to-one directly correlatable with Monero. comparing the results from that paper to our system is inappropriate for a handful of reasons
-[2018-11-05 11:25:32] <suraeNoether> if anything, that paper seems more related to "what would happen if we did a fluffypony styled 30-day timed zcash sidechain?"
-[2018-11-05 11:25:38] <sarang> but it's a great first approach
-[2018-11-05 11:25:56] <suraeNoether> yeah, and i'm eager to apply the results therein with the zcash turnstile
-[2018-11-05 11:26:38] <fluffypony> what's the zcash turnstile? I haven't been following recently with the CLI and GUI releases
-[2018-11-05 11:26:49] <sarang> You can't go sprout to sapling
-[2018-11-05 11:26:54] <sarang> you have to sent to transparent, and then to sapling
-[2018-11-05 11:27:11] <suraeNoether> yep: sprout -> transparent -> sapling
-[2018-11-05 11:27:11] <sarang> They plan to release a tool to help users not fuck it up, but I hear it won't be out for a couple months
-[2018-11-05 11:27:18] <sarang> IMO it's a terrible idea to do it this way
-[2018-11-05 11:27:27] <sarang> They call it "turnstile" to make it seem like Fancy Moon Math
-[2018-11-05 11:27:37] <suraeNoether> nah, they called it that for auditing reasons
-[2018-11-05 11:27:49] <sarang> Oh, I know why they want it
-[2018-11-05 11:27:50] <suraeNoether> they want to demonstrate exactly as many zcash exist as intended
-[2018-11-05 11:27:56] <sarang> but it's a terrible idea and the name softens it
-[2018-11-05 11:28:01] <suraeNoether> security be damned, i guess. :P
-[2018-11-05 11:28:11] <sarang> Not offering users help in doing it safely is dumb as rocks
-[2018-11-05 11:28:12] <binaryFate> auditing reasons is an admission you don't trust your math/implementation
-[2018-11-05 11:28:30] <gmaxwell> it's an implicit admission that they could be inflated...
-[2018-11-05 11:28:43] <sarang> I did hear that they're backing off the "eventually make sprout unspendable" bandwagon
-[2018-11-05 11:28:45] <sarang> so that's good
-[2018-11-05 11:28:56] <sarang> (that was also dumb as rocks IMO)
-[2018-11-05 11:30:04] <suraeNoether> agreed
-[2018-11-05 11:30:05] <suraeNoether> anyway
-[2018-11-05 11:30:10] <sgp_> I offered to help them mitigate turnstile privacy loss. We'll see how good we can get, but it will be a bloodbath no matter what, especially since many people have already transitioned
-[2018-11-05 11:30:19] <gmaxwell> thats a pretty big albatross though... an extra gigabyte of key data wallets need ot have to support it?
-[2018-11-05 11:30:23] <sarang> They should have released the tool and clear instructions to use it
-[2018-11-05 11:30:46] <sarang> gmaxwell: I consider deprecation of spend ability to be a huge violation of the "social contract" of the asset
-[2018-11-05 11:30:48] <suraeNoether> sarang i'm not sure if they've backed off of that. saw zooko brag about backwards incompatibility on twitter. :P
-[2018-11-05 11:31:08] <sarang> Ugh, I had read that they were _not_ looking toward deprecation. Boo
-[2018-11-05 11:31:10] <binaryFate> ring signatures for turnstile would help and keep auditing possible :P
-[2018-11-05 11:32:01] <suraeNoether> anyway, this is off-topic for the research meeting BUT point of the matter is that a modified version of the matching game applies to zcash and it's made more interesting by adding the existence of a second shielded pool
-[2018-11-05 11:32:11] <suraeNoether> binaryFate: +1
-[2018-11-05 11:32:59] <suraeNoether> i would invest in zcash and put it all into the sapling shielded pool, but i wouldn't be able to be confident they'll deprecate *that* shielded pool and force me through a transparent pool again in the future
-[2018-11-05 11:33:08] <suraeNoether> they can promise that they are abandoning their transparent pool all they like
-[2018-11-05 11:33:11] <suraeNoether> i'll believe it when i see it
-[2018-11-05 11:33:14] <sarang> sure
-[2018-11-05 11:33:17] <suraeNoether> seriously off topic
-[2018-11-05 11:33:29] <sarang> But good to keep in mind our goals relative to what's happening in this space
-[2018-11-05 11:33:43] — suraeNoether ponders #monero-talking-points-lab
-[2018-11-05 11:33:49] <sarang> noooo
-[2018-11-05 11:33:51] <sarang> -lounge
-[2018-11-05 11:34:12] <sarang> Anyone else with Fun Things to share?
-[2018-11-05 11:34:24] <rehrar> #monero-too-many-rooms-discussion
-[2018-11-05 11:34:29] <sarang> stahp
-[2018-11-05 11:34:34] <suraeNoether> i tried to get #monero-recipes off the ground, but noooo
-[2018-11-05 11:36:37] <suraeNoether> ok, i guess unless folks have more to talk about
-[2018-11-05 11:36:41] <suraeNoether> we can call this a /meeting
+[2018-11-05 17:59:34] <sarang> Right right, let's begin our meeting now
+[2018-11-05 17:59:39] <sarang> First, GREETINGS to/from all
+[2018-11-05 17:59:41] <sarang> hello
+[2018-11-05 18:00:27] <sgp_> hello
+[2018-11-05 18:01:43] <sarang> ping binaryFate dEBRUYNE endogenic hyc IsthmusCrypto gmaxwell gingeropolous moneromooo parasew[m] rehrar rrol[m] stoffu smooth UkoeHB etc
+[2018-11-05 18:01:50] <sarang> small crowd today
+[2018-11-05 18:01:58] <parasew[m]> hi
+[2018-11-05 18:01:58] <sarang> Even so, RESEARCH UPDATE time
+[2018-11-05 18:02:19] → MSavoritias joined (~anon@2a02:587:980a:9700:906a:830a:123a:1a01)
+[2018-11-05 18:02:21] <sarang> I've done some rearranging with the Lab's public-facing presentation
+[2018-11-05 18:02:36] <sarang> We'll be routing the old lab.getmonero.org to the new getmonero.org MRL landing page
+[2018-11-05 18:02:51] <sgp_> nice
+[2018-11-05 18:02:52] <rehrar> I'm here
+[2018-11-05 18:02:52] <sarang> This allows for translations of things like abstracts, and lets us PR new papers
+[2018-11-05 18:03:16] <sarang> Once this gets merged over on monero-site (hint hint nudge nudge), the three newest MRL publications will appear there
+[2018-11-05 18:03:30] <sarang> English translations only for those papers' abstracts, for the moment
+[2018-11-05 18:04:15] <sarang> Anyway, PR is open there: https://repo.getmonero.org/monero-project/monero-site/merge_requests/950
+[2018-11-05 18:04:35] <sarang> Some format changes too; review if you like
+[2018-11-05 18:05:06] <sarang> I've tossed a basic noninteractive musig implementation over to the sublinear prototyping code for testing purposes
+[2018-11-05 18:05:17] <sarang> The usual lit review
+[2018-11-05 18:05:30] <sarang> And a lot of investigations on output selection since the upgrade
+[2018-11-05 18:05:58] <sarang> Any questions/comments on these items?
+[2018-11-05 18:06:23] <sgp_> do you think it would be useful to have another bulletproof-type video talking about the recent selection changes and possible options going forward? It could be much shorter, perhaps 20-30 minutes
+[2018-11-05 18:06:49] <sarang> I don't consider there to be consensus on the best way to iterate on that
+[2018-11-05 18:07:10] <sarang> so it's not clear what user benefit there would be, except "it's better than before, and we're working on it"
+[2018-11-05 18:07:11] <sarang> :/
+[2018-11-05 18:07:31] ⇐ MSavoritias quit (~anon@2a02:587:980a:9700:906a:830a:123a:1a01): Quit: Konversation terminated!
+[2018-11-05 18:07:32] <sgp_> it could be useful just to get the info out there. depends on user feedback I suppose
+[2018-11-05 18:07:45] <sgp_> most people probably don't care
+[2018-11-05 18:07:49] <sarang> We certainly could, but I also don't want to cause unnecessary FUD
+[2018-11-05 18:08:22] <sarang> My standard line has become "output selection is one layer we use to keep transactions safe; it's been iterated many times over the project's history, and continues to be"
+[2018-11-05 18:08:56] <sgp_> all right, we can move on then
+[2018-11-05 18:09:00] <sarang> as with many heuristics, a suboptimal selection algorithm is not a spend proof
+[2018-11-05 18:09:09] <sarang> ring signatures continue to do exactly what it says on the box
+[2018-11-05 18:09:56] <sarang> I'm running a workshop in Chicago later this week, offering hands-on coding with some basic crypto constructions in Python, practicing RPC calls and explorer APIs, and maybe writing some C++ unit tests
+[2018-11-05 18:10:37] <sgp_> I'm really interested to hear how these technical workshops go
+[2018-11-05 18:10:51] <parasew[m]> very nice, sarang.
+[2018-11-05 18:10:52] <sarang> Folks will get a chance to implement Schnorr sigs and some commitment code
+[2018-11-05 18:10:58] → tk___ joined (uid311166@gateway/web/irccloud.com/x-eopwkhxvpnqnbnds)
+[2018-11-05 18:11:16] ← tk___ left (uid311166@gateway/web/irccloud.com/x-eopwkhxvpnqnbnds): 
+[2018-11-05 18:12:12] <sarang> Otherwise, I continue to move forward on ring sig code/tests, some graph analysis that moves our spent-output work forward to examine complexity, etc
+[2018-11-05 18:12:36] <sarang> Does anyone else have topics of interest to discuss or ask about? Or doing some work that's of interest to the group?
+[2018-11-05 18:13:05] <suraeNoether> hey everyone, sorry for my delay
+[2018-11-05 18:13:08] <sarang> np
+[2018-11-05 18:13:13] <sarang> I just finished my brief updates
+[2018-11-05 18:13:19] <sarang> This is a good place to jump in
+[2018-11-05 18:14:20] <suraeNoether> well, this weekend I spent time on matching and churn and benchmarking the known traceability attacks on monero, and how to translate similar attacks on zcash into this framework
+[2018-11-05 18:14:24] <suraeNoether> worked on the paper for that a bit
+[2018-11-05 18:14:31] <suraeNoether> chatted with rehrar on the phone regarding the monero konferenco
+[2018-11-05 18:14:46] <suraeNoether> i'm starting to reach out to speakers for formal invitations
+[2018-11-05 18:15:17] <suraeNoether> aaaand yeah, slow weekend, i've been ill :(
+[2018-11-05 18:15:52] <suraeNoether> i'll hopefully be pushing a bipartite graph-theoretic benchmarking tool some time this week
+[2018-11-05 18:16:08] <suraeNoether> hopefully first draft of this benchmark paper will be available by end of november
+[2018-11-05 18:16:12] <sarang> This graph matching work is quite excellent
+[2018-11-05 18:16:34] <sarang> It links the complexity of determining possible spends with computational problems in graph theory
+[2018-11-05 18:17:12] <suraeNoether> yeah, we're getting very good information on the raw computational effort and time an adversary would have to spend to "unravel" monero
+[2018-11-05 18:17:13] <sarang> Can you elaborate on the tool?
+[2018-11-05 18:18:08] <suraeNoether> sur
+[2018-11-05 18:18:10] <suraeNoether> sure*
+[2018-11-05 18:18:30] <suraeNoether> the tool is essentially going to compute maximal matchings on randomly generated graphs of specified properties (like number of nodes, connectivity, etc) with the intent of estimating, ballpark, the constants associated with big-oh timing
+[2018-11-05 18:18:44] <suraeNoether> for those of you unfamiliar: https://en.wikipedia.org/wiki/Big_O_notation
+[2018-11-05 18:19:59] <sarang> Which algorithm(s) in particular?
+[2018-11-05 18:20:35] → msvb-mob joined (~michael@x4d042b04.dyn.telefonica.de)
+[2018-11-05 18:21:07] <suraeNoether> https://en.wikipedia.org/wiki/Hopcroft%E2%80%93Karp_algorithm
+[2018-11-05 18:21:29] <sarang> great
+[2018-11-05 18:21:53] <suraeNoether> so, essentially, finding an optimal matching under some null model is the same as finding a maximal matching of a related graph, which is the same as finding augmenting paths for existing matching, and all that boils down to...
+[2018-11-05 18:21:56] <suraeNoether> breadth-first searches
+[2018-11-05 18:22:04] <rehrar> you guys are the bees knees
+[2018-11-05 18:22:14] <suraeNoether> so the idea is this
+[2018-11-05 18:22:16] <sarang> Oh, a quick housekeeping note (lest I forget) that suraeNoether and I have an open funding request for an upcoming Stanford academic conference... and there are other open requests in need of support too: https://forum.getmonero.org/8/funding-required
+[2018-11-05 18:22:36] — sarang backs off again
+[2018-11-05 18:23:43] <suraeNoether> if we can estimate a ballpark constant k such that it takes, worst-case, k*r*n^1.5 units of time to find a maximal matching on an r-regular bipartite graph with 2n nodes in it, using a dumb computer with a dumb algorithm that isn't parallelized, we can begin estimating what a large-scale perfect matching disclosure attack would do to Monero. (see here:
+[2018-11-05 18:23:44] <suraeNoether> https://link.springer.com/chapter/10.1007/978-3-540-70630-4_2 )
+[2018-11-05 18:24:12] <suraeNoether> this literally quantifies the urgency with which we need to replace ring signatures
+[2018-11-05 18:24:21] <suraeNoether> i have some expectations of the results, but we'll see how it all unrolls
+[2018-11-05 18:24:41] <suraeNoether> *and for those who are interested* that paper above is not one-to-one directly correlatable with Monero. comparing the results from that paper to our system is inappropriate for a handful of reasons
+[2018-11-05 18:25:32] <suraeNoether> if anything, that paper seems more related to "what would happen if we did a fluffypony styled 30-day timed zcash sidechain?"
+[2018-11-05 18:25:38] <sarang> but it's a great first approach
+[2018-11-05 18:25:56] <suraeNoether> yeah, and i'm eager to apply the results therein with the zcash turnstile
+[2018-11-05 18:26:38] <fluffypony> what's the zcash turnstile? I haven't been following recently with the CLI and GUI releases
+[2018-11-05 18:26:49] <sarang> You can't go sprout to sapling
+[2018-11-05 18:26:54] <sarang> you have to sent to transparent, and then to sapling
+[2018-11-05 18:27:11] <suraeNoether> yep: sprout -> transparent -> sapling
+[2018-11-05 18:27:11] <sarang> They plan to release a tool to help users not fuck it up, but I hear it won't be out for a couple months
+[2018-11-05 18:27:18] <sarang> IMO it's a terrible idea to do it this way
+[2018-11-05 18:27:27] <sarang> They call it "turnstile" to make it seem like Fancy Moon Math
+[2018-11-05 18:27:37] <suraeNoether> nah, they called it that for auditing reasons
+[2018-11-05 18:27:49] <sarang> Oh, I know why they want it
+[2018-11-05 18:27:50] <suraeNoether> they want to demonstrate exactly as many zcash exist as intended
+[2018-11-05 18:27:56] <sarang> but it's a terrible idea and the name softens it
+[2018-11-05 18:28:01] <suraeNoether> security be damned, i guess. :P
+[2018-11-05 18:28:11] <sarang> Not offering users help in doing it safely is dumb as rocks
+[2018-11-05 18:28:12] <binaryFate> auditing reasons is an admission you don't trust your math/implementation
+[2018-11-05 18:28:30] <gmaxwell> it's an implicit admission that they could be inflated...
+[2018-11-05 18:28:43] <sarang> I did hear that they're backing off the "eventually make sprout unspendable" bandwagon
+[2018-11-05 18:28:45] <sarang> so that's good
+[2018-11-05 18:28:56] <sarang> (that was also dumb as rocks IMO)
+[2018-11-05 18:30:04] <suraeNoether> agreed
+[2018-11-05 18:30:05] <suraeNoether> anyway
+[2018-11-05 18:30:10] <sgp_> I offered to help them mitigate turnstile privacy loss. We'll see how good we can get, but it will be a bloodbath no matter what, especially since many people have already transitioned
+[2018-11-05 18:30:19] <gmaxwell> thats a pretty big albatross though... an extra gigabyte of key data wallets need ot have to support it?
+[2018-11-05 18:30:23] <sarang> They should have released the tool and clear instructions to use it
+[2018-11-05 18:30:46] <sarang> gmaxwell: I consider deprecation of spend ability to be a huge violation of the "social contract" of the asset
+[2018-11-05 18:30:48] <suraeNoether> sarang i'm not sure if they've backed off of that. saw zooko brag about backwards incompatibility on twitter. :P
+[2018-11-05 18:31:08] <sarang> Ugh, I had read that they were _not_ looking toward deprecation. Boo
+[2018-11-05 18:31:10] <binaryFate> ring signatures for turnstile would help and keep auditing possible :P
+[2018-11-05 18:32:01] <suraeNoether> anyway, this is off-topic for the research meeting BUT point of the matter is that a modified version of the matching game applies to zcash and it's made more interesting by adding the existence of a second shielded pool
+[2018-11-05 18:32:11] <suraeNoether> binaryFate: +1
+[2018-11-05 18:32:59] <suraeNoether> i would invest in zcash and put it all into the sapling shielded pool, but i wouldn't be able to be confident they'll deprecate *that* shielded pool and force me through a transparent pool again in the future
+[2018-11-05 18:33:08] <suraeNoether> they can promise that they are abandoning their transparent pool all they like
+[2018-11-05 18:33:11] <suraeNoether> i'll believe it when i see it
+[2018-11-05 18:33:14] <sarang> sure
+[2018-11-05 18:33:17] <suraeNoether> seriously off topic
+[2018-11-05 18:33:29] <sarang> But good to keep in mind our goals relative to what's happening in this space
+[2018-11-05 18:33:43] — suraeNoether ponders #monero-talking-points-lab
+[2018-11-05 18:33:49] <sarang> noooo
+[2018-11-05 18:33:51] <sarang> -lounge
+[2018-11-05 18:34:12] <sarang> Anyone else with Fun Things to share?
+[2018-11-05 18:34:24] <rehrar> #monero-too-many-rooms-discussion
+[2018-11-05 18:34:29] <sarang> stahp
+[2018-11-05 18:34:34] <suraeNoether> i tried to get #monero-recipes off the ground, but noooo
+[2018-11-05 18:36:37] <suraeNoether> ok, i guess unless folks have more to talk about
+[2018-11-05 18:36:41] <suraeNoether> we can call this a /meeting

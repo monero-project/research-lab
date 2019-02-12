@@ -1,264 +1,264 @@
-[2018-12-31 11:00:13] <sarang> OK, probably low attendance today, but might as well see what folks are up to
-[2018-12-31 11:00:15] <sarang> Hullo ll
-[2018-12-31 11:00:17] <sarang> *all
-[2018-12-31 11:00:45] <suraeNoether> morning guys
-[2018-12-31 11:00:48] <sarang> taptap this thing on?
-[2018-12-31 11:00:50] <endogenic> good morning
-[2018-12-31 11:00:53] <suraeNoether> howdy :D
-[2018-12-31 11:00:54] <dsc_> morn'
-[2018-12-31 11:01:00] <suraeNoether> i'm actually excited for this meeting because its' been like two weeks
-[2018-12-31 11:01:16] <suraeNoether> but i don't have much of an update, except "the matching paper is much *shorter* now"
-[2018-12-31 11:01:18] <suraeNoether> :P
-[2018-12-31 11:02:33] <suraeNoether> allrighty, so let's begin
-[2018-12-31 11:02:34] <sarang> Heh, no problem
-[2018-12-31 11:02:42] <sarang> I figure most people took it low this week anyway
-[2018-12-31 11:02:45] <sarang> as tends to happen
-[2018-12-31 11:02:51] <suraeNoether> as usual, we'll 1) open up with questions, 2) sarang and i will give some updates, and 3) we'll see if anyone else has been doing anything interesting
-[2018-12-31 11:03:00] <suraeNoether> so, before we get fired up
-[2018-12-31 11:03:03] <suraeNoether> who has some questions
-[2018-12-31 11:03:04] <suraeNoether> ?
-[2018-12-31 11:03:53] <suraeNoether> oh and, just before I forget: i want to bring the community up to speed on current thinking re: block size blowup
-[2018-12-31 11:03:59] <suraeNoether> seems like no one has any burning questions
-[2018-12-31 11:04:14] <suraeNoether> so, sarang, how about you jump in and give us a briefing on your holiday comings-and-goings
-[2018-12-31 11:04:18] <dsc_> Oh I have a question; what's the status on getting rid of / dealing with payment id
-[2018-12-31 11:04:34] <dsc_> (or integrated addresses, whatever the recent discussino was about)
-[2018-12-31 11:04:43] <endogenic> dsc_: i think we need to bring it up at a dev meeting
-[2018-12-31 11:04:48] <dsc_> ok cool
-[2018-12-31 11:05:01] <endogenic> but i dont know
-[2018-12-31 11:05:02] <sarang> There's general support for deprecation over time, but the question of how/when is still under active discussion
-[2018-12-31 11:05:05] <suraeNoether> dsc_: sgp_ recently posted a draft blag post on the matter
-[2018-12-31 11:05:17] <sarang> Right, but that should not be taken as any kind of consensus
-[2018-12-31 11:05:28] <suraeNoether> i'm not sure how much further the discussion has gotten than the pastebin: https://www.irccloud.com/pastebin/cRwyJViz/monero%20scheduled%20address%20upgrade%20timeline%20%5Bdraft%5D
-[2018-12-31 11:05:33] <sarang> very little
-[2018-12-31 11:05:34] <suraeNoether> rihgt
-[2018-12-31 11:05:38] <suraeNoether> this is still quite fluid
-[2018-12-31 11:05:41] <endogenic> dunno sgp_'s pretty good at representing that stuff :)
-[2018-12-31 11:05:49] <sarang> Heh, very true
-[2018-12-31 11:05:51] <dsc_> cheers
-[2018-12-31 11:05:52] <sgp_> hello all
-[2018-12-31 11:05:56] <endogenic> eyyyy
-[2018-12-31 11:05:56] <sarang> Hi sgp_
-[2018-12-31 11:06:03] <sarang> Want to talk at all about your post draft?
-[2018-12-31 11:06:51] <sgp_> Sure. I outlined my best summary of how Monero will handle payment IDs going forward and how we got to that decision
-[2018-12-31 11:07:11] <sgp_> Of course, we all still need to agree
-[2018-12-31 11:07:22] <sarang> I have been muddling over your post proposal
-[2018-12-31 11:07:35] <suraeNoether> i just started reading it this mroning and i'm going to reserve my comments for later today
-[2018-12-31 11:07:55] <sarang> A good deal of discussion centered around info leakage during multi-destination txns
-[2018-12-31 11:08:07] <sarang> since there's only one payment ID per txn (kind of a PITA honestly)
-[2018-12-31 11:08:25] <sarang> and not one per output, which is much simpler IMO
-[2018-12-31 11:08:30] <sgp_> This assumes unencrypted (standalone) payment ID prohibition in April 2019 and encrypted payment ID prohibition (use subaddresses instead) in April 2020
-[2018-12-31 11:09:13] <sarang> To what extent do we have exchanges represented in the discussion?
-[2018-12-31 11:09:27] <sarang> I operate on the assumption that no exchange reps are in any channels
-[2018-12-31 11:10:18] <sgp_> The most we've heard from any exchanges is from LocalMonero that helped initiate this discussion earlier this year afaik
-[2018-12-31 11:10:30] <sarang> While I don't think we should make decisions based on exchange wishes, they represent a good chunk of user interaction
-[2018-12-31 11:10:47] <dsc_> To what extend would Sarang like to involve exchanges? I mean, probably most of us know some folk who work at exchanges, should an effort be made to get in contact?
-[2018-12-31 11:11:02] <sarang> My thought has been as follows
-[2018-12-31 11:11:14] <sarang> Exchanges need to do infrastructure work if we change pIDs
-[2018-12-31 11:11:31] <sarang> and have little incentive to move to safer alternatives (e.g. subaddresses) without being required t
-[2018-12-31 11:11:33] <sarang> to
-[2018-12-31 11:11:46] <sarang> Setting a firm timeline is important, as is providing sufficient time to change
-[2018-12-31 11:12:00] <sarang> There's almost certainly too few developers doing such things at exchanges
-[2018-12-31 11:12:00] <sgp_> I wrote up this post to help exchanges and other services be prepared, but we've had a historically difficult time reaching these services
-[2018-12-31 11:12:24] <dsc_> nice sgp_
-[2018-12-31 11:12:37] <sarang> One option has been doing wallet defaults only, and not consensus
-[2018-12-31 11:12:51] <sarang> this at least makes most transactions more uniform
-[2018-12-31 11:12:51] <endogenic> just in my personal view i dont think we need to worry too much about third parties… they're going to have to adapt
-[2018-12-31 11:13:15] <suraeNoether> maybe part of our discussion should be to hold a call with some folks at exchanges or something like that, but my thoughts on the matter are in alignment with sarang's: the exchange will make whatever *mandatory* changes the core team decides upon, and it's not like they are going to be able to say "well, what if you guys did *this* instead, it'd be easier on us and it would lead to a better public key
-[2018-12-31 11:13:15] <suraeNoether> infrastructure" or something. that's not their "mission" so to speak
-[2018-12-31 11:14:01] <sarang> "we've had a historically difficult time reaching these services" <--- calls may be tough
-[2018-12-31 11:14:15] <endogenic> who's going to pay us to reach out to them though? :)
-[2018-12-31 11:14:24] <sarang> FFS to the rescue
-[2018-12-31 11:14:25] <sarang> heh
-[2018-12-31 11:14:26] <dsc_> I can forward stuff to Kraken if neccesary
-[2018-12-31 11:14:28] <endogenic> bah
-[2018-12-31 11:14:31] <endogenic> the exchanges should
-[2018-12-31 11:14:32] <suraeNoether> if monero moved to pairings based crypto tomorrow and we modified our whole key structure, they would groan, roll their eyes, curse our names, and then make the changes without publicly complaining at all
-[2018-12-31 11:14:37] <endogenic> yes
-[2018-12-31 11:14:40] <endogenic> agreed
-[2018-12-31 11:14:48] <sgp_> I may be able to talk to Circle and Poloniex. I have someone's email
-[2018-12-31 11:14:57] <sarang> Cool. Step 1: make a damn decision
-[2018-12-31 11:15:15] <suraeNoether> well, let's do a cursory reach-out. let's see if kraken, circle, and polo are willing to provide some feedback, even if it's "please don't make any changes for the love of god"
-[2018-12-31 11:15:19] <sarang> unless we want exchange input well in advance of decisions
-[2018-12-31 11:15:40] <suraeNoether> in the meantime, we'll prioritize a decision on this over the next few days
-[2018-12-31 11:15:41] <hyc> polo has historically been pretty open to communication
-[2018-12-31 11:15:48] <endogenic> feedback wont do harm
-[2018-12-31 11:15:53] <sgp_> We can still approve or reject this recommendation. Give them a pre-release of the press release of sorts
-[2018-12-31 11:16:07] <sarang> that seems fair and in line with our transparency
-[2018-12-31 11:16:07] <suraeNoether> yeah
-[2018-12-31 11:16:22] — suraeNoether claps and rocks back and forth gleefully
-[2018-12-31 11:16:24] <dsc_> Cool. thanks guys.
-[2018-12-31 11:16:24] <sarang> thanks sgp_ for taking the reins on the public-facing side of this
-[2018-12-31 11:16:42] <sarang> let's all review and think about options over the next few days as suraeNoether mentions
-[2018-12-31 11:16:57] <sgp_> I've received feedback from a few people. I'll make the changes to the doc this afternoon, but the overall message is the same
-[2018-12-31 11:17:00] <sarang> esp. relating to timelines, consensus v wallet default, and the consequences on information leakage
-[2018-12-31 11:17:23] <suraeNoether> okay, since we are on specific topics, before we move on to get sarang's research update, we may as well talk about the blocksize blowup thing
-[2018-12-31 11:17:28] <sgp_> One thing I claimed we are not doing: enforcing payment IDs. Are we in agreement here?
-[2018-12-31 11:17:43] <suraeNoether> yes
-[2018-12-31 11:17:46] <sarang> We can't effectively enforce encrypted IDs
-[2018-12-31 11:17:53] <sgp_> Cool, thanks
-[2018-12-31 11:17:57] <sarang> and wallets can always be dumb about it anyway
-[2018-12-31 11:18:10] <sarang> but having the default wallet do the right thing will help a great deal
-[2018-12-31 11:18:38] <suraeNoether> okay, so regarding this blowup/dynamic block size problem
-[2018-12-31 11:18:53] <suraeNoether> first: solutions are easy and numerous, each with pros and cons, but most involve magic numbers of some sort
-[2018-12-31 11:19:25] <suraeNoether> for those of us in the audience, a magic number is *arbitrarily chosen in code*
-[2018-12-31 11:19:28] <sarang> and consensus, which places a firm deadline on changes
-[2018-12-31 11:19:37] <suraeNoether> yes
-[2018-12-31 11:19:52] <suraeNoether> and this is sufficiently urgent of a problem that we should come up with *some solution* asap
-[2018-12-31 11:19:53] <sarang> the gist of the problem: it's easy to blow up the block size by spending money, and it stays there
-[2018-12-31 11:20:02] <suraeNoether> it's cheap to keep block size big, too
-[2018-12-31 11:20:06] <sarang> yes
-[2018-12-31 11:20:20] <sarang> There was a clever proposal to start the penalty _below_ the median
-[2018-12-31 11:20:27] <sarang> to bring size down by default
-[2018-12-31 11:20:46] → cardboardoranges joined (~cardboard@c-24-60-138-210.hsd1.ma.comcast.net)
-[2018-12-31 11:20:46] <sarang> others involve (at the very least) a high cap that still avoids the crazy blowup possibilities
-[2018-12-31 11:21:19] <suraeNoether> Options include but are not limited to
-[2018-12-31 11:21:27] <suraeNoether> 1) change sample size of median block size to something very large like a year. pro: easy, ensures that an attacker has to be executing an attack for at least half a year before expecting any success. con: adds inflexibility to monero block size.
-[2018-12-31 11:21:54] <suraeNoether> (it makes sense to make this increase in window size to be somehow proportional to our change in fees, to ensure that it doesn't cost *less* to attack today than before bulletproofs)
-[2018-12-31 11:22:07] <suraeNoether> 2) add a momentum term to block size so that bigger changes are harder to effect. pro: also easy, improved flexibility. con: unlike median, determining the strength of an attacker required to execute the attack over a sustained period is a trickier question.
-[2018-12-31 11:22:23] <suraeNoether> 3) change block size penalty to begin sub-median. pro: incentive against the attack! great! con: weak incentive, and a determined attacker is already blowing cash on this attack
-[2018-12-31 11:22:25] <sarang> We should also consider the two parts to this: (1) getting the block size big, (2) keeping it big
-[2018-12-31 11:22:44] <suraeNoether> yeah, we could add a rapid decay back to "small"
-[2018-12-31 11:22:50] <suraeNoether> that requires lots of funds to counteract
-[2018-12-31 11:23:01] <suraeNoether> 4) change block size dynamic updating to an *additive* update instead of a *multiplicative update.* Example: if median block size for the past N blocks is greater than some threshold, then change block size as S = S + diff_S instead of S = r*S for some r. Keep the *decreases* in blockchain size multiplicative. Pros: leads to an exponential decay in block size back to zero in the absence of demand, and leads
-[2018-12-31 11:23:02] <suraeNoether> to at best a linear increase in block size in the presence of demand. Con: Not intuitive?
-[2018-12-31 11:23:15] <suraeNoether> 5) limit the maximum change in block size over some time period by some factor. example: do not allow block size to grow more than 2x in a year. pro: easy to intuit, provides a cap on growth but still allows growth, etc. 2x a year is very fast exponential growth generally but we would have time to notice a bloat drift attack and maybe come up with other solutions. con: 2x a year is still very fast exponential
-[2018-12-31 11:23:15] <suraeNoether> growth.
-[2018-12-31 11:23:42] <suraeNoether> in all cases, we have to end up picking some magic numbers that would need to be justified to the community. example: why 2x a year instead of 1.05x a year, or 3x a year?
-[2018-12-31 11:23:59] <spaced0ut> isn't prevention a little more important than the cure? rapid decays back would solve one issue but wasn't it determined someone could grow the chain 30TB or something quickly?
-[2018-12-31 11:24:26] <suraeNoether> last I spoke to fluffypony about this, he said something like option (1) is most easy to get consensus on because we can justify a change based on the decreased fees. the change is pretty intuitive. with an 80% reduction in fees we could have a 5x increase in median sample size
-[2018-12-31 11:24:30] <sarang> This needs a robust long-term solution, but also a short-term solution
-[2018-12-31 11:24:30] <suraeNoether> spaced0ut: i agree with that sentiment
-[2018-12-31 11:24:52] <endogenic> suraeNoether: imo the community doesn't need things justified to them so much as you have to consider them justified from a model pov - community looks to you
-[2018-12-31 11:25:14] <endogenic> cause they'll be able to investigate what you propose
-[2018-12-31 11:25:23] <suraeNoether> endogenic: i disagree. look at bitcoin block size debate or our current ring size debate. everyone wants a justification of the magic numbers proposed.
-[2018-12-31 11:25:25] <sarang> FWIW the funds required to execute such a bloat attack to TB size are O(100K) USD IIRC
-[2018-12-31 11:25:36] <endogenic> suraeNoether: monero != bitcoin tho.. big differences
-[2018-12-31 11:25:36] <sarang> magic number != overall strategy tho
-[2018-12-31 11:25:43] <endogenic> wow r u me
-[2018-12-31 11:26:34] <moneromooo> If you ask for community consensus, you'll get the noisy ones to get their way, and they'll typically be short term profit people who <backspace a bit>.
-[2018-12-31 11:26:53] <sarang> I want developer consensus
-[2018-12-31 11:26:59] <endogenic> ^
-[2018-12-31 11:27:07] <moneromooo> Oh, then that's much better. If you include people like ArticMine in this.
-[2018-12-31 11:27:12] <sarang> Everyone will/should agree that avoiding TB bloat is worth changing shit
-[2018-12-31 11:27:21] <moneromooo> People Who We Know Have A Clue.
-[2018-12-31 11:27:31] <suraeNoether> *nod* i agree with all the above, to be honest
-[2018-12-31 11:27:39] <sarang> at the very least, getting a worst-case short-term fix (like a high cap) in place for spring is the necessary starting point
-[2018-12-31 11:28:11] <spaced0ut> as long as the change clearly shows everything possible is being done to have to avoid setting a hard limit like BTC. not many will think negatively.
-[2018-12-31 11:28:28] <suraeNoether> i think for the spring hard fork, we should try for (1) and (3) together. start penalty at 80% median, and increase median sample size window by 5x.
-[2018-12-31 11:28:30] <sarang> spaced0ut: a hard limit while we actively determine a more robust solution isn't all bad
-[2018-12-31 11:28:41] <sarang> but I see the point
-[2018-12-31 11:28:45] <suraeNoether> but before we make that decision, i want to back-of-the-napkin the cost of the attack before and after the change
-[2018-12-31 11:29:02] <suraeNoether> Isthmus has been helping with some of that
-[2018-12-31 11:29:10] ⇐ cardboardoranges quit (~cardboard@c-24-60-138-210.hsd1.ma.comcast.net): Quit: cardboardoranges
-[2018-12-31 11:29:15] <suraeNoether> but we should also make a decision on this v soon, like end of week
-[2018-12-31 11:29:31] <sarang> Isthmus has a technical note draft on it
-[2018-12-31 11:29:41] <suraeNoether> the cost of changing block size dynamics a second time later this year is low; the cost of permanently bloated blockchain is much higher in my mind
-[2018-12-31 11:29:41] <sarang> If we establish an idea, we can compare to his original analysis
-[2018-12-31 11:29:47] <sarang> yes
-[2018-12-31 11:29:55] <sarang> doing nothing is the worst option
-[2018-12-31 11:30:02] <suraeNoether> sarang: yeah exctly.. when he's done sleeping and recovering from the past month of work. :P
-[2018-12-31 11:30:26] <sarang> OK, for the sake of this discussion, let's work up a proposal for combining options 1 and 3 from suraeNoether's list above
-[2018-12-31 11:30:45] <sarang> (not right now, but I mean as an initial proposal)
-[2018-12-31 11:31:02] <spaced0ut> sarang, i agree. its probably the safest option for XMR's longevity really. that won't be fun to explain so that most people understand though
-[2018-12-31 11:31:08] <sarang> that will make the attack slow and expensive, and bring block size back down after such an attack
-[2018-12-31 11:31:21] <suraeNoether> yep. let's shoot for end of week for our proposal
-[2018-12-31 11:31:25] <sarang> spaced0ut: it's easy if you say "the consequence of leaving it is TB blocks"
-[2018-12-31 11:31:32] <sarang> people hate bloat already
-[2018-12-31 11:31:48] <spaced0ut> yeah
-[2018-12-31 11:31:57] <sarang> These options have little effect on the average user if done properly
-[2018-12-31 11:31:59] <suraeNoether> we don't really have MIPs do we? :P
-[2018-12-31 11:32:04] <sarang> nope
-[2018-12-31 11:32:10] <sarang> Every Commit Is a MIP (tm)
-[2018-12-31 11:32:23] <suraeNoether> that should be on a t-shirt with several cows coding on the back
-[2018-12-31 11:32:29] <suraeNoether> paging rehrar[m] i'd buy several of those shirts
-[2018-12-31 11:32:43] <suraeNoether> well, two
-[2018-12-31 11:32:58] <sarang> So
-[2018-12-31 11:33:15] <sarang> This week I've been doing lit review in between Festivus celebrations, and doing some documentation writeups
-[2018-12-31 11:33:18] <moneromooo> The intent of the block size increase is to allow sustained spikes (to the extent it is not an oxymoron). A year's smoothing will prevent that from working.
-[2018-12-31 11:33:41] <sarang> moneromooo: yes, but at the cost of our simple model failing to prevent sustained bloat
-[2018-12-31 11:33:58] <moneromooo> That seems to be a false dichotomy.
-[2018-12-31 11:34:41] <sarang> Should sustained spikes not also yield a corresponding cost?
-[2018-12-31 11:34:47] <suraeNoether> moneromooo: ehhh it doesn't prevent it. it merely raises the bar for what is required to push block size up, so spikes have to be sustained longer for them to impact the base layer. but you are correct; any time we have a variable/dynamic capacity, this allows for bloat, but fixed capacity is inflexible
-[2018-12-31 11:35:13] <suraeNoether> but to be perfectly honest, if we find ourselves in a situation where people are regularly waiting until the next block to stash a transaction because the current block is full...
-[2018-12-31 11:35:13] <moneromooo> This is a negative question, so "sustained spikes should yield a corresponding cost".
-[2018-12-31 11:35:52] <suraeNoether> then in this situation, we probably will have some lead time to correct our block size dynamics to prevent it from being a systemic load problem
-[2018-12-31 11:35:58] <moneromooo> The point is, if ytou have to waiut for half a year for the thing to kick in, it's pointless for spikes.
-[2018-12-31 11:36:30] <suraeNoether> moneromooo: well, we can try one of the other methods that are more immediately flexible, like a momentum term or whatever
-[2018-12-31 11:36:39] <suraeNoether> or we could just make fees great again
-[2018-12-31 11:36:47] <hyc> yes ^
-[2018-12-31 11:37:03] <sarang> heh yes to which
-[2018-12-31 11:37:08] <suraeNoether> on the other hand, we could just recognize the dynamic block size flexibility to be a long-term flexibility instead of somethign designed to handle short-term volume spikes
-[2018-12-31 11:37:10] <hyc> fundamentally, the reason bloating the chain is cheap is because fees are cheap and XMR/fiat is cheap
-[2018-12-31 11:37:16] <suraeNoether> hyc yes
-[2018-12-31 11:37:18] <spaced0ut> Just throwing an incomplete idea out there. Has anyone thought about increasing fee's as block size increases then decreasing fees based on some median tx count?
-[2018-12-31 11:37:53] <suraeNoether> spaced0ut: the idea of blocksize-dependent fees is one that is very interesting to me, but i haven't dived into the idea
-[2018-12-31 11:38:20] <suraeNoether> but that allows for an attacker to bloat the blockchain and drive everyone else's fees up, ala the bitcoin bloat from ... whenever that was. 2017? sheeee
-[2018-12-31 11:39:03] <tnsepta> i think that one was just lots of real transaction activity?
-[2018-12-31 11:39:19] <hyc> yes, but the net effect is the same
-[2018-12-31 11:39:35] <hyc> everyone else's fees go up, to get their txs mined
-[2018-12-31 11:39:46] <suraeNoether> okay, we'll think about this a little harder this week and see what there is to see
-[2018-12-31 11:40:00] <suraeNoether> brb
-[2018-12-31 11:40:01] <tnsepta> which is what makes this problem hard, you have to increase the cost of bloat attack without also making transactions way too expensive
-[2018-12-31 11:40:15] <tnsepta> two sides of the same coin
-[2018-12-31 11:40:21] <hyc> I would say that's an impossibility
-[2018-12-31 11:40:42] <tnsepta> of course it's impossible to do both at the same time, i mean it's hard to balance the two right
-[2018-12-31 11:40:45] <hyc> you can't distinguish "real" txs from "bloat" txs
-[2018-12-31 11:41:22] <spaced0ut> the truth has been said in here multiple times already. it just sucks to admit. unfortunately our chain isn't insanely expensive to attack right now. there has to be a limit. make it complex or simple but it comes down to size not cost. can't make cost high enough without making it expensive for legit use.
-[2018-12-31 11:42:21] <hyc> standard tragedy of commons scenario
-[2018-12-31 11:43:14] <sarang> and size is dependent only on usage, of course... if you need to get N txns on chain, it costs O(N) in size no matter what
-[2018-12-31 11:44:40] <sarang> Aight, that's two items of priority: (1) fee structure; (2) payment ID timeline
-[2018-12-31 11:46:54] <sarang> Any other work of note?
-[2018-12-31 11:47:25] <moneromooo> I'm doing some more work on multiuser txes (the type you can use, eg, coinjoin with).
-[2018-12-31 11:47:32] <moneromooo> That might be interetsing to people here ?
-[2018-12-31 11:47:50] <sarang> go on...
-[2018-12-31 11:47:54] <tnsepta> is there a benefit of doing coinjoin when we're already doing RCT?
-[2018-12-31 11:48:12] <moneromooo> Yes. Even more privacy.
-[2018-12-31 11:48:28] <moneromooo> And atomic multi user spends.
-[2018-12-31 11:48:32] <tnsepta> ahh ok
-[2018-12-31 11:48:50] <hyc> does it require all participants to be online at once?
-[2018-12-31 11:49:02] <moneromooo> There *might* also be a way to have smaller range proofs, but I'm not sure.
-[2018-12-31 11:49:05] <moneromooo> No.
-[2018-12-31 11:49:17] <sarang> Go on...
-[2018-12-31 11:49:18] <moneromooo> Well, yes if you want it to be fast :D
-[2018-12-31 11:49:32] <hyc> I always want computers to be fast.
-[2018-12-31 11:49:53] <sarang> What's the basic structure moneromooo ?
-[2018-12-31 11:50:03] <moneromooo> I'm making it like multisig. You pass a file around, and write your things. 2N-1 comms though.
-[2018-12-31 11:50:06] <sarang> afaik this is the first I've heard of your work
-[2018-12-31 11:51:05] <moneromooo> atm, I've got a first N comms rounds with everyone adding their inputs/outputs, then another ~N with people signing after checking their I/O are what they specified.
-[2018-12-31 11:51:17] <hyc> who would want to use this approach?
-[2018-12-31 11:51:39] <moneromooo> People who want to use a coinjoin style tx, and people who want to atomically pay.
-[2018-12-31 11:51:53] <hyc> passing this file around sounds like it carries sensitive info, what's the danger of exposing it prematurely?
-[2018-12-31 11:51:54] <moneromooo> (ie, Alice and Bob want to pay Carol, but only if the other also does)
-[2018-12-31 11:52:03] <moneromooo> Not much I think.
-[2018-12-31 11:52:15] <sarang> you're effectively doing partial signatures?
-[2018-12-31 11:52:36] <moneromooo> You create MGs for the outputs you own.
-[2018-12-31 11:52:40] <moneromooo> So kinda yes.
-[2018-12-31 11:52:52] <sarang> MG?
-[2018-12-31 11:53:01] <moneromooo> I think that's a MLSAG.
-[2018-12-31 11:53:57] <sarang> The smaller range proof idea would be an MPC on a bulletproof?
-[2018-12-31 11:54:08] <sarang> which is possible, but we've never had a definite use case
-[2018-12-31 11:54:13] <moneromooo> I don't know. That'll be your job to find out :P
-[2018-12-31 11:54:17] <sarang> heh
-[2018-12-31 11:54:34] <sarang> well fwiw, bulletproof mpc is a known construction
-[2018-12-31 11:54:48] <gingeropolous> damn, missed the bloat thing. i like 1 and 2. I think 1 can be the quick easy fix for now... and if we can figure out the best double mechanism (#2) then we should probably switch to that, because that can allow for spikes
-[2018-12-31 11:55:27] <moneromooo> tnsepta: if you have more than one user, it breaks down some of the analysis you can do since you can't assume all inputs have a common owner.
-[2018-12-31 11:55:27] <sarang> moneromooo: is there a branch with any work? or is it just at the "here's the math" stage?
-[2018-12-31 11:55:41] <moneromooo> There's a "multi" branch, which has a PoC in core_tests.
-[2018-12-31 11:55:55] <moneromooo> I've started working on the simplewallet tooling now.
-[2018-12-31 11:56:33] <spaced0ut> Could the same attack used to expand blocksize and bloat the chain also be used to create an insane amount of identical mixins to the point that future tx would have a high chance of having 10 identical mixins and your real spend?
-[2018-12-31 11:56:33] <sarang> How do you get so much done simultaneously moneromooo ?
-[2018-12-31 11:56:41] <sarang> Surely you burn the candle at all ends
-[2018-12-31 11:56:54] <moneromooo> I have four legs. Humans only use two hands to type.
-[2018-12-31 11:57:07] <sarang> spaced0ut: what do you mean?
-[2018-12-31 11:58:09] <sarang> Do you mean the ring union analysis method?
-[2018-12-31 11:58:31] <sarang> it's extremely unlikely to occur without active selection
-[2018-12-31 12:00:51] <sarang> Unless you mean that the adversary controls a large percentage of available outputs and therefore knows other true spends?
-[2018-12-31 12:00:58] <spaced0ut> okay. i wasn't sure if that held true in a scenario where the chain grew 100x larger and an attacker was sending the exact same amount every time. i'm a noob on input selection
-[2018-12-31 12:01:05] <sarang> In that case, sure, that's always a possibility for an attacker who wants to spam the chain
-[2018-12-31 12:01:13] <sarang> Amounts are irrelevant
-[2018-12-31 12:01:43] <spaced0ut> yes ofc. i worded that funny. you answered me though thanks
-[2018-12-31 12:01:47] <sarang> roger
-[2018-12-31 12:02:02] <sarang> moneromooo: your idea intrigues me, and I'll be interested to examine the details
-[2018-12-31 12:03:56] <sarang> Well, we have come to the end of our allotted time
-[2018-12-31 12:04:04] <sarang> Great discussion all around
-[2018-12-31 12:04:28] <sarang> We'll each move into the future sometime today; let us know what it's like when you get there
+[2018-12-31 17:00:13] <sarang> OK, probably low attendance today, but might as well see what folks are up to
+[2018-12-31 17:00:15] <sarang> Hullo ll
+[2018-12-31 17:00:17] <sarang> *all
+[2018-12-31 17:00:45] <suraeNoether> morning guys
+[2018-12-31 17:00:48] <sarang> taptap this thing on?
+[2018-12-31 17:00:50] <endogenic> good morning
+[2018-12-31 17:00:53] <suraeNoether> howdy :D
+[2018-12-31 17:00:54] <dsc_> morn'
+[2018-12-31 17:01:00] <suraeNoether> i'm actually excited for this meeting because its' been like two weeks
+[2018-12-31 17:01:16] <suraeNoether> but i don't have much of an update, except "the matching paper is much *shorter* now"
+[2018-12-31 17:01:18] <suraeNoether> :P
+[2018-12-31 17:02:33] <suraeNoether> allrighty, so let's begin
+[2018-12-31 17:02:34] <sarang> Heh, no problem
+[2018-12-31 17:02:42] <sarang> I figure most people took it low this week anyway
+[2018-12-31 17:02:45] <sarang> as tends to happen
+[2018-12-31 17:02:51] <suraeNoether> as usual, we'll 1) open up with questions, 2) sarang and i will give some updates, and 3) we'll see if anyone else has been doing anything interesting
+[2018-12-31 17:03:00] <suraeNoether> so, before we get fired up
+[2018-12-31 17:03:03] <suraeNoether> who has some questions
+[2018-12-31 17:03:04] <suraeNoether> ?
+[2018-12-31 17:03:53] <suraeNoether> oh and, just before I forget: i want to bring the community up to speed on current thinking re: block size blowup
+[2018-12-31 17:03:59] <suraeNoether> seems like no one has any burning questions
+[2018-12-31 17:04:14] <suraeNoether> so, sarang, how about you jump in and give us a briefing on your holiday comings-and-goings
+[2018-12-31 17:04:18] <dsc_> Oh I have a question; what's the status on getting rid of / dealing with payment id
+[2018-12-31 17:04:34] <dsc_> (or integrated addresses, whatever the recent discussino was about)
+[2018-12-31 17:04:43] <endogenic> dsc_: i think we need to bring it up at a dev meeting
+[2018-12-31 17:04:48] <dsc_> ok cool
+[2018-12-31 17:05:01] <endogenic> but i dont know
+[2018-12-31 17:05:02] <sarang> There's general support for deprecation over time, but the question of how/when is still under active discussion
+[2018-12-31 17:05:05] <suraeNoether> dsc_: sgp_ recently posted a draft blag post on the matter
+[2018-12-31 17:05:17] <sarang> Right, but that should not be taken as any kind of consensus
+[2018-12-31 17:05:28] <suraeNoether> i'm not sure how much further the discussion has gotten than the pastebin: https://www.irccloud.com/pastebin/cRwyJViz/monero%20scheduled%20address%20upgrade%20timeline%20%5Bdraft%5D
+[2018-12-31 17:05:33] <sarang> very little
+[2018-12-31 17:05:34] <suraeNoether> rihgt
+[2018-12-31 17:05:38] <suraeNoether> this is still quite fluid
+[2018-12-31 17:05:41] <endogenic> dunno sgp_'s pretty good at representing that stuff :)
+[2018-12-31 17:05:49] <sarang> Heh, very true
+[2018-12-31 17:05:51] <dsc_> cheers
+[2018-12-31 17:05:52] <sgp_> hello all
+[2018-12-31 17:05:56] <endogenic> eyyyy
+[2018-12-31 17:05:56] <sarang> Hi sgp_
+[2018-12-31 17:06:03] <sarang> Want to talk at all about your post draft?
+[2018-12-31 17:06:51] <sgp_> Sure. I outlined my best summary of how Monero will handle payment IDs going forward and how we got to that decision
+[2018-12-31 17:07:11] <sgp_> Of course, we all still need to agree
+[2018-12-31 17:07:22] <sarang> I have been muddling over your post proposal
+[2018-12-31 17:07:35] <suraeNoether> i just started reading it this mroning and i'm going to reserve my comments for later today
+[2018-12-31 17:07:55] <sarang> A good deal of discussion centered around info leakage during multi-destination txns
+[2018-12-31 17:08:07] <sarang> since there's only one payment ID per txn (kind of a PITA honestly)
+[2018-12-31 17:08:25] <sarang> and not one per output, which is much simpler IMO
+[2018-12-31 17:08:30] <sgp_> This assumes unencrypted (standalone) payment ID prohibition in April 2019 and encrypted payment ID prohibition (use subaddresses instead) in April 2020
+[2018-12-31 17:09:13] <sarang> To what extent do we have exchanges represented in the discussion?
+[2018-12-31 17:09:27] <sarang> I operate on the assumption that no exchange reps are in any channels
+[2018-12-31 17:10:18] <sgp_> The most we've heard from any exchanges is from LocalMonero that helped initiate this discussion earlier this year afaik
+[2018-12-31 17:10:30] <sarang> While I don't think we should make decisions based on exchange wishes, they represent a good chunk of user interaction
+[2018-12-31 17:10:47] <dsc_> To what extend would Sarang like to involve exchanges? I mean, probably most of us know some folk who work at exchanges, should an effort be made to get in contact?
+[2018-12-31 17:11:02] <sarang> My thought has been as follows
+[2018-12-31 17:11:14] <sarang> Exchanges need to do infrastructure work if we change pIDs
+[2018-12-31 17:11:31] <sarang> and have little incentive to move to safer alternatives (e.g. subaddresses) without being required t
+[2018-12-31 17:11:33] <sarang> to
+[2018-12-31 17:11:46] <sarang> Setting a firm timeline is important, as is providing sufficient time to change
+[2018-12-31 17:12:00] <sarang> There's almost certainly too few developers doing such things at exchanges
+[2018-12-31 17:12:00] <sgp_> I wrote up this post to help exchanges and other services be prepared, but we've had a historically difficult time reaching these services
+[2018-12-31 17:12:24] <dsc_> nice sgp_
+[2018-12-31 17:12:37] <sarang> One option has been doing wallet defaults only, and not consensus
+[2018-12-31 17:12:51] <sarang> this at least makes most transactions more uniform
+[2018-12-31 17:12:51] <endogenic> just in my personal view i dont think we need to worry too much about third parties… they're going to have to adapt
+[2018-12-31 17:13:15] <suraeNoether> maybe part of our discussion should be to hold a call with some folks at exchanges or something like that, but my thoughts on the matter are in alignment with sarang's: the exchange will make whatever *mandatory* changes the core team decides upon, and it's not like they are going to be able to say "well, what if you guys did *this* instead, it'd be easier on us and it would lead to a better public key
+[2018-12-31 17:13:15] <suraeNoether> infrastructure" or something. that's not their "mission" so to speak
+[2018-12-31 17:14:01] <sarang> "we've had a historically difficult time reaching these services" <--- calls may be tough
+[2018-12-31 17:14:15] <endogenic> who's going to pay us to reach out to them though? :)
+[2018-12-31 17:14:24] <sarang> FFS to the rescue
+[2018-12-31 17:14:25] <sarang> heh
+[2018-12-31 17:14:26] <dsc_> I can forward stuff to Kraken if neccesary
+[2018-12-31 17:14:28] <endogenic> bah
+[2018-12-31 17:14:31] <endogenic> the exchanges should
+[2018-12-31 17:14:32] <suraeNoether> if monero moved to pairings based crypto tomorrow and we modified our whole key structure, they would groan, roll their eyes, curse our names, and then make the changes without publicly complaining at all
+[2018-12-31 17:14:37] <endogenic> yes
+[2018-12-31 17:14:40] <endogenic> agreed
+[2018-12-31 17:14:48] <sgp_> I may be able to talk to Circle and Poloniex. I have someone's email
+[2018-12-31 17:14:57] <sarang> Cool. Step 1: make a damn decision
+[2018-12-31 17:15:15] <suraeNoether> well, let's do a cursory reach-out. let's see if kraken, circle, and polo are willing to provide some feedback, even if it's "please don't make any changes for the love of god"
+[2018-12-31 17:15:19] <sarang> unless we want exchange input well in advance of decisions
+[2018-12-31 17:15:40] <suraeNoether> in the meantime, we'll prioritize a decision on this over the next few days
+[2018-12-31 17:15:41] <hyc> polo has historically been pretty open to communication
+[2018-12-31 17:15:48] <endogenic> feedback wont do harm
+[2018-12-31 17:15:53] <sgp_> We can still approve or reject this recommendation. Give them a pre-release of the press release of sorts
+[2018-12-31 17:16:07] <sarang> that seems fair and in line with our transparency
+[2018-12-31 17:16:07] <suraeNoether> yeah
+[2018-12-31 17:16:22] — suraeNoether claps and rocks back and forth gleefully
+[2018-12-31 17:16:24] <dsc_> Cool. thanks guys.
+[2018-12-31 17:16:24] <sarang> thanks sgp_ for taking the reins on the public-facing side of this
+[2018-12-31 17:16:42] <sarang> let's all review and think about options over the next few days as suraeNoether mentions
+[2018-12-31 17:16:57] <sgp_> I've received feedback from a few people. I'll make the changes to the doc this afternoon, but the overall message is the same
+[2018-12-31 17:17:00] <sarang> esp. relating to timelines, consensus v wallet default, and the consequences on information leakage
+[2018-12-31 17:17:23] <suraeNoether> okay, since we are on specific topics, before we move on to get sarang's research update, we may as well talk about the blocksize blowup thing
+[2018-12-31 17:17:28] <sgp_> One thing I claimed we are not doing: enforcing payment IDs. Are we in agreement here?
+[2018-12-31 17:17:43] <suraeNoether> yes
+[2018-12-31 17:17:46] <sarang> We can't effectively enforce encrypted IDs
+[2018-12-31 17:17:53] <sgp_> Cool, thanks
+[2018-12-31 17:17:57] <sarang> and wallets can always be dumb about it anyway
+[2018-12-31 17:18:10] <sarang> but having the default wallet do the right thing will help a great deal
+[2018-12-31 17:18:38] <suraeNoether> okay, so regarding this blowup/dynamic block size problem
+[2018-12-31 17:18:53] <suraeNoether> first: solutions are easy and numerous, each with pros and cons, but most involve magic numbers of some sort
+[2018-12-31 17:19:25] <suraeNoether> for those of us in the audience, a magic number is *arbitrarily chosen in code*
+[2018-12-31 17:19:28] <sarang> and consensus, which places a firm deadline on changes
+[2018-12-31 17:19:37] <suraeNoether> yes
+[2018-12-31 17:19:52] <suraeNoether> and this is sufficiently urgent of a problem that we should come up with *some solution* asap
+[2018-12-31 17:19:53] <sarang> the gist of the problem: it's easy to blow up the block size by spending money, and it stays there
+[2018-12-31 17:20:02] <suraeNoether> it's cheap to keep block size big, too
+[2018-12-31 17:20:06] <sarang> yes
+[2018-12-31 17:20:20] <sarang> There was a clever proposal to start the penalty _below_ the median
+[2018-12-31 17:20:27] <sarang> to bring size down by default
+[2018-12-31 17:20:46] → cardboardoranges joined (~cardboard@c-24-60-138-210.hsd1.ma.comcast.net)
+[2018-12-31 17:20:46] <sarang> others involve (at the very least) a high cap that still avoids the crazy blowup possibilities
+[2018-12-31 17:21:19] <suraeNoether> Options include but are not limited to
+[2018-12-31 17:21:27] <suraeNoether> 1) change sample size of median block size to something very large like a year. pro: easy, ensures that an attacker has to be executing an attack for at least half a year before expecting any success. con: adds inflexibility to monero block size.
+[2018-12-31 17:21:54] <suraeNoether> (it makes sense to make this increase in window size to be somehow proportional to our change in fees, to ensure that it doesn't cost *less* to attack today than before bulletproofs)
+[2018-12-31 17:22:07] <suraeNoether> 2) add a momentum term to block size so that bigger changes are harder to effect. pro: also easy, improved flexibility. con: unlike median, determining the strength of an attacker required to execute the attack over a sustained period is a trickier question.
+[2018-12-31 17:22:23] <suraeNoether> 3) change block size penalty to begin sub-median. pro: incentive against the attack! great! con: weak incentive, and a determined attacker is already blowing cash on this attack
+[2018-12-31 17:22:25] <sarang> We should also consider the two parts to this: (1) getting the block size big, (2) keeping it big
+[2018-12-31 17:22:44] <suraeNoether> yeah, we could add a rapid decay back to "small"
+[2018-12-31 17:22:50] <suraeNoether> that requires lots of funds to counteract
+[2018-12-31 17:23:01] <suraeNoether> 4) change block size dynamic updating to an *additive* update instead of a *multiplicative update.* Example: if median block size for the past N blocks is greater than some threshold, then change block size as S = S + diff_S instead of S = r*S for some r. Keep the *decreases* in blockchain size multiplicative. Pros: leads to an exponential decay in block size back to zero in the absence of demand, and leads
+[2018-12-31 17:23:02] <suraeNoether> to at best a linear increase in block size in the presence of demand. Con: Not intuitive?
+[2018-12-31 17:23:15] <suraeNoether> 5) limit the maximum change in block size over some time period by some factor. example: do not allow block size to grow more than 2x in a year. pro: easy to intuit, provides a cap on growth but still allows growth, etc. 2x a year is very fast exponential growth generally but we would have time to notice a bloat drift attack and maybe come up with other solutions. con: 2x a year is still very fast exponential
+[2018-12-31 17:23:15] <suraeNoether> growth.
+[2018-12-31 17:23:42] <suraeNoether> in all cases, we have to end up picking some magic numbers that would need to be justified to the community. example: why 2x a year instead of 1.05x a year, or 3x a year?
+[2018-12-31 17:23:59] <spaced0ut> isn't prevention a little more important than the cure? rapid decays back would solve one issue but wasn't it determined someone could grow the chain 30TB or something quickly?
+[2018-12-31 17:24:26] <suraeNoether> last I spoke to fluffypony about this, he said something like option (1) is most easy to get consensus on because we can justify a change based on the decreased fees. the change is pretty intuitive. with an 80% reduction in fees we could have a 5x increase in median sample size
+[2018-12-31 17:24:30] <sarang> This needs a robust long-term solution, but also a short-term solution
+[2018-12-31 17:24:30] <suraeNoether> spaced0ut: i agree with that sentiment
+[2018-12-31 17:24:52] <endogenic> suraeNoether: imo the community doesn't need things justified to them so much as you have to consider them justified from a model pov - community looks to you
+[2018-12-31 17:25:14] <endogenic> cause they'll be able to investigate what you propose
+[2018-12-31 17:25:23] <suraeNoether> endogenic: i disagree. look at bitcoin block size debate or our current ring size debate. everyone wants a justification of the magic numbers proposed.
+[2018-12-31 17:25:25] <sarang> FWIW the funds required to execute such a bloat attack to TB size are O(100K) USD IIRC
+[2018-12-31 17:25:36] <endogenic> suraeNoether: monero != bitcoin tho.. big differences
+[2018-12-31 17:25:36] <sarang> magic number != overall strategy tho
+[2018-12-31 17:25:43] <endogenic> wow r u me
+[2018-12-31 17:26:34] <moneromooo> If you ask for community consensus, you'll get the noisy ones to get their way, and they'll typically be short term profit people who <backspace a bit>.
+[2018-12-31 17:26:53] <sarang> I want developer consensus
+[2018-12-31 17:26:59] <endogenic> ^
+[2018-12-31 17:27:07] <moneromooo> Oh, then that's much better. If you include people like ArticMine in this.
+[2018-12-31 17:27:12] <sarang> Everyone will/should agree that avoiding TB bloat is worth changing shit
+[2018-12-31 17:27:21] <moneromooo> People Who We Know Have A Clue.
+[2018-12-31 17:27:31] <suraeNoether> *nod* i agree with all the above, to be honest
+[2018-12-31 17:27:39] <sarang> at the very least, getting a worst-case short-term fix (like a high cap) in place for spring is the necessary starting point
+[2018-12-31 17:28:11] <spaced0ut> as long as the change clearly shows everything possible is being done to have to avoid setting a hard limit like BTC. not many will think negatively.
+[2018-12-31 17:28:28] <suraeNoether> i think for the spring hard fork, we should try for (1) and (3) together. start penalty at 80% median, and increase median sample size window by 5x.
+[2018-12-31 17:28:30] <sarang> spaced0ut: a hard limit while we actively determine a more robust solution isn't all bad
+[2018-12-31 17:28:41] <sarang> but I see the point
+[2018-12-31 17:28:45] <suraeNoether> but before we make that decision, i want to back-of-the-napkin the cost of the attack before and after the change
+[2018-12-31 17:29:02] <suraeNoether> Isthmus has been helping with some of that
+[2018-12-31 17:29:10] ⇐ cardboardoranges quit (~cardboard@c-24-60-138-210.hsd1.ma.comcast.net): Quit: cardboardoranges
+[2018-12-31 17:29:15] <suraeNoether> but we should also make a decision on this v soon, like end of week
+[2018-12-31 17:29:31] <sarang> Isthmus has a technical note draft on it
+[2018-12-31 17:29:41] <suraeNoether> the cost of changing block size dynamics a second time later this year is low; the cost of permanently bloated blockchain is much higher in my mind
+[2018-12-31 17:29:41] <sarang> If we establish an idea, we can compare to his original analysis
+[2018-12-31 17:29:47] <sarang> yes
+[2018-12-31 17:29:55] <sarang> doing nothing is the worst option
+[2018-12-31 17:30:02] <suraeNoether> sarang: yeah exctly.. when he's done sleeping and recovering from the past month of work. :P
+[2018-12-31 17:30:26] <sarang> OK, for the sake of this discussion, let's work up a proposal for combining options 1 and 3 from suraeNoether's list above
+[2018-12-31 17:30:45] <sarang> (not right now, but I mean as an initial proposal)
+[2018-12-31 17:31:02] <spaced0ut> sarang, i agree. its probably the safest option for XMR's longevity really. that won't be fun to explain so that most people understand though
+[2018-12-31 17:31:08] <sarang> that will make the attack slow and expensive, and bring block size back down after such an attack
+[2018-12-31 17:31:21] <suraeNoether> yep. let's shoot for end of week for our proposal
+[2018-12-31 17:31:25] <sarang> spaced0ut: it's easy if you say "the consequence of leaving it is TB blocks"
+[2018-12-31 17:31:32] <sarang> people hate bloat already
+[2018-12-31 17:31:48] <spaced0ut> yeah
+[2018-12-31 17:31:57] <sarang> These options have little effect on the average user if done properly
+[2018-12-31 17:31:59] <suraeNoether> we don't really have MIPs do we? :P
+[2018-12-31 17:32:04] <sarang> nope
+[2018-12-31 17:32:10] <sarang> Every Commit Is a MIP (tm)
+[2018-12-31 17:32:23] <suraeNoether> that should be on a t-shirt with several cows coding on the back
+[2018-12-31 17:32:29] <suraeNoether> paging rehrar[m] i'd buy several of those shirts
+[2018-12-31 17:32:43] <suraeNoether> well, two
+[2018-12-31 17:32:58] <sarang> So
+[2018-12-31 17:33:15] <sarang> This week I've been doing lit review in between Festivus celebrations, and doing some documentation writeups
+[2018-12-31 17:33:18] <moneromooo> The intent of the block size increase is to allow sustained spikes (to the extent it is not an oxymoron). A year's smoothing will prevent that from working.
+[2018-12-31 17:33:41] <sarang> moneromooo: yes, but at the cost of our simple model failing to prevent sustained bloat
+[2018-12-31 17:33:58] <moneromooo> That seems to be a false dichotomy.
+[2018-12-31 17:34:41] <sarang> Should sustained spikes not also yield a corresponding cost?
+[2018-12-31 17:34:47] <suraeNoether> moneromooo: ehhh it doesn't prevent it. it merely raises the bar for what is required to push block size up, so spikes have to be sustained longer for them to impact the base layer. but you are correct; any time we have a variable/dynamic capacity, this allows for bloat, but fixed capacity is inflexible
+[2018-12-31 17:35:13] <suraeNoether> but to be perfectly honest, if we find ourselves in a situation where people are regularly waiting until the next block to stash a transaction because the current block is full...
+[2018-12-31 17:35:13] <moneromooo> This is a negative question, so "sustained spikes should yield a corresponding cost".
+[2018-12-31 17:35:52] <suraeNoether> then in this situation, we probably will have some lead time to correct our block size dynamics to prevent it from being a systemic load problem
+[2018-12-31 17:35:58] <moneromooo> The point is, if ytou have to waiut for half a year for the thing to kick in, it's pointless for spikes.
+[2018-12-31 17:36:30] <suraeNoether> moneromooo: well, we can try one of the other methods that are more immediately flexible, like a momentum term or whatever
+[2018-12-31 17:36:39] <suraeNoether> or we could just make fees great again
+[2018-12-31 17:36:47] <hyc> yes ^
+[2018-12-31 17:37:03] <sarang> heh yes to which
+[2018-12-31 17:37:08] <suraeNoether> on the other hand, we could just recognize the dynamic block size flexibility to be a long-term flexibility instead of somethign designed to handle short-term volume spikes
+[2018-12-31 17:37:10] <hyc> fundamentally, the reason bloating the chain is cheap is because fees are cheap and XMR/fiat is cheap
+[2018-12-31 17:37:16] <suraeNoether> hyc yes
+[2018-12-31 17:37:18] <spaced0ut> Just throwing an incomplete idea out there. Has anyone thought about increasing fee's as block size increases then decreasing fees based on some median tx count?
+[2018-12-31 17:37:53] <suraeNoether> spaced0ut: the idea of blocksize-dependent fees is one that is very interesting to me, but i haven't dived into the idea
+[2018-12-31 17:38:20] <suraeNoether> but that allows for an attacker to bloat the blockchain and drive everyone else's fees up, ala the bitcoin bloat from ... whenever that was. 2017? sheeee
+[2018-12-31 17:39:03] <tnsepta> i think that one was just lots of real transaction activity?
+[2018-12-31 17:39:19] <hyc> yes, but the net effect is the same
+[2018-12-31 17:39:35] <hyc> everyone else's fees go up, to get their txs mined
+[2018-12-31 17:39:46] <suraeNoether> okay, we'll think about this a little harder this week and see what there is to see
+[2018-12-31 17:40:00] <suraeNoether> brb
+[2018-12-31 17:40:01] <tnsepta> which is what makes this problem hard, you have to increase the cost of bloat attack without also making transactions way too expensive
+[2018-12-31 17:40:15] <tnsepta> two sides of the same coin
+[2018-12-31 17:40:21] <hyc> I would say that's an impossibility
+[2018-12-31 17:40:42] <tnsepta> of course it's impossible to do both at the same time, i mean it's hard to balance the two right
+[2018-12-31 17:40:45] <hyc> you can't distinguish "real" txs from "bloat" txs
+[2018-12-31 17:41:22] <spaced0ut> the truth has been said in here multiple times already. it just sucks to admit. unfortunately our chain isn't insanely expensive to attack right now. there has to be a limit. make it complex or simple but it comes down to size not cost. can't make cost high enough without making it expensive for legit use.
+[2018-12-31 17:42:21] <hyc> standard tragedy of commons scenario
+[2018-12-31 17:43:14] <sarang> and size is dependent only on usage, of course... if you need to get N txns on chain, it costs O(N) in size no matter what
+[2018-12-31 17:44:40] <sarang> Aight, that's two items of priority: (1) fee structure; (2) payment ID timeline
+[2018-12-31 17:46:54] <sarang> Any other work of note?
+[2018-12-31 17:47:25] <moneromooo> I'm doing some more work on multiuser txes (the type you can use, eg, coinjoin with).
+[2018-12-31 17:47:32] <moneromooo> That might be interetsing to people here ?
+[2018-12-31 17:47:50] <sarang> go on...
+[2018-12-31 17:47:54] <tnsepta> is there a benefit of doing coinjoin when we're already doing RCT?
+[2018-12-31 17:48:12] <moneromooo> Yes. Even more privacy.
+[2018-12-31 17:48:28] <moneromooo> And atomic multi user spends.
+[2018-12-31 17:48:32] <tnsepta> ahh ok
+[2018-12-31 17:48:50] <hyc> does it require all participants to be online at once?
+[2018-12-31 17:49:02] <moneromooo> There *might* also be a way to have smaller range proofs, but I'm not sure.
+[2018-12-31 17:49:05] <moneromooo> No.
+[2018-12-31 17:49:17] <sarang> Go on...
+[2018-12-31 17:49:18] <moneromooo> Well, yes if you want it to be fast :D
+[2018-12-31 17:49:32] <hyc> I always want computers to be fast.
+[2018-12-31 17:49:53] <sarang> What's the basic structure moneromooo ?
+[2018-12-31 17:50:03] <moneromooo> I'm making it like multisig. You pass a file around, and write your things. 2N-1 comms though.
+[2018-12-31 17:50:06] <sarang> afaik this is the first I've heard of your work
+[2018-12-31 17:51:05] <moneromooo> atm, I've got a first N comms rounds with everyone adding their inputs/outputs, then another ~N with people signing after checking their I/O are what they specified.
+[2018-12-31 17:51:17] <hyc> who would want to use this approach?
+[2018-12-31 17:51:39] <moneromooo> People who want to use a coinjoin style tx, and people who want to atomically pay.
+[2018-12-31 17:51:53] <hyc> passing this file around sounds like it carries sensitive info, what's the danger of exposing it prematurely?
+[2018-12-31 17:51:54] <moneromooo> (ie, Alice and Bob want to pay Carol, but only if the other also does)
+[2018-12-31 17:52:03] <moneromooo> Not much I think.
+[2018-12-31 17:52:15] <sarang> you're effectively doing partial signatures?
+[2018-12-31 17:52:36] <moneromooo> You create MGs for the outputs you own.
+[2018-12-31 17:52:40] <moneromooo> So kinda yes.
+[2018-12-31 17:52:52] <sarang> MG?
+[2018-12-31 17:53:01] <moneromooo> I think that's a MLSAG.
+[2018-12-31 17:53:57] <sarang> The smaller range proof idea would be an MPC on a bulletproof?
+[2018-12-31 17:54:08] <sarang> which is possible, but we've never had a definite use case
+[2018-12-31 17:54:13] <moneromooo> I don't know. That'll be your job to find out :P
+[2018-12-31 17:54:17] <sarang> heh
+[2018-12-31 17:54:34] <sarang> well fwiw, bulletproof mpc is a known construction
+[2018-12-31 17:54:48] <gingeropolous> damn, missed the bloat thing. i like 1 and 2. I think 1 can be the quick easy fix for now... and if we can figure out the best double mechanism (#2) then we should probably switch to that, because that can allow for spikes
+[2018-12-31 17:55:27] <moneromooo> tnsepta: if you have more than one user, it breaks down some of the analysis you can do since you can't assume all inputs have a common owner.
+[2018-12-31 17:55:27] <sarang> moneromooo: is there a branch with any work? or is it just at the "here's the math" stage?
+[2018-12-31 17:55:41] <moneromooo> There's a "multi" branch, which has a PoC in core_tests.
+[2018-12-31 17:55:55] <moneromooo> I've started working on the simplewallet tooling now.
+[2018-12-31 17:56:33] <spaced0ut> Could the same attack used to expand blocksize and bloat the chain also be used to create an insane amount of identical mixins to the point that future tx would have a high chance of having 10 identical mixins and your real spend?
+[2018-12-31 17:56:33] <sarang> How do you get so much done simultaneously moneromooo ?
+[2018-12-31 17:56:41] <sarang> Surely you burn the candle at all ends
+[2018-12-31 17:56:54] <moneromooo> I have four legs. Humans only use two hands to type.
+[2018-12-31 17:57:07] <sarang> spaced0ut: what do you mean?
+[2018-12-31 17:58:09] <sarang> Do you mean the ring union analysis method?
+[2018-12-31 17:58:31] <sarang> it's extremely unlikely to occur without active selection
+[2018-12-31 18:00:51] <sarang> Unless you mean that the adversary controls a large percentage of available outputs and therefore knows other true spends?
+[2018-12-31 18:00:58] <spaced0ut> okay. i wasn't sure if that held true in a scenario where the chain grew 100x larger and an attacker was sending the exact same amount every time. i'm a noob on input selection
+[2018-12-31 18:01:05] <sarang> In that case, sure, that's always a possibility for an attacker who wants to spam the chain
+[2018-12-31 18:01:13] <sarang> Amounts are irrelevant
+[2018-12-31 18:01:43] <spaced0ut> yes ofc. i worded that funny. you answered me though thanks
+[2018-12-31 18:01:47] <sarang> roger
+[2018-12-31 18:02:02] <sarang> moneromooo: your idea intrigues me, and I'll be interested to examine the details
+[2018-12-31 18:03:56] <sarang> Well, we have come to the end of our allotted time
+[2018-12-31 18:04:04] <sarang> Great discussion all around
+[2018-12-31 18:04:28] <sarang> We'll each move into the future sometime today; let us know what it's like when you get there

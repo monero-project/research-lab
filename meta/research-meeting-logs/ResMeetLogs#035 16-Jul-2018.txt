@@ -1,198 +1,198 @@
-[2018-07-16 09:59:26] <sarang> Welcome to everyone; greetings
-[2018-07-16 10:00:28] <suraeNoether> hi
-[2018-07-16 10:00:39] <sarang> Let us go with brief updates
-[2018-07-16 10:00:57] <sarang> The initial draft report from Kudelski has arrived, with generally positive results
-[2018-07-16 10:01:12] <sarang> A few small things to address
-[2018-07-16 10:01:47] <sarang> I am working on some prototyping code for a sublinear RingCT proposal that's progressing very nicely
-[2018-07-16 10:02:06] <sarang> I delivered a talk on fungibility in Portland (in the airport right now about to depart)
-[2018-07-16 10:02:21] <sarang> Other reports?
-[2018-07-16 10:02:29] <suraeNoether> I wrote a thing... it was sort of a whim
-[2018-07-16 10:02:45] <suraeNoether> endogenic and I started talking about comparing addresses when sending a transaction
-[2018-07-16 10:02:58] <suraeNoether> humans tend to only check the first five or sex and last five or six characters in an address
-[2018-07-16 10:03:11] <suraeNoether> there are graphical representations of random data so people can visually compare them
-[2018-07-16 10:03:19] <suraeNoether> one way to do this is using seashells, since they are easily parameterizable
-[2018-07-16 10:03:21] <sarang> (e.g. randomart)
-[2018-07-16 10:03:28] <suraeNoether> https://github.com/b-g-goodell/research-lab/tree/master/source-code/iseeseashells
-[2018-07-16 10:03:37] <sarang> nice
-[2018-07-16 10:03:41] <suraeNoether> so i wrote a thing that takes an address, hashes it, breaks the hash into 4-byte pieces
-[2018-07-16 10:03:48] <suraeNoether> uses each of those pieces to define a parameter of a seashell
-[2018-07-16 10:03:50] <suraeNoether> and then plot it
-[2018-07-16 10:04:09] <suraeNoether> so if we could get something going client-side with each transaction, with a javascript renderer, it would work like this
-[2018-07-16 10:04:17] <suraeNoether> i want to send xmr to a bitcoin address using xmr.to
-[2018-07-16 10:04:52] <suraeNoether> i fire up my xmr wallet and copy-paste my xmr.to address into it, and a seashell appears. i compare it to the seashell on the xmr.to website. they look the same, and the characters seem to mostly match, so i send the transaction
-[2018-07-16 10:05:07] <suraeNoether> (same thing for firing up my bitcoin wallet to  verify i'm sending to myself appropriately)
-[2018-07-16 10:05:18] <sarang> So you effectively treat the shell as a fingerprint
-[2018-07-16 10:05:23] <suraeNoether> yeah, pretty much
-[2018-07-16 10:05:26] <suraeNoether> there are collision issues
-[2018-07-16 10:05:31] <sarang> its use being similar to key fingerprints in other places
-[2018-07-16 10:05:39] <suraeNoether> but i think if we do it appropriately, it's less likely than for other approaches
-[2018-07-16 10:05:44] <sarang> Right, so it's not a primary check
-[2018-07-16 10:05:46] <knaccc> very cool, can you paste an example seashell ascii art please?
-[2018-07-16 10:06:06] <suraeNoether> in addition to that, i wrote a thing on churn that is 3+ pages long. it's statistics-heavy, still internal, will be shared later this week. it'll help inform us on our ring size choices, etc, for the next fork
-[2018-07-16 10:06:13] <suraeNoether> not ascii :D
-[2018-07-16 10:06:16] <suraeNoether> but one sec
-[2018-07-16 10:06:30] <knaccc> oh it's not ascii art? so won't work in the CLI?
-[2018-07-16 10:06:47] <suraeNoether> correct, it  is a 3d rendering
-[2018-07-16 10:06:54] <knaccc> oh cool
-[2018-07-16 10:06:55] <moneromooo> You can have cli shells there.
-[2018-07-16 10:07:05] <suraeNoether> so it'd have to be a javascript client side rendering sort of deal
-[2018-07-16 10:07:07] <knaccc> hehe
-[2018-07-16 10:07:15] <suraeNoether> let me find where i saved some of the cool ones last night
-[2018-07-16 10:07:26] <sarang> will it work in bash, or just in csh =p
-[2018-07-16 10:07:30] <endogenic> you could render it easily enough
-[2018-07-16 10:07:33] <moneromooo> :)
-[2018-07-16 10:07:35] <endogenic> and could also scan a render
-[2018-07-16 10:07:54] <endogenic> rotated of course
-[2018-07-16 10:08:07] <sarang> FYI will have to leave meeting early in 20 min to catch plane
-[2018-07-16 10:08:14] <knaccc> 3d renderings sound much more useful than the kind of ssh-keygen fingerprint ascii art
-[2018-07-16 10:08:42] <suraeNoether> https://usercontent.irccloud-cdn.com/file/vM0sXAXB/Figure_1.png
-[2018-07-16 10:08:51] <suraeNoether> https://usercontent.irccloud-cdn.com/file/RKtCkotV/Figure_1-1.png
-[2018-07-16 10:09:00] <suraeNoether> so, 1) i'm using matplotlib in python, so it's ugly
-[2018-07-16 10:09:05] <knaccc> oooh that's lovely! much better than this:
-[2018-07-16 10:09:07] <knaccc> +---[RSA 2048]----+
-[2018-07-16 10:09:09] <knaccc> |       .++       |
-[2018-07-16 10:09:11] <knaccc> |       .+..     .|
-[2018-07-16 10:09:11] <suraeNoether> ikr
-[2018-07-16 10:09:13] <knaccc> |     . .   . . ..|
-[2018-07-16 10:09:15] <knaccc> |    . .     .E.. |
-[2018-07-16 10:09:16] <moneromooo> ...
-[2018-07-16 10:09:17] <knaccc> |     ...S     .  |
-[2018-07-16 10:09:19] <knaccc> |      o+.        |
-[2018-07-16 10:09:21] <knaccc> |     +..o        |
-[2018-07-16 10:09:23] <knaccc> |  o B .o.        |
-[2018-07-16 10:09:25] <knaccc> | . + +..         |
-[2018-07-16 10:09:27] <knaccc> +------[MD5]------+
-[2018-07-16 10:09:29] <sarang> omg stahp
-[2018-07-16 10:09:38] <sarang> the ascii, it hurts
-[2018-07-16 10:09:51] <knaccc> haha
-[2018-07-16 10:10:04] <suraeNoether> so, all the formulaes and everything need to be tweaked to make them prettier and more shell-like... and a good javascript person could use the marching cubes algorithm to render these really easily. someone could mess with textures and colors using the hashes, too
-[2018-07-16 10:10:10] <moneromooo> Or we could generate rogue rooms...
-[2018-07-16 10:10:34] <suraeNoether> but i'm essentially *not* going to put more effort into it: my goal was to construct parameterizations of these surfaces, the math heavy end of things, so someone else can take it and run with it
-[2018-07-16 10:10:43] <sarang> To jump in quickly due to time... any questions lingering about the audit results? The initial stuff has been picked up by a few sites, generally reported badly
-[2018-07-16 10:11:17] <sarang> We'll respond to the findings and they'll issue a final report, and then get the rest of their payment from OSTIF
-[2018-07-16 10:11:37] <sarang> The initial draft doesn't mention OSTIF, which is an oversight on Kudelski's part
-[2018-07-16 10:11:48] <suraeNoether> sarang I was going to ask about how money was transferred to OSTIF without tax exposure to the monero project or whatever
-[2018-07-16 10:11:56] <suraeNoether> i was thinking about *how to pay for the monero conference*
-[2018-07-16 10:12:09] <suraeNoether> like, will we need to start an LLC for each conference? maybe
-[2018-07-16 10:12:13] <endogenic> didn't seem like anyone found the keyspace validation issue.. is that correct
-[2018-07-16 10:12:14] <endogenic> ?
-[2018-07-16 10:12:25] <suraeNoether> endogenic: you mean the multiply-by-8 stuff?
-[2018-07-16 10:12:27] <endogenic> mm
-[2018-07-16 10:12:29] <sarang> endogenic: kudelski did not mention the subgroup checks
-[2018-07-16 10:12:31] <endogenic> oh wiat one did
-[2018-07-16 10:12:35] <sarang> quarkslab did note it in an email to me
-[2018-07-16 10:12:35] <endogenic> i think
-[2018-07-16 10:12:44] <endogenic> k *zips it*
-[2018-07-16 10:12:52] <sarang> suraeNoether: what about taxes?
-[2018-07-16 10:13:04] <endogenic> scoobybejesus ^
-[2018-07-16 10:13:08] <suraeNoether> sarang: well, some entity has to pay another entity
-[2018-07-16 10:13:11] <suraeNoether> example: to pay for a venue
-[2018-07-16 10:13:17] <sarang> I mean for the audits
-[2018-07-16 10:13:29] <sarang> The payment for the audit was from OSTIF, a nonprofit, to Kudelski, a private company
-[2018-07-16 10:13:44] <suraeNoether> ah, so we paid OSTIF in monero, and OSTIF is dealing with it
-[2018-07-16 10:14:04] <nioc> when is QuarksLab expected to be finished?
-[2018-07-16 10:14:13] <suraeNoether> and since they are non-profit, tax reports must be made but they aren't exposed to the taxes. i get it. but now i'm thinking about how to funnel money from the monero project towards something like a venue expenditure
-[2018-07-16 10:14:14] <sarang> Correct; OSTIF does the transfer to Kudelski's preferred fiat
-[2018-07-16 10:14:18] <suraeNoether> which is a different question
-[2018-07-16 10:14:30] <sarang> the phrase "funnel money" sounds like a Very Bad Thing
-[2018-07-16 10:14:50] <sarang> nioc: I had expected it this past week
-[2018-07-16 10:14:50] <charuto> Probably a bad idea to make the audits public one at a time
-[2018-07-16 10:15:04] <sarang> charuto: I've been posting public audit information as I receive it, in the interest of open disclosure
-[2018-07-16 10:15:23] <suraeNoether> i can see the argument that it foils some of the independence of the teams
-[2018-07-16 10:15:27] <sarang> and IMHO we should fix issues openly as we find them
-[2018-07-16 10:15:35] ⇐ ArticMine quit (~ArticMine@24.244.23.200): Ping timeout: 240 seconds
-[2018-07-16 10:15:53] <moneromooo> Well, if they'd found something bad, we'd have wanted to wait till a release anyway.
-[2018-07-16 10:16:06] <moneromooo> (without piping up)
-[2018-07-16 10:16:12] <sarang> true, good point
-[2018-07-16 10:16:21] <sarang> Their issues were only minor
-[2018-07-16 10:16:39] <charuto> the last team to release their results could have done nothing and waited to see the other team's results to copy them
-[2018-07-16 10:17:06] <sarang> I suppose
-[2018-07-16 10:17:07] <suraeNoether> charuto while that's technically possible, it's more likely that hte second report will merely be *bigger* than the first, including everything the first does, plus more. 
-[2018-07-16 10:17:11] <charuto> Imagine like a student assignment where students make their work public before the assignment is due
-[2018-07-16 10:17:25] <suraeNoether> yeah, except these firms make their living off repeat business and word of mouth
-[2018-07-16 10:17:27] <sarang> Except that I trust these groups to operate in good faith
-[2018-07-16 10:17:44] <suraeNoether> it's not a great incentive to screw over one small software project for a relatively small amount of money, when all of them are on twitter all the time trolling zooko
-[2018-07-16 10:17:46] → silur joined (~silur@84.39.112.19)
-[2018-07-16 10:17:58] <suraeNoether> yeah, the incentive structure for them to not do their jobs isn't really there the way it is in high school or college
-[2018-07-16 10:18:03] <silur> hey guys sorry for being late :(
-[2018-07-16 10:18:07] <sarang> hullo
-[2018-07-16 10:18:12] <sarang> Anyway, other questions on the audits?
-[2018-07-16 10:18:31] <sarang> We shall make changes as necessary and continue the plan toward a release
-[2018-07-16 10:18:53] <suraeNoether> i have one last quick question on that
-[2018-07-16 10:18:56] <sarang> go
-[2018-07-16 10:19:02] <suraeNoether> i know we signed contracts wtih K and QL
-[2018-07-16 10:19:15] <suraeNoether> or did we just accept their SOW?
-[2018-07-16 10:19:33] <sarang> We signed the statements of work regarding scope and payment
-[2018-07-16 10:19:40] <sarang> y?
-[2018-07-16 10:19:45] <suraeNoether> either way, i'm curious about what we have for Buenz. in terms of "what happens if he just gets busy and phones it in? do we still owe him 10k if he does that?"
-[2018-07-16 10:19:54] <sarang> We have an SoW for Benedikt
-[2018-07-16 10:20:09] <sarang> There is no defined metric for what counts as "phoning it in"
-[2018-07-16 10:20:14] <suraeNoether> k i'll read through it again
-[2018-07-16 10:20:34] <sarang> It is assumed that he will operate in good faith, just as we assume this for the other reviewers
-[2018-07-16 10:20:46] <suraeNoether> yep
-[2018-07-16 10:20:47] <sarang> part of the reason he and the others were chosen was for this reason
-[2018-07-16 10:20:54] <suraeNoether> yep, just curiuos. 
-[2018-07-16 10:20:58] <nioc> When is QuarksLab expected to be finished?
-[2018-07-16 10:21:06] <moneromooo> He gave bulletproofs research for free already. No reason why he'd try and screw us here.
-[2018-07-16 10:21:17] <sarang> I emailed a few days ago to QL asking for a status update; no word yet
-[2018-07-16 10:21:41] <nioc> thx
-[2018-07-16 10:21:46] <sarang> I am not pleased with their lack of communication this week
-[2018-07-16 10:21:51] <moneromooo> Well, not "no reason", that is too strong.
-[2018-07-16 10:21:57] <suraeNoether> moneromooo: i'm not assuming malice, but densely packed schedules, the priorities and prerogatives of grad students, etc
-[2018-07-16 10:22:11] <sarang> suraeNoether: he waited for summer term
-[2018-07-16 10:22:18] <sarang> partly because of scheduling
-[2018-07-16 10:22:19] <suraeNoether> yeah i know\
-[2018-07-16 10:22:33] <suraeNoether> i'm not making any accusations, i was just curious. gosh guys
-[2018-07-16 10:22:37] <sarang> lol
-[2018-07-16 10:22:46] — suraeNoether gosh! gimme ur tots
-[2018-07-16 10:22:51] <suraeNoether> i'm going to re-iterate my request that future audits have a "suggested unit testing" section to their reports, though. if we're going to be forking over lots of cash for someone to audit our code, and they are going to spend time saying "gee, this HERE would have been an easy test to write" then... may as well
-[2018-07-16 10:23:56] <suraeNoether> anyway, that's all i have: seashells, churn paper (and small delay on multisig for churn analysis last week, but I've been communicating with Yannick of musig regarding our multisig paper, so that's still moving too)
-[2018-07-16 10:25:15] <suraeNoether> oh, if anyone is curious on the churn paper, and they are tolerant of *incorrect statistics* (NEVER BE TOLERANT OF THIS) then you can read my crapdraft here: https://v2.overleaf.com/read/rznczkmdmchy
-[2018-07-16 10:25:21] <endogenic> lol
-[2018-07-16 10:25:26] <endogenic> all statistics are incorrect
-[2018-07-16 10:25:28] <endogenic> got 'em
-[2018-07-16 10:26:06] <sarang> OK, I need to board my plane now
-[2018-07-16 10:26:10] <sarang> I'll be back online in the air
-[2018-07-16 10:26:15] <sarang> because we're living in the freaking future
-[2018-07-16 10:26:21] <endogenic> man can't believe they make people actually catch the planes these days
-[2018-07-16 10:26:30] <sarang> they don't taxi that fast
-[2018-07-16 10:26:51] <endogenic> maybe if you're riding a pony
-[2018-07-16 10:26:53] <silur> last time border police didn't let me on my flight..... again
-[2018-07-16 10:26:57] <silur> #beingstateless
-[2018-07-16 10:28:15] <suraeNoether> Okay, does anyone have any other things they want to discuss?
-[2018-07-16 10:28:32] <silur> yep, any news from the new-new-new-updated rtrs?
-[2018-07-16 10:28:50] <suraeNoether> silur yes, sarang is getting permission to post it on his github
-[2018-07-16 10:29:23] <silur> shall we merge the implementation too there?
-[2018-07-16 10:29:31] <suraeNoether> he has finished around half the algorihtms required, and has been messing around wtih an ed25519 library in python
-[2018-07-16 10:29:48] <silur> oh it's AN implementation
-[2018-07-16 10:29:55] <silur> thought only text
-[2018-07-16 10:30:00] <suraeNoether> no, no, friend
-[2018-07-16 10:30:03] <suraeNoether> sarang has been ON THIS
-[2018-07-16 10:31:51] <suraeNoether> okay, any other questions before we call it?
-[2018-07-16 10:33:41] <sarang> Yeah code is making good progress, waiting on permission to include on my repo
-[2018-07-16 10:34:41] <silur> I kinda don't want to progress with mine if the reference is outdated but glad to hear the py version is goin good
-[2018-07-16 10:35:40] <sarang> I don't have an opinion on it yet
-[2018-07-16 10:35:55] <sarang> The code is basically to help me better understand the setup and efficiency
-[2018-07-16 10:36:09] <endogenic> i'm curious to bring up the question of bindings to C/C++
-[2018-07-16 10:36:10] <sarang> It's also not even remotely optimized
-[2018-07-16 10:36:13] <endogenic> but i know it's work
-[2018-07-16 10:36:27] <endogenic> the mem mgmt could be made v simple
-[2018-07-16 10:36:48] <endogenic> guess it can be a future goal
-[2018-07-16 10:37:44] <silur> @endogenic my implementation is pure C with openssl dependency
-[2018-07-16 10:38:46] <suraeNoether> endogenic: yeah, all we are doing right now is trying to prototype it to get a *sense* of asymptotic properties of verification time, etc beyond the statistics described in the paper
-[2018-07-16 10:38:50] <endogenic> i mean for various util libs so the usage of a specific language for r&d isn't indicated by the existence of those shared libs
-[2018-07-16 10:38:59] <endogenic> r&d as in prototyping, sims, etc
-[2018-07-16 10:39:24] <suraeNoether> alllrighty, well, it appears as if we have run out of stuff to talk about. Any final questions?
-[2018-07-16 10:39:27] <suraeNoether> I love you all
-[2018-07-16 10:39:37] <endogenic> no i mean that's unsolved
-[2018-07-16 10:40:04] <suraeNoether> ?
-[2018-07-16 10:40:29] <endogenic> sarang chose a specific language to work in because there were libs in that language already
-[2018-07-16 10:40:34] <endogenic> even if it wasn't the preferred language
-[2018-07-16 10:41:00] <endogenic> just saying there are alternatives and asking how recently they've been investigated
-[2018-07-16 10:42:46] <suraeNoether> oh, gosh
-[2018-07-16 10:42:49] <suraeNoether> i don't know!
-[2018-07-16 10:43:07] <suraeNoether> last time i checked... which was last year when knaccc and i were working on ruffct
-[2018-07-16 10:43:16] <suraeNoether> i believe there weren't better options available at the time
-[2018-07-16 10:43:45] <suraeNoether> but since it's just prototyping, i'm not sure it matters too much
-[2018-07-16 10:44:14] <endogenic> yeah, just a matter of language preference for him..
-[2018-07-16 10:45:37] <suraeNoether> okay, </meeting>
+[2018-07-16 16:59:26] <sarang> Welcome to everyone; greetings
+[2018-07-16 17:00:28] <suraeNoether> hi
+[2018-07-16 17:00:39] <sarang> Let us go with brief updates
+[2018-07-16 17:00:57] <sarang> The initial draft report from Kudelski has arrived, with generally positive results
+[2018-07-16 17:01:12] <sarang> A few small things to address
+[2018-07-16 17:01:47] <sarang> I am working on some prototyping code for a sublinear RingCT proposal that's progressing very nicely
+[2018-07-16 17:02:06] <sarang> I delivered a talk on fungibility in Portland (in the airport right now about to depart)
+[2018-07-16 17:02:21] <sarang> Other reports?
+[2018-07-16 17:02:29] <suraeNoether> I wrote a thing... it was sort of a whim
+[2018-07-16 17:02:45] <suraeNoether> endogenic and I started talking about comparing addresses when sending a transaction
+[2018-07-16 17:02:58] <suraeNoether> humans tend to only check the first five or sex and last five or six characters in an address
+[2018-07-16 17:03:11] <suraeNoether> there are graphical representations of random data so people can visually compare them
+[2018-07-16 17:03:19] <suraeNoether> one way to do this is using seashells, since they are easily parameterizable
+[2018-07-16 17:03:21] <sarang> (e.g. randomart)
+[2018-07-16 17:03:28] <suraeNoether> https://github.com/b-g-goodell/research-lab/tree/master/source-code/iseeseashells
+[2018-07-16 17:03:37] <sarang> nice
+[2018-07-16 17:03:41] <suraeNoether> so i wrote a thing that takes an address, hashes it, breaks the hash into 4-byte pieces
+[2018-07-16 17:03:48] <suraeNoether> uses each of those pieces to define a parameter of a seashell
+[2018-07-16 17:03:50] <suraeNoether> and then plot it
+[2018-07-16 17:04:09] <suraeNoether> so if we could get something going client-side with each transaction, with a javascript renderer, it would work like this
+[2018-07-16 17:04:17] <suraeNoether> i want to send xmr to a bitcoin address using xmr.to
+[2018-07-16 17:04:52] <suraeNoether> i fire up my xmr wallet and copy-paste my xmr.to address into it, and a seashell appears. i compare it to the seashell on the xmr.to website. they look the same, and the characters seem to mostly match, so i send the transaction
+[2018-07-16 17:05:07] <suraeNoether> (same thing for firing up my bitcoin wallet to  verify i'm sending to myself appropriately)
+[2018-07-16 17:05:18] <sarang> So you effectively treat the shell as a fingerprint
+[2018-07-16 17:05:23] <suraeNoether> yeah, pretty much
+[2018-07-16 17:05:26] <suraeNoether> there are collision issues
+[2018-07-16 17:05:31] <sarang> its use being similar to key fingerprints in other places
+[2018-07-16 17:05:39] <suraeNoether> but i think if we do it appropriately, it's less likely than for other approaches
+[2018-07-16 17:05:44] <sarang> Right, so it's not a primary check
+[2018-07-16 17:05:46] <knaccc> very cool, can you paste an example seashell ascii art please?
+[2018-07-16 17:06:06] <suraeNoether> in addition to that, i wrote a thing on churn that is 3+ pages long. it's statistics-heavy, still internal, will be shared later this week. it'll help inform us on our ring size choices, etc, for the next fork
+[2018-07-16 17:06:13] <suraeNoether> not ascii :D
+[2018-07-16 17:06:16] <suraeNoether> but one sec
+[2018-07-16 17:06:30] <knaccc> oh it's not ascii art? so won't work in the CLI?
+[2018-07-16 17:06:47] <suraeNoether> correct, it  is a 3d rendering
+[2018-07-16 17:06:54] <knaccc> oh cool
+[2018-07-16 17:06:55] <moneromooo> You can have cli shells there.
+[2018-07-16 17:07:05] <suraeNoether> so it'd have to be a javascript client side rendering sort of deal
+[2018-07-16 17:07:07] <knaccc> hehe
+[2018-07-16 17:07:15] <suraeNoether> let me find where i saved some of the cool ones last night
+[2018-07-16 17:07:26] <sarang> will it work in bash, or just in csh =p
+[2018-07-16 17:07:30] <endogenic> you could render it easily enough
+[2018-07-16 17:07:33] <moneromooo> :)
+[2018-07-16 17:07:35] <endogenic> and could also scan a render
+[2018-07-16 17:07:54] <endogenic> rotated of course
+[2018-07-16 17:08:07] <sarang> FYI will have to leave meeting early in 20 min to catch plane
+[2018-07-16 17:08:14] <knaccc> 3d renderings sound much more useful than the kind of ssh-keygen fingerprint ascii art
+[2018-07-16 17:08:42] <suraeNoether> https://usercontent.irccloud-cdn.com/file/vM0sXAXB/Figure_1.png
+[2018-07-16 17:08:51] <suraeNoether> https://usercontent.irccloud-cdn.com/file/RKtCkotV/Figure_1-1.png
+[2018-07-16 17:09:00] <suraeNoether> so, 1) i'm using matplotlib in python, so it's ugly
+[2018-07-16 17:09:05] <knaccc> oooh that's lovely! much better than this:
+[2018-07-16 17:09:07] <knaccc> +---[RSA 2048]----+
+[2018-07-16 17:09:09] <knaccc> |       .++       |
+[2018-07-16 17:09:11] <knaccc> |       .+..     .|
+[2018-07-16 17:09:11] <suraeNoether> ikr
+[2018-07-16 17:09:13] <knaccc> |     . .   . . ..|
+[2018-07-16 17:09:15] <knaccc> |    . .     .E.. |
+[2018-07-16 17:09:16] <moneromooo> ...
+[2018-07-16 17:09:17] <knaccc> |     ...S     .  |
+[2018-07-16 17:09:19] <knaccc> |      o+.        |
+[2018-07-16 17:09:21] <knaccc> |     +..o        |
+[2018-07-16 17:09:23] <knaccc> |  o B .o.        |
+[2018-07-16 17:09:25] <knaccc> | . + +..         |
+[2018-07-16 17:09:27] <knaccc> +------[MD5]------+
+[2018-07-16 17:09:29] <sarang> omg stahp
+[2018-07-16 17:09:38] <sarang> the ascii, it hurts
+[2018-07-16 17:09:51] <knaccc> haha
+[2018-07-16 17:10:04] <suraeNoether> so, all the formulaes and everything need to be tweaked to make them prettier and more shell-like... and a good javascript person could use the marching cubes algorithm to render these really easily. someone could mess with textures and colors using the hashes, too
+[2018-07-16 17:10:10] <moneromooo> Or we could generate rogue rooms...
+[2018-07-16 17:10:34] <suraeNoether> but i'm essentially *not* going to put more effort into it: my goal was to construct parameterizations of these surfaces, the math heavy end of things, so someone else can take it and run with it
+[2018-07-16 17:10:43] <sarang> To jump in quickly due to time... any questions lingering about the audit results? The initial stuff has been picked up by a few sites, generally reported badly
+[2018-07-16 17:11:17] <sarang> We'll respond to the findings and they'll issue a final report, and then get the rest of their payment from OSTIF
+[2018-07-16 17:11:37] <sarang> The initial draft doesn't mention OSTIF, which is an oversight on Kudelski's part
+[2018-07-16 17:11:48] <suraeNoether> sarang I was going to ask about how money was transferred to OSTIF without tax exposure to the monero project or whatever
+[2018-07-16 17:11:56] <suraeNoether> i was thinking about *how to pay for the monero conference*
+[2018-07-16 17:12:09] <suraeNoether> like, will we need to start an LLC for each conference? maybe
+[2018-07-16 17:12:13] <endogenic> didn't seem like anyone found the keyspace validation issue.. is that correct
+[2018-07-16 17:12:14] <endogenic> ?
+[2018-07-16 17:12:25] <suraeNoether> endogenic: you mean the multiply-by-8 stuff?
+[2018-07-16 17:12:27] <endogenic> mm
+[2018-07-16 17:12:29] <sarang> endogenic: kudelski did not mention the subgroup checks
+[2018-07-16 17:12:31] <endogenic> oh wiat one did
+[2018-07-16 17:12:35] <sarang> quarkslab did note it in an email to me
+[2018-07-16 17:12:35] <endogenic> i think
+[2018-07-16 17:12:44] <endogenic> k *zips it*
+[2018-07-16 17:12:52] <sarang> suraeNoether: what about taxes?
+[2018-07-16 17:13:04] <endogenic> scoobybejesus ^
+[2018-07-16 17:13:08] <suraeNoether> sarang: well, some entity has to pay another entity
+[2018-07-16 17:13:11] <suraeNoether> example: to pay for a venue
+[2018-07-16 17:13:17] <sarang> I mean for the audits
+[2018-07-16 17:13:29] <sarang> The payment for the audit was from OSTIF, a nonprofit, to Kudelski, a private company
+[2018-07-16 17:13:44] <suraeNoether> ah, so we paid OSTIF in monero, and OSTIF is dealing with it
+[2018-07-16 17:14:04] <nioc> when is QuarksLab expected to be finished?
+[2018-07-16 17:14:13] <suraeNoether> and since they are non-profit, tax reports must be made but they aren't exposed to the taxes. i get it. but now i'm thinking about how to funnel money from the monero project towards something like a venue expenditure
+[2018-07-16 17:14:14] <sarang> Correct; OSTIF does the transfer to Kudelski's preferred fiat
+[2018-07-16 17:14:18] <suraeNoether> which is a different question
+[2018-07-16 17:14:30] <sarang> the phrase "funnel money" sounds like a Very Bad Thing
+[2018-07-16 17:14:50] <sarang> nioc: I had expected it this past week
+[2018-07-16 17:14:50] <charuto> Probably a bad idea to make the audits public one at a time
+[2018-07-16 17:15:04] <sarang> charuto: I've been posting public audit information as I receive it, in the interest of open disclosure
+[2018-07-16 17:15:23] <suraeNoether> i can see the argument that it foils some of the independence of the teams
+[2018-07-16 17:15:27] <sarang> and IMHO we should fix issues openly as we find them
+[2018-07-16 17:15:35] ⇐ ArticMine quit (~ArticMine@24.244.23.200): Ping timeout: 240 seconds
+[2018-07-16 17:15:53] <moneromooo> Well, if they'd found something bad, we'd have wanted to wait till a release anyway.
+[2018-07-16 17:16:06] <moneromooo> (without piping up)
+[2018-07-16 17:16:12] <sarang> true, good point
+[2018-07-16 17:16:21] <sarang> Their issues were only minor
+[2018-07-16 17:16:39] <charuto> the last team to release their results could have done nothing and waited to see the other team's results to copy them
+[2018-07-16 17:17:06] <sarang> I suppose
+[2018-07-16 17:17:07] <suraeNoether> charuto while that's technically possible, it's more likely that hte second report will merely be *bigger* than the first, including everything the first does, plus more. 
+[2018-07-16 17:17:11] <charuto> Imagine like a student assignment where students make their work public before the assignment is due
+[2018-07-16 17:17:25] <suraeNoether> yeah, except these firms make their living off repeat business and word of mouth
+[2018-07-16 17:17:27] <sarang> Except that I trust these groups to operate in good faith
+[2018-07-16 17:17:44] <suraeNoether> it's not a great incentive to screw over one small software project for a relatively small amount of money, when all of them are on twitter all the time trolling zooko
+[2018-07-16 17:17:46] → silur joined (~silur@84.39.112.19)
+[2018-07-16 17:17:58] <suraeNoether> yeah, the incentive structure for them to not do their jobs isn't really there the way it is in high school or college
+[2018-07-16 17:18:03] <silur> hey guys sorry for being late :(
+[2018-07-16 17:18:07] <sarang> hullo
+[2018-07-16 17:18:12] <sarang> Anyway, other questions on the audits?
+[2018-07-16 17:18:31] <sarang> We shall make changes as necessary and continue the plan toward a release
+[2018-07-16 17:18:53] <suraeNoether> i have one last quick question on that
+[2018-07-16 17:18:56] <sarang> go
+[2018-07-16 17:19:02] <suraeNoether> i know we signed contracts wtih K and QL
+[2018-07-16 17:19:15] <suraeNoether> or did we just accept their SOW?
+[2018-07-16 17:19:33] <sarang> We signed the statements of work regarding scope and payment
+[2018-07-16 17:19:40] <sarang> y?
+[2018-07-16 17:19:45] <suraeNoether> either way, i'm curious about what we have for Buenz. in terms of "what happens if he just gets busy and phones it in? do we still owe him 10k if he does that?"
+[2018-07-16 17:19:54] <sarang> We have an SoW for Benedikt
+[2018-07-16 17:20:09] <sarang> There is no defined metric for what counts as "phoning it in"
+[2018-07-16 17:20:14] <suraeNoether> k i'll read through it again
+[2018-07-16 17:20:34] <sarang> It is assumed that he will operate in good faith, just as we assume this for the other reviewers
+[2018-07-16 17:20:46] <suraeNoether> yep
+[2018-07-16 17:20:47] <sarang> part of the reason he and the others were chosen was for this reason
+[2018-07-16 17:20:54] <suraeNoether> yep, just curiuos. 
+[2018-07-16 17:20:58] <nioc> When is QuarksLab expected to be finished?
+[2018-07-16 17:21:06] <moneromooo> He gave bulletproofs research for free already. No reason why he'd try and screw us here.
+[2018-07-16 17:21:17] <sarang> I emailed a few days ago to QL asking for a status update; no word yet
+[2018-07-16 17:21:41] <nioc> thx
+[2018-07-16 17:21:46] <sarang> I am not pleased with their lack of communication this week
+[2018-07-16 17:21:51] <moneromooo> Well, not "no reason", that is too strong.
+[2018-07-16 17:21:57] <suraeNoether> moneromooo: i'm not assuming malice, but densely packed schedules, the priorities and prerogatives of grad students, etc
+[2018-07-16 17:22:11] <sarang> suraeNoether: he waited for summer term
+[2018-07-16 17:22:18] <sarang> partly because of scheduling
+[2018-07-16 17:22:19] <suraeNoether> yeah i know\
+[2018-07-16 17:22:33] <suraeNoether> i'm not making any accusations, i was just curious. gosh guys
+[2018-07-16 17:22:37] <sarang> lol
+[2018-07-16 17:22:46] — suraeNoether gosh! gimme ur tots
+[2018-07-16 17:22:51] <suraeNoether> i'm going to re-iterate my request that future audits have a "suggested unit testing" section to their reports, though. if we're going to be forking over lots of cash for someone to audit our code, and they are going to spend time saying "gee, this HERE would have been an easy test to write" then... may as well
+[2018-07-16 17:23:56] <suraeNoether> anyway, that's all i have: seashells, churn paper (and small delay on multisig for churn analysis last week, but I've been communicating with Yannick of musig regarding our multisig paper, so that's still moving too)
+[2018-07-16 17:25:15] <suraeNoether> oh, if anyone is curious on the churn paper, and they are tolerant of *incorrect statistics* (NEVER BE TOLERANT OF THIS) then you can read my crapdraft here: https://v2.overleaf.com/read/rznczkmdmchy
+[2018-07-16 17:25:21] <endogenic> lol
+[2018-07-16 17:25:26] <endogenic> all statistics are incorrect
+[2018-07-16 17:25:28] <endogenic> got 'em
+[2018-07-16 17:26:06] <sarang> OK, I need to board my plane now
+[2018-07-16 17:26:10] <sarang> I'll be back online in the air
+[2018-07-16 17:26:15] <sarang> because we're living in the freaking future
+[2018-07-16 17:26:21] <endogenic> man can't believe they make people actually catch the planes these days
+[2018-07-16 17:26:30] <sarang> they don't taxi that fast
+[2018-07-16 17:26:51] <endogenic> maybe if you're riding a pony
+[2018-07-16 17:26:53] <silur> last time border police didn't let me on my flight..... again
+[2018-07-16 17:26:57] <silur> #beingstateless
+[2018-07-16 17:28:15] <suraeNoether> Okay, does anyone have any other things they want to discuss?
+[2018-07-16 17:28:32] <silur> yep, any news from the new-new-new-updated rtrs?
+[2018-07-16 17:28:50] <suraeNoether> silur yes, sarang is getting permission to post it on his github
+[2018-07-16 17:29:23] <silur> shall we merge the implementation too there?
+[2018-07-16 17:29:31] <suraeNoether> he has finished around half the algorihtms required, and has been messing around wtih an ed25519 library in python
+[2018-07-16 17:29:48] <silur> oh it's AN implementation
+[2018-07-16 17:29:55] <silur> thought only text
+[2018-07-16 17:30:00] <suraeNoether> no, no, friend
+[2018-07-16 17:30:03] <suraeNoether> sarang has been ON THIS
+[2018-07-16 17:31:51] <suraeNoether> okay, any other questions before we call it?
+[2018-07-16 17:33:41] <sarang> Yeah code is making good progress, waiting on permission to include on my repo
+[2018-07-16 17:34:41] <silur> I kinda don't want to progress with mine if the reference is outdated but glad to hear the py version is goin good
+[2018-07-16 17:35:40] <sarang> I don't have an opinion on it yet
+[2018-07-16 17:35:55] <sarang> The code is basically to help me better understand the setup and efficiency
+[2018-07-16 17:36:09] <endogenic> i'm curious to bring up the question of bindings to C/C++
+[2018-07-16 17:36:10] <sarang> It's also not even remotely optimized
+[2018-07-16 17:36:13] <endogenic> but i know it's work
+[2018-07-16 17:36:27] <endogenic> the mem mgmt could be made v simple
+[2018-07-16 17:36:48] <endogenic> guess it can be a future goal
+[2018-07-16 17:37:44] <silur> @endogenic my implementation is pure C with openssl dependency
+[2018-07-16 17:38:46] <suraeNoether> endogenic: yeah, all we are doing right now is trying to prototype it to get a *sense* of asymptotic properties of verification time, etc beyond the statistics described in the paper
+[2018-07-16 17:38:50] <endogenic> i mean for various util libs so the usage of a specific language for r&d isn't indicated by the existence of those shared libs
+[2018-07-16 17:38:59] <endogenic> r&d as in prototyping, sims, etc
+[2018-07-16 17:39:24] <suraeNoether> alllrighty, well, it appears as if we have run out of stuff to talk about. Any final questions?
+[2018-07-16 17:39:27] <suraeNoether> I love you all
+[2018-07-16 17:39:37] <endogenic> no i mean that's unsolved
+[2018-07-16 17:40:04] <suraeNoether> ?
+[2018-07-16 17:40:29] <endogenic> sarang chose a specific language to work in because there were libs in that language already
+[2018-07-16 17:40:34] <endogenic> even if it wasn't the preferred language
+[2018-07-16 17:41:00] <endogenic> just saying there are alternatives and asking how recently they've been investigated
+[2018-07-16 17:42:46] <suraeNoether> oh, gosh
+[2018-07-16 17:42:49] <suraeNoether> i don't know!
+[2018-07-16 17:43:07] <suraeNoether> last time i checked... which was last year when knaccc and i were working on ruffct
+[2018-07-16 17:43:16] <suraeNoether> i believe there weren't better options available at the time
+[2018-07-16 17:43:45] <suraeNoether> but since it's just prototyping, i'm not sure it matters too much
+[2018-07-16 17:44:14] <endogenic> yeah, just a matter of language preference for him..
+[2018-07-16 17:45:37] <suraeNoether> okay, </meeting>

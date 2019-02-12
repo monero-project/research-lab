@@ -1,225 +1,225 @@
-[2018-10-15 10:00:21] <sarang> LET US BEGIN
-[2018-10-15 10:01:27] <suraeNoether> yes hello
-[2018-10-15 10:01:45] <sgp_> Hello
-[2018-10-15 10:01:57] <kovri-slack> <oneiric> hullo
-[2018-10-15 10:02:06] <suraeNoether> today i want to chat about research and the monero konferenco, and... that's my agenda. if folks want to add to the list, shout out~
-[2018-10-15 10:02:07] <sarang> hi
-[2018-10-15 10:02:13] <sarang> Where to begin?
-[2018-10-15 10:02:40] <suraeNoether> well, firstly
-[2018-10-15 10:03:02] <suraeNoether> who wants to come give a 20-40 minute chat at the Monero Konferenco? I'd like each workgroup to have at least one representative
-[2018-10-15 10:03:16] <hyc> when/where is that going to be?
-[2018-10-15 10:03:21] <sarang> I'll do one
-[2018-10-15 10:03:56] <suraeNoether> Good question, hyc! Right now it's looking to be one of the weekends between April 27 and June 15 in Denver, Colorado. invited speakers will be reimbursed for their travel costs
-[2018-10-15 10:04:13] <suraeNoether> assuming the community decides to fund my proposal, that is
-[2018-10-15 10:04:21] <hyc> cool
-[2018-10-15 10:04:25] <sarang> Can reimbursement be in XMR?
-[2018-10-15 10:04:30] <suraeNoether> I'm leaning toward April 27, personally
-[2018-10-15 10:04:33] <sarang> Or are there weird legally things with that
-[2018-10-15 10:04:40] <kovri-slack> <oneiric> I could do one, or defer to anonimal if he wanted to do one
-[2018-10-15 10:04:59] <suraeNoether> yes, reimbursement can be done in XMR, it just makes accounting moderately more annoying, but no legal issues
-[2018-10-15 10:05:10] <sarang> cool
-[2018-10-15 10:05:12] <suraeNoether> and i'm happy to do that
-[2018-10-15 10:05:24] <sarang> Because fiat reimbursement is always a baffling and lengthy ordeal
-[2018-10-15 10:05:41] <suraeNoether> well oneiric i wanted a session of several talks on networking privacy. i'd love to have both you and anonimal come speak
-[2018-10-15 10:05:55] → MrAntrax joined (~MrAntrax@unaffiliated/mrantrax)
-[2018-10-15 10:06:04] <kovri-slack> <oneiric> :)
-[2018-10-15 10:06:18] <suraeNoether> i also want to invite people not directly related to the monero ecosystem
-[2018-10-15 10:06:31] <parasew[m]> i will also try and come there! as i could not make it to defcon sadly
-[2018-10-15 10:07:07] <sarang> suraeNoether: are there plans to arrange for streaming or quality recording?
-[2018-10-15 10:07:34] <sgp_> Yeah, we need that
-[2018-10-15 10:07:34] <suraeNoether> i really want to give folks who are up and coming a chance to speak at this event; we can invite really big name people to come talk, but i feel like their careers are already pretty well laid out before them, so it'd be nice to get some outside researchers who are more tangential to the crypto celebrity scene
-[2018-10-15 10:07:41] <sarang> May I recommend hiring an outside group to handle that, and _not_ venue staff
-[2018-10-15 10:08:25] <suraeNoether> sarang, one option laid out in the budget is a section on audio/visual rental and web streaming and costs; a local place that does webcast-style AV presentations regularly would charge around 5kUSD for such an event.
-[2018-10-15 10:08:29] <sarang> Or at the very least getting someone with professional experience as an audio engineer
-[2018-10-15 10:08:52] <sarang> cool!
-[2018-10-15 10:09:17] <suraeNoether> i posted last week on the forums for the FFS under ideas
-[2018-10-15 10:09:20] <suraeNoether> i haven't gotten comments. :P
-[2018-10-15 10:09:25] <sarang> oops
-[2018-10-15 10:09:28] <sarang> that's my bad
-[2018-10-15 10:09:41] <sarang> I thought I had read something on recording but it's easier to just ask you and be lazy
-[2018-10-15 10:09:43] <sarang> ty
-[2018-10-15 10:09:51] <suraeNoether> not a problem, rehrar was mentioning something about cyphermarket and sponsorship and free toys and t-shirts
-[2018-10-15 10:10:12] <suraeNoether> so i'm thinking we move the idea into "open discussion" and update from there
-[2018-10-15 10:10:56] <suraeNoether> if folks have recommendations for speakers, we are assuming a decent travel cost on average for speakers, so if we can get a handful of relatively small-cost local-ish speakers, we can also have a decent budget for flying people out from further away
-[2018-10-15 10:11:22] <parasew[m]> there are a lot of contacts from the open source hardware association in denver (open source hardware summit was there last year); i could reach out to ppl (audio engineer, etc.)
-[2018-10-15 10:11:29] <sgp_> Yeah, my RT Frontier flight is only ~$200 :)
-[2018-10-15 10:11:30] <suraeNoether> i'm thinking a formal call for papers may be in order
-[2018-10-15 10:11:47] <suraeNoether> sgp_: excellente, come give a taaaaalk on blackballin brother
-[2018-10-15 10:11:55] <suraeNoether> let us have a meeting of the minds
-[2018-10-15 10:11:56] <suraeNoether> all the minds
-[2018-10-15 10:12:13] <sarang> sgp_: but you're flying Frontier, so you'll pay one way or another.... =p
-[2018-10-15 10:12:21] <suraeNoether> sarang zing
-[2018-10-15 10:12:37] <suraeNoether> more like zi... ziring..
-[2018-10-15 10:12:38] <suraeNoether> nah
-[2018-10-15 10:12:42] <suraeNoether> okay, onto research
-[2018-10-15 10:12:51] <sarang> Buy us a Monero jet and I'll fly everyone there
-[2018-10-15 10:13:11] <sgp_> Lmao
-[2018-10-15 10:13:27] <suraeNoether> last week, sarang and I concluded that, for now, RuPol may be too risky for us to implement, given the layers of development required
-[2018-10-15 10:13:50] <suraeNoether> essentially un-vettable at this stage
-[2018-10-15 10:14:21] <suraeNoether> once things are more clear, we can actually benchmark it
-[2018-10-15 10:14:34] <sarang> The level of complexity required for verification computation is also unclear
-[2018-10-15 10:14:44] <sarang> The authors left many, many implementation details out of their paper
-[2018-10-15 10:15:02] <sarang> It suffices to say that there is a lot of annoying math still to be worked out
-[2018-10-15 10:15:03] <suraeNoether> but for now, it relies on a previously described scheme that has it's own typographical errors, etc, and at this point even workign out a single example by hand requires beautiful-mind-level of whiteboards on the walls
-[2018-10-15 10:15:36] <suraeNoether> so we are falling back on ruffct for now to see how much the multiexp speedups we learned about during bulletproof implementations could help
-[2018-10-15 10:15:37] <sarang> I've returned to our older RuffCT scheme, working to backport what we've learned from BPs about optimizations and batching
-[2018-10-15 10:15:41] <sarang> jinx
-[2018-10-15 10:15:56] <suraeNoether> im finna shutup now
-[2018-10-15 10:16:01] <sarang> heh
-[2018-10-15 10:16:12] <sarang> We can certainly speed up some operations on individual spend proofs, and that's cool
-[2018-10-15 10:16:12] <sarang> But
-[2018-10-15 10:16:24] <sarang> The possibility of batching some parts of verification are quite intriguing
-[2018-10-15 10:16:33] <sarang> especially relating to fixed group points
-[2018-10-15 10:16:55] <sarang> I'm running some code and tests on this presently
-[2018-10-15 10:18:40] <suraeNoether> in addition to all that, i've been working on the churn paper to formalize the threat model we discussed last week
-[2018-10-15 10:18:45] <sarang> Also, I've finished some updated blackball testing
-[2018-10-15 10:18:52] <suraeNoether> that's going... really well, and i hope to have a draft to the community in a few days
-[2018-10-15 10:19:07] <sarang> My hunch is that we'll see those papers published with shitty information
-[2018-10-15 10:19:14] <sarang> and the associated bad press
-[2018-10-15 10:19:41] <suraeNoether> sarang i will want to dip into your blackball info in writing this to illustrate the negligibility of the gains from heuristic methods
-[2018-10-15 10:20:12] <suraeNoether> i disagree, i think the papers weren't sufficiently FUD-dy to really be worried about it, as long as they clarify "newly found" versus "total found"
-[2018-10-15 10:20:19] <sgp_> Sounds like a good co-op
-[2018-10-15 10:20:26] <suraeNoether> but, you know, matt green says we have "fake privacy" so
-[2018-10-15 10:20:38] <suraeNoether> :P
-[2018-10-15 10:20:48] <kovri-slack> <oneiric> lol, really?
-[2018-10-15 10:21:05] <suraeNoether> yeah some tweet from awhile ago *shrug*
-[2018-10-15 10:21:06] <sarang> The Zcash mentality is that we offer shitty obfuscation
-[2018-10-15 10:21:13] <sarang> I tend to not really pay attention to it
-[2018-10-15 10:21:27] <suraeNoether> we happen to agree that ring signatures suck and they need to be replaced with something with larger anonymity set sizes
-[2018-10-15 10:21:30] <gingeropolous> when ringsize 42
-[2018-10-15 10:21:34] <suraeNoether> which is why sarang and I never really let go of the sublinear
-[2018-10-15 10:21:35] <sarang> Those papers did a terrible job of differentiating things that are time-based or blockheight-based
-[2018-10-15 10:21:44] <suraeNoether> no big deal
-[2018-10-15 10:22:09] <sgp_> Has anyone seen this new paper? https://eprint.iacr.org/2018/962
-[2018-10-15 10:22:18] <suraeNoether> we saw a draft, not the final thing, i'm withholding judgement
-[2018-10-15 10:22:31] <suraeNoether> sgp_: i have seen this thing, but i have not yet read that thing
-[2018-10-15 10:22:39] <suraeNoether> i need to learn about aurora and this thing
-[2018-10-15 10:23:05] <sgp_> Basically Zerocash applied to computations, no?
-[2018-10-15 10:23:23] <sarang> trusted setup
-[2018-10-15 10:23:46] <sgp_> Just call them "trusted computations" :p
-[2018-10-15 10:23:50] <sarang> lol
-[2018-10-15 10:23:50] <hyc> still quite expensive, <2 minutes generation time
-[2018-10-15 10:23:58] <sarang> the setup is buried deep w/in the paper
-[2018-10-15 10:24:04] <sarang> gmaxwell noted it in p15
-[2018-10-15 10:24:16] <hyc> pls ignore the men behind the curtain
-[2018-10-15 10:24:23] <sgp_> Sounds like a typical trusted setup response
-[2018-10-15 10:24:28] <suraeNoether> trusted setup reminds me of the phrase "military grade encryption"
-[2018-10-15 10:24:33] <kovri-slack> <oneiric> lol, shady indeed
-[2018-10-15 10:24:36] <sarang> Nah
-[2018-10-15 10:24:42] <sarang> People brag about military encryption
-[2018-10-15 10:24:46] <suraeNoether> no no
-[2018-10-15 10:24:46] <sarang> They hide the setup deep within a definition
-[2018-10-15 10:24:58] <suraeNoether> the phrase military grade encryption is usually a tongue-in-cheek reference to a plaintext message
-[2018-10-15 10:25:04] <sarang> =p
-[2018-10-15 10:25:06] <hyc> lol
-[2018-10-15 10:25:11] <sarang> rot26
-[2018-10-15 10:25:17] <hyc> smeaphore at least
-[2018-10-15 10:25:18] <kinghat> are we military grade? or moar better?
-[2018-10-15 10:25:24] <hyc> semaphore, or morse
-[2018-10-15 10:25:40] <suraeNoether> sarang that reminds me
-[2018-10-15 10:25:43] <sarang> ?
-[2018-10-15 10:26:05] <sgp_> We used a Caesar's Cypher, totally secure. Roman military-grade
-[2018-10-15 10:26:10] <suraeNoether> i really really want to create a cryptocurrency like monero but replacing the bernstein group with an absurdly small group, like order 7000-ish or something, and with a tiny-output hash function
-[2018-10-15 10:26:21] <suraeNoether> just let people go wild in forging signatures
-[2018-10-15 10:26:23] <suraeNoether> just see what happens
-[2018-10-15 10:26:30] <suraeNoether> "when forgecoin moon?"
-[2018-10-15 10:26:33] <suraeNoether> etc
-[2018-10-15 10:26:45] <sarang> I'd like to see a version that uses a curve group with cofactor 1
-[2018-10-15 10:26:47] <suraeNoether> ring size 2
-[2018-10-15 10:26:58] <suraeNoether> anyway
-[2018-10-15 10:27:10] <sarang> yeah
-[2018-10-15 10:27:14] <hyc> that can be the next generation of useless ethereum token
-[2018-10-15 10:27:20] <suraeNoether> so, that's my life for this week: ruffct with sarang and the churn paper, and fantasizing about rubiks-cubes-sized groups as a joke cryptocurrency
-[2018-10-15 10:27:39] <suraeNoether> ohhhh man implementing a rubiks cube on top of ethereum would be *such a waste of resources you guys*
-[2018-10-15 10:27:41] <sarang> Yup, I'll be finishing up unit tests on optimized ruffct to get a better idea of batching
-[2018-10-15 10:27:46] <suraeNoether> proving you are making each permutation omg
-[2018-10-15 10:27:52] <suraeNoether> put it on the ledger forever man
-[2018-10-15 10:28:06] <sarang> There was a neat paper I linked earlier about some optimized curve operations
-[2018-10-15 10:28:17] <sarang> they found some better EC formulas in certain special cases
-[2018-10-15 10:28:29] <sgp_> Ethereum Plays Rubik's Cube
-[2018-10-15 10:28:38] <hyc> hm... rubkis cube solvers are pretty fast these days. would be funny to advertise a rubiks cube-based key system
-[2018-10-15 10:28:40] <suraeNoether> oh yes, i am eager to read that. it seems to be strictly related to optimizations obtained from utilizing analytic formula/expressions for multiexp
-[2018-10-15 10:29:33] <suraeNoether> for example, if you have point P = (x, y) and point Q = (z, w) on the ed25519 curve, we define P+Q using the equations of the elliptic curve, the twisted edwards polynomial equations
-[2018-10-15 10:30:00] <sarang> They discuss some neat work on better addition chains
-[2018-10-15 10:30:06] <suraeNoether> so if you want something like 3P + 4Q very often, you can expand that polynomial expression and exploit the structure within those analytic expressions to speed up the computations
-[2018-10-15 10:30:09] <sarang> Goes to show that this is not a totally solved area of research
-[2018-10-15 10:30:20] <sarang> I don't see it being terribly useful here, mind you
-[2018-10-15 10:31:16] <sarang> Anyone else with something fun to share about recent work, questions, ideas?
-[2018-10-15 10:32:03] <sarang> Here's a link to my quick port of ruffct to my python library: https://github.com/SarangNoether/research-lab/tree/pyruff
-[2018-10-15 10:32:19] <sarang> It's more or less a direct port of the java stuff that will be refactored as needed
-[2018-10-15 10:32:27] <sarang> prototyping only; don't use it anywhere that counts
-[2018-10-15 10:32:30] <suraeNoether> oh, I wanted to point out: Vtnerd is asking for a very reasonable amount of USD/hour to construct a tor-based RPC tool for monero (or something like that), and his FFS is under "ideas" right now
-[2018-10-15 10:32:39] <suraeNoether> i wanted to express my support for that proposal
-[2018-10-15 10:32:59] <sarang> Tell me more about this in relation to kovri
-[2018-10-15 10:33:05] <sarang> ELI5
-[2018-10-15 10:33:12] <rehrar> Would RuffCT be pretty drop in as well? Or would it take large amounts of work to get it in?
-[2018-10-15 10:33:42] <sarang> It'd be some work to safely transition old outputs
-[2018-10-15 10:33:49] <sarang> that's part of the prototyping process
-[2018-10-15 10:33:57] <suraeNoether> afaict this is going to be a parallel thing, independent of kovri
-[2018-10-15 10:34:13] <suraeNoether> but also since it's not inventing new protocols, it should proceed with easier-to-anticipate milestones
-[2018-10-15 10:34:22] ← MrAntrax left (~MrAntrax@unaffiliated/mrantrax): "I'm probably disconnected."
-[2018-10-15 10:35:00] <suraeNoether> some folks are of the opinion that multiple tools are beneficial; when it comes to tor, i2p, kovri... i tend to think the most beneficial tools will eventually see the most use
-[2018-10-15 10:35:12] <sarang> rehrar: actual practical ruffct is still a bit pie-in-the-sky; but that's part of our job
-[2018-10-15 10:35:29] <sarang> it has implications on things like address size, for example
-[2018-10-15 10:35:39] <sarang> but we're learning what we can from it
-[2018-10-15 10:36:07] <sgp_> Only point I need to make is that if we want to get anywhere with blackball research, someone needs to update the pool tool and sneurlax is busy
-[2018-10-15 10:36:08] <rehrar> regarding Tor, I think it would be beneficial to Monero to have the option to run over Tor
-[2018-10-15 10:36:10] <sarang> MRL: Putting The Skunk In Skunkworks
-[2018-10-15 10:36:19] <sarang> sgp_: link to current work?
-[2018-10-15 10:36:20] <suraeNoether> rehrar: ruffct as-is requires an additional user key, which would bring us to either 3 group elements as your public key, or 4, depending on how you interpret the ruffct paper, and so we may end up doubling our key length (which doubles verification time from loading keys!)
-[2018-10-15 10:36:32] <suraeNoether> sgp_: any ideas? or does anyone want to help sgp_ out with the pool tool?
-[2018-10-15 10:36:39] <gmaxwell> suraeNoether: you can change the constants in the curve equation and get a tiny group with basically no other changes in the code, there are tests in libsecp256k1 that work that way.
-[2018-10-15 10:36:48] <sgp_> https://github.com/sneurlax/xmreuse
-[2018-10-15 10:37:13] <suraeNoether> gmaxwell: delightful :)
-[2018-10-15 10:37:26] <kovri-slack> <oneiric> yeah, having a public node over tor would be nice. even a hybrid of p2p over tor, rpc over i2p would be sweet
-[2018-10-15 10:37:48] <sarang> gmaxwell: you are referring to a cofactor-1 curve?
-[2018-10-15 10:37:57] <sarang> oh nvm, you mean group size
-[2018-10-15 10:38:03] — sarang takes back his question
-[2018-10-15 10:38:33] <hyc> we have moneroworld nodes on tor
-[2018-10-15 10:39:10] <rehrar> Of course it's possible to run Monero over Tor with some finagling. But how cool would it be to run over tor with a command or button press?
-[2018-10-15 10:39:25] <rehrar> Qubes-Whonix is a good way right now btw
-[2018-10-15 10:39:54] <sarang> perhaps we first get the moneroworld nodes upgraded at all...
-[2018-10-15 10:40:13] <suraeNoether> okay, for me, final thoughts... please make comments on the Denver Monero Konferenco FFS here, and we will move it up to Open Discussion: https://forum.getmonero.org/6/ideas/90909/surae-noether-first-denver-monero-konferenco-spring-2019 and for this conference, PLEASE please let me know if you know of someone who I absolutely MUST INVITE TO SPEAK. If you have a favorite speaker, let me know by emailing
-[2018-10-15 10:40:13] <suraeNoether> surae.noether@protonmail.com 
-[2018-10-15 10:40:29] <suraeNoether> I'll be sending out first-round invitation emails in the next week or so
-[2018-10-15 10:40:43] <suraeNoether> or just email me because i'm lonely
-[2018-10-15 10:40:56] <hyc> lol. I can cook up a talk
-[2018-10-15 10:41:25] <hyc> by next spring we should have a much better idea of whether/how well randomJS will work
-[2018-10-15 10:42:25] <sarang> If there isn't a talk on RandomJS there will be riots
-[2018-10-15 10:43:15] <rehrar> heck, I may start a Riot anyways
-[2018-10-15 10:43:22] <hyc> lol
-[2018-10-15 10:43:29] <rehrar> it's a decent little app on the Matrix protocol
-[2018-10-15 10:43:33] <rehrar> #nerdjokes
-[2018-10-15 10:44:18] <suraeNoether> cool, we can have a session on hardware and proof of work and maybe invite some asic or fpga manufacturers
-[2018-10-15 10:44:36] <hyc> ah a mini-track, yeah
-[2018-10-15 10:45:01] <kovri-slack> <oneiric> head-to-head debate hyc v. timolson?
-[2018-10-15 10:45:05] <sarang> Other questions or research topics?
-[2018-10-15 10:45:08] <hyc> though if we've done our work right, no asic/fpga guys will want to speak to us ever again
-[2018-10-15 10:45:13] <sarang> heh
-[2018-10-15 10:48:07] <kovri-slack> <oneiric> was reading up on ML techniques, would LSTM/regression be helpful for blackball analysis?
-[2018-10-15 10:48:59] ⇐ sgp_ quit (~sgp_@2607:fb90:983a:812e:d640:7084:4eca:f972): Remote host closed the connection
-[2018-10-15 10:49:55] <sarang> I don't think so
-[2018-10-15 10:50:12] <sarang> Given our ring sizes and the actual risks involved, we understand it decently well
-[2018-10-15 10:50:31] <sarang> Things like forks will always be more of an issue than random selection errors
-[2018-10-15 10:50:39] <sarang> if that's what you mean oneiric
-[2018-10-15 10:51:32] <sarang> Even a deterministic approach to identify spent rings reveals relatively few, and each of these has a negligible effect on other rings
-[2018-10-15 10:51:46] <kovri-slack> <oneiric> kind of, I meant applying the learning algo to new forks rather than tuning by hand. I might be misunderstanding blackballing though
-[2018-10-15 10:52:11] <sarang> The risk from forks is spending on both forks, which reveals your spend
-[2018-10-15 10:52:28] <sarang> on-chain risks involve things like pool outputs and set-theoretic analysis
-[2018-10-15 10:52:47] <sarang> The goal of blackballing is to identify _definitely_ spent outs
-[2018-10-15 10:53:02] <sarang> and that's a hard game to play that gives you progressively lesser benefits over time
-[2018-10-15 10:54:57] <sarang> I suppose we can begin to wrap up the official meeting
-[2018-10-15 10:55:13] <kovri-slack> <oneiric> ok, thanks sarang
-[2018-10-15 10:55:16] <sarang> Thoughts on anything that people would like to see investigated for this next week?
-[2018-10-15 10:55:38] <sarang> oneiric: I think some people worry that their outputs can get "caught up" in a blackball list, but this isn't the case
-[2018-10-15 10:56:00] <sarang> The methods we use only determine if it's provable that an output is already spent, which does not affect anyone's funds
-[2018-10-15 10:57:03] <gmaxwell> (the name 'blackball' is really kind of unfortunate.)
-[2018-10-15 10:57:11] <sarang> gmaxwell: agreed
-[2018-10-15 10:57:27] <sarang> I've been using the term "spent note" in my paper drafts
-[2018-10-15 10:57:58] <sarang> I'd prefer something like that or "dead output"
-[2018-10-15 10:58:16] <gmaxwell> Spent Note List (SNL) would hae been much better.
-[2018-10-15 10:58:31] <sarang> We could update it each week, in a Weekend Update
-[2018-10-15 10:58:36] <kovri-slack> <oneiric> Live from New York..
-[2018-10-15 10:59:09] <gmaxwell> Well, sunday is a day of rest so one should do it on saturday, but perhaps as late as possible..
-[2018-10-15 10:59:11] <gmaxwell> :P
-[2018-10-15 10:59:15] <sarang> Well, thanks to everyone for participating in our meeting; we are now adjourned, and informal convos shall continue
+[2018-10-15 17:00:21] <sarang> LET US BEGIN
+[2018-10-15 17:01:27] <suraeNoether> yes hello
+[2018-10-15 17:01:45] <sgp_> Hello
+[2018-10-15 17:01:57] <kovri-slack> <oneiric> hullo
+[2018-10-15 17:02:06] <suraeNoether> today i want to chat about research and the monero konferenco, and... that's my agenda. if folks want to add to the list, shout out~
+[2018-10-15 17:02:07] <sarang> hi
+[2018-10-15 17:02:13] <sarang> Where to begin?
+[2018-10-15 17:02:40] <suraeNoether> well, firstly
+[2018-10-15 17:03:02] <suraeNoether> who wants to come give a 20-40 minute chat at the Monero Konferenco? I'd like each workgroup to have at least one representative
+[2018-10-15 17:03:16] <hyc> when/where is that going to be?
+[2018-10-15 17:03:21] <sarang> I'll do one
+[2018-10-15 17:03:56] <suraeNoether> Good question, hyc! Right now it's looking to be one of the weekends between April 27 and June 15 in Denver, Colorado. invited speakers will be reimbursed for their travel costs
+[2018-10-15 17:04:13] <suraeNoether> assuming the community decides to fund my proposal, that is
+[2018-10-15 17:04:21] <hyc> cool
+[2018-10-15 17:04:25] <sarang> Can reimbursement be in XMR?
+[2018-10-15 17:04:30] <suraeNoether> I'm leaning toward April 27, personally
+[2018-10-15 17:04:33] <sarang> Or are there weird legally things with that
+[2018-10-15 17:04:40] <kovri-slack> <oneiric> I could do one, or defer to anonimal if he wanted to do one
+[2018-10-15 17:04:59] <suraeNoether> yes, reimbursement can be done in XMR, it just makes accounting moderately more annoying, but no legal issues
+[2018-10-15 17:05:10] <sarang> cool
+[2018-10-15 17:05:12] <suraeNoether> and i'm happy to do that
+[2018-10-15 17:05:24] <sarang> Because fiat reimbursement is always a baffling and lengthy ordeal
+[2018-10-15 17:05:41] <suraeNoether> well oneiric i wanted a session of several talks on networking privacy. i'd love to have both you and anonimal come speak
+[2018-10-15 17:05:55] → MrAntrax joined (~MrAntrax@unaffiliated/mrantrax)
+[2018-10-15 17:06:04] <kovri-slack> <oneiric> :)
+[2018-10-15 17:06:18] <suraeNoether> i also want to invite people not directly related to the monero ecosystem
+[2018-10-15 17:06:31] <parasew[m]> i will also try and come there! as i could not make it to defcon sadly
+[2018-10-15 17:07:07] <sarang> suraeNoether: are there plans to arrange for streaming or quality recording?
+[2018-10-15 17:07:34] <sgp_> Yeah, we need that
+[2018-10-15 17:07:34] <suraeNoether> i really want to give folks who are up and coming a chance to speak at this event; we can invite really big name people to come talk, but i feel like their careers are already pretty well laid out before them, so it'd be nice to get some outside researchers who are more tangential to the crypto celebrity scene
+[2018-10-15 17:07:41] <sarang> May I recommend hiring an outside group to handle that, and _not_ venue staff
+[2018-10-15 17:08:25] <suraeNoether> sarang, one option laid out in the budget is a section on audio/visual rental and web streaming and costs; a local place that does webcast-style AV presentations regularly would charge around 5kUSD for such an event.
+[2018-10-15 17:08:29] <sarang> Or at the very least getting someone with professional experience as an audio engineer
+[2018-10-15 17:08:52] <sarang> cool!
+[2018-10-15 17:09:17] <suraeNoether> i posted last week on the forums for the FFS under ideas
+[2018-10-15 17:09:20] <suraeNoether> i haven't gotten comments. :P
+[2018-10-15 17:09:25] <sarang> oops
+[2018-10-15 17:09:28] <sarang> that's my bad
+[2018-10-15 17:09:41] <sarang> I thought I had read something on recording but it's easier to just ask you and be lazy
+[2018-10-15 17:09:43] <sarang> ty
+[2018-10-15 17:09:51] <suraeNoether> not a problem, rehrar was mentioning something about cyphermarket and sponsorship and free toys and t-shirts
+[2018-10-15 17:10:12] <suraeNoether> so i'm thinking we move the idea into "open discussion" and update from there
+[2018-10-15 17:10:56] <suraeNoether> if folks have recommendations for speakers, we are assuming a decent travel cost on average for speakers, so if we can get a handful of relatively small-cost local-ish speakers, we can also have a decent budget for flying people out from further away
+[2018-10-15 17:11:22] <parasew[m]> there are a lot of contacts from the open source hardware association in denver (open source hardware summit was there last year); i could reach out to ppl (audio engineer, etc.)
+[2018-10-15 17:11:29] <sgp_> Yeah, my RT Frontier flight is only ~$200 :)
+[2018-10-15 17:11:30] <suraeNoether> i'm thinking a formal call for papers may be in order
+[2018-10-15 17:11:47] <suraeNoether> sgp_: excellente, come give a taaaaalk on blackballin brother
+[2018-10-15 17:11:55] <suraeNoether> let us have a meeting of the minds
+[2018-10-15 17:11:56] <suraeNoether> all the minds
+[2018-10-15 17:12:13] <sarang> sgp_: but you're flying Frontier, so you'll pay one way or another.... =p
+[2018-10-15 17:12:21] <suraeNoether> sarang zing
+[2018-10-15 17:12:37] <suraeNoether> more like zi... ziring..
+[2018-10-15 17:12:38] <suraeNoether> nah
+[2018-10-15 17:12:42] <suraeNoether> okay, onto research
+[2018-10-15 17:12:51] <sarang> Buy us a Monero jet and I'll fly everyone there
+[2018-10-15 17:13:11] <sgp_> Lmao
+[2018-10-15 17:13:27] <suraeNoether> last week, sarang and I concluded that, for now, RuPol may be too risky for us to implement, given the layers of development required
+[2018-10-15 17:13:50] <suraeNoether> essentially un-vettable at this stage
+[2018-10-15 17:14:21] <suraeNoether> once things are more clear, we can actually benchmark it
+[2018-10-15 17:14:34] <sarang> The level of complexity required for verification computation is also unclear
+[2018-10-15 17:14:44] <sarang> The authors left many, many implementation details out of their paper
+[2018-10-15 17:15:02] <sarang> It suffices to say that there is a lot of annoying math still to be worked out
+[2018-10-15 17:15:03] <suraeNoether> but for now, it relies on a previously described scheme that has it's own typographical errors, etc, and at this point even workign out a single example by hand requires beautiful-mind-level of whiteboards on the walls
+[2018-10-15 17:15:36] <suraeNoether> so we are falling back on ruffct for now to see how much the multiexp speedups we learned about during bulletproof implementations could help
+[2018-10-15 17:15:37] <sarang> I've returned to our older RuffCT scheme, working to backport what we've learned from BPs about optimizations and batching
+[2018-10-15 17:15:41] <sarang> jinx
+[2018-10-15 17:15:56] <suraeNoether> im finna shutup now
+[2018-10-15 17:16:01] <sarang> heh
+[2018-10-15 17:16:12] <sarang> We can certainly speed up some operations on individual spend proofs, and that's cool
+[2018-10-15 17:16:12] <sarang> But
+[2018-10-15 17:16:24] <sarang> The possibility of batching some parts of verification are quite intriguing
+[2018-10-15 17:16:33] <sarang> especially relating to fixed group points
+[2018-10-15 17:16:55] <sarang> I'm running some code and tests on this presently
+[2018-10-15 17:18:40] <suraeNoether> in addition to all that, i've been working on the churn paper to formalize the threat model we discussed last week
+[2018-10-15 17:18:45] <sarang> Also, I've finished some updated blackball testing
+[2018-10-15 17:18:52] <suraeNoether> that's going... really well, and i hope to have a draft to the community in a few days
+[2018-10-15 17:19:07] <sarang> My hunch is that we'll see those papers published with shitty information
+[2018-10-15 17:19:14] <sarang> and the associated bad press
+[2018-10-15 17:19:41] <suraeNoether> sarang i will want to dip into your blackball info in writing this to illustrate the negligibility of the gains from heuristic methods
+[2018-10-15 17:20:12] <suraeNoether> i disagree, i think the papers weren't sufficiently FUD-dy to really be worried about it, as long as they clarify "newly found" versus "total found"
+[2018-10-15 17:20:19] <sgp_> Sounds like a good co-op
+[2018-10-15 17:20:26] <suraeNoether> but, you know, matt green says we have "fake privacy" so
+[2018-10-15 17:20:38] <suraeNoether> :P
+[2018-10-15 17:20:48] <kovri-slack> <oneiric> lol, really?
+[2018-10-15 17:21:05] <suraeNoether> yeah some tweet from awhile ago *shrug*
+[2018-10-15 17:21:06] <sarang> The Zcash mentality is that we offer shitty obfuscation
+[2018-10-15 17:21:13] <sarang> I tend to not really pay attention to it
+[2018-10-15 17:21:27] <suraeNoether> we happen to agree that ring signatures suck and they need to be replaced with something with larger anonymity set sizes
+[2018-10-15 17:21:30] <gingeropolous> when ringsize 42
+[2018-10-15 17:21:34] <suraeNoether> which is why sarang and I never really let go of the sublinear
+[2018-10-15 17:21:35] <sarang> Those papers did a terrible job of differentiating things that are time-based or blockheight-based
+[2018-10-15 17:21:44] <suraeNoether> no big deal
+[2018-10-15 17:22:09] <sgp_> Has anyone seen this new paper? https://eprint.iacr.org/2018/962
+[2018-10-15 17:22:18] <suraeNoether> we saw a draft, not the final thing, i'm withholding judgement
+[2018-10-15 17:22:31] <suraeNoether> sgp_: i have seen this thing, but i have not yet read that thing
+[2018-10-15 17:22:39] <suraeNoether> i need to learn about aurora and this thing
+[2018-10-15 17:23:05] <sgp_> Basically Zerocash applied to computations, no?
+[2018-10-15 17:23:23] <sarang> trusted setup
+[2018-10-15 17:23:46] <sgp_> Just call them "trusted computations" :p
+[2018-10-15 17:23:50] <sarang> lol
+[2018-10-15 17:23:50] <hyc> still quite expensive, <2 minutes generation time
+[2018-10-15 17:23:58] <sarang> the setup is buried deep w/in the paper
+[2018-10-15 17:24:04] <sarang> gmaxwell noted it in p15
+[2018-10-15 17:24:16] <hyc> pls ignore the men behind the curtain
+[2018-10-15 17:24:23] <sgp_> Sounds like a typical trusted setup response
+[2018-10-15 17:24:28] <suraeNoether> trusted setup reminds me of the phrase "military grade encryption"
+[2018-10-15 17:24:33] <kovri-slack> <oneiric> lol, shady indeed
+[2018-10-15 17:24:36] <sarang> Nah
+[2018-10-15 17:24:42] <sarang> People brag about military encryption
+[2018-10-15 17:24:46] <suraeNoether> no no
+[2018-10-15 17:24:46] <sarang> They hide the setup deep within a definition
+[2018-10-15 17:24:58] <suraeNoether> the phrase military grade encryption is usually a tongue-in-cheek reference to a plaintext message
+[2018-10-15 17:25:04] <sarang> =p
+[2018-10-15 17:25:06] <hyc> lol
+[2018-10-15 17:25:11] <sarang> rot26
+[2018-10-15 17:25:17] <hyc> smeaphore at least
+[2018-10-15 17:25:18] <kinghat> are we military grade? or moar better?
+[2018-10-15 17:25:24] <hyc> semaphore, or morse
+[2018-10-15 17:25:40] <suraeNoether> sarang that reminds me
+[2018-10-15 17:25:43] <sarang> ?
+[2018-10-15 17:26:05] <sgp_> We used a Caesar's Cypher, totally secure. Roman military-grade
+[2018-10-15 17:26:10] <suraeNoether> i really really want to create a cryptocurrency like monero but replacing the bernstein group with an absurdly small group, like order 7000-ish or something, and with a tiny-output hash function
+[2018-10-15 17:26:21] <suraeNoether> just let people go wild in forging signatures
+[2018-10-15 17:26:23] <suraeNoether> just see what happens
+[2018-10-15 17:26:30] <suraeNoether> "when forgecoin moon?"
+[2018-10-15 17:26:33] <suraeNoether> etc
+[2018-10-15 17:26:45] <sarang> I'd like to see a version that uses a curve group with cofactor 1
+[2018-10-15 17:26:47] <suraeNoether> ring size 2
+[2018-10-15 17:26:58] <suraeNoether> anyway
+[2018-10-15 17:27:10] <sarang> yeah
+[2018-10-15 17:27:14] <hyc> that can be the next generation of useless ethereum token
+[2018-10-15 17:27:20] <suraeNoether> so, that's my life for this week: ruffct with sarang and the churn paper, and fantasizing about rubiks-cubes-sized groups as a joke cryptocurrency
+[2018-10-15 17:27:39] <suraeNoether> ohhhh man implementing a rubiks cube on top of ethereum would be *such a waste of resources you guys*
+[2018-10-15 17:27:41] <sarang> Yup, I'll be finishing up unit tests on optimized ruffct to get a better idea of batching
+[2018-10-15 17:27:46] <suraeNoether> proving you are making each permutation omg
+[2018-10-15 17:27:52] <suraeNoether> put it on the ledger forever man
+[2018-10-15 17:28:06] <sarang> There was a neat paper I linked earlier about some optimized curve operations
+[2018-10-15 17:28:17] <sarang> they found some better EC formulas in certain special cases
+[2018-10-15 17:28:29] <sgp_> Ethereum Plays Rubik's Cube
+[2018-10-15 17:28:38] <hyc> hm... rubkis cube solvers are pretty fast these days. would be funny to advertise a rubiks cube-based key system
+[2018-10-15 17:28:40] <suraeNoether> oh yes, i am eager to read that. it seems to be strictly related to optimizations obtained from utilizing analytic formula/expressions for multiexp
+[2018-10-15 17:29:33] <suraeNoether> for example, if you have point P = (x, y) and point Q = (z, w) on the ed25519 curve, we define P+Q using the equations of the elliptic curve, the twisted edwards polynomial equations
+[2018-10-15 17:30:00] <sarang> They discuss some neat work on better addition chains
+[2018-10-15 17:30:06] <suraeNoether> so if you want something like 3P + 4Q very often, you can expand that polynomial expression and exploit the structure within those analytic expressions to speed up the computations
+[2018-10-15 17:30:09] <sarang> Goes to show that this is not a totally solved area of research
+[2018-10-15 17:30:20] <sarang> I don't see it being terribly useful here, mind you
+[2018-10-15 17:31:16] <sarang> Anyone else with something fun to share about recent work, questions, ideas?
+[2018-10-15 17:32:03] <sarang> Here's a link to my quick port of ruffct to my python library: https://github.com/SarangNoether/research-lab/tree/pyruff
+[2018-10-15 17:32:19] <sarang> It's more or less a direct port of the java stuff that will be refactored as needed
+[2018-10-15 17:32:27] <sarang> prototyping only; don't use it anywhere that counts
+[2018-10-15 17:32:30] <suraeNoether> oh, I wanted to point out: Vtnerd is asking for a very reasonable amount of USD/hour to construct a tor-based RPC tool for monero (or something like that), and his FFS is under "ideas" right now
+[2018-10-15 17:32:39] <suraeNoether> i wanted to express my support for that proposal
+[2018-10-15 17:32:59] <sarang> Tell me more about this in relation to kovri
+[2018-10-15 17:33:05] <sarang> ELI5
+[2018-10-15 17:33:12] <rehrar> Would RuffCT be pretty drop in as well? Or would it take large amounts of work to get it in?
+[2018-10-15 17:33:42] <sarang> It'd be some work to safely transition old outputs
+[2018-10-15 17:33:49] <sarang> that's part of the prototyping process
+[2018-10-15 17:33:57] <suraeNoether> afaict this is going to be a parallel thing, independent of kovri
+[2018-10-15 17:34:13] <suraeNoether> but also since it's not inventing new protocols, it should proceed with easier-to-anticipate milestones
+[2018-10-15 17:34:22] ← MrAntrax left (~MrAntrax@unaffiliated/mrantrax): "I'm probably disconnected."
+[2018-10-15 17:35:00] <suraeNoether> some folks are of the opinion that multiple tools are beneficial; when it comes to tor, i2p, kovri... i tend to think the most beneficial tools will eventually see the most use
+[2018-10-15 17:35:12] <sarang> rehrar: actual practical ruffct is still a bit pie-in-the-sky; but that's part of our job
+[2018-10-15 17:35:29] <sarang> it has implications on things like address size, for example
+[2018-10-15 17:35:39] <sarang> but we're learning what we can from it
+[2018-10-15 17:36:07] <sgp_> Only point I need to make is that if we want to get anywhere with blackball research, someone needs to update the pool tool and sneurlax is busy
+[2018-10-15 17:36:08] <rehrar> regarding Tor, I think it would be beneficial to Monero to have the option to run over Tor
+[2018-10-15 17:36:10] <sarang> MRL: Putting The Skunk In Skunkworks
+[2018-10-15 17:36:19] <sarang> sgp_: link to current work?
+[2018-10-15 17:36:20] <suraeNoether> rehrar: ruffct as-is requires an additional user key, which would bring us to either 3 group elements as your public key, or 4, depending on how you interpret the ruffct paper, and so we may end up doubling our key length (which doubles verification time from loading keys!)
+[2018-10-15 17:36:32] <suraeNoether> sgp_: any ideas? or does anyone want to help sgp_ out with the pool tool?
+[2018-10-15 17:36:39] <gmaxwell> suraeNoether: you can change the constants in the curve equation and get a tiny group with basically no other changes in the code, there are tests in libsecp256k1 that work that way.
+[2018-10-15 17:36:48] <sgp_> https://github.com/sneurlax/xmreuse
+[2018-10-15 17:37:13] <suraeNoether> gmaxwell: delightful :)
+[2018-10-15 17:37:26] <kovri-slack> <oneiric> yeah, having a public node over tor would be nice. even a hybrid of p2p over tor, rpc over i2p would be sweet
+[2018-10-15 17:37:48] <sarang> gmaxwell: you are referring to a cofactor-1 curve?
+[2018-10-15 17:37:57] <sarang> oh nvm, you mean group size
+[2018-10-15 17:38:03] — sarang takes back his question
+[2018-10-15 17:38:33] <hyc> we have moneroworld nodes on tor
+[2018-10-15 17:39:10] <rehrar> Of course it's possible to run Monero over Tor with some finagling. But how cool would it be to run over tor with a command or button press?
+[2018-10-15 17:39:25] <rehrar> Qubes-Whonix is a good way right now btw
+[2018-10-15 17:39:54] <sarang> perhaps we first get the moneroworld nodes upgraded at all...
+[2018-10-15 17:40:13] <suraeNoether> okay, for me, final thoughts... please make comments on the Denver Monero Konferenco FFS here, and we will move it up to Open Discussion: https://forum.getmonero.org/6/ideas/90909/surae-noether-first-denver-monero-konferenco-spring-2019 and for this conference, PLEASE please let me know if you know of someone who I absolutely MUST INVITE TO SPEAK. If you have a favorite speaker, let me know by emailing
+[2018-10-15 17:40:13] <suraeNoether> surae.noether@protonmail.com 
+[2018-10-15 17:40:29] <suraeNoether> I'll be sending out first-round invitation emails in the next week or so
+[2018-10-15 17:40:43] <suraeNoether> or just email me because i'm lonely
+[2018-10-15 17:40:56] <hyc> lol. I can cook up a talk
+[2018-10-15 17:41:25] <hyc> by next spring we should have a much better idea of whether/how well randomJS will work
+[2018-10-15 17:42:25] <sarang> If there isn't a talk on RandomJS there will be riots
+[2018-10-15 17:43:15] <rehrar> heck, I may start a Riot anyways
+[2018-10-15 17:43:22] <hyc> lol
+[2018-10-15 17:43:29] <rehrar> it's a decent little app on the Matrix protocol
+[2018-10-15 17:43:33] <rehrar> #nerdjokes
+[2018-10-15 17:44:18] <suraeNoether> cool, we can have a session on hardware and proof of work and maybe invite some asic or fpga manufacturers
+[2018-10-15 17:44:36] <hyc> ah a mini-track, yeah
+[2018-10-15 17:45:01] <kovri-slack> <oneiric> head-to-head debate hyc v. timolson?
+[2018-10-15 17:45:05] <sarang> Other questions or research topics?
+[2018-10-15 17:45:08] <hyc> though if we've done our work right, no asic/fpga guys will want to speak to us ever again
+[2018-10-15 17:45:13] <sarang> heh
+[2018-10-15 17:48:07] <kovri-slack> <oneiric> was reading up on ML techniques, would LSTM/regression be helpful for blackball analysis?
+[2018-10-15 17:48:59] ⇐ sgp_ quit (~sgp_@2607:fb90:983a:812e:d640:7084:4eca:f972): Remote host closed the connection
+[2018-10-15 17:49:55] <sarang> I don't think so
+[2018-10-15 17:50:12] <sarang> Given our ring sizes and the actual risks involved, we understand it decently well
+[2018-10-15 17:50:31] <sarang> Things like forks will always be more of an issue than random selection errors
+[2018-10-15 17:50:39] <sarang> if that's what you mean oneiric
+[2018-10-15 17:51:32] <sarang> Even a deterministic approach to identify spent rings reveals relatively few, and each of these has a negligible effect on other rings
+[2018-10-15 17:51:46] <kovri-slack> <oneiric> kind of, I meant applying the learning algo to new forks rather than tuning by hand. I might be misunderstanding blackballing though
+[2018-10-15 17:52:11] <sarang> The risk from forks is spending on both forks, which reveals your spend
+[2018-10-15 17:52:28] <sarang> on-chain risks involve things like pool outputs and set-theoretic analysis
+[2018-10-15 17:52:47] <sarang> The goal of blackballing is to identify _definitely_ spent outs
+[2018-10-15 17:53:02] <sarang> and that's a hard game to play that gives you progressively lesser benefits over time
+[2018-10-15 17:54:57] <sarang> I suppose we can begin to wrap up the official meeting
+[2018-10-15 17:55:13] <kovri-slack> <oneiric> ok, thanks sarang
+[2018-10-15 17:55:16] <sarang> Thoughts on anything that people would like to see investigated for this next week?
+[2018-10-15 17:55:38] <sarang> oneiric: I think some people worry that their outputs can get "caught up" in a blackball list, but this isn't the case
+[2018-10-15 17:56:00] <sarang> The methods we use only determine if it's provable that an output is already spent, which does not affect anyone's funds
+[2018-10-15 17:57:03] <gmaxwell> (the name 'blackball' is really kind of unfortunate.)
+[2018-10-15 17:57:11] <sarang> gmaxwell: agreed
+[2018-10-15 17:57:27] <sarang> I've been using the term "spent note" in my paper drafts
+[2018-10-15 17:57:58] <sarang> I'd prefer something like that or "dead output"
+[2018-10-15 17:58:16] <gmaxwell> Spent Note List (SNL) would hae been much better.
+[2018-10-15 17:58:31] <sarang> We could update it each week, in a Weekend Update
+[2018-10-15 17:58:36] <kovri-slack> <oneiric> Live from New York..
+[2018-10-15 17:59:09] <gmaxwell> Well, sunday is a day of rest so one should do it on saturday, but perhaps as late as possible..
+[2018-10-15 17:59:11] <gmaxwell> :P
+[2018-10-15 17:59:15] <sarang> Well, thanks to everyone for participating in our meeting; we are now adjourned, and informal convos shall continue

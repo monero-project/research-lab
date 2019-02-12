@@ -1,105 +1,105 @@
-[2018-04-16 10:00:18] <suraeNoether> allrighty
-[2018-04-16 10:00:21] <suraeNoether> well hello everyone
-[2018-04-16 10:00:40] <suraeNoether> oh man how could i forget hyc
-[2018-04-16 10:00:44] <sarang> grettings
-[2018-04-16 10:01:29] <suraeNoether> Sarang, you want to kick us off? What have you been working on?
-[2018-04-16 10:01:32] <sarang> Sure
-[2018-04-16 10:01:51] <sarang> I've been working on the churn analysis paper suraeNoether began, looking at definitions and models etc.
-[2018-04-16 10:02:06] <sarang> The paper on FruitChains was also brought to my attention again
-[2018-04-16 10:02:16] <suraeNoether> this is my first time seeing it
-[2018-04-16 10:02:23] <sarang> It's an interesting scheme intended to reduce the effectiveness of pooled mining
-[2018-04-16 10:02:37] <sarang> there's an overhead in block data, unfortunately
-[2018-04-16 10:02:57] <suraeNoether> interesting
-[2018-04-16 10:02:59] <sarang> but it ensures more fair mining and reduces the effectiveness of selfish mining attacks
-[2018-04-16 10:03:20] <sarang> What isn't as clear is the way reward incentives are done, since it's a sort of distributed reward system
-[2018-04-16 10:03:51] <sarang> We did a review of our JS PRNG
-[2018-04-16 10:04:00] <sarang> after a posting on some shitty ones (we're fine)
-[2018-04-16 10:04:03] <suraeNoether> yes! such drama haha
-[2018-04-16 10:04:11] <sarang> Looked at zerocoin attacks
-[2018-04-16 10:04:32] <sarang> and more of the usual audit administrivia
-[2018-04-16 10:04:37] <sarang> </update>
-[2018-04-16 10:04:42] <suraeNoether> how is the audit going?
-[2018-04-16 10:04:55] <suraeNoether> what stage of the process are we at for each auditor? 
-[2018-04-16 10:05:01] <sarang> As planned; we're in the queue for each reviewer
-[2018-04-16 10:05:22] <sarang> I have a kickoff meeting w/ Kudelski tomorrow morning
-[2018-04-16 10:05:23] <suraeNoether> i think this might be the first time we'll actually end up getting this discussion into the meeting notes on github
-[2018-04-16 10:06:26] <sarang> I will say that the FruitChains idea is intriguing if only because of the disincentive to pooled mining
-[2018-04-16 10:06:35] <sarang> especially after our ASIC shenanigans
-[2018-04-16 10:06:43] → rehrar joined (~Diego@174-28-38-85.albq.qwest.net)
-[2018-04-16 10:07:01] <sarang> the paper says "orange is the new block"
-[2018-04-16 10:07:05] <hyc> I see the resistance to selfish mining as pretty important too
-[2018-04-16 10:07:28] <sarang> Oh yes, that property is also nice for sure
-[2018-04-16 10:07:31] → koe_ joined (4ba8ee3e@gateway/web/freenode/ip.75.168.238.62)
-[2018-04-16 10:07:40] <suraeNoether> hyc i agree, especially after seeing a huge ecology of selfish mining and block withholding attacks at BPASE
-[2018-04-16 10:07:51] <hyc> also, BTC is unlikely to ever pursue it. "Too complicated to code"
-[2018-04-16 10:08:00] <suraeNoether> cool beans, cool beans. i've spent the past month basically reading crypto papers, writing code, and writing papers. i'm now back knee-deep in multisig, and i think i'm going to make some recommendations for changes instead of trying to merely describe our current system, since the c++ review was going to be in a second paper anyway...
-[2018-04-16 10:08:32] <suraeNoether> but in the past few weeks, i invented a signature scheme. i lack an implementation, but i am still going to seek publication (because maybe someone else can come upw ith an implementation)
-[2018-04-16 10:08:33] <sarang> In the grand scheme of things, the addition of fruits isn't a _huge_ overhead in space, but it'd need to be considered
-[2018-04-16 10:09:02] <sarang> What's the coding you're up to suraeNoether ?
-[2018-04-16 10:09:24] <suraeNoether> anyone curious about that can see it here: https://www.sharelatex.com/read/sbjpykftgxkn ... 
-[2018-04-16 10:09:37] <suraeNoether> still doing the Poisson graph simulation thing in the evenings
-[2018-04-16 10:09:52] <sarang> sounds like an excellent work-life balance =p
-[2018-04-16 10:10:12] <suraeNoether> in addition to that, I started writing up some notes on using a Kolmogorov-smirnov test as a basis for difficulty adjustment... and then i realized it'd be nice and fun to write a "difficulty adjustment as a statistical inference problem" paper
-[2018-04-16 10:10:34] <suraeNoether> and with those sims, i'll be able to test various hypotheses about UMVUEs and such
-[2018-04-16 10:10:53] <suraeNoether> but that's sort of my side thing the past few weeks.  i've been putting a lot of energy into churn and multisig
-[2018-04-16 10:11:15] <koe_> surae is there an updated multisig pdf I can look at?
-[2018-04-16 10:11:31] <koe_> the one from a month ago has some issues but if you fixed them then all good
-[2018-04-16 10:11:42] <suraeNoether> koe_ wednesday. and yeah, there have been some drastic changes since then
-[2018-04-16 10:11:44] ⇐ koe quit (4ba8ee3e@gateway/web/freenode/ip.75.168.238.62): Ping timeout: 260 seconds
-[2018-04-16 10:12:03] <hyc> difficulty? have you been talking to @zawy12 ? https://github.com/monero-project/monero/pull/2887
-[2018-04-16 10:12:24] <suraeNoether> hyc i've read through a lot of that, and zawy12 will be heavily cited in my work
-[2018-04-16 10:12:32] <hyc> cool
-[2018-04-16 10:12:41] <suraeNoether> let's see here...
-[2018-04-16 10:13:11] <suraeNoether> I've also spent time organizing the first board meeting for MAGIC, April 27 in Denver. sgp and rehrar and myself and sarang and my wife will all be there, and we'll be doing it at one of the possible monero conference locations so we can kinda scope it out
-[2018-04-16 10:13:41] <suraeNoether> maybe we'll all go out and look at several locations and take pictures and rate the places by ratio of distance-to-taco-place by distance-to-hotels
-[2018-04-16 10:13:47] <sarang> yessir
-[2018-04-16 10:13:50] <suraeNoether> oh, and effing taxes
-[2018-04-16 10:13:56] <sarang> Aren't those fun?
-[2018-04-16 10:14:34] <sarang> Any updates from others?
-[2018-04-16 10:15:39] <hyc> last weekend I cobbled together my PoW PoC
-[2018-04-16 10:15:56] <hyc> literally slapped together while reading a tutorial on JS syntax
-[2018-04-16 10:16:16] <suraeNoether> gonna fork monero? do an airdrop?
-[2018-04-16 10:16:20] <rehrar> I wanted to launch hyccoin from it, but he wasn't ecstatic about it
-[2018-04-16 10:16:24] <koe_> it would be nice to publish my report on transactions soon, if surae can get a chance to look through it this week
-[2018-04-16 10:16:54] <suraeNoether> give me a link right quick
-[2018-04-16 10:17:10] <suraeNoether> i'll add it to my high priority before Wednesday thing
-[2018-04-16 10:17:19] <koe_> https://github.com/UkoeHB/Monero-RCT-report
-[2018-04-16 10:17:31] <hyc> in the next couple weeks I plan to rewrite it into something closer to production quality. the current version produces wildly inconsistent random programs (very small to very large) and we want something a bit more uniform in length/runtime
-[2018-04-16 10:17:41] <sarang> koe_: it's a nice update
-[2018-04-16 10:18:11] <suraeNoether> oh koe wait are you kurt magnus also? or are you two just collaborating?
-[2018-04-16 10:18:17] <koe_> ill add some edits ive made over the last week soon, so its all up to date
-[2018-04-16 10:18:27] <koe_> I took over the report ffrom him
-[2018-04-16 10:18:46] <koe_> haven't heard from him in weeks idk
-[2018-04-16 10:18:50] <suraeNoether> huh. 
-[2018-04-16 10:19:23] → valentinbuza joined (~valentinb@unaffiliated/valentinbuza)
-[2018-04-16 10:19:30] <suraeNoether> Okay, so, basically my whole life right now is dedicated to 1) multisig, 2) reading koe's thing by wednesday, and 3) getting ready for LONDON NEXT WEEK
-[2018-04-16 10:19:38] <suraeNoether> oh my GOD you community members who donated ROCK and kick ASS
-[2018-04-16 10:19:43] <sarang> ^
-[2018-04-16 10:20:03] <sarang> I'll put on my Fancy Jacket so I can represent us well
-[2018-04-16 10:20:08] <suraeNoether> If anyone is going to find themselves in london on Monday next week
-[2018-04-16 10:20:18] <rehrar> hyc, when you do that, can we launc the test coin? :D
-[2018-04-16 10:20:19] <suraeNoether> let's get some fish and chips and wear bowler hats together
-[2018-04-16 10:20:45] <sarang> suraeNoether: do I have to start carrying my phone in my left pocket instead of my right?
-[2018-04-16 10:20:51] <hyc> rehrar absolutely, I will launch my own testnet. pre-ICO announcement right here right now.
-[2018-04-16 10:20:51] <suraeNoether> Okay, anyone have any other discussion points?
-[2018-04-16 10:21:00] <jwinterm>  instead of directly storing the records m inside the blockchain, the records are put inside “fruits” denoted f
-[2018-04-16 10:21:02] <suraeNoether> sarang i recommend not bringing your phone to police states, but that's none of my business
-[2018-04-16 10:21:11] <sarang> jwinterm: yes
-[2018-04-16 10:21:30] <sarang> fruits and blocks are mined at the same time
-[2018-04-16 10:21:35] <jwinterm> I'm just going over the paper quickly now
-[2018-04-16 10:21:38] <sarang> but reference different things in the chain
-[2018-04-16 10:21:54] <sarang> and mining rewards are distributed over a segment
-[2018-04-16 10:22:22] <rehrar> please inform me hyc, I want to be among the first to hold these coins
-[2018-04-16 10:22:34] — rehrar head of marketing
-[2018-04-16 10:22:40] <hyc> lol okeydoke
-[2018-04-16 10:22:56] <unknownids> how many wowneros for a hycoin
-[2018-04-16 10:24:29] <suraeNoether> </meeting>
-[2018-04-16 10:24:32] <suraeNoether> lol
-[2018-04-16 10:24:45] <suraeNoether> OH! No meeting next Monday
-[2018-04-16 10:24:53] <suraeNoether> Sarang and I will be bowler-hatting
-[2018-04-16 10:24:57] <suraeNoether> in old london-town
-[2018-04-16 10:25:07] <hyc> funfun
-[2018-04-16 10:25:11] <sarang> I assume it'll go much like The Prisoner
-[2018-04-16 10:25:18] <sarang> and we'll end up on some island
-[2018-04-16 10:25:27] <sarang> until we spill the beans on Monero
-[2018-04-16 10:25:47] * suraeNoether set the topic to Next research meeting April 30, 2018. Bear down for midterms, yall
+[2018-04-16 17:00:18] <suraeNoether> allrighty
+[2018-04-16 17:00:21] <suraeNoether> well hello everyone
+[2018-04-16 17:00:40] <suraeNoether> oh man how could i forget hyc
+[2018-04-16 17:00:44] <sarang> grettings
+[2018-04-16 17:01:29] <suraeNoether> Sarang, you want to kick us off? What have you been working on?
+[2018-04-16 17:01:32] <sarang> Sure
+[2018-04-16 17:01:51] <sarang> I've been working on the churn analysis paper suraeNoether began, looking at definitions and models etc.
+[2018-04-16 17:02:06] <sarang> The paper on FruitChains was also brought to my attention again
+[2018-04-16 17:02:16] <suraeNoether> this is my first time seeing it
+[2018-04-16 17:02:23] <sarang> It's an interesting scheme intended to reduce the effectiveness of pooled mining
+[2018-04-16 17:02:37] <sarang> there's an overhead in block data, unfortunately
+[2018-04-16 17:02:57] <suraeNoether> interesting
+[2018-04-16 17:02:59] <sarang> but it ensures more fair mining and reduces the effectiveness of selfish mining attacks
+[2018-04-16 17:03:20] <sarang> What isn't as clear is the way reward incentives are done, since it's a sort of distributed reward system
+[2018-04-16 17:03:51] <sarang> We did a review of our JS PRNG
+[2018-04-16 17:04:00] <sarang> after a posting on some shitty ones (we're fine)
+[2018-04-16 17:04:03] <suraeNoether> yes! such drama haha
+[2018-04-16 17:04:11] <sarang> Looked at zerocoin attacks
+[2018-04-16 17:04:32] <sarang> and more of the usual audit administrivia
+[2018-04-16 17:04:37] <sarang> </update>
+[2018-04-16 17:04:42] <suraeNoether> how is the audit going?
+[2018-04-16 17:04:55] <suraeNoether> what stage of the process are we at for each auditor? 
+[2018-04-16 17:05:01] <sarang> As planned; we're in the queue for each reviewer
+[2018-04-16 17:05:22] <sarang> I have a kickoff meeting w/ Kudelski tomorrow morning
+[2018-04-16 17:05:23] <suraeNoether> i think this might be the first time we'll actually end up getting this discussion into the meeting notes on github
+[2018-04-16 17:06:26] <sarang> I will say that the FruitChains idea is intriguing if only because of the disincentive to pooled mining
+[2018-04-16 17:06:35] <sarang> especially after our ASIC shenanigans
+[2018-04-16 17:06:43] → rehrar joined (~Diego@174-28-38-85.albq.qwest.net)
+[2018-04-16 17:07:01] <sarang> the paper says "orange is the new block"
+[2018-04-16 17:07:05] <hyc> I see the resistance to selfish mining as pretty important too
+[2018-04-16 17:07:28] <sarang> Oh yes, that property is also nice for sure
+[2018-04-16 17:07:31] → koe_ joined (4ba8ee3e@gateway/web/freenode/ip.75.168.238.62)
+[2018-04-16 17:07:40] <suraeNoether> hyc i agree, especially after seeing a huge ecology of selfish mining and block withholding attacks at BPASE
+[2018-04-16 17:07:51] <hyc> also, BTC is unlikely to ever pursue it. "Too complicated to code"
+[2018-04-16 17:08:00] <suraeNoether> cool beans, cool beans. i've spent the past month basically reading crypto papers, writing code, and writing papers. i'm now back knee-deep in multisig, and i think i'm going to make some recommendations for changes instead of trying to merely describe our current system, since the c++ review was going to be in a second paper anyway...
+[2018-04-16 17:08:32] <suraeNoether> but in the past few weeks, i invented a signature scheme. i lack an implementation, but i am still going to seek publication (because maybe someone else can come upw ith an implementation)
+[2018-04-16 17:08:33] <sarang> In the grand scheme of things, the addition of fruits isn't a _huge_ overhead in space, but it'd need to be considered
+[2018-04-16 17:09:02] <sarang> What's the coding you're up to suraeNoether ?
+[2018-04-16 17:09:24] <suraeNoether> anyone curious about that can see it here: https://www.sharelatex.com/read/sbjpykftgxkn ... 
+[2018-04-16 17:09:37] <suraeNoether> still doing the Poisson graph simulation thing in the evenings
+[2018-04-16 17:09:52] <sarang> sounds like an excellent work-life balance =p
+[2018-04-16 17:10:12] <suraeNoether> in addition to that, I started writing up some notes on using a Kolmogorov-smirnov test as a basis for difficulty adjustment... and then i realized it'd be nice and fun to write a "difficulty adjustment as a statistical inference problem" paper
+[2018-04-16 17:10:34] <suraeNoether> and with those sims, i'll be able to test various hypotheses about UMVUEs and such
+[2018-04-16 17:10:53] <suraeNoether> but that's sort of my side thing the past few weeks.  i've been putting a lot of energy into churn and multisig
+[2018-04-16 17:11:15] <koe_> surae is there an updated multisig pdf I can look at?
+[2018-04-16 17:11:31] <koe_> the one from a month ago has some issues but if you fixed them then all good
+[2018-04-16 17:11:42] <suraeNoether> koe_ wednesday. and yeah, there have been some drastic changes since then
+[2018-04-16 17:11:44] ⇐ koe quit (4ba8ee3e@gateway/web/freenode/ip.75.168.238.62): Ping timeout: 260 seconds
+[2018-04-16 17:12:03] <hyc> difficulty? have you been talking to @zawy12 ? https://github.com/monero-project/monero/pull/2887
+[2018-04-16 17:12:24] <suraeNoether> hyc i've read through a lot of that, and zawy12 will be heavily cited in my work
+[2018-04-16 17:12:32] <hyc> cool
+[2018-04-16 17:12:41] <suraeNoether> let's see here...
+[2018-04-16 17:13:11] <suraeNoether> I've also spent time organizing the first board meeting for MAGIC, April 27 in Denver. sgp and rehrar and myself and sarang and my wife will all be there, and we'll be doing it at one of the possible monero conference locations so we can kinda scope it out
+[2018-04-16 17:13:41] <suraeNoether> maybe we'll all go out and look at several locations and take pictures and rate the places by ratio of distance-to-taco-place by distance-to-hotels
+[2018-04-16 17:13:47] <sarang> yessir
+[2018-04-16 17:13:50] <suraeNoether> oh, and effing taxes
+[2018-04-16 17:13:56] <sarang> Aren't those fun?
+[2018-04-16 17:14:34] <sarang> Any updates from others?
+[2018-04-16 17:15:39] <hyc> last weekend I cobbled together my PoW PoC
+[2018-04-16 17:15:56] <hyc> literally slapped together while reading a tutorial on JS syntax
+[2018-04-16 17:16:16] <suraeNoether> gonna fork monero? do an airdrop?
+[2018-04-16 17:16:20] <rehrar> I wanted to launch hyccoin from it, but he wasn't ecstatic about it
+[2018-04-16 17:16:24] <koe_> it would be nice to publish my report on transactions soon, if surae can get a chance to look through it this week
+[2018-04-16 17:16:54] <suraeNoether> give me a link right quick
+[2018-04-16 17:17:10] <suraeNoether> i'll add it to my high priority before Wednesday thing
+[2018-04-16 17:17:19] <koe_> https://github.com/UkoeHB/Monero-RCT-report
+[2018-04-16 17:17:31] <hyc> in the next couple weeks I plan to rewrite it into something closer to production quality. the current version produces wildly inconsistent random programs (very small to very large) and we want something a bit more uniform in length/runtime
+[2018-04-16 17:17:41] <sarang> koe_: it's a nice update
+[2018-04-16 17:18:11] <suraeNoether> oh koe wait are you kurt magnus also? or are you two just collaborating?
+[2018-04-16 17:18:17] <koe_> ill add some edits ive made over the last week soon, so its all up to date
+[2018-04-16 17:18:27] <koe_> I took over the report ffrom him
+[2018-04-16 17:18:46] <koe_> haven't heard from him in weeks idk
+[2018-04-16 17:18:50] <suraeNoether> huh. 
+[2018-04-16 17:19:23] → valentinbuza joined (~valentinb@unaffiliated/valentinbuza)
+[2018-04-16 17:19:30] <suraeNoether> Okay, so, basically my whole life right now is dedicated to 1) multisig, 2) reading koe's thing by wednesday, and 3) getting ready for LONDON NEXT WEEK
+[2018-04-16 17:19:38] <suraeNoether> oh my GOD you community members who donated ROCK and kick ASS
+[2018-04-16 17:19:43] <sarang> ^
+[2018-04-16 17:20:03] <sarang> I'll put on my Fancy Jacket so I can represent us well
+[2018-04-16 17:20:08] <suraeNoether> If anyone is going to find themselves in london on Monday next week
+[2018-04-16 17:20:18] <rehrar> hyc, when you do that, can we launc the test coin? :D
+[2018-04-16 17:20:19] <suraeNoether> let's get some fish and chips and wear bowler hats together
+[2018-04-16 17:20:45] <sarang> suraeNoether: do I have to start carrying my phone in my left pocket instead of my right?
+[2018-04-16 17:20:51] <hyc> rehrar absolutely, I will launch my own testnet. pre-ICO announcement right here right now.
+[2018-04-16 17:20:51] <suraeNoether> Okay, anyone have any other discussion points?
+[2018-04-16 17:21:00] <jwinterm>  instead of directly storing the records m inside the blockchain, the records are put inside “fruits” denoted f
+[2018-04-16 17:21:02] <suraeNoether> sarang i recommend not bringing your phone to police states, but that's none of my business
+[2018-04-16 17:21:11] <sarang> jwinterm: yes
+[2018-04-16 17:21:30] <sarang> fruits and blocks are mined at the same time
+[2018-04-16 17:21:35] <jwinterm> I'm just going over the paper quickly now
+[2018-04-16 17:21:38] <sarang> but reference different things in the chain
+[2018-04-16 17:21:54] <sarang> and mining rewards are distributed over a segment
+[2018-04-16 17:22:22] <rehrar> please inform me hyc, I want to be among the first to hold these coins
+[2018-04-16 17:22:34] — rehrar head of marketing
+[2018-04-16 17:22:40] <hyc> lol okeydoke
+[2018-04-16 17:22:56] <unknownids> how many wowneros for a hycoin
+[2018-04-16 17:24:29] <suraeNoether> </meeting>
+[2018-04-16 17:24:32] <suraeNoether> lol
+[2018-04-16 17:24:45] <suraeNoether> OH! No meeting next Monday
+[2018-04-16 17:24:53] <suraeNoether> Sarang and I will be bowler-hatting
+[2018-04-16 17:24:57] <suraeNoether> in old london-town
+[2018-04-16 17:25:07] <hyc> funfun
+[2018-04-16 17:25:11] <sarang> I assume it'll go much like The Prisoner
+[2018-04-16 17:25:18] <sarang> and we'll end up on some island
+[2018-04-16 17:25:27] <sarang> until we spill the beans on Monero
+[2018-04-16 17:25:47] * suraeNoether set the topic to Next research meeting April 30, 2018. Bear down for midterms, yall

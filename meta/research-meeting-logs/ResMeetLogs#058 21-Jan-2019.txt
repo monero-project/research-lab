@@ -1,209 +1,209 @@
-[2019-01-21 10:58:35] <sarang> FYI meeting begins shortly
-[2019-01-21 10:59:31] <sarang> Current agenda: https://github.com/monero-project/meta/issues/301
-[2019-01-21 11:00:38] <sarang> Shall we begin?
-[2019-01-21 11:01:40] → el00ruobuob_[m] joined (~el00ruobu@82.230.30.57)
-[2019-01-21 11:01:47] <suraeNoether> sure
-[2019-01-21 11:01:58] <sarang> Greetings, everyone
-[2019-01-21 11:02:00] <suraeNoether> letsdothis.gif
-[2019-01-21 11:02:03] <oneiric_> o/
-[2019-01-21 11:02:36] <sarang> I dislike mass pings, but given certain topics, a special ping to sgp_ ArticMine moneromooo knaccc
-[2019-01-21 11:03:15] <sarang> First, ONGOING WORK
-[2019-01-21 11:03:15] <ArticMine> Hi
-[2019-01-21 11:03:22] — moneromooo looks up
-[2019-01-21 11:03:33] <sarang> Much discussion about payment ID deprecation has occurred
-[2019-01-21 11:04:04] <sarang> sgp_ is holding an open meeting to discuss this, on 25 January: https://github.com/monero-project/meta/issues/299
-[2019-01-21 11:05:11] <sarang> THe current proposal intends to discuss is a deprecation of unencrypted pIDs at next upgrade, followed by a ban on all payment IDs in fall
-[2019-01-21 11:05:51] <sarang> The main source of contention at this point seems to be whether keeping encrypted pIDs around, whether or not the wallet supports them by default, is necessary or desired
-[2019-01-21 11:06:27] <sarang> Unless there's something important to talk about regarding this, and its relationship to the upcoming fork, we can table it until sgp_'s meeting
-[2019-01-21 11:07:09] <suraeNoether> i think it's wise to table the discussion until the meeting
-[2019-01-21 11:07:24] <sarang> moneromooo has been working on wallet handling of payment IDs, as well as the use of default payment IDs for transaction indistinguishability
-[2019-01-21 11:07:30] <sarang> ok!
-[2019-01-21 11:07:37] <sarang> Next is block size scaling
-[2019-01-21 11:07:46] <sarang> ArticMine recently posted a new proposal \
-[2019-01-21 11:08:05] <sarang> So the two on the table right now are the dual-median option (presented last time) and ArticMine's new one
-[2019-01-21 11:08:09] <ArticMine> I can go over the details and answer questions
-[2019-01-21 11:08:13] <sarang> ty ArticMine
-[2019-01-21 11:09:08] <sarang> Here is the paste on this idea, linked earlier: http://paste.debian.net/hidden/50f142a6/
-[2019-01-21 11:09:41] <lurkinandlearnin> To confirm, the old proposal is this? https://github.com/noncesense-research-lab/Blockchain_big_bang/blob/master/models/Isthmus_Bx_big_bang_model.ipynb
-[2019-01-21 11:09:51] <ArticMine> The key part of  my proposal is to separate the block weight into a long term portion LongTermBlockWeight and the balance
-[2019-01-21 11:10:35] <ArticMine>  LongTermBlockWeight - BlockWeight
-[2019-01-21 11:10:54] <sarang> lurkinandlearnin: look at notebook line [3]
-[2019-01-21 11:11:31] <ArticMine> LongTermBlockWeight does not include the burst potion that can go up to 50x
-[2019-01-21 11:12:24] <ArticMine> So the LongTermMedianBlockWeight does not compound at 50x
-[2019-01-21 11:13:09] <suraeNoether> fwiw for the folks in the audience: one of the reasons block size based on medians is a difficult question is the way medians behave...
-[2019-01-21 11:13:16] <suraeNoether> most equations that have been proposed here introduce an effective time delay between how max block size is responding to previous block sizes... and it's a difference equation... and introducing time delay to difference equations can introduce very strange behavior like chaos.  (example: https://advancesindifferenceequations.springeropen.com/articles/10.1186/s13662-015-0374-1 )
-[2019-01-21 11:13:18] <suraeNoether> chaos is bad
-[2019-01-21 11:13:43] <suraeNoether> so most of these proposals are most easily analyzed with simulations, which provide no guarantee that things won't go crazy. i've been looking into mean-based appraoches instead of median-based approaches; this introduces the possibility that outliers become disproportionately important, but it removes chaos from the equations, so we may be able to design a globally stable approach.
-[2019-01-21 11:13:48] <suraeNoether> in addition to evaluating articmine's proposal
-[2019-01-21 11:14:00] <ArticMine> This is the key difference with the prior proposal that compounds the LongTermMedianBlockWeight using the entire block
-[2019-01-21 11:14:04] <ArticMine> the
-[2019-01-21 11:14:18] <sarang> Including the simple two-median approach, right ArticMine ?
-[2019-01-21 11:14:35] → rehrar joined (~rehrar@gateway/tor-sasl/rehrar)
-[2019-01-21 11:14:41] <ArticMine> Yes the simple two median approach fails
-[2019-01-21 11:15:31] <suraeNoether> i'm still not clear on the properties we want out of max block size adjustments
-[2019-01-21 11:15:36] <ArticMine> Since it either compounds the 50x burst (my initial version) or kills the burst over time (smooth's version)
-[2019-01-21 11:15:38] <sarang> ArticMine: is that paste complete as written?
-[2019-01-21 11:15:43] <suraeNoether> beyond "ability to go 50x over a slow day to accommodate a christmas day, and to not allow a big bang"
-[2019-01-21 11:15:44] <ArticMine> Yes
-[2019-01-21 11:17:26] <sarang> Isthmus and I plan to work this in to our existing simulations
-[2019-01-21 11:17:39] <sarang> His is more complete, but I am doing one for my own education and as a separate check
-[2019-01-21 11:18:00] <sarang> We shall need to make a decision by freeze time
-[2019-01-21 11:18:38] <sarang> ArticMine: there are a few subtleties that I'll want to ask you about later
-[2019-01-21 11:19:11] <sarang> But I also would like to hear the answer to suraeNoether's question
-[2019-01-21 11:19:53] <nioc> I did not see any response to smooth's comment.....
-[2019-01-21 11:20:00] <nioc> you can avoid any sort of consensus issues on *1.4 by making it 1.375 which is adding 3/8
-[2019-01-21 11:20:00] <nioc> 10:50 PM or some such, but that should be close enough
-[2019-01-21 11:20:00] <nioc> 10:56 PM overall looks good to me at first reading
-[2019-01-21 11:20:00] <nioc> 11:02 PM i guess 4/10 is fine too, just slower (but not significant)
-[2019-01-21 11:20:21] <sarang> that was a rounding issue, I suppose
-[2019-01-21 11:20:47] <moneromooo> If people will fuck up with 1.4, they will fuck up with 1.375.
-[2019-01-21 11:21:18] <moneromooo> For interested people, the amp branch has ArticMine's change (untested).
-[2019-01-21 11:21:29] <suraeNoether> we should just pick a number that can be represented exactly in a computer
-[2019-01-21 11:21:30] <moneromooo> (just the top patch)
-[2019-01-21 11:22:16] <moneromooo> Better to pick one that can't. You don't want people to use floating point and think they did it right bevause the number was chosen to make things look right.
-[2019-01-21 11:22:40] <sarang> branch link: https://github.com/moneromooo-monero/bitmonero/commit/f1ee51c55963d05a78db916d41da7dc5948bb05a
-[2019-01-21 11:22:42] <suraeNoether> representing 1.4 in a computer is inexact and will cause floating point rounding problems in different pieces of software, but i think 1.375 can be represented in binary exactly and so there is no roundoff problem in that regard...
-[2019-01-21 11:23:29] <sarang> also, hot dang that was fast moneromooo
-[2019-01-21 11:23:31] <suraeNoether> one of the things i, personally, would like out of the block size adjustment is this
-[2019-01-21 11:23:44] <ArticMine> smooth's comment would e an improvement if the BlockWeight were a factor of 8 in bytes, but it is not. So in reality it is not a material change
-[2019-01-21 11:23:47] <suraeNoether> moneromooo: that's a strong argument actually
-[2019-01-21 11:25:08] <suraeNoether> so, i think block size adjustment can benefit from: forcing the marginal cost of adding an additional transaction in terms of block reward penalty to be greater than the standard fees gained by including that transaction
-[2019-01-21 11:25:30] <suraeNoether> even if we pick some exotic max_block_size calculation, we should also be changing the block reward penalty this way
-[2019-01-21 11:25:53] <ArticMine> Still I see as an improvement. As per suraeNoether comment above. So we can make the change from 1.4 to 1.375
-[2019-01-21 11:26:04] <suraeNoether> of course, if the block is nearly full and the block reward is almost zero, adding almost any transaction fees will make up for it
-[2019-01-21 11:26:13] <suraeNoether> ArticMine: moneromooo just made a strong argument *against* that
-[2019-01-21 11:26:40] <suraeNoether> so this marginal cost approach will be most effective when block sizes are nowhere near the big bang levels
-[2019-01-21 11:27:03] <suraeNoether> which is good: providing an incentive to stay reasonable when they are already reasonable
-[2019-01-21 11:28:20] <ArticMine> No When block weight is close to big bang levels LongTermBlockWeight is << BlockWeight
-[2019-01-21 11:29:38] → PauleBert joined (~PauleBert@dslb-188-096-185-204.188.096.pools.vodafone-ip.de)
-[2019-01-21 11:30:17] <suraeNoether> i'm not talking about your block size proposal; i'm talking about block reward penalty as a function of block size
-[2019-01-21 11:30:49] <lurkinandlearnin> Has any thought been given towards an incentive for miners to create smaller blocks when transaction volume is low? To slow blockchain growth
-[2019-01-21 11:31:37] <suraeNoether> that's what i was just talking about lurkinandlearnin
-[2019-01-21 11:31:57] <pigeons> lower blockchain growth is probably less important than quicker validation and propogation but the same point applies
-[2019-01-21 11:32:06] <sarang> lurkinandlearnin: all txns get added eventually if the fee market allows
-[2019-01-21 11:32:36] <suraeNoether> something isthmus brought up to me: there are only about 150,000 blocks between us and the next hard fork. with the *simple* two-median method will forbid a blowup before the next hard fork.
-[2019-01-21 11:32:53] <suraeNoether> woops i mean between March and October hard forks
-[2019-01-21 11:33:04] <moneromooo> Yes, starting the penalty before 100% (idea from smooth).
-[2019-01-21 11:33:15] <suraeNoether> we should consider implementing the simple method *first* and spending time thinking about a more optimal solution, rather than trying to go for broke
-[2019-01-21 11:33:43] <lurkinandlearnin> moneromooo: that sounds like a great idea
-[2019-01-21 11:33:48] <suraeNoether> moneromooo: yep, smooth had the initial idea of sub-100%-median block penalty; my idea is to make the drop-off nonlinear so that it's more expensive to push block sizes larger in the absence of a healthy fee market
-[2019-01-21 11:33:50] <sarang> Well, simulations will shortly be done for ArticMine's proposal compared to the current approach and the simple two-median
-[2019-01-21 11:34:07] <sarang> Presumably the next upgrade will do one of the two options
-[2019-01-21 11:35:17] <suraeNoether> okay, i don't think we're going to come to any conclusions on this, but it's been a good update
-[2019-01-21 11:35:19] <suraeNoether> let's move past scaling
-[2019-01-21 11:35:36] <sarang> Sure thing. We'll talk after simulation data are available
-[2019-01-21 11:35:46] <sarang> Next is transaction size reduction, for which there is a PR from moneromooo
-[2019-01-21 11:35:56] <sarang> AFAIK there are no new updates on this otherwise
-[2019-01-21 11:36:21] <sarang> unless moneromooo you wish to say anything about it?
-[2019-01-21 11:36:36] <moneromooo> I'd just like one of you Noethers to review the code before it goes in.
-[2019-01-21 11:36:55] <moneromooo> suraeNoether said he'd have a look.
-[2019-01-21 11:36:58] <suraeNoether> sarang let's do that *together* tomorrow morning? we can do it over a vidchat since we were going to meet tomorrow anyway
-[2019-01-21 11:37:03] <sarang> Roger; the math looked correct to me, but I may have neglected to add a comment
-[2019-01-21 11:37:09] <sarang> ok suraeNoether can do
-[2019-01-21 11:37:14] <suraeNoether> fun
-[2019-01-21 11:37:37] → mistergo1d joined (~mistergol@185.37.25.30)
-[2019-01-21 11:37:41] <suraeNoether> as for the semi-final point on the agenda... what's the deal with bulletproofs, anyway? seinfeld.gif
-[2019-01-21 11:37:45] <sarang> lol
-[2019-01-21 11:37:50] <suraeNoether> DID YOU GUYS MAKE THINGS FASTER AGAIN
-[2019-01-21 11:38:02] <sarang> Only a brief update that some BP verifier optimizations didn't make it into the 0.13 release
-[2019-01-21 11:38:27] <sarang> a very unscientific test on my box resulted in a 64-batch of 2-proofs verifying 60% faster
-[2019-01-21 11:38:45] <sarang> kudos to moneromooo for continuing to squeeze speed out of those suckers
-[2019-01-21 11:38:54] <lurkinandlearnin> holy smokes
-[2019-01-21 11:39:06] <lurkinandlearnin> 60% faster than current impl or than pre-BP?
-[2019-01-21 11:39:14] <sarang> than the 0.13 release code
-[2019-01-21 11:39:19] <suraeNoether> jeez
-[2019-01-21 11:39:21] <sarang> that is, 0.13 vs master
-[2019-01-21 11:39:27] <sarang> as of a few days ago
-[2019-01-21 11:39:29] <suraeNoether> where did this speedup come from?
-[2019-01-21 11:39:51] <sarang> Folding in some multiexponentiation operations, as well a host of other voodoo moneromooo can dooo
-[2019-01-21 11:40:07] ⇐ mistergold quit (~mistergol@77.243.30.20): Ping timeout: 240 seconds
-[2019-01-21 11:40:23] <sarang> So we can brag about the next release making txns smaller and faster again :D
-[2019-01-21 11:40:38] <moneromooo> I did not keep track of which change sped up by how much. I think sarang's single multiexp change is probably the biggest one though.
-[2019-01-21 11:40:38] <sarang> Let's now discuss NEW WORK
-[2019-01-21 11:40:43] <suraeNoether> cool!
-[2019-01-21 11:40:54] <sarang> suraeNoether: your personal updates?
-[2019-01-21 11:41:28] <suraeNoether> personally, this past week was largely a konferenco administration week for me, contacting speakers and vendors and getting my bank compliant with me
-[2019-01-21 11:41:42] <suraeNoether> i did research on bulletproofs, linear algebra in cryptography, and our matching paper
-[2019-01-21 11:41:49] <sarang> I'm sooper excited for this conference
-[2019-01-21 11:41:49] <suraeNoether> but a lot of my work this week was contacting possible speakers
-[2019-01-21 11:41:57] <sarang> sounds like we'll have some big names joining us
-[2019-01-21 11:42:08] <suraeNoether> yes, it's pretty great so far; we are adding more names this week
-[2019-01-21 11:42:18] <sarang> Any updates on the matching paper suraeNoether ?
-[2019-01-21 11:42:52] <suraeNoether> my simulations aren't passing unit tests
-[2019-01-21 11:42:58] <suraeNoether> once they do, i'm making a commit
-[2019-01-21 11:43:04] <suraeNoether> and then collecting data
-[2019-01-21 11:43:12] <suraeNoether> so: it's moving forward
-[2019-01-21 11:43:12] <sarang> excellent
-[2019-01-21 11:43:24] <sarang> Any questions for suraeNoether ?
-[2019-01-21 11:44:14] <sarang> OK, I'll go next
-[2019-01-21 11:44:34] <suraeNoether> oh i had one more thing to bring up
-[2019-01-21 11:44:38] <suraeNoether> sorry sarang, i don't want to interrupt
-[2019-01-21 11:44:42] <sarang> np go ahead
-[2019-01-21 11:45:24] <lurkinandlearnin> is there a list of speakers for the conference?
-[2019-01-21 11:45:30] <suraeNoether> i found all those old Monero Protocol Standards documents I started writing last year, and I'm wondering if folks still want me to compose the v0.1 versions of these rather short text documents into something to put up on our github
-[2019-01-21 11:45:34] <lurkinandlearnin> or not official yet?
-[2019-01-21 11:45:35] <suraeNoether> lurkinandlearnin: check out konferenco.xyz
-[2019-01-21 11:45:58] <suraeNoether> the benefit of having the standards instead of a single big zero-to-monero document is this:
-[2019-01-21 11:46:24] <suraeNoether> we can update each one piecemeal and only update it if something has changed. this reduces overhead work on documentation. and if it's on github, anyone can update them, we don't have to go find kurt magnus or koe
-[2019-01-21 11:46:44] <sarang> FWIW the ZtM doc is on github and can be PRed
-[2019-01-21 11:46:51] <sarang> but I see the point about modularity
-[2019-01-21 11:47:07] <sarang> My pessimistic side worries that updates would fall behind, as they already have on ZtM
-[2019-01-21 11:47:27] <lurkinandlearnin> What aspects of the protocol are covered? Could be something useful to incorporate into the often neglected wiki
-[2019-01-21 11:47:50] <lurkinandlearnin> as they both sound modular
-[2019-01-21 11:48:06] <suraeNoether> lurkinandlearnin: essentially similar to the cryptonote standards they released after i reviewed their whitepaper years ago, like this: https://cryptonote.org/cns/cns006.txt
-[2019-01-21 11:48:25] <suraeNoether> (my whitepaper review would have been moderately better if they wrote those standards before the whitepaper, but hey)
-[2019-01-21 11:48:30] <suraeNoether> sarang your points are valid
-[2019-01-21 11:48:39] <suraeNoether> which is why i'm not sure if it's a good idea to devote time to it
-[2019-01-21 11:49:00] <Isthmus> Wiki is a good idea, specs are a good idea. Having experience as a book editor, people making random PRs is a huge nightmare to text style and continuity and often took 4x as long to polish then if SerHack and I had written ourselves.
-[2019-01-21 11:49:41] <suraeNoether> okay, how about this
-[2019-01-21 11:49:43] <sarang> Whatever is made available, whether ZtM or wiki or standards, keeping up to date is the most important aspect IMO
-[2019-01-21 11:50:04] <sarang> I cringe at "text-rendered math" though...
-[2019-01-21 11:50:17] <Isthmus> Maybe we should pick one to be the "reference" documentation and the others follow suite?
-[2019-01-21 11:50:39] <sarang> Who's responsible for maintenance of each one?
-[2019-01-21 11:50:41] <lurkinandlearnin> Well as long as the version at time of writing is very clear keeping it updated is not so critical
-[2019-01-21 11:50:56] <suraeNoether> sarang who's responsbile for maintaining anything around here?
-[2019-01-21 11:50:56] <sarang> lurkinandlearnin: I disagree
-[2019-01-21 11:51:14] <suraeNoether> how about i just post what i have after making it a little more readable, and if someone wants to run with it they can
-[2019-01-21 11:51:17] <lurkinandlearnin> nice, but not disastrous. If anything having info about how things used to work out there is also useful.
-[2019-01-21 11:51:29] <suraeNoether> i can post it on my personal github to avoid cluttering the primary\
-[2019-01-21 11:51:34] <sarang> suraeNoether: I think that'd be useful, to get a better sense of scope of audience
-[2019-01-21 11:51:56] <suraeNoether> sarang: we can always label them clearly DEPRECATED AND NOT USEFUL. but i think it'd be better to have them out there
-[2019-01-21 11:52:11] <sarang> good point
-[2019-01-21 11:52:20] <suraeNoether> okay handing it back to sarang
-[2019-01-21 11:52:23] <sarang> As long as it's clear what can be considered "closer to canonical"
-[2019-01-21 11:52:45] ⇐ thrmo quit (~thrmo@unaffiliated/thrmo): Quit: Leaving
-[2019-01-21 11:52:51] <sarang> So I've had some testing and minor optimizations to BPs for the next release, as mentioned earlier
-[2019-01-21 11:53:19] <sarang> Minor work on simulating block size changes to confirm work by Isthmus on scaling etc.
-[2019-01-21 11:53:36] <sarang> Recording of new Breaking Monero episodes with sgp_
-[2019-01-21 11:53:54] <sarang> The usual new lit and project review
-[2019-01-21 11:54:13] <sarang> and some work on a safe MPC protocol for Bulletproofs for future use
-[2019-01-21 11:54:44] <sarang> as well as a lot of back-and-forth administrivia on the topics for the Boron upgrade
-[2019-01-21 11:55:16] <sarang> I am personally in favor of either Boron Betelgeuse or Boron Bellatrix
-[2019-01-21 11:55:28] <sarang> (as far as names go)
-[2019-01-21 11:55:56] <sarang> and of course the math for graph matchings, which has been passed back to suraeNoether for simulation data that he is obtaining
-[2019-01-21 11:55:57] <lurkinandlearnin> Betelgeuse will lead to a schism in the community over pronounciation
-[2019-01-21 11:56:01] <sarang> precisely
-[2019-01-21 11:56:26] <sarang> It's like the naming of iPhone X... by making it hard to get right, it forces you to think it's better than you are
-[2019-01-21 11:56:40] <sarang> humbles us all
-[2019-01-21 11:56:43] <lurkinandlearnin> "It gets the people going!"
-[2019-01-21 11:57:13] <sarang> Any questions for me?
-[2019-01-21 11:57:43] <lurkinandlearnin> what's the next breaking monero topic?
-[2019-01-21 11:57:56] <moneromooo> Hmm... Lightning network things ?
-[2019-01-21 11:58:25] <sarang> moneromooo: what questions on that?
-[2019-01-21 11:58:30] <Isthmus> "Boron borealis" ?? I think there's a Harry Potter character called Bellatrix, which could get confusing with all the HP-themed MimbleWimble names.
-[2019-01-21 11:58:38] <sarang> lurkinandlearnin: we have several topics in the lineup, to be arranged
-[2019-01-21 11:59:20] <Isthmus> Also, Breaking Monero = awesome, thanks for all the time going into that series :- D
-[2019-01-21 11:59:28] <moneromooo> Was anything done or thought about recently about anything monero needs for LN or LN style system ?
-[2019-01-21 12:00:23] <sarang> moneromooo: some of it was an efficient and fungible way to handle protocol aborts, a la noninteractive refunds
-[2019-01-21 12:00:53] <sarang> that was quietly tabled as several proposals for interactive refunds were thrown around
-[2019-01-21 12:01:20] <moneromooo> Ah yes. It would be nice to see a list of things that are needed in monero as building blocks. In terms of parenthesized AND/OR. I always forget. Or never knew.
-[2019-01-21 12:01:54] <sarang> That's a good point. Having a well-considered status update will be useful for longer-term planning
-[2019-01-21 12:02:22] <sarang> Does anyone else have updates to share, before we adjourn?
-[2019-01-21 12:04:36] <sarang> righto
-[2019-01-21 12:04:40] <sarang> Thanks to everyone for joining
-[2019-01-21 12:04:43] <sarang> Our current action items:
-[2019-01-21 12:05:02] <sarang> (a) simulation data for block size proposals, to make a decision before freeze
-[2019-01-21 12:05:12] <sarang> (b) final review of transaction size reduction PR
-[2019-01-21 12:05:55] <sarang> (c) meeting to decide on payment ID deprecation (PLEASE attend or comment on github issue if you have an opinion on this, with justification/data)
-[2019-01-21 12:06:07] — sarang bangs the gavel
-[2019-01-21 12:06:22] <sarang> at ease, soldiers
+[2019-01-21 16:58:35] <sarang> FYI meeting begins shortly
+[2019-01-21 16:59:31] <sarang> Current agenda: https://github.com/monero-project/meta/issues/301
+[2019-01-21 17:00:38] <sarang> Shall we begin?
+[2019-01-21 17:01:40] → el00ruobuob_[m] joined (~el00ruobu@82.230.30.57)
+[2019-01-21 17:01:47] <suraeNoether> sure
+[2019-01-21 17:01:58] <sarang> Greetings, everyone
+[2019-01-21 17:02:00] <suraeNoether> letsdothis.gif
+[2019-01-21 17:02:03] <oneiric_> o/
+[2019-01-21 17:02:36] <sarang> I dislike mass pings, but given certain topics, a special ping to sgp_ ArticMine moneromooo knaccc
+[2019-01-21 17:03:15] <sarang> First, ONGOING WORK
+[2019-01-21 17:03:15] <ArticMine> Hi
+[2019-01-21 17:03:22] — moneromooo looks up
+[2019-01-21 17:03:33] <sarang> Much discussion about payment ID deprecation has occurred
+[2019-01-21 17:04:04] <sarang> sgp_ is holding an open meeting to discuss this, on 25 January: https://github.com/monero-project/meta/issues/299
+[2019-01-21 17:05:11] <sarang> THe current proposal intends to discuss is a deprecation of unencrypted pIDs at next upgrade, followed by a ban on all payment IDs in fall
+[2019-01-21 17:05:51] <sarang> The main source of contention at this point seems to be whether keeping encrypted pIDs around, whether or not the wallet supports them by default, is necessary or desired
+[2019-01-21 17:06:27] <sarang> Unless there's something important to talk about regarding this, and its relationship to the upcoming fork, we can table it until sgp_'s meeting
+[2019-01-21 17:07:09] <suraeNoether> i think it's wise to table the discussion until the meeting
+[2019-01-21 17:07:24] <sarang> moneromooo has been working on wallet handling of payment IDs, as well as the use of default payment IDs for transaction indistinguishability
+[2019-01-21 17:07:30] <sarang> ok!
+[2019-01-21 17:07:37] <sarang> Next is block size scaling
+[2019-01-21 17:07:46] <sarang> ArticMine recently posted a new proposal \
+[2019-01-21 17:08:05] <sarang> So the two on the table right now are the dual-median option (presented last time) and ArticMine's new one
+[2019-01-21 17:08:09] <ArticMine> I can go over the details and answer questions
+[2019-01-21 17:08:13] <sarang> ty ArticMine
+[2019-01-21 17:09:08] <sarang> Here is the paste on this idea, linked earlier: http://paste.debian.net/hidden/50f142a6/
+[2019-01-21 17:09:41] <lurkinandlearnin> To confirm, the old proposal is this? https://github.com/noncesense-research-lab/Blockchain_big_bang/blob/master/models/Isthmus_Bx_big_bang_model.ipynb
+[2019-01-21 17:09:51] <ArticMine> The key part of  my proposal is to separate the block weight into a long term portion LongTermBlockWeight and the balance
+[2019-01-21 17:10:35] <ArticMine>  LongTermBlockWeight - BlockWeight
+[2019-01-21 17:10:54] <sarang> lurkinandlearnin: look at notebook line [3]
+[2019-01-21 17:11:31] <ArticMine> LongTermBlockWeight does not include the burst potion that can go up to 50x
+[2019-01-21 17:12:24] <ArticMine> So the LongTermMedianBlockWeight does not compound at 50x
+[2019-01-21 17:13:09] <suraeNoether> fwiw for the folks in the audience: one of the reasons block size based on medians is a difficult question is the way medians behave...
+[2019-01-21 17:13:16] <suraeNoether> most equations that have been proposed here introduce an effective time delay between how max block size is responding to previous block sizes... and it's a difference equation... and introducing time delay to difference equations can introduce very strange behavior like chaos.  (example: https://advancesindifferenceequations.springeropen.com/articles/10.1186/s13662-015-0374-1 )
+[2019-01-21 17:13:18] <suraeNoether> chaos is bad
+[2019-01-21 17:13:43] <suraeNoether> so most of these proposals are most easily analyzed with simulations, which provide no guarantee that things won't go crazy. i've been looking into mean-based appraoches instead of median-based approaches; this introduces the possibility that outliers become disproportionately important, but it removes chaos from the equations, so we may be able to design a globally stable approach.
+[2019-01-21 17:13:48] <suraeNoether> in addition to evaluating articmine's proposal
+[2019-01-21 17:14:00] <ArticMine> This is the key difference with the prior proposal that compounds the LongTermMedianBlockWeight using the entire block
+[2019-01-21 17:14:04] <ArticMine> the
+[2019-01-21 17:14:18] <sarang> Including the simple two-median approach, right ArticMine ?
+[2019-01-21 17:14:35] → rehrar joined (~rehrar@gateway/tor-sasl/rehrar)
+[2019-01-21 17:14:41] <ArticMine> Yes the simple two median approach fails
+[2019-01-21 17:15:31] <suraeNoether> i'm still not clear on the properties we want out of max block size adjustments
+[2019-01-21 17:15:36] <ArticMine> Since it either compounds the 50x burst (my initial version) or kills the burst over time (smooth's version)
+[2019-01-21 17:15:38] <sarang> ArticMine: is that paste complete as written?
+[2019-01-21 17:15:43] <suraeNoether> beyond "ability to go 50x over a slow day to accommodate a christmas day, and to not allow a big bang"
+[2019-01-21 17:15:44] <ArticMine> Yes
+[2019-01-21 17:17:26] <sarang> Isthmus and I plan to work this in to our existing simulations
+[2019-01-21 17:17:39] <sarang> His is more complete, but I am doing one for my own education and as a separate check
+[2019-01-21 17:18:00] <sarang> We shall need to make a decision by freeze time
+[2019-01-21 17:18:38] <sarang> ArticMine: there are a few subtleties that I'll want to ask you about later
+[2019-01-21 17:19:11] <sarang> But I also would like to hear the answer to suraeNoether's question
+[2019-01-21 17:19:53] <nioc> I did not see any response to smooth's comment.....
+[2019-01-21 17:20:00] <nioc> you can avoid any sort of consensus issues on *1.4 by making it 1.375 which is adding 3/8
+[2019-01-21 17:20:00] <nioc> 10:50 PM or some such, but that should be close enough
+[2019-01-21 17:20:00] <nioc> 10:56 PM overall looks good to me at first reading
+[2019-01-21 17:20:00] <nioc> 11:02 PM i guess 4/10 is fine too, just slower (but not significant)
+[2019-01-21 17:20:21] <sarang> that was a rounding issue, I suppose
+[2019-01-21 17:20:47] <moneromooo> If people will fuck up with 1.4, they will fuck up with 1.375.
+[2019-01-21 17:21:18] <moneromooo> For interested people, the amp branch has ArticMine's change (untested).
+[2019-01-21 17:21:29] <suraeNoether> we should just pick a number that can be represented exactly in a computer
+[2019-01-21 17:21:30] <moneromooo> (just the top patch)
+[2019-01-21 17:22:16] <moneromooo> Better to pick one that can't. You don't want people to use floating point and think they did it right bevause the number was chosen to make things look right.
+[2019-01-21 17:22:40] <sarang> branch link: https://github.com/moneromooo-monero/bitmonero/commit/f1ee51c55963d05a78db916d41da7dc5948bb05a
+[2019-01-21 17:22:42] <suraeNoether> representing 1.4 in a computer is inexact and will cause floating point rounding problems in different pieces of software, but i think 1.375 can be represented in binary exactly and so there is no roundoff problem in that regard...
+[2019-01-21 17:23:29] <sarang> also, hot dang that was fast moneromooo
+[2019-01-21 17:23:31] <suraeNoether> one of the things i, personally, would like out of the block size adjustment is this
+[2019-01-21 17:23:44] <ArticMine> smooth's comment would e an improvement if the BlockWeight were a factor of 8 in bytes, but it is not. So in reality it is not a material change
+[2019-01-21 17:23:47] <suraeNoether> moneromooo: that's a strong argument actually
+[2019-01-21 17:25:08] <suraeNoether> so, i think block size adjustment can benefit from: forcing the marginal cost of adding an additional transaction in terms of block reward penalty to be greater than the standard fees gained by including that transaction
+[2019-01-21 17:25:30] <suraeNoether> even if we pick some exotic max_block_size calculation, we should also be changing the block reward penalty this way
+[2019-01-21 17:25:53] <ArticMine> Still I see as an improvement. As per suraeNoether comment above. So we can make the change from 1.4 to 1.375
+[2019-01-21 17:26:04] <suraeNoether> of course, if the block is nearly full and the block reward is almost zero, adding almost any transaction fees will make up for it
+[2019-01-21 17:26:13] <suraeNoether> ArticMine: moneromooo just made a strong argument *against* that
+[2019-01-21 17:26:40] <suraeNoether> so this marginal cost approach will be most effective when block sizes are nowhere near the big bang levels
+[2019-01-21 17:27:03] <suraeNoether> which is good: providing an incentive to stay reasonable when they are already reasonable
+[2019-01-21 17:28:20] <ArticMine> No When block weight is close to big bang levels LongTermBlockWeight is << BlockWeight
+[2019-01-21 17:29:38] → PauleBert joined (~PauleBert@dslb-188-096-185-204.188.096.pools.vodafone-ip.de)
+[2019-01-21 17:30:17] <suraeNoether> i'm not talking about your block size proposal; i'm talking about block reward penalty as a function of block size
+[2019-01-21 17:30:49] <lurkinandlearnin> Has any thought been given towards an incentive for miners to create smaller blocks when transaction volume is low? To slow blockchain growth
+[2019-01-21 17:31:37] <suraeNoether> that's what i was just talking about lurkinandlearnin
+[2019-01-21 17:31:57] <pigeons> lower blockchain growth is probably less important than quicker validation and propogation but the same point applies
+[2019-01-21 17:32:06] <sarang> lurkinandlearnin: all txns get added eventually if the fee market allows
+[2019-01-21 17:32:36] <suraeNoether> something isthmus brought up to me: there are only about 150,000 blocks between us and the next hard fork. with the *simple* two-median method will forbid a blowup before the next hard fork.
+[2019-01-21 17:32:53] <suraeNoether> woops i mean between March and October hard forks
+[2019-01-21 17:33:04] <moneromooo> Yes, starting the penalty before 100% (idea from smooth).
+[2019-01-21 17:33:15] <suraeNoether> we should consider implementing the simple method *first* and spending time thinking about a more optimal solution, rather than trying to go for broke
+[2019-01-21 17:33:43] <lurkinandlearnin> moneromooo: that sounds like a great idea
+[2019-01-21 17:33:48] <suraeNoether> moneromooo: yep, smooth had the initial idea of sub-100%-median block penalty; my idea is to make the drop-off nonlinear so that it's more expensive to push block sizes larger in the absence of a healthy fee market
+[2019-01-21 17:33:50] <sarang> Well, simulations will shortly be done for ArticMine's proposal compared to the current approach and the simple two-median
+[2019-01-21 17:34:07] <sarang> Presumably the next upgrade will do one of the two options
+[2019-01-21 17:35:17] <suraeNoether> okay, i don't think we're going to come to any conclusions on this, but it's been a good update
+[2019-01-21 17:35:19] <suraeNoether> let's move past scaling
+[2019-01-21 17:35:36] <sarang> Sure thing. We'll talk after simulation data are available
+[2019-01-21 17:35:46] <sarang> Next is transaction size reduction, for which there is a PR from moneromooo
+[2019-01-21 17:35:56] <sarang> AFAIK there are no new updates on this otherwise
+[2019-01-21 17:36:21] <sarang> unless moneromooo you wish to say anything about it?
+[2019-01-21 17:36:36] <moneromooo> I'd just like one of you Noethers to review the code before it goes in.
+[2019-01-21 17:36:55] <moneromooo> suraeNoether said he'd have a look.
+[2019-01-21 17:36:58] <suraeNoether> sarang let's do that *together* tomorrow morning? we can do it over a vidchat since we were going to meet tomorrow anyway
+[2019-01-21 17:37:03] <sarang> Roger; the math looked correct to me, but I may have neglected to add a comment
+[2019-01-21 17:37:09] <sarang> ok suraeNoether can do
+[2019-01-21 17:37:14] <suraeNoether> fun
+[2019-01-21 17:37:37] → mistergo1d joined (~mistergol@185.37.25.30)
+[2019-01-21 17:37:41] <suraeNoether> as for the semi-final point on the agenda... what's the deal with bulletproofs, anyway? seinfeld.gif
+[2019-01-21 17:37:45] <sarang> lol
+[2019-01-21 17:37:50] <suraeNoether> DID YOU GUYS MAKE THINGS FASTER AGAIN
+[2019-01-21 17:38:02] <sarang> Only a brief update that some BP verifier optimizations didn't make it into the 0.13 release
+[2019-01-21 17:38:27] <sarang> a very unscientific test on my box resulted in a 64-batch of 2-proofs verifying 60% faster
+[2019-01-21 17:38:45] <sarang> kudos to moneromooo for continuing to squeeze speed out of those suckers
+[2019-01-21 17:38:54] <lurkinandlearnin> holy smokes
+[2019-01-21 17:39:06] <lurkinandlearnin> 60% faster than current impl or than pre-BP?
+[2019-01-21 17:39:14] <sarang> than the 0.13 release code
+[2019-01-21 17:39:19] <suraeNoether> jeez
+[2019-01-21 17:39:21] <sarang> that is, 0.13 vs master
+[2019-01-21 17:39:27] <sarang> as of a few days ago
+[2019-01-21 17:39:29] <suraeNoether> where did this speedup come from?
+[2019-01-21 17:39:51] <sarang> Folding in some multiexponentiation operations, as well a host of other voodoo moneromooo can dooo
+[2019-01-21 17:40:07] ⇐ mistergold quit (~mistergol@77.243.30.20): Ping timeout: 240 seconds
+[2019-01-21 17:40:23] <sarang> So we can brag about the next release making txns smaller and faster again :D
+[2019-01-21 17:40:38] <moneromooo> I did not keep track of which change sped up by how much. I think sarang's single multiexp change is probably the biggest one though.
+[2019-01-21 17:40:38] <sarang> Let's now discuss NEW WORK
+[2019-01-21 17:40:43] <suraeNoether> cool!
+[2019-01-21 17:40:54] <sarang> suraeNoether: your personal updates?
+[2019-01-21 17:41:28] <suraeNoether> personally, this past week was largely a konferenco administration week for me, contacting speakers and vendors and getting my bank compliant with me
+[2019-01-21 17:41:42] <suraeNoether> i did research on bulletproofs, linear algebra in cryptography, and our matching paper
+[2019-01-21 17:41:49] <sarang> I'm sooper excited for this conference
+[2019-01-21 17:41:49] <suraeNoether> but a lot of my work this week was contacting possible speakers
+[2019-01-21 17:41:57] <sarang> sounds like we'll have some big names joining us
+[2019-01-21 17:42:08] <suraeNoether> yes, it's pretty great so far; we are adding more names this week
+[2019-01-21 17:42:18] <sarang> Any updates on the matching paper suraeNoether ?
+[2019-01-21 17:42:52] <suraeNoether> my simulations aren't passing unit tests
+[2019-01-21 17:42:58] <suraeNoether> once they do, i'm making a commit
+[2019-01-21 17:43:04] <suraeNoether> and then collecting data
+[2019-01-21 17:43:12] <suraeNoether> so: it's moving forward
+[2019-01-21 17:43:12] <sarang> excellent
+[2019-01-21 17:43:24] <sarang> Any questions for suraeNoether ?
+[2019-01-21 17:44:14] <sarang> OK, I'll go next
+[2019-01-21 17:44:34] <suraeNoether> oh i had one more thing to bring up
+[2019-01-21 17:44:38] <suraeNoether> sorry sarang, i don't want to interrupt
+[2019-01-21 17:44:42] <sarang> np go ahead
+[2019-01-21 17:45:24] <lurkinandlearnin> is there a list of speakers for the conference?
+[2019-01-21 17:45:30] <suraeNoether> i found all those old Monero Protocol Standards documents I started writing last year, and I'm wondering if folks still want me to compose the v0.1 versions of these rather short text documents into something to put up on our github
+[2019-01-21 17:45:34] <lurkinandlearnin> or not official yet?
+[2019-01-21 17:45:35] <suraeNoether> lurkinandlearnin: check out konferenco.xyz
+[2019-01-21 17:45:58] <suraeNoether> the benefit of having the standards instead of a single big zero-to-monero document is this:
+[2019-01-21 17:46:24] <suraeNoether> we can update each one piecemeal and only update it if something has changed. this reduces overhead work on documentation. and if it's on github, anyone can update them, we don't have to go find kurt magnus or koe
+[2019-01-21 17:46:44] <sarang> FWIW the ZtM doc is on github and can be PRed
+[2019-01-21 17:46:51] <sarang> but I see the point about modularity
+[2019-01-21 17:47:07] <sarang> My pessimistic side worries that updates would fall behind, as they already have on ZtM
+[2019-01-21 17:47:27] <lurkinandlearnin> What aspects of the protocol are covered? Could be something useful to incorporate into the often neglected wiki
+[2019-01-21 17:47:50] <lurkinandlearnin> as they both sound modular
+[2019-01-21 17:48:06] <suraeNoether> lurkinandlearnin: essentially similar to the cryptonote standards they released after i reviewed their whitepaper years ago, like this: https://cryptonote.org/cns/cns006.txt
+[2019-01-21 17:48:25] <suraeNoether> (my whitepaper review would have been moderately better if they wrote those standards before the whitepaper, but hey)
+[2019-01-21 17:48:30] <suraeNoether> sarang your points are valid
+[2019-01-21 17:48:39] <suraeNoether> which is why i'm not sure if it's a good idea to devote time to it
+[2019-01-21 17:49:00] <Isthmus> Wiki is a good idea, specs are a good idea. Having experience as a book editor, people making random PRs is a huge nightmare to text style and continuity and often took 4x as long to polish then if SerHack and I had written ourselves.
+[2019-01-21 17:49:41] <suraeNoether> okay, how about this
+[2019-01-21 17:49:43] <sarang> Whatever is made available, whether ZtM or wiki or standards, keeping up to date is the most important aspect IMO
+[2019-01-21 17:50:04] <sarang> I cringe at "text-rendered math" though...
+[2019-01-21 17:50:17] <Isthmus> Maybe we should pick one to be the "reference" documentation and the others follow suite?
+[2019-01-21 17:50:39] <sarang> Who's responsible for maintenance of each one?
+[2019-01-21 17:50:41] <lurkinandlearnin> Well as long as the version at time of writing is very clear keeping it updated is not so critical
+[2019-01-21 17:50:56] <suraeNoether> sarang who's responsbile for maintaining anything around here?
+[2019-01-21 17:50:56] <sarang> lurkinandlearnin: I disagree
+[2019-01-21 17:51:14] <suraeNoether> how about i just post what i have after making it a little more readable, and if someone wants to run with it they can
+[2019-01-21 17:51:17] <lurkinandlearnin> nice, but not disastrous. If anything having info about how things used to work out there is also useful.
+[2019-01-21 17:51:29] <suraeNoether> i can post it on my personal github to avoid cluttering the primary\
+[2019-01-21 17:51:34] <sarang> suraeNoether: I think that'd be useful, to get a better sense of scope of audience
+[2019-01-21 17:51:56] <suraeNoether> sarang: we can always label them clearly DEPRECATED AND NOT USEFUL. but i think it'd be better to have them out there
+[2019-01-21 17:52:11] <sarang> good point
+[2019-01-21 17:52:20] <suraeNoether> okay handing it back to sarang
+[2019-01-21 17:52:23] <sarang> As long as it's clear what can be considered "closer to canonical"
+[2019-01-21 17:52:45] ⇐ thrmo quit (~thrmo@unaffiliated/thrmo): Quit: Leaving
+[2019-01-21 17:52:51] <sarang> So I've had some testing and minor optimizations to BPs for the next release, as mentioned earlier
+[2019-01-21 17:53:19] <sarang> Minor work on simulating block size changes to confirm work by Isthmus on scaling etc.
+[2019-01-21 17:53:36] <sarang> Recording of new Breaking Monero episodes with sgp_
+[2019-01-21 17:53:54] <sarang> The usual new lit and project review
+[2019-01-21 17:54:13] <sarang> and some work on a safe MPC protocol for Bulletproofs for future use
+[2019-01-21 17:54:44] <sarang> as well as a lot of back-and-forth administrivia on the topics for the Boron upgrade
+[2019-01-21 17:55:16] <sarang> I am personally in favor of either Boron Betelgeuse or Boron Bellatrix
+[2019-01-21 17:55:28] <sarang> (as far as names go)
+[2019-01-21 17:55:56] <sarang> and of course the math for graph matchings, which has been passed back to suraeNoether for simulation data that he is obtaining
+[2019-01-21 17:55:57] <lurkinandlearnin> Betelgeuse will lead to a schism in the community over pronounciation
+[2019-01-21 17:56:01] <sarang> precisely
+[2019-01-21 17:56:26] <sarang> It's like the naming of iPhone X... by making it hard to get right, it forces you to think it's better than you are
+[2019-01-21 17:56:40] <sarang> humbles us all
+[2019-01-21 17:56:43] <lurkinandlearnin> "It gets the people going!"
+[2019-01-21 17:57:13] <sarang> Any questions for me?
+[2019-01-21 17:57:43] <lurkinandlearnin> what's the next breaking monero topic?
+[2019-01-21 17:57:56] <moneromooo> Hmm... Lightning network things ?
+[2019-01-21 17:58:25] <sarang> moneromooo: what questions on that?
+[2019-01-21 17:58:30] <Isthmus> "Boron borealis" ?? I think there's a Harry Potter character called Bellatrix, which could get confusing with all the HP-themed MimbleWimble names.
+[2019-01-21 17:58:38] <sarang> lurkinandlearnin: we have several topics in the lineup, to be arranged
+[2019-01-21 17:59:20] <Isthmus> Also, Breaking Monero = awesome, thanks for all the time going into that series :- D
+[2019-01-21 17:59:28] <moneromooo> Was anything done or thought about recently about anything monero needs for LN or LN style system ?
+[2019-01-21 18:00:23] <sarang> moneromooo: some of it was an efficient and fungible way to handle protocol aborts, a la noninteractive refunds
+[2019-01-21 18:00:53] <sarang> that was quietly tabled as several proposals for interactive refunds were thrown around
+[2019-01-21 18:01:20] <moneromooo> Ah yes. It would be nice to see a list of things that are needed in monero as building blocks. In terms of parenthesized AND/OR. I always forget. Or never knew.
+[2019-01-21 18:01:54] <sarang> That's a good point. Having a well-considered status update will be useful for longer-term planning
+[2019-01-21 18:02:22] <sarang> Does anyone else have updates to share, before we adjourn?
+[2019-01-21 18:04:36] <sarang> righto
+[2019-01-21 18:04:40] <sarang> Thanks to everyone for joining
+[2019-01-21 18:04:43] <sarang> Our current action items:
+[2019-01-21 18:05:02] <sarang> (a) simulation data for block size proposals, to make a decision before freeze
+[2019-01-21 18:05:12] <sarang> (b) final review of transaction size reduction PR
+[2019-01-21 18:05:55] <sarang> (c) meeting to decide on payment ID deprecation (PLEASE attend or comment on github issue if you have an opinion on this, with justification/data)
+[2019-01-21 18:06:07] — sarang bangs the gavel
+[2019-01-21 18:06:22] <sarang> at ease, soldiers

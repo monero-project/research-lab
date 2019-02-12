@@ -1,35 +1,35 @@
-[2018-12-24 10:56:07] <suraeNoether> good morning, everyone
-[2018-12-24 10:56:35] <suraeNoether> i don't think anyone is expecting a meeting this morning, but i'm dropping this here: the past week has been extremely productive in terms of writing the matching paper, and I'll be sending my copy to Sarang very soon
-[2018-12-24 10:58:11] <suraeNoether> in terms of research, I've also been in contact with a former adviser and I think we may have a way to create a "strong pedersen accumulator" that admits member and non-membership proofs alike, but that's all pretty new and it *could* go wrong, so i'll keep folks updated
-[2018-12-24 10:58:36] <suraeNoether> lastly: MAGIC scholarship applications will be opening on January 15. they aren't free-ride scholarships, they are more like "mitigate the costs of your books for a few semesters"
-[2018-12-24 10:59:07] <suraeNoether> other than that, I hope everyone has a good holiday. until I'm back home, I'm only going to be online off-and-on, but other than today and tomorrow, I'm still working every day
-[2018-12-24 10:59:18] <suraeNoether> if anyone has any questions for me, please shoot me an email at surae@getmonero.org
-[2018-12-24 10:59:22] <suraeNoether> or suraeNoether@protonmail.com
-[2018-12-24 11:05:17] <suraeNoether> sarang: yes :)
-[2018-12-24 11:06:03] <bsm117532> Oooh...do say more about this accumulator...any refs?
-[2018-12-24 11:07:08] <suraeNoether> the *start* of my journey began here: https://kodu.ut.ee/~lipmaa/papers/lip12b/cl-accum.pdf
-[2018-12-24 11:07:48] <suraeNoether> bsm117532: my idea is this: a finite euclidean integral domain is always a field. So something like "polynomials with coefficients in Z/qZ" fits the definition of a finite euclidean integral domain
-[2018-12-24 11:08:38] <bsm117532> So the nth accumulated value v is v x^n?
-[2018-12-24 11:09:01] <suraeNoether> so now i'm merely trying to invent a finite euclidean integral domain, maybe call it D, using something like elliptic curve groups over Z/qZ, where we have a function Z/qZ[X] to D that "acts like" the one-way function of taking a private key to a public key
-[2018-12-24 11:10:33] <suraeNoether> not quite: more like if you have values v[1], v[2], ..., v[n], the accumulator is v*G = v[1]*...*v[n]*G. proving some w is *not* one of the v[i] means applying the euclidean algorithm to write a*v + b*w = 1 and publishing a and b. proving some w2 *is* one of the v[i] is a matter of publishing v[i] and v[1]*...*v[i-1]*v[i+1]*...*v[n]*G
-[2018-12-24 11:10:36] <bsm117532> Also what's a "euclidean integral domain" in this context?
-[2018-12-24 11:10:48] <suraeNoether> of course, you can't apply the above to our current situation because our group isn't euclidean without some additional structure
-[2018-12-24 11:11:05] <suraeNoether> ah, a euclidean ring is one that has a division algorithm: https://en.wikipedia.org/wiki/Euclidean_division
-[2018-12-24 11:11:17] <suraeNoether> an integral domain means that if a*b = 0, then a = 0 or b = 0
-[2018-12-24 11:12:13] <bsm117532> I tried something similar a while back and convinced myself it didn't work...
-[2018-12-24 11:12:19] — bsm117532 jogs memory...
-[2018-12-24 11:13:09] <suraeNoether> Right now I know how to treat Z/qZ[X]... polynomials whose coefficients are in our scalar field... as a finite euclidean domain, so the paper I linked above works in this context
-[2018-12-24 11:13:17] <suraeNoether> but you have to reveal set members and such
-[2018-12-24 11:13:46] <suraeNoether> which is why i want to lift it up to a construction based on elliptic curve groups
-[2018-12-24 11:14:10] → theGaryLambert joined (~theGaryLa@104.222.154.26)
-[2018-12-24 11:14:18] <bsm117532> So if membership of B comes down to accum = A*B*C where you publish A and C to prove that B is an element, you can prove anything is an element by just multiplying A or C by B^-1
-[2018-12-24 11:14:55] <bsm117532> (that's why I decided a product as an accumulator won't work...maybe you're doing something different)
-[2018-12-24 11:16:41] <bsm117532> gotta run but I'll check for responses when I get back...
-[2018-12-24 11:16:42] <suraeNoether> that works over Z/qZ but not Z/qZ[X]
-[2018-12-24 11:16:47] ⇐ immae quit (~immae@immae.eu): Ping timeout: 240 seconds
-[2018-12-24 11:16:51] <suraeNoether> hmm actually wait
-[2018-12-24 11:17:01] <suraeNoether> a finite euclidean domain is always a field so inverses are easy to compute
-[2018-12-24 11:17:29] <suraeNoether> ah, yeah, so again, this comes down to the "secret" part Z/qZ[X] and the "public" part based on elliptic curves *that I have not invented yet*
-[2018-12-24 11:18:07] <suraeNoether> but also, you actually accumulate hashed values, not the plain values, so finding pre-images to cheat the way you describe has negligible success
-[2018-12-24 11:19:46] <suraeNoether> ok guys, i gotta go
-[2018-12-24 11:19:48] <suraeNoether> bbl
+[2018-12-24 16:56:07] <suraeNoether> good morning, everyone
+[2018-12-24 16:56:35] <suraeNoether> i don't think anyone is expecting a meeting this morning, but i'm dropping this here: the past week has been extremely productive in terms of writing the matching paper, and I'll be sending my copy to Sarang very soon
+[2018-12-24 16:58:11] <suraeNoether> in terms of research, I've also been in contact with a former adviser and I think we may have a way to create a "strong pedersen accumulator" that admits member and non-membership proofs alike, but that's all pretty new and it *could* go wrong, so i'll keep folks updated
+[2018-12-24 16:58:36] <suraeNoether> lastly: MAGIC scholarship applications will be opening on January 15. they aren't free-ride scholarships, they are more like "mitigate the costs of your books for a few semesters"
+[2018-12-24 16:59:07] <suraeNoether> other than that, I hope everyone has a good holiday. until I'm back home, I'm only going to be online off-and-on, but other than today and tomorrow, I'm still working every day
+[2018-12-24 16:59:18] <suraeNoether> if anyone has any questions for me, please shoot me an email at surae@getmonero.org
+[2018-12-24 16:59:22] <suraeNoether> or suraeNoether@protonmail.com
+[2018-12-24 17:05:17] <suraeNoether> sarang: yes :)
+[2018-12-24 17:06:03] <bsm117532> Oooh...do say more about this accumulator...any refs?
+[2018-12-24 17:07:08] <suraeNoether> the *start* of my journey began here: https://kodu.ut.ee/~lipmaa/papers/lip12b/cl-accum.pdf
+[2018-12-24 17:07:48] <suraeNoether> bsm117532: my idea is this: a finite euclidean integral domain is always a field. So something like "polynomials with coefficients in Z/qZ" fits the definition of a finite euclidean integral domain
+[2018-12-24 17:08:38] <bsm117532> So the nth accumulated value v is v x^n?
+[2018-12-24 17:09:01] <suraeNoether> so now i'm merely trying to invent a finite euclidean integral domain, maybe call it D, using something like elliptic curve groups over Z/qZ, where we have a function Z/qZ[X] to D that "acts like" the one-way function of taking a private key to a public key
+[2018-12-24 17:10:33] <suraeNoether> not quite: more like if you have values v[1], v[2], ..., v[n], the accumulator is v*G = v[1]*...*v[n]*G. proving some w is *not* one of the v[i] means applying the euclidean algorithm to write a*v + b*w = 1 and publishing a and b. proving some w2 *is* one of the v[i] is a matter of publishing v[i] and v[1]*...*v[i-1]*v[i+1]*...*v[n]*G
+[2018-12-24 17:10:36] <bsm117532> Also what's a "euclidean integral domain" in this context?
+[2018-12-24 17:10:48] <suraeNoether> of course, you can't apply the above to our current situation because our group isn't euclidean without some additional structure
+[2018-12-24 17:11:05] <suraeNoether> ah, a euclidean ring is one that has a division algorithm: https://en.wikipedia.org/wiki/Euclidean_division
+[2018-12-24 17:11:17] <suraeNoether> an integral domain means that if a*b = 0, then a = 0 or b = 0
+[2018-12-24 17:12:13] <bsm117532> I tried something similar a while back and convinced myself it didn't work...
+[2018-12-24 17:12:19] — bsm117532 jogs memory...
+[2018-12-24 17:13:09] <suraeNoether> Right now I know how to treat Z/qZ[X]... polynomials whose coefficients are in our scalar field... as a finite euclidean domain, so the paper I linked above works in this context
+[2018-12-24 17:13:17] <suraeNoether> but you have to reveal set members and such
+[2018-12-24 17:13:46] <suraeNoether> which is why i want to lift it up to a construction based on elliptic curve groups
+[2018-12-24 17:14:10] → theGaryLambert joined (~theGaryLa@104.222.154.26)
+[2018-12-24 17:14:18] <bsm117532> So if membership of B comes down to accum = A*B*C where you publish A and C to prove that B is an element, you can prove anything is an element by just multiplying A or C by B^-1
+[2018-12-24 17:14:55] <bsm117532> (that's why I decided a product as an accumulator won't work...maybe you're doing something different)
+[2018-12-24 17:16:41] <bsm117532> gotta run but I'll check for responses when I get back...
+[2018-12-24 17:16:42] <suraeNoether> that works over Z/qZ but not Z/qZ[X]
+[2018-12-24 17:16:47] ⇐ immae quit (~immae@immae.eu): Ping timeout: 240 seconds
+[2018-12-24 17:16:51] <suraeNoether> hmm actually wait
+[2018-12-24 17:17:01] <suraeNoether> a finite euclidean domain is always a field so inverses are easy to compute
+[2018-12-24 17:17:29] <suraeNoether> ah, yeah, so again, this comes down to the "secret" part Z/qZ[X] and the "public" part based on elliptic curves *that I have not invented yet*
+[2018-12-24 17:18:07] <suraeNoether> but also, you actually accumulate hashed values, not the plain values, so finding pre-images to cheat the way you describe has negligible success
+[2018-12-24 17:19:46] <suraeNoether> ok guys, i gotta go
+[2018-12-24 17:19:48] <suraeNoether> bbl

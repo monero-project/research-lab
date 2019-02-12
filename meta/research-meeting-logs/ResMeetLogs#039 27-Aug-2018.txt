@@ -1,190 +1,190 @@
-[2018-08-27 09:59:28] <sarang> The meeting starts presently
-[2018-08-27 09:59:49] <endogenic> rbrunner: answer is there no?
-[2018-08-27 10:00:39] <sarang> suraeNoether: care to begin?
-[2018-08-27 10:01:02] <suraeNoether> oh gosh
-[2018-08-27 10:01:04] <suraeNoether> lost track of time
-[2018-08-27 10:01:31] <suraeNoether> Hi, everyone, my agenda today is 1) greetings, 2) description of the noether bros recent work, and 3) open up the lab to discussion. I wouldn't mind hearing from silur and IsthmusCrypto.
-[2018-08-27 10:01:51] <suraeNoether> So, hi everyone
-[2018-08-27 10:01:57] <sarang> hi
-[2018-08-27 10:02:05] <silur> hi :)
-[2018-08-27 10:02:06] <rbrunner> Hello there
-[2018-08-27 10:02:33] <suraeNoether> This week I submitted our multisig paper to IACR, started reading the DLSAG paper by sarang and started writing up notes for thring confidential transactions and their applications to cross-chain atomic swaps
-[2018-08-27 10:02:40] <endogenic> woop woop
-[2018-08-27 10:02:42] <suraeNoether> waiting on a link from IACR
-[2018-08-27 10:02:48] <sarang> So you'll be taking the DLSAG and extending?
-[2018-08-27 10:03:04] <suraeNoether> sarang: if you don't mind. we could do two separate papers but I don't see a good reason for that, unless yours is already over 15 pages?
-[2018-08-27 10:03:06] <sarang> I would also like comments on its current "technical note" form, for internal publication
-[2018-08-27 10:03:12] <suraeNoether> yeah, for sure
-[2018-08-27 10:03:24] <sarang> But yes, I would like to see it publishable elsewhere too
-[2018-08-27 10:03:32] <sarang> Mine is ~7 IIRC
-[2018-08-27 10:03:45] <suraeNoether> i feel like "Spender-ambiguous cross-chain atomic swaps of confidential assets" is a sexy title
-[2018-08-27 10:03:55] <sarang> it is
-[2018-08-27 10:04:01] <suraeNoether> yeah, i'll provide notes on that as a technical note, then i'll copypasta to a new doc for swaps
-[2018-08-27 10:04:06] <sarang> Let's stay in close contact regarding the DLSAG work and extension
-[2018-08-27 10:04:11] <suraeNoether> yes
-[2018-08-27 10:04:32] <sarang> excellent
-[2018-08-27 10:04:37] <suraeNoether> if you want to do more of the writing before handing it off to me, i think with our writing dynamic it may be appropriate to find a third author to "finish it off" so I don't spend months being a perfectionist
-[2018-08-27 10:04:53] <sarang> Let's wait and see how it goes
-[2018-08-27 10:05:02] <sarang> No need to put the cart before the LaTeX manuscript
-[2018-08-27 10:05:32] <suraeNoether> i was basically going to take the appendix from "Enabling Blockchain Innovations with Pegged Sidechains" by Back, et al, describing cross-chain atomic swaps (initial suggestion by Tier Nolan) and write up a highly detailed version of it with thring signatures
-[2018-08-27 10:05:51] <suraeNoether> so if you want to have more of a hand in writing it, i can put that down for a few days and give you a chance to put some words into it
-[2018-08-27 10:05:57] <sarang> aye
-[2018-08-27 10:06:06] <suraeNoether> cool. so, what have *you* been up to this week?
-[2018-08-27 10:06:20] <silur> sorry is thring signatures a typo or the new name? :D
-[2018-08-27 10:06:25] <sarang> I've been working with mooo to make BPs even faster
-[2018-08-27 10:06:32] <endogenic> new name
-[2018-08-27 10:07:11] <suraeNoether> Threshold Ring Signatures = thring signatures!
-[2018-08-27 10:07:17] <sarang> I coded up an addition chain for scalar inversion that doesn't need the OpenSSL library
-[2018-08-27 10:07:28] <sarang> and batch inversion that lets us compute a bunch of inverses speedy quick
-[2018-08-27 10:07:30] <suraeNoether> Threshold Ring Confidential Transactions = Thring Confidential Transactions! Woooo!
-[2018-08-27 10:07:39] <sarang> We're now seeing batched BP verification > 40x faster than borromean
-[2018-08-27 10:07:47] <suraeNoether> jfc
-[2018-08-27 10:07:53] <silur> wow
-[2018-08-27 10:08:03] <sarang> So yeah, a bunch of new optimizations
-[2018-08-27 10:08:32] <rbrunner> It something in the stuff that is planned to go online tomorrow on testnet?
-[2018-08-27 10:08:33] <sarang> I'm also doing initial work toward off-chain safe balance computations
-[2018-08-27 10:08:41] <sarang> rbrunner: the PR includes only some of the optimizations
-[2018-08-27 10:08:43] <sarang> not all
-[2018-08-27 10:08:50] <suraeNoether> i vote fixing ring sizes at 36 and keeping them fixed for a year while we look into sublinear optimizations. :P
-[2018-08-27 10:09:25] <endogenic> it would be a good problem to have
-[2018-08-27 10:09:29] <sarang> Unfortunately the prover is still 2x slower than borromean
-[2018-08-27 10:09:47] <moneromooo> Oh, I bumped like 25% off the prover btw.
-[2018-08-27 10:09:53] <sarang> lolwut
-[2018-08-27 10:09:53] <sarang> go on
-[2018-08-27 10:10:05] <moneromooo> Not looking at it anymore for now :)
-[2018-08-27 10:10:13] <sarang> commit #?
-[2018-08-27 10:10:22] <moneromooo> I took out 128 scalarmults IIRC.
-[2018-08-27 10:10:29] <suraeNoether> jfc
-[2018-08-27 10:10:33] <sarang> https://gph.is/1e0T1tY
-[2018-08-27 10:10:34] <suraeNoether> oh, i wanted to add an item to the end of the agenda
-[2018-08-27 10:10:46] <endogenic> lol sarang
-[2018-08-27 10:10:51] <moneromooo> 81a65c30d667eaf5e4a1f0ecd1e64746b09cfdd7
-[2018-08-27 10:10:58] <suraeNoether> 4) the possibility of an FFS for QuarksLabs to just audit our whole codebase.
-[2018-08-27 10:10:58] <sarang> ty
-[2018-08-27 10:11:03] <sarang> Aso
-[2018-08-27 10:11:05] <suraeNoether> or some part of it
-[2018-08-27 10:11:05] <sarang> *Also
-[2018-08-27 10:11:14] <sgp_> hello everyone
-[2018-08-27 10:11:16] <sarang> I want to keep working on trustless accumulators for safe balance computation with auditors
-[2018-08-27 10:11:25] <endogenic> ^
-[2018-08-27 10:11:29] <endogenic> sarangpls
-[2018-08-27 10:11:30] <sarang> PIVX claims to be working on a form of this that's bulletproofs-compatible
-[2018-08-27 10:11:41] <suraeNoether> sarang: do you have any links on that? i know we talked about that euclidean-ring based one
-[2018-08-27 10:11:47] <sarang> I've also been chatting with Zcash devs on their knowledge of this field
-[2018-08-27 10:11:57] <sarang> suraeNoether: the issue is efficiency when it comes to committed values
-[2018-08-27 10:12:04] <sarang> BPs let us do this more or less for free
-[2018-08-27 10:12:37] <sarang> You need to have an accumulator that you can prove was computed correctly with all outputs, and then provide proofs of membership of all the outputs you control, and show that the balances compute
-[2018-08-27 10:12:47] <sarang> my goal is an off-chain solution that requires no protocol changes
-[2018-08-27 10:12:54] <sarang> but also doesn't give the auditor direct knowledge of spend outs
-[2018-08-27 10:13:01] <sarang> (modulo knapsack-type attacks)
-[2018-08-27 10:13:40] <sarang> Our goal is _not_ to encourage users to reveal their key images, which is bad for privacy
-[2018-08-27 10:13:53] <sarang> it should be to allow a user to safely prove a balance without showing key images
-[2018-08-27 10:14:07] <sarang> hence the benefit of commitment-based trustless accumulators as one possible approach
-[2018-08-27 10:15:56] <suraeNoether> i'm eager for any reading you have available for that, although i don't know when i'd get to it. :P
-[2018-08-27 10:16:22] <sarang> I'll keep a running list
-[2018-08-27 10:16:40] <sarang> Zcash team had good early discussion on this same problem, and I'm following their logs as a start
-[2018-08-27 10:16:49] <suraeNoether> cool, consider it a literature review in prep :P
-[2018-08-27 10:16:58] <sarang> yup
-[2018-08-27 10:17:05] <suraeNoether> i wonder if a zk-ledger sidechain run by all the exchanges would work
-[2018-08-27 10:17:10] <sarang> If PIVX figured this out, hot damn
-[2018-08-27 10:17:20] <suraeNoether> not really trading tokens around but only committed balances
-[2018-08-27 10:17:30] <suraeNoether> and zk-ledger is largely trustless, iirc
-[2018-08-27 10:17:32] <sarang> In the approach in my head, Alice would share an accumulator that she filled with all outputs on the blockchain
-[2018-08-27 10:17:37] <suraeNoether> and i don't see how it wouldn't be BP-able
-[2018-08-27 10:17:39] <sarang> the auditor could verify that it was computed correctly
-[2018-08-27 10:17:48] <endogenic> new type of lightning network? :P
-[2018-08-27 10:18:10] <suraeNoether> strictly for auditing/compliance purposes... uhm.
-[2018-08-27 10:18:20] <sarang> and using this she can construct zk proofs that her outputs either are or are not in the key image list
-[2018-08-27 10:19:01] <endogenic> can i suggest another agenda item? ring sig replacements.. could it make sense to give research into that to another funded postdoc as a main project?
-[2018-08-27 10:19:11] <sarang> depends
-[2018-08-27 10:19:23] <sarang> right now there are no good solutions, and people are looking for them
-[2018-08-27 10:19:52] <silur> khm RTRS
-[2018-08-27 10:20:04] <sarang> the second we get trustless efficient general zk systems, this would be possible
-[2018-08-27 10:20:13] <silur> hyrax?
-[2018-08-27 10:20:25] <sarang> poor size/memory tradeoff IIRC
-[2018-08-27 10:20:43] <sarang> all the trustless approaches I know of have terrible scaling
-[2018-08-27 10:21:01] <sarang> it's that damn snark toxic waste that gives the proof polynomials structure in a zerocash setup
-[2018-08-27 10:21:10] <sarang> and that's what gives you such good scaling
-[2018-08-27 10:22:14] <suraeNoether> okay, so Silur, IsthmusCrypto, y'all have been busy
-[2018-08-27 10:23:08] <silur> yep I'm slowly making tests for my RTRS demo at HCPP and patching up my mistakes
-[2018-08-27 10:23:37] <rbrunner> RTRS being?
-[2018-08-27 10:23:39] <suraeNoether> silur: i know i've asked you about PQ shuffles before, but I don't know much about pseudorandom generating objects on a theoretical level. Do you know of any introductory papers or textbooks you could suggest to us? I'm sure to put a few hours in some time in the next few months for my backburnered "cartesian square sig" project
-[2018-08-27 10:24:03] <suraeNoether> RTRS is a version of sublinear ring confidential transactions based loosely on the Bootle paper "Short Accountable Ring Signatures"
-[2018-08-27 10:24:15] <suraeNoether> or am i thinking about someone else with the PQ shuffle
-[2018-08-27 10:24:17] <sarang> silur: any chance of sharing code, even privately?
-[2018-08-27 10:24:31] <silur> also I had some advance with the RLWE VRF stuff kind of overkilled a whole section with modular and double-rounding reconcillation but maybe it will be helpful for a designated verifier setup
-[2018-08-27 10:24:50] <silur> no I'm also working on PQ shuffles but bulletproofs kind of got ahead of me
-[2018-08-27 10:24:57] <silur> and I still have to understand BP fully
-[2018-08-27 10:25:18] <silur> because originally I went for the simple Neff shuffle model on a generalized Chaum-pedersen proof
-[2018-08-27 10:25:20] <sarang> sharing the RTRS code I mean
-[2018-08-27 10:25:28] <silur> yea it's on my github
-[2018-08-27 10:25:44] <silur> https://github.com/Silur/libstringct
-[2018-08-27 10:26:45] <silur> so because BP's are much more scalable I put the PQ-shuffle on a pause and try again when I understand BP at a level when I can confidently start to "port" them into a PQ setting
-[2018-08-27 10:27:03] <sarang> neat
-[2018-08-27 10:27:34] <sarang> Anything else of interest to share with the class
-[2018-08-27 10:28:46] <sarang> Or IsthmusCrypto?
-[2018-08-27 10:29:24] <sgp_> sneurlax's tool is now easy to run
-[2018-08-27 10:29:40] <sgp_> I updated the blackball lists with MoneroV
-[2018-08-27 10:30:04] <sarang> Excellent
-[2018-08-27 10:30:14] <sarang> I hope this sees use and extension by others as well
-[2018-08-27 10:30:16] <sgp_> Any thoughts on making the pool lists available too? I know sneurlax was worried about releasing the code
-[2018-08-27 10:30:18] <sarang> (for those who don't trust sgp_ )
-[2018-08-27 10:30:24] <sarang> Give me the arguments
-[2018-08-27 10:30:41] <sgp_> I can't speak on his behalf. I would release if I was him
-[2018-08-27 10:31:01] <sarang> I'm generally a fan of making information available
-[2018-08-27 10:31:14] <sarang> Might it influence pool behavior in a positive way?
-[2018-08-27 10:31:25] <sgp_> We will need some way to have this tool check for chain reactions with the regular blackball tool in the future
-[2018-08-27 10:32:01] <sgp_> sarang I already came up with an initial best practices guide for pools, but I need to refine it
-[2018-08-27 10:32:04] <moneromooo> The pool thing is a guess though.
-[2018-08-27 10:32:27] <moneromooo> Does it output some sane format (like a key per line or so) ?
-[2018-08-27 10:32:44] <sgp_> It outputs a single output per line in a .txt file
-[2018-08-27 10:32:53] <moneromooo> OK, I can add reading that then.
-[2018-08-27 10:33:31] <sgp_> great! Ideally the pool tool could be run first, then the list can be added to the blackball tool as a set of bad outputs
-[2018-08-27 10:33:45] <sarang> Is there a regular schedule envisioned for this?
-[2018-08-27 10:33:48] <sarang> for the hosted version
-[2018-08-27 10:34:06] <sgp_> At the moment I'm just doing it when I have time. It's all manual at the moment
-[2018-08-27 10:34:20] <sarang> seems a prime candidate for automation
-[2018-08-27 10:34:31] <sgp_> Probably a few times a month unless it's automated, yes
-[2018-08-27 10:34:44] <moneromooo> I had this idea of having diffs made, then advertised in a TXT record like the release updates.
-[2018-08-27 10:34:54] <moneromooo> Then the wallet could automatically download/merge.
-[2018-08-27 10:35:00] <sarang> baller
-[2018-08-27 10:35:27] <moneromooo> It would require the list maintainer to keep to rigid naming conventions for the diffs.
-[2018-08-27 10:37:06] <sgp_> moneromooo I believe there are two big features that would help with pool outputs: 1) an easily-selectable output selection option, such as "--selection-algo public-pool", 2) a wallet option to avoid selecting coinbase outputs for decoys, enabled by default (--coinbase-decoys false)
-[2018-08-27 10:37:45] <sgp_> we can streamline the blackball lists significantly if the coinbase outputs are excluded automatically
-[2018-08-27 10:39:25] <moneromooo> I won't do that unless surae or sarang reckons it's a statistically advantageous thing to do.
-[2018-08-27 10:40:23] <sgp_> all right, but since the vast majority of coinbase outputs are mined by public pools, it's something to consider
-[2018-08-27 10:40:27] <sarang> So you mean perform the statistically correct output selection (fitted gamma) but with avoided decoys
-[2018-08-27 10:40:34] <sarang> including blackball+coinbase
-[2018-08-27 10:41:33] <moneromooo> That means an attacker can know whether a given tx was made by a pool or not. At first glance, it diminishes your anonymity set.
-[2018-08-27 10:42:22] <sgp_> moneromooo can you expand on this reasoning? If you're referring to coinbase outputs, they know what transaction they are spent in anyway by the pool since the pool makes its transaction lists public
-[2018-08-27 10:42:23] <moneromooo> If your tx has only two outs, then it *might* be good, but that's not immediately obvious.
-[2018-08-27 10:42:56] <moneromooo> Oh, I forgot they do now. Dumb.
-[2018-08-27 10:43:09] <moneromooo> Time to kick pools out ^_^
-[2018-08-27 10:43:33] <sgp_> yeah, it's a situation where a ton of network info is public
-[2018-08-27 10:44:40] <sarang> Is IsthmusCrypto here?
-[2018-08-27 10:45:03] <sgp_> So if you can attribute ~90% of coinbase outputs to specific transactions, we should at least consider setting the default wallet behavior to not include these outputs that will be bad ~90% of the time
-[2018-08-27 10:47:02] <endogenic> anyone know if exploremonero.com is open source? i was a bit surprised to see they ask for the sec view key for checking txs
-[2018-08-27 10:48:23] <sgp_> endogenic I can't find it. Only the localization: https://github.com/GBKS
-[2018-08-27 10:48:30] <endogenic> hmmmmm
-[2018-08-27 10:48:46] <endogenic> btw i -think- i've identified anycoin as one of the wallets sending with ringsize 8
-[2018-08-27 10:49:01] <sarang> damn off-by-one...
-[2018-08-27 10:49:29] <sarang> So we have ten minutes remaining
-[2018-08-27 10:49:38] <sarang> Does anyone else wish to share something of interest they are working on?
-[2018-08-27 10:50:13] <sarang> moneromooo: can you comment on the expected status of BP updates relative to our release schedule?
-[2018-08-27 10:52:29] <moneromooo> Do you mean "are BPs going in" ? If so, yes.
-[2018-08-27 10:52:41] <sarang> I know there was a cutoff for PR review purposes
-[2018-08-27 10:52:53] <sarang> I assume all that is going smoothly?
-[2018-08-27 10:53:09] <moneromooo> The PR is reviewed and ready to go. The CNv2 changes were supposed to go in too, but the author dropped a large change yesterday :/
-[2018-08-27 10:53:10] <endogenic> also interested. would be good to freeze at some point, if only for a good bit of testing lead time
-[2018-08-27 10:53:20] <moneromooo> So that might push the merge a bit.
-[2018-08-27 10:54:25] <moneromooo> If some of you are familiar with low level bit bashing and hashes, feel free to review ^_^
-[2018-08-27 10:54:45] <sarang> Yeah I've been following the tweak discussion a bit
-[2018-08-27 10:55:05] <endogenic> how worthwhile will it be to have a final review of this code after the final cut ?
-[2018-08-27 10:55:12] <sarang> Updates to BPs will be a point release I suppose?
-[2018-08-27 10:55:13] <endogenic> i mean audit
-[2018-08-27 10:55:38] <moneromooo> If you mean what's not in the current PR, I dunno yet, but it is fairly likely.
-[2018-08-27 10:56:10] <moneromooo> Unless people want the speedups bad :)
-[2018-08-27 10:56:33] <sarang> Eh
-[2018-08-27 10:57:27] <sarang> Well, thanks to everyone for sharing
-[2018-08-27 10:57:39] <sarang> We can adjourn now and keep discussions going as desired
-[2018-08-27 10:57:43] <sarang> </meeting>
+[2018-08-27 16:59:28] <sarang> The meeting starts presently
+[2018-08-27 16:59:49] <endogenic> rbrunner: answer is there no?
+[2018-08-27 17:00:39] <sarang> suraeNoether: care to begin?
+[2018-08-27 17:01:02] <suraeNoether> oh gosh
+[2018-08-27 17:01:04] <suraeNoether> lost track of time
+[2018-08-27 17:01:31] <suraeNoether> Hi, everyone, my agenda today is 1) greetings, 2) description of the noether bros recent work, and 3) open up the lab to discussion. I wouldn't mind hearing from silur and IsthmusCrypto.
+[2018-08-27 17:01:51] <suraeNoether> So, hi everyone
+[2018-08-27 17:01:57] <sarang> hi
+[2018-08-27 17:02:05] <silur> hi :)
+[2018-08-27 17:02:06] <rbrunner> Hello there
+[2018-08-27 17:02:33] <suraeNoether> This week I submitted our multisig paper to IACR, started reading the DLSAG paper by sarang and started writing up notes for thring confidential transactions and their applications to cross-chain atomic swaps
+[2018-08-27 17:02:40] <endogenic> woop woop
+[2018-08-27 17:02:42] <suraeNoether> waiting on a link from IACR
+[2018-08-27 17:02:48] <sarang> So you'll be taking the DLSAG and extending?
+[2018-08-27 17:03:04] <suraeNoether> sarang: if you don't mind. we could do two separate papers but I don't see a good reason for that, unless yours is already over 15 pages?
+[2018-08-27 17:03:06] <sarang> I would also like comments on its current "technical note" form, for internal publication
+[2018-08-27 17:03:12] <suraeNoether> yeah, for sure
+[2018-08-27 17:03:24] <sarang> But yes, I would like to see it publishable elsewhere too
+[2018-08-27 17:03:32] <sarang> Mine is ~7 IIRC
+[2018-08-27 17:03:45] <suraeNoether> i feel like "Spender-ambiguous cross-chain atomic swaps of confidential assets" is a sexy title
+[2018-08-27 17:03:55] <sarang> it is
+[2018-08-27 17:04:01] <suraeNoether> yeah, i'll provide notes on that as a technical note, then i'll copypasta to a new doc for swaps
+[2018-08-27 17:04:06] <sarang> Let's stay in close contact regarding the DLSAG work and extension
+[2018-08-27 17:04:11] <suraeNoether> yes
+[2018-08-27 17:04:32] <sarang> excellent
+[2018-08-27 17:04:37] <suraeNoether> if you want to do more of the writing before handing it off to me, i think with our writing dynamic it may be appropriate to find a third author to "finish it off" so I don't spend months being a perfectionist
+[2018-08-27 17:04:53] <sarang> Let's wait and see how it goes
+[2018-08-27 17:05:02] <sarang> No need to put the cart before the LaTeX manuscript
+[2018-08-27 17:05:32] <suraeNoether> i was basically going to take the appendix from "Enabling Blockchain Innovations with Pegged Sidechains" by Back, et al, describing cross-chain atomic swaps (initial suggestion by Tier Nolan) and write up a highly detailed version of it with thring signatures
+[2018-08-27 17:05:51] <suraeNoether> so if you want to have more of a hand in writing it, i can put that down for a few days and give you a chance to put some words into it
+[2018-08-27 17:05:57] <sarang> aye
+[2018-08-27 17:06:06] <suraeNoether> cool. so, what have *you* been up to this week?
+[2018-08-27 17:06:20] <silur> sorry is thring signatures a typo or the new name? :D
+[2018-08-27 17:06:25] <sarang> I've been working with mooo to make BPs even faster
+[2018-08-27 17:06:32] <endogenic> new name
+[2018-08-27 17:07:11] <suraeNoether> Threshold Ring Signatures = thring signatures!
+[2018-08-27 17:07:17] <sarang> I coded up an addition chain for scalar inversion that doesn't need the OpenSSL library
+[2018-08-27 17:07:28] <sarang> and batch inversion that lets us compute a bunch of inverses speedy quick
+[2018-08-27 17:07:30] <suraeNoether> Threshold Ring Confidential Transactions = Thring Confidential Transactions! Woooo!
+[2018-08-27 17:07:39] <sarang> We're now seeing batched BP verification > 40x faster than borromean
+[2018-08-27 17:07:47] <suraeNoether> jfc
+[2018-08-27 17:07:53] <silur> wow
+[2018-08-27 17:08:03] <sarang> So yeah, a bunch of new optimizations
+[2018-08-27 17:08:32] <rbrunner> It something in the stuff that is planned to go online tomorrow on testnet?
+[2018-08-27 17:08:33] <sarang> I'm also doing initial work toward off-chain safe balance computations
+[2018-08-27 17:08:41] <sarang> rbrunner: the PR includes only some of the optimizations
+[2018-08-27 17:08:43] <sarang> not all
+[2018-08-27 17:08:50] <suraeNoether> i vote fixing ring sizes at 36 and keeping them fixed for a year while we look into sublinear optimizations. :P
+[2018-08-27 17:09:25] <endogenic> it would be a good problem to have
+[2018-08-27 17:09:29] <sarang> Unfortunately the prover is still 2x slower than borromean
+[2018-08-27 17:09:47] <moneromooo> Oh, I bumped like 25% off the prover btw.
+[2018-08-27 17:09:53] <sarang> lolwut
+[2018-08-27 17:09:53] <sarang> go on
+[2018-08-27 17:10:05] <moneromooo> Not looking at it anymore for now :)
+[2018-08-27 17:10:13] <sarang> commit #?
+[2018-08-27 17:10:22] <moneromooo> I took out 128 scalarmults IIRC.
+[2018-08-27 17:10:29] <suraeNoether> jfc
+[2018-08-27 17:10:33] <sarang> https://gph.is/1e0T1tY
+[2018-08-27 17:10:34] <suraeNoether> oh, i wanted to add an item to the end of the agenda
+[2018-08-27 17:10:46] <endogenic> lol sarang
+[2018-08-27 17:10:51] <moneromooo> 81a65c30d667eaf5e4a1f0ecd1e64746b09cfdd7
+[2018-08-27 17:10:58] <suraeNoether> 4) the possibility of an FFS for QuarksLabs to just audit our whole codebase.
+[2018-08-27 17:10:58] <sarang> ty
+[2018-08-27 17:11:03] <sarang> Aso
+[2018-08-27 17:11:05] <suraeNoether> or some part of it
+[2018-08-27 17:11:05] <sarang> *Also
+[2018-08-27 17:11:14] <sgp_> hello everyone
+[2018-08-27 17:11:16] <sarang> I want to keep working on trustless accumulators for safe balance computation with auditors
+[2018-08-27 17:11:25] <endogenic> ^
+[2018-08-27 17:11:29] <endogenic> sarangpls
+[2018-08-27 17:11:30] <sarang> PIVX claims to be working on a form of this that's bulletproofs-compatible
+[2018-08-27 17:11:41] <suraeNoether> sarang: do you have any links on that? i know we talked about that euclidean-ring based one
+[2018-08-27 17:11:47] <sarang> I've also been chatting with Zcash devs on their knowledge of this field
+[2018-08-27 17:11:57] <sarang> suraeNoether: the issue is efficiency when it comes to committed values
+[2018-08-27 17:12:04] <sarang> BPs let us do this more or less for free
+[2018-08-27 17:12:37] <sarang> You need to have an accumulator that you can prove was computed correctly with all outputs, and then provide proofs of membership of all the outputs you control, and show that the balances compute
+[2018-08-27 17:12:47] <sarang> my goal is an off-chain solution that requires no protocol changes
+[2018-08-27 17:12:54] <sarang> but also doesn't give the auditor direct knowledge of spend outs
+[2018-08-27 17:13:01] <sarang> (modulo knapsack-type attacks)
+[2018-08-27 17:13:40] <sarang> Our goal is _not_ to encourage users to reveal their key images, which is bad for privacy
+[2018-08-27 17:13:53] <sarang> it should be to allow a user to safely prove a balance without showing key images
+[2018-08-27 17:14:07] <sarang> hence the benefit of commitment-based trustless accumulators as one possible approach
+[2018-08-27 17:15:56] <suraeNoether> i'm eager for any reading you have available for that, although i don't know when i'd get to it. :P
+[2018-08-27 17:16:22] <sarang> I'll keep a running list
+[2018-08-27 17:16:40] <sarang> Zcash team had good early discussion on this same problem, and I'm following their logs as a start
+[2018-08-27 17:16:49] <suraeNoether> cool, consider it a literature review in prep :P
+[2018-08-27 17:16:58] <sarang> yup
+[2018-08-27 17:17:05] <suraeNoether> i wonder if a zk-ledger sidechain run by all the exchanges would work
+[2018-08-27 17:17:10] <sarang> If PIVX figured this out, hot damn
+[2018-08-27 17:17:20] <suraeNoether> not really trading tokens around but only committed balances
+[2018-08-27 17:17:30] <suraeNoether> and zk-ledger is largely trustless, iirc
+[2018-08-27 17:17:32] <sarang> In the approach in my head, Alice would share an accumulator that she filled with all outputs on the blockchain
+[2018-08-27 17:17:37] <suraeNoether> and i don't see how it wouldn't be BP-able
+[2018-08-27 17:17:39] <sarang> the auditor could verify that it was computed correctly
+[2018-08-27 17:17:48] <endogenic> new type of lightning network? :P
+[2018-08-27 17:18:10] <suraeNoether> strictly for auditing/compliance purposes... uhm.
+[2018-08-27 17:18:20] <sarang> and using this she can construct zk proofs that her outputs either are or are not in the key image list
+[2018-08-27 17:19:01] <endogenic> can i suggest another agenda item? ring sig replacements.. could it make sense to give research into that to another funded postdoc as a main project?
+[2018-08-27 17:19:11] <sarang> depends
+[2018-08-27 17:19:23] <sarang> right now there are no good solutions, and people are looking for them
+[2018-08-27 17:19:52] <silur> khm RTRS
+[2018-08-27 17:20:04] <sarang> the second we get trustless efficient general zk systems, this would be possible
+[2018-08-27 17:20:13] <silur> hyrax?
+[2018-08-27 17:20:25] <sarang> poor size/memory tradeoff IIRC
+[2018-08-27 17:20:43] <sarang> all the trustless approaches I know of have terrible scaling
+[2018-08-27 17:21:01] <sarang> it's that damn snark toxic waste that gives the proof polynomials structure in a zerocash setup
+[2018-08-27 17:21:10] <sarang> and that's what gives you such good scaling
+[2018-08-27 17:22:14] <suraeNoether> okay, so Silur, IsthmusCrypto, y'all have been busy
+[2018-08-27 17:23:08] <silur> yep I'm slowly making tests for my RTRS demo at HCPP and patching up my mistakes
+[2018-08-27 17:23:37] <rbrunner> RTRS being?
+[2018-08-27 17:23:39] <suraeNoether> silur: i know i've asked you about PQ shuffles before, but I don't know much about pseudorandom generating objects on a theoretical level. Do you know of any introductory papers or textbooks you could suggest to us? I'm sure to put a few hours in some time in the next few months for my backburnered "cartesian square sig" project
+[2018-08-27 17:24:03] <suraeNoether> RTRS is a version of sublinear ring confidential transactions based loosely on the Bootle paper "Short Accountable Ring Signatures"
+[2018-08-27 17:24:15] <suraeNoether> or am i thinking about someone else with the PQ shuffle
+[2018-08-27 17:24:17] <sarang> silur: any chance of sharing code, even privately?
+[2018-08-27 17:24:31] <silur> also I had some advance with the RLWE VRF stuff kind of overkilled a whole section with modular and double-rounding reconcillation but maybe it will be helpful for a designated verifier setup
+[2018-08-27 17:24:50] <silur> no I'm also working on PQ shuffles but bulletproofs kind of got ahead of me
+[2018-08-27 17:24:57] <silur> and I still have to understand BP fully
+[2018-08-27 17:25:18] <silur> because originally I went for the simple Neff shuffle model on a generalized Chaum-pedersen proof
+[2018-08-27 17:25:20] <sarang> sharing the RTRS code I mean
+[2018-08-27 17:25:28] <silur> yea it's on my github
+[2018-08-27 17:25:44] <silur> https://github.com/Silur/libstringct
+[2018-08-27 17:26:45] <silur> so because BP's are much more scalable I put the PQ-shuffle on a pause and try again when I understand BP at a level when I can confidently start to "port" them into a PQ setting
+[2018-08-27 17:27:03] <sarang> neat
+[2018-08-27 17:27:34] <sarang> Anything else of interest to share with the class
+[2018-08-27 17:28:46] <sarang> Or IsthmusCrypto?
+[2018-08-27 17:29:24] <sgp_> sneurlax's tool is now easy to run
+[2018-08-27 17:29:40] <sgp_> I updated the blackball lists with MoneroV
+[2018-08-27 17:30:04] <sarang> Excellent
+[2018-08-27 17:30:14] <sarang> I hope this sees use and extension by others as well
+[2018-08-27 17:30:16] <sgp_> Any thoughts on making the pool lists available too? I know sneurlax was worried about releasing the code
+[2018-08-27 17:30:18] <sarang> (for those who don't trust sgp_ )
+[2018-08-27 17:30:24] <sarang> Give me the arguments
+[2018-08-27 17:30:41] <sgp_> I can't speak on his behalf. I would release if I was him
+[2018-08-27 17:31:01] <sarang> I'm generally a fan of making information available
+[2018-08-27 17:31:14] <sarang> Might it influence pool behavior in a positive way?
+[2018-08-27 17:31:25] <sgp_> We will need some way to have this tool check for chain reactions with the regular blackball tool in the future
+[2018-08-27 17:32:01] <sgp_> sarang I already came up with an initial best practices guide for pools, but I need to refine it
+[2018-08-27 17:32:04] <moneromooo> The pool thing is a guess though.
+[2018-08-27 17:32:27] <moneromooo> Does it output some sane format (like a key per line or so) ?
+[2018-08-27 17:32:44] <sgp_> It outputs a single output per line in a .txt file
+[2018-08-27 17:32:53] <moneromooo> OK, I can add reading that then.
+[2018-08-27 17:33:31] <sgp_> great! Ideally the pool tool could be run first, then the list can be added to the blackball tool as a set of bad outputs
+[2018-08-27 17:33:45] <sarang> Is there a regular schedule envisioned for this?
+[2018-08-27 17:33:48] <sarang> for the hosted version
+[2018-08-27 17:34:06] <sgp_> At the moment I'm just doing it when I have time. It's all manual at the moment
+[2018-08-27 17:34:20] <sarang> seems a prime candidate for automation
+[2018-08-27 17:34:31] <sgp_> Probably a few times a month unless it's automated, yes
+[2018-08-27 17:34:44] <moneromooo> I had this idea of having diffs made, then advertised in a TXT record like the release updates.
+[2018-08-27 17:34:54] <moneromooo> Then the wallet could automatically download/merge.
+[2018-08-27 17:35:00] <sarang> baller
+[2018-08-27 17:35:27] <moneromooo> It would require the list maintainer to keep to rigid naming conventions for the diffs.
+[2018-08-27 17:37:06] <sgp_> moneromooo I believe there are two big features that would help with pool outputs: 1) an easily-selectable output selection option, such as "--selection-algo public-pool", 2) a wallet option to avoid selecting coinbase outputs for decoys, enabled by default (--coinbase-decoys false)
+[2018-08-27 17:37:45] <sgp_> we can streamline the blackball lists significantly if the coinbase outputs are excluded automatically
+[2018-08-27 17:39:25] <moneromooo> I won't do that unless surae or sarang reckons it's a statistically advantageous thing to do.
+[2018-08-27 17:40:23] <sgp_> all right, but since the vast majority of coinbase outputs are mined by public pools, it's something to consider
+[2018-08-27 17:40:27] <sarang> So you mean perform the statistically correct output selection (fitted gamma) but with avoided decoys
+[2018-08-27 17:40:34] <sarang> including blackball+coinbase
+[2018-08-27 17:41:33] <moneromooo> That means an attacker can know whether a given tx was made by a pool or not. At first glance, it diminishes your anonymity set.
+[2018-08-27 17:42:22] <sgp_> moneromooo can you expand on this reasoning? If you're referring to coinbase outputs, they know what transaction they are spent in anyway by the pool since the pool makes its transaction lists public
+[2018-08-27 17:42:23] <moneromooo> If your tx has only two outs, then it *might* be good, but that's not immediately obvious.
+[2018-08-27 17:42:56] <moneromooo> Oh, I forgot they do now. Dumb.
+[2018-08-27 17:43:09] <moneromooo> Time to kick pools out ^_^
+[2018-08-27 17:43:33] <sgp_> yeah, it's a situation where a ton of network info is public
+[2018-08-27 17:44:40] <sarang> Is IsthmusCrypto here?
+[2018-08-27 17:45:03] <sgp_> So if you can attribute ~90% of coinbase outputs to specific transactions, we should at least consider setting the default wallet behavior to not include these outputs that will be bad ~90% of the time
+[2018-08-27 17:47:02] <endogenic> anyone know if exploremonero.com is open source? i was a bit surprised to see they ask for the sec view key for checking txs
+[2018-08-27 17:48:23] <sgp_> endogenic I can't find it. Only the localization: https://github.com/GBKS
+[2018-08-27 17:48:30] <endogenic> hmmmmm
+[2018-08-27 17:48:46] <endogenic> btw i -think- i've identified anycoin as one of the wallets sending with ringsize 8
+[2018-08-27 17:49:01] <sarang> damn off-by-one...
+[2018-08-27 17:49:29] <sarang> So we have ten minutes remaining
+[2018-08-27 17:49:38] <sarang> Does anyone else wish to share something of interest they are working on?
+[2018-08-27 17:50:13] <sarang> moneromooo: can you comment on the expected status of BP updates relative to our release schedule?
+[2018-08-27 17:52:29] <moneromooo> Do you mean "are BPs going in" ? If so, yes.
+[2018-08-27 17:52:41] <sarang> I know there was a cutoff for PR review purposes
+[2018-08-27 17:52:53] <sarang> I assume all that is going smoothly?
+[2018-08-27 17:53:09] <moneromooo> The PR is reviewed and ready to go. The CNv2 changes were supposed to go in too, but the author dropped a large change yesterday :/
+[2018-08-27 17:53:10] <endogenic> also interested. would be good to freeze at some point, if only for a good bit of testing lead time
+[2018-08-27 17:53:20] <moneromooo> So that might push the merge a bit.
+[2018-08-27 17:54:25] <moneromooo> If some of you are familiar with low level bit bashing and hashes, feel free to review ^_^
+[2018-08-27 17:54:45] <sarang> Yeah I've been following the tweak discussion a bit
+[2018-08-27 17:55:05] <endogenic> how worthwhile will it be to have a final review of this code after the final cut ?
+[2018-08-27 17:55:12] <sarang> Updates to BPs will be a point release I suppose?
+[2018-08-27 17:55:13] <endogenic> i mean audit
+[2018-08-27 17:55:38] <moneromooo> If you mean what's not in the current PR, I dunno yet, but it is fairly likely.
+[2018-08-27 17:56:10] <moneromooo> Unless people want the speedups bad :)
+[2018-08-27 17:56:33] <sarang> Eh
+[2018-08-27 17:57:27] <sarang> Well, thanks to everyone for sharing
+[2018-08-27 17:57:39] <sarang> We can adjourn now and keep discussions going as desired
+[2018-08-27 17:57:43] <sarang> </meeting>

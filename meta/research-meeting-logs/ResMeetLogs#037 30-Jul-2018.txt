@@ -1,105 +1,105 @@
-[2018-07-30 09:58:58] <sarang> We can start now
-[2018-07-30 09:59:01] <sarang> Greetings
-[2018-07-30 10:00:25] <sarang> This will be a brief meeting to catch up on recent research
-[2018-07-30 10:00:39] <sarang> All bulletproof audits have completed
-[2018-07-30 10:01:13] <sarang> Kudelski's final report is posted. QuarksLab is updating theirs with our responses before releasing their final version. Benedikt Bunz is updating his similarly with our feedback.
-[2018-07-30 10:01:15] <silur> yaay
-[2018-07-30 10:01:52] <sarang> I continue to work on some new ring signature algos from Ruffing et al.
-[2018-07-30 10:01:57] <oneiric_> very nice, excited to read the most recent reports
-[2018-07-30 10:02:04] <sarang> lots of fun building blocks with that scheme
-[2018-07-30 10:02:19] <sarang> and suraeNoether has provided a multisig paper for me to review
-[2018-07-30 10:02:24] <sarang> that is also in progress
-[2018-07-30 10:02:30] <sarang> any questions on these things in particular?
-[2018-07-30 10:02:43] <silur> let's collaborate on that I have an implemaentation on the first paper version
-[2018-07-30 10:02:55] <silur> C, openssl
-[2018-07-30 10:03:09] <sarang> silur: sure, the initial parts of the prototype are on my repo, rupol branch, in python
-[2018-07-30 10:03:12] <silur> been working on rtrs for a long time
-[2018-07-30 10:03:55] <silur> okay, will write you after the meeting
-[2018-07-30 10:03:55] <sarang> anything in particular to share regarding your rtrs silur ?
-[2018-07-30 10:04:38] <silur> well we just have to update it to the new-new-new construction
-[2018-07-30 10:04:56] <silur> I only have the unpublished internal version of the first paper
-[2018-07-30 10:05:05] <sarang> righto
-[2018-07-30 10:05:10] <sarang> We shall talk afterward
-[2018-07-30 10:05:17] <sarang> Any other interesting work to be shared?
-[2018-07-30 10:05:45] <endogenic> anyone see a problem with running openssl transpiled via emscripten in a browser?
-[2018-07-30 10:06:08] <sarang> I feel extremely not qualified to answer that properly
-[2018-07-30 10:06:25] <andytoshi> endogenic: openssl, transpiling, emscripten, and browsers are all bad for security
-[2018-07-30 10:06:25] <endogenic> yep, no worries, just throwing it out there
-[2018-07-30 10:06:35] <sarang> lol
-[2018-07-30 10:06:45] <endogenic> then why does monero use it lol
-[2018-07-30 10:06:53] <silur> where?
-[2018-07-30 10:07:07] <andytoshi> monero is writtcen in C++
-[2018-07-30 10:08:01] <endogenic> common/util.cpp (LOL) #include <openssl/sha.h>... ringct/bulletproofs.cc #include <openssl/ssl.h> ...
-[2018-07-30 10:08:34] <silur> yea but where do we transpile it with emscripten?
-[2018-07-30 10:08:46] <endogenic> just asking
-[2018-07-30 10:09:20] <silur> I don't really recommend that
-[2018-07-30 10:09:27] <endogenic> any specific reason?
-[2018-07-30 10:09:43] <silur> don't know about emscripten internals but we used to have a thing called openssl code health tuesdays
-[2018-07-30 10:09:54] <silur> after a month we eliminated 40K dead lines and 8 dead platforms
-[2018-07-30 10:10:06] <silur> I think that's a reason not to include it in browsers
-[2018-07-30 10:10:18] <endogenic> emscripten handles that sort of stuff
-[2018-07-30 10:10:24] <andytoshi> there are lots of reasons that projects might have an openssl dep (bitcoin had one for a while). it takes time to eliminate it as other options are developed
-[2018-07-30 10:10:34] <silur> also it has lots of inline ASM stuff how does emscripten handle that?
-[2018-07-30 10:10:52] <andytoshi> but in all seriousness, if you're doing crypto in a browser, you should stop, because it's snake oil. a browser cannot run code in a secure environment.
-[2018-07-30 10:10:59] <needmoney90> Did anyone check out the paper I posted last week?
-[2018-07-30 10:11:01] <needmoney90> https://arxiv.org/abs/1702.07588
-[2018-07-30 10:11:06] <andytoshi> http://matasano.com/articles/javascript-cryptography/
-[2018-07-30 10:11:30] <endogenic> andytoshi: people are going to run worse web wallets if we don't
-[2018-07-30 10:11:36] <endogenic> run one that is
-[2018-07-30 10:11:51] <needmoney90> I'm curious if FHE can be used for remote node syncing, to allow us to make queries on encrypted data
-[2018-07-30 10:11:56] <endogenic> silur: 1sec
-[2018-07-30 10:12:17] <andytoshi> needmoney90: you want PIR for that, not FHE. and there are existing PIR primitives that are actually implemented and usable (see percy++)
-[2018-07-30 10:12:19] <needmoney90> It's possible that due to our static append only data set that we can't actually hide access patterns
-[2018-07-30 10:12:21] <silur> needmoney90 thanks a lot, it seems super interesting
-[2018-07-30 10:13:00] <needmoney90> Never heard of PIR, got a paper for me?
-[2018-07-30 10:13:06] <needmoney90> Maybe I just don't know the acronym
-[2018-07-30 10:13:58] → QuickBASIC joined (~QuickBASI@2603:9001:1c03:2100:a485:2363:7ae2:5d29)
-[2018-07-30 10:14:11] <sarang> private information retrieval
-[2018-07-30 10:14:29] <silur> lots of stuff on PIR
-[2018-07-30 10:14:47] <silur> thanks for percy++, i'm working with pir a lot for riffle
-[2018-07-30 10:15:46] <silur> where do we need that btw?
-[2018-07-30 10:15:49] <silur> in monero?
-[2018-07-30 10:17:13] <endogenic> silur: emscripten might not be able to handle it, depending on exactly what's there. i guess maybe an alternative implementation exists
-[2018-07-30 10:18:39] <endogenic> people seem to have been able to do it , in any case
-[2018-07-30 10:18:57] <endogenic> 🤞
-[2018-07-30 10:19:14] <oneiric_> is boringssl an option for you?
-[2018-07-30 10:19:15] <endogenic> oh
-[2018-07-30 10:19:19] <endogenic> ./configure --no-asm
-[2018-07-30 10:19:23] <endogenic> of course
-[2018-07-30 10:20:46] <endogenic> oneiric_: not to ignore you - i'll investigate if it becomes necessary
-[2018-07-30 10:20:52] <sarang> Anyone else wish to share something intriguing on their minds?
-[2018-07-30 10:20:55] <sarang> Also welcome andytoshi
-[2018-07-30 10:24:55] <isthmuscrypto> Oh, I can give a #noncense-research-lab summary
-[2018-07-30 10:25:02] <sarang> please
-[2018-07-30 10:25:05] <isthmuscrypto> Lots of action in the Monero Archival Project this week. @n3ptune released a new version of our custom archival daemon, and @serhack has been working wonders, configuring and maintaining our network of global VPS-based nodes.
-[2018-07-30 10:25:14] <isthmuscrypto> I have been playing around with temporal analysis of the blockchain. Miner-reported timestamps were shown to be very unreliable, since 2% of blocks include a timestamp that is *before* the timestamp of the block prior.
-[2018-07-30 10:25:20] <isthmuscrypto> These time-traveling Merlin blocks showed up while scoping out the distribution of wait times. https://usercontent.irccloud-cdn.com/file/tLUEZ9aU/ttblocks.png // Looking at the wait times for the block above and below the Merlin blocks themselves, we see that it is skewed toward a longer interval afterward, suggesting that they are actually being retroactively timestamped.
-[2018-07-30 10:25:31] <isthmuscrypto> Our new daemon (upgraded last night) records the node-receipt timestamp(s) in addition to the miner-reported timestamp, so expect some way more detailed analysis of that soon.
-[2018-07-30 10:25:38] <isthmuscrypto> I'm a little exploratory study of how fast the blockchain syncs at each height. It's mostly a cute novelty, but if there are interesting features (e.g. discontinuities around introduction of new tech), or notable conclusions about empirical scaling, I'll share back here.
-[2018-07-30 10:25:55] <isthmuscrypto> (/end)
-[2018-07-30 10:26:21] <isthmuscrypto> Whoops, here's the second link, showing the skew in wait times before and after Merlin blocks: https://usercontent.irccloud-cdn.com/file/f46p6Ddd/merlin_parent_child
-[2018-07-30 10:26:23] <sarang> this is very interesting work
-[2018-07-30 10:26:53] <andytoshi> sarang: we've made a lot of progress on musig recently; you can see https://github.com/apoelstra/secp256k1/blob/2018-04-taproot/src/modules/musig/musig.md for our current API. may have insights valuable to monero in future when you guys support arbitrary multisigs
-[2018-07-30 10:27:40] <sarang> oh excellent, thanks
-[2018-07-30 10:27:41] → thrmo joined (~thrmo@gateway/tor-sasl/thrmo)
-[2018-07-30 10:29:06] <isthmuscrypto> Shoot, I gave the wrong channel above. #noncesense-research-lab
-[2018-07-30 10:32:46] <sarang> andytoshi: what are the overall plans for musig?
-[2018-07-30 10:36:33] <andytoshi> sarang: well, musig signatures verify identically to schnorr..
-[2018-07-30 10:36:40] <andytoshi> so the goal is for bitcoin to support schnorr as part of taproot
-[2018-07-30 10:36:49] <andytoshi> and then wallets would implement musig if they're doing multisig stuff
-[2018-07-30 10:37:01] <andytoshi> since the resulting multisigs would be smaller/more private than ones using CHECKMULTISIG
-[2018-07-30 10:38:56] <sarang> Great, so laying the groundwork for future wallet code
-[2018-07-30 10:38:57] <sarang> cool
-[2018-07-30 10:39:24] <sarang> It seems fairly quiet here otherwise today, so any other material to share?
-[2018-07-30 10:40:03] <andytoshi> not really, i've mostly been doing rust-bitcoin ecosystem work
-[2018-07-30 10:40:16] <endogenic> yknow people have been transpiling rust to JS too :P
-[2018-07-30 10:40:48] <silur> and wasm :D
-[2018-07-30 10:40:54] <endogenic> well that's what i mean :P
-[2018-07-30 10:41:14] <silur> wasm openssl is not a bad idea tho
-[2018-07-30 10:41:20] <silur> looks like I have a new sideproject
-[2018-07-30 10:41:23] <endogenic> oh that's just what i'm talking about...
-[2018-07-30 10:41:30] <endogenic> whoever beats the other to it i guess
-[2018-07-30 10:41:36] <endogenic> it's easy enough
-[2018-07-30 10:41:38] <endogenic> i have instructions.. :P
-[2018-07-30 10:41:44] <endogenic> i have boost transpiled already..
-[2018-07-30 10:41:54] <sarang> Well, I think we can safely call the meeting then, everyone can continue performing admirably
+[2018-07-30 16:58:58] <sarang> We can start now
+[2018-07-30 16:59:01] <sarang> Greetings
+[2018-07-30 17:00:25] <sarang> This will be a brief meeting to catch up on recent research
+[2018-07-30 17:00:39] <sarang> All bulletproof audits have completed
+[2018-07-30 17:01:13] <sarang> Kudelski's final report is posted. QuarksLab is updating theirs with our responses before releasing their final version. Benedikt Bunz is updating his similarly with our feedback.
+[2018-07-30 17:01:15] <silur> yaay
+[2018-07-30 17:01:52] <sarang> I continue to work on some new ring signature algos from Ruffing et al.
+[2018-07-30 17:01:57] <oneiric_> very nice, excited to read the most recent reports
+[2018-07-30 17:02:04] <sarang> lots of fun building blocks with that scheme
+[2018-07-30 17:02:19] <sarang> and suraeNoether has provided a multisig paper for me to review
+[2018-07-30 17:02:24] <sarang> that is also in progress
+[2018-07-30 17:02:30] <sarang> any questions on these things in particular?
+[2018-07-30 17:02:43] <silur> let's collaborate on that I have an implemaentation on the first paper version
+[2018-07-30 17:02:55] <silur> C, openssl
+[2018-07-30 17:03:09] <sarang> silur: sure, the initial parts of the prototype are on my repo, rupol branch, in python
+[2018-07-30 17:03:12] <silur> been working on rtrs for a long time
+[2018-07-30 17:03:55] <silur> okay, will write you after the meeting
+[2018-07-30 17:03:55] <sarang> anything in particular to share regarding your rtrs silur ?
+[2018-07-30 17:04:38] <silur> well we just have to update it to the new-new-new construction
+[2018-07-30 17:04:56] <silur> I only have the unpublished internal version of the first paper
+[2018-07-30 17:05:05] <sarang> righto
+[2018-07-30 17:05:10] <sarang> We shall talk afterward
+[2018-07-30 17:05:17] <sarang> Any other interesting work to be shared?
+[2018-07-30 17:05:45] <endogenic> anyone see a problem with running openssl transpiled via emscripten in a browser?
+[2018-07-30 17:06:08] <sarang> I feel extremely not qualified to answer that properly
+[2018-07-30 17:06:25] <andytoshi> endogenic: openssl, transpiling, emscripten, and browsers are all bad for security
+[2018-07-30 17:06:25] <endogenic> yep, no worries, just throwing it out there
+[2018-07-30 17:06:35] <sarang> lol
+[2018-07-30 17:06:45] <endogenic> then why does monero use it lol
+[2018-07-30 17:06:53] <silur> where?
+[2018-07-30 17:07:07] <andytoshi> monero is writtcen in C++
+[2018-07-30 17:08:01] <endogenic> common/util.cpp (LOL) #include <openssl/sha.h>... ringct/bulletproofs.cc #include <openssl/ssl.h> ...
+[2018-07-30 17:08:34] <silur> yea but where do we transpile it with emscripten?
+[2018-07-30 17:08:46] <endogenic> just asking
+[2018-07-30 17:09:20] <silur> I don't really recommend that
+[2018-07-30 17:09:27] <endogenic> any specific reason?
+[2018-07-30 17:09:43] <silur> don't know about emscripten internals but we used to have a thing called openssl code health tuesdays
+[2018-07-30 17:09:54] <silur> after a month we eliminated 40K dead lines and 8 dead platforms
+[2018-07-30 17:10:06] <silur> I think that's a reason not to include it in browsers
+[2018-07-30 17:10:18] <endogenic> emscripten handles that sort of stuff
+[2018-07-30 17:10:24] <andytoshi> there are lots of reasons that projects might have an openssl dep (bitcoin had one for a while). it takes time to eliminate it as other options are developed
+[2018-07-30 17:10:34] <silur> also it has lots of inline ASM stuff how does emscripten handle that?
+[2018-07-30 17:10:52] <andytoshi> but in all seriousness, if you're doing crypto in a browser, you should stop, because it's snake oil. a browser cannot run code in a secure environment.
+[2018-07-30 17:10:59] <needmoney90> Did anyone check out the paper I posted last week?
+[2018-07-30 17:11:01] <needmoney90> https://arxiv.org/abs/1702.07588
+[2018-07-30 17:11:06] <andytoshi> http://matasano.com/articles/javascript-cryptography/
+[2018-07-30 17:11:30] <endogenic> andytoshi: people are going to run worse web wallets if we don't
+[2018-07-30 17:11:36] <endogenic> run one that is
+[2018-07-30 17:11:51] <needmoney90> I'm curious if FHE can be used for remote node syncing, to allow us to make queries on encrypted data
+[2018-07-30 17:11:56] <endogenic> silur: 1sec
+[2018-07-30 17:12:17] <andytoshi> needmoney90: you want PIR for that, not FHE. and there are existing PIR primitives that are actually implemented and usable (see percy++)
+[2018-07-30 17:12:19] <needmoney90> It's possible that due to our static append only data set that we can't actually hide access patterns
+[2018-07-30 17:12:21] <silur> needmoney90 thanks a lot, it seems super interesting
+[2018-07-30 17:13:00] <needmoney90> Never heard of PIR, got a paper for me?
+[2018-07-30 17:13:06] <needmoney90> Maybe I just don't know the acronym
+[2018-07-30 17:13:58] → QuickBASIC joined (~QuickBASI@2603:9001:1c03:2100:a485:2363:7ae2:5d29)
+[2018-07-30 17:14:11] <sarang> private information retrieval
+[2018-07-30 17:14:29] <silur> lots of stuff on PIR
+[2018-07-30 17:14:47] <silur> thanks for percy++, i'm working with pir a lot for riffle
+[2018-07-30 17:15:46] <silur> where do we need that btw?
+[2018-07-30 17:15:49] <silur> in monero?
+[2018-07-30 17:17:13] <endogenic> silur: emscripten might not be able to handle it, depending on exactly what's there. i guess maybe an alternative implementation exists
+[2018-07-30 17:18:39] <endogenic> people seem to have been able to do it , in any case
+[2018-07-30 17:18:57] <endogenic> 🤞
+[2018-07-30 17:19:14] <oneiric_> is boringssl an option for you?
+[2018-07-30 17:19:15] <endogenic> oh
+[2018-07-30 17:19:19] <endogenic> ./configure --no-asm
+[2018-07-30 17:19:23] <endogenic> of course
+[2018-07-30 17:20:46] <endogenic> oneiric_: not to ignore you - i'll investigate if it becomes necessary
+[2018-07-30 17:20:52] <sarang> Anyone else wish to share something intriguing on their minds?
+[2018-07-30 17:20:55] <sarang> Also welcome andytoshi
+[2018-07-30 17:24:55] <isthmuscrypto> Oh, I can give a #noncense-research-lab summary
+[2018-07-30 17:25:02] <sarang> please
+[2018-07-30 17:25:05] <isthmuscrypto> Lots of action in the Monero Archival Project this week. @n3ptune released a new version of our custom archival daemon, and @serhack has been working wonders, configuring and maintaining our network of global VPS-based nodes.
+[2018-07-30 17:25:14] <isthmuscrypto> I have been playing around with temporal analysis of the blockchain. Miner-reported timestamps were shown to be very unreliable, since 2% of blocks include a timestamp that is *before* the timestamp of the block prior.
+[2018-07-30 17:25:20] <isthmuscrypto> These time-traveling Merlin blocks showed up while scoping out the distribution of wait times. https://usercontent.irccloud-cdn.com/file/tLUEZ9aU/ttblocks.png // Looking at the wait times for the block above and below the Merlin blocks themselves, we see that it is skewed toward a longer interval afterward, suggesting that they are actually being retroactively timestamped.
+[2018-07-30 17:25:31] <isthmuscrypto> Our new daemon (upgraded last night) records the node-receipt timestamp(s) in addition to the miner-reported timestamp, so expect some way more detailed analysis of that soon.
+[2018-07-30 17:25:38] <isthmuscrypto> I'm a little exploratory study of how fast the blockchain syncs at each height. It's mostly a cute novelty, but if there are interesting features (e.g. discontinuities around introduction of new tech), or notable conclusions about empirical scaling, I'll share back here.
+[2018-07-30 17:25:55] <isthmuscrypto> (/end)
+[2018-07-30 17:26:21] <isthmuscrypto> Whoops, here's the second link, showing the skew in wait times before and after Merlin blocks: https://usercontent.irccloud-cdn.com/file/f46p6Ddd/merlin_parent_child
+[2018-07-30 17:26:23] <sarang> this is very interesting work
+[2018-07-30 17:26:53] <andytoshi> sarang: we've made a lot of progress on musig recently; you can see https://github.com/apoelstra/secp256k1/blob/2018-04-taproot/src/modules/musig/musig.md for our current API. may have insights valuable to monero in future when you guys support arbitrary multisigs
+[2018-07-30 17:27:40] <sarang> oh excellent, thanks
+[2018-07-30 17:27:41] → thrmo joined (~thrmo@gateway/tor-sasl/thrmo)
+[2018-07-30 17:29:06] <isthmuscrypto> Shoot, I gave the wrong channel above. #noncesense-research-lab
+[2018-07-30 17:32:46] <sarang> andytoshi: what are the overall plans for musig?
+[2018-07-30 17:36:33] <andytoshi> sarang: well, musig signatures verify identically to schnorr..
+[2018-07-30 17:36:40] <andytoshi> so the goal is for bitcoin to support schnorr as part of taproot
+[2018-07-30 17:36:49] <andytoshi> and then wallets would implement musig if they're doing multisig stuff
+[2018-07-30 17:37:01] <andytoshi> since the resulting multisigs would be smaller/more private than ones using CHECKMULTISIG
+[2018-07-30 17:38:56] <sarang> Great, so laying the groundwork for future wallet code
+[2018-07-30 17:38:57] <sarang> cool
+[2018-07-30 17:39:24] <sarang> It seems fairly quiet here otherwise today, so any other material to share?
+[2018-07-30 17:40:03] <andytoshi> not really, i've mostly been doing rust-bitcoin ecosystem work
+[2018-07-30 17:40:16] <endogenic> yknow people have been transpiling rust to JS too :P
+[2018-07-30 17:40:48] <silur> and wasm :D
+[2018-07-30 17:40:54] <endogenic> well that's what i mean :P
+[2018-07-30 17:41:14] <silur> wasm openssl is not a bad idea tho
+[2018-07-30 17:41:20] <silur> looks like I have a new sideproject
+[2018-07-30 17:41:23] <endogenic> oh that's just what i'm talking about...
+[2018-07-30 17:41:30] <endogenic> whoever beats the other to it i guess
+[2018-07-30 17:41:36] <endogenic> it's easy enough
+[2018-07-30 17:41:38] <endogenic> i have instructions.. :P
+[2018-07-30 17:41:44] <endogenic> i have boost transpiled already..
+[2018-07-30 17:41:54] <sarang> Well, I think we can safely call the meeting then, everyone can continue performing admirably

@@ -1,177 +1,177 @@
-[2018-02-19 09:01:33] <suraeNoether> allrighty, howdy everyone
-[2018-02-19 09:01:39] <suraeNoether> \topic Research meeting now~
-[2018-02-19 09:01:42] <suraeNoether> awww
-[2018-02-19 09:01:49] * suraeNoether set the topic to Research meeting now~
-[2018-02-19 09:02:13] <sarang> hullo
-[2018-02-19 09:02:38] → rehrar joined (~Diego@174-28-44-216.albq.qwest.net)
-[2018-02-19 09:02:42] <rehrar> yeah!
-[2018-02-19 09:05:07] <suraeNoether> so
-[2018-02-19 09:05:17] <sarang> indeed
-[2018-02-19 09:05:19] <suraeNoether> before we get going, does anyone have any questions?
-[2018-02-19 09:05:38] <rehrar> pertaining to?
-[2018-02-19 09:05:44] <suraeNoether> anything, really. :P
-[2018-02-19 09:06:06] <rehrar> Are pancakes better with or without chocolate chips?
-[2018-02-19 09:06:14] <sarang> Well, I see the two big topics right now are output identification (a la MoneroV) and PoW change
-[2018-02-19 09:06:19] <sarang> at least for immediacy
-[2018-02-19 09:06:29] <rehrar> *shuts up to let smart people talk*
-[2018-02-19 09:06:53] <suraeNoether> oh, i think blueberries are better
-[2018-02-19 09:07:01] <suraeNoether> but that's none of my business
-[2018-02-19 09:07:24] <suraeNoether> yeah, i imagine at least some people have questions about how to keep their outputs safe with MoneroV and our PoW change discussion
-[2018-02-19 09:08:17] <sarang> I think a related question that's valid is "what do we plan to do about this?"
-[2018-02-19 09:08:54] <suraeNoether> but we can maybe hold that until the end of the discussion: basically, "what i've done this week" has been multisig. i have the paper down to low 20s pages, and i have one security proof left to complete, and i need to clean up the appendix describing our code.
-[2018-02-19 09:09:13] <suraeNoether> sarang before we move onto the more obvious stuff, want to give us a brief review of your week?
-[2018-02-19 09:09:51] <sarang> Sure, some course planning for the summer, reviewing SoWs and discussing with Benedikt, some paper reading
-[2018-02-19 09:09:53] <rehrar> Sorry, couple questions on multisig paper. 1. ETA? 2. Submit for peer review?
-[2018-02-19 09:09:56] <sarang> A lighter week than last
-[2018-02-19 09:10:47] <sarang> Oh, and writing up a talk on privacy coins for next month
-[2018-02-19 09:10:52] <sarang> (due this week)
-[2018-02-19 09:10:53] <suraeNoether> 1) ETA ... i am hoping to finish it today. so quadruple that and maybe i'll be 10% correct. :P 
-[2018-02-19 09:10:58] <suraeNoether> we are definitely submitting it for peer review
-[2018-02-19 09:11:13] <rehrar> Nice! It will be 'White' no more
-[2018-02-19 09:11:55] <suraeNoether> i'm so close to finishign this thing, i'm hoping for mid-week to release the whitepaper version of it to the community and upload it (perhaps) to arxiv or something, after i get a brief review by sarang
-[2018-02-19 09:12:14] <sarang> Yeah, BPASE work threw a temporary wrench at it
-[2018-02-19 09:12:19] <suraeNoether> does anyone want to describe their work this week? I know chachasmooth has been learning about elliptic curves
-[2018-02-19 09:12:20] <sarang> but that's the nature of research
-[2018-02-19 09:12:47] → p0nziph0ne joined (p0nziph0ne@gateway/vpn/privateinternetaccess/p0nziph0ne)
-[2018-02-19 09:13:16] <sarang> Well I am finalizing my privacy talk, which focuses on some definitions of privacy and compares privacy techologies used in coins today
-[2018-02-19 09:13:32] <sarang> It focuses heavily on Monero but tries to do a fair assessment of the playing field
-[2018-02-19 09:14:15] <suraeNoether> nice, i want to actually talk about a simplification of the EABE attack that is concerning to me
-[2018-02-19 09:14:33] <sarang> I was also asked to lead a one-day short course on data analysis at the SciPy conference this year, so I'm using blockchain data as the project
-[2018-02-19 09:14:47] <sarang> Some good PR and hopefully some interesting analysis we hadn't thought of before
-[2018-02-19 09:14:58] <sarang> Anyway, go ahead suraeNoether
-[2018-02-19 09:15:07] <suraeNoether> I'm thinking perhaps we need to put out a statement, because there is at least one very common scenario in which people think Monero is protecting them with signer ambiguity, but it really isn't
-[2018-02-19 09:15:28] <suraeNoether> and it's the EAE attack, actually, where someone buying something from you is colluding with a KYC exchange
-[2018-02-19 09:16:52] <suraeNoether> in this case, it should be obvious: Alice is surrounded by the KYC exchange, who knows her personal identity, address, etc, and also knows the one-time destination keys being used by Alice for these purchases they are making from you
-[2018-02-19 09:18:39] <suraeNoether> once the KYC exchange has collected a sample size of deposits from Alice, that KYC exchange can look into the history of these deposits and identify one-time keys that were flagged from earlier.
-[2018-02-19 09:18:46] <sarang> right
-[2018-02-19 09:19:25] <suraeNoether> unless alice makes an extremely expensive churn, the appearance of these flagged outputs will occur in the history of these deposits more often than chance would dictate if the ring signatures were being randomly created by other users
-[2018-02-19 09:21:12] <suraeNoether> there isn't a quick and easy solution to this, and users who are very concerned about their privacy should not send their monero to KYC exchanges
-[2018-02-19 09:22:15] <sarang> I think it brings us back to the nature of ring signatures in general
-[2018-02-19 09:22:21] <sarang> They're to offer plausible deniability
-[2018-02-19 09:22:37] <sarang> but statistics will always be a problem unless ring sizes are very large
-[2018-02-19 09:23:12] <suraeNoether> yes. it's objectively better than using something like bitcoin due to plausible deniability, but it's still concerning
-[2018-02-19 09:23:37] <rehrar> does this potentially point to, somewhere down the line in the future, moving to a more bullet proof (pardon the pun) scheme?
-[2018-02-19 09:23:43] <sarang> I think it has to
-[2018-02-19 09:23:48] <suraeNoether> yeah
-[2018-02-19 09:23:57] <sarang> Full anonymity set is the only guaranteed way to thwart statistical analysis
-[2018-02-19 09:23:59] → gsee joined (~gsee@184.75.223.227)
-[2018-02-19 09:24:12] <sarang> This, the MoneroV thing, they all tie in to ring intersections and statistics
-[2018-02-19 09:24:16] <rehrar> does STARKS also have full anonymity set?
-[2018-02-19 09:24:20] <suraeNoether> one of the things fluffypony asked me to look into when i first began this was looking into things like zk-snark sidechains, so we have been considering this for awhile
-[2018-02-19 09:24:24] <suraeNoether> they allegedly do, yes
-[2018-02-19 09:24:26] <andytoshi> rehrar: STARKs is just a tech
-[2018-02-19 09:24:34] <sarang> yes
-[2018-02-19 09:24:34] <suraeNoether> ?
-[2018-02-19 09:24:42] <andytoshi> it's for zero knowledge proofs
-[2018-02-19 09:24:49] <sarang> The goal is just to prove the output is valid
-[2018-02-19 09:24:50] <andytoshi> "full anonymity set" applies to some specific system
-[2018-02-19 09:24:54] <sarang> right
-[2018-02-19 09:24:59] <rehrar> ah, apologies
-[2018-02-19 09:25:08] <suraeNoether> yeah, the implicit quesiton is "would we be using starks to implement a full anon set"
-[2018-02-19 09:25:23] <andytoshi> the answer to that is no, it's not feasible. bulletproofs would be faster for that
-[2018-02-19 09:25:26] <andytoshi> and smaller
-[2018-02-19 09:25:36] <andytoshi> and BPs aren't quite there i think
-[2018-02-19 09:26:00] <sarang> I mean, this problem isn't limited to us
-[2018-02-19 09:26:03] <suraeNoether> starks is new, but so are BPs. i think BPs will allow us to get some impressively large anonymity sets
-[2018-02-19 09:26:22] <sarang> There is not a good, efficient way to handle it... zcash has the same problem with different sacrifices
-[2018-02-19 09:26:51] <andytoshi> yeah..pretty sure BPs have a faster prover than SNARKs
-[2018-02-19 09:26:54] <suraeNoether> sarang ^ this is also correct, most users who use zcash make transactions they wish to be kept private as a z-transaction, but they end up depositing to KYC exchanges as t-transactions
-[2018-02-19 09:27:41] <rehrar> so the answer is almost a social one, wherein people don't need to trade to KYC exchange, because they can purchase whatever they want in Monero
-[2018-02-19 09:27:52] <rehrar> *one of the answers
-[2018-02-19 09:28:14] <suraeNoether> so, this is an *open problem* in some senses, but my point is this: the current wisdom about best practices is to churn a lot and you're good. but that's not the case without impractically large churns, and the best practice is merely to avoid KYC exchanges
-[2018-02-19 09:28:56] <andytoshi> KYC has nothing to do with whether you publish your transaction data on a blockchain, think exchanges are just too lazy to implement z-transaction support
-[2018-02-19 09:29:13] <sarang> Part of the social problem is an identification of what exactly you're trying to accomplish with hiding transactions
-[2018-02-19 09:29:51] <sarang> At what point does "plausible deniability" fall apart in the face of ring statistics?
-[2018-02-19 09:29:58] <suraeNoether> in general, if a business is a KYC business (say a local coffee shop who happens to know you), you still have a similar problem while using Monero. really the best advice is: if you like your privacy in Monero, don't send Monero to people who know your name
-[2018-02-19 09:30:01] <sarang> that's not clear
-[2018-02-19 09:30:18] <suraeNoether> sarang with a sufficiently large sample size, after the "attacker" has made a sufficiently large number of controlled purchass
-[2018-02-19 09:30:22] <rehrar> I guess it may be more of a economics question, but is plausible deniability enough for fungibility than absolute anonymity? Because to answer sarang's question: for the common folk, fungibility would be what they're after
-[2018-02-19 09:30:32] <suraeNoether> purchass = purchases, but purchass sounds like a really great stripper name
-[2018-02-19 09:31:06] <sarang> rehrar: sure, but an exchange or police or whatever can decide when their analysis reveals a "probably bad" output
-[2018-02-19 09:31:16] <rehrar> even if they don't know the word fungiblity :P No merchant or individual wants to go through the headache of checking each received coin for 'taintedness'
-[2018-02-19 09:31:24] <sarang> it's the same issue with burden of proof in the court system, IMHO
-[2018-02-19 09:31:40] <suraeNoether> rehrar: I believe plausible deniability with a large enough scope is fine. 
-[2018-02-19 09:31:58] <sarang> Right, but there is not a definition of "large enough"
-[2018-02-19 09:32:05] <sarang> depends on the context
-[2018-02-19 09:32:23] <sarang> nor is there a good definition of "plausible deniability"
-[2018-02-19 09:33:55] <gsee> When Fluffy spoke at Coinbase, he suggested that maybe they would be more comfortable listing monero and meeting their KYC/AML requirements if they required users to provide their view keys.  Would that damage privacy of others?
-[2018-02-19 09:34:15] <suraeNoether> gsee not at all, and in fact that's what the view key is sort of for
-[2018-02-19 09:34:35] <gsee> what if they also required users to provide key images so to prove a wallet balance?
-[2018-02-19 09:35:33] <suraeNoether> that would have pretty nasty consequences: coinbase would have a list of proven-spent transactions, reducing the effective ring sizes of all outputs
-[2018-02-19 09:35:52] <rehrar> What would it take to get some good research done on 'large enough' and 'plausible deniability' definitions, or at least try to get ballpark stuff?
-[2018-02-19 09:36:11] <rehrar> I think that's some pretty important stuff to be able to define within reason
-[2018-02-19 09:36:25] <suraeNoether> well, my working definition of "large enough" works like this
-[2018-02-19 09:36:26] <gsee> thanks suraeNoether, that's what I was thinking.  Just wanted to doublecheck.
-[2018-02-19 09:36:39] ⇐ p0nziph0ne quit (p0nziph0ne@gateway/vpn/privateinternetaccess/p0nziph0ne): Quit: Leaving
-[2018-02-19 09:36:43] <suraeNoether> let's say you churn N times with ring size R
-[2018-02-19 09:37:25] <gsee> On a similar note, I have to prove our balances to auditors once a year.  Showing them view keys and key images might be a bad idea then.
-[2018-02-19 09:38:04] <suraeNoether> this means you have R^(N-1) independent ring signatures, each with R members. and the question is: if Eve knows Alice has A different outputs on the whole blockchain, whcih has B outputs, and if all outputs are selected for ring signatures at uniform randomly, *how likely is it that we see one of Alice's suspicious one-time keys appear in one of these R^(N-1) ring signatures?*
-[2018-02-19 09:38:52] <suraeNoether> how hard is it to *look like a random sequence of transactions?*
-[2018-02-19 09:39:13] <suraeNoether> anyway rehrar, i've been looking into it for awhile
-[2018-02-19 09:39:36] <suraeNoether> but for now i think we need to put out a statement that monero user keys interested in privacy should not be shared with a KYC exchange in any way
-[2018-02-19 09:40:40] <rehrar> logistics question for me, the website guy: Do we want to put this and any future bulletins under the MRL page on the website?
-[2018-02-19 09:40:49] <rehrar> Or just the repo is good enough with a link to it?
-[2018-02-19 09:40:50] <scoobybejesus> When is it time for MoneroV talk?  I have a question.  Sort of a two-parter.
-[2018-02-19 09:41:03] <sarang> Well, MoneroV is related
-[2018-02-19 09:41:09] <suraeNoether> essentially, if we want like... concrete cryptographic security, we would need to churn... a lot
-[2018-02-19 09:41:41] <scoobybejesus> Question: MoneroV key images. Let's say the MoneroV team chooses to acquiesce and change their key image by hashing another parameter (or something)...
-[2018-02-19 09:41:49] <scoobybejesus> If their key images are a Monero-key-image-hashed-with-something-else, does that mean there is no way (discrete log-wise) to "tie" pre-fork Monero key images to their respective key images in MoneroV?
-[2018-02-19 09:41:57] <scoobybejesus> Or - maybe a better way to ask - is there even a way to take an existing Monero key image, do something to it, have it be useful on the MoneroV chain as double-spend prevention, while still not being "tied" to the Monero key image from whence it came?
-[2018-02-19 09:42:08] <suraeNoether> rehrar I'm unsure on that
-[2018-02-19 09:43:16] <suraeNoether> scoobybejesus: we thought at first monerov could compute key images differently, but the algebra doesn't appear to work out without allowing double spends
-[2018-02-19 09:43:34] <suraeNoether> without some sort of wizardry anyway
-[2018-02-19 09:43:36] <sarang> Well with a hash scheme there would be no way to link them, no
-[2018-02-19 09:43:49] <sarang> But ^ to what suraeNoether sez
-[2018-02-19 09:43:57] <suraeNoether> the only way i know of to safely claim your monerov is to try to fashion the same ring on both chains
-[2018-02-19 09:44:17] <suraeNoether> hmm, what about doubly hashing the point P?
-[2018-02-19 09:44:30] <suraeNoether> nope, still have the double spend problem
-[2018-02-19 09:44:34] <sarang> yup
-[2018-02-19 09:44:36] <sgp_[m]> ^ assuming no chain reactions
-[2018-02-19 09:45:04] <andytoshi> you can hash every known key image with a per-chain salt, then require users reveal only the hashed key image for future spends (and BP that they hashed the key image correctly)
-[2018-02-19 09:45:10] <andytoshi> but that's waay more work than we can expect scammers to do
-[2018-02-19 09:45:15] <suraeNoether> oh yeah, i suppose you are also assuming your fellow ring members are also computing identical rings on both chains
-[2018-02-19 09:46:06] <sarang> oh andytoshi so you mean go back and retroactively update the used image list?
-[2018-02-19 09:46:14] <sarang> interesting
-[2018-02-19 09:46:34] <suraeNoether> andytoshi i almost feel like we should make it an easy to use utility so we can point to unsafe projects and say "how come they aren't using our safe-to-use BP utility to ensure they don't shit in the punchbowl"?
-[2018-02-19 09:46:54] <sarang> suraeNoether: I don't think you can shame them like that
-[2018-02-19 09:46:54] <gsee> should users consolidate outputs before the fork? just in case they're going to try to create the same ring on both chain, it would be easier to do with fewer outputs, right?
-[2018-02-19 09:47:01] <suraeNoether> feels like an easy public relations way to deal with malicious shit in the future like this
-[2018-02-19 09:47:31] <suraeNoether> gsee: sure, but you are (see above) relying on any ring members to do the same as you
-[2018-02-19 09:47:43] <sgp_[m]> Perhaps, it is a social attack after all
-[2018-02-19 09:47:51] <suraeNoether> if half of your ring members don't know what to do and spend their shit on both forks in a sloppy way, then your effective ring size shrinks in a chain reaction
-[2018-02-19 09:48:29] <suraeNoether> because their output is now provably spent and can be removed from any rings referencing it
-[2018-02-19 09:48:44] <sgp_[m]> And with ringsize 5, you would have to expect ~2/3 of transactions on MoneroV to use that tool
-[2018-02-19 09:49:43] <suraeNoether> sounds about correct. seems like a real easy way to part fools from their money. fluffypony don't we have a public relations firm now?
-[2018-02-19 09:50:24] <suraeNoether> monerov is a pretty brilliant social attack. probably not state actors because the result is a public de-anonymization instead of secretly gathering intel, but pretty brilliant
-[2018-02-19 09:50:50] <suraeNoether> i could be convinced its the cryptonote guys
-[2018-02-19 09:52:00] <suraeNoether> anyway, it is unsafe to use your key images on another chain, period
-[2018-02-19 09:52:25] <suraeNoether> if you broadcast your key images in general, you are also opening yourself up to transaction censorship
-[2018-02-19 09:52:38] <gsee> MoneroV might not be state sponsored, but the next one might be.  Or a state may decide to bid up the price of moneroV in order to entice people to spend their moneroV
-[2018-02-19 09:52:48] <suraeNoether> yeah, maybe
-[2018-02-19 09:54:06] <suraeNoether> it's just, in general, key images are sort of like commitments to a transaction. Opening the commitment, sharing the key image, is part of broadcasting a transaction. it shouldn't be seen as a standalone piece that can be treated separately like a view key
-[2018-02-19 09:55:19] <suraeNoether> okay, so today we've spoken about my and sarang's work from this past week briefly, and we discussed the EAE attack (rehrar, pm me, don't make any changes until we've chatted with fluffypony and luigi1111  and moneromooo and others), and the MoneroV airdrop
-[2018-02-19 09:56:03] <rehrar> no changes will be made
-[2018-02-19 09:57:11] <sgp_[m]> I suppose now's a good time for me to ask if you think it's prudent to increase the ringsize to mitigate the damage of a chain split attack. If the costs are minimal compared to the benefits
-[2018-02-19 09:57:13] <sarang> any other updates or questions about other non-pants-on-fire things?
-[2018-02-19 09:57:23] <suraeNoether> I believe we can summarize the EAE attack as: don't use private money with non-private businesses (KYC exchanges in particular). in the meantime, I'm going to think about a threat model. and we can summarize the MoneroV airdrop as: don't use your Monero key images on the MoneroV blockchain. period. 
-[2018-02-19 09:57:40] <andytoshi> sgp_[m]: to increase the ringsize dramatically will require new tech (RTRS or BPs)
-[2018-02-19 09:57:59] <andytoshi> just doubling it or something won't really help i think
-[2018-02-19 09:58:14] <suraeNoether> to increase the ringsize moderately will not be a sufficient protection against the EAE problem 
-[2018-02-19 09:58:17] <suraeNoether> ^
-[2018-02-19 09:58:21] <gsee> i have a question. Not sure if this is the best place/time to ask, so we can take it offline if necessary.  Is there any way to prove what my wallet's balance was on Dec 31st to an auditor if I have made transactions since then?
-[2018-02-19 09:58:36] <suraeNoether> i believe we don't see a lot of benefit until we get ring sizes in the 20s, last time I ran computations, but don't quote me
-[2018-02-19 09:58:45] <sgp_[m]> Won't help EAE, but would help chain split issue
-[2018-02-19 09:58:54] <andytoshi> gsee: yes but you'll need provisions or something
-[2018-02-19 09:59:25] <andytoshi> oh, no, just a view key + the public blockchain will be enough
-[2018-02-19 09:59:53] <suraeNoether> it would probably be sufficient to reveal to an auditor the private transaction key for each transaction, but that reveals a lot more information to the auditor than if you reveal the key images that you've spent
-[2018-02-19 10:00:11] <moneromooo> You see all incoming monero along with block heights, and you can scan the chain for the height a key image was spent, if any. So yes. The DB has no index for key image -> height-or-tx though, so slow.
-[2018-02-19 10:00:31] <iDunk> If he spent from tha wallet, then change would appear as new income.
-[2018-02-19 10:00:52] <suraeNoether> i imagine in most *legal* situations gsee, you could merely present a screenshot of your wallet balance
-[2018-02-19 10:00:54] <suraeNoether> tbh
-[2018-02-19 10:01:15] <gsee> that's what we're leaning towards right now. Actually having someone stand over my shoulder while I show the balance
-[2018-02-19 10:01:25] <suraeNoether> but if you reveal your key images, again, you are proving some outputs as spent to an auditor, which reduces the effective ring size of any other signatures depending on your keys
-[2018-02-19 10:01:34] <suraeNoether> gsee if that's an option, do it that way
-[2018-02-19 10:01:50] <suraeNoether> requires no cryptographic trickery
-[2018-02-19 10:02:03] <suraeNoether> meatspace is like... the best at keeping secrets
-[2018-02-19 10:03:07] <suraeNoether> in practice,  most cryptographic protocols can be broken with a hammer or a 4 dollar wrench in a rather nasty sidechannel attack. :P
-[2018-02-19 10:03:36] <sarang> So, what's everyone's priorities for the next week?
+[2018-02-19 17:01:33] <suraeNoether> allrighty, howdy everyone
+[2018-02-19 17:01:39] <suraeNoether> \topic Research meeting now~
+[2018-02-19 17:01:42] <suraeNoether> awww
+[2018-02-19 17:01:49] * suraeNoether set the topic to Research meeting now~
+[2018-02-19 17:02:13] <sarang> hullo
+[2018-02-19 17:02:38] → rehrar joined (~Diego@174-28-44-216.albq.qwest.net)
+[2018-02-19 17:02:42] <rehrar> yeah!
+[2018-02-19 17:05:07] <suraeNoether> so
+[2018-02-19 17:05:17] <sarang> indeed
+[2018-02-19 17:05:19] <suraeNoether> before we get going, does anyone have any questions?
+[2018-02-19 17:05:38] <rehrar> pertaining to?
+[2018-02-19 17:05:44] <suraeNoether> anything, really. :P
+[2018-02-19 17:06:06] <rehrar> Are pancakes better with or without chocolate chips?
+[2018-02-19 17:06:14] <sarang> Well, I see the two big topics right now are output identification (a la MoneroV) and PoW change
+[2018-02-19 17:06:19] <sarang> at least for immediacy
+[2018-02-19 17:06:29] <rehrar> *shuts up to let smart people talk*
+[2018-02-19 17:06:53] <suraeNoether> oh, i think blueberries are better
+[2018-02-19 17:07:01] <suraeNoether> but that's none of my business
+[2018-02-19 17:07:24] <suraeNoether> yeah, i imagine at least some people have questions about how to keep their outputs safe with MoneroV and our PoW change discussion
+[2018-02-19 17:08:17] <sarang> I think a related question that's valid is "what do we plan to do about this?"
+[2018-02-19 17:08:54] <suraeNoether> but we can maybe hold that until the end of the discussion: basically, "what i've done this week" has been multisig. i have the paper down to low 20s pages, and i have one security proof left to complete, and i need to clean up the appendix describing our code.
+[2018-02-19 17:09:13] <suraeNoether> sarang before we move onto the more obvious stuff, want to give us a brief review of your week?
+[2018-02-19 17:09:51] <sarang> Sure, some course planning for the summer, reviewing SoWs and discussing with Benedikt, some paper reading
+[2018-02-19 17:09:53] <rehrar> Sorry, couple questions on multisig paper. 1. ETA? 2. Submit for peer review?
+[2018-02-19 17:09:56] <sarang> A lighter week than last
+[2018-02-19 17:10:47] <sarang> Oh, and writing up a talk on privacy coins for next month
+[2018-02-19 17:10:52] <sarang> (due this week)
+[2018-02-19 17:10:53] <suraeNoether> 1) ETA ... i am hoping to finish it today. so quadruple that and maybe i'll be 10% correct. :P 
+[2018-02-19 17:10:58] <suraeNoether> we are definitely submitting it for peer review
+[2018-02-19 17:11:13] <rehrar> Nice! It will be 'White' no more
+[2018-02-19 17:11:55] <suraeNoether> i'm so close to finishign this thing, i'm hoping for mid-week to release the whitepaper version of it to the community and upload it (perhaps) to arxiv or something, after i get a brief review by sarang
+[2018-02-19 17:12:14] <sarang> Yeah, BPASE work threw a temporary wrench at it
+[2018-02-19 17:12:19] <suraeNoether> does anyone want to describe their work this week? I know chachasmooth has been learning about elliptic curves
+[2018-02-19 17:12:20] <sarang> but that's the nature of research
+[2018-02-19 17:12:47] → p0nziph0ne joined (p0nziph0ne@gateway/vpn/privateinternetaccess/p0nziph0ne)
+[2018-02-19 17:13:16] <sarang> Well I am finalizing my privacy talk, which focuses on some definitions of privacy and compares privacy techologies used in coins today
+[2018-02-19 17:13:32] <sarang> It focuses heavily on Monero but tries to do a fair assessment of the playing field
+[2018-02-19 17:14:15] <suraeNoether> nice, i want to actually talk about a simplification of the EABE attack that is concerning to me
+[2018-02-19 17:14:33] <sarang> I was also asked to lead a one-day short course on data analysis at the SciPy conference this year, so I'm using blockchain data as the project
+[2018-02-19 17:14:47] <sarang> Some good PR and hopefully some interesting analysis we hadn't thought of before
+[2018-02-19 17:14:58] <sarang> Anyway, go ahead suraeNoether
+[2018-02-19 17:15:07] <suraeNoether> I'm thinking perhaps we need to put out a statement, because there is at least one very common scenario in which people think Monero is protecting them with signer ambiguity, but it really isn't
+[2018-02-19 17:15:28] <suraeNoether> and it's the EAE attack, actually, where someone buying something from you is colluding with a KYC exchange
+[2018-02-19 17:16:52] <suraeNoether> in this case, it should be obvious: Alice is surrounded by the KYC exchange, who knows her personal identity, address, etc, and also knows the one-time destination keys being used by Alice for these purchases they are making from you
+[2018-02-19 17:18:39] <suraeNoether> once the KYC exchange has collected a sample size of deposits from Alice, that KYC exchange can look into the history of these deposits and identify one-time keys that were flagged from earlier.
+[2018-02-19 17:18:46] <sarang> right
+[2018-02-19 17:19:25] <suraeNoether> unless alice makes an extremely expensive churn, the appearance of these flagged outputs will occur in the history of these deposits more often than chance would dictate if the ring signatures were being randomly created by other users
+[2018-02-19 17:21:12] <suraeNoether> there isn't a quick and easy solution to this, and users who are very concerned about their privacy should not send their monero to KYC exchanges
+[2018-02-19 17:22:15] <sarang> I think it brings us back to the nature of ring signatures in general
+[2018-02-19 17:22:21] <sarang> They're to offer plausible deniability
+[2018-02-19 17:22:37] <sarang> but statistics will always be a problem unless ring sizes are very large
+[2018-02-19 17:23:12] <suraeNoether> yes. it's objectively better than using something like bitcoin due to plausible deniability, but it's still concerning
+[2018-02-19 17:23:37] <rehrar> does this potentially point to, somewhere down the line in the future, moving to a more bullet proof (pardon the pun) scheme?
+[2018-02-19 17:23:43] <sarang> I think it has to
+[2018-02-19 17:23:48] <suraeNoether> yeah
+[2018-02-19 17:23:57] <sarang> Full anonymity set is the only guaranteed way to thwart statistical analysis
+[2018-02-19 17:23:59] → gsee joined (~gsee@184.75.223.227)
+[2018-02-19 17:24:12] <sarang> This, the MoneroV thing, they all tie in to ring intersections and statistics
+[2018-02-19 17:24:16] <rehrar> does STARKS also have full anonymity set?
+[2018-02-19 17:24:20] <suraeNoether> one of the things fluffypony asked me to look into when i first began this was looking into things like zk-snark sidechains, so we have been considering this for awhile
+[2018-02-19 17:24:24] <suraeNoether> they allegedly do, yes
+[2018-02-19 17:24:26] <andytoshi> rehrar: STARKs is just a tech
+[2018-02-19 17:24:34] <sarang> yes
+[2018-02-19 17:24:34] <suraeNoether> ?
+[2018-02-19 17:24:42] <andytoshi> it's for zero knowledge proofs
+[2018-02-19 17:24:49] <sarang> The goal is just to prove the output is valid
+[2018-02-19 17:24:50] <andytoshi> "full anonymity set" applies to some specific system
+[2018-02-19 17:24:54] <sarang> right
+[2018-02-19 17:24:59] <rehrar> ah, apologies
+[2018-02-19 17:25:08] <suraeNoether> yeah, the implicit quesiton is "would we be using starks to implement a full anon set"
+[2018-02-19 17:25:23] <andytoshi> the answer to that is no, it's not feasible. bulletproofs would be faster for that
+[2018-02-19 17:25:26] <andytoshi> and smaller
+[2018-02-19 17:25:36] <andytoshi> and BPs aren't quite there i think
+[2018-02-19 17:26:00] <sarang> I mean, this problem isn't limited to us
+[2018-02-19 17:26:03] <suraeNoether> starks is new, but so are BPs. i think BPs will allow us to get some impressively large anonymity sets
+[2018-02-19 17:26:22] <sarang> There is not a good, efficient way to handle it... zcash has the same problem with different sacrifices
+[2018-02-19 17:26:51] <andytoshi> yeah..pretty sure BPs have a faster prover than SNARKs
+[2018-02-19 17:26:54] <suraeNoether> sarang ^ this is also correct, most users who use zcash make transactions they wish to be kept private as a z-transaction, but they end up depositing to KYC exchanges as t-transactions
+[2018-02-19 17:27:41] <rehrar> so the answer is almost a social one, wherein people don't need to trade to KYC exchange, because they can purchase whatever they want in Monero
+[2018-02-19 17:27:52] <rehrar> *one of the answers
+[2018-02-19 17:28:14] <suraeNoether> so, this is an *open problem* in some senses, but my point is this: the current wisdom about best practices is to churn a lot and you're good. but that's not the case without impractically large churns, and the best practice is merely to avoid KYC exchanges
+[2018-02-19 17:28:56] <andytoshi> KYC has nothing to do with whether you publish your transaction data on a blockchain, think exchanges are just too lazy to implement z-transaction support
+[2018-02-19 17:29:13] <sarang> Part of the social problem is an identification of what exactly you're trying to accomplish with hiding transactions
+[2018-02-19 17:29:51] <sarang> At what point does "plausible deniability" fall apart in the face of ring statistics?
+[2018-02-19 17:29:58] <suraeNoether> in general, if a business is a KYC business (say a local coffee shop who happens to know you), you still have a similar problem while using Monero. really the best advice is: if you like your privacy in Monero, don't send Monero to people who know your name
+[2018-02-19 17:30:01] <sarang> that's not clear
+[2018-02-19 17:30:18] <suraeNoether> sarang with a sufficiently large sample size, after the "attacker" has made a sufficiently large number of controlled purchass
+[2018-02-19 17:30:22] <rehrar> I guess it may be more of a economics question, but is plausible deniability enough for fungibility than absolute anonymity? Because to answer sarang's question: for the common folk, fungibility would be what they're after
+[2018-02-19 17:30:32] <suraeNoether> purchass = purchases, but purchass sounds like a really great stripper name
+[2018-02-19 17:31:06] <sarang> rehrar: sure, but an exchange or police or whatever can decide when their analysis reveals a "probably bad" output
+[2018-02-19 17:31:16] <rehrar> even if they don't know the word fungiblity :P No merchant or individual wants to go through the headache of checking each received coin for 'taintedness'
+[2018-02-19 17:31:24] <sarang> it's the same issue with burden of proof in the court system, IMHO
+[2018-02-19 17:31:40] <suraeNoether> rehrar: I believe plausible deniability with a large enough scope is fine. 
+[2018-02-19 17:31:58] <sarang> Right, but there is not a definition of "large enough"
+[2018-02-19 17:32:05] <sarang> depends on the context
+[2018-02-19 17:32:23] <sarang> nor is there a good definition of "plausible deniability"
+[2018-02-19 17:33:55] <gsee> When Fluffy spoke at Coinbase, he suggested that maybe they would be more comfortable listing monero and meeting their KYC/AML requirements if they required users to provide their view keys.  Would that damage privacy of others?
+[2018-02-19 17:34:15] <suraeNoether> gsee not at all, and in fact that's what the view key is sort of for
+[2018-02-19 17:34:35] <gsee> what if they also required users to provide key images so to prove a wallet balance?
+[2018-02-19 17:35:33] <suraeNoether> that would have pretty nasty consequences: coinbase would have a list of proven-spent transactions, reducing the effective ring sizes of all outputs
+[2018-02-19 17:35:52] <rehrar> What would it take to get some good research done on 'large enough' and 'plausible deniability' definitions, or at least try to get ballpark stuff?
+[2018-02-19 17:36:11] <rehrar> I think that's some pretty important stuff to be able to define within reason
+[2018-02-19 17:36:25] <suraeNoether> well, my working definition of "large enough" works like this
+[2018-02-19 17:36:26] <gsee> thanks suraeNoether, that's what I was thinking.  Just wanted to doublecheck.
+[2018-02-19 17:36:39] ⇐ p0nziph0ne quit (p0nziph0ne@gateway/vpn/privateinternetaccess/p0nziph0ne): Quit: Leaving
+[2018-02-19 17:36:43] <suraeNoether> let's say you churn N times with ring size R
+[2018-02-19 17:37:25] <gsee> On a similar note, I have to prove our balances to auditors once a year.  Showing them view keys and key images might be a bad idea then.
+[2018-02-19 17:38:04] <suraeNoether> this means you have R^(N-1) independent ring signatures, each with R members. and the question is: if Eve knows Alice has A different outputs on the whole blockchain, whcih has B outputs, and if all outputs are selected for ring signatures at uniform randomly, *how likely is it that we see one of Alice's suspicious one-time keys appear in one of these R^(N-1) ring signatures?*
+[2018-02-19 17:38:52] <suraeNoether> how hard is it to *look like a random sequence of transactions?*
+[2018-02-19 17:39:13] <suraeNoether> anyway rehrar, i've been looking into it for awhile
+[2018-02-19 17:39:36] <suraeNoether> but for now i think we need to put out a statement that monero user keys interested in privacy should not be shared with a KYC exchange in any way
+[2018-02-19 17:40:40] <rehrar> logistics question for me, the website guy: Do we want to put this and any future bulletins under the MRL page on the website?
+[2018-02-19 17:40:49] <rehrar> Or just the repo is good enough with a link to it?
+[2018-02-19 17:40:50] <scoobybejesus> When is it time for MoneroV talk?  I have a question.  Sort of a two-parter.
+[2018-02-19 17:41:03] <sarang> Well, MoneroV is related
+[2018-02-19 17:41:09] <suraeNoether> essentially, if we want like... concrete cryptographic security, we would need to churn... a lot
+[2018-02-19 17:41:41] <scoobybejesus> Question: MoneroV key images. Let's say the MoneroV team chooses to acquiesce and change their key image by hashing another parameter (or something)...
+[2018-02-19 17:41:49] <scoobybejesus> If their key images are a Monero-key-image-hashed-with-something-else, does that mean there is no way (discrete log-wise) to "tie" pre-fork Monero key images to their respective key images in MoneroV?
+[2018-02-19 17:41:57] <scoobybejesus> Or - maybe a better way to ask - is there even a way to take an existing Monero key image, do something to it, have it be useful on the MoneroV chain as double-spend prevention, while still not being "tied" to the Monero key image from whence it came?
+[2018-02-19 17:42:08] <suraeNoether> rehrar I'm unsure on that
+[2018-02-19 17:43:16] <suraeNoether> scoobybejesus: we thought at first monerov could compute key images differently, but the algebra doesn't appear to work out without allowing double spends
+[2018-02-19 17:43:34] <suraeNoether> without some sort of wizardry anyway
+[2018-02-19 17:43:36] <sarang> Well with a hash scheme there would be no way to link them, no
+[2018-02-19 17:43:49] <sarang> But ^ to what suraeNoether sez
+[2018-02-19 17:43:57] <suraeNoether> the only way i know of to safely claim your monerov is to try to fashion the same ring on both chains
+[2018-02-19 17:44:17] <suraeNoether> hmm, what about doubly hashing the point P?
+[2018-02-19 17:44:30] <suraeNoether> nope, still have the double spend problem
+[2018-02-19 17:44:34] <sarang> yup
+[2018-02-19 17:44:36] <sgp_[m]> ^ assuming no chain reactions
+[2018-02-19 17:45:04] <andytoshi> you can hash every known key image with a per-chain salt, then require users reveal only the hashed key image for future spends (and BP that they hashed the key image correctly)
+[2018-02-19 17:45:10] <andytoshi> but that's waay more work than we can expect scammers to do
+[2018-02-19 17:45:15] <suraeNoether> oh yeah, i suppose you are also assuming your fellow ring members are also computing identical rings on both chains
+[2018-02-19 17:46:06] <sarang> oh andytoshi so you mean go back and retroactively update the used image list?
+[2018-02-19 17:46:14] <sarang> interesting
+[2018-02-19 17:46:34] <suraeNoether> andytoshi i almost feel like we should make it an easy to use utility so we can point to unsafe projects and say "how come they aren't using our safe-to-use BP utility to ensure they don't shit in the punchbowl"?
+[2018-02-19 17:46:54] <sarang> suraeNoether: I don't think you can shame them like that
+[2018-02-19 17:46:54] <gsee> should users consolidate outputs before the fork? just in case they're going to try to create the same ring on both chain, it would be easier to do with fewer outputs, right?
+[2018-02-19 17:47:01] <suraeNoether> feels like an easy public relations way to deal with malicious shit in the future like this
+[2018-02-19 17:47:31] <suraeNoether> gsee: sure, but you are (see above) relying on any ring members to do the same as you
+[2018-02-19 17:47:43] <sgp_[m]> Perhaps, it is a social attack after all
+[2018-02-19 17:47:51] <suraeNoether> if half of your ring members don't know what to do and spend their shit on both forks in a sloppy way, then your effective ring size shrinks in a chain reaction
+[2018-02-19 17:48:29] <suraeNoether> because their output is now provably spent and can be removed from any rings referencing it
+[2018-02-19 17:48:44] <sgp_[m]> And with ringsize 5, you would have to expect ~2/3 of transactions on MoneroV to use that tool
+[2018-02-19 17:49:43] <suraeNoether> sounds about correct. seems like a real easy way to part fools from their money. fluffypony don't we have a public relations firm now?
+[2018-02-19 17:50:24] <suraeNoether> monerov is a pretty brilliant social attack. probably not state actors because the result is a public de-anonymization instead of secretly gathering intel, but pretty brilliant
+[2018-02-19 17:50:50] <suraeNoether> i could be convinced its the cryptonote guys
+[2018-02-19 17:52:00] <suraeNoether> anyway, it is unsafe to use your key images on another chain, period
+[2018-02-19 17:52:25] <suraeNoether> if you broadcast your key images in general, you are also opening yourself up to transaction censorship
+[2018-02-19 17:52:38] <gsee> MoneroV might not be state sponsored, but the next one might be.  Or a state may decide to bid up the price of moneroV in order to entice people to spend their moneroV
+[2018-02-19 17:52:48] <suraeNoether> yeah, maybe
+[2018-02-19 17:54:06] <suraeNoether> it's just, in general, key images are sort of like commitments to a transaction. Opening the commitment, sharing the key image, is part of broadcasting a transaction. it shouldn't be seen as a standalone piece that can be treated separately like a view key
+[2018-02-19 17:55:19] <suraeNoether> okay, so today we've spoken about my and sarang's work from this past week briefly, and we discussed the EAE attack (rehrar, pm me, don't make any changes until we've chatted with fluffypony and luigi1111  and moneromooo and others), and the MoneroV airdrop
+[2018-02-19 17:56:03] <rehrar> no changes will be made
+[2018-02-19 17:57:11] <sgp_[m]> I suppose now's a good time for me to ask if you think it's prudent to increase the ringsize to mitigate the damage of a chain split attack. If the costs are minimal compared to the benefits
+[2018-02-19 17:57:13] <sarang> any other updates or questions about other non-pants-on-fire things?
+[2018-02-19 17:57:23] <suraeNoether> I believe we can summarize the EAE attack as: don't use private money with non-private businesses (KYC exchanges in particular). in the meantime, I'm going to think about a threat model. and we can summarize the MoneroV airdrop as: don't use your Monero key images on the MoneroV blockchain. period. 
+[2018-02-19 17:57:40] <andytoshi> sgp_[m]: to increase the ringsize dramatically will require new tech (RTRS or BPs)
+[2018-02-19 17:57:59] <andytoshi> just doubling it or something won't really help i think
+[2018-02-19 17:58:14] <suraeNoether> to increase the ringsize moderately will not be a sufficient protection against the EAE problem 
+[2018-02-19 17:58:17] <suraeNoether> ^
+[2018-02-19 17:58:21] <gsee> i have a question. Not sure if this is the best place/time to ask, so we can take it offline if necessary.  Is there any way to prove what my wallet's balance was on Dec 31st to an auditor if I have made transactions since then?
+[2018-02-19 17:58:36] <suraeNoether> i believe we don't see a lot of benefit until we get ring sizes in the 20s, last time I ran computations, but don't quote me
+[2018-02-19 17:58:45] <sgp_[m]> Won't help EAE, but would help chain split issue
+[2018-02-19 17:58:54] <andytoshi> gsee: yes but you'll need provisions or something
+[2018-02-19 17:59:25] <andytoshi> oh, no, just a view key + the public blockchain will be enough
+[2018-02-19 17:59:53] <suraeNoether> it would probably be sufficient to reveal to an auditor the private transaction key for each transaction, but that reveals a lot more information to the auditor than if you reveal the key images that you've spent
+[2018-02-19 18:00:11] <moneromooo> You see all incoming monero along with block heights, and you can scan the chain for the height a key image was spent, if any. So yes. The DB has no index for key image -> height-or-tx though, so slow.
+[2018-02-19 18:00:31] <iDunk> If he spent from tha wallet, then change would appear as new income.
+[2018-02-19 18:00:52] <suraeNoether> i imagine in most *legal* situations gsee, you could merely present a screenshot of your wallet balance
+[2018-02-19 18:00:54] <suraeNoether> tbh
+[2018-02-19 18:01:15] <gsee> that's what we're leaning towards right now. Actually having someone stand over my shoulder while I show the balance
+[2018-02-19 18:01:25] <suraeNoether> but if you reveal your key images, again, you are proving some outputs as spent to an auditor, which reduces the effective ring size of any other signatures depending on your keys
+[2018-02-19 18:01:34] <suraeNoether> gsee if that's an option, do it that way
+[2018-02-19 18:01:50] <suraeNoether> requires no cryptographic trickery
+[2018-02-19 18:02:03] <suraeNoether> meatspace is like... the best at keeping secrets
+[2018-02-19 18:03:07] <suraeNoether> in practice,  most cryptographic protocols can be broken with a hammer or a 4 dollar wrench in a rather nasty sidechannel attack. :P
+[2018-02-19 18:03:36] <sarang> So, what's everyone's priorities for the next week?
