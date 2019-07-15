@@ -1,2 +1,13 @@
+# c
+*.o
+
+# Maven
+target
+
+# Intellij IDEA
+.idea
+*.iml
+
+# Python
 *.class
 *.pyc
