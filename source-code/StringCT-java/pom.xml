@@ -14,7 +14,7 @@
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
     <!-- Dependency versions -->
-    <junit.version>4.12</junit.version>
+    <junit.version>4.13.1</junit.version>
     <bcprov-jdk15on.version>1.59</bcprov-jdk15on.version>
     <commons-pool2.version>2.4.2</commons-pool2.version>
     <commons-codec.version>1.10</commons-codec.version>
