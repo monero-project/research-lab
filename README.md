@@ -1,15 +1,19 @@
 # Monero Research Lab
 
-Copyright (c) 2014-2018, The Monero Project
+Copyright (c) 2014-2025, The Monero Project
 
 ## Research Resources
 
 Web: [getmonero.org](https://getmonero.org)  
-Forum: [forum.getmonero.org](https://forum.getmonero.org) 
-IRC on Freenode:
-- [#monero-research-lab](http://webchat.freenode.net/?randomnick=1&channels=%23monero-research-lab&prompt=1&uio=d4)
-- [#monero-dev](http://webchat.freenode.net/?randomnick=1&channels=%23monero-dev&prompt=1&uio=d4)
-- [#kovri-dev](http://webchat.freenode.net/?randomnick=1&channels=%23kovri-dev&prompt=1&uio=d4)
+Papers: [moneroresearch.info](https://moneroresearch.info/)
+
+Matrix:
+- [Research Lab](https://matrix.to/#/%23monero-research-lab%3Amonero.social?via=matrix.org&via=monero.social&via=cypherstack.com)
+- [Dev](https://matrix.to/#/%23monero-dev:monero.social?via=matrix.org)
+
+IRC on Libera:
+- #monero-research-lab
+- #monero-dev
 
 ## Vulnerability Response
 
@@ -24,7 +28,7 @@ This project is covered by the BSD 3-clause license as listed below. Contributor
 
 ## Source Code and Concept License
 
-Copyright (c) 2014-2017, The Monero Project
+Copyright (c) 2014-2025, The Monero Project
 
 All rights reserved.
 
