@@ -1,0 +1,243 @@
+[2018-01-29 16:59:43] <sarang> Let us begin
+[2018-01-29 16:59:55] <suraeNoether> howdy everyone!
+[2018-01-29 17:00:16] <suraeNoether> maybe we should ping people
+[2018-01-29 17:00:54] <endogenic> vtnerd smooth fluffypony othe stoffu knaccc ArticMine kenshi84 pigeons gingeropolous dEBRUYNE
+[2018-01-29 17:00:57] <endogenic> :P
+[2018-01-29 17:01:09] <endogenic> ferretinjapan
+[2018-01-29 17:01:23] <endogenic> silur (absent?)
+[2018-01-29 17:01:31] <endogenic> hyc
+[2018-01-29 17:01:35] <endogenic> endogenic
+[2018-01-29 17:01:38] <suraeNoether> fluffypony luigi1111 andytoshi anonimal  dEBRUYNE endogenic ErCiccione gingeropolous hyc vtnerd smooth  othe  stoffu silur ArticMine kenshi84 pigeons john_alan medusa_ Mouchicc  nioc unknownids 
+[2018-01-29 17:01:55] — andytoshi breakfast meeting, afk, sorry
+[2018-01-29 17:01:57] <anonimal> Hello
+[2018-01-29 17:02:36] <ErCiccione> Hi! (thanks for the ping)
+[2018-01-29 17:02:50] <suraeNoether> So, today I want Sarang and I to give an account of our experience at BPASE18, and then talk about the January roadmap
+[2018-01-29 17:02:53] <hyc> hey
+[2018-01-29 17:03:06] <suraeNoether> and our overall work for this year
+[2018-01-29 17:03:19] <suraeNoether> if anyone is curious, I live-tweeted the majority of talks at BPASE
+[2018-01-29 17:04:55] <sarang> Several talks highlighted topics relating to smart contracts that have little relevance to us
+[2018-01-29 17:05:17] <sarang> However, there were talks on SPECTRE/PHANTOM and bulletproofs that were well presented and well received
+[2018-01-29 17:05:28] <sarang> among many others
+[2018-01-29 17:05:53] <sarang> We'll be able to integrate a brand-new batch verification technique for bulletproofs
+[2018-01-29 17:07:34] <suraeNoether> yes, that was big news
+[2018-01-29 17:08:26] <suraeNoether> PHANTOM is sort of an interesting layer on top of SPECTRE, which leads to probabilistically picking only honest blocks, interesting analysis led to that
+[2018-01-29 17:08:59] <suraeNoether> also, it turns out bulletproofs are crazy adaptible
+[2018-01-29 17:09:12] <suraeNoether> like, you can put SHA256 into a bulletproof and proof that you know the pre-image to a hash
+[2018-01-29 17:09:20] <suraeNoether> without revealing the pre-image
+[2018-01-29 17:09:22] <suraeNoether> etc
+[2018-01-29 17:09:24] <suraeNoether> very interesting stuff
+[2018-01-29 17:09:55] <sarang> Mhmm, it's a general tool for arithmetic circuits
+[2018-01-29 17:10:21] <sarang> Anyone else working on fun research they wish to share as well?
+[2018-01-29 17:10:30] <hyc> very cool... all of this raises a question in my mind - when do we consider "new" technology to be "mature" ?
+[2018-01-29 17:10:46] <hyc> we're taking extra care integrating BPs because they're "new"
+[2018-01-29 17:10:46] <anonimal> When we stop saying sha256 ;)
+[2018-01-29 17:10:56] <anonimal> How does sha384/512 fit into the picture?
+[2018-01-29 17:11:00] <sarang> Maybe when people stop being excited about it and consider it just a tool?
+[2018-01-29 17:11:54] <suraeNoether> that's a good question hyc
+[2018-01-29 17:12:05] <suraeNoether> here's the thing: our current impelmentation of bullet proofs is specifically a range proof implementation
+[2018-01-29 17:12:06] <suraeNoether> iirc
+[2018-01-29 17:12:13] <sarang> yes
+[2018-01-29 17:12:25] <suraeNoether> so in order ot make it to other things, we need to make new implementations
+[2018-01-29 17:12:59] <suraeNoether> so the failure model or threat model for each implementation will be different
+[2018-01-29 17:13:28] <sarang> Not necessarily. The security model for ACs is pretty well defined
+[2018-01-29 17:13:46] <sarang> We just happen to only be using these for range proof
+[2018-01-29 17:14:11] <suraeNoether> the reason it is so important to validate our implemenation of BP-range-proofs is because if that breaks, then people can mint money. but if we implement some other NIZK proof of knowledge with a BP, we may not need to be so nervous, because the failure of the new implementation may be small in scale, as opposed to "free-mint-ALLTHEMONEY" sort of failure model
+[2018-01-29 17:14:34] <suraeNoether> sarang yeah: for a general AC the implementation analysis i usppose will boil down to analyzing the AC
+[2018-01-29 17:14:40] <sarang> yes
+[2018-01-29 17:15:17] <hyc> ok, makes sense. thanks surae
+[2018-01-29 17:15:25] — suraeNoether thumbs up
+[2018-01-29 17:15:38] <suraeNoether> In addition to that, gmaxwell had a brilliant idea on bug bounties
+[2018-01-29 17:15:54] <suraeNoether> but it only kind of works for their implementation of libsecp256k1, because they have a super robust test suite
+[2018-01-29 17:16:25] <suraeNoether> the idea is to put a bug bounty up for altering the test suite in a way such that all current tests *still pass* but you have uploaded some sort of other test that fails despite that
+[2018-01-29 17:17:15] <suraeNoether> so if I can put a new test into the test suite, call it D, and the test suite already has tests A, B, and C... if D is a failure but A,B,C still pass, then you essentially found a new test and a new weakness, so boom, you get the bug bounty
+[2018-01-29 17:17:29] <suraeNoether> not super helpful in our situation because our test suites are not yet robust
+[2018-01-29 17:17:46] <suraeNoether> but it's an interesting model of bug bounties and unit tests
+[2018-01-29 17:19:02] <sarang> Perhaps we should move on to the roadmap to allow plenty of time to discuss?
+[2018-01-29 17:19:38] <suraeNoether> yep
+[2018-01-29 17:21:12] <suraeNoether> So, here's the deal
+[2018-01-29 17:21:16] <suraeNoether> well one of many deals
+[2018-01-29 17:21:41] <suraeNoether> sarang and I are sort of trying to figure out which direction MRL should go over the next year
+[2018-01-29 17:22:30] <suraeNoether> and we need input. Other htan writing up the Monero Standards, and finishing the multisig paper... we sort of suffer a problem where work is done in jerks and starts
+[2018-01-29 17:22:44] <sarang> It's partly the unfortunate nature of research
+[2018-01-29 17:22:55] <suraeNoether> like a few weeks will go by with apparently not too much to get done, then BOOM all of a sudden it's time to implement and review bulletproofs or BOOM, rtrs ringct or whatever
+[2018-01-29 17:23:01] <sarang> I mean, I want to continue a deeper investigation of DAG structures and consensus models
+[2018-01-29 17:23:09] <suraeNoether> and that makes it feel like we're *reactive* instead of proactive
+[2018-01-29 17:23:11] <sarang> I think that will become increasingly more important
+[2018-01-29 17:23:14] <suraeNoether> yeah, i do too
+[2018-01-29 17:24:15] <suraeNoether> i've been working on an adaptable population-driven model of a cryptocurrency network to assess dynamics and how various algorithms affect them. for example, if we want to study a different consensus model or a different PoW algorithm or if we want to study how difficulty metrics respond to changes in hashrate, etc
+[2018-01-29 17:24:24] <suraeNoether> so we can model long-term scaling issues on a controlled simulation
+[2018-01-29 17:24:29] <sarang> Smaller things include broader implementation of curve/scalar optimizations, but that's just housekeeping stuff
+[2018-01-29 17:24:52] <suraeNoether> I also have been working on SPECTRE and finishing up the multisig paper
+[2018-01-29 17:25:16] <sarang> Developing outreach curricula is a non-research side of things, of course, but I believe still important for this group
+[2018-01-29 17:25:43] <suraeNoether> which, btw, after speaking with pietr wuille in Zurich and Stanford, two separate routes an attacker could take have been made clear to me. One of them our code already accounts for. The other is something I need to speak with luigi1111  and moneromooo about
+[2018-01-29 17:26:00] <sarang> In what regard?
+[2018-01-29 17:26:11] <hyc> multisig?
+[2018-01-29 17:26:17] <suraeNoether> yes for multisig i mean
+[2018-01-29 17:26:42] <suraeNoether> there is a simple-ish fix too
+[2018-01-29 17:26:57] <suraeNoether> it's not a huge deal, but it's a big enough deal that I want to speak in private with folks about it before proceeding
+[2018-01-29 17:27:13] <gingeropolous> would it be worth investing time in a network simulator? i know there are various blockchain / p2p sims out there, and it might be more of a technical issue (more admin than research) ....
+[2018-01-29 17:27:37] <sarang> Depends on what we want to model
+[2018-01-29 17:27:42] <suraeNoether> gingeropolous: that's sort of what i'm coding. i'm dissatisfied with several of the other pieces of simulation software out there
+[2018-01-29 17:27:55] <hyc> are you talking open source projects that we can tweak to suit ourselves?
+[2018-01-29 17:28:02] <suraeNoether> of course
+[2018-01-29 17:28:14] <hyc> ^ to ginger actually
+[2018-01-29 17:28:17] <suraeNoether> oh i see what you mean hyc
+[2018-01-29 17:28:20] <suraeNoether> yeah my mistake
+[2018-01-29 17:28:24] <gingeropolous> im imagining something public facing, with a GUI so an average user can go "oh lets drop the fee to 0.0001 and see what happens"
+[2018-01-29 17:28:34] <gingeropolous> some web interface
+[2018-01-29 17:28:37] <suraeNoether> ah so gingeropolous 
+[2018-01-29 17:28:40] <gingeropolous> but that could be phase 2
+[2018-01-29 17:28:47] <suraeNoether> forget about fees, because i'm oinly looking at block dynamics
+[2018-01-29 17:28:59] <sarang> You'd need a much deeper understanding of how nodes/users respond to such factors though?
+[2018-01-29 17:29:04] <suraeNoether> not transaction dynamics
+[2018-01-29 17:29:25] <suraeNoether> but the point is to eventually build it up to do that sort of thing
+[2018-01-29 17:29:31] <gingeropolous> cool
+[2018-01-29 17:29:32] <hyc> quite a lot of variables to model
+[2018-01-29 17:29:34] <suraeNoether> animate it with ggplot or something to make pretty videos
+[2018-01-29 17:29:59] <suraeNoether> hyc yep, it's a very general model, makes it suitable for arbitrary plug-n-play sort of analyses
+[2018-01-29 17:30:14] <suraeNoether> but back to the roadmap
+[2018-01-29 17:30:21] <suraeNoether> i guess what i'm asking is:
+[2018-01-29 17:30:29] <suraeNoether> what do people want to see out of MRL over the next 6 months?
+[2018-01-29 17:30:42] <suraeNoether> other than the completed multisig paper
+[2018-01-29 17:31:23] <sarang> To be honest, I don't think the broader Monero community really has specific opinions on research directions, if that's what you mean
+[2018-01-29 17:31:30] <suraeNoether> hyc you are never opinion-less
+[2018-01-29 17:31:49] <hyc> lol
+[2018-01-29 17:32:15] <hyc> All the things you already outlined sound like important goals to me. some of it sounds like we need more people.
+[2018-01-29 17:32:34] <moneromooo> Modelling of spent output age. Take real distribution since last release, subtract the distribution we use, get the real distribution. See if it matches miller et al.
+[2018-01-29 17:33:05] <hyc> "get the real distribution" --> how?
+[2018-01-29 17:33:08] <moneromooo> Then try to do that at several historical times, every month maybe. And then deduce a formula to vary gamma function over time to use a new fake outdistribution.
+[2018-01-29 17:33:31] <moneromooo> By subtracting the fake outs distribution from the real+fake one.
+[2018-01-29 17:33:43] <moneromooo> May or may not be good enough, I don't know.
+[2018-01-29 17:34:45] <suraeNoether> moneromooo: if we can get a bayesian estimate that updates each hard fork, that'd be great, but it requires being able to "unmask" transactions to see their real spendable output, or to base the estimate on transactions that have already been "unmasked", or to base the estimate on another currency. Each of these have obstacles, obviously
+[2018-01-29 17:34:58] <suraeNoether> we need some ground truth underlying data to make an estimate, and monero doesn't really allow for that
+[2018-01-29 17:35:08] <ErCiccione> The community is pushing a lot the "fee are too high" thing and i feel will be worst with time passing. Is it possible to produce some documentation to instruct people about how Monero fees work and what are the plans for the future on this matter?
+[2018-01-29 17:35:10] <moneromooo> I was suggesting deducing the real outs distribution.
+[2018-01-29 17:35:31] <ErCiccione> i also agree with hyc, er should search fore more researchers
+[2018-01-29 17:35:47] <sarang> I hear gmaxwell is unattached =p
+[2018-01-29 17:35:55] <moneromooo> This would be assuming all txes since last release use our fake outs distribution, though, which mymonero might not. Damn.
+[2018-01-29 17:37:53] <hyc> to some extent, that's all good news - it means the system is no longer analyzable.
+[2018-01-29 17:37:56] <dEBRUYNE> ErCiccione: I wrote a blog about it, you can link that
+[2018-01-29 17:38:08] <suraeNoether> so, ErCiccione: yes, fees are an important part of the discussion around bulletproofs. you are corredct that we should at least put out a statement
+[2018-01-29 17:38:32] <suraeNoether> hyc: without access to KYC/AML data from an exchange, anyway :D
+[2018-01-29 17:38:44] <suraeNoether> i suppose we could ask for some sanitized data from one of the exchanges...
+[2018-01-29 17:38:54] <suraeNoether> actually that's the first time that i've been hopeful about deducing true age distribution
+[2018-01-29 17:38:59] <suraeNoether> but here's the REAL problem
+[2018-01-29 17:39:02] <ferretinjapan> does the current research on multisig cover more complex things like assurance contracts? I think people would definitely be keen to help fund research in enabling those types of things.
+[2018-01-29 17:39:28] <suraeNoether> ferretinjapan: the current paper will not cover that except lightly, but i would loooove to write up a document on "applications of multisig in nearly-smart contracts."
+[2018-01-29 17:39:49] <suraeNoether> let's say there's a really massive anonymity set: the probability of picking any one of them out for usage in a ring is really really small
+[2018-01-29 17:39:56] <ferretinjapan> Because that could mean 100% decentralised FFS :)
+[2018-01-29 17:40:09] <suraeNoether> and if you pulled randomly from the whole blockchain...
+[2018-01-29 17:40:22] <suraeNoether> then the true output you are signing with *probably* hasn't been used in a signature before
+[2018-01-29 17:40:44] <suraeNoether> and more people got into monero recently rather than in 2014
+[2018-01-29 17:40:51] <suraeNoether> so the output being spent is *probably* the youngest one
+[2018-01-29 17:41:14] <hyc> true
+[2018-01-29 17:41:17] <suraeNoether> and this will *always* be the case, unless we make wallet software actively try to de-anonymize the blockchain and we publish a blacklist of known-spent outputs
+[2018-01-29 17:41:36] <suraeNoether> or unless we make wallet software that tries to pick as many transactions from "recently" that have not yet been used in any ring signature
+[2018-01-29 17:41:48] <suraeNoether> another way of looking at this: the first ring signature an output appears in *is likely* to be the one that actually spends it
+[2018-01-29 17:41:54] <suraeNoether> it's not so much a matter of the age of the output
+[2018-01-29 17:42:05] <ErCiccione> dEBRUYNE: right, i forgot about that, but i still think we should be more informative about fees, i see a lot of confusion in the average user, at least on reddit,
+[2018-01-29 17:42:06] <suraeNoether> but how many other ring signatures already reference it
+[2018-01-29 17:42:15] <suraeNoether> ErCiccione: absolutely +1
+[2018-01-29 17:42:19] <suraeNoether> okay, so fees are going on my list
+[2018-01-29 17:42:37] <suraeNoether> for analysis and a nice big public explanation, probably drawing heavily on the blog post by dEBRUYNE 
+[2018-01-29 17:42:44] <suraeNoether> speaking of which dEBRUYNE send us all a link :D
+[2018-01-29 17:43:11] <dEBRUYNE> https://getmonero.org/2017/12/11/A-note-on-fees.html
+[2018-01-29 17:43:18] <suraeNoether> awesome thanks
+[2018-01-29 17:43:32] <dEBRUYNE> re: spent age of outputs, perhaps we could take a look at other chains as well?
+[2018-01-29 17:43:40] <suraeNoether> silur has been working on a C implementation of RTRS ringct
+[2018-01-29 17:44:13] <ferretinjapan> dEBRUYNE, aeon could be a decent model, unless it requires 100% transparency...
+[2018-01-29 17:44:27] <suraeNoether> dEBRUYNE: that comes with its own set of assumptions. i'm actually (I think) more comfortable asking "how long does an average 50 euro bill stay in someone's wallet before being spent?" than "bitcoin"
+[2018-01-29 17:44:50] <suraeNoether> ferretinjapan: aeon suffers the same problem we do i think
+[2018-01-29 17:44:56] <ferretinjapan> ah
+[2018-01-29 17:45:22] <suraeNoether> has anyone else been working on anything they want to talk about?
+[2018-01-29 17:45:31] <dEBRUYNE> ferretinjapan: was more thinking about LTC, BTC
+[2018-01-29 17:45:39] <dEBRUYNE> suraeNoether: whislt that it true, it may be good for pointers
+[2018-01-29 17:45:56] <ferretinjapan> yeah, LTC is actually a good one, had a similar mining start to monero.
+[2018-01-29 17:46:34] <suraeNoether> even if we had a good estimate of true velocity of money, it changes over time so we would need something like a bayesian updating. https://en.wikipedia.org/wiki/Velocity_of_money
+[2018-01-29 17:47:19] <suraeNoether> sarang, do you have anything else you want to chat about?
+[2018-01-29 17:47:58] <ferretinjapan> suraeNoether, true, but I'd wager that LTC and XMR's normal distribution after a year is probably very similar. It's probably clsest you'd get without cracking open monero proper and looking inside.
+[2018-01-29 17:48:02] <sarang> Assembling the formal audit materials as they become available
+[2018-01-29 17:48:26] <sarang> I still wish we had a more concrete guideline for if/when/how we'll do such things in the future
+[2018-01-29 17:48:36] <sarang> But for now this is a Good Thing
+[2018-01-29 17:49:05] <suraeNoether> ferretinjapan: you are assuming it's normal... it isn't, it's heavy-tailed and possibly non-unimodal. :D but you are probably correct that LTC would be a better metric than BTC imho
+[2018-01-29 17:49:17] <suraeNoether> i am curious about one thing
+[2018-01-29 17:49:42] <suraeNoether> Up to your concerns about opsec/privacy, gimme a +1 if you are currently an undergraduate university student
+[2018-01-29 17:49:59] <ferretinjapan> yeah, I'm definitely not saying it's perfect just close-ish compared to the rest of the premined coins out there ;)
+[2018-01-29 17:50:39] <suraeNoether> ferretinjapan: i agree that litecoin could be a good proxy for monero for estimating otherwise unestimable statistics
+[2018-01-29 17:50:57] <suraeNoether> i'd also be in favor of doing it for all transparent coins and obtaining a confidence interval
+[2018-01-29 17:51:53] — anonimal question regarding the MRL over the next 6 months
+[2018-01-29 17:52:10] <anonimal> I first got in contact with sarang back in late August about kovri work but nothing came of it.
+[2018-01-29 17:52:19] <anonimal> That then lead to a late October chat about said kovri work but nothing came of it.
+[2018-01-29 17:52:27] <anonimal> Should I just not count any kovri collaboration from the Noethers? I understand, no hard feelings.
+[2018-01-29 17:52:39] <anonimal> We simply need more researchers.
+[2018-01-29 17:52:41] <ferretinjapan> yeah, do some box plots on a couple dozen and you might get a ballpark figure that helps.
+[2018-01-29 17:52:57] <sarang> anonimal to be honest I didn't think we'd have so much work with RingCT and BPs occupying time
+[2018-01-29 17:52:58] <suraeNoether> i think you are right anonimal
+[2018-01-29 17:53:02] <sarang> It has nothing to do with lack of interest
+[2018-01-29 17:53:03] <suraeNoether> i recall that contact
+[2018-01-29 17:53:08] <sarang> but I apologize if it seemed that way
+[2018-01-29 17:54:06] <suraeNoether> anonimal: is there either an explanatory text or a link or something you would you mind giving us for a look?
+[2018-01-29 17:54:22] <suraeNoether> depending on exactly what sort of questions you are asking, there may be intersection with other work we are doing
+[2018-01-29 17:54:52] <anonimal> What explanatory text would you like exactly?
+[2018-01-29 17:55:32] <suraeNoether> is there a thread someplace that birthed the idea behind kovri? 
+[2018-01-29 17:56:25] <anonimal> Oh. Well those IRC logs were unfortunately pasted to a now-defunct website. I can give TL;DRs if needed though.
+[2018-01-29 17:56:50] <anonimal> Ideally our website/docs would explain everything you need to know but rehrar and I are still WIP with them.
+[2018-01-29 17:56:50] <suraeNoether> ok, so i'll devote a few hours this week to learning about kovri to see *whether* i can help
+[2018-01-29 17:57:03] <suraeNoether> keeping in mind the halting problem
+[2018-01-29 17:57:16] <suraeNoether> (can never really know how long something is going to take until you do it).
+[2018-01-29 17:57:26] <anonimal> How realistic/effective would a noether tweetnacl review be?
+[2018-01-29 17:57:37] <anonimal> tweetnacl has had a lot of eyes
+[2018-01-29 17:57:46] <sarang> You want additional eyes on it?
+[2018-01-29 17:57:49] <anonimal> (relatively speaking, imo)
+[2018-01-29 17:58:15] <anonimal> No, just asking your professional opinion on if that would be a cost-effective use of your time.
+[2018-01-29 17:58:50] <anonimal> IIRC fluffypony wanted teetnacl in monero as some point. I'm not sure where that conversation ended though.
+[2018-01-29 17:59:10] <selsta> some other “news”. Sumokoin team member confirmed me today that they will donate to the BP audit with some of the premine money. i don’t really believe it yet though lol
+[2018-01-29 17:59:24] <anonimal> Crypto++ has recently implemented tweetnacl and, once they implement a crypto++-friendly interface, kovri will drop ref10 supercop for tweetnacl.
+[2018-01-29 17:59:24] <suraeNoether> let me learn a little about tweetnacl, and then i can assess wheter going deeper will be a rabbit hole or ... not
+[2018-01-29 17:59:39] <anonimal> ok
+[2018-01-29 17:59:43] <suraeNoether> i haven't tried to ignore it
+[2018-01-29 17:59:46] <suraeNoether> squeaky wheels and all that
+[2018-01-29 17:59:51] <suraeNoether> i'm curious about how it works
+[2018-01-29 18:00:04] <suraeNoether> but i don't want to go on a two month bender learning a new tech while current projects languish either
+[2018-01-29 18:00:16] <suraeNoether> i think hiring an additional person would be fantastic, for the record
+[2018-01-29 18:00:20] <sarang> Well it does the basic ed25519 operations suraeNoether as well as hashing operations
+[2018-01-29 18:00:40] <suraeNoether> we could get a mathjobs.org employer account and put out a *real* call for applications
+[2018-01-29 18:00:56] <suraeNoether> sarang: well that's nice
+[2018-01-29 18:01:12] <suraeNoether> ok, anonimal thank you so much for bringing this up
+[2018-01-29 18:01:21] <suraeNoether> one hard part about this job
+[2018-01-29 18:01:24] <sarang> yes indeed
+[2018-01-29 18:01:27] <anonimal> You're welcome. I'm just really excited to finally get to use it.
+[2018-01-29 18:01:50] <suraeNoether> is that everyone has their personal pet project they want to see analyzed, some of them are important like multisig and kovri and some not so much, and so it's difficult to figure out where priorities should go to avoid context-switching, etc
+[2018-01-29 18:02:13] <suraeNoether> sometimes it feels like no one knows what job sarang and i have. :P
+[2018-01-29 18:02:22] <suraeNoether> we need a suresh noether
+[2018-01-29 18:02:56] <suraeNoether> Okay, well
+[2018-01-29 18:03:22] <anonimal> I think this tweetnacl business would come at the end of 6 months if even within the next 6 months. Too many other priorities imho
+[2018-01-29 18:03:35] <suraeNoether> any other concerns, questions, gentle or not so gentle priority nudges folks want to bring up?
+[2018-01-29 18:03:48] <sarang> If anything I'd like to devote time to a review of existing analyses of tweetnacl anonimal
+[2018-01-29 18:03:56] <sarang> to at least get a better sense of its current place
+[2018-01-29 18:04:07] <anonimal> ok awesome
+[2018-01-29 18:04:10] <dEBRUYNE> <suraeNoether> we could get a mathjobs.org employer account and put out a *real* call for applications <= I don't think this will be efficient
+[2018-01-29 18:04:20] <dEBRUYNE> Preferably you need someone that already has a passion for Monero
+[2018-01-29 18:04:22] <ferretinjapan> I'll just say you guys are doing a great job keeping up with all these moving targets :)
+[2018-01-29 18:04:50] <suraeNoether> dEBRUYNE: true
+[2018-01-29 18:04:54] <suraeNoether> thanks ferretinjapan 
+[2018-01-29 18:05:08] <suraeNoether> oh my god tweetnacl is kind of crazy, i like it ...just reading a quick description
+[2018-01-29 18:05:20] <suraeNoether> i love the idea of a hyper compact auditable li-berry
+[2018-01-29 18:05:34] <anonimal> +1
+[2018-01-29 18:05:34] <sarang> Yeah the key is auditable
+[2018-01-29 18:05:38] <suraeNoether> well, we probably can't hire andytoshi out from under blockstream. :P
+[2018-01-29 18:05:53] <suraeNoether> or rather, i'd rather not attempt that sort of game
+[2018-01-29 18:06:17] <suraeNoether> i'd rather find someone who is very interested in monero and may be late grad school
+[2018-01-29 18:06:21] <suraeNoether> hmm
+[2018-01-29 18:06:39] <suraeNoether> i can construct a call for applications e-mail and send it to a few specific departments that are crypto + CS heavy in their math programs
+[2018-01-29 18:07:37] ⇐ eruheran quit (~eruheran@85-237-234-24.dynamic.orange.sk): Remote host closed the connection
+[2018-01-29 18:09:36] <ErCiccione> suraeNoether: can you make a post somwhere public with the skills you guys need from a researcher? so i can directly link that to people who may be interested
+[2018-01-29 18:10:03] <suraeNoether> yeah, i will make the call for applications public, probably, ErCiccione 
+[2018-01-29 18:10:08] <suraeNoether> anyway
+[2018-01-29 18:10:19] <suraeNoether> I am probably going to hold off on that for at least two weeks, though
+[2018-01-29 18:10:23] <ErCiccione> ok thanks
+[2018-01-29 18:10:27] <suraeNoether> to think about what it is we will need 6 months from now
+[2018-01-29 18:10:31] <suraeNoether> in a new researcher
+[2018-01-29 18:10:46] <suraeNoether> it's a tough question, and if anyone has any thoughts, shoot me a line at suraeNoether@gmail.com
+[2018-01-29 18:12:20] <ErCiccione> ok, so, in case, will directly give your contact for now
+[2018-01-29 18:12:25] <suraeNoether> okay, so without further ado, I suppose we can bid adieu on this meeting. 

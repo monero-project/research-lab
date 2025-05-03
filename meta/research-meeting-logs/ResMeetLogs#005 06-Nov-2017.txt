@@ -1,0 +1,282 @@
+[2017-11-06 17:02:01] <sarang> Anyhoo, it is time to begin OfficeResearchLabHours
+[2017-11-06 17:02:28] <sarang> I would like to introduce sublinear block shiz
+[2017-11-06 17:02:46] <sarang> The idea is this
+[2017-11-06 17:02:53] <sarang> The blockchain doesn't really change
+[2017-11-06 17:02:53] <sarang> But
+[2017-11-06 17:03:23] <sarang> In a target-based system, half of the blocks will have hash values < T/2
+[2017-11-06 17:03:28] <sarang> a quarter will have values < T/4
+[2017-11-06 17:03:29] <sarang> etc.
+[2017-11-06 17:03:42] <sarang> So imagine you have "levels" to the blockchain
+[2017-11-06 17:04:02] <sarang> Each level consists only of those blocks with values < T/2^i
+[2017-11-06 17:04:10] <sarang> And there's a pointer structure for each level
+[2017-11-06 17:04:24] <sarang> So a block of very low hash value will appear in many levels' subchains
+[2017-11-06 17:04:31] <sarang> Make sense so far?
+[2017-11-06 17:04:43] <hyc> ok, so levels are inclusive not exclusive
+[2017-11-06 17:04:49] <sarang> Yes
+[2017-11-06 17:05:00] <sarang> Now, full nodes maintain the whole blockchain as usual
+[2017-11-06 17:05:01] <sarang> BUT
+[2017-11-06 17:05:08] <sarang> They act as provers to light nodes, which act as verifiers
+[2017-11-06 17:05:29] <sarang> A verifier might ask a prover for the last k blocks, since it doesn't want to process the whole blockchain
+[2017-11-06 17:05:36] <sarang> The prover responds with two things
+[2017-11-06 17:05:44] <sarang> One is its last k blocks (ignoring level)
+[2017-11-06 17:05:49] <endogenic> smooth ^
+[2017-11-06 17:05:51] ⇐ _Slack quit (~Slack_@c-98-234-122-54.hsd1.ca.comcast.net): Remote host closed the connection
+[2017-11-06 17:06:04] <sarang> The other is a proof consisting of certain blocks that IS based on level
+[2017-11-06 17:06:16] → _Slack joined (~Slack_@c-98-234-122-54.hsd1.ca.comcast.net)
+[2017-11-06 17:06:17] <sarang> So we set a second security parameter m
+[2017-11-06 17:06:50] <sarang> For each level that has at least m blocks in it, we recursively include the last m blocks of that level, with some additional lower-level blocks for support
+[2017-11-06 17:07:06] → silur joined (~silur@80-95-71-197.pool.digikabel.hu)
+[2017-11-06 17:07:08] <sarang> The expected value for the size of this proof is 2m blocks
+[2017-11-06 17:07:24] <sarang> The blocks are assembled into a tidy structure and given to the verifier
+[2017-11-06 17:07:38] <sarang> (this structure involves pointers to the previous block in the level chain)
+[2017-11-06 17:08:01] <sarang> A verifier examines the chains/proofs it receives from its provers
+[2017-11-06 17:08:20] <sarang> and is able to claim which is likely the Correct One with overwhelming probability
+[2017-11-06 17:08:45] <sarang> So, what you get from this as a light node
+[2017-11-06 17:09:00] <sarang> Is proofs that scale logarithmically with the blockchain size
+[2017-11-06 17:09:34] <sarang> Scaled by the security parameter m and with the addition of k guaranteed tail blocks in the chain
+[2017-11-06 17:09:55] <hyc> how many provers must a verifier talk to?
+[2017-11-06 17:10:38] <silur> oh ZK stuff? :D
+[2017-11-06 17:10:38] <sarang> The intricacies of the peer-to-peer network are not clear in the paper, but the implication appears to be at least one honest prover
+[2017-11-06 17:10:49] <sarang> This is all non-interactive
+[2017-11-06 17:10:55] <sarang> unlike previous approaches
+[2017-11-06 17:11:36] <sarang> They did a set of Monte Carlo simulations of adversarial hash power
+[2017-11-06 17:12:38] <sarang> Suggesting that with k=6 (i.e. at least 6 guaranteed blocks) and security parameter m=15, an adversary with 30% network control falls below the Nakamoto threshold success probability of 0.001
+[2017-11-06 17:12:44] → yolobadger joined (adeff039@gateway/web/cgi-irc/kiwiirc.com/ip.173.239.240.57)
+[2017-11-06 17:12:45] <scoobybejesus> silur, sarang is talking about sublinear blockchain verification  (he arrived late, for you notification ignorers)
+[2017-11-06 17:12:59] <silur> thanks
+[2017-11-06 17:13:16] <sarang> For m=5, an attacker needs 10% network power to fall below the threshold
+[2017-11-06 17:13:34] <sarang> This is based on a parallel private mining attack
+[2017-11-06 17:14:05] <hyc> sounds promising. so all of these light nodes are operating in parallel with regular full nodes, verifying freshly mined blocks
+[2017-11-06 17:14:09] <sarang> I like this because it makes a clear separation between full nodes and light nodes
+[2017-11-06 17:14:46] <sarang> You decide if you want full blockchain or just the NIPoPoW proofs
+[2017-11-06 17:14:53] <sarang> (Non-Interactive Proof of Proof-of-Work)
+[2017-11-06 17:15:09] <sarang> and it's tunable
+[2017-11-06 17:15:18] <hyc> why would anyone want to eat up all the resources of a full node?
+[2017-11-06 17:15:27] ⇐ serhack quit (25b04645@gateway/web/cgi-irc/kiwiirc.com/ip.37.176.70.69): Remote host closed the connection
+[2017-11-06 17:15:29] <hyc> why wouldn't everyone just try to configure as light node?
+[2017-11-06 17:15:30] <sgp_[m]> What's the approx requirements of running a light node today if implemented?
+[2017-11-06 17:15:45] <sarang> How are you defining requirements?
+[2017-11-06 17:15:59] <sarang> You mean given the current blockchain?
+[2017-11-06 17:16:24] <sgp_[m]> Yes, given current blockchain
+[2017-11-06 17:16:29] <sarang> The verification algorithm is trivial, if that's what you mean
+[2017-11-06 17:16:36] <sarang> I am in the process of pulling XMR data for this
+[2017-11-06 17:17:15] ⇐ _Slack quit (~Slack_@c-98-234-122-54.hsd1.ca.comcast.net): Ping timeout: 268 seconds
+[2017-11-06 17:17:43] <sarang> But hyc brings up a good point about the incentives of full vs light
+[2017-11-06 17:17:43] → _Slack joined (~Slack_@c-98-234-122-54.hsd1.ca.comcast.net)
+[2017-11-06 17:17:43] <sgp_[m]> Is it also trivial bandwidth and storage?
+[2017-11-06 17:18:03] <gingeropolous> i don't get it why we would look into light nodes
+[2017-11-06 17:18:03] <sarang> Bandwidth scales logarithmically based on parameters
+[2017-11-06 17:19:04] <sarang> One specific application that the papers tried to address was multi-blockchain clients
+[2017-11-06 17:19:10] <hyc> also not clear on the storage. after receiving the 2m blocks for a single verification (what is that, verifying one freshly mined block?) are those blocks discarded?
+[2017-11-06 17:20:08] <sarang> Ah, so the verifier could discard the proof blocks
+[2017-11-06 17:20:28] <sarang> Those are only used to assure the verifier
+[2017-11-06 17:20:33] <hyc> ok
+[2017-11-06 17:20:49] <sarang> What the verifier really wants are the suffix blocks (k of them)
+[2017-11-06 17:21:21] <sarang> So I join the network and only want the tail of the blockchain, and use the 2m proof blocks to verify
+[2017-11-06 17:22:12] <sarang> My broad question to the group is: do we think this type of "light node pruning" approach is useful to the project?
+[2017-11-06 17:22:24] <sgp_[m]> I'm with gingeropolous, what's the big picture? Will it help people who don't want to run a full node and no longer need to hand over a view key for convenience?
+[2017-11-06 17:23:04] <endogenic> sarang: imo priority needs to be evaluated on the context of what problems it solves
+[2017-11-06 17:23:20] <endogenic> that can be useful for others in confirming its priority too
+[2017-11-06 17:23:22] <sarang> Well several people have in the past brought up the idea of being able to conduct either some kind of safe pruning, or simply non-complete blockchain acquisition
+[2017-11-06 17:23:26] <hyc> if we can use this as an instant bootstrap for new nodes, sounds good
+[2017-11-06 17:23:31] <sgp_[m]> ^^^^
+[2017-11-06 17:23:59] <sarang> OK, well let's formally define the idea of new node bootstrapping
+[2017-11-06 17:24:29] <hyc> aside from that, need to understand the impact on the network if majority of users choose to run as light nodes
+[2017-11-06 17:24:37] <sarang> hyc yes
+[2017-11-06 17:25:24] <sgp_[m]> Also compare the benefits of users selecting light nodes over SPV/lightweight wallets
+[2017-11-06 17:26:27] → vtnerd joined (~general_l@173-23-171-240.client.mchsi.com)
+[2017-11-06 17:26:30] <hyc> I'm fond of the notion of everyone operating a node on their phones
+[2017-11-06 17:26:30] <endogenic> hey vtnerd
+[2017-11-06 17:27:12] <silur> I'm against any decrease on the "replace everything" fullnode model
+[2017-11-06 17:27:22] <silur> phones sould access a remote home node
+[2017-11-06 17:28:04] <sarang> So it seems this discussion moves back to the more general questions of whether it's good for the network to operate in such a fashion at all
+[2017-11-06 17:28:07] <hyc> that's preferred, but not always feasible.e.g. if you're a dissident on the run.
+[2017-11-06 17:28:07] → iDunk joined (~iDunk@unaffiliated/idunk)
+[2017-11-06 17:28:11] <sarang> depending on what we want out of a light node
+[2017-11-06 17:29:10] <endogenic> silur: can you state the basis or grounds of your stance?
+[2017-11-06 17:29:44] ⇐ Keniyal_ quit (~Keniyal@unaffiliated/keniyal): Remote host closed the connection
+[2017-11-06 17:31:28] <silur> storing X nodes only and trust on the hashes won't make the data under the concensus model searchable
+[2017-11-06 17:32:09] <sgp_[m]> @silur I think we need to accept most people will not use this option of using their own remote node. They will use something like MoneroWorld's list
+[2017-11-06 17:32:23] <silur> sad :/
+[2017-11-06 17:32:49] <sarang> So where, if anywhere, should we go with this research direction?
+[2017-11-06 17:33:06] <sgp_[m]> Some people will, but those are only the enthusiasts
+[2017-11-06 17:33:07] <sarang> There are possible additional applications to answering questions regarding sidechains, but that's for future investigations
+[2017-11-06 17:33:23] <sgp_[m]> @sarang has anyone made a list of the goals of the light node?
+[2017-11-06 17:33:39] <sarang> No, which is why I'd like a formal discussion
+[2017-11-06 17:33:39] <sgp_[m]> *ideal functionality
+[2017-11-06 17:33:57] <sarang> All we really have right now is people's views on whether or not even having one is wise at a large scale
+[2017-11-06 17:33:59] <endogenic> sarang: any thoughts on silur's rebuttal?
+[2017-11-06 17:34:02] → thrmo joined (~thrmo@unaffiliated/thrmo)
+[2017-11-06 17:34:12] <sarang> silur can you explain more?
+[2017-11-06 17:34:17] <sarang> I want to be sure I understand your view
+[2017-11-06 17:35:26] <silur> I missed most of the topic sadly but if the philosophycal goal of light node pruning is somewhat like bitcoin's then having most nodes as SPV/pruned will have bad effect on the network concensus
+[2017-11-06 17:35:51] <endogenic> silur:
+[2017-11-06 17:35:56] <endogenic> https://www.irccloud.com/pastebin/HTqVjtr8/
+[2017-11-06 17:36:02] <silur> wow thanx
+[2017-11-06 17:36:11] <hyc> the point of the technique sarang is discussing is that security is still preserved
+[2017-11-06 17:36:24] <sarang> silur right, the question of distribution of nodes is a good one to have
+[2017-11-06 17:37:11] <hyc> at this point the proposal is too nebulous. the description of levels was isolated, and I don't see its relation to light nodes
+[2017-11-06 17:37:13] <sarang> What this lets a light node (under my vague definition here) do is be assured that if it connects to at least one honest node, that node's NIPoPoW will will out WHP
+[2017-11-06 17:37:27] <sarang> OK let me try to be clearer
+[2017-11-06 17:37:50] <sarang> In this construction, we assume a light node wants the most recent k blocks, but doesn't want to get the whole blockchain to verify
+[2017-11-06 17:38:07] <sarang> A full node (the prover) provides those blocks
+[2017-11-06 17:38:31] <sarang> and also provides this level-based selection of earlier blocks, which IS the proof of earlier proof of work
+[2017-11-06 17:38:48] <sarang> After using that proof to determine which k blocks to accept, the verifier discards the level-based crap
+[2017-11-06 17:38:55] <sarang> and accepts those k blocks as valid
+[2017-11-06 17:39:10] <sarang> Levels ONLY come into play as part of the prove-verify process
+[2017-11-06 17:39:28] <silur> sarang is there any concretu on the proof fullnodes have to prove for light clients about the blocks?
+[2017-11-06 17:39:50] <sarang> "concretu"?
+[2017-11-06 17:40:05] <silur> concretum, any concrete specific info
+[2017-11-06 17:40:20] <endogenic> is it necessary to prove that the current selection of nodes has a consensus-representative set and that the implementation is going to keep the node selection 'current and representative' every time it matters?
+[2017-11-06 17:40:30] <endogenic> i was wondering if i should send that for a while..
+[2017-11-06 17:40:38] <silur> I don't know of any non-hones-verifier model to apply here
+[2017-11-06 17:41:03] <sarang> IIRC (and I can check this again for you), we need to assume at least one honest prover WHP
+[2017-11-06 17:41:19] <sarang> The primitive itself makes no claims about how to choose peers
+[2017-11-06 17:41:49] <silur> do get it right that it's anytrust then?
+[2017-11-06 17:42:13] <sarang> Yes, I believe so
+[2017-11-06 17:42:16] <silur> okay
+[2017-11-06 17:42:23] <sarang> But I want to confirm a couple of the proofs don't assume more
+[2017-11-06 17:42:36] <sarang> So, assume for now that this is the case
+[2017-11-06 17:43:00] <sarang> Under this assumption, is the idea of a "k tail blocks only" light node useful?
+[2017-11-06 17:43:54] <sarang> The ongoing questions about the overall distribution of full/light nodes is a good one and I don't know what we want out of that
+[2017-11-06 17:45:06] <sarang> (Yes, the security proof assumes only at least one honest prover)
+[2017-11-06 17:45:24] <sarang> Also, if someone else has a topic they want to bring up, please do. I'm hogging all the time today
+[2017-11-06 17:45:25] <sarang> :/
+[2017-11-06 17:45:46] <endogenic> sarang: i have a question but don't want to hog
+[2017-11-06 17:45:57] <sarang> go
+[2017-11-06 17:46:43] <sgp_[m]> Just a node that has the most recent blocks? I have a hard time evaluating the usefulness with intuition alone. It doesn't seem like a major improvement for most people though unless I'm misunderstanding
+[2017-11-06 17:46:49] <endogenic> so 'purely' hypothetically let's say we know for sure that it's possible to have revocable view keys... how do you suppose monero might have to be different in order for that to occur? or is that still in zygote stages?
+[2017-11-06 17:47:09] <endogenic> sgp_[m]: yeah i mean i imagine people would love to run light nodes on their phones
+[2017-11-06 17:47:15] <sarang> sgp_[m]: not only the most recent k for all time, just the most recent k when starting out
+[2017-11-06 17:47:20] <endogenic> but i'm not equipped to evaluate whether that would break something
+[2017-11-06 17:47:23] <sarang> After that, it can do whatever it wants
+[2017-11-06 17:47:32] <sarang> But it can be assured that those k are correct
+[2017-11-06 17:47:51] <sarang> endogenic: I haven't thought deeply enough about revocable view keys to answer that properly
+[2017-11-06 17:48:08] <endogenic> sarang: is the idea of revocable keys silly?
+[2017-11-06 17:48:10] <sarang> sgp_[m]: so for bootstrapping new nodes that don't want old blocks
+[2017-11-06 17:48:13] <endogenic> :P
+[2017-11-06 17:48:26] <sarang> endogenic: I can't evaluate that without having looked into it!
+[2017-11-06 17:48:47] <sarang> this conversation has forked
+[2017-11-06 17:48:49] <endogenic> sarang: we'll /hopefully/ have the mymonero backend out soon(tm) so distribution of view keys won't be as big of an issue
+[2017-11-06 17:48:58] <sarang> word
+[2017-11-06 17:49:00] <endogenic> yeah sry i'll pipe down
+[2017-11-06 17:49:07] <sarang> No that's fine!
+[2017-11-06 17:49:12] <sarang> Discussion is good
+[2017-11-06 17:49:32] <endogenic> i'm on a lake and someone is playing biggy across the way.. on a boat??
+[2017-11-06 17:49:33] <sgp_[m]> I'll have to think harder about the likely use-cases and see if it makes sense
+[2017-11-06 17:49:36] <endogenic> biggie*
+[2017-11-06 17:50:09] <sarang> In the meantime, we now have a way to do a form of light node bootstrapping
+[2017-11-06 17:50:30] <endogenic> oh question
+[2017-11-06 17:50:33] <sarang> go
+[2017-11-06 17:50:53] <endogenic> can it be enforced maybe by consensus rule that a light node aggregate more and more of the blockchain the longer it is in service?
+[2017-11-06 17:51:08] <sarang> Verified how?
+[2017-11-06 17:51:11] <endogenic> no idea
+[2017-11-06 17:51:13] — endogenic is noob
+[2017-11-06 17:51:34] <sarang> What a full node proves to a light node is that it has the entire correct blockchain
+[2017-11-06 17:51:59] <endogenic> oh hm ok
+[2017-11-06 17:52:01] <endogenic> ty
+[2017-11-06 17:52:04] <sarang> In theory, this could pass to a verifier I think
+[2017-11-06 17:52:29] <sarang> If the verifier chooses to store and maintain its proof blocks indefinitely
+[2017-11-06 17:53:02] <endogenic> i could keep asking questions about this but anyone's free to take the floor
+[2017-11-06 17:53:02] <sarang> Since the proof blocks that are presented over time will slowly shift forward through the blockchain
+[2017-11-06 17:54:24] <sgp_[m]> How would the light nodes treat a process of restoring an old wallet?
+[2017-11-06 17:54:51] <endogenic> oh hey sarang i also wanted to ask you about kovri
+[2017-11-06 17:55:00] <endogenic> maybe later?
+[2017-11-06 17:55:08] <sarang> yeah
+[2017-11-06 17:55:50] <sarang> sgp_[m]: if it's an old wallet, the node would need all blocks
+[2017-11-06 17:56:13] <sarang> since the protocol chooses proof blocks based on hash levels
+[2017-11-06 17:56:29] <endogenic> sgp_[m]: good question
+[2017-11-06 17:57:18] <sarang> And since a prover node doesn't know transaction destinations, it's not possible for it to select only the verifier's desired blocks
+[2017-11-06 17:57:27] <sarang> Given a view key, it could
+[2017-11-06 17:57:45] <sarang> and in that case, it might be possible to modify the proof to contain destination blocks with proper supports
+[2017-11-06 17:58:30] <sarang> But with the current proof styles, I see this being useful only for new nodes operating on new-ish wallets
+[2017-11-06 19:00:15] <sarang> Any other immediate questions or thoughts on this?
+[2017-11-06 19:00:26] <endogenic> if people are thereby incentivized to create new wallets, does that do anything to the network security?
+[2017-11-06 19:00:37] <endogenic> game theory? :P
+[2017-11-06 19:00:51] <sarang> Security how?
+[2017-11-06 19:01:02] <endogenic> well people are going to mine for other reasons i guess
+[2017-11-06 19:01:07] <endogenic> yeah nm
+[2017-11-06 19:01:10] <endogenic> back to work for me :P
+[2017-11-06 19:01:22] <sarang> It's independent of the number of wallets
+[2017-11-06 19:01:30] <endogenic> well no i know
+[2017-11-06 19:01:40] <endogenic> but ppl do go for the convenient
+[2017-11-06 19:02:25] <endogenic> oh i have a tangential curiosity
+[2017-11-06 19:02:26] <sarang> I could create a bunch of new wallets on a full node
+[2017-11-06 19:02:34] <sgp_[m]> They need the old blocks though to get the money to send to a new wallet
+[2017-11-06 19:03:09] ⇐ thrmo quit (~thrmo@unaffiliated/thrmo): Ping timeout: 250 seconds
+[2017-11-06 19:03:21] <sarang> Right, so for a new-ish wallet that received those blocks in its k-tail, it'd be fine
+[2017-11-06 19:03:58] <sarang> and there's nothing stopping the light node from requesting a larger k value of tail blocks
+[2017-11-06 19:04:20] <sarang> the proof is then based on the chain structure prior to those k
+[2017-11-06 19:05:43] <sarang> Anyway, I feel like I've eaten up waaaay too much time
+[2017-11-06 19:05:44] <sarang> Other topics?
+[2017-11-06 19:05:58] <sarang> Technically the meeting is over anyway, by my clock :(
+[2017-11-06 19:06:28] * sarang set the topic to #TeamDirectedAcyclicGraph
+[2017-11-06 19:06:34] <endogenic> lol
+[2017-11-06 19:06:52] <sarang> That's not a room... just me showing my hatred of hashtags
+[2017-11-06 19:07:18] ⇐ vtnerd quit (~general_l@173-23-171-240.client.mchsi.com): Quit: leaving
+[2017-11-06 19:07:31] <sarang> endogenic: you had a comment about kovri?
+[2017-11-06 19:08:25] <endogenic> well, few different questions, not all suited to this venue but the one that is is from the dev mtg yesterday re: b32 addr exhange
+[2017-11-06 19:08:30] <endogenic> it seemed trivial enough
+[2017-11-06 19:09:05] <endogenic> it was related to a question of mine… i'd like to integrate kovri eventually so i was thinking of getting involved and wanted to ask you if you've had a chance to look at some aspects of it -- will do so via PM :)
+[2017-11-06 19:09:19] <sarang> I've been asked to review the I2P crypto as a first task
+[2017-11-06 19:09:34] <sarang> Beyond that I haven't dived (dove? diven?) into the more recent work
+[2017-11-06 19:09:42] <endogenic> i have not dived
+[2017-11-06 19:09:50] <sarang> So I am a poor choice for details on current kovri
+[2017-11-06 19:09:58] <endogenic> oh no not details
+[2017-11-06 19:09:58] <sarang> There is, however, #kovri-dev
+[2017-11-06 19:09:59] <endogenic> high lvl
+[2017-11-06 19:10:17] <sarang> I would suggest asking there, TBH
+[2017-11-06 19:10:23] <endogenic> mm ok
+[2017-11-06 19:10:25] <endogenic> o7
+[2017-11-06 19:10:34] <silur> last time I brought about incubating some of riffle's features in kovri
+[2017-11-06 19:10:34] <sarang> I haven't been keeping up with their developments, so I know my knowledge is out of date
+[2017-11-06 19:10:44] <sarang> Their goal for me was investigation of the older I2P stuff
+[2017-11-06 19:10:47] <silur> it was vetoed for it needed more research
+[2017-11-06 19:10:49] <sarang> for now at least
+[2017-11-06 19:10:58] <endogenic> oh no i guess i should say then that it was about the more foundational i2p stuff
+[2017-11-06 19:11:08] <endogenic> so stuff that wouldn't really havechanged
+[2017-11-06 19:11:12] <sarang> whew
+[2017-11-06 19:11:21] <silur> so there is the part in I2P where nodes encrypt different messages in the ultiplex model together
+[2017-11-06 19:11:26] <endogenic> ⚡️
+[2017-11-06 19:11:31] <silur> I though about introduing a verifiable shuffle here
+[2017-11-06 19:11:43] <sarang> Quick note since we're heading out of meeting mode: I'd like the group to think more about our desires for light nodes
+[2017-11-06 19:11:44] <endogenic> my connection is so slow T_T
+[2017-11-06 19:11:45] <silur> so the order of the encrypted messages are not the same either
+[2017-11-06 19:11:58] <sarang> Since I agree that any work on proposals needs to be based on whatever goals we have for them
+[2017-11-06 19:12:08] <endogenic> sarang: i think it would have to be proven that it doesn't break anything. then a paper could be written
+[2017-11-06 19:12:17] <endogenic> just my sense
+[2017-11-06 19:12:19] <silur> ^
+[2017-11-06 19:12:34] <sarang> I think it's not so much breaking anything, it's determining what light nodes need to be able to do
+[2017-11-06 19:12:49] <sarang> Recovering an old wallet is an example of something it couldn't do without major changes to the proofs
+[2017-11-06 19:13:29] <sarang> On its base, this is a blockchain primitive that just gives light nodes the tail blocks a prover knows about, securely and with confidence
+[2017-11-06 19:13:40] <endogenic> right
+[2017-11-06 19:13:47] → Keniyal joined (~Keniyal@unaffiliated/keniyal)
+[2017-11-06 19:13:52] <sarang> What the light node does from that point is up to it
+[2017-11-06 19:14:44] <sarang> So if we can work backwards by determining our needs for light nodes, we can see if a k-tail solution answers them
+[2017-11-06 19:16:04] <endogenic> seems there are more pressing issues tho
+[2017-11-06 19:16:11] <endogenic> at least according to some people lol
+[2017-11-06 19:16:19] <sarang> In your view, what are those things?
+[2017-11-06 19:16:24] <endogenic> my personal view?
+[2017-11-06 19:16:33] <sarang> From what you have heard
+[2017-11-06 19:16:39] <endogenic> oh from other ppl?
+[2017-11-06 19:16:42] <sarang> Sure
+[2017-11-06 19:16:50] <sarang> I always want to know views on priorities
+[2017-11-06 19:16:52] <endogenic> well i mentioned that reddit drama yesterday etc :P
+[2017-11-06 19:17:11] <sarang> Yeah, that's a community support issue IMHO
+[2017-11-06 19:17:26] <endogenic> then you'd say the issues he rose have already been sufficiently addressed
+[2017-11-06 19:17:38] <endogenic> rose
+[2017-11-06 19:17:39] <endogenic> raised
+[2017-11-06 19:17:40] <endogenic> ?
+[2017-11-06 19:17:48] <moneromooo> That probabilistic target thing sounds like something we talked about a couple years back. I think it was fluffypony who mentioned it being used (or considered maybe) for bitcoin. He might have good info about this.
+[2017-11-06 19:18:27] <sarang> endogenic: there were good comments made in response about how those issues relate to more recent work we've done
+[2017-11-06 19:18:55] <sarang> fireice didn't really respond to those except to basically say "nope"
+[2017-11-06 19:19:08] <sarang> So that's not really productive at all
+[2017-11-06 19:19:29] <endogenic> well productivity of interaction with him aside
+[2017-11-06 19:19:44] <endogenic> i would imagine that some people are looking for a definitive response (perhaps in the form of a paper) that can be linked so the issue(s) could be "put to be bed"
+[2017-11-06 19:20:17] <endogenic> but as for me, i have a wishlist of research items which i'd pursue in the absence of latent faults in monero
+[2017-11-06 19:20:20] <sarang> I'd like opinion from others as well about this. What's the dev community's view in general?
+[2017-11-06 19:20:22] <endogenic> but i'm just an app dev :P
+[2017-11-06 19:20:27] <sarang> I'd like to hear them
+[2017-11-06 19:20:40] <sarang> That's part of the goals of OfficeResearchHoursMeeting
+[2017-11-06 19:26:27] <mochaccinuh> Would like more anonymity at lower disk and cpu requirements :) and multisig. I feel the prioritization so far has been very good, and well explained
+[2017-11-06 19:26:30] <sarang> Anyway, thanks to everyone for a good meeting. Let me know your thoughts on light nodes as they come to you

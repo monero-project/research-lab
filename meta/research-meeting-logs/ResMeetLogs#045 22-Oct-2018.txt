@@ -1,0 +1,204 @@
+[2018-10-22 17:00:15] <sarang> OK, welcome to our meeting everyone
+[2018-10-22 17:00:16] <sarang> GREETINGS
+[2018-10-22 17:01:02] <kovri-slack1> <oneiric> hiyo
+[2018-10-22 17:02:05] <sarang> There is much to discuss today, but I'll try to dwell on particular topics too long
+[2018-10-22 17:02:09] ⇐ cardboardoranges quit (~cardboard@65.112.8.199): Quit: cardboardoranges
+[2018-10-22 17:02:13] <sarang> FIRST, congrats to everyone on the network upgrade
+[2018-10-22 17:02:21] <endogenic> oneiric btw i have a kovri thing to chat about but couldn't PM you
+[2018-10-22 17:02:51] <sarang> BPs, bigger and better rings, and a host of other fixes are a benefit to our community
+[2018-10-22 17:02:51] <kovri-slack1> <oneiric> yeah, lost access to clearnet irc temporarily
+[2018-10-22 17:03:20] <sarang> Related to this, the final BP audit report is out: https://github.com/SarangNoether/research-lab/blob/master/audits/bulletproofs/Report-QuarksLab.pdf
+[2018-10-22 17:03:37] <sarang> It was delayed to wait for a bugfix at the time of upgrade
+[2018-10-22 17:03:54] <kovri-slack1> <oneiric> ^ halfway thru first read, great work by QuarksLabs
+[2018-10-22 17:04:12] <sarang> Yeah, they did an outstanding job, catching things outside of BPs too (hence the delay)
+[2018-10-22 17:04:24] <sarang> On to more things now...
+[2018-10-22 17:04:53] <sarang> There was earlier discussion about making it clear to researchers how to contact us and such, to avoid low-quality repetitive research on old shit
+[2018-10-22 17:05:08] <sarang> I propose an addition to the main project readme: http://paste.debian.net/hidden/6d3a8964/
+[2018-10-22 17:06:07] <sarang> Related to that, and to talks and papers given over the past year-ish relating to "OMG old ringz are bad and everyone is ded", I think a blag post is called for, summarizing all the work we've done to mitigate against ring attacks: http://paste.debian.net/hidden/6d3a8964/
+[2018-10-22 17:06:20] <sarang> Correction, this link is to the blag post: http://paste.debian.net/hidden/ea43fad6/
+[2018-10-22 17:06:33] <suraeNoether> back
+[2018-10-22 17:07:02] <sarang> Neither of these is live, but I'd like to post them soon. They take into account several good comments that were received last week about them
+[2018-10-22 17:08:33] <sarang> If there are no comments over the next day or so, I'll PR them / send to the correct peeps to post
+[2018-10-22 17:09:11] <sarang> Related to the upgrade, it was noted that our output selection has a bit of a bias, in that it selects blocks according to time, and then picks fakes equiprobably within them
+[2018-10-22 17:09:21] <sarang> This is skewed a bit, since some blocks are full and other are empty
+[2018-10-22 17:09:38] <suraeNoether> regarding blackballing/dead txn outputs: there is a very efficient algorithm I'm interested in benchmarking to revisit the question of whether it's worth the lab or the core team maintaining a live deadout list
+[2018-10-22 17:09:55] <sarang> I recommend that we introduce a windowing, where transactions in the chosen block _and_ a small number on either side are equiprobably chosen
+[2018-10-22 17:10:39] <sarang> suraeNoether: I now agree with your earlier sentiments that this would be a waste of time
+[2018-10-22 17:10:49] <sarang> especially given our ring increase
+[2018-10-22 17:10:49] <suraeNoether> why not use a rule like "pick block height h, go down to the first non-empty block of height h* <= h and up to the first non-empty blcok of height h' >= h, and pick from the (inclusive) range [h*, h']? 
+[2018-10-22 17:11:15] <suraeNoether> eh, i suppose details are unimportant for the meeting. :P
+[2018-10-22 17:11:30] <suraeNoether> sarang i'll have some specific numbers to *prove* it's a waste of time, though. :P
+[2018-10-22 17:11:35] <sarang> excellent
+[2018-10-22 17:11:56] <sarang> But yeah, it's reasonably easy to mitigate against that bias, and we should
+[2018-10-22 17:12:03] <suraeNoether> cool
+[2018-10-22 17:12:05] <selsta> I have a question about that blog post
+[2018-10-22 17:12:09] <sarang> selsta: go
+[2018-10-22 17:12:24] <sarang> s/blog/blag
+[2018-10-22 17:12:57] <selsta> Is it a good idea to write that we know about an upcoming research paper? Maybe other researchers would stop disclosing research that is in progress to us.
+[2018-10-22 17:13:04] <netg> https://eprint.iacr.org/2018/990 < old?
+[2018-10-22 17:13:53] <suraeNoether> selsta: we've communicated with them about that paper, and they didn't ask for any particular confidentiality or anything. in the past, researchers have contacted us with a paper and asked for confidentiality until publication, and we've kept those promises
+[2018-10-22 17:14:33] <suraeNoether> netg i will read this carefully
+[2018-10-22 17:15:05] <selsta> suraeNoether: okay :)
+[2018-10-22 17:15:20] <suraeNoether> ok, i have two things i want to chat about: firstly, the churn analysis, and second, the monero konferenco
+[2018-10-22 17:15:35] <sarang> May I say one thing first?
+[2018-10-22 17:15:37] <suraeNoether> but i don't want to interrupt sarang's 
+[2018-10-22 17:15:38] <suraeNoether> yep
+[2018-10-22 17:15:38] <sarang> Then I believe I'm finished
+[2018-10-22 17:15:41] <sarang> ty
+[2018-10-22 17:15:46] <suraeNoether> np didn't even finish typing
+[2018-10-22 17:16:21] <sarang> I have two paper drafts, one on dual-key signatures and one on spent output sets, that are sitting in no-man's land right now. I'd like us to move those to the official MRL publication list
+[2018-10-22 17:16:42] <suraeNoether> i thought we already had for DLSAG
+[2018-10-22 17:16:47] <sarang> We had not
+[2018-10-22 17:17:04] <suraeNoether> i'm fine with that, and we can reformat the thring signature paper and put them out at the same time with sequential numbers
+[2018-10-22 17:17:12] <suraeNoether> or... we should wait till we find out about a journal for thring
+[2018-10-22 17:17:20] <sarang> Cool, we can arrange PRs later for this
+[2018-10-22 17:17:28] <sarang> selsta: about your comment
+[2018-10-22 17:17:29] <suraeNoether> can you make both links available for the folks who are attending?
+[2018-10-22 17:17:48] <sarang> I also didn't provide details on anything that hasn't already been discussed here publicly and known before those peeps contacted us
+[2018-10-22 17:18:07] <sarang> I'll look up links to the compiled PDFs while suraeNoether discusses
+[2018-10-22 17:18:13] — sarang is done now
+[2018-10-22 17:18:17] <suraeNoether> okay, coolio
+[2018-10-22 17:18:28] <suraeNoether> so, at our research meeting two weeks ago, i guess it was Oct 1
+[2018-10-22 17:18:39] <suraeNoether> rehrar, sgp, sarang, and others asked for a formalization of the EAE + churn problem
+[2018-10-22 17:18:50] → cardboardoranges joined (~cardboard@65.112.8.199)
+[2018-10-22 17:19:05] <suraeNoether> in the ensuing two weeks, I've come up with some... disappointing results. and some hopeful results. sort of contradictory
+[2018-10-22 17:19:18] <suraeNoether> not a literal contradiction, or i wouldn't be coming to the community about it
+[2018-10-22 17:19:42] <suraeNoether> so, essentially, i have *nearly* formalized a game i'm calling the linkability game, and a specific implementation of this game could be called the fungibility game
+[2018-10-22 17:20:01] <suraeNoether> this quantifies the complexity an adversary faces when trying to link monero transactions
+[2018-10-22 17:20:32] <suraeNoether> compare this to the naive anonymity set questions we began with... "if we churn 7 times with ring size 5, does that mean we have an effective anonymity set of 5^7? who knows!"
+[2018-10-22 17:21:34] <suraeNoether> well, now i have a formal, quantifiable way of assessing the time required for an adversary to find a plausible transaction history that is optimal with respect to some model chosen by the adversary: that is to say, if the adversary thinks they have come up with a new heuristic, I can answer the question "how long does it take to find the most plausible transaction history, according to this heuristic?"
+[2018-10-22 17:22:21] <sarang> It sounds like the counter to the adversary's work is "how many other transaction histories are possible along with the true spends?"
+[2018-10-22 17:22:33] <suraeNoether> the answer to that question confirms previous results from linkability studies: it doesn't take long. Even in a world with *lots and lots* of plausible transaction histories, it is fairly quick to find the *optimally plausible ones* where plausible is defined by the adversary's model
+[2018-10-22 17:23:04] <suraeNoether> ^ good observation, sarang, they are related questions, but here's what's funny
+[2018-10-22 17:23:58] <suraeNoether> if an adversary wants to find an _approximately_ optimal transaction history among N keys with ring size R using some model, they can find it in O(R*N) time
+[2018-10-22 17:24:17] <suraeNoether> if they want to find an _exactly_ optimal trnasaction history, they can do it in O(R*N^1.5) time
+[2018-10-22 17:24:58] → sgp_ joined (~justi@50-202-180-242-static.hfc.comcastbusiness.net)
+[2018-10-22 17:25:07] <suraeNoether> this is sort of bad news and sort of good news: this is says "it is never worse than O(R*N^1.5) time to find these histories, and so the time required is proportional to ring size, and gets more annoying as the blockchain gets bigger"
+[2018-10-22 17:25:20] <sarang> What are the takeaways for this group?
+[2018-10-22 17:25:26] <suraeNoether> oh gosh sorry, yeah
+[2018-10-22 17:25:33] <suraeNoether> sorry, getting lost in the weeds
+[2018-10-22 17:25:53] <suraeNoether> so, bad news: it's fast and efficient to find an optimally plausible solution. good news: the total number of solutions can be made *really really massive*
+[2018-10-22 17:25:58] → sgp_1 joined (~justi@50-202-180-242-static.hfc.comcastbusiness.net)
+[2018-10-22 17:26:24] <suraeNoether> even if someone can find the optimally plausible solution in a short period of time, *all the other possible solutions* are also plausible
+[2018-10-22 17:26:57] <suraeNoether> so, I asked myself "okay, how can we make it so that there are so many plausible transaction histories that it's unreasonable to decide on any one of them?"
+[2018-10-22 17:27:30] <wow-discord> <sgp> yes
+[2018-10-22 17:27:34] <suraeNoether> even if you have a great heuristic and you can find the optimally plausible one very quickly, you are vulnerable to *not* catching someone who uses your heuristics to greedily make their transactions as invisible as possible
+[2018-10-22 17:28:53] <suraeNoether> so, for example, there are at least a billion transaction histories that are *plausible* if you deposit 16 outputs with a ring size of 10 
+[2018-10-22 17:29:18] <suraeNoether> there are 10^81 plausible trnasaction histories if you deposit 52 outputs at ring size 100
+[2018-10-22 17:29:27] ⇐ sgp_ quit (~justi@50-202-180-242-static.hfc.comcastbusiness.net): Ping timeout: 240 seconds
+[2018-10-22 17:29:50] <sarang> So the question becomes "what number is acceptable"?
+[2018-10-22 17:29:53] <wow-discord> <sgp> how are 10, 81, 52, and 100 related?
+[2018-10-22 17:30:00] <sarang> (not from a theory perspective, from a practical one)
+[2018-10-22 17:30:17] <suraeNoether> so: time complexity to find *any* solution is linearly related to ring size, and the total number of possible transaction histories can be computed precisely using this formula: (((R-1)^(R-1))/(R^(R-2)))^k where k = # of outputs deposited
+[2018-10-22 17:30:27] <suraeNoether> sgp_[m]: merely related according to that formula
+[2018-10-22 17:30:39] <wow-discord> <sgp> thanks, gives me some context
+[2018-10-22 17:30:55] <suraeNoether> i picked 10 and 100 ring members respectively as examples that are one order of magnitude apart, and i picked a billion (10^9) and big (10^81) essentially just to look at the behavior, at a glance
+[2018-10-22 17:31:14] <suraeNoether> so, this actually demonstrates a few things
+[2018-10-22 17:31:44] → barefootmouse joined (~barefootm@151.68.7.253)
+[2018-10-22 17:31:59] <suraeNoether> firstly: someone who is making only a few deposits, say 3, with no churn whatsoever, at a ring size of 11 is like ... dealing with 76 or so possible transaction histories
+[2018-10-22 17:32:14] <suraeNoether> which is unnaceptable for someone whose safety depends on Monero
+[2018-10-22 17:32:40] <suraeNoether> this means people transacting with untrusted 3rd parties should be using at least one churn between transactions
+[2018-10-22 17:32:42] <moneromooo> What do you call "transaction history" ?
+[2018-10-22 17:33:11] <suraeNoether> moneromooo: a plausible transaction history is a matching between key images and one-time output keys. there is only one "true" transaction history, which corresponds to "which key was used to compute this key image?"
+[2018-10-22 17:33:32] <suraeNoether> if some signatures are mutually incompatible, you end up not getting a matching
+[2018-10-22 17:33:35] <moneromooo> Thanks.
+[2018-10-22 17:33:38] <suraeNoether> np
+[2018-10-22 17:33:39] <sarang> (e.g. from the graph representation we talked about a while ago)
+[2018-10-22 17:33:45] <suraeNoether> yep
+[2018-10-22 17:34:26] <sarang> I assume it also goes without saying that churns should follow spend timing patterns
+[2018-10-22 17:34:42] <sarang> but this is a separate issue from the idea of transaction matchings
+[2018-10-22 17:34:43] <suraeNoether> yes
+[2018-10-22 17:35:32] <suraeNoether> so, the second thing this demonstrates is the power of plausible deniability, which really only matters for a court-of-law sort of situation as opposed to a more nefarious type who is trying to literally hunt or track down people using the monero blockchain
+[2018-10-22 17:36:49] <suraeNoether> another thing: this same approach can be used to link commitments and nullifiers in zcash; the goodness of your linking is dependent upon your heuristics (like timing as people leave and enter the shielded pool, or like amount-matching with the transparent-pool trnasactions) just like in monero. the primary difference is that the total number of edges to match is much much higher in zcash, at least whenever
+[2018-10-22 17:36:49] <suraeNoether> the shielded pool is big enough
+[2018-10-22 17:37:07] <suraeNoether> so it takes a lot longer, and there is less information to base heuristics on
+[2018-10-22 17:37:34] <sarang> In the interest of time, what are our next steps?
+[2018-10-22 17:37:39] <sarang> These are excellent results
+[2018-10-22 17:38:09] ← sgp_1 left (~justi@50-202-180-242-static.hfc.comcastbusiness.net): 
+[2018-10-22 17:38:23] <suraeNoether> i think a priority of MRL should be to seek out replacements for ring signatures
+[2018-10-22 17:38:32] ⇐ barefootmouse quit (~barefootm@151.68.7.253): Ping timeout: 272 seconds
+[2018-10-22 17:38:40] <sarang> of course
+[2018-10-22 17:38:45] → sgp_ joined (~justi@50-202-180-242-static.hfc.comcastbusiness.net)
+[2018-10-22 17:38:47] <suraeNoether> i think writing a paper on the topic will 1) do Monero a world of good in the long run but 2) will be FUDbait in the short run
+[2018-10-22 17:38:55] <suraeNoether> sort of like my MRL-0001 paper
+[2018-10-22 17:39:01] <sarang> Our users want to know what churn should look like
+[2018-10-22 17:39:17] <sarang> And before we replace ring sigs, understanding the benefits to increasing ring size is also important
+[2018-10-22 17:39:34] <suraeNoether> well, that's a good question: my results suggest that churning is helpful, but far less important than *diluting your deposits.* let me give you an example
+[2018-10-22 17:39:43] <sgp_> yeah, I agree churning and ringsize should be the high priority since we have them right now
+[2018-10-22 17:40:20] <sarang> IMO we should write up the relevant portions of these results and give some insights into churn behavior and how ring size affects it
+[2018-10-22 17:40:27] <sarang> and then best practices can be built from that
+[2018-10-22 17:40:40] <sarang> formalization and generalization to other projects could come after
+[2018-10-22 17:40:48] <sgp_> sarang please yes :) it's the material the community can best understand
+[2018-10-22 17:41:26] <suraeNoether> if you are depositing more than 155 outputs at our current ring size, the adversary has more possible transaciotn histories than the number of fundamental particles in the universe.
+[2018-10-22 17:41:40] <sarang> sure
+[2018-10-22 17:41:46] <suraeNoether> and that has no information about churn in it whatsoever
+[2018-10-22 17:41:52] <sarang> ok
+[2018-10-22 17:42:13] <suraeNoether> but we can re-interpret it: instead of 155 outputs, say we have 1 output we churn 154 times. same answer
+[2018-10-22 17:42:29] <sarang> what security level should we strive for?
+[2018-10-22 17:42:58] <suraeNoether> i have no clue, especially since this is a heuristic approach; if we shoot for 10^120, i'm pretty sure we'll be good to go
+[2018-10-22 17:43:00] <sarang> I'm not sure 2^256 is necessary for these kinds of plausible deniability
+[2018-10-22 17:43:17] <sarang> For rings we only have 11 options =p
+[2018-10-22 17:44:04] <suraeNoether> let's say we want to obscure 6 outputs by churning 6 times each. that's 216 keys in total. at ring size 10, there are 10^127 transaction histories
+[2018-10-22 17:44:16] <suraeNoether> oh no that's 36 keys. :P
+[2018-10-22 17:44:33] <suraeNoether> let's say 14 keys 14 times. that gives us 10^114 transaction histories
+[2018-10-22 17:44:54] <sarang> Cool, let's get a table like this into a tech note, along with the relevant results
+[2018-10-22 17:44:58] <suraeNoether> i don't have a good way of saying "here, churn 7 times at ring size 11"
+[2018-10-22 17:44:59] <suraeNoether> ok cool
+[2018-10-22 17:45:00] <sarang> and it'll be a great contribution
+[2018-10-22 17:45:10] <sarang> excellent work suraeNoether on this
+[2018-10-22 17:45:13] <moneromooo> I still hate churning though.
+[2018-10-22 17:45:20] <suraeNoether> moneromooo same same
+[2018-10-22 17:46:04] <sarang> due to bloat?
+[2018-10-22 17:46:09] <sarang> which it certainly does
+[2018-10-22 17:46:42] <moneromooo> Yes. It encourages people to shit on everyone's else resources.
+[2018-10-22 17:47:06] <sarang> suraeNoether and I had discussed that earlier too, that we need to provide answers about reasonable threat models that minimize bloat
+[2018-10-22 17:47:47] <sarang> and obv different user types have different requirements for their privacy/safety
+[2018-10-22 17:48:09] <suraeNoether> long story short: don't use KYC/AML exchanges, and if you do, make sure you churn at least once before your deposits... and more often if you plan on making many deposits that you suspect are "marked..." and dilute your deposits with other outputs as much as possible.
+[2018-10-22 17:48:32] <sarang> it's the "as much as possible" and "at least" that this note should attempt to quantify
+[2018-10-22 17:48:51] <sgp_> yes, thanks
+[2018-10-22 17:49:20] <sarang> cool
+[2018-10-22 17:49:22] <suraeNoether> except i don't think it's directly quantifiable :( if we say "a cryptographic number of plausible transaction histories, so 10^88 or bigger, or so", this is essentially arbitrarily chosen
+[2018-10-22 17:49:46] <suraeNoether> but we'll chat more about it later
+[2018-10-22 17:49:46] <sarang> Well, whatever we do (or don't do) eventually needs to be distilled to best practices
+[2018-10-22 17:49:54] <sarang> or users will just do whatever they think is helpful
+[2018-10-22 17:50:03] <sarang> and that might just lead to bloat with no benefit
+[2018-10-22 17:50:18] <sarang> Anyway, let's move on for now
+[2018-10-22 17:50:23] <sarang> Any other quick news suraeNoether ?
+[2018-10-22 17:50:33] <sarang> (10 min officially remain)
+[2018-10-22 17:50:47] <suraeNoether> the second thing i wanted to talk to everyone about is the monero konferenco. in order to move forward in the funding process, please leave ANY COMMENT, positive, negative, or neutral, in this thread: https://forum.getmonero.org/6/ideas/90909/surae-noether-first-denver-monero-konferenco-spring-2019 
+[2018-10-22 17:50:57] <suraeNoether> Please keep in mind that things like booking the event  or inviting speakers... these are unlikely to happen before funding begins, and the longer we wait, the less likely it is we can get all the things we want to get 
+[2018-10-22 17:50:58] <sarang> ^
+[2018-10-22 17:51:15] <sarang> There's been informal speaking interest from some top-quality folks
+[2018-10-22 17:51:22] <suraeNoether> yes, several
+[2018-10-22 17:51:22] <sarang> (won't put names out there yet)
+[2018-10-22 17:51:31] <suraeNoether> also, I conferred with fluffypony re: timing for next year
+[2018-10-22 17:51:55] <suraeNoether> due to the lateness of the year, the coincidence with consensus, etc, we decided on the weekend of June 22nd
+[2018-10-22 17:52:07] <suraeNoether> unless booking goes weird, in which case we will shoot for June 15th as a back-up date
+[2018-10-22 17:52:18] <sarang> sweet
+[2018-10-22 17:52:33] <suraeNoether> I know i was mentioning April 27 last week, but that's 1) too close to consensus and graduation, and 2) pushing it back earlier seems unwise.
+[2018-10-22 17:52:52] <sarang> To wrap up, I have some action-item links to list here
+[2018-10-22 17:52:57] <suraeNoether> excellente
+[2018-10-22 17:53:17] <sarang> The dual-key signature paper, which will be pushed to main MRL page unless there are comments: https://v2.overleaf.com/read/vcyxgpntfsgz
+[2018-10-22 17:53:29] <sarang> The spent-output paper, same deal: https://v2.overleaf.com/read/xtbwpvqvtqmm
+[2018-10-22 17:53:53] <sarang> The proposed addition to the readme, that discusses research contacts: http://paste.debian.net/hidden/6d3a8964/
+[2018-10-22 17:54:14] <sarang> The proposed blag post responding to ring attacks: http://paste.debian.net/hidden/ea43fad6/
+[2018-10-22 17:54:33] <kovri-slack1> <rehrar> Oh shoot! None of my comments have relayed.
+[2018-10-22 17:54:46] <kovri-slack1> <rehrar> I have been talking this whole time.
+[2018-10-22 17:54:47] <sarang> Action will be taken on all those links if I hear no comments or suggestions
+[2018-10-22 17:55:19] <kovri-slack1> <rehrar> And thought everyone has been ignoring me cuz they hate me.
+[2018-10-22 17:55:26] <sarang> And of course, suraeNoether's FFS on the conference would like comments: https://forum.getmonero.org/6/ideas/90909/surae-noether-first-denver-monero-konferenco-spring-2019
+[2018-10-22 17:55:27] <kovri-slack1> <rehrar> I have many many comments on Brandon's work.
+[2018-10-22 17:55:32] <sarang> rehrar[m]: hullo
+[2018-10-22 17:55:38] <sarang> We can chat about all of this once we adjourn!
+[2018-10-22 17:55:42] <kovri-slack1> <rehrar> Ok.
+[2018-10-22 17:55:51] <sarang> Any other last-minute wrap-up?
+[2018-10-22 17:56:02] <suraeNoether> i'm very eager to see what rehrar[m] had to say
+[2018-10-22 17:56:04] <suraeNoether> :P
+[2018-10-22 17:56:11] <sarang> Yes! OK, lets adjourn and continue discussion
+[2018-10-22 17:56:13] <sarang> Thanks to all
+[2018-10-22 17:56:19] * sarang set the topic to 
+[2018-10-22 17:56:32] <sarang> hullo rehrar[m] !
+[2018-10-22 17:56:44] <binaryFate> sarang title "Sets of spent notes" is ambiguous wording
+[2018-10-22 17:56:46] <kovri-slack1> <oneiric> same, thanks for the meeting
+[2018-10-22 17:57:05] <binaryFate> maybe +Notes on "Sets of spent"+
+[2018-10-22 17:57:13] * suraeNoether set the topic to sarang: There is much to discuss today, but I'll try to dwell on particular topics too long

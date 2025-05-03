@@ -1,0 +1,315 @@
+[2019-01-28 17:00:39] <suraeNoether>	allrighty, well, it's 17 UTC
+[2019-01-28 17:00:44] <serhack>	Hi!
+[2019-01-28 17:00:45] <suraeNoether>	howdy everyone
+[2019-01-28 17:00:51] <ardyfy>	HI
+[2019-01-28 17:00:51] <oneiric_>	ohiyo
+[2019-01-28 17:00:56] <Xeagu>	Hey
+[2019-01-28 17:01:00] <learninandlurkin>	Salutations
+[2019-01-28 17:01:09] <ArticMine>	hi
+[2019-01-28 17:01:27] <suraeNoether>	today, our agenda is here: https://github.com/monero-project/meta/issues/302
+[2019-01-28 17:01:28] <Mochi101>	woohoo!
+[2019-01-28 17:02:08] <suraeNoether>	allrighty, so let's begin with payment ID deprecation
+[2019-01-28 17:02:27] <Mochi101>	Very sad.
+[2019-01-28 17:02:41] <suraeNoether>	my understanding is that some folks are opposed to the proposed timeline for switching over to subaddresses
+[2019-01-28 17:02:44] <Mochi101>	Don't you guys think that such drastic changes hurts Monero adoption?
+[2019-01-28 17:02:58] <Xeagu>	It is new information to me that this was not already default
+[2019-01-28 17:03:30] <xiphon>	Mochi101: payment id is actually what "hurts Monero adoption"
+[2019-01-28 17:03:45] <xiphon>	^ standalone one
+[2019-01-28 17:04:01] <suraeNoether>	mochi101 what drastic change are you referring to? deprecating payment IDs? or enforcing subaddresses?
+[2019-01-28 17:04:24] <Mochi101>	Both actually.
+[2019-01-28 17:04:36] <learninandlurkin>	Drastic changes is what Monero is all about. 6 month forks and whatnot.
+[2019-01-28 17:04:48] <ArticMine>	I am in favor of this, the only possible issue I see is timing on which I am neutral
+[2019-01-28 17:04:53] <suraeNoether>	in my opinion, switching to a system with fewer moving parts with fewer ways for users or wallet developers to accidentally screw up, this is a net win for monero users, the ecosystem in general.
+[2019-01-28 17:05:02] <gingeropolous>	^^
+[2019-01-28 17:05:13] <Mochi101>	Yes, Monero feels like a really high maintenance, needy girlfriend sometimes.
+[2019-01-28 17:05:36] <suraeNoether>	i don't know about you, but "idiot proof" cryptography is sort of a myth, but it'd be really really great if we could take incremental steps toward systems with fewer complications glued on top just to make it work
+[2019-01-28 17:06:04] <Xeagu>	In the unknown future, will Monero no longer require network upgrades every 6 months?
+[2019-01-28 17:06:26] <suraeNoether>	xeagu i believe we are intending on keeping 6 month network upgrade schedules for the foreseeable future, with the intention of *eventually* slowing them down
+[2019-01-28 17:06:59] <suraeNoether>	i don't know what timescale "eventually" means here, practically, though. fluffypony has mentioned it  before but I don't recall the timescale
+[2019-01-28 17:07:14] <Xeagu>	Do you think a timeline would help those with concerns about that activity hurting adoption?
+[2019-01-28 17:07:18] <learninandlurkin>	The unknown future is unknown
+[2019-01-28 17:07:19] <silur>	I aggree that in the anctient security vs UX war we need to stick with security
+[2019-01-28 17:07:34] <silur>	and moving/changing parts is a golden rule in crypto
+[2019-01-28 17:07:51] <silur>	even if it's more surface for users to screw up
+[2019-01-28 17:08:09] <suraeNoether>	ArticMine: thank you for supporting the change. i'm with you on both timeline and supporting the upgrade. i'm asking if anyone here has specific timeline objections they want to bring up; last I recall, sgp_ had a great chart, but perhaps the discussions have changed a bit since then?
+[2019-01-28 17:08:29] <dEBRUYNE>	UX issues stemming from payment IDs are predominantly caused by the long, unencrypted payment IDs. Thus, imo, it's imperative that we remove those
+[2019-01-28 17:08:41] <suraeNoether>	^^
+[2019-01-28 17:09:05] <Mochi101>	As far as I know there's not even any real documentation on subaddress generation, identifying the last index which has been used, etc.
+[2019-01-28 17:09:22] <Mochi101>	That's pretty bad when you're going to force it.
+[2019-01-28 17:09:33] <sgp_>	Mochi101: https://github.com/monero-project/meta/issues/299
+[2019-01-28 17:09:45] <sgp_>	lots of details there, including a basic upgrade guide for services
+[2019-01-28 17:10:15] <suraeNoether>	thanks for the link to the previous PayID discussion, sgp_ ! i am bookmarking that rn
+[2019-01-28 17:10:33] <sgp_>	services have nearly half a year to upgrade, which is reasonable given the requirements. We have spoken to exchanges and payment processor services who think the timeline is aggressive but realistic
+[2019-01-28 17:10:59] <sgp_>	Mochi101: the logs for the meeting are also available at the same link
+[2019-01-28 17:11:11] <suraeNoether>	sgp_: cool! personally, I think this is a win for monero users in terms of privacy, a win for developers in terms of elegance, and a win for the ecosystem in terms of efficiency
+[2019-01-28 17:11:11] <sgp_>	I recommend you read them
+[2019-01-28 17:11:34]*	serhack has quit (Remote host closed the connection)
+[2019-01-28 17:12:02]*	ferretinjapan (ferretinja@gateway/vpn/privateinternetaccess/ferretinjapan) has joined
+[2019-01-28 17:12:38] <Xeagu>	I admit I don't understand how subaddresses work
+[2019-01-28 17:12:43] <suraeNoether>	I don't want to speak for sarang; perhaps when he gets back he can jump in and provide an opinion.
+[2019-01-28 17:12:53] <Xeagu>	There is a need in the market for distributed education
+[2019-01-28 17:13:15] <suraeNoether>	Xeagu: the main idea is you take your wallet address (A,B) and you generate a family of addresses deterministically all sharing the same view key, and allowing you to mass-scan all the subaddresses simultaneously for incoming transactions
+[2019-01-28 17:13:35] <suraeNoether>	it's a little more complciated than that because they don't *actually* share a view key
+[2019-01-28 17:13:39] <Mochi101>	Thanks. But you're only seeing this from your "in the loop" perspective. I looked for information about this and couldn't find any in the places that I expected them to be. Really people using Monero should not have to search through GitHub to find this stuff. If it's a major issue like this it should be front and center on something like getmonero.org
+[2019-01-28 17:13:40] <suraeNoether>	but they can all be *scanned* with a single view key
+[2019-01-28 17:14:07] <Xeagu>	Yes I am confused on the order that subaddresses are selected during generation
+[2019-01-28 17:14:16] <Xeagu>	If they are deterministic, no?
+[2019-01-28 17:14:29] <gingeropolous>	is there anything research-y about payment IDs / encrypted / subaddresses at this point? I mean, its pretty solid that anything except subaddresses is sub-optimal, right?
+[2019-01-28 17:14:33] <suraeNoether>	you use deterministic nonces while hashing, so they appear random but always come up to be the same
+[2019-01-28 17:14:48] <sgp_>	Xeagu: read this: https://medium.com/@anhdres/how-moneros-accounts-and-subaddresses-work-in-monerujo-4fa7df0a58e4
+[2019-01-28 17:14:54] <selsta>	Mochi101: You should subscribe to the newsletter.
+[2019-01-28 17:15:00] <dEBRUYNE>	Mochi101: It was announced on the mailing list
+[2019-01-28 17:15:16] <sgp_>	Yes, please join that. It's essential for staying up-to-date
+[2019-01-28 17:15:38] <Xeagu>	Alright so basically I need to read through Mastering Monero again
+[2019-01-28 17:16:02] <suraeNoether>	gingeropolous: yeah. this is a question (subaddresses) about key infrastructures. not really in doubt that subaddresses are objectively superior in terms of engineering and in terms of simplicity. keeping around old systems for no good reason is not going to help adoption.
+[2019-01-28 17:16:45] <suraeNoether>	also as far as I understand it, the MRL contributors sgp and knaccc are both working on documentation
+[2019-01-28 17:16:51] <gingeropolous>	right. it just seems at this point we gotta bite the bullet and go through the suck.
+[2019-01-28 17:16:53] <suraeNoether>	we can continue this conversation after the meeting
+[2019-01-28 17:16:54] <Xeagu>	Subaddresses mean you only really need to memorize a single wallet seed, as I understand it.
+[2019-01-28 17:17:28] <sgp_>	yes Xeagu, and best to table this discussion imo
+[2019-01-28 17:17:44] <Xeagu>	Let's move on
+[2019-01-28 17:17:45] *	OWLisFLOWN (18cdb83a@gateway/web/cgi-irc/kiwiirc.com/ip.24.205.184.58) has joined
+[2019-01-28 17:17:50] <suraeNoether>	let's move along to the oh-so-contentious  block size scaling discussion
+[2019-01-28 17:17:57] <suraeNoether>	articmine is currently validating some cost analyses by sarang
+[2019-01-28 17:18:07] <OWLisFLOWN>	Sup n00bs
+[2019-01-28 17:18:36] <suraeNoether>	i whipped up two ideas, one wacky and one not for block size debate, and i'll be contributing these two ideas to the mix to see about how it all fits together
+[2019-01-28 17:18:46] <suraeNoether>	in terms of cost analyses
+[2019-01-28 17:19:05] <Xeagu>	What are the two ideas?
+[2019-01-28 17:19:20] <ArticMine>	I presented my overall proposal
+[2019-01-28 17:19:35] <suraeNoether>	my first idea is a simple low-pass filter, and my complicated idea is inspired by some discontinuous reset models from neuroscience, which sounds fancy, but is in no way "modeling brains on the blockchain" or anything like that, please do not run away with my words
+[2019-01-28 17:19:48] *	thrmo has quit (Remote host closed the connection)
+[2019-01-28 17:19:54] <suraeNoether>	ArticMine: yeah, i thought you and sarang were working together to make sure cost analyses were apples-to-apples comparisons?
+[2019-01-28 17:20:13] <ArticMine>	https://paste.debian.net/hidden/556a3a8a/
+[2019-01-28 17:20:20] <suraeNoether>	aha!
+[2019-01-28 17:20:32] <suraeNoether>	thanks articmine
+[2019-01-28 17:20:39] <suraeNoether>	that's articmine's proposal
+[2019-01-28 17:20:44] <Xeagu>	Interesting okay. Can you explain the low-pass filter? I'd like to discuss the brains on the blockchain idea later.
+[2019-01-28 17:21:01] <ArticMine>	There was one addition: We can use LongTermBlockWeight as opposed to BlockWeight in the fee calculation
+[2019-01-28 17:21:45] <suraeNoether>	xeagu essentially all our proposals revolve around discrete-time dynamical systems, including my discontinuous reset idea.  so "how to update next_max_block_size as a function of previous block sizes... so that the blockchain doesn't get caught in a feedback loop and blow up for a determined and moderately wealthy attacker?"
+[2019-01-28 17:22:00] <Xeagu>	This is trying to determine future dynamic block size scaling?
+[2019-01-28 17:22:17] <suraeNoether>	yep.
+[2019-01-28 17:22:23] <silur>	wait
+[2019-01-28 17:22:29] <silur>	I have a paper on this issue
+[2019-01-28 17:22:34] <suraeNoether>	great!
+[2019-01-28 17:22:35] <suraeNoether>	please link!
+[2019-01-28 17:22:44] <silur>	it's originally for PoS
+[2019-01-28 17:22:50] <silur>	but does address the problem
+[2019-01-28 17:22:54] <suraeNoether>	i believe articmine's approach is good in the sense that it forces an attacker attempting to force bloat to drag out an attack over a long timescale in order to have a decent influence, which costs more and more money.
+[2019-01-28 17:22:56] <silur>	of keeping this wealth blowup in check
+[2019-01-28 17:22:57] <silur>	https://arxiv.org/abs/1809.07468v2
+[2019-01-28 17:23:09] *	sarang is back
+[2019-01-28 17:23:39] <suraeNoether>	interesting, thank you. i believe someone had an idea where miners vote on the max block size for the next N blocks using proof of work, but i haven't looked further into it yet
+[2019-01-28 17:23:43] <suraeNoether>	wb sarang
+[2019-01-28 17:23:47] <Xeagu>	I am not familiar with ArticMines proposal
+[2019-01-28 17:24:14] <suraeNoether>	xeagu he linked it a moment ago, and sarang has been running simulations and comparing costs
+[2019-01-28 17:24:18] <silur>	this one has a formula for how to calculate the next reward based on the current parameters
+[2019-01-28 17:24:28] <silur>	maybe we can generalize it for blocksize?
+[2019-01-28 17:24:47] <Xeagu>	I need it in ELI5 terms
+[2019-01-28 17:25:00] <ArticMine>	interesting, thank you. i believe someone had an idea where miners vote on the max block size for the next N blocks using proof of work, but i haven't looked further into it yet] <--- This is one of many failed Bitcoin proposals
+[2019-01-28 17:25:02] <moneromooo>	As long as we finalize ArticMine's proposal soon, before the fancy new stuff gets worked on :)
+[2019-01-28 17:25:16] <Xeagu>	How does the dynamic block size change from its current state?
+[2019-01-28 17:25:24] <suraeNoether>	ArticMine: also good to know
+[2019-01-28 17:25:32] <suraeNoether>	xeagu right now
+[2019-01-28 17:25:40] <sarang>	The newer proposals do away with the idea of a single median
+[2019-01-28 17:25:41] <suraeNoether>	we allow next max block size to be 2*Median(last N blocks)
+[2019-01-28 17:25:44] <suraeNoether>	i forget N
+[2019-01-28 17:25:50] <moneromooo>	Xeagu: https://paste.debian.net/hidden/556a3a8a/
+[2019-01-28 17:26:01] <moneromooo>	100000
+[2019-01-28 17:26:03] *	TheoStorm (~TheoStorm@host-lzquwqj.cbn1.zeelandnet.nl) has joined
+[2019-01-28 17:26:07] <sarang>	Details that have been previously reviewed can probably be discussed more deeply after meeting, IMO
+[2019-01-28 17:26:11] <Xeagu>	moneromooo: that's too high level for me
+[2019-01-28 17:26:13] <moneromooo>	And 1.4 IIRC, not 2.
+[2019-01-28 17:26:24] <Xeagu>	I'll review other notes sure
+[2019-01-28 17:26:26] <suraeNoether>	moneromooo: oh! that's good :D
+[2019-01-28 17:26:33] <suraeNoether>	xeagu i'll get you after the meeting
+[2019-01-28 17:26:43] <sarang>	atm, I am waiting to see what cost details are added by ArticMine to ensure we understand the relative cost of bloat under the different options
+[2019-01-28 17:26:54] <Xeagu>	Okay
+[2019-01-28 17:27:04] <suraeNoether>	basically: block size scaling is still under discussion, we are working on formalizing articmine's proposal and comparing it to our present proposal as well as at least one other proposal.
+[2019-01-28 17:27:14] <suraeNoether>	and i think sarang and i can collaborate on a technical note describing all this
+[2019-01-28 17:27:59] <suraeNoether>	moving along to MRL 11's status update: MRL 11 is essentially about traceability and linkability in Monero, and comparing techniques across multiple blockchains like Zcash + Monero together
+[2019-01-28 17:28:29] <suraeNoether>	if you guys have seen matthew green and binaryfate and fluffypony sparring on twitter about ring sizes compared to the shielded pool in zcash
+[2019-01-28 17:28:38] <suraeNoether>	this is that
+[2019-01-28 17:28:46] <Xeagu>	Zcash doesn't scale
+[2019-01-28 17:28:49] <silur>	ah :D
+[2019-01-28 17:29:01] <suraeNoether>	the current status is that sarang passed it back to me more than a week ago, and i've been tinkering with simulations
+[2019-01-28 17:29:09] <ArticMine>	My proposal uses the current 2x maximum for the short term median and 1.4x for the long term median
+[2019-01-28 17:29:33] <Xeagu>	You can't let every transaction be shielded without huge data storage
+[2019-01-28 17:29:49] <suraeNoether>	i want to simulate something like the following, and it's quite challenging to formalize this (i'm bringing my hangup to the crowd so you guys know what i'm stuck on)... I want to create a formal statistical hypothesis, and it's eluding me...
+[2019-01-28 17:30:00] <suraeNoether>	essentially, i want to capture the EABE scenario that started this whole paper last year
+[2019-01-28 17:30:05] <suraeNoether>	and churn
+[2019-01-28 17:30:17] <Xeagu>	EABE scenario?
+[2019-01-28 17:30:24] <sarang>	Poisoned outputs
+[2019-01-28 17:30:35] <Xeagu>	Oh got it
+[2019-01-28 17:30:41] <suraeNoether>	I want to generate a random blockchain (somehow) and embed within it the spending behavior masking "churn" between receiving a possibly "marked note" and then later trying to cash it out at a KYC/AML exchange
+[2019-01-28 17:30:43] *	nton-nton has quit (Quit: Leaving.)
+[2019-01-28 17:31:06] *	JOhNKMus has quit (Ping timeout: 250 seconds)
+[2019-01-28 17:31:16] <suraeNoether>	then i want to apply our matching technique to see the probability that this behavior is caught, if someone is looking for it
+[2019-01-28 17:31:22] <Xeagu>	But as I understand if you just show view key, the exchange will accept it
+[2019-01-28 17:31:34] <suraeNoether>	xeagu that's the final vertex in the transaction graph
+[2019-01-28 17:31:39] *	AndroUser2 (~androirc@174.128.242.250) has joined
+[2019-01-28 17:31:46] <suraeNoether>	there may be many intermediate vertices as you churn
+[2019-01-28 17:32:16] <suraeNoether>	most importantly, we need somehow to gauge the entire confusion table; false positives, false negatives, true positives, and true negatives
+[2019-01-28 17:32:22] <Xeagu>	Like how far back do exchanges care about poisoned outputs?
+[2019-01-28 17:32:41] <sarang>	unknown
+[2019-01-28 17:32:46] <suraeNoether>	and i can do this *under certain hypotheses* but i can't do it in general. all i really i want is a practical comparison of our technique to a real world scenario like a miner trying to hide that he's depositing a mined coin on an exchange
+[2019-01-28 17:32:51] <sarang>	You should conservatively assume "all the way back"
+[2019-01-28 17:33:29] <sarang>	Anyway, feels like we're getting off topic somewhat
+[2019-01-28 17:33:54] <Xeagu>	Was regarding MRL 11
+[2019-01-28 17:34:02] <Xeagu>	Traceability comparison
+[2019-01-28 17:34:16] <suraeNoether>	so, to summarize MRL 11: we have an algorithm, we have timing estimates, we are working on simulations and comparisons of our technique across multiple blockchains at once, and we are basically gearing up to figure out how many churns is enough... or... alternatively... we are gearing up to figure out how to show the depth of the wastefulness of having a massive anonymity set like the whole zcash shielded
+[2019-01-28 17:34:16] <suraeNoether>	pool
+[2019-01-28 17:34:51] <suraeNoether>	sarang: think that was an okay summary? i don't want to speak for you
+[2019-01-28 17:35:32] <sarang>	Yes, the computational bounds are the most interesting part IMO
+[2019-01-28 17:35:49] <suraeNoether>	yeah, same actually
+[2019-01-28 17:35:51] <sarang>	they set a framework for analyzing certain behavior
+[2019-01-28 17:36:11] <suraeNoether>	the interesting thing to me is we were able to put lower bounds on how fast an attacker can generate a "guess" at a possible spend history
+[2019-01-28 17:36:31] <suraeNoether>	bad news: it's pretty fast. good news: there are lots and lots of possible spend histories, like cryptographically many
+[2019-01-28 17:36:40] <suraeNoether>	how much is the practical security compared to a zk-snark scenario? we'll find out
+[2019-01-28 17:37:16] <sarang>	So you earlier discussed block size scaling (waiting on cost analysis)... did I also miss anything on output selection?
+[2019-01-28 17:37:28] <suraeNoether>	spoiler: if both blockchains exist together at the same time, one with an opt-out transparent pool and both with users interacting at KYC/AML exchanges...  then security on both are wildly compromised
+[2019-01-28 17:37:38] <suraeNoether>	sarang eek I forgot to add output selection to the agenda, that's my bad
+[2019-01-28 17:37:47] <sarang>	OK, is now a good time for this?
+[2019-01-28 17:37:53] <suraeNoether>	perfect time actually
+[2019-01-28 17:37:57] <sarang>	Great
+[2019-01-28 17:38:01] *	suraeNoether it is great
+[2019-01-28 17:38:12] <Xeagu>	It's not on the agenda but I wanted to make sure we discussed the rumor of ASIC/FPGAS on the network.
+[2019-01-28 17:38:15] <sarang>	moneromooo had asked me earlier about reviewing our windowing approach to gamma selection
+[2019-01-28 17:38:49] <sarang>	He had an idea about further weighting selection probability of a block based on output count
+[2019-01-28 17:39:06] <sarang>	with a possible goal of reducing the coinbase-to-non-coinbase ratio in rings to that of the whole chain
+[2019-01-28 17:39:17] <suraeNoether>	xeagu we'll get to that in a sec, thanks for reminding me :\
+[2019-01-28 17:39:20] <sarang>	e.g. 6-10% of outputs are coinbase, so 6-10% of a ring should be as well
+[2019-01-28 17:39:52] <sarang>	moneromooo can explain it better, but the idea would be to take the gamma probability of block selection and further weight by the block's output count, and then uniformly select within that block
+[2019-01-28 17:40:03] <sarang>	I'm working up some code based on chain stats
+[2019-01-28 17:40:08] <sarang>	but I'll put it out there for comment
+[2019-01-28 17:40:13] *	sarang steps back
+[2019-01-28 17:40:19] <suraeNoether>	sarang #actually
+[2019-01-28 17:40:26] <suraeNoether>	the distribution in the ring should be "whatever the probability that the next transaction is a coinbase output."
+[2019-01-28 17:40:31] <Xeagu>	I think miners churning newly mined coins would help against poisoned outputs
+[2019-01-28 17:40:35] <suraeNoether>	so if miners typically hodl for long long long times, then mimicing the distribution of the outputs that care coinbases will drastically over-sample the coinbase outputs.
+[2019-01-28 17:40:40] <suraeNoether>	xeagu i agree
+[2019-01-28 17:40:50] <gingeropolous>	<sarang> e.g. 6-10% of outputs are coinbase, so 6-10% of a ring should be as well >>>>> but 99% of coinbase outputs are owned by about 15 people
+[2019-01-28 17:40:51] <suraeNoether>	i think a lot of miners churn in order to mask that they are mining
+[2019-01-28 17:41:06] <suraeNoether>	gingeropolous: exactly!
+[2019-01-28 17:41:17] <sarang>	I know, but we have no good metric for "how many coinbase in a ring is ok"
+[2019-01-28 17:41:28] <suraeNoether>	unfortunately we don't really have a way of estimating how often any given subsets of our blockchain are spent
+[2019-01-28 17:41:30] <sarang>	Currently it's 1-3 outputs per ring on average that are coinbase
+[2019-01-28 17:41:36] <moneromooo>	The idea I had is meant to (I think) make the selection process match the gamma from an ideal blockchain (ideal being, every block has the same number of outputs).
+[2019-01-28 17:41:47] <moneromooo>	And indeed, in that particular case, the two distributions match.
+[2019-01-28 17:41:58] <moneromooo>	The idea has two steps:
+[2019-01-28 17:42:01] <sarang>	Nice, did you run sims?
+[2019-01-28 17:42:24] <moneromooo>	- for each block, calculate its probability of being picked by the gamma distribution pick
+[2019-01-28 17:42:35] <moneromooo>	- for each block, multiply that number by the number of outputs in that block
+[2019-01-28 17:42:53] <moneromooo>	Then you just pick a random block from those weights using a discrete distribution.
+[2019-01-28 17:43:05] <moneromooo>	I did not run sims, because I do not know how to calculate the first step.
+[2019-01-28 17:43:08] <suraeNoether>	MOO
+[2019-01-28 17:43:11] <suraeNoether>	you brilliant bastard
+[2019-01-28 17:43:16] <suraeNoether>	you want to know why that works?
+[2019-01-28 17:43:26] <sarang>	moneromooo had pointed out earlier that this also solves the issue of a fixed window size
+[2019-01-28 17:43:43] <moneromooo>	Well, I see how it'd work by, er... intuition really. Why does it work ?
+[2019-01-28 17:43:49] <suraeNoether>	you are estimating an empirical distribution: when you multiply that number by the number of outputs in the block, you are computing the expected number of outputs to be selected from that block. then you built a histogram and selected from that!
+[2019-01-28 17:43:56] <sarang>	Yeah
+[2019-01-28 17:44:03] <suraeNoether>	it's cool
+[2019-01-28 17:44:07] <suraeNoether>	expectation as a linear operator
+[2019-01-28 17:44:10] <suraeNoether>	fun stuff
+[2019-01-28 17:44:11] <suraeNoether>	*ahem*
+[2019-01-28 17:44:24] <sarang>	the scaling of coinbase outputs in this case is also independent of the gamma distribution, which I find neat
+[2019-01-28 17:44:31] <suraeNoether>	very frequentist. hem hem
+[2019-01-28 17:44:44] <suraeNoether>	yeah, you could use this with any underlying hypothetical distribution
+[2019-01-28 17:44:47] <sarang>	I'm confirming that it does so, and writing up some sims to convince myself of it
+[2019-01-28 17:45:03] <suraeNoether>	\me eats oatmeal
+[2019-01-28 17:45:08] <sarang>	kudos moneromooo, it's a clever approach that fixes the issues with windowing
+[2019-01-28 17:45:20] <gingeropolous>	so there's still a probability that multiple coinbases will be selected, but because tiny blocks have low probability, we should expect less outputs selected from tiny blocks?
+[2019-01-28 17:45:21] <suraeNoether>	it actually fixes several other things i'd been thinking about
+[2019-01-28 17:45:24] <suraeNoether>	it's a great framework.
+[2019-01-28 17:45:35] <moneromooo>	Thanks. Still needs a way to compute the first number. I fear it might involve integrals.
+[2019-01-28 17:45:38] <Xeagu>	I don't understand :/
+[2019-01-28 17:46:04] <sarang>	moneromooo: probably not =p
+[2019-01-28 17:46:04] <suraeNoether>	gingeropolous: yeah, exactly. each output has a gamma age, and then you select from all outputs. rather than selecting an output age from a gamma and then selecting from all the outs with that age. subtle flipping of the order of things
+[2019-01-28 17:46:25] <sarang>	I believe it should reduce the ring ratio to that of the whole chain
+[2019-01-28 17:46:29] <Xeagu>	I don't know what gamma means
+[2019-01-28 17:46:33] <sgp_>	In the most extreme case, we can say 0 coinbase are necessary and force independent miners to churn their received funds if they care. Pools don't care and are the main cause of this debate. But there doesn't seem to be enough support for this, and it comes with other tradeoffs. I just think it's important to keep mentioning
+[2019-01-28 17:46:37] <moneromooo>	A particular random distribution.
+[2019-01-28 17:46:39] <sarang>	the way we select ring members using math Xeagu
+[2019-01-28 17:46:53] <gingeropolous>	Xeagu, you can think of gamma as a droopy triangle
+[2019-01-28 17:46:57] <suraeNoether>	xeagu there is a long statistical background on the gamma distribution. we'll catch you up after the meeting
+[2019-01-28 17:47:13] <gingeropolous>	right triangle, 90 degrees on the right side. the hypotenuse is the droopy side
+[2019-01-28 17:47:14] <sarang>	sgp_: we can enforce coinbase-only rings as a first churn, but that doesn't solve the heuristic of "coinbase are bad"
+[2019-01-28 17:47:20] <sarang>	it just moves it along the transaction graph a teeny bit
+[2019-01-28 17:47:22] <sarang>	so I feel ya
+[2019-01-28 17:47:42] *	Febo (Febo@89-212-17-205.static.t-2.net) has joined
+[2019-01-28 17:47:42] <suraeNoether>	you flip a coin until you get a heads up and right down the number of flips. then you do that 10 times. then you add those wait-times-until-heads-up together
+[2019-01-28 17:47:49] <sgp_>	sarang: this would just accept "coinbases are bad" and not touch them whenever possible
+[2019-01-28 17:47:54] <Xeagu>	So if gamma is a process (verb) how is it acting as an adjective modifying a noun (age)?
+[2019-01-28 17:48:20] <gingeropolous>	i dunno what parameters we use, but https://en.wikipedia.org/wiki/Gamma_distribution#/media/File:Gamma_distribution_pdf.svg
+[2019-01-28 17:48:28] <gingeropolous>	i'd guess we look like the red line
+[2019-01-28 17:48:30] <suraeNoether>	and then you ask "what is the probability that i got wait times of 3, 2, 0, 1, 1, 0, 1, 2, 1, 0?" that's essentially a gamma distribution
+[2019-01-28 17:48:31] <gingeropolous>	Xeagu,
+[2019-01-28 17:48:47] <sarang>	The heuristic would move from "coinbase in a ring are decoys" to "outputs generated in a coinbase-only ring are decoys"
+[2019-01-28 17:49:05] <suraeNoether>	sarang i'm not sure i follow that
+[2019-01-28 17:49:05] <sarang>	unless you convince miners to churn more out of the goodness of their pooled hearts
+[2019-01-28 17:49:25] <suraeNoether>	oh i think i follow you
+[2019-01-28 17:49:27] <sarang>	Right now you might throw out all coinbase ring members as decoys
+[2019-01-28 17:49:42] <sarang>	Now you look back one step, and throw out an output generated from an obvious coinbase churn
+[2019-01-28 17:49:48] <sarang>	You gain very little from this
+[2019-01-28 17:49:59] <suraeNoether>	yeah, i think i follow yoiu
+[2019-01-28 17:50:14] <sarang>	So I like the idea of shooting for a ring member ratio matching the chain
+[2019-01-28 17:50:22] <sarang>	and this weighted approach should do that for us
+[2019-01-28 17:50:31] <sarang>	to be confirmed by sanity-check sims!
+[2019-01-28 17:50:54] <suraeNoether>	okay, so the output selection method proposed by moneromooo is actually a really clever way of computing expectations, and as a consequence, gives us a better output selection method. we should glance through the code, but i'm happy with that
+[2019-01-28 17:51:05] <suraeNoether>	FPGA/ASIC stuff
+[2019-01-28 17:51:05] <sarang>	Neat
+[2019-01-28 17:51:10] <suraeNoether>	let's move along
+[2019-01-28 17:51:16] <suraeNoether>	i hear some nonce distributions are non-uniform
+[2019-01-28 17:51:39] <sarang>	and they recently changed as of the new year-ish
+[2019-01-28 17:52:04] <suraeNoether>	fun
+[2019-01-28 17:52:39] <suraeNoether>	so, i'm not really prepared to talk about monero POW and asic-resistance right now, tbqh
+[2019-01-28 17:53:10] <suraeNoether>	i happened upon some reading this weekend on sponge constructions, so i'm currently on the path toward learning more about hash functions and pseudorandom functions
+[2019-01-28 17:53:31] <suraeNoether>	but i don't have any thoughts i want to make public right now
+[2019-01-28 17:53:33] <suraeNoether>	sarang?
+[2019-01-28 17:53:59] *	cardboardoranges has quit (Quit: cardboardoranges)
+[2019-01-28 17:54:05] <suraeNoether>	(i'm not keeping anything from anyone either, I harbor no secret opinions on this either)
+[2019-01-28 17:54:09] <sarang>	I have been working on sims relating to output selection and block size, and continue side work on bulletproofs MPC and related things
+[2019-01-28 17:54:23] <sarang>	I'll be attending the Stanford academic crypto conference this week
+[2019-01-28 17:54:40] <suraeNoether>	Yeah, sarang and endogenic and i and isthmus will all be there
+[2019-01-28 17:54:50] <silur>	*not envy*
+[2019-01-28 17:54:52] <suraeNoether>	CONVENIENTLY i found my LAST FOUR MRL shirts, so you know
+[2019-01-28 17:55:02] <suraeNoether>	i'll be forcing everyone to wear them for a photo
+[2019-01-28 17:55:14] <sarang>	Does anyone else have work to share before we review action items?
+[2019-01-28 17:55:35] <Xeagu>	I have to go
+[2019-01-28 17:55:37] <suraeNoether>	i have been doing some reading on alternatives to ring signatures
+[2019-01-28 17:55:40] <Xeagu>	Great meeting everyone
+[2019-01-28 17:56:03] <suraeNoether>	i plan on writing up a technical note summarizing different options in different cryptographic hardness settings, timing and space comparisons
+[2019-01-28 17:56:11] <learninandlurkin>	Alternatives without huge resource drain?
+[2019-01-28 17:56:19] <suraeNoether>	learninandlurkin: so, some of that is tricky
+[2019-01-28 17:56:19] <sarang>	that's always the kicker
+[2019-01-28 17:56:34] <suraeNoether>	for example, i came across some short-integer-solution methods with lattices that are FAST AS HECK but HUGE
+[2019-01-28 17:56:47] <silur>	oh yes
+[2019-01-28 17:56:49] <suraeNoether>	the tradeoff isn't there yet, but it's worth summarizing it all
+[2019-01-28 17:56:50] <silur>	my favorites
+[2019-01-28 17:56:57] <silur>	they are also good for accumulators
+[2019-01-28 17:57:03] <silur>	I have some demos on that
+[2019-01-28 17:57:08] <silur>	been working with SIS for long
+[2019-01-28 17:57:12] <suraeNoether>	silur ooh, i'd love to see a link of some sort
+[2019-01-28 17:57:46] <silur>	I've got really into noncommutative crypto recently
+[2019-01-28 17:57:56] <suraeNoether>	so i'll be summarizing i think four papers in the coming days, to communicate some of the options we have to the community
+[2019-01-28 17:58:03] <silur>	it feels like a graveyard because except for the primitives everything is broken
+[2019-01-28 17:58:23] <sarang>	Action items for this week?
+[2019-01-28 17:58:24] <silur>	but I asessed all attacks and stuff that are still holding in the recent months
+[2019-01-28 17:58:33] <silur>	main focus on zk stuff now
+[2019-01-28 17:58:48] <sarang>	I am looking forward to ArticMine's sim code updates to reflect rational miner costs, which will allow us to assess our options for next upgrade
+[2019-01-28 17:59:02] <suraeNoether>	my action items are: matching simulations and hypothesis testing, and my alternatives-to-ring-signatures-aren't-much-better technical note
+[2019-01-28 17:59:10] <learninandlurkin>	I'll look forward to that suraeNoether. With ringsigs being our main weakness and also the main missing component of Grin (as compared to XMR) I think this are of research will have big implications.
+[2019-01-28 17:59:42] <silur>	ringsigs are our main weakness?
+[2019-01-28 17:59:46] <silur>	what happenned with RTRS?
+[2019-01-28 18:00:31] <sarang>	It remains an option, but one that requires a lot of overhauling for still being ring sigs :.
+[2019-01-28 18:00:33] <sarang>	:/
+[2019-01-28 18:01:25] <suraeNoether>	silur: sarang has gotten them to be suitably fast with multiexponentiation so that we could, say, use ring sizes up to, say, 20-30.  however, there are some other sublinear schemes that are available, each with their own trade-offs, which is why i'm writing my paper
+[2019-01-28 18:02:00] <silur>	wow
+[2019-01-28 18:02:02] <suraeNoether>	i was hoping that once we broke a certain speed barrier, the path forward would be a no-brainer
+[2019-01-28 18:02:06] <silur>	okay, I'll be waiting for it
+[2019-01-28 18:02:18] <silur>	the paper I mean
+[2019-01-28 18:02:32] <suraeNoether>	but we have certain issues we're dealing with and it's not totally clear whether overhauling the system for such a small ring size boost would be worth it if there could be another option with a relatively bigger boost eventually
+[2019-01-28 18:03:09] <sarang>	well said
+[2019-01-28 18:03:10] <suraeNoether>	replace that last word "eventually" with "presently"
+[2019-01-28 18:03:21] *	sarang has changed the topic to: Research meeting Mondays @ 17:00 UTC
+[2019-01-28 18:03:26] <suraeNoether>	cool, /meeting

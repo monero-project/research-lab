@@ -1,0 +1,303 @@
+[2018-02-05 17:00:12] <sarang> So, what shall we cover?
+[2018-02-05 17:00:28] <sarang> I'm writing up a technical note on our BP stuff, for addition to the MRL paper library
+[2018-02-05 17:00:42] <suraeNoether> 1: greetings, 2: your work since our last meeting, c) my work since our last meeting, and iv: what you and i just discussed i guess
+[2018-02-05 17:00:43] <sarang> it should help reviewers with notes of where we are different from the original whitepaper
+[2018-02-05 17:00:50] <sarang> ah ok, I'm getting ahead of myself
+[2018-02-05 17:00:51] <sarang> <_<
+[2018-02-05 17:00:55] <suraeNoether> hehe
+[2018-02-05 17:01:07] <suraeNoether> but i think greetings are too formal, etc
+[2018-02-05 17:01:26] <suraeNoether> you go ahead
+[2018-02-05 17:02:00] <suraeNoether> are our implementations of bulletproofs so novel that we need an MRL-XXXX ? or is this more of a monero standards-thing?
+[2018-02-05 17:02:00] <sarang> Sure
+[2018-02-05 17:02:13] <sarang> So moneromooo and I worked on getting batch verification added to BPs
+[2018-02-05 17:02:24] <sarang> which will significantly speed up initial operations for new nodes
+[2018-02-05 17:02:43] <sarang> It lets you lump together verification of multiple proofs from as many transactions as you want
+[2018-02-05 17:02:55] <sarang> Still linear time, but the scaling factor is less when you batch
+[2018-02-05 17:03:25] <sarang> I'm writing up a technical note that discusses the rationale for our switch to BPs, and talks about the math behind the changes we made from the whitepaper
+[2018-02-05 17:03:42] <sarang> These may be included in andytoshi's update to the whitepaper, but the timeline on that isn't clear
+[2018-02-05 17:03:54] <sarang> This will help out the review process by explaining what we did and why we did it
+[2018-02-05 17:04:01] <sarang> as well as beef up the MRL paper library =p
+[2018-02-05 17:04:21] <sarang> It will NOT be a full review of all the BP algorithms, which would be horrifically redundant
+[2018-02-05 17:04:21] <suraeNoether> this still makes me nervous, fwiw, because you can interpret a range proof as a ring signature with a private key from the set [0, 1, ..., 2^N], and ruffing's theorem on verification of ring signatures implies you can't batch several of them
+[2018-02-05 17:04:35] <sarang> It's still linear
+[2018-02-05 17:04:57] <sarang> All we're doing is combining multiexp operations using linear combinations of the scalars
+[2018-02-05 17:05:21] <sarang> And keep in mind it's batching independent proofs
+[2018-02-05 17:05:40] <suraeNoether> yeah, but that's like verifying multiple signatures simultaneously
+[2018-02-05 17:05:47] <sarang> If one proof requires g^a + h^b = 0
+[2018-02-05 17:05:55] <sarang> * not +
+[2018-02-05 17:06:02] <sarang> and another requires g^c*h^d = 0
+[2018-02-05 17:06:27] <suraeNoether> thing is, my reasoning is faulty for a few reasons. the first one is that just because we used borromean ring sigs to build range proofs that does not imply that all range proofs can be interpreted as ring signatures. and these range proofs are from arithmetic circuits, yeah?
+[2018-02-05 17:06:28] <sarang> You can check g^(Aa+Cc)h^(Bb+Dd) = 0, where the capital letters are randomly selected by the verifier
+[2018-02-05 17:06:32] <suraeNoether> ooooh
+[2018-02-05 17:06:42] <suraeNoether> hmm
+[2018-02-05 17:06:52] <sarang> Since the weights aren't deterministic, the prover can't cleverly produce proofs designed to fool this
+[2018-02-05 17:06:57] <suraeNoether> yeah and that's pretty specific to commitments, too
+[2018-02-05 17:07:19] <suraeNoether> cool, sorry for interrupting, please go on
+[2018-02-05 17:07:20] <sarang> So again, still linear, but replacing expensive curve ops with scalar ops, and only doing 1 multiexp
+[2018-02-05 17:07:37] <sarang> It's technically possible to do this for every part of the verification, but moneromooo said there could be caching issues
+[2018-02-05 17:07:55] <sarang> So we might just stick to one particular batch operation, which would be the most expensive one anyway
+[2018-02-05 17:08:24] <sarang> Also
+[2018-02-05 17:08:34] <sarang> You can do this for proofs of different aggregation levels
+[2018-02-05 17:08:58] <sarang> Now, andytoshi and benedikt have also figured out a way to allow ANY number of outputs in a single proof, and not just a power of 2
+[2018-02-05 17:09:13] ⇐ pgupta quit (~pgupta@pat-231-94.external.eduroam.ucl.ac.uk): Remote host closed the connection
+[2018-02-05 17:09:16] <sarang> but this would require a significant overhaul and may not be worth it (they were interested for AC applications)
+[2018-02-05 17:09:24] <sarang> I say we just stick with power of 2
+[2018-02-05 17:09:29] <sarang> it'll make for easier review
+[2018-02-05 17:09:54] <sarang> This will all be discussed in the technical note
+[2018-02-05 17:10:06] <suraeNoether> well hold on though
+[2018-02-05 17:10:25] <sarang> ?
+[2018-02-05 17:11:23] <suraeNoether> i'm okay with the idea of sticking with powers of 2 but is there an efficiency reason to avoid the more general approach?
+[2018-02-05 17:11:55] <suraeNoether> is the primary reason to avoid the general # of bulletproofs because the overhaul to the code would be significant, or would it be because the gains in efficiency aren't worth it (in terms of proof size and proof verification time?)
+[2018-02-05 17:12:22] → nioc joined (43562ab9@gateway/web/freenode/ip.67.86.42.185)
+[2018-02-05 17:12:31] <sarang> The overhaul to the code is quite a bit
+[2018-02-05 17:12:40] <sarang> For proof size it's irrelevant
+[2018-02-05 17:12:48] <sarang> The scaling is logarithmic so it's a minor gain
+[2018-02-05 17:12:57] <sarang> But verification time is linear
+[2018-02-05 17:13:12] <suraeNoether> yeah, it always is, and always will be, but do the constants change?
+[2018-02-05 17:13:22] <sarang> If you have 9 outputs, you either pack with dummies to a 16-proof, or do an 8-proof and a 1-proof
+[2018-02-05 17:13:27] <sarang> no
+[2018-02-05 17:13:38] <suraeNoether> oh, then forget it, keep it at powers of 2 and i'm fine with that
+[2018-02-05 17:13:45] <sarang> Yeah, our numbers are small enough
+[2018-02-05 17:13:54] <sarang> andytoshi et al. were testing with giant ACs where it would matter a lot more
+[2018-02-05 17:14:08] <suraeNoether> yeah, i imagine the flexibility of the construction is important for their purposes
+[2018-02-05 17:14:11] <sarang> 16-proof is more space efficient, but 8+1 is more time efficient
+[2018-02-05 17:14:14] <sarang> slightly
+[2018-02-05 17:14:32] — sarang will stop talking now
+[2018-02-05 17:14:40] <suraeNoether> and it will also be important for our purposes later on, but for range proofs right now, we can save on fees and blockchain space and new node sync time, it's a no-brainer
+[2018-02-05 17:14:53] <suraeNoether> cool, thanks sarang
+[2018-02-05 17:15:01] <sarang> If we decide to switch later, it would change the proof structure
+[2018-02-05 17:15:10] <sarang> for what it's worth
+[2018-02-05 17:15:23] <suraeNoether> anyone else have any questions about bulletproofs and sarang's documentation of the work on bulletproofs into an MRL-XXXX?
+[2018-02-05 17:16:06] <sarang> I'm ready to be done with these!
+[2018-02-05 17:16:21] → ArticMine joined (~ArticMine@207.194.38.218)
+[2018-02-05 17:16:21] <sarang> Fun project, lots of crazy optimizations, but it's time to get this baby born
+[2018-02-05 17:16:42] <suraeNoether> For my work, I'm working on multisig, and working on incorporating some of the ideas from musig into our key merging. https://eprint.iacr.org/2018/068
+[2018-02-05 17:17:06] <sarang> Yeah, cool work discussed at BPASE
+[2018-02-05 17:17:08] <suraeNoether> there are some issues with our current key merging, although I think everything else is pretty much good to go
+[2018-02-05 17:17:19] <sgp_[m]> No more questions from me on bulletproofs
+[2018-02-05 17:17:22] <sarang> Another reason that conference was a great investment
+[2018-02-05 17:17:31] <suraeNoether> oh, and holy crap
+[2018-02-05 17:17:34] <suraeNoether> i have to thank the community
+[2018-02-05 17:17:39] <sarang> As do I
+[2018-02-05 17:17:41] <suraeNoether> for freaking sending me all over the world twice in two weeks
+[2018-02-05 17:18:07] <sarang> From the exotic shores of Switzerland to the exotic shores of... Palo Alto?
+[2018-02-05 17:18:09] <suraeNoether> this has been one of the most enlightening and fun weeks of my life, meeting such smart people with such great ideas
+[2018-02-05 17:18:34] <suraeNoether> but we'll get back to that later, I suppose
+[2018-02-05 17:18:39] <sarang> We can make many things virtual, but conferences are not currently one of them
+[2018-02-05 17:18:58] <suraeNoether> back to multisig: basically, the naive, first way anyone has ever done key merging/key aggregation is to simply sum keys
+[2018-02-05 17:19:11] <suraeNoether> so if A, B, and C want to make a multisignature wallet, they compute A+B+C as their public key
+[2018-02-05 17:20:20] <suraeNoether> this has two drawbacks. one of them is that keys can't be re-used securely, and another is that A can try to pick a key of the form A* - B - C and get a public key A*. this way, A can make signatures without the input of B and C
+[2018-02-05 17:20:30] <sarang> (I'll be AFK for about 10 min, sorry)
+[2018-02-05 17:21:37] <dEBRUYNE> Wasn't the latter attack discussed here a while ago too? I think luigi1111 retorted it.
+[2018-02-05 17:21:42] <dEBRUYNE> I might be conflating stuff though
+[2018-02-05 17:22:02] <suraeNoether> if so, i'm not sure where it is
+[2018-02-05 17:22:15] <suraeNoether> this goes back to the original criticisms of the ASNL ring sigs back when we first did ringct
+[2018-02-05 17:23:00] <suraeNoether> so other methods would instead of computing the simple sum A + B + C would compute a linear combination c1*A + c2*B + c3*C where each c1,c2,c3 is a random challenge based on the associated key
+[2018-02-05 17:23:40] <suraeNoether> first methods tried something like c1 = H(A), but the problem became an issue where all the public keys A, B, C have to be revealed to verify a signature
+[2018-02-05 17:23:54] ⇐ cialu quit (~cialu@151.41.155.24): Quit: Leaving
+[2018-02-05 17:24:19] <suraeNoether> which brings us to another drawback of A+B+C which is that it's distinguishable from other keys: if you suspect some users have formed an N-of-N wallet and you know their public keys, it's trivial to check if a key is a multisig key
+[2018-02-05 17:24:56] <suraeNoether> the key aggregation in the musig paper computes c1 = H(A, {A,B,C}), c2 = H(B, {A,B,C}), and c3 = H(C,{A,B,C})
+[2018-02-05 17:25:08] <suraeNoether> and this one little trick (!) of the hash function makes it verifiable with only the total aggregated key
+[2018-02-05 17:25:37] <suraeNoether> long story short, it's a simple change from computing keys as a simple sum(key) to sum( H(key, list_of_keys)*key)
+[2018-02-05 17:25:49] <suraeNoether> and this sounds great
+[2018-02-05 17:26:17] <suraeNoether> but then your heart falls when you find out that they use a novel and somewhat complicated proof technique with a nonstandard discrete log assumption
+[2018-02-05 17:27:23] <suraeNoether> so, i'm going through an MLSAG ring signature extremely carefully and making sure that I can substitute these keys into the proof without changing the underlying security properties of the MLSAG
+[2018-02-05 17:27:52] <suraeNoether> I don't want to make any recommendations about changes, yet, though, because of their proof technique and their strange security assumption
+[2018-02-05 17:29:55] <suraeNoether> also, fwiw, if users always roll fresh keys for their multisig wallets, we could simply insert a commit-to-keys and an opening-of-commitments  set of steps in key merging, and instruct users to always roll fresh keys for each new multisig construction
+[2018-02-05 17:30:35] <suraeNoether> so there is a route for preventing this rogue key attack in both cases. i just want to take this new proof seriously
+[2018-02-05 17:31:11] <suraeNoether> any questions about multisig?
+[2018-02-05 17:31:50] <luigi1111> Yes but not now
+[2018-02-05 17:31:55] <luigi1111> I'm not really here
+[2018-02-05 17:32:23] <suraeNoether> ok we can put that on hold for now
+[2018-02-05 17:33:44] <suraeNoether> in addition to that, Sarang and I are starting to throw the first roadmap of the year together. We are taking a little bit extra time because other projects like BP and multisig are more urgent.
+[2018-02-05 17:35:39] <suraeNoether> Sarang also has a three-week cryptography course planned this summer, maybe when he gets back he can tell us about that
+[2018-02-05 17:36:53] <sarang> back
+[2018-02-05 17:36:55] <sarang> Yes
+[2018-02-05 17:36:59] <suraeNoether> good timing
+[2018-02-05 17:37:00] <sgp_[m]> Yes, sarang made this course sound pretty interesting. I'd like to hear more about it
+[2018-02-05 17:37:12] <sarang> So there was desire expressed that educational outreach is a Good Thing
+[2018-02-05 17:37:27] <sarang> And who knows, maybe eventually we can run an independent program, or team up with other projects for this
+[2018-02-05 17:37:32] <sarang> But that's time-consuming and very expensive
+[2018-02-05 17:37:47] <sarang> There's an offer this summer to do a 3-week intensive course through Duke or JHU
+[2018-02-05 17:37:52] <sarang> It costs the community nothing
+[2018-02-05 17:38:10] <sarang> and is a good opportunity to pilot a cryptocurrency-focused modern crypto course for gifted high school students
+[2018-02-05 17:38:37] <sarang> Disclaimer: I'd get paid a pittance to teach it, based on their existing pay structure, so I wouldn't request any FFS during that time
+[2018-02-05 17:39:04] <suraeNoether> pittances invested in cryptocurrencies become old toyota tacomas
+[2018-02-05 17:39:16] <sarang> Ha, it's paid in boring US currency
+[2018-02-05 17:39:28] <sarang> Any questions on it?
+[2018-02-05 17:39:35] <sarang> Course materials would be released fo free
+[2018-02-05 17:39:39] <sarang> Lectures can't be videotaped
+[2018-02-05 17:40:22] <suraeNoether> oh, i was speaking with you, Sarang, and one of fluffypony's friends about making educational youtube videos, white-board-style, that explain how bitcoin and monero work, and how ethereum smart contracts will destroy the whole ecosystem
+[2018-02-05 17:40:26] <suraeNoether> (ahem)
+[2018-02-05 17:40:33] <suraeNoether> i mean how smart ethereum smart contracts are
+[2018-02-05 17:40:37] <sgp_[m]> Course materials include slides?
+[2018-02-05 17:40:51] <suraeNoether> sarang: do you usually use slides or are you a chalk talk sort of man
+[2018-02-05 17:40:53] <suraeNoether> ?
+[2018-02-05 17:41:23] <sarang> I've moved some of it to slides for easier reuse
+[2018-02-05 17:41:26] <sarang> But not entirely
+[2018-02-05 17:41:37] <sarang> I also have a lot of it in book form now
+[2018-02-05 17:42:02] <sarang> Over 100 pages of classical and some modern material, with exercises
+[2018-02-05 17:42:12] <suraeNoether> that's pretty sweet actually. you following the footsteps of your adviser, writing your own textbook one semester at a time?
+[2018-02-05 17:42:24] <sarang> Only out of laziness
+[2018-02-05 17:42:37] <suraeNoether> the best motivator for keeping detailed notes
+[2018-02-05 17:42:37] <sarang> I've taught classical crypto courses before and got sick of rewriting everything
+[2018-02-05 17:42:52] <sarang> So anyway, comments/questions welcome
+[2018-02-05 17:42:56] <sarang> especially on the scope
+[2018-02-05 17:44:12] <sarang> This will basically be a pilot program run under the existing structure of an established program
+[2018-02-05 17:44:20] <sarang> which removes all the hassle of recruiting students, housing people, etc.
+[2018-02-05 17:45:01] <suraeNoether> neato burrito
+[2018-02-05 17:45:04] <sarang> For reference though, this doesn't mean that JHU or Duke are endorsing Monero in any way... I'd be teaching it as an unaffiliated seasonal employee
+[2018-02-05 17:45:45] <sarang> oh, sgp_[m] yes that would include slides
+[2018-02-05 17:45:53] <suraeNoether> One last time, I would like to thank the community for their amazing generosity in general, and in particular these past few weeks. 
+[2018-02-05 17:45:59] <sarang> everything except for video lectures (can't release those since students are minors)
+[2018-02-05 17:46:33] <sarang> Notes also include a cool section on Enigma that includes a paper simulator you can build yourself
+[2018-02-05 17:47:45] <suraeNoether> if anyone has found any interesting papers or ideas recently, please share them! I saw that hyc spoke at a fosdem 
+[2018-02-05 17:47:57] <suraeNoether> does anyone know if his talk is available anywhere?
+[2018-02-05 17:48:10] <suraeNoether> i hear he serenaded the crowd with his violin
+[2018-02-05 17:48:23] <sarang> Well I heard about this crazy new coin! It uses a DAG! And it's like a hive with fast payments and it has secure!
+[2018-02-05 17:48:30] <sgp_[m]> I would also like the link if possible
+[2018-02-05 17:48:32] <suraeNoether> is instant?
+[2018-02-05 17:48:40] <sarang> Probably!
+[2018-02-05 17:48:50] <suraeNoether> probabilistically instant?
+[2018-02-05 17:48:53] <sarang> I've turned into this huge Eeyore among local groups
+[2018-02-05 17:49:11] <sarang> They keep posting their favorite new shitcoin, and I keep telling them the whitepaper has zero crypto, protocols, or math
+[2018-02-05 17:49:13] <sarang> =p
+[2018-02-05 17:49:20] <sarang> Then they get mad
+[2018-02-05 17:49:26] <sgp_[m]> @sarang that's a great way of putting it
+[2018-02-05 17:49:33] <suraeNoether> gotta be a good red team
+[2018-02-05 17:49:43] <suraeNoether> gotta *have* a good red team
+[2018-02-05 17:49:59] <sarang> This isn't being a red team, it's being able to read
+[2018-02-05 17:50:00] <suraeNoether> okay, so there's also this idea that Sarang and I have been kicking around
+[2018-02-05 17:50:18] <suraeNoether> about hosting a Monero conference next spring in Denver, CO
+[2018-02-05 17:50:22] <diego[m]> Meeting = missed. :(
+[2018-02-05 17:50:32] <suraeNoether> eh, not really
+[2018-02-05 17:50:38] <suraeNoether> tail end anyway
+[2018-02-05 17:51:44] <suraeNoether> i've spoken with a few different possible speakers, and everyone seems to be receptive to the idea. i've costed it out, and i am astounded, btw. a conference like consensus charges huge $$ to get in, but from the numbers i'm seeing, we can break even for between 50-100 bucks a ticket
+[2018-02-05 17:52:10] <suraeNoether> if we run an FFS, it could just be free
+[2018-02-05 17:52:18] <suraeNoether> well, free except for the donors
+[2018-02-05 17:52:22] <suraeNoether> well
+[2018-02-05 17:52:25] <suraeNoether> i mean free to attendees
+[2018-02-05 17:52:34] — suraeNoether *flustered*
+[2018-02-05 17:52:59] <gingeropolous> thats because they look to profit
+[2018-02-05 17:53:05] <suraeNoether> gingeropolous: +1
+[2018-02-05 17:53:16] <sarang> It'd be funny to have a "donors" section of the program with a bunch of blacked-out names
+[2018-02-05 17:53:27] <anonimal> Venue picked out?
+[2018-02-05 17:53:47] <suraeNoether> anonimal: i have a few in mind, i ahve a spreadsheet of possibilities
+[2018-02-05 17:53:50] <sarang> He can prove it's at one of several possible venues
+[2018-02-05 17:53:58] <diego[m]> We should milk attendees for all they're worth.
+[2018-02-05 17:53:59] <diego[m]> Conference be Monero specific? Not privacy? Not open source? (Just some questions)
+[2018-02-05 17:54:08] <sarang> diego[m]: provide free milk?
+[2018-02-05 17:54:10] <suraeNoether> i want this to be a 1 or 1.5 day thing filled with technical talks. investors and venture capitalists shoudl be bored out of their minds
+[2018-02-05 17:54:23] <anonimal> In Denver or surrounding area?
+[2018-02-05 17:54:26] <suraeNoether> diego[m]: i'm open to most privacy-enhancing technology based talks
+[2018-02-05 17:54:38] <suraeNoether> anonimal: yeah, if you want i can send you a list of some places i found
+[2018-02-05 17:54:50] <anonimal> That'd be great, thanks.
+[2018-02-05 17:54:54] <suraeNoether> we can go super super cheap and go for a university if we don't want to have a cool industrial-style brewery all to ourselves
+[2018-02-05 17:55:04] <anonimal> I do miss those hills.
+[2018-02-05 17:55:05] <sarang> Orrrr we could do brewery
+[2018-02-05 17:55:20] <sgp_[m]> Have you talked with any universities? May be much cheaper and easier to host a conference there than a hotel or similar
+[2018-02-05 17:55:39] <sarang> suraeNoether: you've been talking with an event planner, yes?
+[2018-02-05 17:55:52] <suraeNoether> yep
+[2018-02-05 17:55:54] <anonimal> Any boulder connections? IIRC bigreddmachine is there.
+[2018-02-05 17:56:11] <sarang> and the zcash folkz
+[2018-02-05 17:56:14] <diego[m]> ajs and I had a similar idea a while back, so if you need any help from Monero Community, We can see what we can do. Maybe come early to decorate. :P
+[2018-02-05 17:56:18] <suraeNoether> she's organized conferences for pharma companies and doctors and stuff like that before, and she's chatting with me pro bono about it
+[2018-02-05 17:56:45] <suraeNoether> anonimal: zcashco world headquarters is in boulder. :P heh.
+[2018-02-05 17:56:58] <suraeNoether> mike from the moneromonitor podcast is out there too
+[2018-02-05 17:57:02] <sarang> I always pictured them having their headquarters in a mountain
+[2018-02-05 17:57:05] <suraeNoether> anyway, i'm glad to see such positive responses
+[2018-02-05 17:57:06] <sarang> or a lighthouse or something
+[2018-02-05 17:57:18] <anonimal> oh my
+[2018-02-05 17:57:20] <suraeNoether> i've been watching venture brothers. spiderskull island ftw
+[2018-02-05 17:57:44] <sarang> I'm telling ya, buy a Monero jet and I'll fly all the attendees there
+[2018-02-05 17:57:49] <diego[m]> Why don't we have it at a resort? :D
+[2018-02-05 17:58:00] <suraeNoether> sarang has a pilot's license, he isn't kidding.
+[2018-02-05 17:58:02] <anonimal> lol aspen
+[2018-02-05 17:58:05] <sarang> Denver is a resort... THE LAST RESORT
+[2018-02-05 17:58:06] <sarang> burn
+[2018-02-05 17:58:22] <suraeNoether> diego[m]: actually if we do summer, i was considering estes park
+[2018-02-05 17:58:37] <suraeNoether> it's a summer town in the middle of the mountains and there is a YMCA there that hosts huge huge conventions eveyr year
+[2018-02-05 17:58:49] <suraeNoether> but the cabins don't have good wifi, and i feel like that's a really really big requirement
+[2018-02-05 17:58:57] <suraeNoether> they *do* have wifi
+[2018-02-05 17:59:03] <suraeNoether> just not *great* wifi
+[2018-02-05 17:59:14] <sarang> Is it encrypted wifi? Or is it like the Stanford conference?
+[2018-02-05 17:59:18] <sgp_[m]> Gigabit ethernet #1 consideration lol
+[2018-02-05 17:59:22] <anonimal> We could do black hawk but don't get me gambling...
+[2018-02-05 17:59:25] <sarang> Which for some reason had insecure wifi that sucked ass
+[2018-02-05 17:59:32] <suraeNoether> sarang: it's far less secure than the stanford. :P
+[2018-02-05 17:59:38] <suraeNoether> anyway, i'm super happy to see this sort of response
+[2018-02-05 18:00:16] <anonimal> We could turn black hawk into the next defcon
+[2018-02-05 18:00:16] <sgp_[m]> @surae I I would go well out of my way to go to a Monero conference
+[2018-02-05 18:00:17] <anonimal> ...
+[2018-02-05 18:00:19] <anonimal> X)
+[2018-02-05 18:00:42] <sarang> We should settle on a date sooner rather than later
+[2018-02-05 18:00:49] ⇐ iDunk quit (~iDunk@unaffiliated/idunk): Read error: Connection reset by peer
+[2018-02-05 18:00:52] <sarang> Or at least a couple of options so people can plan
+[2018-02-05 18:00:56] <suraeNoether> sarang: we'll try to get that hammered out before the end of the month
+[2018-02-05 18:01:01] <suraeNoether> one thing, though
+[2018-02-05 18:01:08] <anonimal> Is summer an option?
+[2018-02-05 18:01:32] <suraeNoether> i just don't want it to overlap any big known conferences, and i want to avoid late september-through-december
+[2018-02-05 18:01:41] <sarang> righto
+[2018-02-05 18:01:47] <diego[m]> Sounds fun.
+[2018-02-05 18:02:12] <sarang> We should also talk about the scope of talks, so folks from other projects have a good sense of what they'd be in for
+[2018-02-05 18:02:32] <anonimal> Let's do it after defcon.
+[2018-02-05 18:02:34] <gingeropolous> line by line presentation of the monero code
+[2018-02-05 18:02:41] <diego[m]> We're not talking for this year, though, right?
+[2018-02-05 18:02:43] <sarang> Have it scrolling in the background
+[2018-02-05 18:02:45] <anonimal> People will already be out in the U.S.
+[2018-02-05 18:02:46] <sarang> like the Matrix
+[2018-02-05 18:02:54] <sarang> Yeah not this year
+[2018-02-05 18:02:56] <suraeNoether> diego no, 2019
+[2018-02-05 18:03:39] <suraeNoether> OH MY GOD i just checked my protonmail after BPASE, i'm swamped
+[2018-02-05 18:03:48] <suraeNoether> ok, this meeting is either over or can continue without me
+[2018-02-05 18:03:50] <suraeNoether> peace out brothers~!
+[2018-02-05 18:04:06] <suraeNoether> if anyone has any questions, please email me at suraeNoether@Protonmail.com (I'll be there for the rest of the day apparently)
+[2018-02-05 18:04:27] <sgp_[m]> I couldn't find the recording, but here's hyc's slides https://fosdem.org/2018/schedule/event/monero/attachments/audio/2585/export/events/attachments/monero/audio/2585/20180204_FOSDEM_Monero.pdf
+[2018-02-05 18:05:43] <sarang> cheers
+[2018-02-05 18:05:59] → iDunk joined (~iDunk@unaffiliated/idunk)
+[2018-02-05 18:06:41] <sgp_[m]> Only one thing from me. After the chaos of bulletproofs and multisig calms down, I would like to encourage future research in the impact of ringsize and churning. Either these need more research, or we need better ways of communicating these concerns to people https://www.reddit.com/r/Monero/comments/7v601j/skepticism_sunday_february_04_2018/dtq9tnt/
+[2018-02-05 18:06:59] <sarang> I agree
+[2018-02-05 18:07:06] <sgp_[m]> Also we're discussing increasing the minimum ringsize without really knowing what the tangible benefits are
+[2018-02-05 18:07:14] <sarang> Fortunately we have good space savings we can use to our advantage
+[2018-02-05 18:07:22] <sarang> if we decide to move there
+[2018-02-05 18:07:50] <suraeNoether> sgp_[m]: I agree, and actually I've been thinking about that. 
+[2018-02-05 18:07:54] <dEBRUYNE> I think the discussion doesn't pertain to whether it has tangible benefits
+[2018-02-05 18:08:03] <dEBRUYNE> It's whether it's significantly outweighs the trade-offs
+[2018-02-05 18:08:10] <suraeNoether> ^
+[2018-02-05 18:08:29] <dEBRUYNE> it significantly*
+[2018-02-05 18:08:34] <sarang> soon STARKs will save us all
+[2018-02-05 18:08:48] <dEBRUYNE> I think an increase to 10 + making it static is worth the trade-off though
+[2018-02-05 18:09:16] <sarang> Having a tested model will be essential
+[2018-02-05 18:09:25] <sarang> Otherwise we'd just be pulling numbers out of our ass
+[2018-02-05 18:09:35] <dEBRUYNE> What should be tested?
+[2018-02-05 18:09:44] <dEBRUYNE> I mean, which variables
+[2018-02-05 18:10:10] <sarang> Well I think we need to be able to quantify what we consider the weaknesses or attack vectors, couple that with some cost function, and work from there
+[2018-02-05 18:10:16] <sarang> I don't have the answer
+[2018-02-05 18:10:22] <sarang> But I think it's the approach we should take if possible
+[2018-02-05 18:11:02] <sarang> Oh one quick addition
+[2018-02-05 18:11:13] <sarang> One of the non-OSTIF audit groups checked with their lawyers
+[2018-02-05 18:11:29] <sarang> They won't let us publish their name or statement of work in advance
+[2018-02-05 18:13:31] <sarang> I think that's far enough outside of our philosophy for this review that it takes them out of the running, unfortunately
+[2018-02-05 18:13:42] <anonimal> +1
+[2018-02-05 18:13:58] <sarang> Once we've formally turned them down, I can say who they are
+[2018-02-05 18:14:36] <sarang> Process on the other groups is moving forward, albeit delightfully slowly
+[2018-02-05 18:14:45] <sarang> More details as I get them
+[2018-02-05 18:15:08] <sarang> Although I'm not too worried, since we just added batch verification anyway, and that needs to go into the technical paper that the reviewers will get
+[2018-02-05 18:16:04] <dEBRUYNE> <sarang> They won't let us publish their name or statement of work in advance <= Can you elaborate on this?
+[2018-02-05 18:17:03] <sarang> So, I told all the prospective groups that we want to publicly discuss all SoWs and prices prior to funding, so we can make an informed decision
+[2018-02-05 18:17:22] <sarang> As well as share the results of the audit(s)
+[2018-02-05 18:17:35] <sarang> SoWs being important since they explicitly outline the scope of the review
+[2018-02-05 18:19:33] <sarang> https://www.irccloud.com/pastebin/RAEbSR24/
+[2018-02-05 18:19:45] <sarang> This is the email from their rep
+[2018-02-05 18:20:05] <sgp_[m]> @dEBRUYNE I totally agree that we should weigh the benefits and cons. We just need more justification than "10 is a larger number than 5"
+[2018-02-05 18:21:17] <dEBRUYNE> sarang: I see. Was this group favored qualitively? If so, perhaps we can think about a work around.
+[2018-02-05 18:22:15] <sarang> They're a well-established group
+[2018-02-05 18:22:29] <sarang> I have no doubt that they would do a thorough and correct review
+[2018-02-05 18:22:57] → arubi_ joined (~ese168@gateway/tor-sasl/ese168)
+[2018-02-05 18:23:06] <dEBRUYNE> Ok. Let me put some thoughts into this
+[2018-02-05 18:23:19] <sarang> But I don't like the idea that I'm the only one (or part of a non-public group) that decides this
+[2018-02-05 18:23:21] ⇐ arubi quit (~ese168@gateway/tor-sasl/ese168): Remote host closed the connection
+[2018-02-05 18:23:44] <sarang> Once I get final word from all OSTIF prospects, we'll have a better idea of any differences in scope
+[2018-02-05 18:24:15] <sarang> What they care about more than absolute price estimates is their rates
+[2018-02-05 18:24:19] <sarang> FWIW
+[2018-02-05 18:24:48] <suraeNoether> on a slightly different note, all the slides and videos of the talks at BPASE this year are online here: https://cyber.stanford.edu/bpase18 <--- I highly recommend @roasbeef's talk, but slow it down to 50% speed

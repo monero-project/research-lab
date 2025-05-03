@@ -1,0 +1,179 @@
+[2018-12-03 17:02:54] <sarang> OK, it's time to begin our meeting
+[2018-12-03 17:03:17] <sarang> ping suraeNoether and others (mass ping sucks)
+[2018-12-03 17:03:25] <endogenic> i am self-pinging
+[2018-12-03 17:03:33] <serhack> ping serhack
+[2018-12-03 17:03:35] <serhack> Hey!
+[2018-12-03 17:03:37] <suraeNoether> howdy everyone
+[2018-12-03 17:03:37] <sarang> If everyone pings three others, eventually the whole world is pinged
+[2018-12-03 17:03:44] <sarang> pinged? pung?
+[2018-12-03 17:03:46] <suraeNoether> multi-level pinging schemes
+[2018-12-03 17:03:49] <suraeNoether> consider myself punged
+[2018-12-03 17:03:50] <sarang> definitely pung
+[2018-12-03 17:04:00] <suraeNoether> it's like the purge, but pingier
+[2018-12-03 17:04:06] <endogenic> pang*
+[2018-12-03 17:04:37] <sarang> I have several items on my provisional agenda today, as well as a round-the-horn to see what folks wish to share
+[2018-12-03 17:04:58] <sarang> First, the Lab landing page https://getmonero.org/resources/research-lab/ has been updated to add new papers
+[2018-12-03 17:05:17] <endogenic> very nice!
+[2018-12-03 17:05:20] <sarang> translations are welcome, now that we support them
+[2018-12-03 17:05:25] <sarang> I only added English abstracts
+[2018-12-03 17:05:53] <sarang> Second, suraeNoether and I will be posting new FFS requests for Q1 2019 shortly
+[2018-12-03 17:06:05] <sarang> We've been discussing, as we often to, the correct way to assess the amount
+[2018-12-03 17:06:32] <sarang> This ties in with discussions elsewhere about how best to approach multi-month funding on FFS
+[2018-12-03 17:06:34] <serhack> Whoa, translating abstracts to Italian? it would a pleasure for me
+[2018-12-03 17:06:43] <sarang> serhack: yass
+[2018-12-03 17:06:54] <suraeNoether> Given the 50% contraction each of the past two quarters, we are trying to decide the best way to price our next quarters. whether we should switch to monthly funding, etc.
+[2018-12-03 17:07:03] <sarang> The current FFS system doesn't allow for non-escrow payments, so we're stuck with whatever the market does
+[2018-12-03 17:07:32] <sarang> I've been traditionally using a 14-day EMA or 30-day EMA
+[2018-12-03 17:07:43] <suraeNoether> Last time, I tried to take trendline into account and I received some pushback, which is very understandable. so we wanted to open up the discussion to get some ideas.
+[2018-12-03 17:07:53] <sarang> Yeah, what are the group's thoughts on this?
+[2018-12-03 17:08:07] <sarang> (We'd be requesting through Mar 2019)
+[2018-12-03 17:08:20] <endogenic> could you make the question a little more concrete?
+[2018-12-03 17:08:21] <endogenic> for clarity
+[2018-12-03 17:08:25] <sarang> We could do shorter periods, like monthly, but that opens to donor fatigue
+[2018-12-03 17:08:38] <sarang> endogenic: what's the fairest exchange rate computation?
+[2018-12-03 17:09:24] <suraeNoether> i'm generally opposed to using moving averages: in an uptrend, the community ends up paying more and we receive disproportionately more than *that* by the time our paychecks come around... so we are arguably unfairly overcompensated... and in the downtrend, the opposite occurs, where donor cash doesn't go as far, and we still receive disproportionately less than *that* by the time our paychecks come around
+[2018-12-03 17:09:39] <endogenic> imo ideally you all shouldnt have to worry about that as you really want to have your compensation targeted for the currency you have to pay rent, taxes, etc in
+[2018-12-03 17:09:47] <endogenic> so it's whatever allows you not to have to worry about it
+[2018-12-03 17:10:17] <endogenic> i think it's a real issue though as a source of stress
+[2018-12-03 17:11:06] <sarang> Well, discussions of how to structure FFS in the future are good ones, but right now it is what it is
+[2018-12-03 17:11:14] <suraeNoether> endogenic:  what if we list our desired salaries in USD and donating to pay our salaries could be a rolling thing; at the end of each month, we take a 48-hour average or something based on Kraken or whatever, and we dip into that fund according to that instantaneous exchange rate? it seems more fair to both donors and us to use a method like that
+[2018-12-03 17:11:26] <endogenic> that's interesting
+[2018-12-03 17:12:04] <sarang> It might encourage donors to delay donations
+[2018-12-03 17:12:15] <sarang> until they know the actual value being dispersed
+[2018-12-03 17:12:47] <suraeNoether> that may actually work out to everyone's benefit
+[2018-12-03 17:13:00] <suraeNoether> people see their XMR hit our account at much closer to their desired exchange rate
+[2018-12-03 17:13:13] <suraeNoether> or rather, we gain control over it at a more reasonable rate
+[2018-12-03 17:13:17] <sarang> Any big opposition to investigating this further? We'd need a decision very quickly
+[2018-12-03 17:13:29] <suraeNoether> so people's money isn't wasted on volatility and we get what we need to pay rent, etc
+[2018-12-03 17:13:38] <suraeNoether> fluffypony luigi1111w any thoughts?
+[2018-12-03 17:13:41] <sarang> ping binaryFate or luigi1111 or fluffypony
+[2018-12-03 17:13:44] <suraeNoether> ArticMine and binaryFate too
+[2018-12-03 17:13:48] <sarang> jinx
+[2018-12-03 17:13:52] — suraeNoether thought we hated mass pings
+[2018-12-03 17:13:58] <endogenic> when atomic pings
+[2018-12-03 17:14:25] <suraeNoether> cross-client atomic pings via SMS relayed by telegram (the literal wire, not the app)
+[2018-12-03 17:14:39] <suraeNoether> (not wire the app either)
+[2018-12-03 17:14:42] <endogenic> make it so
+[2018-12-03 17:14:54] <suraeNoether> anyway, let's put that on the back burner until we get feedback, hopefully in the next day or so
+[2018-12-03 17:14:56] <sarang> Anyway, until Core Team arrive, let's move on
+[2018-12-03 17:15:00] <suraeNoether> yep
+[2018-12-03 17:15:06] <endogenic> wow are you guys twins or something
+[2018-12-03 17:15:11] <sarang> suraeNoether: want to give your updates?
+[2018-12-03 17:15:40] <cjd> https://github.com/cjdelisle/RandomHash
+[2018-12-03 17:15:54] <sarang> hello
+[2018-12-03 17:16:07] <cjd> howdy
+[2018-12-03 17:16:42] <cjd> experimentation on randomized hash function
+[2018-12-03 17:16:43] <suraeNoether> well, recently I've been working on three things
+[2018-12-03 17:16:51] <suraeNoether> cjd thanks for the contribution
+[2018-12-03 17:16:59] ⇐ midipoet quit (8fef72ab@gateway/web/freenode/ip.143.239.114.171): Quit: Page closed
+[2018-12-03 17:17:04] <suraeNoether> first thing i've been working on is the matching paper, which i've handed off to sarang
+[2018-12-03 17:17:19] <suraeNoether> i had some ideas over the weekend on how to quantify some churn length methodology
+[2018-12-03 17:17:26] <suraeNoether> which is a step in the right direction
+[2018-12-03 17:17:44] <suraeNoether> the second thing i've been working on is reading more about accumulators and zero knowledge proofs of membership and nonmembership
+[2018-12-03 17:18:10] <suraeNoether> this is surae. this is surae catching up on large-anon-set-authentication-without-trusted-setups-to-replace-ring signatures. see surae cry.
+[2018-12-03 17:18:14] <binaryFate> Rolling fund sounds good
+[2018-12-03 17:18:23] <suraeNoether> binaryFate +1 thanks for the feedback :D
+[2018-12-03 17:19:02] <suraeNoether> the third thing I've been working on is mapping certain discrete-log-based crypto schemes over into a module-theoretic setting and constructing examples. this is a fun hobby for me that is brand new and sarang and i are going to write a paper on it
+[2018-12-03 17:19:47] <suraeNoether> i've also been working on non-research stuff related to the monero konferenco, and we just got back from our monero workshop in nashville, where we met up to do some research and brainstorming face to face
+[2018-12-03 17:20:13] <suraeNoether> oh, and i've been making some final edits to the thring sig paper before submitting for peer review
+[2018-12-03 17:20:19] <suraeNoether> and that's it
+[2018-12-03 17:20:25] — sarang applauds
+[2018-12-03 17:20:33] <suraeNoether> oh, i started reading silur's verifiable shuffle
+[2018-12-03 17:20:44] <sarang> Any specific questions on suraeNoether's recent work?
+[2018-12-03 17:21:06] — sarang uses moderate; it's super effective
+[2018-12-03 17:21:45] <sarang> going once, twice
+[2018-12-03 17:21:54] <sarang> OK, I'll make my update
+[2018-12-03 17:22:19] <sarang> suraeNoether has passed on the current draft of the graph matching paper to me for additional work; this is some really cool shit that will be worth everyone's time
+[2018-12-03 17:23:32] <sarang> I'm finalizing a tech note on discrete logs, reviewing several other papers by other researchers, and also finishing up some re-review of a ring representation paper from Matt Green's team from a while back
+[2018-12-03 17:24:44] <sarang> My goal is get the tech note, graph matching paper, etc. out the door as efficiently as possible
+[2018-12-03 17:25:22] <sarang> I want next quarter to focus more heavily on ringct replacements, as does suraeNoether
+[2018-12-03 17:25:31] <sarang> Any specific questions for me or for suraeNoether on these fast updates?
+[2018-12-03 17:26:14] <sarang> chirp chirp
+[2018-12-03 17:26:26] <sarang> Isthmus was unavailable but wanted me to share the following update (one sec):
+[2018-12-03 17:26:43] <sarang> https://www.irccloud.com/pastebin/UGzuSz5P/
+[2018-12-03 17:27:41] <sarang> sgp_ was looking at pool output data to give more information that could lead to changes in how we handle pool and coinbase outputs
+[2018-12-03 17:28:01] <endogenic> very cool sgp_
+[2018-12-03 17:28:12] ⇐ lurkinandlearnin quit (~lurkinand@149.254.234.203): Ping timeout: 250 seconds
+[2018-12-03 17:28:18] <sarang> The upcoming Stanford Blockchain Conference has its free registration open now: https://cyber.stanford.edu/sbc19
+[2018-12-03 17:28:27] <sarang> Both suraeNoether and I applied to speak, but I have not heard back on this
+[2018-12-03 17:28:44] <sarang> An FFS to fund our presence was successful, but the market has been... unkind in the meantime
+[2018-12-03 17:28:53] <endogenic> as it is
+[2018-12-03 17:29:26] <sarang> Hopefully at least one of us is accepted, to offset those costs. It's an exceptionally worthwhile event
+[2018-12-03 17:29:47] <sarang> Does anyone else have work of interest to share with the group?
+[2018-12-03 17:29:58] <suraeNoether> sarang thanks for the link to SBC, i just registered :P
+[2018-12-03 17:30:12] <h4sh3d> I have worked on an atomic swap BTC/XMR https://github.com/GuggerJoel/XMR-BTC-atomic
+[2018-12-03 17:30:30] <endogenic> h4sh3d: did you see the feedback you got to that?
+[2018-12-03 17:30:33] <moneromooo> Worthy goal.
+[2018-12-03 17:31:48] <h4sh3d> endogenic: I didn't see feedback on IRC
+[2018-12-03 17:32:21] <sarang> Doesn't that scheme require knowledge of the same scalar across groups?
+[2018-12-03 17:32:28] <endogenic> h4sh3d: "vtnerd> h4sh3d the paper still has a magic zkp step. How are these values zkp'ed ?"
+[2018-12-03 17:32:29] <sarang> correct me if wrong
+[2018-12-03 17:32:48] <sarang> if so, that's a subtle step that is nontrivial
+[2018-12-03 17:33:18] <h4sh3d> Knowledge of a scalar on ed25519 (i.e. mod l) only
+[2018-12-03 17:33:57] <h4sh3d> and the SHA256 of the scalar
+[2018-12-03 17:34:36] <sarang> a proof of that equality in zero knowledge?
+[2018-12-03 17:34:37] <h4sh3d> that's the magic zkp needed, but with Bulletproofs it is possible to prove these constraints
+[2018-12-03 17:34:45] <sarang> Yeah, other proposals have had the same issue
+[2018-12-03 17:35:13] <h4sh3d> > a proof of that equality in zero knowledge?
+[2018-12-03 17:35:15] <h4sh3d> yes
+[2018-12-03 17:35:38] <suraeNoether> hey guys i have to go a bit early
+[2018-12-03 17:35:41] <sarang> np
+[2018-12-03 17:35:43] <suraeNoether> i'll be on for most of the day
+[2018-12-03 17:35:48] <endogenic> see you
+[2018-12-03 17:36:08] ⇐ serhack quit (5ea197f2@gateway/web/cgi-irc/kiwiirc.com/ip.94.161.151.242): Remote host closed the connection
+[2018-12-03 17:36:31] <h4sh3d> I started to write a proposal to work on that scheme, what do you think?
+[2018-12-03 17:36:44] <sarang> h4sh3d: I need to re-read your paper to remind myself of a few details, but does the sender on one chain guarantee return of funds if the protocol fails?
+[2018-12-03 17:37:39] <h4sh3d> sarang: yes if it fails Alice (XMR) get her XMR back and Bob (BTC) get his BTC baCK
+[2018-12-03 17:38:19] <h4sh3d> If Bob disappears Alice gains the BTC
+[2018-12-03 17:38:42] <sarang> High level: why does Alice get her XMR back?
+[2018-12-03 17:39:18] <sarang> Delayed signing and posting by Bob?
+[2018-12-03 17:39:53] <h4sh3d> Ok, what do you mean by "fail"? The zkp or after the firsts transactions on-chain?
+[2018-12-03 17:40:05] <sarang> why not either
+[2018-12-03 17:40:34] <sarang> Under whatever circumstances Alice is not guaranteed the BTC
+[2018-12-03 17:41:22] <h4sh3d> If after locking the BTC/XMR on-chain Bob does not follow the protocol anymore
+[2018-12-03 17:41:49] <h4sh3d> can be because Bob disappear or act malicious
+[2018-12-03 17:42:33] <sarang> So what transaction is posted to the XMR chain, and why can Alice get her funds back if it's posted and Bob disappears or pulls other shenanigans?
+[2018-12-03 17:42:58] <sarang> Proposals around refund transactions can take advantage of that new construction, but not with this proposal
+[2018-12-03 17:44:42] <h4sh3d> In this scheme the first XMR transaction move funds into the address controlled w/ (a,x) private key, where x is half controlled by Alice and half by Bob
+[2018-12-03 17:45:05] <sarang> OK, if Bob disappears, Alice can recover the key?
+[2018-12-03 17:45:22] <h4sh3d> no, but she can get the BTC
+[2018-12-03 17:45:36] → msvb-mob joined (~msvb-lab@monero/hardware/michael)
+[2018-12-03 17:45:45] <sarang> Does she wait until Bob has posted the BTC transaction before posting the XMR transaction?
+[2018-12-03 17:45:56] <h4sh3d> so if Bob disappears, Bob loose
+[2018-12-03 17:46:08] <sarang> (I'm being purposefully socratic to help me understand better)
+[2018-12-03 17:46:19] <h4sh3d> np
+[2018-12-03 17:46:21] <h4sh3d> https://github.com/GuggerJoel/XMR-BTC-atomic/blob/master/whitepaper/xmr-btc.pdf
+[2018-12-03 17:46:24] <h4sh3d> page 4
+[2018-12-03 17:46:47] <sarang> Yep, I read that. I want to ensure I understand the nature of protocol failure by asking you that question
+[2018-12-03 17:46:57] <h4sh3d> Yes, Alice waits enough conf before sending XMR tx
+[2018-12-03 17:47:41] <sarang> OK, and Bob takes advantage of BTC timelock in case of Alice's disappearance
+[2018-12-03 17:47:45] <h4sh3d> In fact we can say that Alice or Bob will "sell" half of the key in the Bitcoin tx
+[2018-12-03 17:47:57] <h4sh3d> Yes, exactly
+[2018-12-03 17:48:22] <sarang> My spidey sense tells me that someone else had a similar idea at some point, but I don't recall specifically
+[2018-12-03 17:48:29] <sarang> Even so, at face value a neat idea
+[2018-12-03 17:48:36] <sarang> made possible by bulletproofs (tm)
+[2018-12-03 17:49:40] <sarang> To what extent is knowledge of the ed25519 scalar as a hash preimage on the BTC chain group-specific?
+[2018-12-03 17:49:41] <h4sh3d> I've not finished my journey into Bulletproof, but I'm pretty sure that it's feasible with zkp tech today
+[2018-12-03 17:49:51] <sarang> h4sh3d: yes
+[2018-12-03 17:50:02] <sarang> bulletproofs can support this
+[2018-12-03 17:50:22] <sarang> verification isn't trivial and the circuit is ugly
+[2018-12-03 17:50:50] <sarang> But yeah, any time you're using values across groups, you have to account for how they are used
+[2018-12-03 17:50:52] <h4sh3d> Not sure that I understand the question about preimage on the BTC chain group-specific
+[2018-12-03 17:50:56] <sarang> ed25519 != secp256k1
+[2018-12-03 17:51:02] <moneromooo> None o that goes onto the chain though, right ?
+[2018-12-03 17:51:08] <moneromooo> (except the tx)
+[2018-12-03 17:51:10] <sarang> That's my question
+[2018-12-03 17:51:29] <h4sh3d> Yea I know but the x is not used with secp256k1
+[2018-12-03 17:51:56] <sarang> I obviously need to do deeper diving onto the guts of hash timelocks
+[2018-12-03 17:52:01] <h4sh3d> x_0 or x_1 is reveal into the unlock script in bitcoin
+[2018-12-03 17:52:13] <rehrar> sometimes I think you guys just make up words and terms to sound smart
+[2018-12-03 17:52:16] <sarang> What groups are those scalars in?
+[2018-12-03 17:52:36] <sarang> Is there any algebraic requirement beyond "throw it into a hash function as a byte string"?
+[2018-12-03 17:53:34] <endogenic> rehrar: you're not wrong
+[2018-12-03 17:54:20] <h4sh3d> I dont think so
+[2018-12-03 17:54:44] <sarang> h4sh3d: if there are no algebraic assumptions on the scalars and it's purely a matter of byte representation, that's one thing
+[2018-12-03 17:55:25] → p0nziph0ne joined (p0nziph0ne@gateway/vpn/privateinternetaccess/p0nziph0ne)
+[2018-12-03 17:55:28] <sarang> otherwise you'd have to be very careful about crossing groups (we dealt with this recently do a discrete log equality proof across curves)
+[2018-12-03 17:56:18] <sarang> Anyway, we should continue to discuss this... but does anyone else have a short item to bring up, before we hit the end of our meeting time?
+[2018-12-03 17:56:27] <sarang> If not, we can adjourn and continue existing discussions
+[2018-12-03 17:57:03] <sarang> OK, officially adjourned

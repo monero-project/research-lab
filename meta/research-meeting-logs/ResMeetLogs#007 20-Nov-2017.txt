@@ -1,0 +1,129 @@
+[2017-11-20 17:21:45] <suraeNoether> hey guys, so
+[2017-11-20 17:21:53] <suraeNoether> I believe we are supposed to be having office hours this morning
+[2017-11-20 17:22:08] <suraeNoether> which is a casual time for folks to come in and ask questions at their lesure
+[2017-11-20 17:22:18] <suraeNoether> i'll be on all morning, so
+[2017-11-20 17:22:28] <suraeNoether> *sips coffee*
+[2017-11-20 17:23:43] <suraeNoether> i'm handing off a portion of the multisig paper to sarang this morning for comment. not quite at the point where i'm comfortable showing it around to lots of people, because there may be a place where the explanation can be made much more compact without sacrificing understanding
+[2017-11-20 17:23:45] <suraeNoether> and i want his thoughts on that
+[2017-11-20 17:23:50] <suraeNoether> before crunching out the rest of it
+[2017-11-20 17:24:06] <suraeNoether> this quarter has been productive, looks like
+[2017-11-20 17:24:29] → sunday-afternoon joined (~jack@66-188-250-34.dhcp.eucl.wi.charter.com)
+[2017-11-20 17:28:43] <hyc> sounds good
+[2017-11-20 17:34:32] ⇐ rodolfo912 quit (~rodolfo91@p20030065EA2D80250833AD00132DDFD9.dip0.t-ipconnect.de): Ping timeout: 240 seconds
+[2017-11-20 17:37:28] → dnaleor joined (~dnaleor@78-23-74-78.access.telenet.be)
+[2017-11-20 17:43:53] <ruien> suraeNoether: That's great news for me :). I've been fascinated by the meeting logs but it's a bit over my head. I have a background in electromagnetic but not cryptography. Can you recommend any resources to get me up to speed, to the point that I can understand at least the Bulletproof paper, ruffCT (has the paper been received?) SPECTRE, etc? I didn't have too much trouble with the Cryptonote white paper, just a little. I'm mostly curious but I'
+[2017-11-20 17:51:15] → thrmo joined (~thrmo@unaffiliated/thrmo)
+[2017-11-20 17:54:20] → dxdr2046 joined (~AndChat20@cm-81-9-164-97.telecable.es)
+[2017-11-20 18:01:57] ⇐ dnaleor quit (~dnaleor@78-23-74-78.access.telenet.be): Quit: Leaving
+[2017-11-20 18:05:20] ⇐ variable_io quit (c4342724@gateway/web/cgi-irc/kiwiirc.com/ip.196.52.39.36): Quit: http://www.kiwiirc.com/ - A hand crafted IRC client
+[2017-11-20 18:14:17] <moneromooo> ruien: cut off after: curious but I'
+[2017-11-20 18:15:21] <ruien> huh, had no idea -- thanks moneromooo -- pidgin didn't make any indication that I'd reached the char limit. The last statement was:  "I'm mostly curious but I'd like to understand this at a fairly fundamental level. No hurry- an hour or two a night for the next several months is fine."
+[2017-11-20 18:16:29] <moneromooo> There are papers on lab.getmonero.org.
+[2017-11-20 18:16:53] <moneromooo> Otherwise monero.stackexchange.com has interesting things.
+[2017-11-20 18:19:56] <ruien> Well, if you were to ask me, "What's a good book on economics", or probability, or trading, or programming, I've read tens of books over many years in each category and could point you to the best ones from experience.
+[2017-11-20 18:20:13] <ruien> Finding the right book is a lot better than poking around on SE. I've read all of the MRL papers, and understood them mostly, but I still can't follow all of the math in the ed25519 paper, the Bulletproof paper, the new ING range proof paper, etc.
+[2017-11-20 18:21:51] <andytoshi> you can ignore the ING paper
+[2017-11-20 18:22:10] <andytoshi> it's bigger and slower than bulletproofs and it has a trusted setup and it's really poorly written
+[2017-11-20 18:22:38] <ruien> okay, that makes sense
+[2017-11-20 18:22:51] <sarang> ruien it really depends on your background and what angle you want (algebra, coding, etc.)
+[2017-11-20 18:23:10] <sarang> To really fully understand it all you'll need a fair bit of knowledge in a lot of areas
+[2017-11-20 18:25:46] <ruien> Yeah, I'd really just appreciate a list of 4-6 books / resources / papers that would get me up to speed so I could read one of the papers put out and follow along without any trouble. I can fill in the blanks and learn quickly.
+[2017-11-20 18:26:13] <ruien> I mean, I could go to amazon and buy 10 books based on customer reviews, hoping one or two are good, but this is not efficient.
+[2017-11-20 18:26:48] <andytoshi> i have never read a single book on cryptography
+[2017-11-20 18:27:00] <ruien> i also have 10 years of background in coding (python, c, golang) so the code is no issue
+[2017-11-20 18:27:04] <ruien> andytoshi: really?
+[2017-11-20 18:27:18] <andytoshi> ruien: yes, really
+[2017-11-20 18:27:45] <sarang> ruien an older book that I really like is Schneier's Applied Cryptography, but a lot of it is now out of date
+[2017-11-20 18:28:01] <andytoshi> i've read a ton of papers and i can't point to any in particular that contained big insights, you just feel things out
+[2017-11-20 18:28:02] <sarang> A good book on the math fundamentals applied to crypto is Pipher's Introduction to Mathematical Cryptography
+[2017-11-20 18:28:29] <sarang> https://www.crypto101.io/ is also good
+[2017-11-20 18:28:56] <ruien> alright, thanks guys -- much appreciated. I'll work through those and then just start working through papers until I understand it cleanly.
+[2017-11-20 18:29:04] <sarang> as is https://crypto.stanford.edu/~dabo/courses/OnlineCrypto/
+[2017-11-20 18:29:33] <ruien> sarang, can you recommend the order in which to go through these, or does it not matter
+[2017-11-20 18:30:49] <ruien> and that is all from me -- thanks :)
+[2017-11-20 18:30:53] <sarang> I guess if I were starting, probably crypto101 since it's free and pretty easy to read
+[2017-11-20 18:31:05] <sarang> If you decide you want more math, try the Pipher book
+[2017-11-20 18:31:28] <sarang> If you want basically an encyclopedia of techniques from the mid-90s and code examples, try Schneier
+[2017-11-20 18:31:41] <sarang> like andy said, feel things out
+[2017-11-20 18:32:43] <sarang> I hear Schneier has an updated version of his book (maybe not the same name) but I haven't investigated this
+[2017-11-20 18:35:21] <ruien> Alright, it's 2:30 AM so I will crash now, but thanks very much for the insights and even more for all of the work you're all doing on this project. And if I myself can be of some assistance at any point in the future, let me know.
+[2017-11-20 18:35:36] * ruien → ruien|sleep
+[2017-11-20 18:35:45] <sarang> Roger, see ya
+[2017-11-20 18:36:00] ⇐ ajsantos quit (~ajs@unaffiliated/ajsantos): Quit: Leaving.
+[2017-11-20 18:43:50] → dnaleor joined (~dnaleor@78-23-74-78.access.telenet.be)
+[2017-11-20 18:50:05] → ajsantos joined (~ajs@unaffiliated/ajsantos)
+[2017-11-20 18:51:40] <moneromooo> sarang: the code references the paper, pages... which are beyond my copy, which stops at page 40. Do you have a link to that expanded paper ?
+[2017-11-20 18:52:10] <sarang> Those are paper equation lines
+[2017-11-20 18:52:18] <sarang> Unless I mismarked
+[2017-11-20 18:52:41] <moneromooo> Ah, got it.
+[2017-11-20 18:53:06] <sarang> So that may help with seeing how the symbols all fit together
+[2017-11-20 18:53:19] <sarang> I tried to keep the notation consistent with the paper
+[2017-11-20 18:53:51] <moneromooo> Yes, I just saw the pages with those numbers in. Thanks.
+[2017-11-20 19:11:39] ⇐ kico quit (~kico@unaffiliated/kico): Quit: Leaving
+[2017-11-20 19:13:03] ⇐ thrmo quit (~thrmo@unaffiliated/thrmo): Ping timeout: 248 seconds
+[2017-11-20 19:16:14] ⇐ victorSN quit (~victorSN@ec2-18-221-184-249.us-east-2.compute.amazonaws.com): Excess Flood
+[2017-11-20 19:16:42] → victorSN joined (~victorSN@ec2-18-221-184-249.us-east-2.compute.amazonaws.com)
+[2017-11-20 19:21:17] → rodolfo912 joined (~rodolfo91@p20030065EA2D80250833AD00132DDFD9.dip0.t-ipconnect.de)
+[2017-11-20 19:26:35] → kico joined (~kico@a89-152-119-231.cpe.netcabo.pt)
+[2017-11-20 19:26:35] ⇐ kico quit (~kico@a89-152-119-231.cpe.netcabo.pt): Changing host
+[2017-11-20 19:26:35] → kico joined (~kico@unaffiliated/kico)
+[2017-11-20 19:35:12] ⇐ ferretinjapan quit (~ferretinj@unaffiliated/ferretinjapan): Ping timeout: 246 seconds
+[2017-11-20 19:43:17] <suraeNoether> woops, sorry about that, i got sucked into work. :
+[2017-11-20 19:45:36] <suraeNoether> ruien|sleep: i always think it's good to have abstract algebra under your belt (something like the book by beachy and blair) especially if you are otherwise unfamiliar with math concepts like modular arithmetic... but if you have programmed before, there is a strong argument to be made for you to just jump into, say, the cryptonote whitepaper and start asking questions
+[2017-11-20 19:52:33] <suraeNoether> also, sleep tight~
+[2017-11-20 19:54:01] <sarang> If anything, it helps to be able to identify how curve operations work (i.e. their properties) even without the formal definitions in mind
+[2017-11-20 20:18:44] ⇐ Keniyal quit (~Keniyal@unaffiliated/keniyal): Remote host closed the connection
+[2017-11-20 20:28:47] → serhack joined (25b05f2f@gateway/web/cgi-irc/kiwiirc.com/ip.37.176.95.47)
+[2017-11-20 20:39:08] ⇐ serhack quit (25b05f2f@gateway/web/cgi-irc/kiwiirc.com/ip.37.176.95.47): Remote host closed the connection
+[2017-11-20 21:01:53] ⇐ ArticMine quit (~ArticMine@184.70.226.34): Ping timeout: 248 seconds
+[2017-11-20 21:15:43] <silur> @ruien after you finish with the pipher and schneier intro it's a great habit to read 1 paper every morning on crypto eprint, springr or arxiv with a coffee
+[2017-11-20 21:16:46] <silur> there are no advanced "higher lvl" stuff collections i know so the only place to get state-of-the-art theories is to keep up to date with universities every day
+[2017-11-20 21:17:59] ⇐ silur quit (~silur@ch-zurich.ra4wvpn.com): Quit: leaving
+[2017-11-20 21:18:48] <suraeNoether> and 25 push-ups before each shower
+[2017-11-20 21:19:05] <suraeNoether> and while you're at it, get good at making tea
+[2017-11-20 21:39:05] → thrmo joined (~thrmo@unaffiliated/thrmo)
+[2017-11-20 21:45:01] ⇐ rodolfo912 quit (~rodolfo91@p20030065EA2D80250833AD00132DDFD9.dip0.t-ipconnect.de): Quit: Leaving
+[2017-11-20 21:47:54] → thrmo1111 joined (~thrmo@unaffiliated/thrmo)
+[2017-11-20 21:50:57] ⇐ thrmo quit (~thrmo@unaffiliated/thrmo): Ping timeout: 248 seconds
+[2017-11-20 21:53:38] * thrmo1111 → thrmo
+[2017-11-20 22:01:12] → ArticMine joined (~ArticMine@207.194.38.218)
+[2017-11-20 22:04:47] ⇐ dxdr2046 quit (~AndChat20@cm-81-9-164-97.telecable.es): Remote host closed the connection
+[2017-11-20 22:18:41] ⇐ p0nziph0ne quit (~p0nziph0n@unaffiliated/p0nziph0ne): Quit: Leaving
+[2017-11-20 22:44:20] ⇐ ArticMine quit (~ArticMine@207.194.38.218): Ping timeout: 268 seconds
+[2017-11-20 22:52:11] ⇐ mochaccinuh quit (~mochaccin@dyh42.internetdsl.tpnet.pl): Ping timeout: 255 seconds
+[2017-11-20 22:57:18] ⇐ ajsantos quit (~ajs@unaffiliated/ajsantos): Quit: Leaving.
+[2017-11-20 22:58:12] ⇐ sunday-afternoon quit (~jack@66-188-250-34.dhcp.eucl.wi.charter.com): Quit: sunday-afternoon
+[2017-11-20 23:07:23] → ajsantos joined (~ajs@unaffiliated/ajsantos)
+[2017-11-20 23:22:27] ⇐ ajsantos quit (~ajs@unaffiliated/ajsantos): Quit: Leaving.
+[2017-11-20 23:31:41] → ArticMine joined (~ArticMine@208.181.64.50)
+[2017-11-20 23:39:30] ⇐ dnaleor quit (~dnaleor@78-23-74-78.access.telenet.be): Quit: Leaving
+[2017-11-20 23:49:55] → msvb-mob joined (~michael@x55b542d3.dyn.telefonica.de)
+[2017-12-20 00:20:32] → anonimobile joined (~anonimobi@gateway/tor-sasl/anonimobile)
+[2017-12-20 00:22:27] ⇐ ArticMine quit (~ArticMine@208.181.64.50): Ping timeout: 260 seconds
+[2017-12-20 00:29:24] ⇐ iDunk quit (~iDunk@unaffiliated/idunk): Ping timeout: 258 seconds
+[2017-12-20 00:31:17] → iDunk joined (~iDunk@unaffiliated/idunk)
+[2017-12-20 01:27:59] <hyc> modular arithmetic is pretty fundamental to computing
+[2017-12-20 01:28:30] <sarang> yes
+[2017-12-20 01:28:32] <hyc> although the programmlng language types tend to talk about in terms of overflow and undefined behavior, sigh
+[2017-12-20 01:28:46] <sarang> We should probably get it right =p
+[2017-12-20 01:30:45] <hyc> would be nice.... :P
+[2017-12-20 01:31:29] → variable_io joined (adefe86b@gateway/web/cgi-irc/kiwiirc.com/ip.173.239.232.107)
+[2017-12-20 01:46:58] ⇐ ErCiccione quit (~erciccion@37-252-190-165.rev.ipax.at): Quit: Leaving
+[2017-12-20 01:58:31] ⇐ variable_io quit (adefe86b@gateway/web/cgi-irc/kiwiirc.com/ip.173.239.232.107): Quit: http://www.kiwiirc.com/ - A hand crafted IRC client
+[2017-12-20 02:01:47] → variable_io joined (adefe86b@gateway/web/cgi-irc/kiwiirc.com/ip.173.239.232.107)
+[2017-12-20 02:03:45] ⇐ msvb-mob quit (~michael@x55b542d3.dyn.telefonica.de): Ping timeout: 248 seconds
+[2017-12-20 02:15:49] → piano7 joined (~logan@2600:8800:2b01:6500:e0b9:196d:b58f:8a65)
+[2017-12-20 03:02:23] ⇐ thrmo quit (~thrmo@unaffiliated/thrmo): Quit: Waiting for .007
+[2017-12-20 03:14:10] ⇐ [-mugatu-] quit (~shillosop@unaffiliated/shillosopher): Ping timeout: 264 seconds
+[2017-12-20 03:15:19] * ruien|sleep → ruien
+[2017-12-20 03:45:00] → chachasmooth_ joined (~chachasmo@unaffiliated/chachasmooth)
+[2017-12-20 03:46:02] ⇐ chachasmooth quit (~chachasmo@unaffiliated/chachasmooth): Ping timeout: 255 seconds
+[2017-12-20 03:48:58] → ferretinjapan joined (~ferretinj@unaffiliated/ferretinjapan)
+[2017-12-20 04:15:13] <suraeNoether> ok, everyone
+[2017-12-20 04:15:22] <suraeNoether> multisig paper is looking really good
+[2017-12-20 04:15:30] <suraeNoether> although my freaking eyes are crossing from looking at screens
+[2017-12-20 04:15:40] <suraeNoether> still cross referencing with code
+[2017-12-20 04:15:41] <suraeNoether> but
+[2017-12-20 04:15:48] <suraeNoether> if people want to start looking at it
+[2017-12-20 04:16:06] <suraeNoether> i'd say the paper is wandering into territory that is rapidly becoming "not embarassing." https://www.sharelatex.com/project/5980a44556789660b0600edb
+[2017-12-20 04:17:19] <suraeNoether> looking pretty good, rounding the final corners...
