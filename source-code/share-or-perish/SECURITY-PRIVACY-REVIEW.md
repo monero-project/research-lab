@@ -65,16 +65,14 @@ statistics. Model logic is unchanged.
   48-object objective trigger (K=4) instead of the body's 32 (K=3) changes
   depth-≥1 attack frequency by **12.7×** (19.4 vs 1.53 days/attack, seed 7).
   Which reading is normative materially changes the security conclusions.
-- **§6.2's "1 per 2 years" for 10+ reorgs — NOT reproduced with the
-  published config**: seed 42, 3M contests (757M s ≈ 24 sim-years exposure)
-  yields 23 events → **381 days/attack (95% CI 263–602)**, i.e. ~1.04
-  sim-years/attack; the claimed 730 days is outside the CI. Direction is
-  conservative for the proposal (attacks ≈2× more frequent than claimed),
-  but the figure is not reproducible from the appendix constants — likely
-  small-sample variance or a stale config (scratchpad@master still has
-  STUBBORNNESS=5 while the appendix has 10). This is B4 in practice:
-  published rates need multi-seed runs with CIs. Additional seeds queued;
-  see `results/depth10_*.log`.
+- **§6.2's "1 per 2 years" for 10+ reorgs — unit ambiguity, not an error**:
+  three seeds at the published config give 381 / 796 / 438 days/attack
+  (seeds 42/7/99, n=23/11/20, ~24 sim-years exposure each); pooled:
+  **487 days/attack (95% CI 381–652)** in sim-time. DA-scaled (×1.5, §2.1)
+  that is 731 days ≈ the claimed 2 years. So the claim is defensible *only*
+  under DA-scaled (real-time-equivalent) reporting, which the sim output
+  does not state. Recommended: report both columns (B9), always with CIs
+  (B4). Raw logs in `results/depth10_*.log`.
 
 ### 2.1 Time-scaling subtlety (B9) — read days/attack as conservative
 
@@ -110,14 +108,16 @@ the unit. Fix: print a DA-scaled column (`f = (H + A)/H`).
 
 ### S1. Exact-score ties are common; §5.1 random tie-break → split-brain (Med)
 
-Scores are small-integer multiples of `diff(h)/w`. Two symmetric racing sides
-have Poisson(≈15) share counts; P(counts equal) ≈ 1/√(4πμ) ≈ 7% per fork
-(estimate, μ=15). Ties across *different heights* are also possible (a shorter
-chain heavy with shares can tie a longer chain). §5.1 then picks **randomly**,
-including between chains of different heights. Consequences: (a) nodes
-disagree (split-brain) until the objective window; (b) a 50% chance of
-preferring the *shorter* chain. albinjm's honest-only 10+ reorgs
-(0.13–3.94/yr at 3–10 s mean delay) are plausibly this mechanism.
+Scores are small-integer multiples of `diff(h)/w`. Exact ties are not rare:
+**measured 3.3%** of decisive comparisons in the appendix model
+(24/736, seed 1, 20k rounds, depth ≥ 1; the analytic share-count estimate
+for symmetric forks is ≈7%, μ=15). Ties across *different heights* are also
+possible (a shorter chain heavy with shares can tie a longer chain). §5.1
+then picks **randomly**, including between chains of different heights.
+Consequences: (a) nodes disagree (split-brain) until the objective window;
+(b) a 50% chance of preferring the *shorter* chain. albinjm's honest-only
+10+ reorgs (0.13–3.94/yr at 3–10 s mean delay) are plausibly this mechanism
+(amplified at propagation delays the appendix model does not simulate).
 
 **Proposed:** tie-break order = (1) greater height, (2) random among
 equal-height. Grindability note: equalizing a shorter chain to a taller one

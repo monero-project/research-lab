@@ -1,0 +1,18 @@
+# cmd: python3 blockchain_sim.py --rounds 20000 --min-reorg-depth 1 --seed 1 (tie-rate measurement for review S1)
+W=16
+STUBBORNNESS=10
+UNIQUE_SHARES=True
+UNCLE_BLOCKS=False
+COUNT_TIP_SHARES=True
+SEED=1
+
+Time: 5035008 s, attacks: 36, 1.619 days/attack (95% CI 1.196-2.312), DA-scaled x1.50: 2.428 days/attack
+Reorg depth: avg 3.78 median 4 max 8 (n=36)
+Exact-score ties among decisive comparisons: 24/736 (3.3%)
+
+W=16
+STUBBORNNESS=10
+UNIQUE_SHARES=True
+UNCLE_BLOCKS=False
+COUNT_TIP_SHARES=True
+SEED=1
