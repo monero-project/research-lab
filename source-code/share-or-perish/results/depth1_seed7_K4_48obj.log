@@ -1,0 +1,2 @@
+# cmd: MIN_REORG_DEPTH=1 SEED=7 SIM_ROUNDS=20000 K=4 python3 sim_repro.py  (models the comments' 48-object objective trigger vs body's 32)
+SEED=7 W=16 K=4 STUB=10 DEPTH=1 TS=5035930 ATTACKS=3 DAYS_PER=19.429 AVG_DEPTH=2.000

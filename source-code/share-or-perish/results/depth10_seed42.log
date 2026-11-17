@@ -1,0 +1,4 @@
+# cmd: MIN_REORG_DEPTH=10 SEED=42 SIM_ROUNDS=3000000 python3 sim_repro.py
+SEED=42 W=16 K=3 STUB=10 DEPTH=10 TS=757165259 ATTACKS=23 DAYS_PER=381.021 AVG_DEPTH=10.043
+# note: claimed in section 6.2: 'about 1 such reorg per 2 years'; measured 381 days (95% CI 263-602), n=23, exposure 24 sim-years
+# pooled: 54 events / 2270699203 s = 487 days/attack (Garwood 95% CI 381-652); DA-scaled x1.5 = 731 days
