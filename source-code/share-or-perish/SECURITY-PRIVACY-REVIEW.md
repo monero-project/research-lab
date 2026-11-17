@@ -49,15 +49,16 @@ statistics. Model logic is unchanged.
 | DEPTH=1, seed 7, UNIQUE_SHARES=0 | 644 | 0.111 | 3.82 |
 | DEPTH=1, seed 7, COUNT_TIP_SHARES=0 | 101 | 0.576 | 3.13 |
 | DEPTH=10, seed 42, 3M rounds | 23 | 381 (CI 263–602) | 10.04 |
+| DEPTH=10, 3 seeds pooled, UNIQUE_SHARES=0 | 690 | 7.96 (CI 7.39–8.58) | ~10.0 |
 | DEPTH=1, seed 7, K=4 (48-object trigger, comments' reading) | 3 | 19.4 | 2.00 |
 
 - **§6.2 "once per 1.5 days, ~3-block reorg" — reproduced** (1.53–1.62 days,
   avg depth 2.8–3.8). ✔
-- **Uniqueness-rule benefit — confirmed at depth 1**: removing it raises
-  attack frequency 13.7× (0.111 vs 1.53 days/attack). The claim in §2.2 is
-  "up to 2 orders of magnitude" for *long* reorgs; at depth 1 we measure
-  ~1.1 orders. Consistent; long-depth ablation is future work (each run
-  costs hours of wall time). ✔ (partial)
+- **Uniqueness-rule benefit — fully confirmed**: removing the rule raises
+  attack frequency **13.7×** at depth ≥ 1 (0.111 vs 1.53 days/attack, seed 7)
+  and **61× ≈ 1.79 orders of magnitude** at depth ≥ 10 (7.96 vs 487
+  days/attack, 690 vs 54 pooled events). §2.2's "up to 2 orders of
+  magnitude" for *long* reorgs is accurate as written.
 - **Oct-2026 tip-share fix — confirmed**: reverting `COUNT_TIP_SHARES`
   (pre-2026-10-20 protocol) raises attack frequency 2.7× at depth 1. The
   fix materially closed the dry-spell weakness tevador described. ✔
